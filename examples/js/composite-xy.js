@@ -226,49 +226,6 @@ complexChartView.setConfig({
     config: {
       el: '#complexChart-controlPanel',
       enabled: true,
-      buttons: [
-        {
-          name: 'filter',
-          title: 'Filter',
-          iconClass: 'fa fa-filter',
-          events: {
-            click: 'filterVariables'
-          },
-          panel: {
-            name: 'accessorData',
-            width: '350px'
-          }
-        },
-        {
-          name: 'sendMessage',
-          title: 'Send Message',
-          iconClass: 'fa fa-edit',
-          events: {
-            click: function () {
-              this.eventObject.trigger('message', {
-                componentId: 'XYChartView',
-                action: 'new',
-                messages: [
-                  {
-                    title: 'New Message',
-                    message: 'A message was added.'
-                  }
-                ]
-              })
-            }
-          }
-        },
-        {
-          name: 'clearMessage',
-          title: 'Clear Message',
-          iconClass: 'fa fa-eraser',
-          events: {
-            click: function () {
-              this.eventObject.trigger('clearMessage', 'XYChartView')
-            }
-          }
-        }
-      ]
     },
   }, {
     type: 'message',

@@ -7,6 +7,8 @@ var ContrailChartsDataModel = require('contrail-charts-data-model')
 var ContrailChartsView = require('contrail-charts-view')
 var components = require('components/index')
 var handlers = require('handlers/index')
+var Actionman = require('../../plugins/Actionman')
+var _actions = []
 /**
 * Chart with a common X axis and many possible child components rendering data on the Y axis (for example: line, bar, stackedBar).
 * Many different Y axis may be configured.
@@ -22,6 +24,14 @@ var XYChartView = ContrailChartsView.extend({
     self._components = []
     options = options || {}
     self.eventObject = options.eventObject || _.extend({}, Events)
+
+    self._actionman = new Actionman()
+
+    self._actions = _actions
+    // register common actions
+    setTimeout(() => {
+      _.each(self._actions, action => self._actionman.set(action))
+    })
   },
   /**
   * Provide data for this chart as a simple array of objects.
@@ -126,7 +136,9 @@ var XYChartView = ContrailChartsView.extend({
       id: id,
       config: configModel,
       model: model,
-      eventObject: self.eventObject
+      eventObject: self.eventObject,
+      // actionman is passed as parameter to each component for it to be able to register action
+      actionman: self._actionman,
     })
     var component = new components[type].View(viewOptions)
     self._components.push(component)
@@ -175,6 +187,7 @@ var XYChartView = ContrailChartsView.extend({
     _.each(self._components, function (component) {
       component.render()
     })
+    $(self._config.el).html(self.$el)
   }
 })
 

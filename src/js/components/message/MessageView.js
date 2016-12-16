@@ -5,6 +5,8 @@ var $ = require('jquery')
 var _ = require('lodash')
 var Events = require('contrail-charts-events')
 var ContrailChartsView = require('contrail-charts-view')
+var SendMessageAction = require('./action/SendMessage')
+var ClearMessageAction = require('./action/ClearMessage')
 
 var MessageView = ContrailChartsView.extend({
   type: 'message',
@@ -13,14 +15,10 @@ var MessageView = ContrailChartsView.extend({
 
   initialize: function (options) {
     var self = this
-    self.config = options.config
+    ContrailChartsView.prototype.initialize.call(self, options)
     self.eventObject = options.eventObject || _.extend({}, Events)
-    self._registerListeners()
-  },
-
-  _registerListeners: function () {
-    this.listenTo(this.eventObject, 'message', this.renderMessage)
-    this.listenTo(this.eventObject, 'clearMessage', this.clearMessage)
+    self._actionman.set(SendMessageAction, self)
+    self._actionman.set(ClearMessageAction, self)
   },
 
   render: function () {

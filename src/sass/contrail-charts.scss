@@ -153,6 +153,8 @@ button:focus {
 		}
 	}
 	.control-panel-expanded-container {
+    display: none;
+    width: 350px;
 		margin: 0 33px 0 0;
 		border: 1px solid #ddd;
 		background-color: #fff;
