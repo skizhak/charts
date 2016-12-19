@@ -8,7 +8,8 @@ var ContrailChartsView = require('contrail-charts-view')
 var components = require('components/index')
 var handlers = require('handlers/index')
 var Actionman = require('../../plugins/Actionman')
-var _actions = []
+var _actions = [require('actions/SelectSerie')
+]
 /**
 * Chart with a common X axis and many possible child components rendering data on the Y axis (for example: line, bar, stackedBar).
 * Many different Y axis may be configured.
@@ -30,7 +31,7 @@ var XYChartView = ContrailChartsView.extend({
     self._actions = _actions
     // register common actions
     setTimeout(() => {
-      _.each(self._actions, action => self._actionman.set(action))
+      _.each(self._actions, action => self._actionman.set(action, this))
     })
   },
   /**
@@ -115,7 +116,11 @@ var XYChartView = ContrailChartsView.extend({
   _initComponents: function () {
     var self = this
     _.each(self._config.components, function (component) {
-      self._registerComponent(component.type, component.config, self._dataProvider, component.id)
+      let config = component.config
+      if (component.config.sourceComponent) {
+        config = _.extend({}, _.find(self._config.components, {type: component.config.sourceComponent}).config, component.config)
+      }
+      self._registerComponent(component.type, config, self._dataProvider, component.id)
     })
     if (self._isEnabledComponent('navigation')) {
       var dataModel = self.getComponentByType('navigation').getFocusDataProvider()
@@ -131,8 +136,11 @@ var XYChartView = ContrailChartsView.extend({
   _registerComponent: function (type, config, model, id) {
     var self = this
     if (!self._isEnabledComponent(type)) return false
-    var configModel = new components[type].ConfigModel(config)
-    var viewOptions = _.extend(config, {
+    let configModel
+    if (components[type].ConfigModel) {
+      configModel = new components[type].ConfigModel(config)
+    }
+    var viewOptions = _.extend({}, config, {
       id: id,
       config: configModel,
       model: model,

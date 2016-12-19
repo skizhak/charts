@@ -4,6 +4,8 @@ var MessageConfigModel = require('components/message/MessageConfigModel')
 var MessageView = require('components/message/MessageView')
 var NavigationConfigModel = require('components/navigation/NavigationConfigModel')
 var NavigationView = require('components/navigation/NavigationView')
+var FilterView = require('components/filter/FilterView')
+var FilterConfigModel = require('components/filter/FilterConfigModel')
 var TooltipConfigModel = require('components/tooltip/TooltipConfigModel')
 var TooltipView = require('components/tooltip/TooltipView')
 var LegendConfigModel = require('components/legend/LegendConfigModel')
@@ -43,6 +45,10 @@ module.exports = {
   navigation: {
     ConfigModel: NavigationConfigModel,
     View: NavigationView
+  },
+  filter: {
+    ConfigModel: FilterConfigModel,
+    View: FilterView,
   },
   message: {
     ConfigModel: MessageConfigModel,

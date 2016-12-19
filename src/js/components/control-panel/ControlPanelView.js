@@ -22,6 +22,8 @@ class Self extends ContrailChartsView.extend({
     this.listenTo(this.config, 'change', this.render)
     this.eventObject = options.eventObject || _.extend({}, Events)
 
+    // TODO control panel will operate not with all actions
+    // this may be configured per this component
     const _actions = this._actionman.getAll()
     this.$el.html(_template())
 
@@ -33,6 +35,7 @@ class Self extends ContrailChartsView.extend({
   }
 
   render () {
+    this.$el.addClass(this.className)
   }
 
   addMenuItem (action) {

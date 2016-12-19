@@ -1,4 +1,7 @@
-/** Copyright (c) 2016 Juniper Networks, Inc. All rights reserved. 
+/*
+ * Copyright (c) 2016 Juniper Networks, Inc. All rights reserved.
+ */
+/**
  * Handler for single serie data type 
  */ 
 var _ = require('lodash') 

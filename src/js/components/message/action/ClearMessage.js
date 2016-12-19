@@ -1,5 +1,5 @@
-var _ = require('lodash')
-var Action = require('../../../plugins/Action')
+const _ = require('lodash')
+const Action = require('../../../plugins/Action')
 
 class Self extends Action {
   constructor (p) {

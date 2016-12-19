@@ -22,21 +22,6 @@ for (var i = 0; i < 100; i++) {
 }
 var complexChartView = new coCharts.charts.XYChartView()
 complexChartView.setConfig({
-  handlers: [{
-    type: 'bindingHandler',
-    config: {
-      bindings: [
-        {
-          sourceComponent: 'compositeY',
-          sourceModel: 'config',
-          sourcePath: 'plot',
-          targetComponent: 'controlPanel',
-          targetModel: 'config',
-          action: 'sync'
-        }
-      ]
-    },
-  }],
   components: [{
     type: 'compositeY',
     config: {
@@ -251,6 +236,12 @@ complexChartView.setConfig({
       el: '#complexChart-color-picker',
       sourceComponent: 'compositeY'
     }
+  }, {
+    type: 'filter',
+    config: {
+      el: '#complexChart-filter',
+      sourceComponent: 'compositeY',
+    },
   }]
 })
 complexChartView.setData(complexData)

@@ -1,0 +1,21 @@
+<div class="filter-container"> 
+  <div class="filter-head"> 
+    <span class="filter-head-icon"> 
+      <i class="fa fa-filter"></i> 
+    </span> 
+    <span class="filter-title-text">Filter</span> 
+    <span class="filter-close"> 
+      <i class="fa fa-remove"></i> 
+    </span> 
+  </div> 
+  <div class="filter-body"> 
+    <div class="filter-items"> 
+      {{#each this }} 
+      <div class="filter-item"> 
+        <input id="filter-item-input-{{accessor}}" class="filter-item-input" type="checkbox" name="filter" class="accessor-data-checkbox" value="{{accessor}}" {{#if enabled}}checked{{/if}}> 
+        <label for="filter-item-input-{{accessor}}" class="accessor-data-checkbox-label">{{label}}</label> 
+      </div> 
+      {{/each}} 
+    </div> 
+  </div> 
+</div> 
