@@ -6,6 +6,8 @@ var NavigationConfigModel = require('components/navigation/NavigationConfigModel
 var NavigationView = require('components/navigation/NavigationView')
 var FilterView = require('components/filter/FilterView')
 var FilterConfigModel = require('components/filter/FilterConfigModel')
+var TimelineConfigModel = require('components/timeline/TimelineConfigModel')
+var TimelineView = require('components/timeline/TimelineView')
 var TooltipConfigModel = require('components/tooltip/TooltipConfigModel')
 var TooltipView = require('components/tooltip/TooltipView')
 var LegendConfigModel = require('components/legend/LegendConfigModel')
@@ -49,6 +51,10 @@ module.exports = {
   filter: {
     ConfigModel: FilterConfigModel,
     View: FilterView,
+  },
+  timeline: {
+    ConfigModel: TimelineConfigModel,
+    View: TimelineView
   },
   message: {
     ConfigModel: MessageConfigModel,

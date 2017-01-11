@@ -1,11 +1,9 @@
 /*
  * Copyright (c) 2016 Juniper Networks, Inc. All rights reserved.
  */
-var _ = require('lodash')
-var d3 = require('d3')
-var ContrailChartsConfigModel = require('contrail-charts-config-model')
+const ContrailChartsConfigModel = require('contrail-charts-config-model')
 
-var NavigationConfigModel = ContrailChartsConfigModel.extend({
+const NavigationConfigModel = ContrailChartsConfigModel.extend({
   defaults: {
     // / The chart width. If not provided will be caculated by View.
     chartWidth: undefined,
@@ -16,12 +14,8 @@ var NavigationConfigModel = ContrailChartsConfigModel.extend({
     // / The chart height. If not provided will be caculated by View.
     chartHeight: undefined,
 
-    colorScale: d3.scaleOrdinal(d3.schemeCategory20),
     // / Duration of chart transitions.
     duration: 300,
-
-    xTicks: 10,
-    yTicks: 10,
 
     // / General margin used for computing the side margins.
     margin: 30,
@@ -33,19 +27,13 @@ var NavigationConfigModel = ContrailChartsConfigModel.extend({
     marginRight: undefined,
     marginInner: undefined,
 
-    curve: d3.curveCatmullRom.alpha(0.5),
+    brushHandleHeight: 8,
+    brushHandleScaleX: 1,
+    brushHandleScaleY: 1.2,
 
     // The selection to use when first rendered [xMin%, xMax%].
-    selection: undefined
-  },
-
-  getColor: function (accessor) {
-    if (_.has(accessor, 'color')) {
-      return accessor.color
-    } else {
-      return this.attributes.colorScale(accessor.accessor)
-    }
-  },
+    selection: undefined,
+  }
 })
 
 module.exports = NavigationConfigModel

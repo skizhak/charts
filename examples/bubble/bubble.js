@@ -1,8 +1,8 @@
-/* global coCharts */
+/* global coCharts d3 */
 
-function timeFormatter (value) { 
-  return d3.timeFormat('%H:%M:%S')(value) 
-} 
+function timeFormatter (value) {
+  return d3.timeFormat('%H:%M:%S')(value) // eslint-disable-line no-undef
+}
 function numberFormatter (number) {
   return number.toFixed(2)
 }
@@ -11,17 +11,20 @@ var complexData = []
 for (var i = 0; i < 100; i++) {
   complexData.push({
     x: 1475760930000 + 1000000 * i,
-    a: (Math.random() - 0.5) * 50,
-    y: Math.random() * 100,
-    r: Math.random() * 10
+    c: (Math.random() - 0.5) * 50,
+    s: Math.random() * 100,
+    t: Math.random() * 100,
+    r: Math.random() * 10,
+    nav: (Math.random() - 0.5) * 50
   })
 }
 
 var chartConfig = {
+  container: '#chart',
   components: [{
     type: 'compositeY',
     config: {
-      el: '#chart',
+      chartHeight: 600,
       marginInner: 25,
       rRange: [3, 50],
       plot: {
@@ -30,20 +33,60 @@ var chartConfig = {
         },
         y: [
           {
-            accessor: 'a',
+            accessor: 'c',
             chart: 'scatterBubble',
             sizeAccessor: 'r',
             sizeAxis: 'rAxis',
             shape: 'circle',
+            axis: 'y1'
+          },
+          {
+            accessor: 's',
+            chart: 'scatterBubble',
+            sizeAccessor: 's',
+            sizeAxis: 'rAxis',
+            shape: 'square',
+            axis: 'y2'
+          },
+          {
+            accessor: 't',
+            chart: 'scatterBubble',
+            sizeAccessor: 's',
+            sizeAxis: 'rAxis',
+            shape: 'triangle',
+            axis: 'y2'
           }
         ]
       },
       axis: {
         rAxis: {
           range: [3, 50]
+        },
+        y1: {
+          position: 'left',
+          formatter: numberFormatter,
+          labelMargin: 15
+        },
+        y2: {
+          position: 'right',
+          formatter: numberFormatter,
+          labelMargin: 15
         }
-      }
-    },
+      },
+      // Sample shape function for shape other than circle, square and triangle
+      // shapeEnterFunctions: {
+      //   // New custom shape
+      //   diamond: function (d, selection) {
+      //     //create and return diamond shape.
+      //   }
+      // },
+      // shapeEditFunctions: {
+      //   // Override the way diamond shape is drawn
+      //   diamond: function (d, selection) {
+      //   // Add any transition or update on shape.
+      //   }
+      // }
+    }
   }, {
     type: 'tooltip',
     config: {
@@ -54,35 +97,41 @@ var chartConfig = {
           labelFormatter: function (key) {
             return 'Time'
           },
-          valueFormatter: timeFormatter,
+          valueFormatter: timeFormatter
         },
         {
-          accessor: 'a',
+          accessor: 'c',
           labelFormatter: function (key) {
-            return 'A'
+            return 'C'
           },
-          valueFormatter: numberFormatter,
+          valueFormatter: numberFormatter
         },
         {
-          accessor: 'y',
+          accessor: 's',
           labelFormatter: function (key) {
-            return 'Y'
+            return 'S'
           },
-          valueFormatter: numberFormatter,
+          valueFormatter: numberFormatter
+        },
+        {
+          accessor: 't',
+          labelFormatter: function (key) {
+            return 'T'
+          },
+          valueFormatter: numberFormatter
         },
         {
           accessor: 'r',
           labelFormatter: function (key) {
             return 'R'
           },
-          valueFormatter: numberFormatter,
+          valueFormatter: numberFormatter
         }
-      ],
-    },
+      ]
+    }
   }, {
     type: 'navigation',
     config: {
-      el: '#chart-navigation',
       marginInner: 5,
       chartHeight: 200,
       plot: {
@@ -91,7 +140,7 @@ var chartConfig = {
         },
         y: [
           {
-            accessor: 'a',
+            accessor: 'nav',
             chart: 'line'
           }
         ]
@@ -103,4 +152,3 @@ var chartConfig = {
 var chartView = new coCharts.charts.XYChartView()
 chartView.setConfig(chartConfig)
 chartView.setData(complexData)
-chartView.render()

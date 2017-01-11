@@ -1,54 +1,93 @@
 /*
  * Copyright (c) 2016 Juniper Networks, Inc. All rights reserved.
  */
+const _ = require('lodash')
+const d3 = require('d3')
+const Events = require('contrail-charts-events')
+const ContrailView = require('contrail-view')
+/**
+ * View base class.
+ */
+module.exports = ContrailView.extend({
+  defaults: {
+    _type: 'ContrailChartsView',
+  },
 
-define([
-  'jquery',
-  'underscore',
-  'd3',
-  'contrail-view'
-], function ($, _, d3, ContrailView) {
+  initialize: function (options) {
+    this.id = options.id
+    this.config = options.config
+    this._actionman = options.actionman
+    this._order = options.order
+    this._container = options.container
+    this._eventObject = options.eventObject || _.extend({}, Events)
+  },
   /**
-   * View base class.
+   * Save the config '_computed' parameters in the view's 'params' local object for easier reference (this.params instead of this.config._computed).
+   * The view may modify the params object with calculated values.
    */
-  var ContrailChartsView = ContrailView.extend({
-    defaults: {
-      _type: 'ContrailChartsView'
-    },
+  resetParams: function () {
+    this.params = this.config.initializedComputedParameters()
+  },
 
-    initialize: function (options) {
-      this.config = options.config
-      this._actionman = options.actionman
-    },
-
-    /**
-     * Save the config '_computed' parameters in the view's 'params' local object for easier reference (this.params instead of this.config._computed).
-     * The view may modify the params object with calculated values.
-     */
-    resetParams: function () {
-      this.params = this.config.initializedComputedParameters()
-    },
-
-    resetParamsForChild: function (childIndex) {
-      this.params = this.config.initializedComputedParametersForChild(childIndex)
-    },
-
-    /**
-    * This is how the view gets its data.
-    */
-    getData: function () {
-      return this.model.getData()
-    },
-
-    /**
-    * This is how the view gets the SVG html element selection for rendering.
-    */
-    svgSelection: function () {
-      var self = this
-      // return d3.select(self.$el.get(0)).select("svg#" + self.id)
-      return d3.select(self.el).select('svg')
+  resetParamsForChild: function (childIndex) {
+    this.params = this.config.initializedComputedParametersForChild(childIndex)
+  },
+  /**
+  * This is how the view gets its data.
+  */
+  getData: function () {
+    return this.model.getData()
+  },
+  /**
+   * First component which uses shared svg container appends svg element to container
+   */
+  initSVG: function (sort) {
+    let svg = this.svgSelection()
+    if (svg.empty()) {
+      svg = d3.select(this._container[0])
+        .append('svg')
+        .classed('coCharts-svg', true)
+        .attr('data-order', this._order)
     }
-  })
+    if (sort && !_.isNil(this._order)) {
+      svg.attr('data-order', this._order)
+      d3.select(this._container[0])
+        .selectAll(':scope > [data-order]')
+        .datum(function () { return this.dataset.order })
+        .sort()
+        .datum(null)
+    }
+    // Each component adds its class to shared svg to indicate initialized state
+    svg.classed(this.className, true)
+    return svg
+  },
+  /**
+  * @return Object d3 Selection of svg element shared between components in this container
+  */
+  svgSelection: function () {
+    return d3.select(this._container[0]).select(':scope > svg')
+  },
 
-  return ContrailChartsView
+  render: function (content) {
+    if (content) this.$el.html(content)
+
+    // append element to container first time
+    const id = _.isUndefined(this.id) ? '' : this.id
+    const selector = id ? `#${id}` : `.${this.className}`
+    if (!_.isEmpty(this._container.find(selector))) return
+    this.$el.addClass(this.className)
+    this.el.dataset['order'] = this._order
+    if (this._container.is(':empty')) {
+      this._container.append(this.$el)
+    } else {
+      const elements = this._container.children()
+      _.each(elements, (el) => {
+        if (this._order < el.dataset['order']) {
+          this.$el.insertBefore(el)
+          return false
+        }
+        if (_.last(elements) === el) this.$el.insertAfter(el)
+      })
+    }
+  },
 })

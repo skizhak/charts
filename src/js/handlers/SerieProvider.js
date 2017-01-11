@@ -27,12 +27,12 @@ var SerieProvider = ContrailModel.extend({
     self.set('data', self.get('parent').getData())
   },
 
-  getLabels: function (formatter) { 
+  getLabels: function (formatter) {
     var self = this
     return _.map(self.get('data'), function (serie) {
       return formatter(serie)
     })
-  }, 
-}) 
- 
+  },
+})
+
 module.exports = SerieProvider

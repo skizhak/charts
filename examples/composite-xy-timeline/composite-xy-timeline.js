@@ -25,12 +25,23 @@ for (var i = 0; i < 100; i++) {
 }
 var complexChartView = new coCharts.charts.XYChartView()
 complexChartView.setConfig({
-  components: [{
-    type: 'legend',
+  handlers: [{
+    type: 'bindingHandler',
     config: {
-      sourceComponent: 'complexChartCompositeY'
-    }
-  }, {
+      bindings: [
+        {
+          sourceComponent: 'compositeY',
+          sourceModel: 'config',
+          sourcePath: 'plot',
+          targetComponent: 'controlPanel',
+          targetModel: 'config',
+          action: 'sync'
+        }
+      ]
+    },
+  }],
+  container: '#complexChart',
+  components: [{
     id: 'complexChartCompositeY',
     type: 'compositeY',
     config: {
@@ -64,8 +75,8 @@ complexChartView.setConfig({
               }
             ],
             axis: 'y1',
-            tooltip: 'defaultTooltip',
-          }, {
+          },
+          {
             accessor: 'b',
             labelFormatter: 'B',
             enabled: true,
@@ -83,8 +94,8 @@ complexChartView.setConfig({
               }
             ],
             axis: 'y1',
-            tooltip: 'customTooltip',
-          }, {
+          },
+          {
             accessor: 'c',
             labelFormatter: 'C',
             enabled: false,
@@ -102,8 +113,8 @@ complexChartView.setConfig({
               }
             ],
             axis: 'y1',
-            tooltip: 'defaultTooltip',
-          }, {
+          },
+          {
             accessor: 'd',
             labelFormatter: 'Megabytes',
             color: '#d62728',
@@ -122,8 +133,8 @@ complexChartView.setConfig({
               }
             ],
             axis: 'y2',
-            tooltip: 'defaultTooltip',
-          }, {
+          },
+          {
             accessor: 'e',
             labelFormatter: 'Megabytes',
             color: '#9467bd',
@@ -142,7 +153,6 @@ complexChartView.setConfig({
               }
             ],
             axis: 'y2',
-            tooltip: 'defaultTooltip',
           }
         ]
       },
@@ -162,9 +172,9 @@ complexChartView.setConfig({
           labelMargin: 15
         }
       }
-    },
+    }
   }, {
-    type: 'navigation',
+    type: 'timeline',
     config: {
       marginInner: 10,
       marginLeft: 80,
@@ -175,125 +185,17 @@ complexChartView.setConfig({
       plot: {
         x: {
           accessor: 'x',
-          labelFormatter: 'Time'
-        },
-        y: [
-          {
-            accessor: 'a',
-            labelFormatter: 'A',
-            chart: 'stackedBar',
-            axis: 'y1'
-          },
-          {
-            accessor: 'b',
-            labelFormatter: 'B',
-            chart: 'stackedBar',
-            axis: 'y1'
-          },
-          {
-            accessor: 'd',
-            labelFormatter: 'Megabytes',
-            chart: 'line',
-            axis: 'y2'
-          }
-        ]
+          labelFormatter: 'Time',
+          axis: 'x'
+        }
       },
       axis: {
         x: {
-        },
-        y1: {
-          position: 'left',
-          formatter: numberFormatter,
-          labelMargin: 15
-        },
-        y2: {
-          position: 'right',
-          formatter: numberFormatter3,
-          labelMargin: 15
+          formatter: d3.timeFormat('%H:%M:%S')
         }
       }
-    },
-  }, {
-    id: 'defaultTooltip',
-    type: 'tooltip',
-    config: {
-      dataConfig: [
-        {
-          accessor: 'x',
-          labelFormatter: 'Time',
-          valueFormatter: timeFormatter,
-        }, {
-          accessor: 'a',
-          labelFormatter: 'A',
-          valueFormatter: numberFormatter,
-        }, {
-          accessor: 'b',
-          labelFormatter: 'B',
-          valueFormatter: numberFormatter,
-        }, {
-          accessor: 'c',
-          labelFormatter: 'C',
-          valueFormatter: numberFormatter,
-        }, {
-          accessor: 'd',
-          labelFormatter: 'D',
-          valueFormatter: numberFormatter,
-        }, {
-          accessor: 'e',
-          labelFormatter: 'E',
-          valueFormatter: numberFormatter,
-        }
-      ]
-    },
-  }, {
-    id: 'customTooltip',
-    type: 'tooltip',
-    config: {
-      template: function (data) {
-        return '<div class="tooltip-content">Custom tooltip</div>'
-      }
     }
-  }, {
-    id: 'complexChart-controlPanel',
-    type: 'controlPanel',
-    config: {
-      enabled: true,
-    },
-  }, {
-    id: 'messageView',
-    type: 'message',
-    config: {
-      enabled: true,
-    }
-  }, {
-    type: 'crosshair',
-    config: {
-      tooltip: 'defaultTooltip',
-    }
-  }, {
-    type: 'colorPicker',
-    config: {
-      sourceComponent: 'complexChartCompositeY',
-    }
-  }, {
-    type: 'filter',
-    config: {
-      el: '#complexChart-filter',
-      sourceComponent: 'compositeY',
-    },
   }]
 })
 complexChartView.setData(complexData)
-complexChartView.renderMessage({
-  componentId: 'XYChartView',
-  action: 'once',
-  messages: [{
-    level: 'info',
-    title: 'Message 1',
-    message: 'This is an example message. It will disapear after 5 seconds.'
-  }, {
-    level: 'info',
-    title: 'Message 2',
-    message: 'This is another example message.'
-  }]
-})
+complexChartView.render()
