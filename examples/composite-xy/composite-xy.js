@@ -287,6 +287,7 @@ complexChartView.setConfig({
             width: '350px'
           }
         }, {
+          // This action button is to demonstrate the message component. May not reflect the correct use-case.
           name: 'sendMessage',
           title: 'Send Message',
           iconClass: 'fa fa-edit',

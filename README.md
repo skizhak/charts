@@ -141,6 +141,9 @@ series are different, let's put them on different axis.
 
 Using the same XYChartView we can render line, bar and zoom charts. Head over to examples for more!
 
+Refer [Documentation](https://github.com/Juniper/contrail-charts/wiki) for different types of charts, components and 
+their config options. 
+
 # Tests
 
 To run UT,
