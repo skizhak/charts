@@ -19,14 +19,25 @@ var MessageView = ContrailChartsView.extend({
   },
 
   show: function (data) {
-    let msgObj = _.extend({}, data)
-    msgObj.componentId = msgObj.componentId || 'default'
-    msgObj.action = msgObj.action || 'update' // 'new', 'once', 'update'. future: 'dismiss', 'block'
+    let msgObj = _.assignIn({
+      componentId: 'default',
+      action: 'update',  // 'new', 'once', 'update'. future: 'dismiss', 'block'
+      messages: []
+    }, data)
+    let template = this.config.get('template') || _template
+
     if (msgObj.action === 'update') {
       // update message so remove any previous messages from this component
       this.clear(msgObj.componentId)
     }
-    this.$el.html(_template(msgObj))
+    _.forEach(msgObj.messages, (msg) => {
+      _.assignIn(msg, {
+        iconLevel: this.config.HTMLClassNames.icon[msg.level],
+        msgLevel: this.config.HTMLClassNames.message[msg.level]
+      })
+    })
+
+    this.$el.html(template(msgObj))
 
     d3.selectAll('[data-action="once"')
       .style('opacity', 1)

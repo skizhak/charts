@@ -352,6 +352,10 @@ complexChartView.renderMessage({
     title: 'Message 1',
     message: 'This is an example message. It will disapear after 5 seconds.'
   }, {
+    level: 'error',
+    title: 'A Fatal Error',
+    message: 'This is an error.'
+  }, {
     level: 'info',
     title: 'Message 2',
     message: 'This is another example message.'
