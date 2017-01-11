@@ -44,42 +44,47 @@ And we need to plot a line chart for memory 'mem' data over time 'ts'
 
 ```javascript
     // Initialize a XYChartView
-    var xyChartView = new coCharts.charts.XYChartView()
+    var cpuMemChartView = new coCharts.charts.XYChartView()
 
     // Let's set the chart config.
-    xyChartView.setConfig({
-        xyChart: {
-          el: '#cpumemChart', //Element Id
-          plot: {
-            x: {
-              accessor: 'ts' // Field name to use on x
-            },
-            y: [
-              {
-                accessor: 'mem', // Field name to use on y
-                chart: 'line' // Type of the chart
+    cpuMemChartView.setConfig({
+        container: '#cpumemChart', // Chart container.
+        components: [ // Array of child components.
+          {
+            type: 'compositeY', // Component type. Let's use composite-y component to render line chart.
+            config: {
+              plot: {
+                x: {
+                  accessor: 'ts' // Field name to use on x
+                  label: 'Time' // Label to be displayed
+                },
+                y: [
+                  {
+                    accessor: 'mem', // Field name to us  e on y
+                    chart: 'line' // Type of the chart
+                  }
+                ]
               }
-            ]
+            }
           }
-        }
+        ]
     })
 
     // Set the time series data to chart view.
-    simpleChartView.setData(tsData)
+    cpuMemChartView.setData(tsData)
 
     // Render it.
-    simpleChartView.render()
+    cpuMemChartView.render()
 ```
 
-TODO: provide jsfiddle.
+![create](examples/basic/img/sample1.png)
 
 Nice, but the axis is missing. Let's add it. Update the config with axis
 
 ```javascript
     axis: {
         y1: {
-            label: 'Memory',
-            position: 'left'
+           position: 'left'
         }
     }
 ```
@@ -89,46 +94,50 @@ and use them inside your plot.y config
     y: [
       {
         accessor: 'mem', // Field name to use on y
+        label: 'Memory',
         chart: 'line' // Type of the chart
         axis: y1 // Axis to plot this field on
       }
     ]
     ...
 ```
-TODO: provide jsfiddle
 
-Let's make it more interesting. Add cpu data also in the same chart, but let's use bar
+Let's make it more interesting. Add cpu data also in the same chart, but let's use bar chart for cpu data and since two 
+series are different, let's put them on different axis.
+
 ```javascript
     ....
     // Add new axis.
     axis: {
             y1: {
-                label: 'Memory',
                 position: 'left'
             },
             y2: {
-                label: 'CPU',
                 position: 'right'
             }
         }
 
     ...
-    // Update the accessors.
+    // Update the Y accessors.
     y: [
       {
         accessor: 'mem', // Field name to use on y
-        chart: 'line' // Type of the chart
+        chart: 'line', // Type of the chart
+        label: 'Memory', // Label to be displayed on the axis
         axis: y1 // Axis to plot this field on
       },
       {
           accessor: 'cpu', // Field name to use on y
-          chart: 'stackedBar' // Type of the chart
+          chart: 'bar', // Type of the chart
+          label: 'CPU', // Label to be displayed on the axis
           axis: y2 // Axis to plot this field on
         }
 
     ]
     ...
 ```
+
+![create](examples/basic/img/sample2.png)
 
 Using the same XYChartView we can render line, bar and zoom charts. Head over to examples for more!
 
