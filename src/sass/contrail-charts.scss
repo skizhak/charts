@@ -1,3 +1,9 @@
+@import "colors";
+
+* {
+	box-sizing: border-box;
+}
+
 button {
 	text-align: center;
 	white-space: nowrap;
@@ -198,18 +204,36 @@ button:focus {
 
 .coCharts-message-view {
 	.message-row {
-		.message-title {
-			display: inline-block;
-			width: 30%;
-			padding: 5px;
-			font-size: 12px;
-			font-weight: bold;
+		overflow: hidden;
+		font-size: 0.75rem;
+
+		&.coCharts-msg-info {
+			background-color: $infoBlue;
 		}
-		.message-body {
-			display: inline-block;
-			width: 70%;
-			padding: 5px;
-			font-size: 12px;
+
+		&.coCharts-msg-error {
+			background-color: $errorRed;
+		}
+
+		& .message-heading,
+		& .message-body {
+			width: 100%;
+			padding: 0 5px;
+			margin: 5px 0;
+		}
+
+		.message-heading {
+			display: flex;
+			position: relative;
+
+			.fa {
+				margin-right: 2px;
+			}
+
+			.message-title {
+				flex-grow: 1;
+				font-weight: bold;
+			}
 		}
 	}
 }
