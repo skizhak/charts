@@ -25,17 +25,13 @@ class Self extends ContrailChartsView.extend({
     // TODO control panel will operate not with all actions
     // this may be configured per this component
     const _actions = this._actionman.getAll()
-    this.$el.html(_template())
+    this.render(_template())
 
     // add menu items for already registered actions
     _.each(_actions, (action) => {
       this.addMenuItem(action)
     })
     this._actionman.on('add', this.addMenuItem.bind(this))
-  }
-
-  render () {
-    this.$el.addClass(this.className)
   }
 
   addMenuItem (action) {

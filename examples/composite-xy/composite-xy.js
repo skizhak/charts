@@ -25,6 +25,7 @@ for (var i = 0; i < 100; i++) {
 }
 var complexChartView = new coCharts.charts.XYChartView()
 complexChartView.setConfig({
+  container: '#complexChart',
   components: [{
     type: 'legend',
     config: {
@@ -278,8 +279,7 @@ complexChartView.setConfig({
   }, {
     type: 'filter',
     config: {
-      el: '#complexChart-filter',
-      sourceComponent: 'compositeY',
+      sourceComponent: 'complexChartCompositeY',
     },
   }]
 })

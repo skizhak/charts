@@ -24,7 +24,7 @@ var XYChartView = ContrailChartsView.extend({
     self._dataProvider = new handlers.DataProvider({ parentDataModel: self._dataModel })
     self._components = []
     options = options || {}
-    self.eventObject = options.eventObject || _.extend({}, Events)
+    self._eventObject = options.eventObject || _.extend({}, Events)
 
     self._actionman = new Actionman()
 
@@ -167,7 +167,6 @@ var XYChartView = ContrailChartsView.extend({
       model: model,
       eventObject: self._eventObject,
       container: self.$el,
-      eventObject: self.eventObject,
       // actionman is passed as parameter to each component for it to be able to register action
       actionman: self._actionman,
     })

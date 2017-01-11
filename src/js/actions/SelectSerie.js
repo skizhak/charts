@@ -1,4 +1,3 @@
-const _ = require('lodash')
 const Action = require('../plugins/Action')
 
 class Self extends Action {
@@ -11,14 +10,14 @@ class Self extends Action {
 
   _execute (plot) {
     var chart = this.registrar
-      if (chart._isEnabledComponent('filter')) {
-        var filter = chart.getComponentByType('filter')
-        filter.config.set('plot', plot)
-      }
-      if (chart._isEnabledComponent('compositeY')) {
-        var compositeY = chart.getComponentByType('compositeY')
-        compositeY.config.set('plot', plot)
-      }
+    if (chart._isEnabledComponent('filter')) {
+      var filter = chart.getComponentByType('filter')
+      filter.config.set('plot', plot)
+    }
+    if (chart._isEnabledComponent('compositeY')) {
+      var compositeY = chart.getComponentByType('compositeY')
+      compositeY.config.set('plot', plot)
+    }
   }
 }
 

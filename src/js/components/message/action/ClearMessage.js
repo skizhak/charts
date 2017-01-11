@@ -1,4 +1,3 @@
-const _ = require('lodash')
 const Action = require('../../../plugins/Action')
 
 class Self extends Action {
@@ -11,7 +10,7 @@ class Self extends Action {
   }
 
   _execute (p) {
-    this.registrar.clearMessage(p)
+    this.registrar.clear(p)
   }
 }
 
