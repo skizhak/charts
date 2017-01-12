@@ -10,7 +10,7 @@ const CrosshairConfigModel = ContrailChartsConfigModel.extend({
   defaults: {
     duration: 100,
     bubbleR: 5,
-    isSharedContainer: true
+    isSvg: true
   },
 })
 

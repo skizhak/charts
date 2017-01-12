@@ -62,7 +62,7 @@ module.exports = {
     ConfigModel: CompositeYChartConfigModel,
     View: CompositeYChartView
   },
-  radialChart: {
+  pieChart: {
     ConfigModel: PieChartConfigModel,
     View: PieChartView
   }

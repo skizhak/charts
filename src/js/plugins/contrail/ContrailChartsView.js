@@ -8,82 +8,81 @@ const ContrailView = require('contrail-view')
 /**
  * View base class.
  */
-module.exports = ContrailView.extend({
-  defaults: {
-    _type: 'ContrailChartsView',
-  },
+class Self extends ContrailView {
+  get defaults () {
+    return {
+      _type: 'ContrailChartsView',
+    }
+  }
 
-  initialize: function (options) {
+  constructor (options) {
+    super(options)
     this.id = options.id
     this.config = options.config
     this._order = options.order
     this._container = options.container
     this._eventObject = options.eventObject || _.extend({}, Events)
-  },
+  }
+
+  get d3Container () {
+    if (this.config.get('isSvg')) {
+      return d3.select(this._container[0]).select('svg')
+    } else {
+      return d3.select(this._container[0])
+    }
+  }
   /**
    * Save the config '_computed' parameters in the view's 'params' local object for easier reference (this.params instead of this.config._computed).
    * The view may modify the params object with calculated values.
    */
-  resetParams: function () {
+  resetParams () {
     this.params = this.config.initializedComputedParameters()
-  },
+  }
 
-  resetParamsForChild: function (childIndex) {
+  resetParamsForChild (childIndex) {
     this.params = this.config.initializedComputedParametersForChild(childIndex)
-  },
+  }
   /**
   * This is how the view gets its data.
   */
-  getData: function () {
+  getData () {
     return this.model.getData()
-  },
-  initContainer: function () {
-    let container = this.containerSelection()
-    if (container.empty()) { // This will be the shared container case.
-      container = d3.select(this._container[0])
-        .append('div')
-        .classed('coCharts-shared-container', true)
-        .attr('data-order', this._order)
-    }
-    return container
-  },
+  }
   /**
    * First component which uses shared svg container appends svg element to container
    */
-  initSVG: function (sort) {
-    let svg = this.svgSelection()
-    let container = this.initContainer()
-    if (svg.empty()) {
-      svg = container.append('svg')
-        .classed('coCharts-svg', true)
-    }
-    if (sort && !_.isNil(this._order)) {
-      svg.node().parentNode.dataset['order'] = this._order
+  _initSvg () {
+    if (this.d3Container.empty()) {
       d3.select(this._container[0])
-        .selectAll('div > [data-order]')
-        .datum(function () { return this.dataset.order })
-        .sort()
-        .datum(null)
+        .append('svg')
+        .classed('coCharts-shared-svg', true)
+        // TODO should be set in the chart class
+        .attr('width', this.config.get('chartWidth'))
+        .attr('height', this.config.get('chartHeight'))
     }
     // Each component adds its class to shared svg to indicate initialized state
-    svg.classed(this.className, true)
-    return svg
-  },
-  containerSelection: function () {
-    if (this.config.get('isSharedContainer')) {
-      return d3.select(this._container[0]).select('.coCharts-shared-container')
-    } else {
-      return d3.select(this._container[0])
-    }
-  },
+    return this.d3Container
+  }
   /**
-  * @return Object d3 Selection of svg element shared between components in this container
-  */
-  svgSelection: function () {
-    return this.containerSelection().select('svg')
-  },
+   * Appends components element to container in the order specified in this._order
+   *
+   * Components which renders vector graphics should call super.render() firsthand
+   * in order to initialize shared svg container if missing and append this.el to it
+   * Thus this.element will be ready to animate other entering elements
+   *
+   * Components rendering html should call super.render() at the end to increase performance by less browser redraw
+   * @param {String} content to insert into element's html
+   */
+  render (content) {
+    if (this.config.get('isSvg')) {
+      const el = this._initSvg()
+      // TODO may need to use this.tagName here
+        .append('g')
+        .classed(this.className, true)
+      this.d3SetElement(el)
+      return
+    }
 
-  render: function (content) {
     if (content) this.$el.html(content)
 
     // append element to container first time
@@ -104,5 +103,7 @@ module.exports = ContrailView.extend({
         if (_.last(elements) === el) this.$el.insertAfter(el)
       })
     }
-  },
-})
+  }
+}
+
+module.exports = Self

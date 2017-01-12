@@ -22,7 +22,7 @@ var chartConfig = {
   container: '.chart',
   components: [{
     id: 'pieChart',
-    type: 'radialChart',
+    type: 'pieChart',
     config: {
       type: 'donut',
       chartWidth: 480,

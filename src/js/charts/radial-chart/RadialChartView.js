@@ -8,12 +8,12 @@ const ContrailView = require('contrail-view') // Todo use contrail-charts-view i
 const components = require('components/index')
 const handlers = require('handlers/index')
 /**
-* Chart with a common X axis and many possible child components rendering data on the Y axis (for example: line, bar, stackedBar).
-* Many different Y axis may be configured.
+* Group of charts rendered in polar coordinates system
+* TODO merge with ChartView as long as XYChart too
 */
-class Self extends ContrailView.extend({
-  type: 'RadialChartView',
-}) {
+class Self extends ContrailView {
+  get type () { return 'RadialChartView' }
+
   constructor (options) {
     super()
     this.hasExternalBindingHandler = false
@@ -85,8 +85,8 @@ class Self extends ContrailView.extend({
         component.config.setParent(sourceComponent.config)
       }
     })
-    if (this._isEnabledComponent('radialChart')) {
-      this.getComponentByType('radialChart').changeModel(this._dataProvider)
+    if (this._isEnabledComponent('pieChart')) {
+      this.getComponentByType('pieChart').changeModel(this._dataProvider)
     }
   }
 
