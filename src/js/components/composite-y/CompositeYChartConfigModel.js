@@ -7,26 +7,29 @@ var ContrailChartsConfigModel = require('contrail-charts-config-model')
 
 var CompositeYChartConfigModel = ContrailChartsConfigModel.extend({
   defaults: {
-    // / The chart width. If not provided will be caculated by View.
+    // by default will use common shared container under the parent
+    isSharedContainer: true,
+
+    // The chart width. If not provided will be calculated by View.
     chartWidth: undefined,
 
-    // / The difference by how much we want to modify the computed width.
+    // The difference by how much we want to modify the computed width.
     chartWidthDelta: undefined,
 
-    // / The chart height. If not provided will be caculated by View.
+    // The chart height. If not provided will be calculated by View.
     chartHeight: undefined,
 
     colorScale: d3.scaleOrdinal(d3.schemeCategory20),
-    // / Duration of chart transitions.
+    // Duration of chart transitions.
     duration: 300,
 
     xTicks: 10,
     yTicks: 10,
 
-    // / General margin used for computing the side margins.
+    // General margin used for computing the side margins.
     margin: 30,
 
-    // / Side margins. Will be computed if undefined.
+    // Side margins. Will be computed if undefined.
     marginTop: undefined,
     marginBottom: undefined,
     marginLeft: undefined,

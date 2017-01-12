@@ -37,21 +37,30 @@ module.exports = ContrailView.extend({
   getData: function () {
     return this.model.getData()
   },
+  initContainer: function () {
+    let container = this.containerSelection()
+    if (container.empty()) { // This will be the shared container case.
+      container = d3.select(this._container[0])
+        .append('div')
+        .classed('coCharts-shared-container', true)
+        .attr('data-order', this._order)
+    }
+    return container
+  },
   /**
    * First component which uses shared svg container appends svg element to container
    */
   initSVG: function (sort) {
     let svg = this.svgSelection()
+    let container = this.initContainer()
     if (svg.empty()) {
-      svg = d3.select(this._container[0])
-        .append('svg')
+      svg = container.append('svg')
         .classed('coCharts-svg', true)
-        .attr('data-order', this._order)
     }
     if (sort && !_.isNil(this._order)) {
-      svg.attr('data-order', this._order)
+      svg.node().parentNode.dataset['order'] = this._order
       d3.select(this._container[0])
-        .selectAll(':scope > [data-order]')
+        .selectAll('div > [data-order]')
         .datum(function () { return this.dataset.order })
         .sort()
         .datum(null)
@@ -60,11 +69,18 @@ module.exports = ContrailView.extend({
     svg.classed(this.className, true)
     return svg
   },
+  containerSelection: function () {
+    if (this.config.get('isSharedContainer')) {
+      return d3.select(this._container[0]).select('.coCharts-shared-container')
+    } else {
+      return d3.select(this._container[0])
+    }
+  },
   /**
   * @return Object d3 Selection of svg element shared between components in this container
   */
   svgSelection: function () {
-    return d3.select(this._container[0]).select(':scope > svg')
+    return this.containerSelection().select('svg')
   },
 
   render: function (content) {
