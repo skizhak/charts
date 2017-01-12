@@ -32,14 +32,15 @@ var MessageView = ContrailChartsView.extend({
     }
     _.forEach(msgObj.messages, (msg) => {
       _.assignIn(msg, {
-        iconLevel: this.config.HTMLClassNames.icon[msg.level],
-        msgLevel: this.config.HTMLClassNames.message[msg.level]
+        level: msg.level || 'default',
+        iconLevel: this.config.HTMLClassNames.icon[msg.level || 'default'],
+        msgLevel: this.config.HTMLClassNames.message[msg.level || 'default']
       })
     })
 
     this.$el.html(template(msgObj))
 
-    d3.selectAll('[data-action="once"')
+    d3.selectAll('[data-action="once"]')
       .style('opacity', 1)
       .transition()
       .duration(5000)
