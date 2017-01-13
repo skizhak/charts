@@ -15,7 +15,7 @@ class Self extends ContrailView {
     }
   }
 
-  constructor (options) {
+  constructor (options = {}) {
     super(options)
     this.id = options.id
     this.config = options.config
@@ -55,10 +55,11 @@ class Self extends ContrailView {
     if (this.d3Container.empty()) {
       d3.select(this._container[0])
         .append('svg')
-        .classed('coCharts-shared-svg', true)
+        .classed('coCharts-svg', true)
+        .classed('shared-svg', true)
         // TODO should be set in the chart class
-        .attr('width', this.config.get('chartWidth'))
-        .attr('height', this.config.get('chartHeight'))
+        .attr('width', this.params.chartWidth)
+        .attr('height', this.params.chartHeight)
     }
     // Each component adds its class to shared svg to indicate initialized state
     return this.d3Container
@@ -75,11 +76,14 @@ class Self extends ContrailView {
    */
   render (content) {
     if (this.config.get('isSvg')) {
-      const el = this._initSvg()
+      this._initSvg()
+      this.d3Container.selectAll(`.${this.className}`).data([{}]).enter()
       // TODO may need to use this.tagName here
         .append('g')
         .classed(this.className, true)
-      this.d3SetElement(el)
+        .each((d, i, els) => {
+          this.setElement(els[0])
+        })
       return
     }
 

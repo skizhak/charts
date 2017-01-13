@@ -1,10 +1,11 @@
 /*
  * Copyright (c) 2016 Juniper Networks, Inc. All rights reserved.
  */
+const _ = require('lodash')
 const shape = require('d3-shape')
 const ContrailChartsView = require('contrail-charts-view')
 
-class Self extends ContrailChartsView {
+class PieChartView extends ContrailChartsView {
   get type () { return 'pieChart' }
   get className () { return 'coCharts-pie-chart' }
 
@@ -13,6 +14,7 @@ class Self extends ContrailChartsView {
     this._highlightRadius = 10
     this.listenTo(this.model, 'change', this._onDataModelChange)
     this.listenTo(this.config, 'change', this._onConfigModelChange)
+    window.addEventListener('resize', _.throttle(() => { this.render() }, 100))
   }
 
   changeModel (model) {
@@ -21,10 +23,23 @@ class Self extends ContrailChartsView {
     this.listenTo(this.model, 'change', this._onDataModelChange)
   }
 
+  _calculateDimensions () {
+    if (!this.params.chartWidth) {
+      this.params.chartWidth = this._container.width()
+    }
+    if (this.params.chartWidthDelta) {
+      this.params.chartWidth += this.params.chartWidthDelta
+    }
+    if (!this.params.chartHeight) {
+      this.params.chartHeight = Math.round(this.params.chartWidth / 2)
+    }
+    // TODO: use the 'axis' param to compute additional margins for the axis
+  }
+
   render () {
+    this.resetParams()
+    this._calculateDimensions()
     super.render()
-    const width = this.config.get('chartWidth')
-    const height = this.config.get('chartHeight')
     const serieConfig = this.config.get('serie')
     const radius = this.config.get('radius')
     const data = this.model.get('data')
@@ -38,7 +53,7 @@ class Self extends ContrailChartsView {
       .value((d) => serieConfig.getValue(d))(data)
 
     this.d3
-      .attr('transform', `translate(${width / 2}, ${height / 2})`)
+      .attr('transform', `translate(${this.params.chartWidth / 2}, ${this.params.chartHeight / 2})`)
 
     this.d3.selectAll('arc')
       .data(pie)
@@ -63,14 +78,12 @@ class Self extends ContrailChartsView {
   _onHover (sector) {
     // TODO consider case with missing width config in order to occupy all available space
     const serieConfig = this.config.get('serie')
-    const width = this.config.get('chartWidth')
-    const height = this.config.get('chartHeight')
     const outerRadius = this.config.get('radius')
     const innerRadius = this.config.getInnerRadius()
     const chartOffset = this.d3Container.node().getBoundingClientRect()
     const tooltipOffset = {
-      left: chartOffset.left + width / 2 - innerRadius * 0.707,
-      top: chartOffset.top + height / 2 - innerRadius * 0.707,
+      left: chartOffset.left + this.params.chartWidth / 2 - innerRadius * 0.707,
+      top: chartOffset.top + this.params.chartHeight / 2 - innerRadius * 0.707,
       width: innerRadius * 0.707 * 2,
       height: innerRadius * 0.707 * 2,
     }
@@ -93,4 +106,4 @@ class Self extends ContrailChartsView {
   }
 }
 
-module.exports = Self
+module.exports = PieChartView
