@@ -6,7 +6,7 @@ const _ = require('lodash')
 const ContrailChartsView = require('contrail-charts-view')
 const _template = require('./tooltip.html')
 
-class Self extends ContrailChartsView {
+class TooltipView extends ContrailChartsView {
   get type () { return 'tooltip' }
   get tagName () { return 'div' }
   get className () { return 'coCharts-tooltip-view' }
@@ -67,4 +67,4 @@ class Self extends ContrailChartsView {
   }
 }
 
-module.exports = Self
+module.exports = TooltipView

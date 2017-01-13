@@ -1,61 +1,66 @@
 /*
  * Copyright (c) 2016 Juniper Networks, Inc. All rights reserved.
 */
-var _ = require('lodash')
-var d3 = require('d3')
-var ContrailChartsConfigModel = require('contrail-charts-config-model')
+const _ = require('lodash')
+const d3 = require('d3')
+const ContrailChartsConfigModel = require('contrail-charts-config-model')
 
-var CompositeYChartConfigModel = ContrailChartsConfigModel.extend({
-  defaults: {
-    // by default will use common shared container under the parent
-    isSharedContainer: true,
+class CompositeYChartConfigModel extends ContrailChartsConfigModel {
+  get defaults () {
+    return {
+      // renders content as vector graphics
+      isSvg: true,
 
-    // The chart width. If not provided will be calculated by View.
-    chartWidth: undefined,
+      // by default will use common shared container under the parent
+      isSharedContainer: true,
 
-    // The difference by how much we want to modify the computed width.
-    chartWidthDelta: undefined,
+      // The chart width. If not provided will be calculated by View.
+      chartWidth: undefined,
 
-    // The chart height. If not provided will be calculated by View.
-    chartHeight: undefined,
+      // The difference by how much we want to modify the computed width.
+      chartWidthDelta: undefined,
 
-    colorScale: d3.scaleOrdinal(d3.schemeCategory20),
-    // Duration of chart transitions.
-    duration: 300,
+      // The chart height. If not provided will be calculated by View.
+      chartHeight: undefined,
 
-    xTicks: 10,
-    yTicks: 10,
+      colorScale: d3.scaleOrdinal(d3.schemeCategory20),
+      // Duration of chart transitions.
+      duration: 300,
 
-    // General margin used for computing the side margins.
-    margin: 30,
+      xTicks: 10,
+      yTicks: 10,
 
-    // Side margins. Will be computed if undefined.
-    marginTop: undefined,
-    marginBottom: undefined,
-    marginLeft: undefined,
-    marginRight: undefined,
-    marginInner: undefined,
+      // General margin used for computing the side margins.
+      margin: 30,
 
-    curve: d3.curveCatmullRom.alpha(0.5)
-  },
+      // Side margins. Will be computed if undefined.
+      marginTop: 30,
+      marginBottom: 30,
+      marginLeft: 30,
+      marginRight: 30,
+      marginInner: 0,
 
-  getColor: function (accessor) {
+      curve: d3.curveCatmullRom.alpha(0.5)
+    }
+  }
+
+  getColor (accessor) {
     if (_.has(accessor, 'color')) {
       return accessor.color
     } else {
       return this.attributes.colorScale(accessor.accessor)
     }
-  },
+  }
 
-  getAccessors: function () {
+  getAccessors () {
     return this.get('plot').y
-  },
+  }
   /**
    * Enable / disable event triggering with data preperation for specified component
    * @param {String} type Component type
    * @param {Boolean} enable Change state of this component
    */
-  toggleComponent: function (type, enable) {
+  toggleComponent (type, enable) {
     switch (type) {
       case 'tooltip':
         if (!this.attributes.crosshairEnabled) this.set('tooltipEnabled', enable)
@@ -67,7 +72,7 @@ var CompositeYChartConfigModel = ContrailChartsConfigModel.extend({
       default:
         break
     }
-  },
-})
+  }
+}
 
 module.exports = CompositeYChartConfigModel

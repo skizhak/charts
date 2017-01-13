@@ -8,7 +8,7 @@ const ContrailView = require('contrail-view')
 /**
  * View base class.
  */
-class Self extends ContrailView {
+class ContrailChartsView extends ContrailView {
   get defaults () {
     return {
       _type: 'ContrailChartsView',
@@ -110,4 +110,4 @@ class Self extends ContrailView {
   }
 }
 
-module.exports = Self
+module.exports = ContrailChartsView

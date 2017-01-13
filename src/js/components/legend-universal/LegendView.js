@@ -5,7 +5,7 @@ const $ = require('jquery')
 const ContrailChartsView = require('contrail-charts-view')
 const _template = require('./legend.html')
 
-class Self extends ContrailChartsView {
+class LegendView extends ContrailChartsView {
   get type () { return 'legendUniversal' }
   get className () { return 'coCharts-legend-view' }
 
@@ -23,4 +23,4 @@ class Self extends ContrailChartsView {
   }
 }
 
-module.exports = Self
+module.exports = LegendView

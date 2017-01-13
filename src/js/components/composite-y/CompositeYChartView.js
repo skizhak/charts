@@ -2,97 +2,96 @@
  * Copyright (c) 2016 Juniper Networks, Inc. All rights reserved.
  */
 
-var $ = require('jquery')
-var _ = require('lodash')
-var d3 = require('d3')
-var ContrailChartsView = require('contrail-charts-view')
-var LineChartView = require('components/composite-y/LineChartView')
-var AreaChartView = require('components/composite-y/AreaChartView')
-var BarChartView = require('components/composite-y/GroupedBarChartView')
-var StackedBarChartView = require('components/composite-y/StackedBarChartView')
-var ScatterBubbleChartView = require('components/composite-y/ScatterBubbleChartView')
+const $ = require('jquery')
+const _ = require('lodash')
+const d3 = require('d3')
+const ContrailChartsView = require('contrail-charts-view')
+const LineChartView = require('components/composite-y/LineChartView')
+const AreaChartView = require('components/composite-y/AreaChartView')
+const BarChartView = require('components/composite-y/GroupedBarChartView')
+const StackedBarChartView = require('components/composite-y/StackedBarChartView')
+const ScatterBubbleChartView = require('components/composite-y/ScatterBubbleChartView')
 
-var CompositeYChartView = ContrailChartsView.extend({
-  type: 'compositeY',
-  className: 'coCharts-xy-chart',
+class CompositeYChartView extends ContrailChartsView {
+  get type () { return 'compositeY' }
+  get className () { return 'coCharts-xy-chart' }
+  get possibleChildViews () {
+    return {
+      line: LineChartView,
+      area: AreaChartView,
+      bar: BarChartView,
+      stackedBar: StackedBarChartView,
+      scatterBubble: ScatterBubbleChartView
+    }
+  }
 
-  initialize: function (options) {
-    var self = this
-    ContrailChartsView.prototype.initialize.call(self, options)
+  constructor (options) {
+    super(options)
+    ContrailChartsView.prototype.initialize.call(this, options)
     // TODO: Every model change will trigger a redraw. This might not be desired - dedicated redraw event?
     // / View params hold values from the config and computed values.
-    self._debouncedRenderFunction = _.bind(_.debounce(self._render, 10), self)
-    self.name = options.name || 'compositeY'
-    self._onWindowResize()
+    this._debouncedRenderFunction = _.bind(_.debounce(this._render, 10), this)
+    this.name = options.name || 'compositeY'
+    this._onWindowResize()
 
-    self.listenTo(self.model, 'change', self._onDataModelChange)
-    self.listenTo(self.config, 'change', self._onConfigModelChange)
-    self.listenTo(self._eventObject, 'selectColor', self.selectColor)
-    self.listenTo(self._eventObject, 'refresh', self.refresh)
-  },
+    this.listenTo(this.model, 'change', this._onDataModelChange)
+    this.listenTo(this.config, 'change', this._onConfigModelChange)
+    this.listenTo(this._eventObject, 'selectColor', this.selectColor)
+    this.listenTo(this._eventObject, 'refresh', this.refresh)
+  }
 
   // Action handler
-  selectColor: function (accessorName, color) {
+  selectColor (accessorName, color) {
     const configAccessor = _.find(this.config.get('plot').y, (a) => a.accessor === accessorName)
     if (configAccessor) {
       configAccessor.color = color
       this.config.trigger('change', this.config)
     }
-  },
+  }
 
-  refresh: function () {
+  refresh () {
     this.config.trigger('change', this.config)
-  },
+  }
 
-  changeModel: function (model) {
-    var self = this
-    self.stopListening(self.model)
-    self.model = model
-    self.listenTo(self.model, 'change', self._onDataModelChange)
-    _.each(self._drawings, function (drawing) {
+  changeModel (model) {
+    this.stopListening(this.model)
+    this.model = model
+    this.listenTo(this.model, 'change', this._onDataModelChange)
+    _.each(this._drawings, (drawing) => {
       drawing.model = model
     })
-    self._onDataModelChange()
-  },
+    this._onDataModelChange()
+  }
 
-  resetParams: function () {
+  resetParams () {
     // Reset parents params
     this.params = this.config.initializedComputedParameters()
     // Reset params for all children.
     // This way every child drawing can have access to parents config and still have its own computed params stored in config.
-    _.each(this._drawings, function (drawing, i) {
+    _.each(this._drawings, (drawing, i) => {
       drawing.resetParamsForChild(i)
     })
-  },
-
-  possibleChildViews: {
-    line: LineChartView,
-    area: AreaChartView,
-    bar: BarChartView,
-    stackedBar: StackedBarChartView,
-    scatterBubble: ScatterBubbleChartView
-  },
+  }
   /**
   * Calculates the activeAccessorData that holds only the verified and enabled accessors from the 'plot' structure.
   * Params: activeAccessorData, yAxisInfoArray
   */
-  calculateActiveAccessorData: function () {
-    var self = this
-    self.params.activeAccessorData = []
-    self.params.yAxisInfoArray = []
+  calculateActiveAccessorData () {
+    this.params.activeAccessorData = []
+    this.params.yAxisInfoArray = []
     // Initialize the drawings activeAccessorData structure
-    _.each(self._drawings, function (drawing) {
+    _.each(this._drawings, (drawing) => {
       drawing.params.activeAccessorData = []
       drawing.params.enabled = false
     })
     // Fill the activeAccessorData structure.
-    _.each(self.params.plot.y, function (accessor) {
-      var drawing = self.getDrawing(accessor.axis, accessor.chart)
+    _.each(this.params.plot.y, (accessor) => {
+      const drawing = this.getDrawing(accessor.axis, accessor.chart)
       if (drawing) {
         if (accessor.enabled) {
-          self.params.activeAccessorData.push(accessor)
-          var foundAxisInfo = _.find(self.params.yAxisInfoArray, { name: accessor.axis })
-          var axisPosition = self.hasAxisParam(accessor.axis, 'position') ? self.params.axis[accessor.axis].position : 'left'
+          this.params.activeAccessorData.push(accessor)
+          let foundAxisInfo = _.find(this.params.yAxisInfoArray, { name: accessor.axis })
+          const axisPosition = this.hasAxisParam(accessor.axis, 'position') ? this.params.axis[accessor.axis].position : 'left'
           if (!foundAxisInfo) {
             foundAxisInfo = {
               name: accessor.axis,
@@ -101,7 +100,7 @@ var CompositeYChartView = ContrailChartsView.extend({
               num: 0,
               accessors: []
             }
-            self.params.yAxisInfoArray.push(foundAxisInfo)
+            this.params.yAxisInfoArray.push(foundAxisInfo)
           }
           foundAxisInfo.used++
           foundAxisInfo.accessors.push(accessor.accessor)
@@ -115,87 +114,68 @@ var CompositeYChartView = ContrailChartsView.extend({
         }
       }
     })
-  },
+  }
   /**
    * Calculates the chart dimensions and margins.
    * Use the dimensions provided in the config. If not provided use all available width of container and 3/4 of this width for height.
    * This method should be called before rendering because the available dimensions could have changed.
    * Params: chartWidth, chartHeight, margin, marginTop, marginBottom, marginLeft, marginRight, marginInner.
    */
-  calculateDimensions: function () {
-    var self = this
-    if (!self.params.chartWidth) {
-      // TODO element width may be unavailable before first render
-      // consider case for the chart to occupy all available width
-      self.params.chartWidth = self._container.width()
+  _calculateDimensions () {
+    if (!this.params.chartWidth) {
+      this.params.chartWidth = this._container.width()
     }
-    if (self.params.chartWidthDelta) {
-      self.params.chartWidth += self.params.chartWidthDelta
+    if (this.params.chartWidthDelta) {
+      this.params.chartWidth += this.params.chartWidthDelta
     }
-    if (!self.params.chartHeight) {
-      self.params.chartHeight = Math.round(self.params.chartWidth / 2)
-    }
-    if (!self.params.margin) {
-      self.params.margin = 5
-    }
-    if (!self.params.marginInner) {
-      self.params.marginInner = 0
+    if (!this.params.chartHeight) {
+      this.params.chartHeight = Math.round(this.params.chartWidth / 2)
     }
     // TODO: use the 'axis' param to compute additional margins for the axis
-    var sides = ['Top', 'Right', 'Bottom', 'Left']
-    _.each(sides, function (side) {
-      if (!self.params['margin' + side]) {
-        self.params['margin' + side] = self.params.margin
-      }
-    })
-  },
+  }
   /**
    * Use the scales provided in the config or calculate them to fit data in view.
    * Assumes to have the range values available in the DataProvider (model) and the chart dimensions available in params.
    * Params: xRange, yRange, xDomain, yDomain, xScale, yScale
    */
-  calculateScales: function () {
-    var self = this
+  calculateScales () {
     // Calculate the starting and ending positions in pixels of the chart data drawing area.
-    self.params.xRange = [self.params.marginLeft + self.params.marginInner, self.params.chartWidth - self.params.marginRight - self.params.marginInner]
-    self.params.yRange = [self.params.chartHeight - self.params.marginInner - self.params.marginBottom, self.params.marginInner + self.params.marginTop]
-    self.saveScales()
+    this.params.xRange = [this.params.marginLeft + this.params.marginInner, this.params.chartWidth - this.params.marginRight - this.params.marginInner]
+    this.params.yRange = [this.params.chartHeight - this.params.marginInner - this.params.marginBottom, this.params.marginInner + this.params.marginTop]
+    this.saveScales()
     // Now let every drawing perform it's own calculations based on the provided X and Y scales.
-    _.each(self._drawings, function (drawing) {
+    _.each(this._drawings, (drawing) => {
       if (_.isFunction(drawing.calculateScales)) {
         drawing.calculateScales()
       }
     })
-  },
+  }
 
-  calculateColorScale: function () {
-    var self = this
-    _.each(self.params.plot.y, function (accessor) {
-      accessor.color = self.config.getColor(accessor)
+  calculateColorScale () {
+    _.each(this.params.plot.y, (accessor) => {
+      accessor.color = this.config.getColor(accessor)
     })
-  },
+  }
 
-  getDrawing: function (axisName, chartType) {
-    var self = this
-    var foundDrawing = null
-    var drawingName = axisName + '-' + chartType
-    _.each(self._drawings, function (drawing) {
+  getDrawing (axisName, chartType) {
+    let foundDrawing = null
+    const drawingName = axisName + '-' + chartType
+    _.each(this._drawings, (drawing) => {
       if (drawing.getName() === drawingName) {
         foundDrawing = drawing
       }
     })
     return foundDrawing
-  },
+  }
   /**
   * Combine the axis domains (extents) from all enabled drawings.
   */
-  combineAxisDomains: function () {
-    var self = this
-    var domains = {}
-    _.each(self._drawings, function (drawing) {
+  combineAxisDomains () {
+    const domains = {}
+    _.each(this._drawings, (drawing) => {
       if (drawing.params.enabled) {
-        var drawingDomains = drawing.calculateAxisDomains()
-        _.each(drawingDomains, function (domain, axisName) {
+        const drawingDomains = drawing.calculateAxisDomains()
+        _.each(drawingDomains, (domain, axisName) => {
           if (!_.has(domains, axisName)) {
             domains[axisName] = [domain[0], domain[1]]
           } else {
@@ -208,242 +188,220 @@ var CompositeYChartView = ContrailChartsView.extend({
             }
           }
           // Override axis domain based on axis config.
-          if (self.hasAxisParam(axisName, 'domain')) {
-            if (!_.isUndefined(self.config.get('axis')[axisName].domain[0])) {
-              domains[axisName][0] = self.config.get('axis')[axisName].domain[0]
+          if (this.hasAxisParam(axisName, 'domain')) {
+            if (!_.isUndefined(this.config.get('axis')[axisName].domain[0])) {
+              domains[axisName][0] = this.config.get('axis')[axisName].domain[0]
             }
-            if (!_.isUndefined(self.config.get('axis')[axisName].domain[1])) {
-              domains[axisName][1] = self.config.get('axis')[axisName].domain[1]
+            if (!_.isUndefined(this.config.get('axis')[axisName].domain[1])) {
+              domains[axisName][1] = this.config.get('axis')[axisName].domain[1]
             }
           }
         })
       }
     })
     return domains
-  },
+  }
   /**
   * Save all scales in the params and drawing.params structures.
   */
-  saveScales: function () {
-    var self = this
-    var domains = self.combineAxisDomains()
-    if (!_.has(self.params, 'axis')) {
-      self.params.axis = {}
+  saveScales () {
+    const domains = this.combineAxisDomains()
+    if (!_.has(this.params, 'axis')) {
+      this.params.axis = {}
     }
-    _.each(domains, function (domain, axisName) {
-      if (!_.has(self.params.axis, axisName)) {
-        self.params.axis[axisName] = {}
+    _.each(domains, (domain, axisName) => {
+      if (!_.has(this.params.axis, axisName)) {
+        this.params.axis[axisName] = {}
       }
-      if (!self.hasAxisParam(axisName, 'position')) {
+      if (!this.hasAxisParam(axisName, 'position')) {
         // Default axis position.
         if (axisName.charAt(0) === 'x') {
-          self.params.axis[axisName].position = 'bottom'
+          this.params.axis[axisName].position = 'bottom'
         } else if (axisName.charAt(0) === 'y') {
-          self.params.axis[axisName].position = 'left'
+          this.params.axis[axisName].position = 'left'
         }
       }
-      if (!self.hasAxisParam(axisName, 'range')) {
-        if (['bottom', 'top'].indexOf(self.params.axis[axisName].position) >= 0) {
-          self.params.axis[axisName].range = self.params.xRange
-        } else if (['left', 'right'].indexOf(self.params.axis[axisName].position) >= 0) {
-          self.params.axis[axisName].range = self.params.yRange
+      if (!this.hasAxisParam(axisName, 'range')) {
+        if (['bottom', 'top'].indexOf(this.params.axis[axisName].position) >= 0) {
+          this.params.axis[axisName].range = this.params.xRange
+        } else if (['left', 'right'].indexOf(this.params.axis[axisName].position) >= 0) {
+          this.params.axis[axisName].range = this.params.yRange
         }
       }
-      self.params.axis[axisName].domain = domain
-      if (!_.isFunction(self.params.axis[axisName].scale) && self.params.axis[axisName].range) {
-        var baseScale = null
-        if (self.hasAxisConfig(axisName, 'scale') && _.isFunction(d3[self.config.get('axis')[axisName]])) {
-          baseScale = d3[self.params.axis[axisName].scale]()
-        } else if (['bottom', 'top'].indexOf(self.params.axis[axisName].position) >= 0) {
+      this.params.axis[axisName].domain = domain
+      if (!_.isFunction(this.params.axis[axisName].scale) && this.params.axis[axisName].range) {
+        let baseScale = null
+        if (this.hasAxisConfig(axisName, 'scale') && _.isFunction(d3[this.config.get('axis')[axisName]])) {
+          baseScale = d3[this.params.axis[axisName].scale]()
+        } else if (['bottom', 'top'].indexOf(this.params.axis[axisName].position) >= 0) {
           baseScale = d3.scaleTime()
         } else {
           baseScale = d3.scaleLinear()
         }
-        self.params.axis[axisName].scale = baseScale.domain(self.params.axis[axisName].domain).range(self.params.axis[axisName].range)
-        if (self.hasAxisParam(axisName, 'nice') && self.params.axis[axisName].nice) {
-          if (self.hasAxisParam(axisName, 'ticks')) {
-            self.params.axis[axisName].scale = self.params.axis[axisName].scale.nice(self.params.axis[axisName].ticks)
+        baseScale
+          .domain(this.params.axis[axisName].domain)
+          .range(this.params.axis[axisName].range)
+        this.params.axis[axisName].scale = baseScale
+        if (this.hasAxisParam(axisName, 'nice') && this.params.axis[axisName].nice) {
+          if (this.hasAxisParam(axisName, 'ticks')) {
+            this.params.axis[axisName].scale = this.params.axis[axisName].scale.nice(this.params.axis[axisName].ticks)
           } else {
-            self.params.axis[axisName].scale = self.params.axis[axisName].scale.nice()
+            this.params.axis[axisName].scale = this.params.axis[axisName].scale.nice()
           }
         }
       }
     })
     // Now update the scales of the appropriate drawings.
-    _.each(self._drawings, function (drawing) {
-      drawing.params.axis = self.params.axis
+    _.each(this._drawings, (drawing) => {
+      drawing.params.axis = this.params.axis
     })
-  },
+  }
   /**
-   * Renders the svg element with axis and drawing groups.
+   * Renders axis and drawing groups.
    * Resizes chart dimensions if chart already exists.
    */
-  renderSVG: function () {
-    var self = this
-    let svg = self.svgSelection()
-    var translate = self.params.xRange[0] - self.params.marginInner
-    var rectClipPathId = 'rect-clipPath-' + self.cid
-    if (svg.empty() || !svg.classed(this.className)) {
-      svg = this.initSVG(true)
-      svg.append('clipPath')
-        .attr('id', rectClipPathId)
+  renderSVG () {
+    const translate = this.params.xRange[0] - this.params.marginInner
+    this.params.rectClipPathId = 'rect-clipPath-' + this.cid
+    if (this.d3.select('clipPath').empty()) {
+      this.d3.append('clipPath')
+        .attr('id', this.params.rectClipPathId)
         .append('rect')
-        .attr('x', self.params.xRange[0] - self.params.marginInner)
-        .attr('y', self.params.yRange[1] - self.params.marginInner)
-        .attr('width', self.params.xRange[1] - self.params.xRange[0] + 2 * self.params.marginInner)
-        .attr('height', self.params.yRange[0] - self.params.yRange[1] + 2 * self.params.marginInner)
-      svg.append('g')
+        .attr('x', this.params.xRange[0] - this.params.marginInner)
+        .attr('y', this.params.yRange[1] - this.params.marginInner)
+        .attr('width', this.params.xRange[1] - this.params.xRange[0] + 2 * this.params.marginInner)
+        .attr('height', this.params.yRange[0] - this.params.yRange[1] + 2 * this.params.marginInner)
+      this.d3.append('g')
         .attr('class', 'axis x-axis')
-        .attr('transform', 'translate(0,' + (self.params.yRange[1] - self.params.marginInner) + ')')
+        .attr('transform', 'translate(0,' + (this.params.yRange[1] - this.params.marginInner) + ')')
     }
+    // TODO merge with previous as enter / update
+    // Handle (re)size.
+    this.d3
+      .select('#' + this.params.rectClipPathId).select('rect')
+      .attr('x', this.params.xRange[0] - this.params.marginInner)
+      .attr('y', this.params.yRange[1] - this.params.marginInner)
+      .attr('width', this.params.xRange[1] - this.params.xRange[0] + 2 * this.params.marginInner)
+      .attr('height', this.params.yRange[0] - this.params.yRange[1] + 2 * this.params.marginInner)
+
     // Handle Y axis
-    var svgYAxis = svg.selectAll('.axis.y-axis').data(self.params.yAxisInfoArray, function (d) {
-      return d.name
-    })
+    const svgYAxis = this.d3.selectAll('.axis.y-axis').data(this.params.yAxisInfoArray, (d) => d.name)
     svgYAxis.exit().remove()
     svgYAxis.enter()
       .append('g')
-      .attr('class', function (d) { return 'axis y-axis ' + d.name + '-axis' })
+      .attr('class', (d) => `axis y-axis ${d.name}-axis`)
       .merge(svgYAxis)
       .attr('transform', 'translate(' + translate + ',0)')
-    // Handle drawing groups
-    var svgDrawingGroups = svg.selectAll('.drawing-group').data(self._drawings, function (c) {
-      return c.getName()
-    })
-    svgDrawingGroups.enter().append('g')
-      .attr('class', function (drawing) {
-        return 'drawing-group drawing-' + drawing.getName() + ' ' + drawing.className
-      })
-      .attr('clip-path', 'url(#' + rectClipPathId + ')')
-    // Every drawing can add a one time (enter) code into it's drawing group.
-    svgDrawingGroups.enter().each(function (drawing) {
-      if (_.isFunction(drawing.renderSVG)) {
-        d3.select(this).select('.drawing-' + drawing.getName()).call(drawing.renderSVG)
-      }
-    })
-    svgDrawingGroups.exit().remove()
-    // Handle (re)size.
-    svg
-      .attr('width', self.params.chartWidth)
-      .attr('height', self.params.chartHeight)
-      .select('#' + rectClipPathId).select('rect')
-      .attr('x', self.params.xRange[0] - self.params.marginInner)
-      .attr('y', self.params.yRange[1] - self.params.marginInner)
-      .attr('width', self.params.xRange[1] - self.params.xRange[0] + 2 * self.params.marginInner)
-      .attr('height', self.params.yRange[0] - self.params.yRange[1] + 2 * self.params.marginInner)
 
     const throttledShowCrosshair = _.throttle((point) => {
       this._eventObject.trigger('showCrosshair', this.getCrosshairData(point), point, this.getCrosshairConfig())
     }, 100)
-    if (self.config.get('crosshairEnabled')) {
-      svg.on('mousemove', function () { throttledShowCrosshair(d3.mouse(this)) })
+    if (this.config.get('crosshairEnabled')) {
+      this.d3.on('mousemove', () => { throttledShowCrosshair(d3.mouse(this)) })
     }
-  },
+  }
 
-  hasAxisConfig: function (axisName, axisAttributeName) {
-    var self = this
-    var axis = self.config.get('axis')
+  hasAxisConfig (axisName, axisAttributeName) {
+    const axis = this.config.get('axis')
     return _.isObject(axis) && _.isObject(axis[axisName]) && !_.isUndefined(axis[axisName][axisAttributeName])
-  },
+  }
 
-  hasAxisParam: function (axisName, axisAttributeName) {
-    var self = this
-    return _.isObject(self.params.axis) && _.isObject(self.params.axis[axisName]) && !_.isUndefined(self.params.axis[axisName][axisAttributeName])
-  },
+  hasAxisParam (axisName, axisAttributeName) {
+    return _.isObject(this.params.axis) && _.isObject(this.params.axis[axisName]) && !_.isUndefined(this.params.axis[axisName][axisAttributeName])
+  }
   /**
    * Renders the axis.
    */
-  renderAxis: function () {
-    var self = this
-    var xAxisName = self.params.plot.x.axis
-    var xAxis = d3.axisBottom(self.params.axis[xAxisName].scale)
-      .tickSize(self.params.yRange[0] - self.params.yRange[1] + 2 * self.params.marginInner)
+  renderAxis () {
+    const xAxisName = this.params.plot.x.axis
+    let xAxis = d3.axisBottom(this.params.axis[xAxisName].scale)
+      .tickSize(this.params.yRange[0] - this.params.yRange[1] + 2 * this.params.marginInner)
       .tickPadding(10)
-    if (self.hasAxisParam('x', 'ticks')) {
-      xAxis = xAxis.ticks(self.params.axis[xAxisName].ticks)
+    if (this.hasAxisParam('x', 'ticks')) {
+      xAxis = xAxis.ticks(this.params.axis[xAxisName].ticks)
     }
-    if (self.hasAxisConfig('x', 'formatter')) {
-      xAxis = xAxis.tickFormat(self.config.get('axis').x.formatter)
+    if (this.hasAxisConfig('x', 'formatter')) {
+      xAxis = xAxis.tickFormat(this.config.get('axis').x.formatter)
     }
-    var svg = self.svgSelection().transition().ease(d3.easeLinear).duration(self.params.duration)
-    svg.select('.axis.x-axis').call(xAxis)
+    this.d3.transition().ease(d3.easeLinear).duration(this.params.duration)
+    this.d3.select('.axis.x-axis').call(xAxis)
     // X axis label
-    var xLabelData = []
-    var xLabelMargin = 5
-    if (self.hasAxisParam(xAxisName, 'labelMargin')) {
-      xLabelMargin = self.params.axis[xAxisName].labelMargin
+    const xLabelData = []
+    let xLabelMargin = 5
+    if (this.hasAxisParam(xAxisName, 'labelMargin')) {
+      xLabelMargin = this.params.axis[xAxisName].labelMargin
     }
-    var xLabel = self.params.plot.x.labelFormatter || self.params.plot.x.label
-    if (self.hasAxisParam(xAxisName, 'label')) {
-      xLabel = self.params.axis[xAxisName].label
+    let xLabel = this.params.plot.x.labelFormatter || this.params.plot.x.label
+    if (this.hasAxisParam(xAxisName, 'label')) {
+      xLabel = this.params.axis[xAxisName].label
     }
     if (xLabel) {
       xLabelData.push(xLabel)
     }
-    var xAxisLabelSvg = self.svgSelection().select('.axis.x-axis').selectAll('.axis-label').data(xLabelData)
+    const xAxisLabelSvg = this.d3.select('.axis.x-axis').selectAll('.axis-label').data(xLabelData)
     xAxisLabelSvg.enter()
       .append('text')
       .attr('class', 'axis-label')
-      .merge(xAxisLabelSvg) // .transition().ease( d3.easeLinear ).duration( self.params.duration )
-      .attr('x', self.params.xRange[0] + (self.params.xRange[1] - self.params.xRange[0]) / 2)
-      .attr('y', self.params.chartHeight - self.params.marginTop - xLabelMargin)
-      .text(function (d) { return d })
+      .merge(xAxisLabelSvg) // .transition().ease( d3.easeLinear ).duration( this.params.duration )
+      .attr('x', this.params.xRange[0] + (this.params.xRange[1] - this.params.xRange[0]) / 2)
+      .attr('y', this.params.chartHeight - this.params.marginTop - xLabelMargin)
+      .text((d) => d)
     xAxisLabelSvg.exit().remove()
     // We render the yAxis here because there may be multiple drawings for one axis.
     // The parent has aggregated information about all Y axis.
-    var referenceYScale = null
-    var yLabelX = 0
-    var yLabelTransform = 'rotate(-90)'
-    _.each(self.params.yAxisInfoArray, function (axisInfo) {
-      var yLabelMargin = 12
-      if (self.hasAxisParam(axisInfo.name, 'labelMargin')) {
-        yLabelMargin = self.params.axis[axisInfo.name].labelMargin
+    let referenceYScale = null
+    let yLabelX = 0
+    let yLabelTransform = 'rotate(-90)'
+    _.each(this.params.yAxisInfoArray, (axisInfo) => {
+      let yLabelMargin = 12
+      if (this.hasAxisParam(axisInfo.name, 'labelMargin')) {
+        yLabelMargin = this.params.axis[axisInfo.name].labelMargin
       }
-      yLabelX = 0 - self.params.marginLeft + yLabelMargin
+      yLabelX = 0 - this.params.marginLeft + yLabelMargin
       yLabelTransform = 'rotate(-90)'
       if (axisInfo.position === 'right') {
-        yLabelX = self.params.chartWidth - self.params.marginLeft - yLabelMargin
+        yLabelX = this.params.chartWidth - this.params.marginLeft - yLabelMargin
         yLabelTransform = 'rotate(90)'
-        axisInfo.yAxis = d3.axisRight(self.params.axis[axisInfo.name].scale)
-          .tickSize((self.params.xRange[1] - self.params.xRange[0] + 2 * self.params.marginInner))
+        axisInfo.yAxis = d3.axisRight(this.params.axis[axisInfo.name].scale)
+          .tickSize((this.params.xRange[1] - this.params.xRange[0] + 2 * this.params.marginInner))
           .tickPadding(5)
       } else {
-        axisInfo.yAxis = d3.axisLeft(self.params.axis[axisInfo.name].scale)
-          .tickSize(-(self.params.xRange[1] - self.params.xRange[0] + 2 * self.params.marginInner))
+        axisInfo.yAxis = d3.axisLeft(this.params.axis[axisInfo.name].scale)
+          .tickSize(-(this.params.xRange[1] - this.params.xRange[0] + 2 * this.params.marginInner))
           .tickPadding(5)
       }
-      if (self.hasAxisParam(axisInfo.name, 'ticks')) {
-        axisInfo.yAxis = axisInfo.yAxis.ticks(self.params.axis[axisInfo.name].ticks)
+      if (this.hasAxisParam(axisInfo.name, 'ticks')) {
+        axisInfo.yAxis = axisInfo.yAxis.ticks(this.params.axis[axisInfo.name].ticks)
       }
       if (!referenceYScale) {
-        referenceYScale = self.params.axis[axisInfo.name].scale
+        referenceYScale = this.params.axis[axisInfo.name].scale
       } else {
         // This is not the first Y axis so adjust the tick values to the first axis tick values.
-        var ticks = referenceYScale.ticks(self.params.yTicks)
-        if (self.hasAxisParam(axisInfo.name, 'ticks')) {
-          ticks = referenceYScale.ticks(self.params.axis[axisInfo.name].ticks)
+        let ticks = referenceYScale.ticks(this.params.yTicks)
+        if (this.hasAxisParam(axisInfo.name, 'ticks')) {
+          ticks = referenceYScale.ticks(this.params.axis[axisInfo.name].ticks)
         }
-        var referenceTickValues = _.map(ticks, function (tickValue) {
+        const referenceTickValues = _.map(ticks, (tickValue) => {
           return axisInfo.yAxis.scale().invert(referenceYScale(tickValue))
         })
         axisInfo.yAxis = axisInfo.yAxis.tickValues(referenceTickValues)
       }
-      if (self.hasAxisConfig(axisInfo.name, 'formatter')) {
-        axisInfo.yAxis = axisInfo.yAxis.tickFormat(self.config.get('axis')[axisInfo.name].formatter)
+      if (this.hasAxisConfig(axisInfo.name, 'formatter')) {
+        axisInfo.yAxis = axisInfo.yAxis.tickFormat(this.config.get('axis')[axisInfo.name].formatter)
       }
-      svg.select('.axis.y-axis.' + axisInfo.name + '-axis').call(axisInfo.yAxis)
+      this.d3.select('.axis.y-axis.' + axisInfo.name + '-axis').call(axisInfo.yAxis)
       // Y axis label
-      var yLabelData = []
-      var i = 0
+      const yLabelData = []
+      let i = 0
       // There will be one label per unique accessor label displayed on this axis.
-      _.each(axisInfo.accessors, function (key) {
-        var foundActiveAccessorData = _.find(self.params.activeAccessorData, { accessor: key })
+      _.each(axisInfo.accessors, (key) => {
+        const foundActiveAccessorData = _.find(this.params.activeAccessorData, { accessor: key })
         if (!foundActiveAccessorData) return
-        var label = foundActiveAccessorData.labelFormatter || foundActiveAccessorData.label
+        const label = foundActiveAccessorData.labelFormatter || foundActiveAccessorData.label
         if (!label) return
-        var foundYLabelData = _.find(yLabelData, { label: label })
+        const foundYLabelData = _.find(yLabelData, { label: label })
         if (!foundYLabelData) {
-          var yLabelXDelta = 12 * i
+          let yLabelXDelta = 12 * i
           if (axisInfo.position === 'right') {
             yLabelXDelta = -yLabelXDelta
           }
@@ -451,34 +409,33 @@ var CompositeYChartView = ContrailChartsView.extend({
           i++
         }
       })
-      var yAxisLabelSvg = self.svgSelection().select('.axis.y-axis.' + axisInfo.name + '-axis').selectAll('.axis-label').data(yLabelData, function (d) { return d.label })
+      const yAxisLabelSvg = this.d3.select(`.axis.y-axis.${axisInfo.name}-axis`)
+        .selectAll('.axis-label')
+        .data(yLabelData, (d) => d.label)
       yAxisLabelSvg.enter()
         .append('text')
         .attr('class', 'axis-label')
-        .merge(yAxisLabelSvg) // .transition().ease( d3.easeLinear ).duration( self.params.duration )
+        .merge(yAxisLabelSvg) // .transition().ease( d3.easeLinear ).duration( this.params.duration )
         // .attr( "x", yLabelX )
-        // .attr( "y", self.params.yRange[1] + (self.params.yRange[0] - self.params.yRange[1]) / 2 )
-        .attr('transform', function (d) { return 'translate(' + d.x + ',' + (self.params.yRange[1] + (self.params.yRange[0] - self.params.yRange[1]) / 2) + ') ' + yLabelTransform })
-        .text(function (d) { return d.label })
+        // .attr( "y", this.params.yRange[1] + (this.params.yRange[0] - this.params.yRange[1]) / 2 )
+        .attr('transform', (d) => 'translate(' + d.x + ',' + (this.params.yRange[1] + (this.params.yRange[0] - this.params.yRange[1]) / 2) + ') ' + yLabelTransform)
+        .text((d) => d.label)
       yAxisLabelSvg.exit().remove()
     })
-  },
+  }
 
-  renderData: function () {
-    var self = this
-    _.each(self._drawings, function (drawing) {
+  renderData () {
+    _.each(this._drawings, (drawing) => {
       drawing.renderData()
     })
-  },
+  }
 
-  getCrosshairData: function (point) {
+  getCrosshairData (point) {
     const data = this.getData()
     const xScale = this.params.axis[this.params.plot.x.axis].scale
     const xAccessor = this.params.plot.x.accessor
     const mouseX = xScale.invert(point[0])
-    const xBisector = d3.bisector(function (d) {
-      return d[xAccessor]
-    }).right
+    const xBisector = d3.bisector((d) => d[xAccessor]).right
     const indexRight = xBisector(data, mouseX, 0, data.length - 1)
     let indexLeft = indexRight - 1
     if (indexLeft < 0) indexLeft = 0
@@ -487,9 +444,9 @@ var CompositeYChartView = ContrailChartsView.extend({
       index = indexLeft
     }
     return data[index]
-  },
+  }
   // TODO move to CrosshairConfig
-  getCrosshairConfig: function () {
+  getCrosshairConfig () {
     const data = { circles: [] }
     const globalXScale = this.params.axis[this.params.plot.x.axis].scale
     // Prepare crosshair bounding box
@@ -516,7 +473,7 @@ var CompositeYChartView = ContrailChartsView.extend({
     // Prepare circle data
     _.each(this._drawings, (plotTypeComponent) => {
       _.each(plotTypeComponent.params.activeAccessorData, (accessor) => {
-        var circleObject = {}
+        const circleObject = {}
         circleObject.id = accessor.accessor
         circleObject.x = (dataElem) => {
           return plotTypeComponent.getScreenX(dataElem, this.params.plot.x.accessor, accessor.accessor)
@@ -529,25 +486,23 @@ var CompositeYChartView = ContrailChartsView.extend({
       })
     })
     return data
-  },
+  }
 
-  render: function () {
-    var self = this
-    if (self.config) self._debouncedRenderFunction()
-    return self
-  },
+  render () {
+    if (this.config) this._debouncedRenderFunction()
+    return this
+  }
   /**
   * Update the drawings array based on the plot.y.
   */
-  _updateChildDrawings: function () {
-    var self = this
-    var plot = self.config.get('plot')
-    self._drawings = []
+  _updateChildDrawings () {
+    const plot = this.config.get('plot')
+    this._drawings = []
     if (!plot.x.axis) {
       // Default x axis name.
       plot.x.axis = 'x'
     }
-    _.each(plot.y, function (accessor) {
+    _.each(plot.y, (accessor) => {
       if (!accessor.axis) {
         // Default y axis name.
         accessor.axis = 'y'
@@ -556,64 +511,63 @@ var CompositeYChartView = ContrailChartsView.extend({
         accessor.enabled = true
       }
       if (accessor.chart && accessor.enabled) {
-        var drawingName = accessor.axis + '-' + accessor.chart
-        var foundDrawing = _.find(self._drawings, function (drawing) { return drawing.getName() === drawingName })
+        const drawingName = accessor.axis + '-' + accessor.chart
+        let foundDrawing = _.find(this._drawings, (drawing) => drawing.getName() === drawingName)
         if (!foundDrawing) {
           // The child drawing with this name does not exist yet. Instantiate the child drawing.
-          _.each(self.possibleChildViews, function (ChildView, chartType) {
+          _.each(this.possibleChildViews, (ChildView, chartType) => {
             if (chartType === accessor.chart) {
               // TODO: a way to provide a different model to every child
               // TODO: pass eventObject to child?
               foundDrawing = new ChildView({
-                model: self.model,
-                config: self.config,
-                eventObject: self._eventObject,
-                container: self._container,
-                el: self.el,
+                model: this.model,
+                config: this.config,
+                eventObject: this._eventObject,
+                container: this._container,
                 axisName: accessor.axis,
-                parent: self
+                parent: this
               })
-              self._drawings.push(foundDrawing)
+              this._drawings.push(foundDrawing)
             }
           })
         }
       }
     })
     // Order the drawings so the highest order drawings get rendered first.
-    self._drawings.sort(function (a, b) { return b.renderOrder - a.renderOrder })
-  },
+    this._drawings.sort((a, b) => b.renderOrder - a.renderOrder)
+  }
 
-  _render: function () {
-    var self = this
-    self._updateChildDrawings()
-    self.resetParams()
-    self.calculateActiveAccessorData()
-    self.calculateDimensions()
-    self.calculateScales()
-    self.calculateColorScale()
-    self.renderSVG()
-    self.renderAxis()
-    self.renderData()
-    self._eventObject.trigger('rendered:' + self.name, self.params, self.config, self)
-  },
+  _render () {
+    this._updateChildDrawings()
+    this.resetParams()
+    this.calculateActiveAccessorData()
+    this._calculateDimensions()
+    this.calculateScales()
+    this.calculateColorScale()
+
+    super.render()
+    this.renderSVG()
+    this.renderAxis()
+    this.renderData()
+    this._eventObject.trigger('rendered:' + this.name, this.params, this.config, this)
+  }
 
   // Event handlers
 
-  _onDataModelChange: function () {
+  _onDataModelChange () {
     this.render()
-  },
+  }
 
-  _onConfigModelChange: function () {
+  _onConfigModelChange () {
     this.render()
-  },
+  }
 
-  _onWindowResize: function () {
-    var self = this
-    var throttled = _.throttle(function () {
-      self.render()
+  _onWindowResize () {
+    const throttled = _.throttle(() => {
+      this.render()
     }, 100)
     $(window).resize(throttled)
-  },
-})
+  }
+}
 
 module.exports = CompositeYChartView

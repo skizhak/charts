@@ -11,7 +11,7 @@ const handlers = require('handlers/index')
 * Group of charts rendered in polar coordinates system
 * TODO merge with ChartView as long as XYChart too
 */
-class Self extends ContrailView {
+class RadialChartView extends ContrailView {
   get type () { return 'RadialChartView' }
 
   constructor (options) {
@@ -123,4 +123,4 @@ class Self extends ContrailView {
   }
 }
 
-module.exports = Self
+module.exports = RadialChartView
