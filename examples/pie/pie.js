@@ -1,5 +1,5 @@
 // Most basic chart.
-var pieData = [
+const pieData = [
   { x: 'System process', y: 4499890 },
   { x: 'Process 1', y: 2704659 },
   { x: 'Process 2', y: 2159981 },
@@ -18,7 +18,7 @@ function getValue (serie) {
   return serie.y
 }
 
-var chartConfig = {
+const chartConfig = {
   container: '.chart',
   components: [{
     id: 'pieChart',
@@ -51,6 +51,6 @@ var chartConfig = {
     },
   }]
 }
-var chartView = new coCharts.charts.RadialChartView()
+const chartView = new coCharts.charts.RadialChartView()
 chartView.setConfig(chartConfig)
 chartView.setData(pieData)

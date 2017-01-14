@@ -17,15 +17,20 @@ class ContrailChartsView extends ContrailView {
 
   constructor (options = {}) {
     super(options)
-    this.id = options.id
+    this._id = options.id
+    this.d3.attr('id', this.id)
     this.config = options.config
     this._order = options.order
     this._container = options.container
     this._eventObject = options.eventObject || _.extend({}, Events)
   }
 
+  get id () {
+    return this._id || this.cid
+  }
+
   get d3Container () {
-    if (this.config.get('isSvg')) {
+    if (this.tagName === 'g') {
       return d3.select(this._container[0]).select('svg')
     } else {
       return d3.select(this._container[0])
@@ -57,12 +62,10 @@ class ContrailChartsView extends ContrailView {
         .append('svg')
         .classed('coCharts-svg', true)
         .classed('shared-svg', true)
-        // TODO should be set in the chart class
-        .attr('width', this.params.chartWidth)
-        .attr('height', this.params.chartHeight)
     }
-    // Each component adds its class to shared svg to indicate initialized state
-    return this.d3Container
+    this.d3Container
+      .attr('width', this.params.chartWidth || this.d3Container.attr('width'))
+      .attr('height', this.params.chartHeight || this.d3Container.attr('height'))
   }
   /**
    * Appends components element to container in the order specified in this._order
@@ -75,15 +78,11 @@ class ContrailChartsView extends ContrailView {
    * @param {String} content to insert into element's html
    */
   render (content) {
-    if (this.config.get('isSvg')) {
+    if (this.tagName === 'g') {
       this._initSvg()
-      this.d3Container.selectAll(`.${this.className}`).data([{}]).enter()
-      // TODO may need to use this.tagName here
-        .append('g')
-        .classed(this.className, true)
-        .each((d, i, els) => {
-          this.setElement(els[0])
-        })
+      if (this.d3Container.select(`.${this.className}`).empty()) {
+        this.d3Container.node().append(this.el)
+      }
       return
     }
 

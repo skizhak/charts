@@ -1,23 +1,28 @@
 /*
  * Copyright (c) 2016 Juniper Networks, Inc. All rights reserved.
  */
+/**
+ * Extending Backbone View
+ */
+const _ = require('lodash')
 const Backbone = require('backbone')
-const d3 = require('d3')
+const d3Selection = require('d3-selection')
 
 class ContrailView extends Backbone.View {
-  constructor (options) {
-    super(options)
-    this.d3 = d3.select(this.el)
+  /**
+   * svg elements are xml and require namespace to be specified
+   */
+  _createElement (tagName) {
+    if (_.includes(['g'], tagName)) {
+      return document.createElementNS('http://www.w3.org/2000/svg', tagName)
+    } else return super._createElement(tagName)
   }
-
-  setElement (el) {
-    super.setElement(el)
-    this.d3 = d3.select(el)
-  }
-
-  d3SetElement (d3El) {
-    super.setElement(d3El.node())
-    this.d3 = d3El
+  /**
+   * d3 selection shortcut for view element
+   */
+  _setElement (el) {
+    super._setElement(el)
+    this.d3 = d3Selection.select(el)
   }
 }
 
