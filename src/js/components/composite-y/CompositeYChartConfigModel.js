@@ -8,9 +8,6 @@ const ContrailChartsConfigModel = require('contrail-charts-config-model')
 class CompositeYChartConfigModel extends ContrailChartsConfigModel {
   get defaults () {
     return {
-      // renders content as vector graphics
-      isSvg: true,
-
       // by default will use common shared container under the parent
       isSharedContainer: true,
 

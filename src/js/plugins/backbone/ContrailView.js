@@ -9,11 +9,16 @@ const Backbone = require('backbone')
 const d3Selection = require('d3-selection')
 
 class ContrailView extends Backbone.View {
+  // TODO move this function to Utils?
+  // instanceof SVGElement works for existing element
+  isTagNameSvg (tagName) {
+    return _.includes(['g'], tagName)
+  }
   /**
    * svg elements are xml and require namespace to be specified
    */
   _createElement (tagName) {
-    if (_.includes(['g'], tagName)) {
+    if (this.isTagNameSvg(tagName)) {
       return document.createElementNS('http://www.w3.org/2000/svg', tagName)
     } else return super._createElement(tagName)
   }

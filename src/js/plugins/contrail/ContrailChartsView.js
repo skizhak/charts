@@ -30,7 +30,7 @@ class ContrailChartsView extends ContrailView {
   }
 
   get d3Container () {
-    if (this.tagName === 'g') {
+    if (this.isTagNameSvg(this.tagName)) {
       return d3.select(this._container[0]).select('svg')
     } else {
       return d3.select(this._container[0])
@@ -78,9 +78,9 @@ class ContrailChartsView extends ContrailView {
    * @param {String} content to insert into element's html
    */
   render (content) {
-    if (this.tagName === 'g') {
+    if (this.isTagNameSvg(this.tagName)) {
       this._initSvg()
-      if (this.d3Container.select(`.${this.className}`).empty()) {
+      if (this.d3Container.select(`.${this.id}`).empty()) {
         this.d3Container.node().append(this.el)
       }
       return
@@ -89,10 +89,8 @@ class ContrailChartsView extends ContrailView {
     if (content) this.$el.html(content)
 
     // append element to container first time
-    const id = _.isUndefined(this.id) ? '' : this.id
-    const selector = id ? `#${id}` : `.${this.className}`
-    if (!_.isEmpty(this._container.find(selector))) return
-    this.$el.addClass(this.className)
+    if (!_.isEmpty(this._container.find(`#${this.id}`))) return
+
     this.el.dataset['order'] = this._order
     if (this._container.is(':empty')) {
       this._container.append(this.$el)
