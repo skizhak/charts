@@ -4,18 +4,12 @@
 const ContrailChartsView = require('contrail-charts-view')
 
 class XYChartSubView extends ContrailChartsView {
+  get tagName () { return 'g' }
 
   constructor (options) {
     super(options)
     this._parent = options.parent
     this.axisName = options.axisName
-  }
-  /**
-  * Returns the unique name of this drawing so it can identify itself for the parent.
-  * The drawing's name is of the following format: [axisName]-[chartType] ie. "y1-line".
-  */
-  getName () {
-    return this.axisName + '-' + this.chartType
   }
 
   getYScale () {
@@ -42,9 +36,7 @@ class XYChartSubView extends ContrailChartsView {
 
   render () {
     super.render()
-    this.d3
-      .classed(`g.drawing-${this.getName()}`, true)
-      .attr('clip-path', `url(#${this._parent.params.rectClipPathId})`)
+    this.d3.attr('clip-path', `url(#${this._parent.params.rectClipPathId})`)
   }
 }
 

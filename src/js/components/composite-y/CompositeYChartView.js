@@ -10,10 +10,11 @@ const LineChartView = require('components/composite-y/LineChartView')
 const AreaChartView = require('components/composite-y/AreaChartView')
 const BarChartView = require('components/composite-y/GroupedBarChartView')
 const StackedBarChartView = require('components/composite-y/StackedBarChartView')
-const ScatterBubbleChartView = require('components/composite-y/ScatterBubbleChartView')
+const ScatterPlotView = require('components/composite-y/ScatterBubbleChartView')
 
 class CompositeYChartView extends ContrailChartsView {
   get type () { return 'compositeY' }
+  get tagName () { return 'g' }
   get className () { return 'coCharts-xy-chart' }
   get possibleChildViews () {
     return {
@@ -21,13 +22,13 @@ class CompositeYChartView extends ContrailChartsView {
       area: AreaChartView,
       bar: BarChartView,
       stackedBar: StackedBarChartView,
-      scatterBubble: ScatterBubbleChartView
+      scatterPlot: ScatterPlotView,
     }
   }
 
   constructor (options) {
     super(options)
-    ContrailChartsView.prototype.initialize.call(this, options)
+    this._drawings = []
     // TODO: Every model change will trigger a redraw. This might not be desired - dedicated redraw event?
     // / View params hold values from the config and computed values.
     this._debouncedRenderFunction = _.bind(_.debounce(this._render, 10), this)
@@ -86,7 +87,7 @@ class CompositeYChartView extends ContrailChartsView {
     })
     // Fill the activeAccessorData structure.
     _.each(this.params.plot.y, (accessor) => {
-      const drawing = this.getDrawing(accessor.axis, accessor.chart)
+      const drawing = this.getDrawing(accessor)
       if (drawing) {
         if (accessor.enabled) {
           this.params.activeAccessorData.push(accessor)
@@ -157,15 +158,10 @@ class CompositeYChartView extends ContrailChartsView {
     })
   }
 
-  getDrawing (axisName, chartType) {
-    let foundDrawing = null
-    const drawingName = axisName + '-' + chartType
-    _.each(this._drawings, (drawing) => {
-      if (drawing.getName() === drawingName) {
-        foundDrawing = drawing
-      }
+  getDrawing (accessor) {
+    return _.find(this._drawings, (drawing) => {
+      return drawing.axisName === accessor.axis && drawing.type === accessor.chart
     })
-    return foundDrawing
   }
   /**
   * Combine the axis domains (extents) from all enabled drawings.
@@ -497,7 +493,6 @@ class CompositeYChartView extends ContrailChartsView {
   */
   _updateChildDrawings () {
     const plot = this.config.get('plot')
-    this._drawings = []
     if (!plot.x.axis) {
       // Default x axis name.
       plot.x.axis = 'x'
@@ -511,8 +506,7 @@ class CompositeYChartView extends ContrailChartsView {
         accessor.enabled = true
       }
       if (accessor.chart && accessor.enabled) {
-        const drawingName = accessor.axis + '-' + accessor.chart
-        let foundDrawing = _.find(this._drawings, (drawing) => drawing.getName() === drawingName)
+        let foundDrawing = this.getDrawing(accessor)
         if (!foundDrawing) {
           // The child drawing with this name does not exist yet. Instantiate the child drawing.
           _.each(this.possibleChildViews, (ChildView, chartType) => {

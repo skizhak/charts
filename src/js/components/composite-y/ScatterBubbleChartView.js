@@ -1,208 +1,154 @@
 /*
  * Copyright (c) 2016 Juniper Networks, Inc. All rights reserved.
  */
-var _ = require('lodash')
-var d3 = require('d3')
-var XYChartSubView = require('components/composite-y/XYChartSubView')
+const _ = require('lodash')
+require('d3-transition')
+const d3Selection = require('d3-selection')
+const d3Shape = require('d3-shape')
+const d3Array = require('d3-array')
+const d3Ease = require('d3-ease')
+const d3Scale = require('d3-scale')
+const XYChartSubView = require('components/composite-y/XYChartSubView')
 
-var ScatterBubbleChartView = XYChartSubView.extend({
-  className: 'scatter-bubble-chart',
-  chartType: 'scatterBubble',
-  renderOrder: 50,
+class ScatterBubbleChartView extends XYChartSubView {
+  get type () { return 'scatterPlot' }
+  get className () { return 'coCharts-scatter-plot' }
+  get renderOrder () { return 50 }
+  get events () {
+    return {
+      'mouseover .point': '_onMouseover',
+      'mouseout .point': '_onMouseout',
+    }
+  }
+
+  constructor (options) {
+    super(options)
+    this.shapeScale = d3Scale.scaleOrdinal()
+      .domain(['square', 'triangle', 'circle'])
+      .range([d3Shape.symbolSquare, d3Shape.symbolTriangle, d3Shape.symbolCircle])
+  }
   /**
   * Called by the parent in order to calculate maximum data extents for all of this child's axis.
   * Assumes the params.activeAccessorData for this child view is filled by the parent with the relevent yAccessors for this child only.
   * Returns an object with following structure: { y1: [0,10], x: [-10,10] }
   */
-  calculateAxisDomains: function () {
-    var self = this
-    var domains = {}
-    domains[self.params.plot.x.axis] = self.model.getRangeFor(self.params.plot.x.accessor)
-    domains[self.axisName] = []
+  calculateAxisDomains () {
+    const domains = {}
+    domains[this.params.plot.x.axis] = this.model.getRangeFor(this.params.plot.x.accessor)
+    domains[this.axisName] = []
     // The domains calculated here can be overriden in the axis configuration.
     // The overrides are handled by the parent.
-    _.each(self.params.activeAccessorData, function (accessor) {
-      var domain = self.model.getRangeFor(accessor.accessor)
-      domains[self.axisName] = domains[self.axisName].concat(domain)
+    _.each(this.params.activeAccessorData, (accessor) => {
+      const domain = this.model.getRangeFor(accessor.accessor)
+      domains[this.axisName] = domains[this.axisName].concat(domain)
       if (accessor.sizeAccessor && accessor.shape && accessor.sizeAxis) {
         if (!domains[accessor.sizeAxis]) {
           domains[accessor.sizeAxis] = []
         }
-        domains[accessor.sizeAxis] = domains[accessor.sizeAxis].concat(self.model.getRangeFor(accessor.sizeAccessor))
+        domains[accessor.sizeAxis] = domains[accessor.sizeAxis].concat(this.model.getRangeFor(accessor.sizeAccessor))
       }
     })
-    _.each(domains, function (domain, key) {
-      domains[key] = d3.extent(domain)
+    _.each(domains, (domain, key) => {
+      domains[key] = d3Array.extent(domain)
     })
-    self.params.handledAxisNames = _.keys(domains)
+    this.params.handledAxisNames = _.keys(domains)
     return domains
-  },
+  }
   /**
    * Called by the parent when all scales have been saved in this child's params.
    * Can be used by the child to perform any additional calculations.
    */
-  calculateScales: function () {},
-  /**
-   * Called by the parent to allow the child to add some initialization code into the provided entering selection.
-   */
-  renderSVG: function (enteringSelection) {
-    enteringSelection.append('g').attr('class', 'bubbles')
-  },
+  calculateScales () {}
 
-  _bindMouseOverEvents: function (selection) {
-    let self = this
-    selection.on('mouseover', function (d) {
-      // var pos = $(this).offset() // not working in jquery 3
-      if (self.config.get('tooltipEnabled')) {
-        var offset = {
-          left: d.x + d.r * 0.71,
-          top: d.y - d.r * 0.71
-        }
-        self._eventObject.trigger('showTooltip', offset, d.data, d.accessor.tooltip)
-        d3.select(this).classed('active', true)
-      }
-    })
-    selection.on('mouseout', function (d) {
-      // var pos = $(this).offset() // not working in jquery 3
-      if (self.config.get('tooltipEnabled')) {
-        self._eventObject.trigger('hideTooltip', d.accessor.tooltip)
-      }
-      d3.select(this).classed('active', false)
-    })
-  },
-  /**
-  * Default shape drawing functions. Circle, Square and Triangle.
-  * Use config.shapeEnterFunctions and config.shapeEditFunctions to define custom shape drawing functions.
-  * Example: shapeEnterFunctions: { square: function (d, selection) { return selection.append('rect') ... } }
-  */
-  _shapeEnterCircle: function (d, selection) {
-    return selection.append('circle')
-      .attr('class', d.className)
-      .attr('cx', d.x)
-      .attr('cy', d.y)
-      .attr('fill', d.color)
-      .attr('r', 0)
-  },
-
-  _shapeEditCircle: function (d, selection) {
-    selection.transition().ease(d3.easeLinear).duration(300)
-      .attr('cx', d.x)
-      .attr('cy', d.y)
-      .attr('fill', d.color)
-      .attr('r', d.r)
-  },
-
-  _shapeEnterSquare: function (d, selection) {
-    return selection.append('rect')
-      .attr('class', d.className)
-      .attr('x', d.x)
-      .attr('y', d.y)
-      .attr('fill', d.color)
-      .attr('width', 0)
-      .attr('height', 0)
-  },
-
-  _shapeEditSquare: function (d, selection) {
-    selection.transition().ease(d3.easeLinear).duration(300)
-      .attr('x', d.x)
-      .attr('y', d.y)
-      .attr('fill', d.color)
-      .attr('width', d.r)
-      .attr('height', d.r)
-  },
-
-  _shapeEnterTriangle: function (d, selection) {
-    return selection.append('path')
-      .attr('class', d.className)
-      .attr('d', d3.symbol().type(d3.symbolTriangle).size(0))
-      .attr('fill', d.color)
-      .attr('transform', 'translate(' + d.x + ',' + d.y + ')')
-  },
-
-  _shapeEditTriangle: function (d, selection) {
-    selection.transition().ease(d3.easeLinear).duration(300)
-      .attr('fill', d.color)
-      .attr('transform', 'translate(' + d.x + ',' + d.y + ')')
-      .attr('d', d3.symbol().type(d3.symbolTriangle).size(d.r))
-  },
-
-  /**
-  * Shape drawing functions. The draw on the entering and edit selections. One drawing function per accessor shape.
-  */
-  prepareShapeRenderFunctions: function () {
-    let self = this
-    self.shapeEnterFunctions = {
-      circle: self._shapeEnterCircle,
-      square: self._shapeEnterSquare,
-      triangle: self._shapeEnterTriangle
-    }
-    self.shapeEditFunctions = {
-      circle: self._shapeEditCircle,
-      square: self._shapeEditSquare,
-      triangle: self._shapeEditTriangle
-    }
-    if (self.config.has('shapeEnterFunctions')) {
-      _.extend(self.shapeEnterFunctions, self.config.get('shapeEnterFunctions'))
-    }
-    if (self.config.has('shapeEditFunctions')) {
-      _.extend(self.shapeEditFunctions, self.config.get('shapeEditFunctions'))
-    }
-  },
-
-  renderData: function () {
-    var self = this
-    var data = self.getData()
-    var yScale = self.getYScale()
-    var xScale = self.params.axis[self.params.plot.x.axis].scale
-
-    self.prepareShapeRenderFunctions()
+  renderData () {
+    super.render()
+    const data = this.getData()
+    const yScale = this.getYScale()
+    const xScale = this.params.axis[this.params.plot.x.axis].scale
 
     // Create a flat data structure
-    var flatData = []
-    _.each(data, function (d) {
-      var x = d[self.params.plot.x.accessor]
-      _.each(self.params.activeAccessorData, function (accessor) {
-        var key = accessor.accessor
-        var y = d[key]
-        var rScale = self.params.axis[accessor.sizeAxis].scale
-        var obj = {
+    const flatData = []
+    _.each(data, (d) => {
+      const x = d[this.params.plot.x.accessor]
+      _.each(this.params.activeAccessorData, (accessor) => {
+        const key = accessor.accessor
+        const y = d[key]
+        const rScale = this.params.axis[accessor.sizeAxis].scale
+        const obj = {
           id: x + '-' + key,
-          className: 'bubble bubble-' + key,
-          selectClassName: '.bubble-' + key,
+          className: 'point point-' + key,
+          selectClassName: '.point-' + key,
           x: xScale(x),
           y: yScale(y),
-          shape: accessor.shape,
-          r: rScale(d[accessor.sizeAccessor]),
-          color: self.getColor(accessor),
+          shape: this.shapeScale(accessor.shape),
+          area: 4 * rScale(d[accessor.sizeAccessor]) * rScale(d[accessor.sizeAccessor]),
+          color: this.getColor(accessor),
           accessor: accessor,
-          data: d
+          data: d,
         }
         flatData.push(obj)
       })
     })
-    var svgBubbles = self.svgSelection().select('g.drawing-' + self.getName()).selectAll('.bubble').data(flatData, function (d) { return d.id })
-    svgBubbles.enter()
-      .each(function (d, i, selection) {
-        let enter = self.shapeEnterFunctions[d.shape](d, d3.select(this))
-        self._bindMouseOverEvents(enter)
+    let points = this.d3
+      .selectAll('.point')
+      .data(flatData, (d) => d.id)
+
+    points.enter()
+      .append('path')
+      .attr('class', 'point')
+      .attr('d', (d) => {
+        return d3Shape.symbol().type(d.shape).size(1)()
       })
-    svgBubbles = self.svgSelection().select('g.drawing-' + self.getName()).selectAll('.bubble').data(flatData, function (d) { return d.id })
-    svgBubbles
-      .each(function (d) {
-        self.shapeEditFunctions[d.shape](d, d3.select(this))
+      .attr('transform', (d) => `translate(${d.x},${d.y})`)
+      .attr('fill', (d) => d.color)
+      .each((d, i, selection) => {
+        d3Selection.select(selection[i]).transition().ease(d3Ease.easeLinear).duration(this.params.duration)
+          .attr('d', d3Shape.symbol().type(d.shape).size(d.area)())
       })
-    svgBubbles.exit().transition().ease(d3.easeLinear).duration(self.params.duration)
+
+    // Update
+    points
+      .each((d, i, selection) => {
+        d3Selection.select(selection[i]).transition().ease(d3Ease.easeLinear).duration(this.params.duration)
+        .attr('transform', (d) => `translate(${d.x},${d.y})`)
+      })
+
+    points.exit()
+      .transition()
+      .ease(d3Ease.easeLinear)
+      .duration(this.params.duration)
       .attr('r', 0)
       .remove()
-  },
-
-  render: function () {
-    var self = this
-    _.defer(function () {
-      self.renderData()
-    })
-    return self
   }
-})
+
+  render () {
+    _.defer(() => {
+      this.renderData()
+    })
+    return this
+  }
+
+  _onMouseover (e) {
+    if (this.config.get('tooltipEnabled')) {
+      const el = d3Selection.select(e.currentTarget)
+      const d = el.data()[0]
+      const offset = {
+        left: d.x + Math.sqrt(d.area) * 0.71,
+        top: d.y - Math.sqrt(d.area) * 0.71,
+      }
+      el.classed('active', true)
+      this._eventObject.trigger('showTooltip', offset, d.data, d.accessor.tooltip)
+    }
+  }
+
+  _onMouseout (e) {
+    if (this.config.get('tooltipEnabled')) {
+      const el = d3Selection.select(e.currentTarget)
+      const d = el.data()[0]
+      el.classed('active', false)
+      this._eventObject.trigger('hideTooltip', d.accessor.tooltip)
+    }
+  }
+}
 
 module.exports = ScatterBubbleChartView
