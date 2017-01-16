@@ -31,7 +31,6 @@ class CompositeYChartView extends ContrailChartsView {
     this._drawings = []
     // TODO: Every model change will trigger a redraw. This might not be desired - dedicated redraw event?
     // / View params hold values from the config and computed values.
-    this._debouncedRenderFunction = _.bind(_.debounce(this._render, 10), this)
     this.name = options.name || 'compositeY'
     this._onWindowResize()
 
@@ -39,6 +38,11 @@ class CompositeYChartView extends ContrailChartsView {
     this.listenTo(this.config, 'change', this._onConfigModelChange)
     this.listenTo(this._eventObject, 'selectColor', this.selectColor)
     this.listenTo(this._eventObject, 'refresh', this.refresh)
+
+    this._debouncedRenderFunction = _.bind(_.debounce(this._render, 10), this)
+    this._throttledShowCrosshair = _.throttle((point) => {
+      this._eventObject.trigger('showCrosshair', this.getCrosshairData(point), point, this.getCrosshairConfig())
+    }, 100)
   }
 
   // Action handler
@@ -124,7 +128,7 @@ class CompositeYChartView extends ContrailChartsView {
    */
   _calculateDimensions () {
     if (!this.params.chartWidth) {
-      this.params.chartWidth = this._container.width()
+      this.params.chartWidth = this._container.getBoundingClientRect().width
     }
     if (this.params.chartWidthDelta) {
       this.params.chartWidth += this.params.chartWidthDelta
@@ -288,12 +292,8 @@ class CompositeYChartView extends ContrailChartsView {
       .attr('class', (d) => `axis y-axis ${d.name}-axis`)
       .merge(svgYAxis)
       .attr('transform', 'translate(' + translate + ',0)')
-
-    const throttledShowCrosshair = _.throttle((point) => {
-      this._eventObject.trigger('showCrosshair', this.getCrosshairData(point), point, this.getCrosshairConfig())
-    }, 100)
     if (this.config.get('crosshairEnabled')) {
-      this.d3.on('mousemove', () => { throttledShowCrosshair(d3.mouse(this)) })
+      this.svg.on('mousemove', this._onMousemove.bind(this))
     }
   }
 
@@ -420,12 +420,6 @@ class CompositeYChartView extends ContrailChartsView {
     })
   }
 
-  renderData () {
-    _.each(this._drawings, (drawing) => {
-      drawing.renderData()
-    })
-  }
-
   getCrosshairData (point) {
     const data = this.getData()
     const xScale = this.params.axis[this.params.plot.x.axis].scale
@@ -542,7 +536,10 @@ class CompositeYChartView extends ContrailChartsView {
     super.render()
     this.renderSVG()
     this.renderAxis()
-    this.renderData()
+    _.each(this._drawings, (drawing) => {
+      drawing.render()
+    })
+
     this._eventObject.trigger('rendered:' + this.name, this.params, this.config, this)
   }
 
@@ -561,6 +558,10 @@ class CompositeYChartView extends ContrailChartsView {
       this.render()
     }, 100)
     $(window).resize(throttled)
+  }
+
+  _onMousemove () {
+    this._throttledShowCrosshair(d3.mouse(d3.event.currentTarget))
   }
 }
 

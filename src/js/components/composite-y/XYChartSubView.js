@@ -34,6 +34,11 @@ class XYChartSubView extends ContrailChartsView {
     return yScale(dataElem[yAccessor])
   }
 
+  resetParams () {
+    this.params = this.config.initializedComputedParameters()
+    this.params.isPrimary = false
+  }
+
   render () {
     super.render()
     this.d3.attr('clip-path', `url(#${this._parent.params.rectClipPathId})`)

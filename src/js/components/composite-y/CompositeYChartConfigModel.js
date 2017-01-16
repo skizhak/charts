@@ -8,6 +8,7 @@ const ContrailChartsConfigModel = require('contrail-charts-config-model')
 class CompositeYChartConfigModel extends ContrailChartsConfigModel {
   get defaults () {
     return {
+      isPrimary: true,
       // by default will use common shared container under the parent
       isSharedContainer: true,
 
