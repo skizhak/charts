@@ -4,27 +4,27 @@
 const d3 = require('d3')
 const ContrailChartsView = require('contrail-charts-view')
 
-const CrosshairView = ContrailChartsView.extend({
-  type: 'crosshair',
-  className: 'coCharts-crosshair-view',
+class CrosshairView extends ContrailChartsView {
+  get type () { return 'crosshair' }
+  get tagName () { return 'g' }
+  get className () { return 'coCharts-crosshair-view' }
 
-  initialize: function (options) {
-    ContrailChartsView.prototype.initialize.call(this, options)
-    this.listenTo(this.config, 'change', this.render)
+  constructor (options) {
+    super(options)
     this.render()
+    this.listenTo(this.config, 'change', this.render)
     this.listenTo(this._eventObject, 'showCrosshair', this.show)
     this.listenTo(this._eventObject, 'hideCrosshair', this.hide)
-  },
+  }
 
-  show: function (data, point, config) {
+  show (data, point, config) {
     if (!data) return this.hide()
 
     if (point[0] < config.x1 || point[0] > config.x2 || point[1] < config.y1 || point[1] > config.y2) {
       return this.hide()
     }
-    const svg = this.svgSelection()
     // Draw crosshair line
-    const svgCrosshair = svg.selectAll('.crosshair').data([config.line])
+    const svgCrosshair = this.d3.selectAll('.crosshair').data([config.line])
     const svgCrosshairEnter = svgCrosshair.enter().append('g')
       .attr('class', 'crosshair')
     svgCrosshairEnter.append('line')
@@ -52,10 +52,10 @@ const CrosshairView = ContrailChartsView.extend({
       .attr('y', (d) => d.y1 + 15)
       .text((d) => d.text(data))
     // Draw bubbles for all enabled y accessors.
-    const svgBubbles = svg.select('.crosshair')
-          .select('.bubbles')
-          .selectAll('circle')
-          .data(config.circles, (d) => d.id)
+    const svgBubbles = this.d3.select('.crosshair')
+      .select('.bubbles')
+      .selectAll('circle')
+      .data(config.circles, (d) => d.id)
     svgBubbles.enter().append('circle')
       .attr('cx', (d) => d.x(data))
       .attr('cy', (d) => d.y(data))
@@ -69,27 +69,23 @@ const CrosshairView = ContrailChartsView.extend({
     svgCrosshair.exit().remove()
     if (this.config.get('tooltip')) {
       // Show tooltip
-      const pos = this.$el.offset()
+      const pos = this.svg.node().getBoundingClientRect()
       const tooltipOffset = {
-        left: point[0] + pos.left + 30,
-        top: point[1] + pos.top + 30,
+        left: point[0] + pos.left,
+        top: point[1] + pos.top,
       }
       this._eventObject.trigger('showTooltip', tooltipOffset, data, this.config.get('tooltip'))
     }
-  },
+  }
 
-  hide: function () {
-    const svgCrosshair = this.svgSelection().selectAll('.crosshair').data([])
+  hide () {
+    const svgCrosshair = this.d3.selectAll('.crosshair').data([])
     svgCrosshair.exit().remove()
     if (this.config.get('tooltip')) {
       // Hide tooltip
       this._eventObject.trigger('hideTooltip', this.config.get('tooltip'))
     }
-  },
-
-  render: function () {
-    this.initSVG()
   }
-})
+}
 
 module.exports = CrosshairView
