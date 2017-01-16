@@ -8,7 +8,6 @@ const _template = require('./tooltip.html')
 
 class TooltipView extends ContrailChartsView {
   get type () { return 'tooltip' }
-  get tagName () { return 'div' }
   get className () { return 'coCharts-tooltip-view' }
 
   constructor (options) {
@@ -45,7 +44,7 @@ class TooltipView extends ContrailChartsView {
   }
 
   hide (id) {
-    if (id !== this.id) return
+    if (id && id !== this.id) return
     this.$el.hide()
   }
 
@@ -61,9 +60,8 @@ class TooltipView extends ContrailChartsView {
       }
     })
     tooltipData.title = this.config.get('title')
-    const tooltipElement = $(template(tooltipData))
 
-    ContrailChartsView.prototype.render.call(this, tooltipElement)
+    super.render(template(tooltipData))
   }
 }
 
