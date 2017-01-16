@@ -143,7 +143,7 @@ class XYChartView extends ContrailChartsView {
       config: configModel,
       model: model,
       eventObject: this._eventObject,
-      container: this.$el,
+      container: this.el,
     })
     const component = new components[type].View(viewOptions)
     this._components.push(component)
