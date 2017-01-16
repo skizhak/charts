@@ -1,7 +1,6 @@
 /*
  * Copyright (c) 2016 Juniper Networks, Inc. All rights reserved.
  */
-const $ = require('jquery')
 const ContrailChartsView = require('contrail-charts-view')
 const _template = require('./legend.html')
 
@@ -17,7 +16,7 @@ class LegendView extends ContrailChartsView {
 
   render () {
     const template = this.config.get('template') || _template
-    const content = $(template(this.config.getData(this.model)))
+    const content = template(this.config.getData(this.model))
 
     super.render(content)
   }

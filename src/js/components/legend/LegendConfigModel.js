@@ -4,17 +4,17 @@
 const _ = require('lodash')
 const ContrailChartsConfigModel = require('contrail-charts-config-model')
 
-const Self = ContrailChartsConfigModel.extend({
-  setParent: function (model) {
+class LegendConfigModel extends ContrailChartsConfigModel {
+  setParent (model) {
     this._parent = model
     model.on('change', () => {
       this.trigger('change')
     })
-  },
+  }
   /**
    * Ask parent component for serie accessors
    */
-  getData: function () {
+  getData () {
     const accessors = this._parent.getAccessors()
     return _.map(accessors, (accessor) => {
       return {
@@ -23,6 +23,6 @@ const Self = ContrailChartsConfigModel.extend({
       }
     })
   }
-})
+}
 
-module.exports = Self
+module.exports = LegendConfigModel
