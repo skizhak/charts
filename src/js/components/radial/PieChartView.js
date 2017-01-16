@@ -32,7 +32,7 @@ class PieChartView extends ContrailChartsView {
 
   _calculateDimensions () {
     if (!this.params.chartWidth) {
-      this.params.chartWidth = this._container.width()
+      this.params.chartWidth = this._container.getBoundingClientRect().width
     }
     if (this.params.chartWidthDelta) {
       this.params.chartWidth += this.params.chartWidthDelta
@@ -84,7 +84,7 @@ class PieChartView extends ContrailChartsView {
     const serieConfig = this.config.get('serie')
     const outerRadius = this.config.get('radius')
     const innerRadius = this.config.getInnerRadius()
-    const chartOffset = this.d3Container.node().getBoundingClientRect()
+    const chartOffset = this.svg.node().getBoundingClientRect()
     const tooltipOffset = {
       left: chartOffset.left + this.params.chartWidth / 2 - innerRadius * 0.707,
       top: chartOffset.top + this.params.chartHeight / 2 - innerRadius * 0.707,
