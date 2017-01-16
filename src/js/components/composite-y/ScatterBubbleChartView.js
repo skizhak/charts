@@ -3,7 +3,6 @@
  */
 const _ = require('lodash')
 require('d3-transition')
-const d3Selection = require('d3-selection')
 const d3Shape = require('d3-shape')
 const d3Array = require('d3-array')
 const d3Ease = require('d3-ease')
@@ -60,15 +59,50 @@ class ScatterBubbleChartView extends XYChartSubView {
    */
   calculateScales () {}
 
-  renderData () {
+  render () {
+    _.defer(() => { this._render() })
+    return this
+  }
+
+  _render () {
     super.render()
+
+    let points = this.d3.selectAll('.point')
+      .data(this._prepareData(), (d) => d.id)
+
+    points.enter()
+      .append('path')
+      .attr('class', 'point')
+      .attr('d', (d) => {
+        return d3Shape.symbol().type(d.shape).size(1)()
+      })
+      .attr('transform', (d) => `translate(${d.x},${d.y})`)
+      .attr('fill', (d) => d.color)
+      .transition().ease(d3Ease.easeLinear).duration(this.params.duration)
+      .attr('d', (d) => d3Shape.symbol().type(d.shape).size(d.area)())
+
+    // Update
+    points
+      .transition().ease(d3Ease.easeLinear).duration(this.params.duration)
+      .attr('transform', (d) => `translate(${d.x},${d.y})`)
+
+    points.exit()
+      .transition()
+      .ease(d3Ease.easeLinear)
+      .duration(this.params.duration)
+      .attr('r', 0)
+      .remove()
+  }
+  /**
+   * Create a flat data structure
+   */
+  _prepareData () {
     const data = this.getData()
     const yScale = this.getYScale()
     const xScale = this.params.axis[this.params.plot.x.axis].scale
 
-    // Create a flat data structure
     const flatData = []
-    _.each(data, (d) => {
+    _.map(data, (d) => {
       const x = d[this.params.plot.x.accessor]
       _.each(this.params.activeAccessorData, (accessor) => {
         const key = accessor.accessor
@@ -89,63 +123,27 @@ class ScatterBubbleChartView extends XYChartSubView {
         flatData.push(obj)
       })
     })
-    let points = this.d3
-      .selectAll('.point')
-      .data(flatData, (d) => d.id)
-
-    points.enter()
-      .append('path')
-      .attr('class', 'point')
-      .attr('d', (d) => {
-        return d3Shape.symbol().type(d.shape).size(1)()
-      })
-      .attr('transform', (d) => `translate(${d.x},${d.y})`)
-      .attr('fill', (d) => d.color)
-      .each((d, i, selection) => {
-        d3Selection.select(selection[i]).transition().ease(d3Ease.easeLinear).duration(this.params.duration)
-          .attr('d', d3Shape.symbol().type(d.shape).size(d.area)())
-      })
-
-    // Update
-    points
-      .each((d, i, selection) => {
-        d3Selection.select(selection[i]).transition().ease(d3Ease.easeLinear).duration(this.params.duration)
-        .attr('transform', (d) => `translate(${d.x},${d.y})`)
-      })
-
-    points.exit()
-      .transition()
-      .ease(d3Ease.easeLinear)
-      .duration(this.params.duration)
-      .attr('r', 0)
-      .remove()
+    return flatData
   }
 
-  render () {
-    _.defer(() => {
-      this.renderData()
-    })
-    return this
-  }
+  // Event handlers
 
-  _onMouseover (e) {
+  _onMouseover (d, el) {
     if (this.config.get('tooltipEnabled')) {
-      const el = d3Selection.select(e.currentTarget)
-      const d = el.data()[0]
+      this.d3.select(() => el)
+        .classed('active', true)
       const offset = {
         left: d.x + Math.sqrt(d.area) * 0.71,
         top: d.y - Math.sqrt(d.area) * 0.71,
       }
-      el.classed('active', true)
       this._eventObject.trigger('showTooltip', offset, d.data, d.accessor.tooltip)
     }
   }
 
-  _onMouseout (e) {
+  _onMouseout (d, el) {
     if (this.config.get('tooltipEnabled')) {
-      const el = d3Selection.select(e.currentTarget)
-      const d = el.data()[0]
-      el.classed('active', false)
+      this.d3.select(() => el)
+        .classed('active', false)
       this._eventObject.trigger('hideTooltip', d.accessor.tooltip)
     }
   }
