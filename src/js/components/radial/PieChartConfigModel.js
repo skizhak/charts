@@ -9,6 +9,7 @@ class PieChartConfigModel extends ContrailChartsConfigModel {
     return {
       // sets the position for shared svg container
       isPrimary: true,
+
       // The chart width. If not provided will be caculated by View.
       chartWidth: undefined,
 

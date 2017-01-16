@@ -9,6 +9,12 @@ class PieChartView extends ContrailChartsView {
   get type () { return 'pieChart' }
   get tagName () { return 'g' }
   get className () { return 'coCharts-pie-chart' }
+  get events () {
+    return {
+      'mouseover .arc': '_onMouseover',
+      'mouseout .arc': '_onMouseout',
+    }
+  }
 
   constructor (options = {}) {
     super(options)
@@ -62,8 +68,6 @@ class PieChartView extends ContrailChartsView {
       .classed('arc', true)
       .attr('d', arc)
       .style('fill', (d) => this.config.getColor(serieConfig.getLabel(d.data)))
-      .on('mouseover', this._onHover.bind(this))
-      .on('mouseout', this._onMouseout.bind(this))
   }
 
   // Event handlers
@@ -76,8 +80,7 @@ class PieChartView extends ContrailChartsView {
     this.render()
   }
 
-  _onHover (sector) {
-    // TODO consider case with missing width config in order to occupy all available space
+  _onMouseover (sector) {
     const serieConfig = this.config.get('serie')
     const outerRadius = this.config.get('radius')
     const innerRadius = this.config.getInnerRadius()
