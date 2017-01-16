@@ -7,7 +7,6 @@ const ContrailChartsConfigModel = require('contrail-charts-config-model')
 class PieChartConfigModel extends ContrailChartsConfigModel {
   get defaults () {
     return {
-      type: 'pie',
       // sets the position for shared svg container
       isPrimary: true,
       // The chart width. If not provided will be caculated by View.
