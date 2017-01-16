@@ -9,8 +9,8 @@ const XYChartSubView = require('components/composite-y/XYChartSubView')
 * This is the child view for CompositeYChartView.
 */
 class AreaChartView extends XYChartSubView {
+  get type () { return 'area' }
   get className () { return 'area-chart' }
-  get chartType () { return 'area' }
   get renderOrder () { return 50 }
 
   /**

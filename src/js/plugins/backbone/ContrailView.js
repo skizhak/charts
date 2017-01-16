@@ -42,7 +42,7 @@ class ContrailView extends Backbone.View {
   /**
    * Replace jquery with d3
    * d3 doesn't support multiple listeners on the same event and element,
-   * use listener name to create event namespace
+   * so add listener name to create event namespace
    */
   delegate (eventName, selector, listener) {
     const listenerName = listener.name.split(' ')[1]
