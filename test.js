@@ -1,3 +1,3 @@
-var open = require("open");
-open("./tests/TestRunner.html");
+const open = require('open')
+open('./tests/TestRunner.html')
 

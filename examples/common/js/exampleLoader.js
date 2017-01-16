@@ -2,7 +2,7 @@
  * Update following to add a new example.
  * @type {*[]}
  */
-var examples = [
+const examples = [
   {
     html: 'composite-xy/composite-xy.html',
     js: 'composite-xy/composite-xy.js',
@@ -53,16 +53,16 @@ var examples = [
   }
 ]
 
-var $exampleLinks = $('#exampleLinks')
-for (var i = 0; i < examples.length; i++) {
-  var $link = $('<a href="#' + i + '" class="link">' + examples[i].title + '</a>')
+const $exampleLinks = $('#exampleLinks')
+for (let i = 0; i < examples.length; i++) {
+  const $link = $('<a href="#' + i + '" class="link">' + examples[i].title + '</a>')
   $link.click(sideBarLinkOnClick)
   $exampleLinks.append($('<li>').append($link))
 }
 
 function sideBarLinkOnClick (e) {
-  var index = $(this).attr('href').split('#')[1]
-  var example = examples[index]
+  const index = $(this).attr('href').split('#')[1]
+  const example = examples[index]
   $('#outputView').find('.output-demo-iframe').attr('src', example.html)
   // Todo: Fix html code display
   // $('#htmlContent').find('.source-html-iframe')

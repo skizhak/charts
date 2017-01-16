@@ -59,7 +59,7 @@ describe('coCharts.charts.XYChartView', function () {
   it('XYChartView xy component generates activeAccessorData on render', function (done) {
     this.chartView.setData([])
     this.chartView.setConfig(this.simpleChartConfig)
-    var compositeY = this.chartView.getComponentByType('compositeY')
+    const compositeY = this.chartView.getComponentByType('compositeY')
     compositeY.render()
     // Time for component init before assert
     setTimeout(function () {
@@ -71,10 +71,9 @@ describe('coCharts.charts.XYChartView', function () {
   it('On XYChartView render, component xy render is called', function () {
     this.chartView.setData([])
     this.chartView.setConfig(this.simpleChartConfig)
-    var compositeY = this.chartView.getComponentByType('compositeY')
+    const compositeY = this.chartView.getComponentByType('compositeY')
     spyOn(compositeY, 'render')
     this.chartView.render()
     expect(compositeY.render).toHaveBeenCalled()
   })
 })
-
