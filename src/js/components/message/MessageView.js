@@ -31,8 +31,9 @@ class MessageView extends ContrailChartsView {
     }
     _.forEach(msgObj.messages, (msg) => {
       _.assignIn(msg, {
-        iconLevel: this.config.HTMLClassNames.icon[msg.level],
-        msgLevel: this.config.HTMLClassNames.message[msg.level]
+        level: msg.level || 'default',
+        iconLevel: this.config.HTMLClassNames.icon[msg.level || 'default'],
+        msgLevel: this.config.HTMLClassNames.message[msg.level || 'default']
       })
     })
 
