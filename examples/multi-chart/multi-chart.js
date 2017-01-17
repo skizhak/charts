@@ -21,18 +21,26 @@ const chartConfigs = [
       config: {
         plot: {
           x: {
-            accessor: 'x'
+            accessor: 'x',
+            axis: 'x',
           },
           y: [
             {
               accessor: 'a',
-              chart: 'bar'
-            },
-            {
+              enabled: true,
+              chart: 'bar',
+              axis: 'y',
+            }, {
               accessor: 'b',
-              chart: 'bar'
+              enabled: true,
+              chart: 'bar',
+              axis: 'y',
             }
           ]
+        },
+        axis: {
+          x: {},
+          y: {},
         }
       }
     }]
@@ -45,12 +53,15 @@ const chartConfigs = [
       config: {
         plot: {
           x: {
-            accessor: 'x'
+            accessor: 'x',
+            axis: 'x',
           },
           y: [
             {
               accessor: 'c',
-              chart: 'line'
+              enabled: true,
+              chart: 'line',
+              axis: 'y',
             }
           ]
         }
@@ -61,12 +72,15 @@ const chartConfigs = [
         chartHeight: 200,
         plot: {
           x: {
-            accessor: 'x'
+            accessor: 'x',
+            axis: 'x',
           },
           y: [
             {
               accessor: 'c',
-              chart: 'line'
+              enabled: true,
+              chart: 'line',
+              axis: 'y',
             }
           ]
         }

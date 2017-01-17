@@ -58,7 +58,7 @@ define([ // eslint-disable-line no-undef
           x: {
             accessor: 'x',
             label: 'Time',
-            axis: 'x'
+            axis: 'x',
           },
           y: [
             {
@@ -67,30 +67,26 @@ define([ // eslint-disable-line no-undef
               enabled: true,
               chart: 'stackedBar',
               axis: 'y1',
-            },
-            {
+            }, {
               accessor: 'b',
               label: 'B',
               enabled: true,
               chart: 'stackedBar',
               axis: 'y1',
-            },
-            {
+            }, {
               accessor: 'c',
               label: 'C',
               enabled: false,
               chart: 'stackedBar',
               axis: 'y1',
-            },
-            {
+            }, {
               accessor: 'd',
               label: 'Megabytes',
               color: '#d62728',
               enabled: true,
               chart: 'line',
               axis: 'y2',
-            },
-            {
+            }, {
               accessor: 'e',
               label: 'Megabytes',
               color: '#9467bd',
@@ -101,9 +97,7 @@ define([ // eslint-disable-line no-undef
           ]
         },
         axis: {
-          x: {
-
-          },
+          x: {},
           y1: {
             position: 'left',
             formatter: d3.format('.0f'),
@@ -117,33 +111,6 @@ define([ // eslint-disable-line no-undef
         }
       },
     }, {
-      type: 'navigation',
-      config: {
-        marginInner: 10,
-        marginLeft: 80,
-        marginRight: 80,
-        marginBottom: 40,
-        chartHeight: 200,
-        plot: {
-          x: {
-            accessor: 'x',
-            label: 'Time'
-          },
-          y: [
-            {
-              accessor: 'a',
-              label: 'A',
-              chart: 'stackedBar'
-            },
-            {
-              accessor: 'b',
-              label: 'B',
-              chart: 'stackedBar'
-            }
-          ]
-        }
-      },
-    }, {
       type: 'tooltip',
       config: {
         dataConfig: [
@@ -151,13 +118,11 @@ define([ // eslint-disable-line no-undef
             accessor: 'x',
             labelFormatter: (key) => 'Time',
             valueFormatter: d3.format('.0f')
-          },
-          {
+          }, {
             accessor: 'a',
             labelFormatter: () => 'A',
             valueFormatter: d3.format('.05f')
-          },
-          {
+          }, {
             accessor: 'b',
             labelFormatter: () => 'B',
             valueFormatter: d3.format('.02f')
@@ -204,12 +169,15 @@ define([ // eslint-disable-line no-undef
       config: {
         plot: {
           x: {
-            accessor: 'x'
+            accessor: 'x',
+            axis: 'x',
           },
           y: [
             {
+              enabled: true,
               accessor: 'y',
-              chart: 'line'
+              chart: 'line',
+              axis: 'y',
             }
           ]
         }

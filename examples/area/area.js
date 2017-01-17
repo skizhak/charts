@@ -14,12 +14,15 @@ simpleChartView.setConfig({
     config: {
       plot: {
         x: {
-          accessor: 'x'
+          accessor: 'x',
+          axis: 'x',
         },
         y: [
           {
+            enabled: true,
             accessor: 'y',
             chart: 'area',
+            axis: 'y',
           }
         ]
       },
@@ -28,8 +31,8 @@ simpleChartView.setConfig({
           domain: [(new Date(2016, 11, 2)).getTime(), (new Date(2016, 11, 4)).getTime()]
         },
         y: {
-          domain: [undefined, 10],
-          ticks: 20
+          domain: [0, 10],
+          ticks: 20,
         }
       }
     }

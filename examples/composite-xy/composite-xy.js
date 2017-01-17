@@ -191,26 +191,28 @@ complexChartView.setConfig({
       plot: {
         x: {
           accessor: 'x',
-          labelFormatter: 'Time'
+          labelFormatter: 'Time',
+          axis: 'x',
         },
         y: [
           {
+            enabled: true,
             accessor: 'a',
             labelFormatter: 'A',
             chart: 'stackedBar',
-            axis: 'y1'
-          },
-          {
+            axis: 'y1',
+          }, {
+            enabled: true,
             accessor: 'b',
             labelFormatter: 'B',
             chart: 'stackedBar',
-            axis: 'y1'
-          },
-          {
+            axis: 'y1',
+          }, {
+            enabled: true,
             accessor: 'd',
             labelFormatter: 'Megabytes',
             chart: 'line',
-            axis: 'y2'
+            axis: 'y2',
           }
         ]
       },
@@ -220,12 +222,12 @@ complexChartView.setConfig({
         y1: {
           position: 'left',
           formatter: numberFormatter,
-          labelMargin: 15
+          labelMargin: 15,
         },
         y2: {
           position: 'right',
           formatter: numberFormatter3,
-          labelMargin: 15
+          labelMargin: 15,
         }
       }
     },

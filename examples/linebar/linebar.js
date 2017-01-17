@@ -137,15 +137,18 @@ cpuMemChartView.setConfig({
         x: {
           accessor: 'T',
           labelFormatter: 'Time',
+          axis: 'x',
         },
         y: [
           {
+            enabled: true,
             accessor: 'cpu_stats.cpu_one_min_avg',
             labelFormatter: 'CPU',
             chart: 'stackedBar',
             color: '#6baed6',
             axis: 'y1',
           }, {
+            enabled: true,
             accessor: 'cpu_stats.rss',
             labelFormatter: 'Memory',
             chart: 'line',
@@ -160,13 +163,13 @@ cpuMemChartView.setConfig({
           position: 'left',
           formatter: cpuFormatter,
           labelMargin: 15,
-          ticks: 4
+          ticks: 4,
         },
         y2: {
           position: 'right',
           formatter: memFormatter,
           labelMargin: 15,
-          ticks: 4
+          ticks: 4,
         }
       }
     }

@@ -28,9 +28,11 @@ const chartConfig = {
       plot: {
         x: {
           accessor: 'x',
+          axis: 'x',
         },
         y: [
           {
+            enabled: true,
             accessor: 'c',
             chart: 'scatterPlot',
             sizeAccessor: 'r',
@@ -38,6 +40,7 @@ const chartConfig = {
             shape: 'circle',
             axis: 'y1'
           }, {
+            enabled: true,
             accessor: 's',
             chart: 'scatterPlot',
             sizeAccessor: 's',
@@ -45,6 +48,7 @@ const chartConfig = {
             shape: 'square',
             axis: 'y2'
           }, {
+            enabled: true,
             accessor: 't',
             chart: 'scatterPlot',
             sizeAccessor: 's',
@@ -56,7 +60,7 @@ const chartConfig = {
       },
       axis: {
         rAxis: {
-          range: [3, 10]
+          range: [3, 50]
         },
         y1: {
           position: 'left',
@@ -115,14 +119,24 @@ const chartConfig = {
       chartHeight: 200,
       plot: {
         x: {
-          accessor: 'x'
+          accessor: 'x',
+          axis: 'x',
         },
         y: [
           {
+            enabled: true,
             accessor: 'nav',
-            chart: 'line'
+            chart: 'line',
+            axis: 'y1',
           }
         ]
+      },
+      axis: {
+        y1: {
+          position: 'left',
+          formatter: numberFormatter,
+          labelMargin: 15,
+        },
       }
     }
   }]
