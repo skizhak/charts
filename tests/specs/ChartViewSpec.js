@@ -29,20 +29,22 @@ describe('coCharts', function () {
 describe('coCharts.charts.XYChartView', function () {
   beforeEach(function () {
     this.simpleChartConfig = {
+      container: '#chartView',
       components: [{
         type: 'compositeY',
         config: {
-          el: '#chartView',
           plot: {
             x: {
               accessor: 'x',
-              axis: 'x'
+              axis: 'x',
             },
             y: [{
+              enabled: true,
               accessor: 'y',
-              chart: 'line'
+              chart: 'line',
+              axis: 'y',
             }]
-          }
+          },
         }
       }]
     }
