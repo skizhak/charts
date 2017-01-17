@@ -22,18 +22,18 @@ class NavigationConfigModel extends ContrailChartsConfigModel {
       margin: 30,
 
       // Side margins. Will be computed if undefined.
-      marginTop: undefined,
-      marginBottom: undefined,
-      marginLeft: undefined,
-      marginRight: undefined,
-      marginInner: undefined,
+      marginTop: 30,
+      marginBottom: 30,
+      marginLeft: 30,
+      marginRight: 30,
+      marginInner: 30,
 
       brushHandleHeight: 8,
       brushHandleScaleX: 1,
       brushHandleScaleY: 1.2,
 
       // The selection to use when first rendered [xMin%, xMax%].
-      selection: undefined,
+      selection: [0, 100],
     }
   }
 }
