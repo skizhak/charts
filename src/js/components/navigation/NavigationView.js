@@ -1,281 +1,185 @@
 /*
  * Copyright (c) 2016 Juniper Networks, Inc. All rights reserved.
  */
-var $ = require('jquery')
-var _ = require('lodash')
-var d3 = require('d3')
-var ContrailChartsView = require('contrail-charts-view')
-var DataProvider = require('handlers/DataProvider')
-var CompositeYChartView = require('components/composite-y/CompositeYChartView')
+const _ = require('lodash')
+const d3 = require('d3')
+const d3Ease = require('d3-ease')
+const ContrailChartsView = require('contrail-charts-view')
+const DataProvider = require('handlers/DataProvider')
+const CompositeYChartView = require('components/composite-y/CompositeYChartView')
+const CompositeYChartConfigModel = require('components/composite-y/CompositeYChartConfigModel')
 
-var NavigationView = ContrailChartsView.extend({
-  type: 'navigation',
-  className: 'navigation-view',
-
-  events: {
-    'click .prev>a': 'prevChunkSelected',
-    'click .next>a': 'nextChunkSelected'
-  },
-
-  initialize: function (options) {
-    var self = this
-    ContrailChartsView.prototype.initialize.call(self, options)
-    self._focusDataProvider = new DataProvider({parentDataModel: self.model})
-    self._isModelChanged = false
-    self.brush = null
-    self.compositeYChartView = null
-    self.throttledTriggerWindowChangedEvent = _.bind(_.throttle(self._triggerWindowChangedEvent, 100), self)
-    $(window).resize(function () {
-      // Change the model change flag so that when the underlying chart rendered event fires the brush will be re-computed.
-      self._isModelChanged = true
-      if (self.brush) {
-        var marginInner = self.params.marginInner
-        self.brush = self.brush.extent([
-          [self.params.xRange[0] - marginInner, self.params.yRange[1] - marginInner],
-          [self.params.xRange[1] + marginInner, self.params.yRange[0] + marginInner]])
-        self.svgSelection().select('g.brush').call(self.brush)
-      }
-    })
-    self.listenTo(self.model, 'change', self.render)
-  },
-  /**
-   * Override ContrailChartsView.svgSelection which uses container's shared svg
-   */
-  svgSelection: function () {
-    return d3.select(this.el).select('svg')
-  },
-
-  changeModel: function (model) {
-    var self = this
-    self.stopListening(self.model)
-    self.model = model
-    self._focusDataProvider = new DataProvider({parentDataModel: self.model})
-    self.listenTo(self.model, 'change', self._onModelChange)
-  },
-
-  _onModelChange: function () {
-    this._isModelChanged = true
-  },
-
-  _handleModelChange: function () {
-    var self = this
-    var x = self.params.plot.x.accessor
-    var xScale = self.params.axis[self.params.plot.x.axis].scale
-    var rangeX = self.model.getRangeFor(x)
-    // Fetch the previous data window position
-    var prevWindowXMin
-    var prevWindowXMax
-    var prevWindowSize
-    if (self.config.has('focusDomain')) {
-      var prevFocusDomain = self.config.get('focusDomain')
-      if (_.isArray(prevFocusDomain[x])) {
-        prevWindowXMin = prevFocusDomain[x][0]
-        prevWindowXMax = prevFocusDomain[x][1]
-        prevWindowSize = prevWindowXMax - prevWindowXMin
-      }
+class NavigationView extends ContrailChartsView {
+  get type () { return 'navigation' }
+  get tagName () { return 'g' }
+  get className () { return 'navigation-view' }
+  get events () {
+    return {
+      'click .prev>a': 'prevChunkSelected',
+      'click .next>a': 'nextChunkSelected',
     }
-    // Try to keep the same data window. Move it if exceeds data range.
-    if (!_.isUndefined(prevWindowXMin) && !_.isUndefined(prevWindowXMax)) {
-      var xMin = prevWindowXMin
-      var xMax = prevWindowXMax
-      if (xMin < rangeX[0]) {
-        xMin = rangeX[0]
-      }
-      if (xMin > rangeX[1] - prevWindowSize) {
-        xMin = rangeX[1] - prevWindowSize
-      }
-      if (xMax > rangeX[1]) {
-        xMax = rangeX[1]
-      }
-      if (xMax < rangeX[0] + prevWindowSize) {
-        xMax = rangeX[0] + prevWindowSize
-      }
-      var newFocusDomain = {}
-      newFocusDomain[x] = [xMin, xMax]
-      // if (xMin !== prevWindowXMin || xMax !== prevWindowXMax) {
-      self._focusDataProvider.setRangeAndFilterData(newFocusDomain)
-      self.config.set({ focusDomain: newFocusDomain }, { silent: true })
-      // }
-      var brushGroup = self.svgSelection().select('g.brush').transition().ease(d3.easeLinear).duration(self.params.duration)
-      self.brush.move(brushGroup, [xScale(xMin), xScale(xMax)])
-    } else {
-      self.removeBrush()
+  }
+  constructor (options) {
+    super(options)
+    this._focusDataProvider = new DataProvider({parentDataModel: this.model})
+    this._isModelChanged = false
+    this.brush = null
+    this.compositeYChartView = null
+    this._throttledTriggerSelectionChange = _.throttle(this._triggerSelectionChange, 100).bind(this)
+    this._throttledRenderBrush = _.throttle(this._renderBrush, 100).bind(this)
+    window.addEventListener('resize', this._onWindowResize.bind(this))
+    this.listenTo(this.model, 'change', this.render)
+  }
+
+  changeModel (model) {
+    this.stopListening(this.model)
+    this.model = model
+    this._focusDataProvider = new DataProvider({parentDataModel: this.model})
+    this.listenTo(this.model, 'change', this.render)
+  }
+
+  render () {
+    this.resetParams()
+    super.render()
+    if (!this.compositeYChartView) {
+      // One time compositeYChartView initialization.
+      this._initializeAndRenderCompositeYChartView()
+    // From this moment the compositeYChartView is independent from NavigationView. It will react to config / model changes on it's own.
     }
-  },
+    return this
+  }
 
-  removeBrush: function () {
-    var self = this
-    var svg = self.svgSelection()
-    svg.select('g.brush').remove()
-    self.brush = null
-    self.config.unset('focusDomain', { silent: true })
-    var newFocusDomain = {}
-    self._focusDataProvider.setRangeAndFilterData(newFocusDomain)
-  },
+  get focusDataProvider () {
+    return this._focusDataProvider
+  }
 
-  prevChunkSelected: function () {
-    var range = this.model.getRange()
-    var x = this.params.xAccessor
-    var rangeDiff = range[x][1] - range[x][0]
-    var queryLimit = {}
+  prevChunkSelected () {
+    const range = this.model.getRange()
+    const x = this.params.xAccessor
+    const rangeDiff = range[x][1] - range[x][0]
+    const queryLimit = {}
     queryLimit[x] = [range[x][0] - rangeDiff * 0.5, range[x][1] - rangeDiff * 0.5]
     this.model.setQueryLimit(queryLimit)
   // TODO: show some waiting screen?
-  },
+  }
 
-  nextChunkSelected: function () {
-    var range = this.model.getRange()
-    var x = this.params.xAccessor
-    var rangeDiff = range[x][1] - range[x][0]
-    var queryLimit = {}
+  nextChunkSelected () {
+    const range = this.model.getRange()
+    const x = this.params.xAccessor
+    const rangeDiff = range[x][1] - range[x][0]
+    const queryLimit = {}
     queryLimit[x] = [range[x][0] + rangeDiff * 0.5, range[x][1] + rangeDiff * 0.5]
     this.model.setQueryLimit(queryLimit)
   // TODO: show some waiting screen?
-  },
+  }
 
-  getFocusDataProvider: function () {
-    return this._focusDataProvider
-  },
-
-  initializeAndRenderCompositeYChartView: function () {
-    var self = this
-    self.compositeYChartView = new CompositeYChartView({
-      model: self.model,
-      config: self.config,
-      container: self.$el,
-      // TODO id should be unique per component
-      id: self.id,
-      eventObject: self._eventObject,
-      name: 'xyChartNavigation'
+  _initializeAndRenderCompositeYChartView () {
+    const params = _.extend({}, this.params)
+    params.isSharedContainer = true
+    const compositeYConfig = new CompositeYChartConfigModel(params)
+    this.compositeYChartView = new CompositeYChartView({
+      model: this.model,
+      config: compositeYConfig,
+      container: this._wrapper.node(),
+      eventObject: this._eventObject,
     })
-    self.listenTo(self._eventObject, 'rendered:xyChartNavigation', self._chartRendered)
-    self.compositeYChartView.render()
-  },
-
-  /**
-  * This method will be called when the underlying chart is rendered.
-  */
-  _chartRendered: function () {
-    var self = this
-    self.params = self.compositeYChartView.params
-    if (self._isModelChanged) {
-      self._handleModelChange()
-      self._isModelChanged = false
-    }
-    setTimeout(function () {
-      self.renderBrush()
-    }, 1000)
-
-  // self.renderPageLinks()
-  },
-
-  _triggerWindowChangedEvent: function (focusDomain) {
-    var self = this
-    var x = self.params.plot.x.accessor
-    self._focusDataProvider.setRangeAndFilterData(focusDomain)
-    self._eventObject.trigger('windowChanged', focusDomain[x][0], focusDomain[x][1])
-  },
-
-  _handleBrushSelection: function (dataWindow) {
-    var self = this
-    var x = self.params.plot.x.accessor
-    var xScale = self.params.axis[self.params.plot.x.axis].scale
-    var brushHandleCenter = (self.params.yRange[0] - self.params.yRange[1] + 2 * self.params.marginInner) / 2
-    var svg = self.svgSelection()
-    var xMin = xScale.invert(dataWindow[0])
-    var xMax = xScale.invert(dataWindow[1])
-    if (_.isDate(xMin)) {
-      xMin = xMin.getTime()
-    }
-    if (_.isDate(xMax)) {
-      xMax = xMax.getTime()
-    }
-    var focusDomain = {}
-    focusDomain[x] = [xMin, xMax]
-    self.config.set({ focusDomain: focusDomain }, { silent: true })
-    self.throttledTriggerWindowChangedEvent(focusDomain)
-    var gHandles = svg.select('g.brush').selectAll('.handle--custom')
-    gHandles
-      .classed('hide', false)
-      .attr('transform', function (d, i) { return 'translate(' + dataWindow[i] + ',' + brushHandleCenter + ') scale(1,2)' })
-  },
-
+    this.compositeYChartView.on('rendered', this._renderBrush.bind(this))
+    this.compositeYChartView.render()
+  }
   /**
   * This needs to be called after compositeYChartView is rendered because we need the params computed.
   */
-  renderBrush: function () {
-    var self = this
-    var xScale = self.params.axis[self.params.plot.x.axis].scale
-    var svg = self.svgSelection()
-    if (!self.brush) {
-      var marginInner = self.params.marginInner
-      var brushHandleHeight = 16 // self.params.yRange[0] - self.params.yRange[1]
-      self.brush = d3.brushX()
-        .extent([
-          [self.params.xRange[0] - marginInner, self.params.yRange[1] - marginInner],
-          [self.params.xRange[1] + marginInner, self.params.yRange[0] + marginInner]])
-        .handleSize(10)
-        .on('brush', function () {
-          self._handleBrushSelection(d3.event.selection)
-        })
-        .on('end', function () {
-          var dataWindow = d3.event.selection
-          if (!dataWindow) {
-            self.removeBrush()
-            self.renderBrush()
-          } else {
-            self._handleBrushSelection(d3.event.selection)
-          }
-        })
-      var gBrush = svg.append('g').attr('class', 'brush').call(self.brush)
+  _renderBrush () {
+    // TODO use ordered rendering instead of reattaching element to be the last
+    setTimeout(() => {
+      this.el.parentNode.removeChild(this.el)
+      this.svg.append(() => this.el)
+    }, 200)
+    const compositeYParams = this.compositeYChartView.params
+    const xScale = compositeYParams.axis[compositeYParams.plot.x.axis].scale
+    const marginInner = this.params.marginInner
+    const brushHandleHeight = 16 // this.params.yRange[0] - this.params.yRange[1]
+    this.brush = d3.brushX()
+      .extent([
+        [compositeYParams.xRange[0] - marginInner, compositeYParams.yRange[1] - marginInner],
+        [compositeYParams.xRange[1] + marginInner, compositeYParams.yRange[0] + marginInner]])
+      .handleSize(10)
+      .on('brush', () => {
+        this._onBrushSelection(d3.event.selection)
+      })
+      .on('end', () => {
+        const dataWindow = d3.event.selection
+        if (!dataWindow) {
+          this._removeBrush()
+          this._renderBrush()
+        } else {
+          this._onBrushSelection(d3.event.selection)
+        }
+      })
+    let gBrush = this.d3.select('g.brush')
+    if (gBrush.empty()) {
+      gBrush = this.d3.append('g')
       gBrush.selectAll('.handle--custom')
         .data([{type: 'w'}, {type: 'e'}])
         .enter().append('path')
-        .attr('class', 'handle--custom hide')
-        .attr('fill', '#666')
-        .attr('fill-opacity', 0.75)
-        .attr('stroke', '#444')
-        .attr('stroke-width', 1)
-        .attr('cursor', 'ew-resize')
+        .classed('hide', true)
+        .classed('handle--custom', true)
         .attr('d', d3.arc()
           .innerRadius(0)
           .outerRadius(brushHandleHeight / 2)
           .startAngle(0)
-          .endAngle(function (d, i) { return i ? Math.PI : -Math.PI }))
-      if (_.isArray(self.params.selection)) {
-        if (!self.params.selection[0]) {
-          self.params.selection[0] = 0
-        }
-        if (!self.params.selection[1]) {
-          self.params.selection[1] = 100
-        }
-        var brushGroup = self.svgSelection().select('g.brush').transition().ease(d3.easeLinear).duration(self.params.duration)
-        var xMin = (xScale.range()[1] - xScale.range()[0]) * (self.params.selection[0] / 100) + xScale.range()[0]
-        var xMax = (xScale.range()[1] - xScale.range()[0]) * (self.params.selection[1] / 100) + xScale.range()[0]
-        self.brush.move(brushGroup, [xMin, xMax])
-      }
+          .endAngle((d, i) => { return i ? Math.PI : -Math.PI }))
     }
-  },
-
-  renderPageLinks: function () {
-    var self = this
-    if (!self.$el.find('.page-links').length) {
-      $('<div>').appendTo(self.$el).addClass('page-links')
+    gBrush.classed('brush', true).call(this.brush)
+    if (_.isArray(this.params.selection)) {
+      const brushGroup = this.d3.select('g.brush').transition().ease(d3Ease.easeLinear).duration(this.params.duration)
+      const xMin = (xScale.range()[1] - xScale.range()[0]) * (this.params.selection[0] / 100) + xScale.range()[0]
+      const xMax = (xScale.range()[1] - xScale.range()[0]) * (this.params.selection[1] / 100) + xScale.range()[0]
+      this.brush.move(brushGroup, [xMin, xMax])
     }
-    self.$el.find('.page-links').html(self.template())
-  },
-
-  render: function () {
-    var self = this
-    self.resetParams()
-    if (!self.compositeYChartView) {
-      // One time compositeYChartView initialization.
-      self.initializeAndRenderCompositeYChartView()
-      ContrailChartsView.prototype.render.call(self)
-    // From this moment the compositeYChartView is independent from NavigationView. It will react to config / model changes on it's own.
-    }
-    return self
   }
-})
+
+  _removeBrush () {
+    this.d3.select('g.brush').remove()
+    this.brush = null
+    this.config.unset('focusDomain', { silent: true })
+    const newFocusDomain = {}
+    this._focusDataProvider.setRangeAndFilterData(newFocusDomain)
+  }
+
+  _triggerSelectionChange (focusDomain) {
+    const xAccessor = this.params.plot.x.accessor
+    this._focusDataProvider.setRangeAndFilterData(focusDomain)
+    this._eventObject.trigger('windowChanged', focusDomain[xAccessor][0], focusDomain[xAccessor][1])
+  }
+
+  // Event handlers
+
+  _onBrushSelection (selection) {
+    const compositeYParams = this.compositeYChartView.params
+    const xAccessor = this.params.plot.x.accessor
+    const xScale = compositeYParams.axis[this.params.plot.x.axis].scale
+    const brushHandleCenter = (compositeYParams.yRange[0] - compositeYParams.yRange[1] + 2 * this.params.marginInner) / 2
+    let xMin = xScale.invert(selection[0])
+    let xMax = xScale.invert(selection[1])
+    if (_.isDate(xMin)) xMin = xMin.getTime()
+    if (_.isDate(xMax)) xMax = xMax.getTime()
+    const focusDomain = {}
+    focusDomain[xAccessor] = [xMin, xMax]
+    this.config.set({ focusDomain: focusDomain }, { silent: true })
+    this._throttledTriggerSelectionChange(focusDomain)
+    const gHandles = this.d3.select('g.brush').selectAll('.handle--custom')
+    gHandles
+      // TODO class should be reapplied
+      .classed('hide', false)
+      .attr('transform', (d, i) => {
+        return `translate(${selection[i]},${brushHandleCenter}) scale(1,2)`
+      })
+  }
+
+  _onWindowResize () {
+    this._throttledRenderBrush()
+  }
+}
 
 module.exports = NavigationView

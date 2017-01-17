@@ -34,7 +34,7 @@ class ContrailChartsView extends ContrailView {
    * @returns {d3 selection} svg container to render this.el into if component's element is vector graphics
    */
   get svg () {
-    const selector = this.config.get('isSharedContainer') ? 'svg.shared-svg' : `#${this.id}-wrapper svg`
+    const selector = this.config.get('isSharedContainer') ? `#${this._container.id} > svg` : `#${this.id}-wrapper svg`
     return this.container.select(selector)
   }
   /**
@@ -96,11 +96,11 @@ class ContrailChartsView extends ContrailView {
       containerOfSvg
         .append('svg')
         .classed('coCharts-svg', true)
-        .classed('shared-svg', isSharedContainer)
     }
     this.svg
       .attr('width', this.params.chartWidth || this.svg.attr('width'))
       .attr('height', this.params.chartHeight || this.svg.attr('height'))
+      .classed('shared-svg', isSharedContainer)
 
     if (isSharedContainer && this.params.isPrimary) this.svg.attr('data-order', this.config.get('order'))
   }
