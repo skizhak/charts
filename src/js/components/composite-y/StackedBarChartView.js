@@ -22,16 +22,14 @@ class StackedBarChartView extends XYChartSubView {
   */
   calculateAxisDomains () {
     const domains = {}
-    domains[this.params.plot.x.axis] = this.model.getRangeFor(this.params.plot.x.accessor)
+    domains[this.params.plot.x.axis] = this.model.getRangeFor(this._parent.params.plot.x.accessor)
     // The domains calculated here can be overriden in the axis configuration.
     // The overrides are handled by the parent.
     _.each(this.params.activeAccessorData, (accessor) => {
       const domain = this.model.getRangeFor(accessor.accessor)
       if (_.has(domains, this.axisName)) {
-        // domains[this.axisName][0] = Math.min( domain[0], domains[this.axisName][0] )
         domains[this.axisName][1] += domain[1]
       } else {
-        // domains[this.axisName] = [domain[0], domain[1]]
         domains[this.axisName] = [0, domain[1]]
       }
     })

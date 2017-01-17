@@ -2,7 +2,6 @@
  * Copyright (c) 2016 Juniper Networks, Inc. All rights reserved.
  */
 
-const $ = require('jquery')
 const _ = require('lodash')
 const d3 = require('d3')
 const ContrailChartsView = require('contrail-charts-view')
@@ -11,6 +10,7 @@ const AreaChartView = require('components/composite-y/AreaChartView')
 const BarChartView = require('components/composite-y/GroupedBarChartView')
 const StackedBarChartView = require('components/composite-y/StackedBarChartView')
 const ScatterPlotView = require('components/composite-y/ScatterBubbleChartView')
+const CompositeYChartConfigModel = require('components/composite-y/CompositeYChartConfigModel')
 
 class CompositeYChartView extends ContrailChartsView {
   get type () { return 'compositeY' }
@@ -31,15 +31,15 @@ class CompositeYChartView extends ContrailChartsView {
     this._drawings = []
     // TODO: Every model change will trigger a redraw. This might not be desired - dedicated redraw event?
     // / View params hold values from the config and computed values.
-    this.name = options.name || 'compositeY'
-    this._onWindowResize()
 
     this.listenTo(this.model, 'change', this._onDataModelChange)
     this.listenTo(this.config, 'change', this._onConfigModelChange)
     this.listenTo(this._eventObject, 'selectColor', this.selectColor)
     this.listenTo(this._eventObject, 'refresh', this.refresh)
+    window.addEventListener('resize', this._onWindowResize.bind(this))
 
     this._debouncedRenderFunction = _.bind(_.debounce(this._render, 10), this)
+    this._throttledRender = _.throttle(() => { this.render() }, 100)
     this._throttledShowCrosshair = _.throttle((point) => {
       this._eventObject.trigger('showCrosshair', this.getCrosshairData(point), point, this.getCrosshairConfig())
     }, 100)
@@ -67,16 +67,6 @@ class CompositeYChartView extends ContrailChartsView {
     })
     this._onDataModelChange()
   }
-
-  resetParams () {
-    // Reset parents params
-    this.params = this.config.initializedComputedParameters()
-    // Reset params for all children.
-    // This way every child drawing can have access to parents config and still have its own computed params stored in config.
-    _.each(this._drawings, (drawing, i) => {
-      drawing.resetParamsForChild(i)
-    })
-  }
   /**
   * Calculates the activeAccessorData that holds only the verified and enabled accessors from the 'plot' structure.
   * Params: activeAccessorData, yAxisInfoArray
@@ -103,7 +93,7 @@ class CompositeYChartView extends ContrailChartsView {
               used: 0,
               position: axisPosition,
               num: 0,
-              accessors: []
+              accessors: [],
             }
             this.params.yAxisInfoArray.push(foundAxisInfo)
           }
@@ -505,11 +495,13 @@ class CompositeYChartView extends ContrailChartsView {
           // The child drawing with this name does not exist yet. Instantiate the child drawing.
           _.each(this.possibleChildViews, (ChildView, chartType) => {
             if (chartType === accessor.chart) {
-              // TODO: a way to provide a different model to every child
+              const params = _.extend({}, this.params)
+              delete params.isPrimary
+              const compositeYConfig = new CompositeYChartConfigModel(params)
               // TODO: pass eventObject to child?
               foundDrawing = new ChildView({
                 model: this.model,
-                config: this.config,
+                config: compositeYConfig,
                 eventObject: this._eventObject,
                 container: this._container,
                 axisName: accessor.axis,
@@ -523,11 +515,12 @@ class CompositeYChartView extends ContrailChartsView {
     })
     // Order the drawings so the highest order drawings get rendered first.
     this._drawings.sort((a, b) => b.renderOrder - a.renderOrder)
+    _.each(this._drawings, (drawing) => { drawing.resetParams() })
   }
 
   _render () {
-    this._updateChildDrawings()
     this.resetParams()
+    this._updateChildDrawings()
     this.calculateActiveAccessorData()
     this._calculateDimensions()
     this.calculateScales()
@@ -540,7 +533,7 @@ class CompositeYChartView extends ContrailChartsView {
       drawing.render()
     })
 
-    this._eventObject.trigger('rendered:' + this.name, this.params, this.config, this)
+    this.trigger('rendered')
   }
 
   // Event handlers
@@ -554,10 +547,7 @@ class CompositeYChartView extends ContrailChartsView {
   }
 
   _onWindowResize () {
-    const throttled = _.throttle(() => {
-      this.render()
-    }, 100)
-    $(window).resize(throttled)
+    this._throttledRender()
   }
 
   _onMousemove () {

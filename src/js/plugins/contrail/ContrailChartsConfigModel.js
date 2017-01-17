@@ -8,17 +8,9 @@ class ContrailChartsConfigModel extends ContrailModel {
   /**
   * Initialize the computed parameters with the config parameters.
   */
-  initializedComputedParameters () {
+  computeParams () {
     this._computed = {}
     return _.extend(this._computed, JSON.parse(JSON.stringify(this.toJSON())))
-  }
-
-  initializedComputedParametersForChild (childIndex) {
-    if (!_.isArray(this._computedForChild)) {
-      this._computedForChild = []
-    }
-    this._computedForChild[childIndex] = {}
-    return _.extend(this._computedForChild[childIndex], JSON.parse(JSON.stringify(this.toJSON())))
   }
 
   getValue (data, datumConfig) {

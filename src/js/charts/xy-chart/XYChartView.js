@@ -115,11 +115,11 @@ class XYChartView extends ContrailChartsView {
       }
     })
     if (this._isEnabledComponent('navigation')) {
-      dataModel = this.getComponentByType('navigation').getFocusDataProvider()
+      dataModel = this.getComponentByType('navigation').focusDataProvider
       if (this._isEnabledComponent('compositeY')) this.getComponentByType('compositeY').changeModel(dataModel)
     }
     if (this._isEnabledComponent('timeline')) {
-      dataModel = this.getComponentByType('timeline').getFocusDataProvider()
+      dataModel = this.getComponentByType('timeline').focusDataProvider
       if (this._isEnabledComponent('compositeY')) this.getComponentByType('compositeY').changeModel(dataModel)
     }
     if (this._isEnabledComponent('tooltip')) {

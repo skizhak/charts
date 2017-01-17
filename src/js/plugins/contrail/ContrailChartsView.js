@@ -48,11 +48,7 @@ class ContrailChartsView extends ContrailView {
    * The view may modify the params object with calculated values.
    */
   resetParams () {
-    this.params = this.config.initializedComputedParameters()
-  }
-
-  resetParamsForChild (childIndex) {
-    this.params = this.config.initializedComputedParametersForChild(childIndex)
+    this.params = this.config.computeParams()
   }
   /**
   * This is how the view gets its data.
