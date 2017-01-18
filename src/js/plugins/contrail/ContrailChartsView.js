@@ -37,6 +37,12 @@ class ContrailChartsView extends ContrailView {
     return this._id || this.cid
   }
   /**
+   * Backbone tries to set id while initialization
+   */
+  set id (id) {
+    // do nothing
+  }
+  /**
    * @returns {d3 selection} Looks for svg container
    */
   get svg () {
