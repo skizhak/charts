@@ -11,7 +11,7 @@ before_script:
 
 script:
   - npm run lint
-  - phantomjs tests/run-jasmine.js tests/TestRunner.html
+  - npm run test-headless
 
 after_script:
   - process.exit()

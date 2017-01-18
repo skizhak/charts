@@ -49,7 +49,6 @@ describe('coCharts.charts.XYChartView', function () {
       }]
     }
     this.chartView = new coCharts.charts.XYChartView()
-    this.chartView.setConfig(this.simpleChartConfig)
   })
 
   it('XYChartView has xyChart component', function () {
@@ -71,11 +70,24 @@ describe('coCharts.charts.XYChartView', function () {
   })
 
   it('On XYChartView render, component xy render is called', function () {
-    this.chartView.setData([])
     this.chartView.setConfig(this.simpleChartConfig)
     const compositeY = this.chartView.getComponentByType('compositeY')
     spyOn(compositeY, 'render')
     this.chartView.render()
     expect(compositeY.render).toHaveBeenCalled()
   })
+
+  // it('On XYChartView render, component xy render is called', function () {
+  //   this.chartView.setConfig(this.simpleChartConfig)
+  //   const compositeY = this.chartView.getComponentByType('compositeY')
+  //   spyOn(compositeY, 'render')
+  //   this.chartView.setData([
+  //     { x: (new Date(2016, 11, 1)).getTime(), y: 0 },
+  //     { x: (new Date(2016, 11, 2)).getTime(), y: 3 },
+  //     { x: (new Date(2016, 11, 3)).getTime(), y: 2 },
+  //     { x: (new Date(2016, 11, 4)).getTime(), y: 4 },
+  //     { x: (new Date(2016, 11, 5)).getTime(), y: 5 },
+  //   ])
+  //   expect(compositeY.render).toHaveBeenCalled()
+  // })
 })

@@ -8,6 +8,7 @@
     "clean-build": "rm -rf build/* && webpack --mode=build",
     "dev": "webpack --progress --colors --watch --mode=dev",
     "test": "node test.js",
+    "test-headless": "phantomjs tests/run-jasmine.js tests/TestRunner.html",
     "lint": "eslint src/** || true"
   },
   "license": "Apache-2.0",
