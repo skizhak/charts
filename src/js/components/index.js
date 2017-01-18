@@ -67,5 +67,9 @@ module.exports = {
   pieChart: {
     ConfigModel: PieChartConfigModel,
     View: PieChartView
-  }
+  },
+  standalone: {
+    ConfigModel: StandaloneConfigModel,
+    View: StandaloneView,
+  },
 }

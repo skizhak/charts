@@ -214,6 +214,11 @@ cpuMemChartView.setConfig({
       ]
     }
   }, {
+    type: 'standalone',
+    config: {
+      isSharedContainer: false,
+    },
+  }, {
     type: 'message',
     config: {
       enabled: true,

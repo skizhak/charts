@@ -9,7 +9,7 @@ const LineChartView = require('components/composite-y/LineChartView')
 const AreaChartView = require('components/composite-y/AreaChartView')
 const BarChartView = require('components/composite-y/GroupedBarChartView')
 const StackedBarChartView = require('components/composite-y/StackedBarChartView')
-const ScatterPlotView = require('components/composite-y/ScatterBubbleChartView')
+const ScatterPlotView = require('components/composite-y/ScatterPlotView')
 const CompositeYChartConfigModel = require('components/composite-y/CompositeYChartConfigModel')
 
 class CompositeYChartView extends ContrailChartsView {
