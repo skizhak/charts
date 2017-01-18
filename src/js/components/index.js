@@ -20,6 +20,8 @@ const CompositeYChartConfigModel = require('components/composite-y/CompositeYCha
 const CompositeYChartView = require('components/composite-y/CompositeYChartView')
 const PieChartConfigModel = require('components/radial/PieChartConfigModel')
 const PieChartView = require('components/radial/PieChartView')
+const StandaloneConfigModel = require('components/standalone/StandaloneConfigModel')
+const StandaloneView = require('components/standalone/StandaloneView')
 
 module.exports = {
   tooltip: {

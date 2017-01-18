@@ -9,10 +9,11 @@ const d3Ease = require('d3-ease')
 const d3Scale = require('d3-scale')
 const XYChartSubView = require('components/composite-y/XYChartSubView')
 
-class ScatterBubbleChartView extends XYChartSubView {
+class ScatterPlotView extends XYChartSubView {
   get type () { return 'scatterPlot' }
   get className () { return 'coCharts-scatter-plot' }
-  get renderOrder () { return 50 }
+  get zIndex () { return 1 }
+
   get events () {
     return {
       'mouseover .point': '_onMouseover',
@@ -149,4 +150,4 @@ class ScatterBubbleChartView extends XYChartSubView {
   }
 }
 
-module.exports = ScatterBubbleChartView
+module.exports = ScatterPlotView
