@@ -9,6 +9,20 @@ class MessageView extends ContrailChartsView {
   get type () { return 'message' }
   get tagName () { return 'div' }
   get className () { return 'coCharts-message-view' }
+  get selectors () {
+    return _.extend(super.selectors, {
+      message: {
+        default: 'coCharts-msg-default',
+        info: 'coCharts-msg-info',
+        error: 'coCharts-msg-error',
+      },
+      icon: {
+        default: 'fa-comment-o',
+        info: 'fa-info-circle',
+        error: 'fa-exclamation-triangle',
+      }
+    })
+  }
 
   constructor (options) {
     super(options)
@@ -32,8 +46,8 @@ class MessageView extends ContrailChartsView {
     _.forEach(msgObj.messages, (msg) => {
       _.assignIn(msg, {
         level: msg.level || 'default',
-        iconLevel: this.config.HTMLClassNames.icon[msg.level || 'default'],
-        msgLevel: this.config.HTMLClassNames.message[msg.level || 'default']
+        iconLevel: this.selectors.icon[msg.level || 'default'],
+        msgLevel: this.selectors.message[msg.level || 'default'],
       })
     })
 
