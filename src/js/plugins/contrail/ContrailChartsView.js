@@ -18,6 +18,7 @@ class ContrailChartsView extends ContrailView {
       sharedSvg: '.shared-svg',
     }
   }
+  get zIndex () { return 0 }
 
   constructor (options = {}) {
     super(options)
@@ -62,10 +63,17 @@ class ContrailChartsView extends ContrailView {
     return d3.select(this._container)
   }
   /**
+   * One-time setter
+   */
+  set container (el) {
+    if (!this._container) this._container = el
+  }
+  /**
    * Save the config '_computed' parameters in the view's 'params' local object for easier reference (this.params instead of this.config._computed).
    * The view may modify the params object with calculated values.
    */
-  resetParams () {
+  resetParams (params) {
+    if (params) this.config.set(params)
     this.params = this.config.computeParams()
   }
   /**
@@ -88,7 +96,14 @@ class ContrailChartsView extends ContrailView {
     if (this.isTagNameSvg(this.tagName)) {
       this._initSvg()
       if (this.svg.select(`.${this.id}`).empty()) {
+        this.el.setAttribute('data-order', this.zIndex)
         this.svg.node().append(this.el)
+        // TODO constrain selector to direct descendants ":scope > g"
+        this.svg
+          .selectAll('g[data-order]')
+          .datum(function () { return this.getAttribute('data-order') })
+          .sort()
+          .datum(null)
       }
     } else {
       // non vector components

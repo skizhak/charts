@@ -15,7 +15,7 @@ const XYChartSubView = require('components/composite-y/XYChartSubView')
 class LineChartView extends XYChartSubView {
   get type () { return 'line' }
   get className () { return 'line-chart' }
-  get renderOrder () { return 10 }
+  get zIndex () { return 2 }
   get events () {
     return {
       'mouseover .line': '_onMouseover',

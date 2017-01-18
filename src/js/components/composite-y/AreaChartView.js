@@ -11,7 +11,7 @@ const XYChartSubView = require('components/composite-y/XYChartSubView')
 class AreaChartView extends XYChartSubView {
   get type () { return 'area' }
   get className () { return 'area-chart' }
-  get renderOrder () { return 50 }
+  get zIndex () { return 50 }
 
   /**
   * Called by the parent in order to calculate maximum data extents for all of this child's axis.

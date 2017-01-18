@@ -8,7 +8,7 @@ const XYChartSubView = require('components/composite-y/XYChartSubView')
 class BarChartView extends XYChartSubView {
   get type () { return 'bar' }
   get className () { return 'bar-chart' }
-  get renderOrder () { return 100 }
+  get zIndex () { return 1 }
   get events () {
     return {
       'mouseover .bar': '_onMouseover',

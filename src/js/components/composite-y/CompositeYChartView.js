@@ -514,7 +514,7 @@ class CompositeYChartView extends ContrailChartsView {
       }
     })
     // Order the drawings so the highest order drawings get rendered first.
-    this._drawings.sort((a, b) => b.renderOrder - a.renderOrder)
+    this._drawings.sort((a, b) => a.renderOrder - b.renderOrder)
     _.each(this._drawings, (drawing) => { drawing.resetParams() })
   }
 

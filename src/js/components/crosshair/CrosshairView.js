@@ -8,6 +8,7 @@ class CrosshairView extends ContrailChartsView {
   get type () { return 'crosshair' }
   get tagName () { return 'g' }
   get className () { return 'coCharts-crosshair-view' }
+  get zIndex () { return 9 }
 
   constructor (options) {
     super(options)
