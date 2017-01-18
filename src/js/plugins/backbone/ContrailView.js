@@ -30,7 +30,7 @@ class ContrailView extends Backbone.View {
     events || (events = _.result(this, 'events'))
     if (!events) return this
     this.undelegateEvents()
-    for (const key in events) {
+    for (let key in events) {
       let method = events[key]
       if (!_.isFunction(method)) method = this[method]
       if (!method) continue
