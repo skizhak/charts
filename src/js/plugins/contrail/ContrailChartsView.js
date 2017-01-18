@@ -10,9 +10,12 @@ const ContrailView = require('contrail-view')
  * View base class.
  */
 class ContrailChartsView extends ContrailView {
-  get defaults () {
+  get selectors () {
     return {
-      _type: 'ContrailChartsView',
+      component: '.coCharts-component',
+      svgWrapper: '.svg-wrapper',
+      svg: '.coCharts-svg',
+      sharedSvg: '.shared-svg',
     }
   }
 
@@ -26,15 +29,30 @@ class ContrailChartsView extends ContrailView {
     this._eventObject = options.eventObject || _.extend({}, Events)
     this.params = {}
   }
-
+  /**
+   * @return {String} id provided by config or Backbone generated
+   */
   get id () {
     return this._id || this.cid
   }
   /**
-   * @returns {d3 selection} svg container to render this.el into if component's element is vector graphics
+   * @returns {d3 selection} Looks for svg container
    */
   get svg () {
-    const selector = this.config.get('isSharedContainer') ? `#${this._container.id} > svg` : `#${this.id}-wrapper svg`
+    let selector = ''
+    if (this.config.get('isSharedContainer')) {
+      // this components uses shared svg container
+      selector = `#${this._container.id} > ${this.selectors.svgWrapper} > svg${this.selectors.svg}${this.selectors.sharedSvg}`
+    } else {
+      // this component is standalone
+      if (this.isTagNameSvg(this.tagName)) {
+        // this component is pure svg
+        selector = `#${this._container.id} > #${this.id}-svg-wrapper > svg${this.selectors.svg}`
+      } else {
+        // this component may have shared container inside
+        selector = `#${this._container.id} > #${this.id} > ${this.selectors.svgWrapper} > svg${this.selectors.svg}${this.selectors.sharedSvg}`
+      }
+    }
     return this.container.select(selector)
   }
   /**
@@ -68,64 +86,64 @@ class ContrailChartsView extends ContrailView {
    */
   render (content) {
     if (this.isTagNameSvg(this.tagName)) {
-      if (!this.config.get('isSharedContainer')) {
-        const wrapper = document.createElement('div')
-        wrapper.setAttribute('id', `${this.id}-wrapper`)
-        this._insertSorted(wrapper)
-      }
       this._initSvg()
       if (this.svg.select(`.${this.id}`).empty()) {
         this.svg.node().append(this.el)
       }
     } else {
-      if (content) this.$el.html(content)
+      // non vector components
+      if (content) this.el.innerHTML = content
       this._insertSorted(this.el)
     }
   }
-
-  get _wrapper () {
-    return this.container.select(`#${this.id}-wrapper`)
-  }
   /**
    * First component which uses shared svg container appends svg element to container
+   * There is a div wrapper over svg to workaround FF bug, when svg data-order attribute is not set
    */
   _initSvg () {
     const isSharedContainer = this.config.get('isSharedContainer')
     if (this.svg.empty()) {
-      const containerOfSvg = isSharedContainer ? this.container : this._wrapper
-      containerOfSvg
-        .append('svg')
-        .classed('coCharts-svg', true)
+      const wrapper = document.createElement('div')
+      const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg')
+      wrapper.appendChild(svg)
+      svg.classList.add(this.selectors.svg.substr(1))
+      if (isSharedContainer) {
+        svg.classList.add(this.selectors.sharedSvg.substr(1))
+      } else {
+        // create wrapper for this component only
+        wrapper.setAttribute('id', `${this.id}-svg-wrapper`)
+      }
+      wrapper.classList.add(this.selectors.svgWrapper.substr(1))
+      this._insertSorted(wrapper)
+    }
+    const wrapperPosition = this.svg.node().parentNode.dataset.order
+    if (this.params.isPrimary && wrapperPosition !== this.config.get('order')) {
+      const wrapper = this.svg.node().parentNode
+      $(wrapper).detach()
+      this._insertSorted(wrapper)
     }
     this.svg
       .attr('width', this.params.chartWidth || this.svg.attr('width'))
       .attr('height', this.params.chartHeight || this.svg.attr('height'))
-      .classed('shared-svg', isSharedContainer)
-
-    if (isSharedContainer && this.params.isPrimary) this.svg.attr('data-order', this.config.get('order'))
+      .classed(this.selectors.sharedSvg.substr(1), isSharedContainer)
   }
   /**
    * insert own element into the DOM in the right order
    */
   _insertSorted (el) {
     // do nothing if element exists
-    if ($.contains(document.documentElement, el)) return
+    if (document.documentElement.contains(el)) return
 
     if (!this.config.get('isSharedContainer') || this.params.isPrimary) {
       el.dataset['order'] = this.config.get('order')
     }
-    if (this._container.innerHTML === '') {
-      this.container.append(() => el)
-    } else {
-      const siblings = this._container.children
-      _.each(siblings, (sibling) => {
-        if (this.config.get('order') < sibling.dataset['order']) {
-          $(el).insertBefore(sibling)
-          return false
-        }
-        if (_.last(siblings) === sibling) $(el).insertAfter(sibling)
-      })
-    }
+    el.classList.add(this.selectors.component.substr(1))
+    this._container.appendChild(el)
+    this.container
+      .selectAll(`#${this._container.id} > ${this.selectors.component}`)
+      .datum(function () { return this.dataset['order'] })
+      .sort()
+      .datum(null)
   }
 }
 

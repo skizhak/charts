@@ -71,7 +71,7 @@ class CompositeYChartView extends ContrailChartsView {
   * Calculates the activeAccessorData that holds only the verified and enabled accessors from the 'plot' structure.
   * Params: activeAccessorData, yAxisInfoArray
   */
-  calculateActiveAccessorData () {
+  _calculateActiveAccessorData () {
     this.params.activeAccessorData = []
     this.params.yAxisInfoArray = []
     // Initialize the drawings activeAccessorData structure
@@ -496,7 +496,7 @@ class CompositeYChartView extends ContrailChartsView {
           _.each(this.possibleChildViews, (ChildView, chartType) => {
             if (chartType === accessor.chart) {
               const params = _.extend({}, this.params)
-              delete params.isPrimary
+              params.isPrimary = false
               const compositeYConfig = new CompositeYChartConfigModel(params)
               // TODO: pass eventObject to child?
               foundDrawing = new ChildView({
@@ -521,7 +521,7 @@ class CompositeYChartView extends ContrailChartsView {
   _render () {
     this.resetParams()
     this._updateChildDrawings()
-    this.calculateActiveAccessorData()
+    this._calculateActiveAccessorData()
     this._calculateDimensions()
     this.calculateScales()
     this.calculateColorScale()

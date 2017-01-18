@@ -19,7 +19,7 @@ function getValue (serie) {
 }
 
 const chartConfig = {
-  container: '.chart',
+  container: '#chart',
   components: [{
     id: 'pieChart',
     type: 'pieChart',
