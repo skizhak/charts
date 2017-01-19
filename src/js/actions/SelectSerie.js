@@ -5,7 +5,6 @@ class SelectSerie extends Action {
     super(p)
     this._id = 'selectSerie'
     this._deny = false
-    this._icon = 'fa fa-filter'
   }
 
   _execute (plot) {

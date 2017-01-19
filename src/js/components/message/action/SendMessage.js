@@ -4,8 +4,6 @@ class SendMessage extends Action {
   constructor (p) {
     super(p)
     this._id = 'messageSend'
-    this._label = 'Send Message'
-    this._icon = 'fa fa-edit'
     this._deny = false
   }
 

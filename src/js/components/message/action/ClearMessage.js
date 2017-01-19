@@ -4,8 +4,6 @@ class ClearMessage extends Action {
   constructor (p) {
     super(p)
     this._id = 'messageClear'
-    this._label = 'Clear Message'
-    this._icon = 'fa fa-eraser'
     this._deny = false
   }
 

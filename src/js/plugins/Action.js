@@ -9,8 +9,6 @@ class Action {
   constructor (p = {}) {
     this.registrar = p.registrar
     this._id = p.id
-    this._label = p.label
-    this._icon = p.icon || 'fa fa-check-square-o'
     this._deny = true
   }
   /**
@@ -46,31 +44,6 @@ class Action {
    */
   get id () {
     return this._id
-  }
-  /**
-   * Change icon
-   * @param String cssClass
-   */
-  set icon (cssClass) {
-    this._icon = cssClass
-  }
-  get icon () {
-    return this._icon
-  }
-  /**
-   * Refresh the action label
-   * @param newLabel String the new label
-   */
-  set label (newLabel) {
-    this._label = newLabel
-  }
-
-  get label () {
-    return this._label
-  }
-
-  get type () {
-    return this._type
   }
   /**
    * Changes enable/disable state
