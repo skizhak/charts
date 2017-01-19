@@ -40,6 +40,12 @@ class ContrailChartsConfigModel extends ContrailModel {
     if (_.isNil(data)) return undefined
     if (_.isFunction(getLabel)) return getLabel(data)
   }
+  /**
+   * Enable / disable event triggering with data preperation for specified component
+   * @param {String} type Component type
+   * @param {Boolean} enable Change state of this component
+   */
+  toggleComponent (type, enable) {}
 }
 
 module.exports = ContrailChartsConfigModel

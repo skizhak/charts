@@ -54,9 +54,7 @@ class CompositeYChartConfigModel extends ContrailChartsConfigModel {
     return this.get('plot').y
   }
   /**
-   * Enable / disable event triggering with data preperation for specified component
-   * @param {String} type Component type
-   * @param {Boolean} enable Change state of this component
+   * Override parent
    */
   toggleComponent (type, enable) {
     switch (type) {

@@ -6,7 +6,7 @@ const Events = require('contrail-charts-events')
 const ContrailChartsDataModel = require('contrail-charts-data-model')
 const ContrailView = require('contrail-view') // Todo use contrail-charts-view instead?
 const components = require('components/index')
-const handlers = require('handlers/index')
+const SerieProvider = require('handlers/SerieProvider')
 /**
 * Group of charts rendered in polar coordinates system
 * TODO merge with ChartView as long as XYChart too
@@ -14,14 +14,13 @@ const handlers = require('handlers/index')
 class RadialChartView extends ContrailView {
   get type () { return 'RadialChartView' }
 
-  constructor (options) {
-    super()
-    this.hasExternalBindingHandler = false
+  constructor (p) {
+    super(p)
     this._dataModel = new ContrailChartsDataModel()
-    this._dataProvider = new handlers.SerieProvider({ parent: this._dataModel })
+    this._dataProvider = new SerieProvider({ parent: this._dataModel })
     this._components = []
-    options = options || {}
-    this._eventObject = options.eventObject || _.extend({}, Events)
+    p = p || {}
+    this._eventObject = p.eventObject || _.extend({}, Events)
     this.listenTo(this._dataProvider, 'change', this._render)
   }
 

@@ -20,15 +20,15 @@ class ContrailChartsView extends ContrailView {
   }
   get zIndex () { return 0 }
 
-  constructor (options = {}) {
-    super(options)
-    this._id = options.id
+  constructor (p = {}) {
+    super(p)
+    this._id = p.id
     this.d3.attr('id', this.id)
-    this.config = options.config
-    this._actionman = options.actionman
-    this._order = options.order
-    this._container = options.container
-    this._eventObject = options.eventObject || _.extend({}, Events)
+    this.config = p.config
+    this._actionman = p.actionman
+    this._order = p.order
+    this._container = p.container
+    this._eventObject = p.eventObject || _.extend({}, Events)
     this.params = {}
   }
   /**

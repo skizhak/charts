@@ -13,16 +13,15 @@ const components = require('components/index')
 const handlers = require('handlers/index')
 
 class ChartView extends ContrailChartsView {
-  constructor () {
-    super()
+  constructor (p) {
+    super(p)
     this._charts = {}
     this._components = []
   }
   /**
   * Data can be set separately into every chart so every chart can have different data.
   */
-  setData (data, dataConfig, chartId) {
-    dataConfig = dataConfig || {}
+  setData (data, dataConfig = {}, chartId) {
     chartId = chartId || 'default'
     // Set data to the given chart if it exists.
     if (this._charts[chartId]) this._charts[chartId].setData(data, dataConfig)

@@ -2,7 +2,6 @@
  * Copyright (c) 2016 Juniper Networks, Inc. All rights reserved.
  */
 const _ = require('lodash')
-const $ = require('jquery')
 const ContrailChartsDataModel = require('contrail-charts-data-model')
 const ContrailChartsView = require('contrail-charts-view')
 const components = require('components/index')
@@ -17,13 +16,11 @@ const _actions = [require('actions/SelectSerie')
 class XYChartView extends ContrailChartsView {
   get type () { return 'XYChartView' }
 
-  constructor (options) {
-    super(options)
-    this.hasExternalBindingHandler = false
+  constructor (p) {
+    super(p)
     this._dataModel = new ContrailChartsDataModel()
     this._dataProvider = new handlers.DataProvider({ parentDataModel: this._dataModel })
     this._components = []
-    options = options || {}
     this._actionman = new Actionman()
 
     this._actions = _actions
@@ -46,8 +43,7 @@ class XYChartView extends ContrailChartsView {
    * Set ContrailChartsDataModel config
    * @param dataConfig
    */
-  setDataConfig (dataConfig) {
-    dataConfig = dataConfig || {}
+  setDataConfig (dataConfig = {}) {
     this._dataModel.set(dataConfig, { silent: true })
   }
   /**
@@ -108,19 +104,29 @@ class XYChartView extends ContrailChartsView {
       this._dataProvider.getParentModel().trigger('change')
     }
   }
-
+  /**
+   * Initialize configured components
+   */
   _initComponents () {
     let dataModel
     _.each(this._config.components, (component, index) => {
       component.config.order = index
       this._registerComponent(component.type, component.config, this._dataProvider, component.id)
     })
-    // set parent config model
+
+    // Post init configuration of components dependant on others
+
     _.each(this._components, (component, index) => {
       const sourceComponentId = component.config.get('sourceComponent')
       if (sourceComponentId) {
         const sourceComponent = this.getComponent(sourceComponentId)
         component.config.setParent(sourceComponent.config)
+      }
+      if (this._isEnabledComponent('tooltip')) {
+        component.config.toggleComponent('tooltip', true)
+      }
+      if (this._isEnabledComponent('crosshair')) {
+        component.config.toggleComponent('crosshair', true)
       }
     })
     if (this._isEnabledComponent('navigation')) {
@@ -131,19 +137,13 @@ class XYChartView extends ContrailChartsView {
       dataModel = this.getComponentByType('timeline').focusDataProvider
       if (this._isEnabledComponent('compositeY')) this.getComponentByType('compositeY').changeModel(dataModel)
     }
-    if (this._isEnabledComponent('tooltip')) {
-      if (this._isEnabledComponent('compositeY')) this.getComponentByType('compositeY').config.toggleComponent('tooltip', true)
-    }
-    if (this._isEnabledComponent('crosshair')) {
-      if (this._isEnabledComponent('compositeY')) this.getComponentByType('compositeY').config.toggleComponent('crosshair', true)
-    }
-    if (this._isEnabledHandler('bindingHandler') && !this.hasExternalBindingHandler) {
-      // Only start the binding handler if it is not an external one.
-      // Otherwise assume it will be started by the parent chart.
-      this.bindingHandler.start()
-    }
   }
-
+  /**
+   * Initialize individual component by type, given config, data model and id
+   * @param {String} type
+   * @param {Object} config
+   * @param {String} id optional
+   */
   _registerComponent (type, config, model, id) {
     if (!this._isEnabledComponent(type)) return false
     let configModel
@@ -177,7 +177,7 @@ class XYChartView extends ContrailChartsView {
     const msgObj = {
       componentId: componentId,
       action: 'update',
-      messages: []
+      messages: [],
     }
     this._eventObject.trigger('message', msgObj)
   }
