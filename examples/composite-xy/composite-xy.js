@@ -11,9 +11,9 @@ function numberFormatter3 (number) {
 }
 
 // Complex example
-var complexData = []
-for (var i = 0; i < 100; i++) {
-  var a = Math.random() * 100
+const complexData = []
+for (let i = 0; i < 100; i++) {
+  const a = Math.random() * 100
   complexData.push({
     x: 1475760930000 + 1000000 * i,
     a: a,
@@ -23,7 +23,7 @@ for (var i = 0; i < 100; i++) {
     e: (Math.random() - 0.5) * 10
   })
 }
-var complexChartView = new coCharts.charts.XYChartView()
+const complexChartView = new coCharts.charts.XYChartView()
 complexChartView.setConfig({
   container: '#complexChart',
   components: [{
@@ -176,26 +176,28 @@ complexChartView.setConfig({
       plot: {
         x: {
           accessor: 'x',
-          labelFormatter: 'Time'
+          labelFormatter: 'Time',
+          axis: 'x',
         },
         y: [
           {
+            enabled: true,
             accessor: 'a',
             labelFormatter: 'A',
             chart: 'stackedBar',
-            axis: 'y1'
-          },
-          {
+            axis: 'y1',
+          }, {
+            enabled: true,
             accessor: 'b',
             labelFormatter: 'B',
             chart: 'stackedBar',
-            axis: 'y1'
-          },
-          {
+            axis: 'y1',
+          }, {
+            enabled: true,
             accessor: 'd',
             labelFormatter: 'Megabytes',
             chart: 'line',
-            axis: 'y2'
+            axis: 'y2',
           }
         ]
       },
@@ -205,12 +207,12 @@ complexChartView.setConfig({
         y1: {
           position: 'left',
           formatter: numberFormatter,
-          labelMargin: 15
+          labelMargin: 15,
         },
         y2: {
           position: 'right',
           formatter: numberFormatter3,
-          labelMargin: 15
+          labelMargin: 15,
         }
       }
     },
@@ -291,6 +293,10 @@ complexChartView.renderMessage({
     level: 'info',
     title: 'Message 1',
     message: 'This is an example message. It will disapear after 5 seconds.'
+  }, {
+    level: 'error',
+    title: 'A Fatal Error',
+    message: 'This is an error.'
   }, {
     level: 'info',
     title: 'Message 2',

@@ -1,3 +1,9 @@
+@import "colors";
+
+* {
+	box-sizing: border-box;
+}
+
 button {
 	text-align: center;
 	white-space: nowrap;
@@ -60,18 +66,18 @@ button:focus {
 			opacity: 0.9;
 		}
 	}
-	.scatter-bubble-chart {
-		.bubble {
+	.coCharts-scatter-plot {
+		.point {
 			opacity: 0.55;
 			stroke-width: 0;
 			shape-rendering: geometricPrecision;
-		}
-		.bubble:hover {
-			opacity: 0.85;
-			stroke-width: 2;
-			stroke: #ddd;
-			cursor: pointer;
-			shape-rendering: geometricPrecision;
+      &:hover {
+        opacity: 0.85;
+        stroke-width: 2;
+        stroke: #ddd;
+        cursor: pointer;
+        shape-rendering: geometricPrecision;
+      }
 		}
 	}
 	.brush {
@@ -79,8 +85,15 @@ button:focus {
 			fill: #aaa;
 		}
 		.handle--custom {
+      opacity: 1;
 			fill: #888;
-			stroke: #555;
+      fill-opacity: 0.75;
+      stroke: #444;
+      stroke-width: 1;
+      cursor: ew-resize;
+      &.hide {
+        opacity: 1e-6;
+      }
 		}
 	}
 	.crosshair {
@@ -200,18 +213,36 @@ button:focus {
 
 .coCharts-message-view {
 	.message-row {
-		.message-title {
-			display: inline-block;
-			width: 30%;
-			padding: 5px;
-			font-size: 12px;
-			font-weight: bold;
+		overflow: hidden;
+		font-size: 0.75rem;
+
+		&.coCharts-msg-info {
+			background-color: $infoBlue;
 		}
-		.message-body {
-			display: inline-block;
-			width: 70%;
-			padding: 5px;
-			font-size: 12px;
+
+		&.coCharts-msg-error {
+			background-color: $errorRed;
+		}
+
+		& .message-heading,
+		& .message-body {
+			width: 100%;
+			padding: 0 5px;
+			margin: 5px 0;
+		}
+
+		.message-heading {
+			display: flex;
+			position: relative;
+
+			.fa {
+				margin-right: 2px;
+			}
+
+			.message-title {
+				flex-grow: 1;
+				font-weight: bold;
+			}
 		}
 	}
 }
@@ -287,7 +318,7 @@ button:focus {
 	}
 }
 
-.pie-chart {
+.coCharts-pie-chart {
   path.arc {
     stroke: white;
   }

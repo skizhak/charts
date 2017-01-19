@@ -2,51 +2,75 @@
  * Copyright (c) 2016 Juniper Networks, Inc. All rights reserved.
  */
 const _ = require('lodash')
-const d3 = require('d3')
 const ContrailChartsView = require('contrail-charts-view')
 const _template = require('./message.html')
 const SendMessageAction = require('./action/SendMessage')
 const ClearMessageAction = require('./action/ClearMessage')
 
-var MessageView = ContrailChartsView.extend({
-  type: 'message',
-  tagName: 'div',
-  className: 'coCharts-message-view',
+class MessageView extends ContrailChartsView {
+  get type () { return 'message' }
+  get tagName () { return 'div' }
+  get className () { return 'coCharts-message-view' }
+  get selectors () {
+    return _.extend(super.selectors, {
+      message: {
+        default: 'coCharts-msg-default',
+        info: 'coCharts-msg-info',
+        error: 'coCharts-msg-error',
+      },
+      icon: {
+        default: 'fa-comment-o',
+        info: 'fa-info-circle',
+        error: 'fa-exclamation-triangle',
+      }
+    })
+  }
 
-  initialize: function (options) {
-    ContrailChartsView.prototype.initialize.call(this, options)
+  constructor (options) {
+    super(options)
     this.render()
     this._actionman.set(SendMessageAction, this)
     this._actionman.set(ClearMessageAction, this)
     this.listenTo(this._eventObject, 'message', this.show)
     this.listenTo(this._eventObject, 'clearMessage', this.clear)
-  },
+  }
 
-  show: function (data) {
-    let msgObj = _.extend({}, data)
-    msgObj.componentId = msgObj.componentId || 'default'
-    msgObj.action = msgObj.action || 'update' // 'new', 'once', 'update'. future: 'dismiss', 'block'
+  show (data) {
+    let msgObj = _.assignIn({
+      componentId: 'default',
+      action: 'update',  // 'new', 'once', 'update'. future: 'dismiss', 'block'
+      messages: [],
+    }, data)
+    let template = this.config.get('template') || _template
+
     if (msgObj.action === 'update') {
       // update message so remove any previous messages from this component
       this.clear(msgObj.componentId)
     }
-    this.$el.html(_template(msgObj))
+    _.forEach(msgObj.messages, (msg) => {
+      _.assignIn(msg, {
+        level: msg.level || 'default',
+        iconLevel: this.selectors.icon[msg.level || 'default'],
+        msgLevel: this.selectors.message[msg.level || 'default'],
+      })
+    })
 
-    d3.selectAll('[data-action="once"')
+    this.$el.html(template(msgObj))
+
+    this.d3.selectAll('[data-action="once"')
       .style('opacity', 1)
       .transition()
       .duration(5000)
       .style('opacity', 1e-06)
       .remove()
-  },
+  }
 
-  clear: function (componentId) {
-    var messageSelector = '.message-row[data-component-id="' + componentId + '"]'
+  clear (componentId) {
+    const messageSelector = `.message-row[data-component-id="${componentId}"]`
     this.$(messageSelector).fadeOut('fast', () => {
       this.$(messageSelector).remove()
     })
-  },
-
-})
+  }
+}
 
 module.exports = MessageView

@@ -1,224 +1,210 @@
 /*
  * Copyright (c) 2016 Juniper Networks, Inc. All rights reserved.
  */
-var _ = require('lodash')
-var Events = require('contrail-charts-events')
-var ContrailChartsDataModel = require('contrail-charts-data-model')
-var ContrailChartsView = require('contrail-charts-view')
-var components = require('components/index')
-var handlers = require('handlers/index')
-var Actionman = require('../../plugins/Actionman')
-var _actions = [require('actions/SelectSerie')
+const _ = require('lodash')
+const Events = require('contrail-charts-events')
+const ContrailChartsDataModel = require('contrail-charts-data-model')
+const ContrailChartsView = require('contrail-charts-view')
+const components = require('components/index')
+const handlers = require('handlers/index')
+const Actionman = require('../../plugins/Actionman')
+const _actions = [require('actions/SelectSerie')
 ]
 /**
 * Chart with a common X axis and many possible child components rendering data on the Y axis (for example: line, bar, stackedBar).
 * Many different Y axis may be configured.
 */
-var XYChartView = ContrailChartsView.extend({
-  type: 'XYChartView',
+class XYChartView extends ContrailChartsView {
+  get type () { return 'XYChartView' }
 
-  initialize: function (options) {
-    var self = this
-    self.hasExternalBindingHandler = false
-    self._dataModel = new ContrailChartsDataModel()
-    self._dataProvider = new handlers.DataProvider({ parentDataModel: self._dataModel })
-    self._components = []
+  constructor (options) {
+    super(options)
+    this.hasExternalBindingHandler = false
+    this._dataModel = new ContrailChartsDataModel()
+    this._dataProvider = new handlers.DataProvider({ parentDataModel: this._dataModel })
+    this._components = []
     options = options || {}
-    self._eventObject = options.eventObject || _.extend({}, Events)
+    this._actionman = new Actionman()
 
-    self._actionman = new Actionman()
-
-    self._actions = _actions
+    this._actions = _actions
     // register common actions
     setTimeout(() => {
-      _.each(self._actions, action => self._actionman.set(action, this))
+      _.each(this._actions, action => this._actionman.set(action, this))
     })
-  },
+  }
   /**
   * Provide data for this chart as a simple array of objects.
   * Additional ContrailChartsDataModel configuration may be provided.
   * Setting data to a rendered chart will trigger a DataModel change event that will cause the chart to be re-rendered.
   */
-  setData: function (data, dataConfig) {
-    var self = this
-    if (dataConfig) self.setDataConfig(dataConfig)
-    if (_.isArray(data)) self._dataModel.setData(data)
-  },
+  setData (data, dataConfig) {
+    if (dataConfig) this.setDataConfig(dataConfig)
+    if (_.isArray(data)) this._dataModel.setData(data)
+  }
   // Todo deprecate setDataConfig. DataModel parser will be set as input parser in dataProvider config.
   /**
    * Set ContrailChartsDataModel config
    * @param dataConfig
    */
-  setDataConfig: function (dataConfig) {
-    var self = this
+  setDataConfig (dataConfig) {
     dataConfig = dataConfig || {}
-    self._dataModel.set(dataConfig, { silent: true })
-  },
+    this._dataModel.set(dataConfig, { silent: true })
+  }
   /**
   * Provides a global BindingHandler to this chart.
   * If no BindingHandler is provided it will be instantiated by this chart if needed based on its local configuration.
   */
-  setBindingHandler: function (bindingHandler) {
-    var self = this
-    self.hasExternalBindingHandler = (bindingHandler != null)
-    self.bindingHandler = bindingHandler
-  },
+  setBindingHandler (bindingHandler) {
+    this.hasExternalBindingHandler = (bindingHandler != null)
+    this.bindingHandler = bindingHandler
+  }
   /**
   * Sets the configuration for this chart as a simple object.
   * Instantiate the required views if they do not exist yet, set their configurations otherwise.
   * Setting configuration to a rendered chart will trigger a ConfigModel change event that will cause the chart to be re-rendered.
   */
-  setConfig: function (config) {
-    var self = this
-    self._config = config
-    self.setElement(config.container)
-    if (!self._config.chartId) {
-      self._config.chartId = 'XYChartView'
+  setConfig (config) {
+    this._config = config
+    this.setElement(config.container)
+    if (!this._config.chartId) {
+      this._config.chartId = 'XYChartView'
     }
     // Todo make dataConfig part of handlers? as dataProvider
-    if (self._config.dataConfig) self.setDataConfig(self._config.dataConfig)
-    self._initHandlers()
-    self._initComponents()
-  },
+    if (this._config.dataConfig) this.setDataConfig(this._config.dataConfig)
+    this._initHandlers()
+    this._initComponents()
+  }
 
-  getComponent: function (id) {
+  getComponent (id) {
     return _.find(this._components, {id: id})
-  },
+  }
 
-  getComponentByType: function (type) {
-    var self = this
-    return _.find(self._components, {type: type})
-  },
+  getComponentByType (type) {
+    return _.find(this._components, {type: type})
+  }
 
-  _initHandlers: function () {
-    var self = this
-    _.each(self._config.handlers, function (handler) {
-      self._registerHandler(handler.type, handler.config)
+  _initHandlers () {
+    _.each(this._config.handlers, (handler) => {
+      this._registerHandler(handler.type, handler.config)
     })
-  },
+  }
 
-  _registerHandler: function (type, config) {
-    var self = this
-    if (!self._isEnabledHandler(type)) return false
+  _registerHandler (type, config) {
+    if (!this._isEnabledHandler(type)) return false
     // Todo create handlers array similar to components.
     if (type === 'bindingHandler') {
-      if (!self.bindingHandler) {
-        self.bindingHandler = new handlers.BindingHandler(config)
+      if (!this.bindingHandler) {
+        this.bindingHandler = new handlers.BindingHandler(config)
       } else {
-        self.bindingHandler.addBindings(config.bindings, self._config.chartId)
+        this.bindingHandler.addBindings(config.bindings, this._config.chartId)
       }
     }
     if (type === 'dataProvider') {
       // Set dataProvider config. Eg. input data formatter config
-      self._dataProvider.set(config, { silent: true })
+      this._dataProvider.set(config, { silent: true })
       // Since we're setting the config, trigger a change to parentDataModel to re-compute based on new config.
       // Triggering the change on parentModel triggers prepareData on all the dataProvider instances of same parentModel.
       // Todo check if we really need to trigger this or simply call prepareData in current dataProvider?
-      self._dataProvider.getParentModel().trigger('change')
+      this._dataProvider.getParentModel().trigger('change')
     }
-  },
+  }
 
-  _initComponents: function () {
-    var self = this
-    var dataModel
-    _.each(self._config.components, function (component, index) {
+  _initComponents () {
+    let dataModel
+    _.each(this._config.components, (component, index) => {
       component.config.order = index
-      self._registerComponent(component.type, component.config, self._dataProvider, component.id)
+      this._registerComponent(component.type, component.config, this._dataProvider, component.id)
     })
     // set parent config model
-    _.each(self._components, function (component, index) {
+    _.each(this._components, (component, index) => {
       const sourceComponentId = component.config.get('sourceComponent')
       if (sourceComponentId) {
-        const sourceComponent = self.getComponent(sourceComponentId)
+        const sourceComponent = this.getComponent(sourceComponentId)
         component.config.setParent(sourceComponent.config)
       }
     })
-    if (self._isEnabledComponent('navigation')) {
-      dataModel = self.getComponentByType('navigation').getFocusDataProvider()
-      if (self._isEnabledComponent('compositeY')) self.getComponentByType('compositeY').changeModel(dataModel)
+    if (this._isEnabledComponent('navigation')) {
+      dataModel = this.getComponentByType('navigation').focusDataProvider
+      if (this._isEnabledComponent('compositeY')) this.getComponentByType('compositeY').changeModel(dataModel)
     }
-    if (self._isEnabledComponent('timeline')) {
-      dataModel = self.getComponentByType('timeline').getFocusDataProvider()
-      if (self._isEnabledComponent('compositeY')) self.getComponentByType('compositeY').changeModel(dataModel)
+    if (this._isEnabledComponent('timeline')) {
+      dataModel = this.getComponentByType('timeline').focusDataProvider
+      if (this._isEnabledComponent('compositeY')) this.getComponentByType('compositeY').changeModel(dataModel)
     }
-    if (self._isEnabledComponent('tooltip')) {
-      if (self._isEnabledComponent('compositeY')) self.getComponentByType('compositeY').config.toggleComponent('tooltip', true)
+    if (this._isEnabledComponent('tooltip')) {
+      if (this._isEnabledComponent('compositeY')) this.getComponentByType('compositeY').config.toggleComponent('tooltip', true)
     }
-    if (self._isEnabledComponent('crosshair')) {
-      if (self._isEnabledComponent('compositeY')) self.getComponentByType('compositeY').config.toggleComponent('crosshair', true)
+    if (this._isEnabledComponent('crosshair')) {
+      if (this._isEnabledComponent('compositeY')) this.getComponentByType('compositeY').config.toggleComponent('crosshair', true)
     }
-    if (self._isEnabledHandler('bindingHandler') && !self.hasExternalBindingHandler) {
+    if (this._isEnabledHandler('bindingHandler') && !this.hasExternalBindingHandler) {
       // Only start the binding handler if it is not an external one.
       // Otherwise assume it will be started by the parent chart.
-      self.bindingHandler.start()
+      this.bindingHandler.start()
     }
-  },
+  }
 
-  _registerComponent: function (type, config, model, id) {
-    var self = this
-    if (!self._isEnabledComponent(type)) return false
+  _registerComponent (type, config, model, id) {
+    if (!this._isEnabledComponent(type)) return false
     let configModel
     if (components[type].ConfigModel) {
       configModel = new components[type].ConfigModel(config)
     }
-    var viewOptions = _.extend({}, config, {
+    const viewOptions = _.extend({}, config, {
       id: id,
       config: configModel,
       model: model,
-      eventObject: self._eventObject,
-      container: self.$el,
+      eventObject: this._eventObject,
+      container: this.el,
       // actionman is passed as parameter to each component for it to be able to register action
-      actionman: self._actionman,
+      actionman: this._actionman,
     })
-    var component = new components[type].View(viewOptions)
-    self._components.push(component)
+    const component = new components[type].View(viewOptions)
+    this._components.push(component)
 
-    if (self._isEnabledHandler('bindingHandler') || self.hasExternalBindingHandler) {
-      self.bindingHandler.addComponent(self._config.chartId, type, component)
+    if (this._isEnabledHandler('bindingHandler') || this.hasExternalBindingHandler) {
+      this.bindingHandler.addComponent(this._config.chartId, type, component)
     }
     return component
-  },
+  }
 
-  renderMessage: function (msgObj) {
+  renderMessage (msgObj) {
     this._eventObject.trigger('message', msgObj)
-  },
+  }
 
-  clearMessage: function (componentId) {
+  clearMessage (componentId) {
     // To clear messages for a given component we send a message with 'update' action and an empty array of messages.
-    var msgObj = {
+    const msgObj = {
       componentId: componentId,
       action: 'update',
       messages: []
     }
     this._eventObject.trigger('message', msgObj)
-  },
+  }
 
-  _isEnabled: function (config, type) {
-    var foundConfig = _.find(config, {type: type})
+  _isEnabled (config, type) {
+    const foundConfig = _.find(config, {type: type})
     if (!foundConfig) return false
     if (_.isObject(foundConfig.config)) {
       return !(foundConfig.config.enable === false)
     }
     return false
-  },
+  }
 
-  _isEnabledComponent: function (type) {
-    var self = this
-    return self._isEnabled(self._config.components, type)
-  },
+  _isEnabledComponent (type) {
+    return this._isEnabled(this._config.components, type)
+  }
 
-  _isEnabledHandler: function (type) {
-    var self = this
-    return self._isEnabled(self._config.handlers, type)
-  },
+  _isEnabledHandler (type) {
+    return this._isEnabled(this._config.handlers, type)
+  }
 
-  render: function () {
-    var self = this
-    _.each(self._components, function (component) {
+  render () {
+    _.each(this._components, (component) => {
       component.render()
     })
-    $(self._config.el).html(self.$el)
+    $(this._config.el).html(this.$el)
   }
-})
+}
 
 module.exports = XYChartView

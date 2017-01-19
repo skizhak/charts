@@ -8,9 +8,9 @@ define([ // eslint-disable-line no-undef
   'contrail-charts'
 ], function (d3, _, coCharts) {
   // Complex example
-  var complexData = []
-  _.each(d3.range(100), function (i) {
-    var a = Math.random() * 100
+  const complexData = []
+  _.each(d3.range(100), (i) => {
+    const a = Math.random() * 100
     complexData.push({
       x: 1475760930000 + 1000000 * i,
       a: a,
@@ -20,7 +20,7 @@ define([ // eslint-disable-line no-undef
       e: (Math.random() - 0.5) * 10
     })
   })
-  var complexChartView = new coCharts.charts.XYChartView()
+  const complexChartView = new coCharts.charts.XYChartView()
   complexChartView.setData(complexData)
   complexChartView.setConfig({
     handlers: [{
@@ -40,7 +40,7 @@ define([ // eslint-disable-line no-undef
     }, {
       type: 'dataProvider',
       config: {
-        formatData: function (data) {
+        formatData: (data) => {
           // Sample dataProvider input data formatter.
           return data
         }
@@ -58,7 +58,7 @@ define([ // eslint-disable-line no-undef
           x: {
             accessor: 'x',
             label: 'Time',
-            axis: 'x'
+            axis: 'x',
           },
           y: [
             {
@@ -67,30 +67,26 @@ define([ // eslint-disable-line no-undef
               enabled: true,
               chart: 'stackedBar',
               axis: 'y1',
-            },
-            {
+            }, {
               accessor: 'b',
               label: 'B',
               enabled: true,
               chart: 'stackedBar',
               axis: 'y1',
-            },
-            {
+            }, {
               accessor: 'c',
               label: 'C',
               enabled: false,
               chart: 'stackedBar',
               axis: 'y1',
-            },
-            {
+            }, {
               accessor: 'd',
               label: 'Megabytes',
               color: '#d62728',
               enabled: true,
               chart: 'line',
               axis: 'y2',
-            },
-            {
+            }, {
               accessor: 'e',
               label: 'Megabytes',
               color: '#9467bd',
@@ -101,9 +97,7 @@ define([ // eslint-disable-line no-undef
           ]
         },
         axis: {
-          x: {
-
-          },
+          x: {},
           y1: {
             position: 'left',
             formatter: d3.format('.0f'),
@@ -117,55 +111,20 @@ define([ // eslint-disable-line no-undef
         }
       },
     }, {
-      type: 'navigation',
-      config: {
-        marginInner: 10,
-        marginLeft: 80,
-        marginRight: 80,
-        marginBottom: 40,
-        chartHeight: 200,
-        plot: {
-          x: {
-            accessor: 'x',
-            label: 'Time'
-          },
-          y: [
-            {
-              accessor: 'a',
-              label: 'A',
-              chart: 'stackedBar'
-            },
-            {
-              accessor: 'b',
-              label: 'B',
-              chart: 'stackedBar'
-            }
-          ]
-        }
-      },
-    }, {
       type: 'tooltip',
       config: {
         dataConfig: [
           {
             accessor: 'x',
-            labelFormatter: function (key) {
-              return 'Time'
-            },
+            labelFormatter: (key) => 'Time',
             valueFormatter: d3.format('.0f')
-          },
-          {
+          }, {
             accessor: 'a',
-            labelFormatter: function (key) {
-              return 'A'
-            },
+            labelFormatter: () => 'A',
             valueFormatter: d3.format('.05f')
-          },
-          {
+          }, {
             accessor: 'b',
-            labelFormatter: function (key) {
-              return 'B'
-            },
+            labelFormatter: () => 'B',
             valueFormatter: d3.format('.02f')
           }
         ]
@@ -194,14 +153,14 @@ define([ // eslint-disable-line no-undef
   complexChartView.render()
 
   // Most basic chart.
-  var simpleData = [
+  const simpleData = [
     { x: 1475760930000, y: 0 },
     { x: 1475761930000, y: 3 },
     { x: 1475762930000, y: 2 },
     { x: 1475763930000, y: 4 },
     { x: 1475764930000, y: 5 }
   ]
-  var simpleChartView = new coCharts.charts.XYChartView()
+  const simpleChartView = new coCharts.charts.XYChartView()
   simpleChartView.setData(simpleData)
   simpleChartView.setConfig({
     container: '#simpleChart',
@@ -210,12 +169,15 @@ define([ // eslint-disable-line no-undef
       config: {
         plot: {
           x: {
-            accessor: 'x'
+            accessor: 'x',
+            axis: 'x',
           },
           y: [
             {
+              enabled: true,
               accessor: 'y',
-              chart: 'line'
+              chart: 'line',
+              axis: 'y',
             }
           ]
         }

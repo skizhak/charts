@@ -7,10 +7,10 @@ function cpuFormatter (number) {
   return number.toFixed(2) + '%'
 }
 function memFormatter (number) {
-  var bytePrefixes = ['B', 'KB', 'MB', 'GB', 'TB']
-  var bytes = parseInt(number * 1024)
-  var formattedBytes = '-'
-  _.each(bytePrefixes, function (prefix, idx) {
+  const bytePrefixes = ['B', 'KB', 'MB', 'GB', 'TB']
+  let bytes = parseInt(number * 1024)
+  let formattedBytes = '-'
+  _.each(bytePrefixes, (prefix, idx) => {
     if (bytes < 1024) {
       formattedBytes = bytes.toFixed(2) + ' ' + prefix
       return false
@@ -26,8 +26,8 @@ function memFormatter (number) {
 }
 
 // Time series data.
-var tsData = []
-for (var i = 0; i < 100; i++) {
+const tsData = []
+for (let i = 0; i < 100; i++) {
   tsData.push({
     'T': 1475760930000 + 1000000 * i,
     'cpu_stats.cpu_one_min_avg': Math.random() * 100, // Value between 0-100
@@ -36,7 +36,7 @@ for (var i = 0; i < 100; i++) {
 }
 
 // Create chart view.
-var cpuMemChartView = new coCharts.charts.XYChartView()
+const cpuMemChartView = new coCharts.charts.XYChartView()
 cpuMemChartView.setConfig({
   handlers: [{
     type: 'bindingHandler',
@@ -72,7 +72,7 @@ cpuMemChartView.setConfig({
         x: {
           accessor: 'T',
           label: 'Time',
-          axis: 'x'
+          axis: 'x',
         },
         y: [
           {
@@ -83,15 +83,14 @@ cpuMemChartView.setConfig({
             possibleChartTypes: [
               {
                 label: 'Stacked Bar',
-                chart: 'stackedBar'
+                chart: 'stackedBar',
               }, {
                 label: 'Line',
-                chart: 'line'
+                chart: 'line',
               }
             ],
             color: '#6baed6',
             axis: 'y1',
-            tooltip: 'defaultTooltip'
           }, {
             accessor: 'cpu_stats.rss',
             label: 'Memory Usage',
@@ -100,7 +99,7 @@ cpuMemChartView.setConfig({
             possibleChartTypes: [
               {
                 label: 'Stacked Bar',
-                chart: 'stackedBar'
+                chart: 'stackedBar',
               }, {
                 label: 'Line',
                 chart: 'line'
@@ -108,7 +107,6 @@ cpuMemChartView.setConfig({
             ],
             color: '#2ca02c',
             axis: 'y2',
-            tooltip: 'customTooltip'
           }
         ]
       },
@@ -117,12 +115,12 @@ cpuMemChartView.setConfig({
         y1: {
           position: 'left',
           formatter: cpuFormatter,
-          labelMargin: 15
+          labelMargin: 15,
         },
         y2: {
           position: 'right',
           formatter: memFormatter,
-          labelMargin: 15
+          labelMargin: 15,
         }
       }
     }
@@ -138,21 +136,24 @@ cpuMemChartView.setConfig({
       plot: {
         x: {
           accessor: 'T',
-          labelFormatter: 'Time'
+          labelFormatter: 'Time',
+          axis: 'x',
         },
         y: [
           {
+            enabled: true,
             accessor: 'cpu_stats.cpu_one_min_avg',
             labelFormatter: 'CPU',
             chart: 'stackedBar',
             color: '#6baed6',
-            axis: 'y1'
+            axis: 'y1',
           }, {
+            enabled: true,
             accessor: 'cpu_stats.rss',
             labelFormatter: 'Memory',
             chart: 'line',
             color: '#2ca02c',
-            axis: 'y2'
+            axis: 'y2',
           }
         ]
       },
@@ -162,13 +163,13 @@ cpuMemChartView.setConfig({
           position: 'left',
           formatter: cpuFormatter,
           labelMargin: 15,
-          ticks: 4
+          ticks: 4,
         },
         y2: {
           position: 'right',
           formatter: memFormatter,
           labelMargin: 15,
-          ticks: 4
+          ticks: 4,
         }
       }
     }
@@ -212,6 +213,11 @@ cpuMemChartView.setConfig({
         }
       ]
     }
+  }, {
+    type: 'standalone',
+    config: {
+      isSharedContainer: false,
+    },
   }, {
     type: 'message',
     config: {

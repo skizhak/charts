@@ -5,17 +5,17 @@ const $ = require('jquery')
 const _ = require('underscore')
 const Events = require('contrail-charts-events')
 const ContrailChartsView = require('contrail-charts-view')
-
 const _template = require('./control-panel.html')
 const _actionTemplate = require('./action.html')
 
-class Self extends ContrailChartsView.extend({
-  type: 'controlPanel',
-  className: 'coCharts-control-panel-view',
-  events: {
+class Self extends ContrailChartsView {
+  get type () { return 'controlPanel' }
+  get className () { return 'coCharts-control-panel-view' }
+  get events () {
+    return {
     'click .control-panel-item': '_onMenuItemClick',
-  },
-}) {
+    }
+  }
   constructor (options = {}) {
     super(options)
 

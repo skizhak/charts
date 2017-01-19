@@ -32,7 +32,7 @@ Our library also supports including via requirejs. Refer our examples for sample
 Let's assume we've a time-series data
 ```javascript
      // CPU-MEM Time series data.
-     var tsData = [
+     const tsData = [
        { ts: 1475760930000, mem: 0, cpu: 10 },
        { ts: 1475761930000, mem: 3, cpu: 20 },
        { ts: 1475762930000, mem: 2, cpu: 15 },
@@ -44,42 +44,45 @@ And we need to plot a line chart for memory 'mem' data over time 'ts'
 
 ```javascript
     // Initialize a XYChartView
-    var xyChartView = new coCharts.charts.XYChartView()
+    const cpuMemChartView = new coCharts.charts.XYChartView()
 
     // Let's set the chart config.
-    xyChartView.setConfig({
-        xyChart: {
-          el: '#cpumemChart', //Element Id
-          plot: {
-            x: {
-              accessor: 'ts' // Field name to use on x
-            },
-            y: [
-              {
-                accessor: 'mem', // Field name to use on y
-                chart: 'line' // Type of the chart
+    cpuMemChartView.setConfig({
+        container: '#cpumemChart', // Chart container.
+        components: [ // Array of child components.
+          {
+            type: 'compositeY', // Component type. Let's use composite-y component to render line chart. Refer wiki for more details on component.
+            config: {
+              plot: {
+                x: {
+                  accessor: 'ts', // Accessor key from dataset to plot x axis
+                  label: 'Time' // Label to be displayed
+                },
+                y: [ // Array of plottable accessors on Y axis
+                  {
+                    accessor: 'mem', // Accessor key from the dataset.
+                    chart: 'line' // Type of the chart
+                  }
+                ]
               }
-            ]
+            }
           }
-        }
+        ]
     })
 
     // Set the time series data to chart view.
-    simpleChartView.setData(tsData)
-
-    // Render it.
-    simpleChartView.render()
+    // This will trigger render function also
+    cpuMemChartView.setData(tsData)
 ```
 
-TODO: provide jsfiddle.
+![create](examples/basic/img/sample1.png)
 
 Nice, but the axis is missing. Let's add it. Update the config with axis
 
 ```javascript
     axis: {
         y1: {
-            label: 'Memory',
-            position: 'left'
+           position: 'left'
         }
     }
 ```
@@ -89,40 +92,42 @@ and use them inside your plot.y config
     y: [
       {
         accessor: 'mem', // Field name to use on y
-        chart: 'line' // Type of the chart
+        label: 'Memory',
+        chart: 'line', // Type of the chart
         axis: y1 // Axis to plot this field on
       }
     ]
     ...
 ```
-TODO: provide jsfiddle
 
-Let's make it more interesting. Add cpu data also in the same chart, but let's use bar
+Let's make it more interesting. Add cpu data also in the same chart, but let's use bar chart for cpu data and since two 
+series are different, let's put them on different axis.
+
 ```javascript
     ....
     // Add new axis.
     axis: {
             y1: {
-                label: 'Memory',
                 position: 'left'
             },
             y2: {
-                label: 'CPU',
                 position: 'right'
             }
         }
 
     ...
-    // Update the accessors.
+    // Update the Y accessors.
     y: [
       {
         accessor: 'mem', // Field name to use on y
-        chart: 'line' // Type of the chart
+        chart: 'line', // Type of the chart
+        label: 'Memory', // Label to be displayed on the axis
         axis: y1 // Axis to plot this field on
       },
       {
           accessor: 'cpu', // Field name to use on y
-          chart: 'stackedBar' // Type of the chart
+          chart: 'bar', // Type of the chart
+          label: 'CPU', // Label to be displayed on the axis
           axis: y2 // Axis to plot this field on
         }
 
@@ -130,7 +135,12 @@ Let's make it more interesting. Add cpu data also in the same chart, but let's u
     ...
 ```
 
+![create](examples/basic/img/sample2.png)
+
 Using the same XYChartView we can render line, bar and zoom charts. Head over to examples for more!
+
+Refer [Documentation](https://github.com/Juniper/contrail-charts/wiki) for different types of charts, components and 
+their config options. 
 
 # Tests
 
@@ -139,4 +149,4 @@ To run UT,
 ```npm run test```
 
 under CI infrastructure, we use phantomjs. If you want to run under headless browser
-`npm install -g phantomjs-prebuilt` and do `phantomjs tests/run-jasmine.js tests/TestRunner.html`
+`npm install -g phantomjs-prebuilt` and do `npm run test-headless`

@@ -3,9 +3,7 @@
  */
 const ContrailChartsConfigModel = require('contrail-charts-config-model')
 
-const MessageConfigModel = ContrailChartsConfigModel.extend({
-  defaults: {
-  }
-})
+class MessageConfigModel extends ContrailChartsConfigModel {
+}
 
 module.exports = MessageConfigModel

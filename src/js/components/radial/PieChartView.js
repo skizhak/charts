@@ -1,24 +1,27 @@
 /*
  * Copyright (c) 2016 Juniper Networks, Inc. All rights reserved.
  */
-const d3 = require('d3')
+const _ = require('lodash')
+const shape = require('d3-shape')
 const ContrailChartsView = require('contrail-charts-view')
-// Todo why config model is not used?
-// const ContrailChartsDataModel = require('contrail-charts-data-model')
-// const PieChartConfigModel = require('./PieChartConfigModel')
-/**
-* Group of charts rendered in polar coordinates system
-* TODO merge with ChartView as long as XYChart too
-*/
-class Self extends ContrailChartsView.extend({
-  type: 'radialChart',
-  className: 'coCharts-pie-chart',
-}) {
+
+class PieChartView extends ContrailChartsView {
+  get type () { return 'pieChart' }
+  get tagName () { return 'g' }
+  get className () { return 'coCharts-pie-chart' }
+  get events () {
+    return {
+      'mouseover .arc': '_onMouseover',
+      'mouseout .arc': '_onMouseout',
+    }
+  }
+
   constructor (options = {}) {
     super(options)
     this._highlightRadius = 10
     this.listenTo(this.model, 'change', this._onDataModelChange)
     this.listenTo(this.config, 'change', this._onConfigModelChange)
+    window.addEventListener('resize', _.throttle(() => { this.render() }, 100))
   }
 
   changeModel (model) {
@@ -27,41 +30,44 @@ class Self extends ContrailChartsView.extend({
     this.listenTo(this.model, 'change', this._onDataModelChange)
   }
 
+  _calculateDimensions () {
+    if (!this.params.chartWidth) {
+      this.params.chartWidth = this._container.getBoundingClientRect().width
+    }
+    if (this.params.chartWidthDelta) {
+      this.params.chartWidth += this.params.chartWidthDelta
+    }
+    if (!this.params.chartHeight) {
+      this.params.chartHeight = Math.round(this.params.chartWidth / 2)
+    }
+    // TODO: use the 'axis' param to compute additional margins for the axis
+  }
+
   render () {
-    const width = this.config.get('chartWidth')
-    const height = this.config.get('chartHeight')
+    this.resetParams()
+    this._calculateDimensions()
+    super.render()
     const serieConfig = this.config.get('serie')
     const radius = this.config.get('radius')
     const data = this.model.get('data')
 
-    let svg = this.svgSelection()
-    if (svg.empty() || !svg.classed(this.className)) {
-      svg = this.initSVG()
-    }
-
-    const arc = d3.arc()
+    const arc = shape.arc()
       .outerRadius(radius)
       .innerRadius(this.config.getInnerRadius())
 
-    const pie = d3.pie()
+    const pie = shape.pie()
       .sort(null)
       .value((d) => serieConfig.getValue(d))(data)
 
-    svg
-      .attr('width', width)
-      .attr('height', height)
-    const group = svg.append('g')
-      .classed('pie-chart', true)
-      .attr('transform', `translate(${width / 2}, ${height / 2})`)
+    this.d3
+      .attr('transform', `translate(${this.params.chartWidth / 2}, ${this.params.chartHeight / 2})`)
 
-    group.selectAll('arc')
+    this.d3.selectAll('arc')
       .data(pie)
       .enter().append('path')
       .classed('arc', true)
       .attr('d', arc)
       .style('fill', (d) => this.config.getColor(serieConfig.getLabel(d.data)))
-      .on('mouseover', this._onHover.bind(this))
-      .on('mouseout', this._onMouseout.bind(this))
   }
 
   // Event handlers
@@ -74,27 +80,23 @@ class Self extends ContrailChartsView.extend({
     this.render()
   }
 
-  _onHover (sector) {
-    // TODO consider case with missing width config in order to occupy all available space
+  _onMouseover (sector) {
     const serieConfig = this.config.get('serie')
-    const width = this.config.get('chartWidth')
-    const height = this.config.get('chartHeight')
     const outerRadius = this.config.get('radius')
     const innerRadius = this.config.getInnerRadius()
-    // const valueAccessor = this.config.get('serie').getValue
-    const chartOffset = this.svgSelection().node().getBoundingClientRect()
+    const chartOffset = this.svg.node().getBoundingClientRect()
     const tooltipOffset = {
-      left: chartOffset.left + width / 2 - innerRadius * 0.707,
-      top: chartOffset.top + height / 2 - innerRadius * 0.707,
+      left: chartOffset.left + this.params.chartWidth / 2 - innerRadius * 0.707,
+      top: chartOffset.top + this.params.chartHeight / 2 - innerRadius * 0.707,
       width: innerRadius * 0.707 * 2,
       height: innerRadius * 0.707 * 2,
     }
-    const arc = d3.arc(sector)
+    const arc = shape.arc(sector)
       .innerRadius(outerRadius)
       .outerRadius(outerRadius + this._highlightRadius)
       .startAngle(sector.startAngle)
       .endAngle(sector.endAngle)
-    this.svgSelection().select('.pie-chart')
+    this.d3
       .append('path')
       .classed('arc', true)
       .classed('highlight', true)
@@ -104,8 +106,8 @@ class Self extends ContrailChartsView.extend({
   }
 
   _onMouseout (e) {
-    this.svgSelection().select('.highlight').remove()
+    this.d3.select('.highlight').remove()
   }
 }
 
-module.exports = Self
+module.exports = PieChartView

@@ -9,13 +9,13 @@ class Self extends Action {
   }
 
   _execute (plot) {
-    var chart = this.registrar
+    const chart = this.registrar
     if (chart._isEnabledComponent('filter')) {
-      var filter = chart.getComponentByType('filter')
+      const filter = chart.getComponentByType('filter')
       filter.config.set('plot', plot)
     }
     if (chart._isEnabledComponent('compositeY')) {
-      var compositeY = chart.getComponentByType('compositeY')
+      const compositeY = chart.getComponentByType('compositeY')
       compositeY.config.set('plot', plot)
     }
   }
