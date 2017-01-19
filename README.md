@@ -51,16 +51,16 @@ And we need to plot a line chart for memory 'mem' data over time 'ts'
         container: '#cpumemChart', // Chart container.
         components: [ // Array of child components.
           {
-            type: 'compositeY', // Component type. Let's use composite-y component to render line chart.
+            type: 'compositeY', // Component type. Let's use composite-y component to render line chart. Refer wiki for more details on component.
             config: {
               plot: {
                 x: {
-                  accessor: 'ts', // Field name to use on x
+                  accessor: 'ts', // Accessor key from dataset to plot x axis
                   label: 'Time' // Label to be displayed
                 },
-                y: [
+                y: [ // Array of plottable accessors on Y axis
                   {
-                    accessor: 'mem', // Field name to us  e on y
+                    accessor: 'mem', // Accessor key from the dataset.
                     chart: 'line' // Type of the chart
                   }
                 ]
@@ -149,4 +149,4 @@ To run UT,
 ```npm run test```
 
 under CI infrastructure, we use phantomjs. If you want to run under headless browser
-`npm install -g phantomjs-prebuilt` and do `phantomjs tests/run-jasmine.js tests/TestRunner.html`
+`npm install -g phantomjs-prebuilt` and do `npm run test-headless`
