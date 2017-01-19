@@ -11,7 +11,8 @@ class SerieProvider extends ContrailModel {
     }
   }
 
-  constructor (options) {
+  constructor (p) {
+    super(p)
     if (this.has('parent')) {
       this.listenTo(this.get('parent'), 'change', this.parse)
     }

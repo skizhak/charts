@@ -1,8 +1,9 @@
 /*
  * Copyright (c) 2016 Juniper Networks, Inc. All rights reserved.
  */
-const $ = require('jquery')
 const _ = require('underscore')
+const $ = require('jquery')
+const d3 = require('d3')
 const Events = require('contrail-charts-events')
 const ContrailChartsView = require('contrail-charts-view')
 const _template = require('./control-panel.html')
@@ -13,7 +14,7 @@ class ControlPanelView extends ContrailChartsView {
   get className () { return 'coCharts-control-panel-view' }
   get events () {
     return {
-    'click .control-panel-item': '_onMenuItemClick',
+      'click .control-panel-item': '_onMenuItemClick',
     }
   }
   constructor (options = {}) {

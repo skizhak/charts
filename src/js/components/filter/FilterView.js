@@ -1,7 +1,7 @@
 /*
  * Copyright (c) 2017 Juniper Networks, Inc. All rights reserved.
  */
-const $ = require('jquery')
+const d3 = require('d3')
 const ContrailChartsView = require('contrail-charts-view')
 const _template = require('./filter.html')
 

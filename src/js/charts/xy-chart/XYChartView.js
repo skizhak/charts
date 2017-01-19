@@ -2,7 +2,7 @@
  * Copyright (c) 2016 Juniper Networks, Inc. All rights reserved.
  */
 const _ = require('lodash')
-const Events = require('contrail-charts-events')
+const $ = require('jquery')
 const ContrailChartsDataModel = require('contrail-charts-data-model')
 const ContrailChartsView = require('contrail-charts-view')
 const components = require('components/index')

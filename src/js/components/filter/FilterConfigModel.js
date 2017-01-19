@@ -5,10 +5,6 @@ const _ = require('lodash')
 const ContrailChartsConfigModel = require('contrail-charts-config-model')
 
 class FilterConfigModel extends ContrailChartsConfigModel {
-  constructor (p) {
-    super(p)
-  }
-
   setParent (model) {
     this._parent = model
     model.on('change', () => {

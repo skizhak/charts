@@ -1,7 +1,7 @@
 const Action = require('../plugins/Action')
 
 class SelectSerie extends Action {
-  constructor (p = {}) {
+  constructor (p) {
     super(p)
     this._id = 'selectSerie'
     this._deny = false
@@ -16,7 +16,7 @@ class SelectSerie extends Action {
     }
     if (chart._isEnabledComponent('compositeY')) {
       const compositeY = chart.getComponentByType('compositeY')
-      compositeY.config.set('plot', plot)
+      compositeY.config.trigger('change:plot')
     }
   }
 }
