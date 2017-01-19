@@ -32,7 +32,7 @@ Our library also supports including via requirejs. Refer our examples for sample
 Let's assume we've a time-series data
 ```javascript
      // CPU-MEM Time series data.
-     var tsData = [
+     const tsData = [
        { ts: 1475760930000, mem: 0, cpu: 10 },
        { ts: 1475761930000, mem: 3, cpu: 20 },
        { ts: 1475762930000, mem: 2, cpu: 15 },
@@ -44,7 +44,7 @@ And we need to plot a line chart for memory 'mem' data over time 'ts'
 
 ```javascript
     // Initialize a XYChartView
-    var cpuMemChartView = new coCharts.charts.XYChartView()
+    const cpuMemChartView = new coCharts.charts.XYChartView()
 
     // Let's set the chart config.
     cpuMemChartView.setConfig({
@@ -55,7 +55,7 @@ And we need to plot a line chart for memory 'mem' data over time 'ts'
             config: {
               plot: {
                 x: {
-                  accessor: 'ts' // Field name to use on x
+                  accessor: 'ts', // Field name to use on x
                   label: 'Time' // Label to be displayed
                 },
                 y: [
@@ -71,10 +71,8 @@ And we need to plot a line chart for memory 'mem' data over time 'ts'
     })
 
     // Set the time series data to chart view.
+    // This will trigger render function also
     cpuMemChartView.setData(tsData)
-
-    // Render it.
-    cpuMemChartView.render()
 ```
 
 ![create](examples/basic/img/sample1.png)
@@ -95,7 +93,7 @@ and use them inside your plot.y config
       {
         accessor: 'mem', // Field name to use on y
         label: 'Memory',
-        chart: 'line' // Type of the chart
+        chart: 'line', // Type of the chart
         axis: y1 // Axis to plot this field on
       }
     ]

@@ -5,99 +5,97 @@ var $ = require('jquery')
 var _ = require('underscore')
 var ContrailChartsView = require('contrail-charts-view')
 
-var ControlPanelView = ContrailChartsView.extend({
-  type: 'controlPanel',
-  tagName: 'div',
-  className: 'coCharts-control-panel-view',
+class ControlPanelView extends ContrailChartsView {
+  get type () { return 'controlPanel' }
+  get className () { return 'coCharts-control-panel-view' }
 
-  expandedTemplates: {
-    accessorData: 'SOME_TEMPLATE_ID'
-  },
+  get expandedTemplates () {
+    return {
+      accessorData: 'SOME_TEMPLATE_ID'
+    }
+  }
 
-  events: {
-    'click .control-panel-item': 'controlPanelItemClicked',
-    'click .control-panel-filter-close': 'controlPanelExpandedCloseButtonClicked',
-    'change .accessor-data-checkbox': 'accessorDataCheckboxChanged',
-    'change .accessor-data-chart-type-select': 'accessorDataSelectChanged'
-  },
+  get events () {
+    return {
+      'click .control-panel-item': 'controlPanelItemClicked',
+      'click .control-panel-filter-close': 'controlPanelExpandedCloseButtonClicked',
+      'change .accessor-data-checkbox': 'accessorDataCheckboxChanged',
+      'change .accessor-data-chart-type-select': 'accessorDataSelectChanged'
+    }
+  }
 
-  initialize: function (options) {
-    var self = this
-    ContrailChartsView.prototype.initialize.call(self, options)
-    self.listenTo(self.config, 'change', self.render)
-  },
+  constructor (options) {
+    super(options)
+    this.listenTo(this.config, 'change', this.render)
+  }
 
-  controlPanelItemClicked: function (e) {
-    var self = this
-    var $button = $(e.target).closest('.control-panel-item')
+  controlPanelItemClicked (d, el) {
+    var $button = $(el).closest('.control-panel-item')
     var buttonName = $button.attr('data-name')
-    var button = _.findWhere(self.config.get('buttons'), { name: buttonName })
+    var button = _.findWhere(this.config.get('buttons'), { name: buttonName })
     if (button) {
-      self.params.activeButton = button
+      this.params.activeButton = button
       if (_.isObject(button.events) && button.events.click) {
         if (_.isString(button.events.click)) {
-          self._eventObject.trigger(button.events.click, self.params)
+          this._eventObject.trigger(button.events.click, this.params)
         } else if (_.isFunction(button.events.click)) {
-          _.bind(button.events.click, self)()
+          _.bind(button.events.click, this)()
         }
       }
       if (_.has(button, 'panel') && button.panel.name) {
-        var $expandedPanel = self.$el.find('.control-panel-expanded-container')
+        var $expandedPanel = this.$el.find('.control-panel-expanded-container')
         if (!$expandedPanel.hasClass('hide')) {
           // Panel already open.
-          if (self.params.activePanel === button.panel.name) {
+          if (this.params.activePanel === button.panel.name) {
             // Same panel open so close it.
             $expandedPanel.addClass('hide')
-            self.params.activePanel = null
+            this.params.activePanel = null
           } else {
             // Different panel open so replace it.
-            self.renderPanel(button.panel.name)
-            self.params.activePanel = button.panel.name
+            this.renderPanel(button.panel.name)
+            this.params.activePanel = button.panel.name
           }
         } else {
           // Panel not open so open it
           $expandedPanel.removeClass('hide')
-          self.renderPanel(button.panel.name)
-          self.params.activePanel = button.panel.name
+          this.renderPanel(button.panel.name)
+          this.params.activePanel = button.panel.name
         }
       }
     }
-  },
+  }
 
-  controlPanelExpandedCloseButtonClicked: function (e) {
+  controlPanelExpandedCloseButtonClicked (e) {
     this.$el.find('.control-panel-expanded-container').addClass('hide')
-  },
+  }
 
-  accessorDataCheckboxChanged: function () {
-    var self = this
-    var plot = self.config.get('plot')
-    self.$el.find('.accessor-data-checkbox').each(function () {
-      var checked = $(this).is(':checked')
-      var key = $(this).attr('value')
+  accessorDataCheckboxChanged (d, el) {
+    var plot = this.config.get('plot')
+    this.$el.find('.accessor-data-checkbox').each(() => {
+      var checked = el.checked
+      var key = el.value
       var accessor = _.find(plot.y, { accessor: key })
       if (accessor) {
         accessor.enabled = checked
       }
     })
-    self.config.trigger('change:plot')
-  },
+    this.config.trigger('change:plot')
+  }
 
-  accessorDataSelectChanged: function () {
-    var self = this
-    var plot = self.config.get('plot')
-    self.$el.find('.accessor-data-chart-type-select').each(function () {
-      var selectedChartType = $(this).val()
-      var key = $(this).attr('name')
+  accessorDataSelectChanged (d, el) {
+    var plot = this.config.get('plot')
+    this.$el.find('.accessor-data-chart-type-select').each(() => {
+      var selectedChartType = el.value
+      var key = el.getAttribute('name')
       var accessor = _.find(plot.y, { accessor: key })
       if (selectedChartType && accessor) {
         accessor.chart = selectedChartType
       }
     })
-    self.config.trigger('change:plot')
-  },
+    this.config.trigger('change:plot')
+  }
 
-  generateExpandedPanel: function (params) {
-    var self = this
+  generateExpandedPanel (params) {
     var $container = $('<div class="control-panel-filter-container"></div>')
     var $panelHead = $('<div class="control-panel-filter-head"></div>')
     $panelHead.append('<span class="control-panel-filter-head-icon"><i class="' + params.activeButton.iconClass + '"></i></span>')
@@ -105,20 +103,20 @@ var ControlPanelView = ContrailChartsView.extend({
     $panelHead.append('<span class="control-panel-filter-close"><i class="fa fa-remove"></i></span>')
     var $panelBody = $('<div class="control-panel-filter-body"></div>')
     var $filterItems = $('<div class="control-panel-filter-items"></div>')
-    _.each(params.plot.y, function (accessor) {
+    _.each(params.plot.y, (accessor) => {
       var key = accessor.accessor
       var $filterItem = $('<div class="control-panel-filter-item"></div>')
       var $checkbox = $('<input id="filter-item-input-' + key + '" type="checkbox" name="control-panel-filter" class="accessor-data-checkbox" value="' + key + '"/>')
       if (accessor.enabled) {
         $checkbox.prop('checked', true)
       }
-      var $label = $('<label for="filter-item-input-' + key + '" class="accessor-data-checkbox-label"> ' + self.config.getLabel(undefined, accessor) + '</label>')
+      var $label = $('<label for="filter-item-input-' + key + '" class="accessor-data-checkbox-label"> ' + this.config.getLabel(undefined, accessor) + '</label>')
       $filterItem.append($checkbox)
       $filterItem.append($label)
       if (accessor.possibleChartTypes) {
         var $chartTypeSelector = $('<select class="accessor-data-chart-type-select" name="' + key + '"></select>')
-        _.each(accessor.possibleChartTypes, function (chartType) {
-          var $option = $('<option value="' + chartType.chart + '">' + self.config.getLabel(undefined, chartType) + '</option>')
+        _.each(accessor.possibleChartTypes, (chartType) => {
+          var $option = $('<option value="' + chartType.chart + '">' + this.config.getLabel(undefined, chartType) + '</option>')
           if (accessor.chart === chartType.chart) {
             $option.prop('selected', true)
           }
@@ -132,22 +130,21 @@ var ControlPanelView = ContrailChartsView.extend({
     $container.append($panelHead)
     $container.append($panelBody)
     return $container
-  },
+  }
 
-  renderPanel: function (panelName) {
-    var self = this
-    if (self.expandedTemplates[panelName]) {
-      var $expandedPanelContainer = self.$el.find('.control-panel-expanded-container')
-      $expandedPanelContainer.html(self.generateExpandedPanel(self.params))
-      if (self.params.activeButton.panel.width) {
-        $expandedPanelContainer.css({ width: self.params.activeButton.panel.width })
+  renderPanel (panelName) {
+    if (this.expandedTemplates[panelName]) {
+      var $expandedPanelContainer = this.$el.find('.control-panel-expanded-container')
+      $expandedPanelContainer.html(this.generateExpandedPanel(this.params))
+      if (this.params.activeButton.panel.width) {
+        $expandedPanelContainer.css({ width: this.params.activeButton.panel.width })
       }
     }
-  },
+  }
 
-  generateItems: function (params) {
+  generateItems (params) {
     var $controlPanelItems = $('<div class="control-panel-items"></div>')
-    _.each(params.buttons, function (button) {
+    _.each(params.buttons, (button) => {
       var $button = $('<button data-name="' + button.name + '" title="' + button.title + '"></button>')
       $button.append('<i class="' + button.iconClass + '"></i>')
       $button.addClass('control-panel-item')
@@ -155,15 +152,14 @@ var ControlPanelView = ContrailChartsView.extend({
       $controlPanelItems.append($button)
     })
     return $controlPanelItems
-  },
-
-  render: function () {
-    var self = this
-    self.resetParams()
-    self.$el.html(self.generateItems(self.params))
-    self.$el.append('<div class="control-panel-expanded-container hide"></div>')
-    ContrailChartsView.prototype.render.call(this)
   }
-})
+
+  render () {
+    this.resetParams()
+    this.$el.html(this.generateItems(this.params))
+    this.$el.append('<div class="control-panel-expanded-container hide"></div>')
+    super.render()
+  }
+}
 
 module.exports = ControlPanelView
