@@ -66,18 +66,18 @@ button:focus {
 			opacity: 0.9;
 		}
 	}
-	.scatter-bubble-chart {
-		.bubble {
+	.coCharts-scatter-plot {
+		.point {
 			opacity: 0.55;
 			stroke-width: 0;
 			shape-rendering: geometricPrecision;
-		}
-		.bubble:hover {
-			opacity: 0.85;
-			stroke-width: 2;
-			stroke: #ddd;
-			cursor: pointer;
-			shape-rendering: geometricPrecision;
+      &:hover {
+        opacity: 0.85;
+        stroke-width: 2;
+        stroke: #ddd;
+        cursor: pointer;
+        shape-rendering: geometricPrecision;
+      }
 		}
 	}
 	.brush {
@@ -85,8 +85,15 @@ button:focus {
 			fill: #aaa;
 		}
 		.handle--custom {
+      opacity: 1;
 			fill: #888;
-			stroke: #555;
+      fill-opacity: 0.75;
+      stroke: #444;
+      stroke-width: 1;
+      cursor: ew-resize;
+      &.hide {
+        opacity: 1e-6;
+      }
 		}
 	}
 	.crosshair {
@@ -309,7 +316,7 @@ button:focus {
 	}
 }
 
-.pie-chart {
+.coCharts-pie-chart {
   path.arc {
     stroke: white;
   }

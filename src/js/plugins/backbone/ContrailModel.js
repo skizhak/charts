@@ -3,5 +3,5 @@
  */
 const Backbone = require('backbone')
 
-const ContrailModel = Backbone.Model.extend({})
+class ContrailModel extends Backbone.Model {}
 module.exports = ContrailModel
