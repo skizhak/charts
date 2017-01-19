@@ -1,6 +1,6 @@
 const Action = require('../plugins/Action')
 
-class Self extends Action {
+class SelectSerie extends Action {
   constructor (p = {}) {
     super(p)
     this._id = 'selectSerie'
@@ -21,4 +21,4 @@ class Self extends Action {
   }
 }
 
-module.exports = Self
+module.exports = SelectSerie

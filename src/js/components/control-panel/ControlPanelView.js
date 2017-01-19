@@ -8,7 +8,7 @@ const ContrailChartsView = require('contrail-charts-view')
 const _template = require('./control-panel.html')
 const _actionTemplate = require('./action.html')
 
-class Self extends ContrailChartsView {
+class ControlPanelView extends ContrailChartsView {
   get type () { return 'controlPanel' }
   get className () { return 'coCharts-control-panel-view' }
   get events () {
@@ -58,12 +58,12 @@ class Self extends ContrailChartsView {
     menuItem.removeClass('enabled')
   }
 
-  _onMenuItemClick (e) {
-    e.stopPropagation()
-    const data = $(e.currentTarget).data()
+  _onMenuItemClick (d, el) {
+    d3.event.stopPropagation()
+    const data = $(el).data()
     const action = this._actionman.get(data.id)
     action.apply(data)
   }
 }
 
-module.exports = Self
+module.exports = ControlPanelView

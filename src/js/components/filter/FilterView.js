@@ -5,12 +5,13 @@ const $ = require('jquery')
 const ContrailChartsView = require('contrail-charts-view')
 const _template = require('./filter.html')
 
-class Self extends ContrailChartsView.extend({
-  events: {
-    'change .filter-item-input': '_onItemClick',
+class FilterView extends ContrailChartsView {
+  get events () {
+    return {
+      'change .filter-item-input': '_onItemClick',
+    }
   }
-}) {
-  constructor (options = {}) {
+  constructor (options) {
     super(options)
     this.type = 'filter'
     this.className = 'coCharts-filter-view'
@@ -21,13 +22,13 @@ class Self extends ContrailChartsView.extend({
     super.render(_template(this.config.getData().y))
   }
 
-  _onItemClick (e) {
-    e.stopPropagation()
-    const accessor = $(e.target).val()
+  _onItemClick (d, el) {
+    d3.event.stopPropagation()
+    const accessor = el.value
     const action = this._actionman.get('selectSerie')
     this.config.filter(accessor)
     action.apply(this.config.getData())
   }
 }
 
-module.exports = Self
+module.exports = FilterView

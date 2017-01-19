@@ -1,6 +1,6 @@
 const Action = require('../../../plugins/Action')
 
-class Self extends Action {
+class ClearMessage extends Action {
   constructor (p) {
     super(p)
     this._id = 'messageClear'
@@ -14,4 +14,4 @@ class Self extends Action {
   }
 }
 
-module.exports = Self
+module.exports = ClearMessage

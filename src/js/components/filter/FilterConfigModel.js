@@ -4,8 +4,8 @@
 const _ = require('lodash')
 const ContrailChartsConfigModel = require('contrail-charts-config-model')
 
-class Self extends ContrailChartsConfigModel {
-  constructor (p = {}) {
+class FilterConfigModel extends ContrailChartsConfigModel {
+  constructor (p) {
     super(p)
   }
 
@@ -27,4 +27,4 @@ class Self extends ContrailChartsConfigModel {
   }
 }
 
-module.exports = Self
+module.exports = FilterConfigModel

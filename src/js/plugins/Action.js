@@ -5,7 +5,7 @@ const Events = require('contrail-charts-events')
  * @event enable
  * @event disable
  */
-class Self {
+class Action {
   constructor (p = {}) {
     this.registrar = p.registrar
     this._id = p.id
@@ -102,6 +102,6 @@ class Self {
   }
 }
 // TODO replace with class extends syntax
-_.extend(Self.prototype, Events)
+_.extend(Action.prototype, Events)
 
-module.exports = Self
+module.exports = Action

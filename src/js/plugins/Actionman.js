@@ -3,7 +3,7 @@ const Events = require('contrail-charts-events')
 /**
  * Action Manager
  */
-class Self {
+class Actionman {
   constructor () {
     this._instances = {}
   }
@@ -46,6 +46,6 @@ class Self {
   }
 }
 // TODO replace with class extends syntax
-_.extend(Self.prototype, Events)
+_.extend(Actionman.prototype, Events)
 
-module.exports = Self
+module.exports = Actionman

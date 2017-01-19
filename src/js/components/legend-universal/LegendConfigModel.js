@@ -4,7 +4,7 @@
 const _ = require('lodash')
 const ContrailChartsConfigModel = require('contrail-charts-config-model')
 
-class Self extends ContrailChartsConfigModel {
+class LegendConfigModel extends ContrailChartsConfigModel {
   setParent (model) {
     this._parent = model
     model.on('change', () => {
@@ -25,4 +25,4 @@ class Self extends ContrailChartsConfigModel {
   }
 }
 
-module.exports = Self
+module.exports = LegendConfigModel
