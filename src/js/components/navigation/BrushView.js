@@ -32,8 +32,8 @@ class BrushView extends ContrailChartsView {
       .on('end', () => {
         const dataWindow = d3.event.selection
         if (!dataWindow) {
-          this._removeBrush()
-          this._renderBrush()
+          this.remove()
+          this.render()
         } else {
           this._onSelection(d3.event.selection)
         }
@@ -60,9 +60,11 @@ class BrushView extends ContrailChartsView {
   remove () {
     this.el.innerHTML = ''
     this._brush = null
-    //this.config.unset('focusDomain', { silent: true })
-    //const newFocusDomain = {}
-    //this._focusDataProvider.setRangeAndFilterData(newFocusDomain)
+    this.d3.selectAll('.handle--custom')
+      .classed('hide', true)
+    // this.config.unset('focusDomain', { silent: true })
+    // const newFocusDomain = {}
+    // this._focusDataProvider.setRangeAndFilterData(newFocusDomain)
   }
 
   // Event handlers
