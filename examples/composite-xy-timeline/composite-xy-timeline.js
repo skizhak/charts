@@ -25,21 +25,6 @@ for (let i = 0; i < 100; i++) {
 }
 const complexChartView = new coCharts.charts.XYChartView()
 complexChartView.setConfig({
-  handlers: [{
-    type: 'bindingHandler',
-    config: {
-      bindings: [
-        {
-          sourceComponent: 'compositeY',
-          sourceModel: 'config',
-          sourcePath: 'plot',
-          targetComponent: 'controlPanel',
-          targetModel: 'config',
-          action: 'sync'
-        }
-      ]
-    },
-  }],
   container: '#complexChart',
   components: [{
     id: 'complexChartCompositeY',

@@ -47,14 +47,6 @@ class XYChartView extends ContrailChartsView {
     this._dataModel.set(dataConfig, { silent: true })
   }
   /**
-  * Provides a global BindingHandler to this chart.
-  * If no BindingHandler is provided it will be instantiated by this chart if needed based on its local configuration.
-  */
-  setBindingHandler (bindingHandler) {
-    this.hasExternalBindingHandler = (bindingHandler != null)
-    this.bindingHandler = bindingHandler
-  }
-  /**
   * Sets the configuration for this chart as a simple object.
   * Instantiate the required views if they do not exist yet, set their configurations otherwise.
   * Setting configuration to a rendered chart will trigger a ConfigModel change event that will cause the chart to be re-rendered.
@@ -87,14 +79,6 @@ class XYChartView extends ContrailChartsView {
 
   _registerHandler (type, config) {
     if (!this._isEnabledHandler(type)) return false
-    // Todo create handlers array similar to components.
-    if (type === 'bindingHandler') {
-      if (!this.bindingHandler) {
-        this.bindingHandler = new handlers.BindingHandler(config)
-      } else {
-        this.bindingHandler.addBindings(config.bindings, this._config.chartId)
-      }
-    }
     if (type === 'dataProvider') {
       // Set dataProvider config. Eg. input data formatter config
       this._dataProvider.set(config, { silent: true })
@@ -162,9 +146,6 @@ class XYChartView extends ContrailChartsView {
     const component = new components[type].View(viewOptions)
     this._components.push(component)
 
-    if (this._isEnabledHandler('bindingHandler') || this.hasExternalBindingHandler) {
-      this.bindingHandler.addComponent(this._config.chartId, type, component)
-    }
     return component
   }
 
@@ -203,7 +184,6 @@ class XYChartView extends ContrailChartsView {
     _.each(this._components, (component) => {
       component.render()
     })
-    $(this._config.el).html(this.$el)
   }
 }
 

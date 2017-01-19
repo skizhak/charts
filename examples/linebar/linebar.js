@@ -38,21 +38,6 @@ for (let i = 0; i < 100; i++) {
 // Create chart view.
 const cpuMemChartView = new coCharts.charts.XYChartView()
 cpuMemChartView.setConfig({
-  handlers: [{
-    type: 'bindingHandler',
-    config: {
-      bindings: [
-        {
-          sourceComponent: 'compositeY',
-          sourceModel: 'config',
-          sourcePath: 'plot',
-          targetComponent: 'controlPanel',
-          targetModel: 'config',
-          action: 'sync'
-        }
-      ]
-    }
-  }],
   container: '#cpuMemChart',
   components: [{
     type: 'legend',

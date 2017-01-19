@@ -23,29 +23,6 @@ define([ // eslint-disable-line no-undef
   const complexChartView = new coCharts.charts.XYChartView()
   complexChartView.setData(complexData)
   complexChartView.setConfig({
-    handlers: [{
-      type: 'bindingHandler',
-      config: {
-        bindings: [
-          {
-            sourceComponent: 'compositeY',
-            sourceModel: 'config',
-            sourcePath: 'plot',
-            targetComponent: 'controlPanel',
-            targetModel: 'config',
-            action: 'sync'
-          }
-        ]
-      }
-    }, {
-      type: 'dataProvider',
-      config: {
-        formatData: (data) => {
-          // Sample dataProvider input data formatter.
-          return data
-        }
-      }
-    }],
     container: '#complexChart',
     components: [{
       type: 'compositeY',

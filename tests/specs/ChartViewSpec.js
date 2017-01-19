@@ -11,7 +11,6 @@ describe('coCharts', function () {
   it('coCharts has all charts, handlers and components', function () {
     expect(coCharts.charts.MultiChartView).toBeDefined()
     expect(coCharts.charts.XYChartView).toBeDefined()
-    expect(coCharts.handlers.BindingHandler).toBeDefined()
     expect(coCharts.handlers.DataProvider).toBeDefined()
     expect(coCharts.components.compositeY.ConfigModel).toBeDefined()
     expect(coCharts.components.compositeY.View).toBeDefined()

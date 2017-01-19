@@ -10,7 +10,6 @@ const charts = {
   RadialChartView: require('charts/radial-chart/RadialChartView'),
 }
 const components = require('components/index')
-const handlers = require('handlers/index')
 
 class ChartView extends ContrailChartsView {
   constructor (p) {
@@ -49,13 +48,6 @@ class ChartView extends ContrailChartsView {
   _registerHandler (type, config) {
     if (!this._isEnabledHandler(type)) return false
     // Todo create handlers array similar to components.
-    if (type === 'bindingHandler') {
-      if (!this.bindingHandler) {
-        this.bindingHandler = new handlers.BindingHandler(config)
-      } else {
-        this.bindingHandler.addBindings(config.bindings, this._config.chartId)
-      }
-    }
     if (type === 'dataProvider') {
       // Set dataProvider config. Eg. input data formatter config
       this._dataProvider.set(config, { silent: true })
@@ -69,7 +61,7 @@ class ChartView extends ContrailChartsView {
    * Initialize child chart views.
    */
   _initCharts () {
-    // Iterate through the this._config.charts array, initialize the given charts, set their binding handle and config.
+    // Iterate through the this._config.charts array, initialize the given charts, set their config.
     _.each(this._config.charts, (chart) => {
       this._registerChart(chart)
     })
@@ -79,9 +71,6 @@ class ChartView extends ContrailChartsView {
     if (chart.chartId) {
       if (!this._charts[chart.chartId]) {
         this._charts[chart.chartId] = new charts[chart.type]()
-      }
-      if (this._isEnabledHandler('bindingHandler')) {
-        this._charts[chart.chartId].setBindingHandler(this.bindingHandler)
       }
       this._charts[chart.chartId].setConfig(chart)
     }
@@ -94,11 +83,6 @@ class ChartView extends ContrailChartsView {
     if (this._isEnabledComponent('navigation')) {
       const dataModel = this.getComponentByType('navigation').focusDataProvider
       if (this._isEnabledComponent('compositeY')) this.getComponentByType('compositeY').changeModel(dataModel)
-    }
-    if (this._isEnabledHandler('bindingHandler') && !this.hasExternalBindingHandler) {
-      // Only start the binding handler if it is not an external one.
-      // Otherwise assume it will be started by the parent chart.
-      this.bindingHandler.start()
     }
   }
 
@@ -114,9 +98,6 @@ class ChartView extends ContrailChartsView {
     const component = new components[type].View(viewOptions)
     this._components.push(component)
 
-    if (this._isEnabledHandler('bindingHandler') || this.hasExternalBindingHandler) {
-      this.bindingHandler.addComponent(this._config.chartId, type, component)
-    }
     return component
   }
 

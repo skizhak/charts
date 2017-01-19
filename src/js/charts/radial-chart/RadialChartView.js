@@ -66,14 +66,6 @@ class RadialChartView extends ContrailView {
   _initComponents () {
     _.each(this._config.components, (component, index) => {
       component.config.order = index
-      if (component.type === 'bindingHandler' && this._isEnabledComponent('bindingHandler')) {
-        if (!this.bindingHandler) {
-          this.bindingHandler = new handlers.BindingHandler(this._config.bindingHandler)
-        } else {
-          this.bindingHandler.addBindings(this._config.bindingHandler.bindings, this._config.chartId)
-        }
-        return
-      }
       this._registerComponent(component.type, component.config, this._dataProvider, component.id)
     })
     // set parent config model
@@ -102,9 +94,6 @@ class RadialChartView extends ContrailView {
     const component = new components[type].View(viewOptions)
     this._components.push(component)
 
-    if (this._isEnabledComponent('bindingHandler') || this.hasExternalBindingHandler) {
-      this.bindingHandler.addComponent(this._config.chartId, type, component)
-    }
     return component
   }
 
