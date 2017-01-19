@@ -1,7 +1,7 @@
 /*
  * Copyright (c) 2016 Juniper Networks, Inc. All rights reserved.
  */
-const _ = require('underscore')
+const _ = require('lodash')
 const $ = require('jquery')
 const d3 = require('d3')
 const Events = require('contrail-charts-events')

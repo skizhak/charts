@@ -4,7 +4,7 @@
 
 define([ // eslint-disable-line no-undef
   'd3', // Example use of older d3 versions.
-  'underscore',
+  'lodash',
   'contrail-charts'
 ], function (d3, _, coCharts) {
   // Complex example
