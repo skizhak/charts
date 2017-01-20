@@ -24,12 +24,7 @@ class XYChartView extends ContrailChartsView {
     this._dataProvider = new handlers.DataProvider({ parentDataModel: this._dataModel })
     this._components = []
     this._actionman = new Actionman()
-
-    this._actions = _actions
-    // register common actions
-    setTimeout(() => {
-      _.each(this._actions, action => this._actionman.set(action, this))
-    })
+    _.each(_actions, action => this._actionman.set(action, this))
   }
   /**
   * Provide data for this chart as a simple array of objects.
@@ -86,7 +81,7 @@ class XYChartView extends ContrailChartsView {
   }
 
   renderMessage (msgObj) {
-    this._eventObject.trigger('message', msgObj)
+    this._actionman.get('messageSend').apply(msgObj)
   }
 
   clearMessage (componentId) {
@@ -96,7 +91,7 @@ class XYChartView extends ContrailChartsView {
       action: 'update',
       messages: [],
     }
-    this._eventObject.trigger('message', msgObj)
+    this._actionman.get('messageClear').apply(msgObj)
   }
 
   _initHandlers () {

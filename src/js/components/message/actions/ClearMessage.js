@@ -7,8 +7,8 @@ class ClearMessage extends Action {
     this._deny = false
   }
 
-  _execute (p) {
-    this.registrar.clear(p)
+  _execute (msgObj) {
+    this.registrar.clear(msgObj)
   }
 }
 
