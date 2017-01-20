@@ -5,8 +5,8 @@
   "main": "src/js/contrail-charts.js",
   "scripts": {
     "build": "webpack --mode=build",
-    "build-example": "webpack --mode=build --config webpack.example.config.js",
-    "clean-build": "rm -rf build/* && webpack --mode=build",
+    "build-examples": "webpack --mode=build --config webpack.examples.config.js",
+    "build-clean": "rm -rf build/* && webpack --mode=build",
     "dev": "webpack --progress --colors --watch --mode=dev",
     "test": "node test.js",
     "test-headless": "phantomjs tests/run-jasmine.js tests/TestRunner.html",
