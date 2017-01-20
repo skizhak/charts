@@ -39,9 +39,6 @@ class CompositeYChartView extends ContrailChartsView {
 
     this._debouncedRenderFunction = _.bind(_.debounce(this._render, 10), this)
     this._throttledRender = _.throttle(() => { this.render() }, 100)
-    this._throttledShowCrosshair = _.throttle((point) => {
-      this._eventObject.trigger('showCrosshair', this.getCrosshairData(point), point, this.getCrosshairConfig())
-    }, 100)
   }
 
   refresh () {
@@ -541,7 +538,7 @@ class CompositeYChartView extends ContrailChartsView {
   }
 
   _onMousemove () {
-    this._throttledShowCrosshair(d3.mouse(d3.event.currentTarget))
+    this._actionman.fire('ShowCrosshair', d3.mouse(d3.event.currentTarget), this)
   }
 }
 
