@@ -8,6 +8,14 @@ $tabsPaddingTop: $tabLabelVerticalPadding + $tabLabelCheckedBorderTop + 3px;
 $tabContentOffsetTop: $tabsPaddingTop + $baseFontSize + 2px + $tabLabelVerticalPadding;
 $contentHorizontalPadding: 20px;
 
+
+$stdWhite: #ffffff;
+$stdDarkgray: #555555;
+$stdGray: #888888;
+$stdLightgray: #eeeeee;
+
+$stdBorderGray: #dddddd;
+
 html, body {
     overflow-y: scroll;
     height: 100%;
@@ -21,8 +29,8 @@ html, body {
 
 body {
     font: $baseFontSize 'Open Sans', sans-serif;
-    color: #555;
-    background: #eee;
+    color: $stdDarkgray;
+    background: $stdLightgray;
 }
 
 h1 {
@@ -78,7 +86,7 @@ h1 {
     clear: both;
     padding: $tabsPaddingTop 20px 0;
     margin: 0 auto;
-    background: #fff;
+    background: $stdWhite;
     width: 100%;
     height: 100%;
 
@@ -94,7 +102,7 @@ h1 {
             left: 1px;
 
             &:hover {
-                color: #888;
+                color: $stdGray;
                 cursor: pointer;
             }
         }
@@ -103,11 +111,11 @@ h1 {
             display: none;
 
             &:checked ~ label {
-                color: #555;
-                border: 1px solid #ddd;
+                color: $stdDarkgray;
+                border: 1px solid $stdBorderGray;
                 border-top: $tabLabelCheckedBorderTop solid orange;
-                border-bottom: 1px solid #fff;
-                background: #fff;
+                border-bottom: 1px solid $stdWhite;
+                background: $stdWhite;
                 z-index: 2;
 
                 ~ .content {
@@ -125,9 +133,9 @@ h1 {
             left: 0;
             right: 0;
             bottom: 0;
-            background: white;
+            background: $stdWhite;
             padding: 20px $contentHorizontalPadding 0;
-            border-top: 1px solid #ddd;
+            border-top: 1px solid $stdBorderGray;
             overflow-y: scroll;
 
             &.remove-content-horizontal-padding {
