@@ -4,7 +4,7 @@
 requirejs.config({ // eslint-disable-line
   paths: {
     app: 'app',
-    'contrail-charts': '../../build/js/contrail-charts',
+    'contrail-charts': '../../build/src/js/contrail-charts',
     'jquery': '../../node_modules/jquery/dist/jquery',
     'backbone': '../../node_modules/backbone/backbone',
     'd3v4': '../../node_modules/d3/build/d3',
