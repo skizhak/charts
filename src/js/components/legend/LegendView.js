@@ -16,7 +16,7 @@ class LegendView extends ContrailChartsView {
 
   render () {
     const template = this.config.get('template') || _template
-    const content = template(this.config.getData(this.model))
+    const content = template(this.config.data)
     super.render(content)
   }
 }

@@ -19,7 +19,7 @@ class FilterView extends ContrailChartsView {
   }
 
   render () {
-    super.render(_template(this.config.getData().y))
+    super.render(_template(this.config.data.y))
   }
 
   _onItemClick (d, el) {
@@ -27,7 +27,7 @@ class FilterView extends ContrailChartsView {
     const accessor = el.value
     const action = this._actionman.get('selectSerie')
     this.config.filter(accessor)
-    action.apply(this.config.getData())
+    action.apply(this.config.data)
   }
 }
 

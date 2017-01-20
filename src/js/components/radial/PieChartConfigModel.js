@@ -20,6 +20,12 @@ class PieChartConfigModel extends ContrailChartsConfigModel {
     }
   }
 
+  get innerRadius () {
+    const chartType = this.get('type')
+    const innerRadiusCoefficient = chartType === 'pie' ? 0 : 0.75
+    return this.get('radius') * innerRadiusCoefficient
+  }
+
   getColor (accessor) {
     return this.attributes.colorScale(accessor)
   }
@@ -27,12 +33,6 @@ class PieChartConfigModel extends ContrailChartsConfigModel {
   getLabels (dataProvider) {
     const labelFormatter = this.get('serie').getLabel
     return dataProvider.getLabels(labelFormatter)
-  }
-
-  getInnerRadius () {
-    const chartType = this.get('type')
-    const innerRadiusCoefficient = chartType === 'pie' ? 0 : 0.75
-    return this.get('radius') * innerRadiusCoefficient
   }
 }
 

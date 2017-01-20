@@ -14,12 +14,11 @@ const SerieProvider = require('handlers/SerieProvider')
 class RadialChartView extends ContrailView {
   get type () { return 'RadialChartView' }
 
-  constructor (p) {
+  constructor (p = {}) {
     super(p)
     this._dataModel = new ContrailChartsDataModel()
     this._dataProvider = new SerieProvider({ parent: this._dataModel })
     this._components = []
-    p = p || {}
     this._eventObject = p.eventObject || _.extend({}, Events)
     this.listenTo(this._dataProvider, 'change', this._render)
   }
@@ -58,9 +57,12 @@ class RadialChartView extends ContrailView {
   getComponent (id) {
     return _.find(this._components, {id: id})
   }
-  // TODO should return all instances not first only
-  getComponentByType (type) {
-    return _.find(this._components, {type: type})
+  /**
+   * Get array of components by type
+   * @return {Array}
+   */
+  getComponentsByType (type) {
+    return _.filter(this._components, {type: type})
   }
 
   _initComponents () {
@@ -73,11 +75,11 @@ class RadialChartView extends ContrailView {
       const sourceComponentId = component.config.get('sourceComponent')
       if (sourceComponentId) {
         const sourceComponent = this.getComponent(sourceComponentId)
-        component.config.setParent(sourceComponent.config)
+        component.config.parent = sourceComponent.config
       }
     })
     if (this._isEnabledComponent('pieChart')) {
-      this.getComponentByType('pieChart').changeModel(this._dataProvider)
+      _.each(this.getComponentsByType('pieChart'), (pieChart) => pieChart.changeModel(this._dataProvider))
     }
   }
 

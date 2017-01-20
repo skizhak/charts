@@ -5,7 +5,7 @@ const _ = require('lodash')
 const ContrailChartsConfigModel = require('contrail-charts-config-model')
 
 class LegendConfigModel extends ContrailChartsConfigModel {
-  setParent (model) {
+  set parent (model) {
     this._parent = model
     model.on('change', () => {
       this.trigger('change')

@@ -1,3 +1,4 @@
+const _ = require('lodash')
 const Action = require('../plugins/Action')
 
 class SelectSerie extends Action {
@@ -9,14 +10,10 @@ class SelectSerie extends Action {
 
   _execute (plot) {
     const chart = this.registrar
-    if (chart._isEnabledComponent('filter')) {
-      const filter = chart.getComponentByType('filter')
-      filter.config.set('plot', plot)
-    }
-    if (chart._isEnabledComponent('compositeY')) {
-      const compositeY = chart.getComponentByType('compositeY')
-      compositeY.config.trigger('change:plot')
-    }
+    _.each(chart.getComponentsByType('filter'), (filter) => filter.config.set('plot', plot))
+    _.each(chart.getComponentsByType('compositeY'), (compositeY) => {
+      compositeY.config.trigger('change', compositeY.config)
+    })
   }
 }
 

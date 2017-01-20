@@ -11,17 +11,10 @@ class ColorPickerConfigModel extends ContrailChartsConfigModel {
       palette: d3.schemeCategory20,
     }
   }
-
-  setParent (model) {
-    this._parent = model
-    model.on('change', () => {
-      this.trigger('change')
-    })
-  }
   /**
    * Ask parent component for serie accessors
    */
-  getData () {
+  get data () {
     const data = {colors: this.attributes.palette}
     const accessors = this._parent.getAccessors()
     data.series = _.map(accessors, (accessor) => {
@@ -32,6 +25,13 @@ class ColorPickerConfigModel extends ContrailChartsConfigModel {
       }
     })
     return data
+  }
+
+  set parent (model) {
+    this._parent = model
+    model.on('change', () => {
+      this.trigger('change')
+    })
   }
 }
 

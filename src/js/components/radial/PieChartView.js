@@ -53,7 +53,7 @@ class PieChartView extends ContrailChartsView {
 
     const arc = shape.arc()
       .outerRadius(radius)
-      .innerRadius(this.config.getInnerRadius())
+      .innerRadius(this.config.innerRadius)
 
     const pie = shape.pie()
       .sort(null)
@@ -83,7 +83,7 @@ class PieChartView extends ContrailChartsView {
   _onMouseover (sector) {
     const serieConfig = this.config.get('serie')
     const outerRadius = this.config.get('radius')
-    const innerRadius = this.config.getInnerRadius()
+    const innerRadius = this.config.innerRadius
     const chartOffset = this.svg.node().getBoundingClientRect()
     const tooltipOffset = {
       left: chartOffset.left + this.params.chartWidth / 2 - innerRadius * 0.707,

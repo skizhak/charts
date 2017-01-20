@@ -7,7 +7,6 @@ const _template = require('./color-picker.html')
 class ColorPickerView extends ContrailChartsView {
   get type () { return 'colorPicker' }
   get className () { return 'coCharts-color-picker-view' }
-
   get events () {
     return {
       'click .color-select': 'open',
@@ -18,12 +17,13 @@ class ColorPickerView extends ContrailChartsView {
 
   constructor (options) {
     super(options)
+    this.listenTo(this.model, 'change', this.render)
     this.listenTo(this.config, 'change', this.render)
   }
 
   render () {
     const template = this.config.get('template') || _template
-    const content = template(this.config.getData())
+    const content = template(this.config.data)
 
     super.render(content)
   }

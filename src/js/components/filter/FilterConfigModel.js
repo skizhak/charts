@@ -5,7 +5,11 @@ const _ = require('lodash')
 const ContrailChartsConfigModel = require('contrail-charts-config-model')
 
 class FilterConfigModel extends ContrailChartsConfigModel {
-  setParent (model) {
+  get data () {
+    return this._parent.get('plot')
+  }
+
+  set parent (model) {
     this._parent = model
     model.on('change', () => {
       this.trigger('change')
@@ -16,10 +20,6 @@ class FilterConfigModel extends ContrailChartsConfigModel {
     const series = this._parent.get('plot').y
     const serieConfig = _.find(series, {accessor})
     serieConfig.enabled = !serieConfig.enabled
-  }
-
-  getData () {
-    return this._parent.get('plot')
   }
 }
 

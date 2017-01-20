@@ -7,7 +7,9 @@ const ContrailChartsView = require('contrail-charts-view')
 const components = require('components/index')
 const handlers = require('handlers/index')
 const Actionman = require('../../plugins/Actionman')
-const _actions = [require('actions/SelectSerie')
+const _actions = [
+  require('actions/SelectSerie'),
+  require('actions/SelectColor'),
 ]
 /**
 * Chart with a common X axis and many possible child components rendering data on the Y axis (for example: line, bar, stackedBar).
@@ -62,13 +64,39 @@ class XYChartView extends ContrailChartsView {
     this._initHandlers()
     this._initComponents()
   }
-
+  /**
+   * Get component by id
+   * @param {String} id
+   */
   getComponent (id) {
     return _.find(this._components, {id: id})
   }
+  /**
+   * Get array of components by type
+   * @return {Array}
+   */
+  getComponentsByType (type) {
+    return _.filter(this._components, {type: type})
+  }
 
-  getComponentByType (type) {
-    return _.find(this._components, {type: type})
+  render () {
+    _.each(this._components, (component) => {
+      component.render()
+    })
+  }
+
+  renderMessage (msgObj) {
+    this._eventObject.trigger('message', msgObj)
+  }
+
+  clearMessage (componentId) {
+    // To clear messages for a given component we send a message with 'update' action and an empty array of messages.
+    const msgObj = {
+      componentId: componentId,
+      action: 'update',
+      messages: [],
+    }
+    this._eventObject.trigger('message', msgObj)
   }
 
   _initHandlers () {
@@ -104,7 +132,7 @@ class XYChartView extends ContrailChartsView {
       const sourceComponentId = component.config.get('sourceComponent')
       if (sourceComponentId) {
         const sourceComponent = this.getComponent(sourceComponentId)
-        component.config.setParent(sourceComponent.config)
+        component.config.parent = sourceComponent.config
       }
       if (this._isEnabledComponent('tooltip')) {
         component.config.toggleComponent('tooltip', true)
@@ -114,12 +142,12 @@ class XYChartView extends ContrailChartsView {
       }
     })
     if (this._isEnabledComponent('navigation')) {
-      dataModel = this.getComponentByType('navigation').focusDataProvider
-      if (this._isEnabledComponent('compositeY')) this.getComponentByType('compositeY').changeModel(dataModel)
+      dataModel = this.getComponentsByType('navigation')[0].focusDataProvider
+      _.each(this.getComponentsByType('compositeY'), (compositeY) => compositeY.changeModel(dataModel))
     }
     if (this._isEnabledComponent('timeline')) {
-      dataModel = this.getComponentByType('timeline').focusDataProvider
-      if (this._isEnabledComponent('compositeY')) this.getComponentByType('compositeY').changeModel(dataModel)
+      dataModel = this.getComponentsByType('timeline')[0].focusDataProvider
+      _.each(this.getComponentsByType('compositeY'), (compositeY) => compositeY.changeModel(dataModel))
     }
   }
   /**
@@ -149,20 +177,6 @@ class XYChartView extends ContrailChartsView {
     return component
   }
 
-  renderMessage (msgObj) {
-    this._eventObject.trigger('message', msgObj)
-  }
-
-  clearMessage (componentId) {
-    // To clear messages for a given component we send a message with 'update' action and an empty array of messages.
-    const msgObj = {
-      componentId: componentId,
-      action: 'update',
-      messages: [],
-    }
-    this._eventObject.trigger('message', msgObj)
-  }
-
   _isEnabled (config, type) {
     const foundConfig = _.find(config, {type: type})
     if (!foundConfig) return false
@@ -178,12 +192,6 @@ class XYChartView extends ContrailChartsView {
 
   _isEnabledHandler (type) {
     return this._isEnabled(this._config.handlers, type)
-  }
-
-  render () {
-    _.each(this._components, (component) => {
-      component.render()
-    })
   }
 }
 

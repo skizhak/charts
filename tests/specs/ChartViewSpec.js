@@ -30,6 +30,7 @@ describe('coCharts.charts.XYChartView', function () {
     this.simpleChartConfig = {
       container: '#chartView',
       components: [{
+        id: 'compositeY',
         type: 'compositeY',
         config: {
           plot: {
@@ -52,14 +53,14 @@ describe('coCharts.charts.XYChartView', function () {
 
   it('XYChartView has xyChart component', function () {
     this.chartView.setConfig(this.simpleChartConfig)
-    expect(this.chartView.getComponentByType('compositeY')).toBeDefined()
-    expect(this.chartView.getComponentByType('navigation')).not.toBeDefined()
+    expect(this.chartView.getComponent('compositeY')).toBeDefined()
+    expect(this.chartView.getComponent('navigation')).not.toBeDefined()
   })
 
   it('XYChartView xy component generates activeAccessorData on render', function (done) {
     this.chartView.setData([])
     this.chartView.setConfig(this.simpleChartConfig)
-    const compositeY = this.chartView.getComponentByType('compositeY')
+    const compositeY = this.chartView.getComponent('compositeY')
     compositeY.render()
     // Time for component init before assert
     setTimeout(function () {
@@ -70,23 +71,23 @@ describe('coCharts.charts.XYChartView', function () {
 
   it('On XYChartView render, component xy render is called', function () {
     this.chartView.setConfig(this.simpleChartConfig)
-    const compositeY = this.chartView.getComponentByType('compositeY')
+    const compositeY = this.chartView.getComponent('compositeY')
     spyOn(compositeY, 'render')
     this.chartView.render()
     expect(compositeY.render).toHaveBeenCalled()
   })
 
-  // it('On XYChartView render, component xy render is called', function () {
-  //   this.chartView.setConfig(this.simpleChartConfig)
-  //   const compositeY = this.chartView.getComponentByType('compositeY')
-  //   spyOn(compositeY, 'render')
-  //   this.chartView.setData([
-  //     { x: (new Date(2016, 11, 1)).getTime(), y: 0 },
-  //     { x: (new Date(2016, 11, 2)).getTime(), y: 3 },
-  //     { x: (new Date(2016, 11, 3)).getTime(), y: 2 },
-  //     { x: (new Date(2016, 11, 4)).getTime(), y: 4 },
-  //     { x: (new Date(2016, 11, 5)).getTime(), y: 5 },
-  //   ])
-  //   expect(compositeY.render).toHaveBeenCalled()
-  // })
+  it('On XYChartView data set, component xy render is called', function () {
+    this.chartView.setConfig(this.simpleChartConfig)
+    const compositeY = this.chartView.getComponent('compositeY')
+    spyOn(compositeY, 'render')
+    this.chartView.setData([
+      { x: (new Date(2016, 11, 1)).getTime(), y: 0 },
+      { x: (new Date(2016, 11, 2)).getTime(), y: 3 },
+      { x: (new Date(2016, 11, 3)).getTime(), y: 2 },
+      { x: (new Date(2016, 11, 4)).getTime(), y: 4 },
+      { x: (new Date(2016, 11, 5)).getTime(), y: 5 },
+    ])
+    expect(compositeY.render).toHaveBeenCalled()
+  })
 })

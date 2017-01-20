@@ -81,8 +81,8 @@ class ChartView extends ContrailChartsView {
       this._registerComponent(component.type, component.config, this._dataProvider, component.id)
     })
     if (this._isEnabledComponent('navigation')) {
-      const dataModel = this.getComponentByType('navigation').focusDataProvider
-      if (this._isEnabledComponent('compositeY')) this.getComponentByType('compositeY').changeModel(dataModel)
+      const dataModel = this.getComponentsByType('navigation')[0].focusDataProvider
+      _.each(this.getComponentsByType('compositeY'), (compositeY) => compositeY.changeModel(dataModel))
     }
   }
 
