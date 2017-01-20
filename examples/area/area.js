@@ -1,12 +1,12 @@
 // Most basic chart.
-var simpleData = [
+const simpleData = [
   { x: (new Date(2016, 11, 1)).getTime(), y: 0 },
   { x: (new Date(2016, 11, 2)).getTime(), y: 3 },
   { x: (new Date(2016, 11, 3)).getTime(), y: 2 },
   { x: (new Date(2016, 11, 4)).getTime(), y: 4 },
-  { x: (new Date(2016, 11, 5)).getTime(), y: 5 }
+  { x: (new Date(2016, 11, 5)).getTime(), y: 5 },
 ]
-var simpleChartView = new coCharts.charts.XYChartView()
+const simpleChartView = new coCharts.charts.XYChartView()
 simpleChartView.setConfig({
   container: '#simpleChart',
   components: [{
@@ -14,12 +14,15 @@ simpleChartView.setConfig({
     config: {
       plot: {
         x: {
-          accessor: 'x'
+          accessor: 'x',
+          axis: 'x',
         },
         y: [
           {
+            enabled: true,
             accessor: 'y',
             chart: 'area',
+            axis: 'y',
           }
         ]
       },
@@ -28,8 +31,8 @@ simpleChartView.setConfig({
           domain: [(new Date(2016, 11, 2)).getTime(), (new Date(2016, 11, 4)).getTime()]
         },
         y: {
-          domain: [undefined, 10],
-          ticks: 20
+          domain: [0, 10],
+          ticks: 20,
         }
       }
     }

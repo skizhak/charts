@@ -2,50 +2,43 @@
  * Update following to add a new example.
  * @type {*[]}
  */
-var examples = [
+const examples = [
   {
     html: 'composite-xy/composite-xy.html',
     js: 'composite-xy/composite-xy.js',
     css: 'composite-xy/composite-xy.css',
-    title: 'Line Bar chart with Control panel'
-  },
-  {
+    title: 'Line Bar chart with Control panel',
+  }, {
     html: 'multi-chart/multi-chart.html',
     js: 'multi-chart/multi-chart.js',
     css: 'multi-chart/multi-chart.css',
-    title: 'Multi Chart with Focus'
-  },
-  {
-    html: 'bubble/bubble.html',
-    js: 'bubble/bubble.js',
-    css: 'bubble/bubble.css',
-    title: 'Bubble Chart'
-  },
-  {
+    title: 'Multi Chart with Focus',
+  }, {
+    html: 'scatterplot/scatterplot.html',
+    js: 'scatterplot/scatterplot.js',
+    css: 'scatterplot/scatterplot.css',
+    title: 'Scatter Plot',
+  }, {
     html: 'area/area.html',
     js: 'area/area.js',
     css: 'area/area.css',
-    title: 'Area Chart'
-  },
-  {
+    title: 'Area Chart',
+  }, {
     html: 'pie/pie.html',
     js: 'pie/pie.js',
     css: 'pie/pie.css',
-    title: 'Pie Chart'
-  },
-  {
+    title: 'Pie Chart',
+  }, {
     html: 'requirejs/requirejs.html',
     js: ['requirejs/requirejs-config.js', 'requirejs/app/example1.js'],
     css: 'requirejs/app/example1.css',
-    title: 'Using RequireJS'
-  },
-  {
+    title: 'Using RequireJS',
+  }, {
     html: 'linebar/linebar.html',
     js: 'linebar/linebar.js',
     css: 'linebar/linebar.css',
-    title: 'Line Bar chart (CPU/Mem)'
-  },
-  {
+    title: 'Line Bar chart (CPU/Mem)',
+  }, {
     html: 'composite-xy-timeline/composite-xy-timeline.html',
     js: 'composite-xy-timeline/composite-xy-timeline.js',
     css: 'composite-xy-timeline/composite-xy-timeline.css',
@@ -59,8 +52,8 @@ var examples = [
   }
 ]
 
-var loadedExampleSrc = []
-var $exampleLinks = $('#exampleLinks')
+let loadedExampleSrc = []
+let $exampleLinks = $('#exampleLinks')
 
 examples.forEach(
   (example, idx) => {
@@ -72,7 +65,7 @@ examples.forEach(
         return loadedFiles
       }, {}) : {[example.js]: require('raw!../../' + example.js)}
     })
-    var $link = $(`<a href="#${idx}" class="link">${example.title}</a>`)
+    let $link = $(`<a href="#${idx}" class="link">${example.title}</a>`)
     $link.click(sideBarLinkOnClick)
     $exampleLinks.append($('<li>').append($link))
   }
@@ -83,7 +76,7 @@ function htmlEntityEncoding (srcString) {
     return srcString
   }
 
-  var encoder = {
+  let encoder = {
     '&': '&amp;',
     '<': '&lt;',
     '>': '&gt;',
@@ -91,8 +84,8 @@ function htmlEntityEncoding (srcString) {
     '\'': '&#x27;'
   }
 
-  var retStr = srcString.replace(/./g, (letter) => {
-    var encoded = encoder[letter]
+  let retStr = srcString.replace(/./g, (letter) => {
+    let encoded = encoder[letter]
 
     return encoded || letter
   })
@@ -101,8 +94,8 @@ function htmlEntityEncoding (srcString) {
 }
 
 function reformatHTMLToShow (rawHTML) {
-  var newlineMarker = '%%%newline%%%'
-  var regex = {
+  let newlineMarker = '%%%newline%%%'
+  let regex = {
     recoverNewline: new RegExp(newlineMarker, 'gm'),
     indentation: new RegExp(`(?:${newlineMarker})(\\s{2,})`, 'gm')
   }
@@ -123,15 +116,15 @@ function createNewTab (id, title, group = 'js-files', checked, content) {
 }
 
 function sideBarLinkOnClick (e) {
-  var index = $(this).attr('href').split('#')[1]
-  var example = examples[index]
-  var {rawHTML, rawJS, rawCSS} = loadedExampleSrc[index]
+  let index = $(this).attr('href').split('#')[1]
+  let example = examples[index]
+  let {rawHTML, rawJS, rawCSS} = loadedExampleSrc[index]
 
   $('#outputView').find('.output-demo-iframe').attr('src', example.html)
   $('#htmlContent').html(reformatHTMLToShow(rawHTML))
   $('#cssContent').html(reformatHTMLToShow(rawCSS))
 
-  var tabCollections = Object.keys(rawJS)
+  let tabCollections = Object.keys(rawJS)
       .reduce((tabsHTML, currentJSFile, idx) => {
         tabsHTML.push(
           createNewTab(

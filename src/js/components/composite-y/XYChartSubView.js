@@ -3,42 +3,41 @@
  */
 const ContrailChartsView = require('contrail-charts-view')
 
-const XYChartSubView = ContrailChartsView.extend({
+class XYChartSubView extends ContrailChartsView {
+  get tagName () { return 'g' }
 
-  initialize: function (options) {
-    ContrailChartsView.prototype.initialize.call(this, options)
-    this.parent = options.parent
+  constructor (options) {
+    super(options)
+    this._parent = options.parent
     this.axisName = options.axisName
-  },
-  /**
-  * Returns the unique name of this drawing so it can identify itself for the parent.
-  * The drawing's name is of the following format: [axisName]-[chartType] ie. "y1-line".
-  */
-  getName: function () {
-    return this.axisName + '-' + this.chartType
-  },
+  }
 
-  getYScale: function () {
+  getYScale () {
     return this.params.axis[this.axisName].scale
-  },
+  }
 
-  getXScale: function () {
+  getXScale () {
     return this.params.axis[this.params.plot.x.axis].scale
-  },
+  }
 
-  getColor: function (accessor) {
+  getColor (accessor) {
     return accessor.color
-  },
+  }
 
-  getScreenX: function (dataElem, xAccessor) {
+  getScreenX (dataElem, xAccessor) {
     const xScale = this.getXScale()
     return xScale(dataElem[xAccessor])
-  },
+  }
 
-  getScreenY: function (dataElem, yAccessor) {
+  getScreenY (dataElem, yAccessor) {
     const yScale = this.getYScale()
     return yScale(dataElem[yAccessor])
-  },
-})
+  }
+
+  render () {
+    super.render()
+    this.d3.attr('clip-path', `url(#${this._parent.params.rectClipPathId})`)
+  }
+}
 
 module.exports = XYChartSubView

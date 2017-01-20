@@ -1,48 +1,49 @@
 /*
  * Copyright (c) 2016 Juniper Networks, Inc. All rights reserved.
  */
-var _ = require('lodash')
-var ContrailModel = require('contrail-model')
+const _ = require('lodash')
+const ContrailModel = require('contrail-model')
 
 /**
  * Base data model.
  */
-var ContrailChartsDataModel = ContrailModel.extend({
-  defaults: {
-    // / The formatted data
-    data: [],
+class ContrailChartsDataModel extends ContrailModel {
+  get defaults () {
+    return {
+      // / The formatted data
+      data: [],
 
-    // to Save the current state of data fetching
-    // Todo: integrate properly with ContrailListModel remoteDataHandler.
-    dataStatus: undefined,
+      // to Save the current state of data fetching
+      // Todo: integrate properly with ContrailListModel remoteDataHandler.
+      dataStatus: undefined,
 
-    // / The current data query limits. For example the data limits set on a query that returned this data.
-    // / example: limit: { x: [0, 100] }
-    limit: {}
-  },
+      // / The current data query limits. For example the data limits set on a query that returned this data.
+      // / example: limit: { x: [0, 100] }
+      limit: {}
+    }
+  }
 
-  getData: function () {
+  getData () {
     return this.get('data')
-  },
+  }
 
-  setData: function (data) {
+  setData (data) {
     if (_.isFunction(this.get('dataParser'))) {
       data = this.get('dataParser')(data)
     }
     this.set({data: data})
-  },
+  }
 
-  getQueryLimit: function () {
+  getQueryLimit () {
     return this.get('limit')
-  },
+  }
 
-  setQueryLimit: function (limit) {
+  setQueryLimit (limit) {
     // Simulate a query. The provided limit should be used to retreive a new data chunk.
-    var self = this
-    setTimeout(function () {
-      self.set({data: self.getData(), limit: limit})
+    setTimeout(() => {
+      this.set({data: this.getData(), limit: limit})
     }, 1000)
-  },
+  }
 
   // Formatter prepares the raw data. Try to avoid additional formatting on view level.
   // Navigation
@@ -55,10 +56,10 @@ var ContrailChartsDataModel = ContrailModel.extend({
   // Helper functions - no need to implement in an actual DataModel.
   // However an actual DataModel would require some functions to fetch data.
 
-  setDataAndLimit: function (data, limit) {
+  setDataAndLimit (data, limit) {
     this.setData(data)
     this.set({limit: limit})
-  },
-})
+  }
+}
 
 module.exports = ContrailChartsDataModel

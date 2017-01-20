@@ -1,46 +1,48 @@
 /*
  * Copyright (c) 2016 Juniper Networks, Inc. All rights reserved.
  */
-var _ = require('lodash')
-var d3 = require('d3')
-var ContrailModel = require('contrail-model')
-var ContrailEvents = require('contrail-events')
+const _ = require('lodash')
+const d3 = require('d3')
+const ContrailModel = require('contrail-model')
+const ContrailEvents = require('contrail-events')
 /**
  * A DataModel wrapper for view components.
  * Handles:
  * - data range calculation for view components
  * - data filtering and chaining between components
  */
-var DataProvider = ContrailModel.extend({
-  defaults: {
-    _type: 'DataProvider',
+class DataProvider extends ContrailModel {
+  get defaults () {
+    return {
+      _type: 'DataProvider',
 
-    // The formatted/filtered data
-    data: [],
+      // The formatted/filtered data
+      data: [],
 
-    // Function to format/filter data. Always applied on parentData
-    formatData: undefined,
+      // Function to format/filter data. Always applied on parentData
+      formatData: undefined,
 
-    // A lazy store of data ranges for which a range was calculated or for which the range was set manually.
-    // example: { x: [0, 100], y: [20, 30], r: [5, 20] }
-    range: {},
+      // A lazy store of data ranges for which a range was calculated or for which the range was set manually.
+      // example: { x: [0, 100], y: [20, 30], r: [5, 20] }
+      range: {},
 
-    // Ranges set manually on this data provider.
-    manualRange: {},
+      // Ranges set manually on this data provider.
+      manualRange: {},
 
-    // This can be a DataModel or another DataProvider.
-    // expected functions: getData(), getQueryLimit(), setQueryLimit()
-    parentDataModel: undefined,
+      // This can be a DataModel or another DataProvider.
+      // expected functions: getData(), getQueryLimit(), setQueryLimit()
+      parentDataModel: undefined,
 
-    error: false,
+      error: false,
 
-    // List or error objects with level and error message
-    errorList: [],
+      // List or error objects with level and error message
+      errorList: [],
 
-    messageEvent: _.extend({}, ContrailEvents)
-  },
+      messageEvent: _.extend({}, ContrailEvents)
+    }
+  }
 
-  initialize: function (options) {
+  initialize (options) {
     // Listen for changes in the parent model.
     if (this.hasParentModel()) {
       this.listenTo(this.getParentModel(), 'change', this.prepareData)
@@ -48,160 +50,153 @@ var DataProvider = ContrailModel.extend({
     this.prepareData()
 
     this.listenTo(this, 'change:error', this.triggerError)
-  },
+  }
 
-  getParentModel: function () {
+  getParentModel () {
     return this.get('parentDataModel')
-  },
+  }
 
-  hasParentModel: function () {
+  hasParentModel () {
     return this.has('parentDataModel')
-  },
+  }
 
-  getData: function () {
+  getData () {
     return this.get('data')
-  },
+  }
 
-  setData: function (data) {
+  setData (data) {
     this.set({data: data})
-  },
+  }
 
-  getParentData: function () {
-    var data
+  getParentData () {
+    let data
     if (this.hasParentModel() && _.isFunction(this.getParentModel().getData)) {
       data = this.getParentModel().getData()
     } else {
       data = []
     }
     return data
-  },
+  }
 
-  getQueryLimit: function () {
-    var queryLimit
+  getQueryLimit () {
+    let queryLimit
     if (this.hasParentModel() && _.isFunction(this.getParentModel().getQueryLimit)) {
       queryLimit = this.getParentModel().getQueryLimit()
     } else {
       queryLimit = {}
     }
     return queryLimit
-  },
-
+  }
   /**
    * Calls the parent's setQueryLimit() function. In practice this will iterate down to the DataModel and should cause a data re-fetch with new limits.
    */
-  setQueryLimit: function (queryLimit) {
-    var self = this
-    if (self.hasParentModel() && _.isFunction(self.getParentModel().setQueryLimit)) {
-      self.getParentModel().setQueryLimit(queryLimit)
+  setQueryLimit (queryLimit) {
+    if (this.hasParentModel() && _.isFunction(this.getParentModel().setQueryLimit)) {
+      this.getParentModel().setQueryLimit(queryLimit)
     }
-    var range = self.getRange()
-    _.each(queryLimit, function (queryRange, key) {
+    const range = this.getRange()
+    _.each(queryLimit, (queryRange, key) => {
       delete range[key]
     })
-  },
+  }
 
-  getRange: function () {
+  getRange () {
     return this.get('range')
-  },
+  }
 
-  getManualRange: function () {
+  getManualRange () {
     return this.get('manualRange')
-  },
+  }
 
-  getRangeFor: function (variableName) {
-    var range = this.getRange()
-    if (!_.has(range, variableName)) {
-      range[variableName] = this.calculateRangeForDataAndVariableName(this.getData(), variableName)
+  getRangeFor (constiableName) {
+    const range = this.getRange()
+    if (!_.has(range, constiableName)) {
+      range[constiableName] = this.calculateRangeForDataAndVariableName(this.getData(), constiableName)
     }
-    return range[variableName]
-  },
+    return range[constiableName]
+  }
 
-  getParentRange: function () {
-    var parentRange
+  getParentRange () {
+    let parentRange
     if (this.hasParentModel() && _.isFunction(this.getParentModel().getRange)) {
       parentRange = this.getParentModel().getRange()
     } else {
       parentRange = {}
     }
     return parentRange
-  },
+  }
 
-  setRange: function (range) {
+  setRange (range) {
     this.set({range: range})
-  },
+  }
 
   /**
-   * Sets the ranges and manual ranges for the variables provided in the newRange object.
+   * Sets the ranges and manual ranges for the constiables provided in the newRange object.
    * Example: setRangeFor( { x: [0,100], y: [5,10] } )
    */
-  setRangeFor: function (newRange) {
-    var self = this
-    var range = _.extend({}, self.getRange())
-    var manualRange = _.extend({}, self.getManualRange())
-    _.each(newRange, function (variableRange, variableName) {
-      range[variableName] = variableRange
-      manualRange[variableName] = variableRange
+  setRangeFor (newRange) {
+    const range = _.extend({}, this.getRange())
+    const manualRange = _.extend({}, this.getManualRange())
+    _.each(newRange, (constiableRange, constiableName) => {
+      range[constiableName] = constiableRange
+      manualRange[constiableName] = constiableRange
     })
-    self.setRanges(range, manualRange)
-  },
+    this.setRanges(range, manualRange)
+  }
 
-  resetRangeFor: function (newRange) {
-    var self = this
-    var range = _.extend({}, self.getRange())
-    var manualRange = _.extend({}, self.get('manualRange'))
-    _.each(newRange, function (variableRange, variableName) {
-      delete range[variableName]
-      delete manualRange[variableName]
+  resetRangeFor (newRange) {
+    const range = _.extend({}, this.getRange())
+    const manualRange = _.extend({}, this.get('manualRange'))
+    _.each(newRange, (constiableRange, constiableName) => {
+      delete range[constiableName]
+      delete manualRange[constiableName]
     })
-    self.setRanges(range, manualRange)
-  },
+    this.setRanges(range, manualRange)
+  }
 
-  resetAllRanges: function () {
+  resetAllRanges () {
     this.setRanges({}, {})
-  },
+  }
 
-  setRangeAndFilterData: function (newRange) {
-    var self = this
-    self.setDataAndRanges(self.filterDataByRange(self.getParentData(), newRange), newRange, newRange)
-  },
-
+  setRangeAndFilterData (newRange) {
+    this.setDataAndRanges(this.filterDataByRange(this.getParentData(), newRange), newRange, newRange)
+  }
   /**
-   * Worker function used to calculate a data range for provided varaible name.
+   * Worker function used to calculate a data range for provided constaible name.
    */
-  calculateRangeForDataAndVariableName: function (data, variableName) {
-    var variableRange
-    var manualRange = this.get('manualRange')
-    if (_.isArray(manualRange[variableName])) {
+  calculateRangeForDataAndVariableName (data, constiableName) {
+    let constiableRange
+    const manualRange = this.get('manualRange')
+    if (_.isArray(manualRange[constiableName])) {
       // Use manually set range if available.
-      variableRange = [manualRange[variableName][0], manualRange[variableName][1]]
+      constiableRange = [manualRange[constiableName][0], manualRange[constiableName][1]]
     } else {
       // Otherwise calculate the range from data.
       if (data.length) {
-        variableRange = d3.extent(data, function (d) { return d[variableName] })
+        constiableRange = d3.extent(data, (d) => d[constiableName])
       } else {
         // No data available so assume a [0..1] range.
-        variableRange = [0, 1]
+        constiableRange = [0, 1]
       }
     }
-    return variableRange
-  },
+    return constiableRange
+  }
 
-  setDataAndRanges: function (data, range, manualRange) {
-    var self = this
+  setDataAndRanges (data, range, manualRange) {
     if (!data) {
-      data = self.getParentData()
+      data = this.getParentData()
     }
-    var formatData = self.get('formatData')
+    const formatData = this.get('formatData')
     if (_.isFunction(formatData)) {
       data = formatData(data, manualRange)
     }
-    self.set({data: data, range: range, manualRange: manualRange})
-  },
+    this.set({data: data, range: range, manualRange: manualRange})
+  }
 
-  filterDataByRange: function (data, range) {
-    return _.filter(data, function (d) {
-      var ok = true
-      _.each(range, function (range, key) {
+  filterDataByRange (data, range) {
+    return _.filter(data, (d) => {
+      let ok = true
+      _.each(range, (range, key) => {
         if (!_.has(d, key)) {
           ok = false
         } else {
@@ -212,38 +207,36 @@ var DataProvider = ContrailModel.extend({
       })
       return ok
     })
-  },
+  }
 
-  setRanges: function (range, manualRange) {
-    var self = this
-    // var data = self.getParentData()
-    var data = self.getData()
-    var formatData = self.get('formatData')
+  setRanges (range, manualRange) {
+    // const data = this.getParentData()
+    let data = this.getData()
+    const formatData = this.get('formatData')
     if (!manualRange) {
-      manualRange = self.get('manualRange')
+      manualRange = this.get('manualRange')
     }
     if (_.isFunction(formatData)) {
       data = formatData(data, manualRange)
     }
-    self.set({data: data, range: range, manualRange: manualRange})
-  },
-
+    this.set({data: data, range: range, manualRange: manualRange})
+  }
   /**
    * Take the parent's data and filter / format it.
    * Called on initialization and when parent data changed.
    */
-  prepareData: function () {
+  prepareData () {
     // Set the new data array and reset range - leave the manual range.
     this.setDataAndRanges(null, {}, {})
-  },
+  }
 
-  triggerError: function () {
+  triggerError () {
     if (this.error) {
       this.messageEvent.trigger('error', {type: this._type, action: 'show', messages: this.errorList})
     } else {
       this.messageEvent.trigger('error', {type: this._type, action: 'hide'})
     }
   }
-})
+}
 
 module.exports = DataProvider

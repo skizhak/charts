@@ -1,326 +1,270 @@
 /*
  * Copyright (c) 2016 Juniper Networks, Inc. All rights reserved.
  */
-const $ = require('jquery')
 const _ = require('lodash')
 const d3 = require('d3')
+const d3Ease = require('d3-ease')
 const ContrailChartsView = require('contrail-charts-view')
 const DataProvider = require('handlers/DataProvider')
 
-var TimelineView = ContrailChartsView.extend({
-  type: 'timeline',
-  className: 'timeline-view',
+class TimelineView extends ContrailChartsView {
+  get type () { return 'timeline' }
+  get tagName () { return 'g' }
+  get className () { return 'timeline-view' }
 
-  initialize: function (options) {
-    var self = this
-    ContrailChartsView.prototype.initialize.call(self, options)
-    self._focusDataProvider = new DataProvider({parentDataModel: self.model})
-    self.brush = null
-    self.throttledTriggerWindowChangedEvent = _.bind(_.throttle(self._triggerWindowChangedEvent, 100), self)
-    $(window).resize(function () {
-      self.render()
-      self._handleModelChange()
-    })
-  },
+  constructor (options) {
+    super(options)
+    this._focusDataProvider = new DataProvider({parentDataModel: this.model})
+    this.brush = null
+    this._throttledTriggerWindowChangedEvent = _.throttle(this._triggerWindowChangedEvent, 100).bind(this)
+    this.listenTo(this.model, 'change', this._onModelChange)
+    window.addEventListener('resize', this._onModelChange.bind(this))
+  }
 
-  changeModel: function (model) {
-    var self = this
-    self.stopListening(self.model)
-    self.model = model
-    self._focusDataProvider = new DataProvider({parentDataModel: self.model})
-    self.listenTo(self.model, 'change', self._onModelChange)
-  },
-  /**
-   * Override ContrailChartsView.svgSelection which uses container's shared svg
-   */
-  svgSelection: function () {
-    return d3.select(this.el).select('svg')
-  },
+  changeModel (model) {
+    this.stopListening(this.model)
+    this.model = model
+    this._focusDataProvider = new DataProvider({parentDataModel: this.model})
+    this.listenTo(this.model, 'change', this._onModelChange)
+  }
 
-  getFocusDataProvider: function () {
+  get focusDataProvider () {
     return this._focusDataProvider
-  },
+  }
 
-  hasAxisConfig: function (axisName, axisAttributeName) {
-    var self = this
-    var axis = self.config.get('axis')
+  hasAxisConfig (axisName, axisAttributeName) {
+    const axis = this.config.get('axis')
     return _.isObject(axis) && _.isObject(axis[axisName]) && !_.isUndefined(axis[axisName][axisAttributeName])
-  },
+  }
 
-  hasAxisParam: function (axisName, axisAttributeName) {
-    var self = this
-    return _.isObject(self.params.axis) && _.isObject(self.params.axis[axisName]) && !_.isUndefined(self.params.axis[axisName][axisAttributeName])
-  },
+  hasAxisParam (axisName, axisAttributeName) {
+    return _.isObject(this.params.axis) &&
+      _.isObject(this.params.axis[axisName]) &&
+      !_.isUndefined(this.params.axis[axisName][axisAttributeName])
+  }
+
+  render () {
+    this.resetParams()
+    this._calculateDimensions()
+    this._calculateScales()
+    super.render()
+    this._renderAxis()
+    this._renderBar()
+    this._renderBrush()
+    return this
+  }
   /**
   * This needs to be called after compositeYChartView is rendered because we need the params computed.
   */
-  renderBrush: function () {
-    var self = this
-    var xScale = self.params.axis[self.params.plot.x.axis].scale
-    var svg = self.svgSelection()
-    if (!self.brush) {
-      var brushHandleHeight = self.params.brushHandleHeight
-      self.brush = d3.brushX()
+  _renderBrush () {
+    const xScale = this.params.axis[this.params.plot.x.axis].scale
+    if (!this.brush) {
+      const brushHandleHeight = this.params.brushHandleHeight
+      this.brush = d3.brushX()
         .extent([
-          [self.params.xRange[0], self.params.yRange[1] + 10],
-          [self.params.xRange[1], self.params.yRange[0] - 10]])
+          [this.params.xRange[0], this.params.yRange[1] + 10],
+          [this.params.xRange[1], this.params.yRange[0] - 10]])
         .handleSize(10)
-        .on('brush', function () {
-          self._handleBrushSelection(d3.event.selection)
+        .on('brush', () => {
+          this._handleBrushSelection(d3.event.selection)
         })
-        .on('end', function () {
-          var dataWindow = d3.event.selection
+        .on('end', () => {
+          const dataWindow = d3.event.selection
           if (!dataWindow) {
-            self.removeBrush()
-            self.renderBrush()
+            this._removeBrush()
+            this._renderBrush()
           } else {
-            self._handleBrushSelection(d3.event.selection)
+            this._handleBrushSelection(d3.event.selection)
           }
         })
-      var gBrush = svg.append('g').attr('class', 'brush').call(self.brush)
+      const gBrush = this.d3.append('g').classed('brush', true).call(this.brush)
       gBrush.selectAll('.handle--custom')
         .data([{type: 'w'}, {type: 'e'}])
         .enter().append('path')
-        .attr('class', 'handle--custom hide')
-        .attr('fill', '#666')
-        .attr('fill-opacity', 0.75)
-        .attr('stroke', '#444')
-        .attr('stroke-width', 1)
-        .attr('cursor', 'ew-resize')
+        .classed('handle--custom', true)
+        .classed('hide', true)
         .attr('d', d3.arc()
           .innerRadius(0)
           .outerRadius(brushHandleHeight)
           .startAngle(0)
-          .endAngle(function (d, i) { return i ? Math.PI : -Math.PI }))
-      if (_.isArray(self.params.selection)) {
-        if (!self.params.selection[0]) {
-          self.params.selection[0] = 0
-        }
-        if (!self.params.selection[1]) {
-          self.params.selection[1] = 100
-        }
-        var brushGroup = self.svgSelection().select('g.brush').transition().ease(d3.easeLinear).duration(self.params.duration)
-        var xMin = (xScale.range()[1] - xScale.range()[0]) * (self.params.selection[0] / 100) + xScale.range()[0]
-        var xMax = (xScale.range()[1] - xScale.range()[0]) * (self.params.selection[1] / 100) + xScale.range()[0]
-        self.brush.move(brushGroup, [xMin, xMax])
+          .endAngle((d, i) => i ? Math.PI : -Math.PI))
+      if (_.isArray(this.params.selection)) {
+        const brushGroup = this.d3.select('g.brush').transition().ease(d3Ease.easeLinear).duration(this.params.duration)
+        const xMin = (xScale.range()[1] - xScale.range()[0]) * (this.params.selection[0] / 100) + xScale.range()[0]
+        const xMax = (xScale.range()[1] - xScale.range()[0]) * (this.params.selection[1] / 100) + xScale.range()[0]
+        this.brush.move(brushGroup, [xMin, xMax])
       }
     }
-  },
+  }
 
-  removeBrush: function () {
-    var self = this
-    var svg = self.svgSelection()
-    svg.select('g.brush').remove()
-    self.brush = null
-    self.config.unset('focusDomain', { silent: true })
-    var newFocusDomain = {}
-    self._focusDataProvider.setRangeAndFilterData(newFocusDomain)
-  },
+  _removeBrush () {
+    this.d3.select('g.brush').remove()
+    this.brush = null
+    this.config.unset('focusDomain', { silent: true })
+    const newFocusDomain = {}
+    this._focusDataProvider.setRangeAndFilterData(newFocusDomain)
+  }
 
-  calculateDimensions: function () {
-    var self = this
-    if (!self.params.chartWidth) {
-      self.params.chartWidth = self._container.width()
+  _calculateDimensions () {
+    if (!this.params.chartWidth) {
+      this.params.chartWidth = this._container.getBoundingClientRect().width
     }
-    if (self.params.chartWidthDelta) {
-      self.params.chartWidth += self.params.chartWidthDelta
+    if (this.params.chartWidthDelta) {
+      this.params.chartWidth += this.params.chartWidthDelta
     }
-    if (!self.params.chartHeight) {
-      self.params.chartHeight = Math.round(self.params.chartWidth / 2)
+    if (!this.params.chartHeight) {
+      this.params.chartHeight = Math.round(this.params.chartWidth / 2)
     }
-    if (!self.params.margin) {
-      self.params.margin = 5
-    }
-    var sides = ['Top', 'Right', 'Bottom', 'Left']
-    _.each(sides, function (side) {
-      if (!self.params['margin' + side]) {
-        self.params['margin' + side] = self.params.margin
-      }
-    })
-  },
+  }
 
-  calculateScales: function () {
-    var self = this
+  _calculateScales () {
     // Calculate the starting and ending positions in pixels of the chart data drawing area.
-    self.params.xRange = [self.params.marginLeft, self.params.chartWidth - self.params.marginRight]
-    self.params.yRange = [self.params.chartHeight - self.params.marginBottom, self.params.marginTop]
-    var domain = self.model.getRangeFor(self.params.plot.x.accessor)
-    var axisName = self.params.plot.x.axis || 'x'
-    if (self.hasAxisParam(axisName, 'domain')) {
-      if (!_.isUndefined(self.config.get('axis')[axisName].domain[0])) {
-        domain[0] = self.config.get('axis')[axisName].domain[0]
+    this.params.xRange = [this.params.marginLeft, this.params.chartWidth - this.params.marginRight]
+    this.params.yRange = [this.params.chartHeight - this.params.marginBottom, this.params.marginTop]
+    const domain = this.model.getRangeFor(this.params.plot.x.accessor)
+    const axisName = this.params.plot.x.axis || 'x'
+    if (this.hasAxisParam(axisName, 'domain')) {
+      if (!_.isUndefined(this.config.get('axis')[axisName].domain[0])) {
+        domain[0] = this.config.get('axis')[axisName].domain[0]
       }
-      if (!_.isUndefined(self.config.get('axis')[axisName].domain[1])) {
-        domain[1] = self.config.get('axis')[axisName].domain[1]
+      if (!_.isUndefined(this.config.get('axis')[axisName].domain[1])) {
+        domain[1] = this.config.get('axis')[axisName].domain[1]
       }
     }
-    self.params.axis[axisName].domain = domain
-    if (!_.isFunction(self.params.axis[axisName].scale)) {
-      var baseScale = null
-      if (self.hasAxisConfig(axisName, 'scale') && _.isFunction(d3[self.config.get('axis')[axisName]])) {
-        baseScale = d3[self.params.axis[axisName].scale]()
+    this.params.axis[axisName].domain = domain
+    if (!_.isFunction(this.params.axis[axisName].scale)) {
+      let baseScale = null
+      if (this.hasAxisConfig(axisName, 'scale') && _.isFunction(d3[this.config.get('axis')[axisName]])) {
+        baseScale = d3[this.params.axis[axisName].scale]()
       } else {
         baseScale = d3.scaleTime()
       }
-      self.params.axis[axisName].scale = baseScale.domain(self.params.axis[axisName].domain).range(self.params.xRange)
-      if (self.hasAxisParam(axisName, 'nice') && self.params.axis[axisName].nice) {
-        if (self.hasAxisParam(axisName, 'ticks')) {
-          self.params.axis[axisName].scale = self.params.axis[axisName].scale.nice(self.params.axis[axisName].ticks)
+      this.params.axis[axisName].scale = baseScale.domain(this.params.axis[axisName].domain).range(this.params.xRange)
+      if (this.hasAxisParam(axisName, 'nice') && this.params.axis[axisName].nice) {
+        if (this.hasAxisParam(axisName, 'ticks')) {
+          this.params.axis[axisName].scale = this.params.axis[axisName].scale.nice(this.params.axis[axisName].ticks)
         } else {
-          self.params.axis[axisName].scale = self.params.axis[axisName].scale.nice()
+          this.params.axis[axisName].scale = this.params.axis[axisName].scale.nice()
         }
       }
     }
-  },
+  }
 
-  renderSVG: function () {
-    var self = this
-    let svg = d3.select(self.el).select('svg')
-    if (svg.empty()) {
-      svg = d3.select(self.el).append('svg').attr('class', 'coCharts-svg')
-      svg.append('g')
-        .attr('class', 'axis x-axis')
-        .attr('transform', 'translate(0,' + self.params.yRange[1] + ')')
-    }
-    // Handle (re)size.
-    self.svgSelection()
-      .attr('width', self.params.chartWidth)
-      .attr('height', self.params.chartHeight)
-  },
-
-  renderAxis: function () {
-    var self = this
-    var xAxisName = self.params.plot.x.axis
-    var xAxis = d3.axisBottom(self.params.axis[xAxisName].scale)
-      .tickSize(self.params.yRange[0] - self.params.yRange[1])
+  _renderAxis () {
+    const xAxisName = this.params.plot.x.axis
+    let xAxis = d3.axisBottom(this.params.axis[xAxisName].scale)
+      .tickSize(this.params.yRange[0] - this.params.yRange[1])
       .tickPadding(10)
-    if (self.hasAxisParam('x', 'ticks')) {
-      xAxis = xAxis.ticks(self.params.axis[xAxisName].ticks)
+    if (this.hasAxisParam('x', 'ticks')) {
+      xAxis = xAxis.ticks(this.params.axis[xAxisName].ticks)
     }
-    if (self.hasAxisConfig('x', 'formatter')) {
-      xAxis = xAxis.tickFormat(self.config.get('axis').x.formatter)
+    if (this.hasAxisConfig('x', 'formatter')) {
+      xAxis = xAxis.tickFormat(this.config.get('axis').x.formatter)
     }
-    var svg = self.svgSelection().transition().ease(d3.easeLinear).duration(self.params.duration)
-    svg.select('.axis.x-axis').call(xAxis)
+    this.d3.transition().ease(d3Ease.easeLinear).duration(this.params.duration)
+    this.d3.select('.axis.x-axis').call(xAxis)
     // X axis label
-    var xLabelData = []
-    var xLabelMargin = 5
-    if (self.hasAxisParam(xAxisName, 'labelMargin')) {
-      xLabelMargin = self.params.axis[xAxisName].labelMargin
+    const xLabelData = []
+    let xLabelMargin = 5
+    if (this.hasAxisParam(xAxisName, 'labelMargin')) {
+      xLabelMargin = this.params.axis[xAxisName].labelMargin
     }
-    var xLabel = self.params.plot.x.labelFormatter || self.params.plot.x.label
-    if (self.hasAxisParam(xAxisName, 'label')) {
-      xLabel = self.params.axis[xAxisName].label
+    let xLabel = this.params.plot.x.labelFormatter || this.params.plot.x.label
+    if (this.hasAxisParam(xAxisName, 'label')) {
+      xLabel = this.params.axis[xAxisName].label
     }
     if (xLabel) {
       xLabelData.push(xLabel)
     }
-    var xAxisLabelSvg = self.svgSelection().select('.axis.x-axis').selectAll('.axis-label').data(xLabelData)
+    const xAxisLabelSvg = this.d3.select('.axis.x-axis').selectAll('.axis-label').data(xLabelData)
     xAxisLabelSvg.enter()
       .append('text')
       .attr('class', 'axis-label')
-      .merge(xAxisLabelSvg) // .transition().ease( d3.easeLinear ).duration( self.params.duration )
-      .attr('x', self.params.xRange[0] + (self.params.xRange[1] - self.params.xRange[0]) / 2)
-      .attr('y', self.params.chartHeight - self.params.marginTop - xLabelMargin)
-      .text(function (d) { return d })
+      .merge(xAxisLabelSvg)
+      .attr('x', this.params.xRange[0] + (this.params.xRange[1] - this.params.xRange[0]) / 2)
+      .attr('y', this.params.chartHeight - this.params.marginTop - xLabelMargin)
+      .text((d) => d)
     xAxisLabelSvg.exit().remove()
-  },
+  }
 
-  renderBar: function () {
-    var self = this
-    var axisName = self.params.plot.x.axis
-    var xScale = self.params.axis[axisName].scale
-    var barHeight = self.params.brushHandleHeight
-    var barTop = self.params.yRange[1] - (barHeight / 2) + (self.params.yRange[0] - self.params.yRange[1]) / 2
-    var svg = self.svgSelection()
-    var svgBars = svg.selectAll('.timeline-bar').data([{ c: barTop, h: barHeight }])
+  _renderBar () {
+    const axisName = this.params.plot.x.axis
+    const xScale = this.params.axis[axisName].scale
+    const barHeight = this.params.brushHandleHeight
+    const barTop = this.params.yRange[1] - (barHeight / 2) + (this.params.yRange[0] - this.params.yRange[1]) / 2
+    const svgBars = this.d3.selectAll('.timeline-bar').data([{ c: barTop, h: barHeight }])
     svgBars.enter().append('rect')
       .attr('class', 'timeline-bar')
       .attr('x', xScale.range()[0])
       .attr('y', barTop + barHeight / 2)
       .attr('width', xScale.range()[1] - xScale.range()[0])
       .attr('height', 1)
-      .merge(svgBars).transition().ease(d3.easeLinear).duration(self.params.duration)
+      .merge(svgBars).transition().ease(d3Ease.easeLinear).duration(this.params.duration)
       .attr('x', xScale.range()[0])
-      .attr('y', function (d) { return d.c })
+      .attr('y', (d) => d.c)
       .attr('width', xScale.range()[1] - xScale.range()[0])
-      .attr('height', function (d) { return d.h })
+      .attr('height', (d) => d.h)
     svgBars.exit().remove()
-  },
+  }
 
-  render: function () {
-    var self = this
-    self.resetParams()
-    self.calculateDimensions()
-    self.calculateScales()
-    self.renderSVG()
-    self.renderAxis()
-    self.renderBar()
-    self.renderBrush()
-    ContrailChartsView.prototype.render.call(self)
-    return self
-  },
+  _triggerWindowChangedEvent (focusDomain) {
+    const x = this.params.plot.x.accessor
+    this._focusDataProvider.setRangeAndFilterData(focusDomain)
+    this._eventObject.trigger('windowChanged', focusDomain[x][0], focusDomain[x][1])
+  }
 
-  _triggerWindowChangedEvent: function (focusDomain) {
-    var self = this
-    var x = self.params.plot.x.accessor
-    self._focusDataProvider.setRangeAndFilterData(focusDomain)
-    self._eventObject.trigger('windowChanged', focusDomain[x][0], focusDomain[x][1])
-  },
+  // Event handlers
 
-  _handleBrushSelection: function (dataWindow) {
-    var self = this
-    var x = self.params.plot.x.accessor
-    var xScale = self.params.axis[self.params.plot.x.axis].scale
-    var brushHandleScaleX = self.params.brushHandleScaleX
-    var brushHandleScaleY = self.params.brushHandleScaleY
-    var brushHandleCenter = self.params.yRange[1] + (self.params.yRange[0] - self.params.yRange[1]) / 2
-    var svg = self.svgSelection()
-    var xMin = xScale.invert(dataWindow[0])
-    var xMax = xScale.invert(dataWindow[1])
+  _handleBrushSelection (dataWindow) {
+    const x = this.params.plot.x.accessor
+    const xScale = this.params.axis[this.params.plot.x.axis].scale
+    const brushHandleScaleX = this.params.brushHandleScaleX
+    const brushHandleScaleY = this.params.brushHandleScaleY
+    const brushHandleCenter = this.params.yRange[1] + (this.params.yRange[0] - this.params.yRange[1]) / 2
+    let xMin = xScale.invert(dataWindow[0])
+    let xMax = xScale.invert(dataWindow[1])
     if (_.isDate(xMin)) {
       xMin = xMin.getTime()
     }
     if (_.isDate(xMax)) {
       xMax = xMax.getTime()
     }
-    var focusDomain = {}
+    const focusDomain = {}
     focusDomain[x] = [xMin, xMax]
-    self.config.set({ focusDomain: focusDomain }, { silent: true })
-    self.throttledTriggerWindowChangedEvent(focusDomain)
-    var gHandles = svg.select('g.brush').selectAll('.handle--custom')
+    this.config.set({ focusDomain: focusDomain }, { silent: true })
+    this._throttledTriggerWindowChangedEvent(focusDomain)
+    const gHandles = this.d3.select('g.brush').selectAll('.handle--custom')
     gHandles
       .classed('hide', false)
-      .attr('transform', function (d, i) { return 'translate(' + dataWindow[i] + ',' + brushHandleCenter + ') scale(' + brushHandleScaleX + ',' + brushHandleScaleY + ')' })
-  },
+      .attr('transform', (d, i) => 'translate(' + dataWindow[i] + ',' + brushHandleCenter + ') scale(' + brushHandleScaleX + ',' + brushHandleScaleY + ')')
+  }
 
-  _onModelChange: function () {
+  _onModelChange () {
     this.render()
     this._handleModelChange()
-  },
+  }
 
-  _handleModelChange: function () {
-    var self = this
-    var xScale = self.params.axis[self.params.plot.x.axis].scale
-    if (self.brush) {
-      self.brush = self.brush.extent([
-          [self.params.xRange[0], self.params.yRange[1] + 10],
-          [self.params.xRange[1], self.params.yRange[0] - 10]])
-      self.svgSelection().select('g.brush').call(self.brush)
+  _handleModelChange () {
+    const xScale = this.params.axis[this.params.plot.x.axis].scale
+    if (this.brush) {
+      this.brush = this.brush.extent([
+          [this.params.xRange[0], this.params.yRange[1] + 10],
+          [this.params.xRange[1], this.params.yRange[0] - 10]])
+      this.d3.select('g.brush').call(this.brush)
     }
-    if (_.isArray(self.params.selection)) {
-      if (!self.params.selection[0]) {
-        self.params.selection[0] = 0
+    if (_.isArray(this.params.selection)) {
+      if (!this.params.selection[0]) {
+        this.params.selection[0] = 0
       }
-      if (!self.params.selection[1]) {
-        self.params.selection[1] = 100
+      if (!this.params.selection[1]) {
+        this.params.selection[1] = 100
       }
-      var brushGroup = self.svgSelection().select('g.brush').transition().ease(d3.easeLinear).duration(self.params.duration)
-      var xMin = (xScale.range()[1] - xScale.range()[0]) * (self.params.selection[0] / 100) + xScale.range()[0]
-      var xMax = (xScale.range()[1] - xScale.range()[0]) * (self.params.selection[1] / 100) + xScale.range()[0]
-      self.brush.move(brushGroup, [xMin, xMax])
+      const brushGroup = this.d3.select('g.brush').transition().ease(d3Ease.easeLinear).duration(this.params.duration)
+      const xMin = (xScale.range()[1] - xScale.range()[0]) * (this.params.selection[0] / 100) + xScale.range()[0]
+      const xMax = (xScale.range()[1] - xScale.range()[0]) * (this.params.selection[1] / 100) + xScale.range()[0]
+      this.brush.move(brushGroup, [xMin, xMax])
     }
-  },
-})
+  }
+}
 
 module.exports = TimelineView

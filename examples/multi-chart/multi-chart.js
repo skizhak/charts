@@ -1,8 +1,8 @@
 /* global coCharts */
 
-var complexData = []
-for (var i = 0; i < 100; i++) {
-  var a = Math.random() * 100
+const complexData = []
+for (let i = 0; i < 100; i++) {
+  const a = Math.random() * 100
   complexData.push({
     x: 1475760930000 + 1000000 * i,
     a: a,
@@ -11,7 +11,7 @@ for (var i = 0; i < 100; i++) {
   })
 }
 
-var chartConfigs = [
+const chartConfigs = [
   {
     chartId: 'chart1',
     type: 'XYChartView',
@@ -21,18 +21,26 @@ var chartConfigs = [
       config: {
         plot: {
           x: {
-            accessor: 'x'
+            accessor: 'x',
+            axis: 'x',
           },
           y: [
             {
               accessor: 'a',
-              chart: 'bar'
-            },
-            {
+              enabled: true,
+              chart: 'bar',
+              axis: 'y',
+            }, {
               accessor: 'b',
-              chart: 'bar'
+              enabled: true,
+              chart: 'bar',
+              axis: 'y',
             }
           ]
+        },
+        axis: {
+          x: {},
+          y: {},
         }
       }
     }]
@@ -45,12 +53,15 @@ var chartConfigs = [
       config: {
         plot: {
           x: {
-            accessor: 'x'
+            accessor: 'x',
+            axis: 'x',
           },
           y: [
             {
               accessor: 'c',
-              chart: 'line'
+              enabled: true,
+              chart: 'line',
+              axis: 'y',
             }
           ]
         }
@@ -61,12 +72,15 @@ var chartConfigs = [
         chartHeight: 200,
         plot: {
           x: {
-            accessor: 'x'
+            accessor: 'x',
+            axis: 'x',
           },
           y: [
             {
               accessor: 'c',
-              chart: 'line'
+              enabled: true,
+              chart: 'line',
+              axis: 'y',
             }
           ]
         }
@@ -75,7 +89,7 @@ var chartConfigs = [
   }
 ]
 
-var chartView = new coCharts.charts.MultiChartView()
+const chartView = new coCharts.charts.MultiChartView()
 chartView.setConfig({
   chartId: 'parentChart',
   handlers: [{
@@ -91,7 +105,7 @@ chartView.setConfig({
           targetComponent: 'compositeY',
           targetModel: 'config',
           action: function (sourceModel, targetModel, xMin, xMax) {
-            var axis = targetModel.get('axis') || {}
+            const axis = targetModel.get('axis') || {}
             axis.x = axis.x || {}
             axis.x.domain = [xMin, xMax]
             targetModel.set({ axis: axis }, { silent: true })

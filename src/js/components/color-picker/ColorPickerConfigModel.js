@@ -5,21 +5,23 @@ const _ = require('lodash')
 const d3 = require('d3')
 const ContrailChartsConfigModel = require('contrail-charts-config-model')
 
-const ColorPickerConfigModel = ContrailChartsConfigModel.extend({
-  defaults: {
-    palette: d3.schemeCategory20,
-  },
+class ColorPickerConfigModel extends ContrailChartsConfigModel {
+  get defaults () {
+    return {
+      palette: d3.schemeCategory20,
+    }
+  }
 
-  setParent: function (model) {
+  setParent (model) {
     this._parent = model
     model.on('change', () => {
       this.trigger('change')
     })
-  },
+  }
   /**
    * Ask parent component for serie accessors
    */
-  getData: function () {
+  getData () {
     const data = {colors: this.attributes.palette}
     const accessors = this._parent.getAccessors()
     data.series = _.map(accessors, (accessor) => {
@@ -31,6 +33,6 @@ const ColorPickerConfigModel = ContrailChartsConfigModel.extend({
     })
     return data
   }
-})
+}
 
 module.exports = ColorPickerConfigModel
