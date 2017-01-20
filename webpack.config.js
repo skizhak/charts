@@ -41,7 +41,7 @@ const config = {
   },
   devtool: 'source-map',
   output: {
-    path: path.join(__dirname, '/build'),
+    path: path.join(__dirname, '/build/src'),
     filename: 'js/' + '[name].js',
     library: libraryName,
     libraryTarget: 'umd',
