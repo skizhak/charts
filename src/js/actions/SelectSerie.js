@@ -8,11 +8,27 @@ class SelectSerie extends Action {
     this._deny = false
   }
 
-  _execute (plot) {
+  _execute (accessorName, isSelected) {
     const chart = this.registrar
-    _.each(chart.getComponentsByType('filter'), (filter) => filter.config.set('plot', plot))
     _.each(chart.getComponentsByType('compositeY'), (compositeY) => {
-      compositeY.config.trigger('change', compositeY.config)
+      const plot = compositeY.config.get('plot')
+      const accessor = _.find(plot.y, (a) => a.accessor === accessorName)
+      if (accessor) {
+        accessor.enabled = isSelected
+        compositeY.config.trigger('change', compositeY.config)
+      }
+    })
+
+    // Filter will be updated as it has CompositeY Config Model as a parent
+    // as well as all CompositeY dependant components too
+
+    _.each(chart.getComponentsByType('navigation'), (navigation) => {
+      const plot = navigation.config.get('plot')
+      const accessor = _.find(plot.y, (a) => a.accessor === accessorName)
+      if (accessor) {
+        accessor.enabled = isSelected
+        navigation.config.trigger('change', navigation.config)
+      }
     })
   }
 }

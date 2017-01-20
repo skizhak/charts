@@ -25,10 +25,10 @@ class FilterView extends ContrailChartsView {
 
   _onItemClick (d, el) {
     d3.event.stopPropagation()
-    const accessor = el.value
+    const accessorName = el.value
+    const isChecked = el.checked
     const action = this._actionman.get('selectSerie')
-    this.config.filter(accessor)
-    action.apply(this.config.data)
+    action.apply(accessorName, isChecked)
   }
 }
 
