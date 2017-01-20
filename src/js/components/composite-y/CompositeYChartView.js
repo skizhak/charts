@@ -45,15 +45,6 @@ class CompositeYChartView extends ContrailChartsView {
     }, 100)
   }
 
-  // Action handler
-  selectColor (accessorName, color) {
-    const configAccessor = _.find(this.config.get('plot').y, (a) => a.accessor === accessorName)
-    if (configAccessor) {
-      configAccessor.color = color
-      this.config.trigger('change', this.config)
-    }
-  }
-
   refresh () {
     this.config.trigger('change', this.config)
   }

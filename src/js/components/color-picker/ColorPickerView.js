@@ -11,7 +11,7 @@ class ColorPickerView extends ContrailChartsView {
     return {
       'click .color-select': 'open',
       'click .color-picker-palette-close': 'close',
-      'click .color-picker-palette-color': 'selectColor',
+      'click .color-picker-palette-color': '_onSelectColor',
     }
   }
 
@@ -44,10 +44,12 @@ class ColorPickerView extends ContrailChartsView {
     this.$('.color-picker-palette').hide()
   }
 
-  selectColor (d, el) {
-    const $elem = this.$(el)
-    const color = $elem.css('background-color')
-    this._eventObject.trigger('selectColor', this._accessor, color)
+  // Event handlers
+
+  _onSelectColor (d, el) {
+    const color = el.style['background-color']
+    const action = this._actionman.get('selectColor')
+    action.apply(this._accessor, color)
   }
 }
 
