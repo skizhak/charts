@@ -102,7 +102,7 @@ class PieChartView extends ContrailChartsView {
       .classed('highlight', true)
       .attr('d', arc)
       .style('fill', this.config.getColor(serieConfig.getLabel(sector.data)))
-    this._eventObject.trigger('showTooltip', tooltipOffset, sector.data)
+    this._actionman.fire('ShowTooltip', tooltipOffset, sector.data)
   }
 
   _onMouseout (e) {

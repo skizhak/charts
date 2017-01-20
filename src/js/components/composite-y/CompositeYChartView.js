@@ -492,10 +492,10 @@ class CompositeYChartView extends ContrailChartsView {
               foundDrawing = new ChildView({
                 model: this.model,
                 config: compositeYConfig,
-                eventObject: this._eventObject,
                 container: this._container,
                 axisName: accessor.axis,
-                parent: this
+                parent: this,
+                actionman: this._actionman,
               })
               this._drawings.push(foundDrawing)
             }

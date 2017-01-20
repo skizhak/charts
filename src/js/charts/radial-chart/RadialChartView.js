@@ -20,14 +20,12 @@ class RadialChartView extends ContrailView {
     this._dataProvider = new SerieProvider({ parent: this._dataModel })
     this._components = []
     this._eventObject = p.eventObject || _.extend({}, Events)
-    this.listenTo(this._dataProvider, 'change', this._render)
   }
 
   render () {
     _.each(this._components, (component) => {
       component.render()
     })
-    this._render()
   }
   /**
   * Provide data for this chart as a simple array of objects.
@@ -106,10 +104,6 @@ class RadialChartView extends ContrailView {
       return !(componentConfig.config.enable === false)
     }
     return false
-  }
-
-  _render () {
-    // TODO chart render function should be called after each component render for performance
   }
 }
 

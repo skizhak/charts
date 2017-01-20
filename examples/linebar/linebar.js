@@ -166,15 +166,15 @@ cpuMemChartView.setConfig({
         {
           accessor: 'T',
           labelFormatter: 'Time',
-          valueFormatter: timeFormatter
+          valueFormatter: timeFormatter,
         }, {
           accessor: 'cpu_stats.cpu_one_min_avg',
           labelFormatter: 'CPU',
-          valueFormatter: cpuFormatter
+          valueFormatter: cpuFormatter,
         }, {
           accessor: 'cpu_stats.rss',
           labelFormatter: 'Memory',
-          valueFormatter: memFormatter
+          valueFormatter: memFormatter,
         }
       ]
     }
@@ -189,11 +189,11 @@ cpuMemChartView.setConfig({
           title: 'Filter',
           iconClass: 'fa fa-filter',
           events: {
-            click: 'filterVariables'
+            click: 'filterVariables',
           },
           panel: {
             name: 'accessorData',
-            width: '350px'
+            width: '350px',
           }
         }
       ]
@@ -226,6 +226,6 @@ cpuMemChartView.renderMessage({
   messages: [{
     level: 'info',
     title: '',
-    message: 'Loading ...'
+    message: 'Loading ...',
   }]
 })

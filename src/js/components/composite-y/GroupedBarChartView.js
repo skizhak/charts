@@ -131,14 +131,14 @@ class BarChartView extends XYChartSubView {
 
   _onMouseover (d, el) {
     if (this.config.get('tooltipEnabled')) {
-      this._eventObject.trigger('showTooltip', {left: d.x, top: d.y}, d.data, d.accessor.tooltip)
+      this._actionman.fire('ShowTooltip', {left: d.x, top: d.y}, d.data, d.accessor.tooltip)
     }
     d3.select(() => el).classed('active', true)
   }
 
   _onMouseout (d, el) {
     if (this.config.get('tooltipEnabled')) {
-      this._eventObject.trigger('hideTooltip', d.accessor.tooltip)
+      this._actionman.fire('HideTooltip', d.accessor.tooltip)
     }
     d3.select(() => el).classed('active', false)
   }

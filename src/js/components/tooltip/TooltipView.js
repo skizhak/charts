@@ -5,6 +5,10 @@ const $ = require('jquery')
 const _ = require('lodash')
 const ContrailChartsView = require('contrail-charts-view')
 const _template = require('./tooltip.html')
+const _actions = [
+  require('./actions/ShowTooltip'),
+  require('./actions/HideTooltip'),
+]
 
 class TooltipView extends ContrailChartsView {
   get type () { return 'tooltip' }
@@ -14,8 +18,7 @@ class TooltipView extends ContrailChartsView {
     super(options)
     this.resetParams()
     this.listenTo(this.config, 'change', this.resetParams)
-    this.listenTo(this._eventObject, 'showTooltip', this.show)
-    this.listenTo(this._eventObject, 'hideTooltip', this.hide)
+    _.each(_actions, action => this._actionman.set(action, this))
   }
 
   show (offset, data, id) {

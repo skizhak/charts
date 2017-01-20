@@ -108,14 +108,14 @@ class LineChartView extends XYChartSubView {
         top: offset.top + pos[1],
       }
 
-      this._eventObject.trigger('showTooltip', tooltipOffset, dataItem, d.accessor.tooltip)
+      this._actionman.fire('ShowTooltip', tooltipOffset, dataItem, d.accessor.tooltip)
     }
     this.d3.select(() => el).classed('active', true)
   }
 
   _onMouseout (d, el) {
     if (this.config.get('tooltipEnabled')) {
-      this._eventObject.trigger('hideTooltip', d.accessor.tooltip)
+      this._actionman.fire('HideTooltip', d.accessor.tooltip)
     }
     this.d3.select(() => el)
       .classed('active', false)

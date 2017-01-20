@@ -137,7 +137,7 @@ class ScatterPlotView extends XYChartSubView {
         left: d.x + Math.sqrt(d.area) * 0.71,
         top: d.y - Math.sqrt(d.area) * 0.71,
       }
-      this._eventObject.trigger('showTooltip', offset, d.data, d.accessor.tooltip)
+      this._actionman.fire('ShowTooltip', offset, d.data, d.accessor.tooltip)
     }
   }
 
@@ -145,7 +145,7 @@ class ScatterPlotView extends XYChartSubView {
     if (this.config.get('tooltipEnabled')) {
       this.d3.select(() => el)
         .classed('active', false)
-      this._eventObject.trigger('hideTooltip', d.accessor.tooltip)
+      this._actionman.fire('HideTooltip', d.accessor.tooltip)
     }
   }
 }
