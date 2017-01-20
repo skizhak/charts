@@ -19,11 +19,17 @@ class Actionman {
   getActive () {
     return _.filter(this._instances, action => action.isEnabled())
   }
-
+  /**
+   * @param {Action} Action class to be instantiated
+   * @return {Action} found or instantiated action
+   */
   set (Action, registrar) {
     const action = new Action({ registrar })
-    this._instances[action.id] = action
+    if (this._instances[Action.name] === action) return
+
+    this._instances[Action.name] = action
     this.trigger('add', action)
+    return action
   }
   /**
    * Updates all actions state
@@ -40,8 +46,8 @@ class Actionman {
   fire (actionName, ...args) {
     const action = this._instances[actionName]
 
-    if (action !== null) {
-      action.apply(args)
+    if (!_.isNil(action)) {
+      action.apply(...args)
     }
   }
 }

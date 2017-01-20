@@ -34,7 +34,6 @@ class CompositeYChartView extends ContrailChartsView {
 
     this.listenTo(this.model, 'change', this._onDataModelChange)
     this.listenTo(this.config, 'change', this._onConfigModelChange)
-    this.listenTo(this._eventObject, 'selectColor', this.selectColor)
     this.listenTo(this._eventObject, 'refresh', this.refresh)
     window.addEventListener('resize', this._onWindowResize.bind(this))
 

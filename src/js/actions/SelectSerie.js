@@ -4,12 +4,11 @@ const Action = require('../plugins/Action')
 class SelectSerie extends Action {
   constructor (p) {
     super(p)
-    this._id = 'selectSerie'
     this._deny = false
   }
 
   _execute (accessorName, isSelected) {
-    const chart = this.registrar
+    const chart = this._registrar
     _.each(chart.getComponentsByType('compositeY'), (compositeY) => {
       const plot = compositeY.config.get('plot')
       const accessor = _.find(plot.y, (a) => a.accessor === accessorName)

@@ -3,12 +3,11 @@ const Action = require('../../../plugins/Action')
 class SendMessage extends Action {
   constructor (p) {
     super(p)
-    this._id = 'messageSend'
     this._deny = false
   }
 
   _execute (msgObj) {
-    this.registrar.show(msgObj)
+    this._registrar.show(msgObj)
   }
 }
 

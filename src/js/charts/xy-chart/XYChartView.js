@@ -81,7 +81,7 @@ class XYChartView extends ContrailChartsView {
   }
 
   renderMessage (msgObj) {
-    this._actionman.get('messageSend').apply(msgObj)
+    this._actionman.fire('SendMessage', msgObj)
   }
 
   clearMessage (componentId) {
@@ -91,7 +91,7 @@ class XYChartView extends ContrailChartsView {
       action: 'update',
       messages: [],
     }
-    this._actionman.get('messageClear').apply(msgObj)
+    this._actionman.fire('ClearMessage', msgObj)
   }
 
   _initHandlers () {
