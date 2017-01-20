@@ -39,6 +39,7 @@ class NavigationView extends ContrailChartsView {
     this._components = [this._brush, this._compositeYChartView]
     this._throttledTriggerSelectionChange = _.throttle(this._triggerSelectionChange, 100).bind(this)
     this.listenTo(this._brush, 'brush', this._onSelection)
+    this.listenTo(this.config, 'change', this.render)
     this.listenTo(this.model, 'change', this.render)
   }
 

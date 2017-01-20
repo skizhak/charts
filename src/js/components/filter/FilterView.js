@@ -6,15 +6,16 @@ const ContrailChartsView = require('contrail-charts-view')
 const _template = require('./filter.html')
 
 class FilterView extends ContrailChartsView {
+  get type () { return 'filter' }
+  get className () { return 'coCharts-filter-view' }
   get events () {
     return {
       'change .filter-item-input': '_onItemClick',
     }
   }
-  constructor (options) {
-    super(options)
-    this.type = 'filter'
-    this.className = 'coCharts-filter-view'
+  constructor (p) {
+    super(p)
+    this.listenTo(this.model, 'change', this.render)
     this.listenTo(this.config, 'change', this.render)
   }
 
