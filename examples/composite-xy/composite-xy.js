@@ -27,10 +27,14 @@ const complexChartView = new coCharts.charts.XYChartView()
 complexChartView.setConfig({
   container: '#complexChart',
   components: [{
-    type: 'legend',
+    type: 'legendPanel',
     config: {
-      sourceComponent: 'complexChartCompositeY'
-    }
+      sourceComponent: 'complexChartCompositeY',
+      placement: 'row',
+      coloPicker: true,
+      filter: true,
+      chartSelector: true,
+    },
   }, {
     id: 'complexChartCompositeY',
     type: 'compositeY',
@@ -257,12 +261,6 @@ complexChartView.setConfig({
       }
     }
   }, {
-    id: 'complexChart-controlPanel',
-    type: 'controlPanel',
-    config: {
-      enabled: true,
-    },
-  }, {
     id: 'messageView',
     type: 'message',
     config: {
@@ -278,11 +276,6 @@ complexChartView.setConfig({
     config: {
       sourceComponent: 'complexChartCompositeY',
     }
-  }, {
-    type: 'filter',
-    config: {
-      sourceComponent: 'complexChartCompositeY',
-    },
   }]
 })
 complexChartView.setData(complexData)

@@ -24,6 +24,8 @@ const PieChartConfigModel = require('components/radial/PieChartConfigModel')
 const PieChartView = require('components/radial/PieChartView')
 const StandaloneConfigModel = require('components/standalone/StandaloneConfigModel')
 const StandaloneView = require('components/standalone/StandaloneView')
+var LegendPanelConfigModel = require('components/legend-panel/LegendPanelConfigModel')
+var LegendPanelView = require('components/legend-panel/LegendPanelView')
 
 module.exports = {
   tooltip: {
@@ -37,6 +39,10 @@ module.exports = {
   legendUniversal: {
     ConfigModel: LegendUniversalConfigModel,
     View: LegendUniversalView,
+  },
+  legendPanel: {
+    ConfigModel: LegendPanelConfigModel,
+    View: LegendPanelView
   },
   crosshair: {
     ConfigModel: CrosshairConfigModel,

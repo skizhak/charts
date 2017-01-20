@@ -27,8 +27,7 @@ class FilterView extends ContrailChartsView {
     d3.event.stopPropagation()
     const accessorName = el.value
     const isChecked = el.checked
-    const action = this._actionman.get('selectSerie')
-    action.apply(accessorName, isChecked)
+    this._actionman.fire('selectSerie', accessorName, isChecked)
   }
 }
 

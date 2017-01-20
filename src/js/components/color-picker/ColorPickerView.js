@@ -48,8 +48,7 @@ class ColorPickerView extends ContrailChartsView {
 
   _onSelectColor (d, el) {
     const color = el.style['background-color']
-    const action = this._actionman.get('selectColor')
-    action.apply(this._accessor, color)
+    this._actionman.fire('selectColor', this._accessor, color)
   }
 }
 
