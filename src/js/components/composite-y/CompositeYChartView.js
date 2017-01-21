@@ -270,7 +270,7 @@ class CompositeYChartView extends ContrailChartsView {
       .merge(svgYAxis)
       .attr('transform', 'translate(' + translate + ',0)')
     if (this.config.get('crosshairEnabled')) {
-      this.svg.on('mousemove', this._onMousemove.bind(this))
+      this.svg.delegate('mousemove', 'svg', _.throttle(this._onMousemove.bind(this), 100))
     }
   }
 
@@ -485,7 +485,6 @@ class CompositeYChartView extends ContrailChartsView {
               const params = _.extend({}, this.params)
               params.isPrimary = false
               const compositeYConfig = new CompositeYChartConfigModel(params)
-              // TODO: pass eventObject to child?
               foundDrawing = new ChildView({
                 model: this.model,
                 config: compositeYConfig,
@@ -537,8 +536,11 @@ class CompositeYChartView extends ContrailChartsView {
     this._throttledRender()
   }
 
-  _onMousemove () {
-    this._actionman.fire('ShowCrosshair', d3.mouse(d3.event.currentTarget), this)
+  _onMousemove (d, el, e) {
+    const point = [e.offsetX, e.offsetY]
+    const data = this.getCrosshairData(point)
+    const config = this.getCrosshairConfig()
+    this._actionman.fire('ShowCrosshair', data, point, config)
   }
 }
 

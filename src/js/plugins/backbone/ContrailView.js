@@ -13,7 +13,7 @@ d3.selection.prototype.delegate = function (eventName, targetSelector, handler) 
   function delegated () {
     // TODO use jquery.closest d3 alternative here
     const eventTarget = $(d3.event.target).closest(targetSelector)[0]
-    if (eventTarget) handler.call(eventTarget, eventTarget.__data__, eventTarget)
+    if (eventTarget) handler.call(eventTarget, eventTarget.__data__, eventTarget, d3.event)
   }
   return this.on(eventName, delegated)
 }
