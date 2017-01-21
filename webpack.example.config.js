@@ -33,7 +33,8 @@ plugins.push(new ExtractTextPlugin('css/' + fileName + '.css'))
 
 const config = {
   entry: {
-    'exampleLoader': path.join(__dirname, '/examples/common/js/exampleLoader.js')
+    'exampleLoader': path.join(__dirname, '/examples/common/js/exampleLoader.js'),
+    'port-distribution': path.join(__dirname, '/examples/port-distribution/port-distribution.js')
   },
   devtool: 'source-map',
   output: {
