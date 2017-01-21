@@ -38,7 +38,7 @@ const config = {
   },
   devtool: 'source-map',
   output: {
-    path: path.join(__dirname, '/build'),
+    path: path.join(__dirname, '/build/examples'),
     filename: 'js/' + '[name].js',
   },
   module: {loaders},
