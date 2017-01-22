@@ -1,10 +1,7 @@
 /*
  * Copyright (c) 2016 Juniper Networks, Inc. All rights reserved.
  */
-const $ = require('jquery')
-const _ = require('lodash')
 const d3 = require('d3')
-const Events = require('contrail-charts-events')
 const ContrailView = require('contrail-view')
 /**
  * View base class.
@@ -28,7 +25,6 @@ class ContrailChartsView extends ContrailView {
     this._actionman = p.actionman
     this._order = p.order
     this._container = p.container
-    this._eventObject = p.eventObject || _.extend({}, Events)
     this.params = {}
   }
   /**
@@ -135,7 +131,7 @@ class ContrailChartsView extends ContrailView {
     const wrapperPosition = this.svg.node().parentNode.dataset.order
     if (this.params.isPrimary && wrapperPosition !== this.config.get('order')) {
       const wrapper = this.svg.node().parentNode
-      $(wrapper).detach()
+      wrapper.remove() // detach
       this._insertSorted(wrapper)
     }
     this.svg

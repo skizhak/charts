@@ -26,9 +26,7 @@ class SerieProvider extends ContrailModel {
   }
 
   getLabels (formatter) {
-    return _.map(this.get('data'), function (serie) {
-      return formatter(serie)
-    })
+    return _.map(this.get('data'), (serie) => formatter(serie))
   }
 }
 

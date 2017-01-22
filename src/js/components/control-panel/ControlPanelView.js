@@ -4,7 +4,6 @@
 const _ = require('lodash')
 const $ = require('jquery')
 const d3 = require('d3')
-const Events = require('contrail-charts-events')
 const ContrailChartsView = require('contrail-charts-view')
 const _template = require('./control-panel.html')
 const _actionTemplate = require('./action.html')
@@ -17,11 +16,10 @@ class ControlPanelView extends ContrailChartsView {
       'click .control-panel-item': '_onMenuItemClick',
     }
   }
-  constructor (options = {}) {
-    super(options)
+  constructor (p = {}) {
+    super(p)
 
     this.listenTo(this.config, 'change', this.render)
-    this.eventObject = options.eventObject || _.extend({}, Events)
 
     // TODO control panel will operate not with all actions
     // this may be configured per this component

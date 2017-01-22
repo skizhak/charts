@@ -12,6 +12,7 @@ const d3 = require('d3')
 d3.selection.prototype.delegate = function (eventName, targetSelector, handler) {
   function delegated () {
     // TODO use jquery.closest d3 alternative here
+    // as native closest is not supported in IE15
     const eventTarget = $(d3.event.target).closest(targetSelector)[0]
     if (eventTarget) handler.call(eventTarget, eventTarget.__data__, eventTarget, d3.event)
   }
