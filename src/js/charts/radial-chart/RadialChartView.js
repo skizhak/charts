@@ -2,11 +2,11 @@
  * Copyright (c) 2016 Juniper Networks, Inc. All rights reserved.
  */
 const _ = require('lodash')
-const Events = require('contrail-charts-events')
 const ContrailChartsDataModel = require('contrail-charts-data-model')
 const ContrailView = require('contrail-view') // Todo use contrail-charts-view instead?
 const components = require('components/index')
 const SerieProvider = require('handlers/SerieProvider')
+const Actionman = require('../../plugins/Actionman')
 /**
 * Group of charts rendered in polar coordinates system
 * TODO merge with ChartView as long as XYChart too
@@ -19,7 +19,7 @@ class RadialChartView extends ContrailView {
     this._dataModel = new ContrailChartsDataModel()
     this._dataProvider = new SerieProvider({ parent: this._dataModel })
     this._components = []
-    this._eventObject = p.eventObject || _.extend({}, Events)
+    this._actionman = new Actionman()
   }
 
   render () {
@@ -36,7 +36,7 @@ class RadialChartView extends ContrailView {
     dataConfig = dataConfig || {}
     this._dataModel.set(dataConfig, { silent: true })
 
-    if (_.isArray(data)) this._dataModel.setData(data)
+    if (_.isArray(data)) this._dataModel.data = data
   }
   /**
   * Sets the configuration for this chart as a simple object.
@@ -88,7 +88,7 @@ class RadialChartView extends ContrailView {
       id: id,
       config: configModel,
       model: model,
-      eventObject: this._eventObject,
+      actionman: this._actionman,
       container: this.el,
     })
     const component = new components[type].View(viewOptions)
