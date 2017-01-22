@@ -1,6 +1,7 @@
 /*
  * Copyright (c) 2016 Juniper Networks, Inc. All rights reserved.
  */
+const d3 = require('d3')
 const ContrailChartsView = require('contrail-charts-view')
 
 class XYChartSubView extends ContrailChartsView {
@@ -13,7 +14,7 @@ class XYChartSubView extends ContrailChartsView {
   }
 
   get yScale () {
-    return this.params.axis[this.axisName].scale
+    return this.params.axis[this.axisName].scale || d3.scaleLinear()
   }
 
   get xScale () {
