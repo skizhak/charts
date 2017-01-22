@@ -54,7 +54,7 @@ class ChartView extends ContrailChartsView {
       // Since we're setting the config, trigger a change to parentDataModel to re-compute based on new config.
       // Triggering the change on parentModel triggers prepareData on all the dataProvider instances of same parentModel.
       // Todo check if we really need to trigger this or simply call prepareData in current dataProvider?
-      this._dataProvider.getParentModel().trigger('change')
+      this._dataProvider.parentModel.trigger('change')
     }
   }
   /**

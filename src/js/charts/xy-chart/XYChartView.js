@@ -33,7 +33,7 @@ class XYChartView extends ContrailChartsView {
   */
   setData (data, dataConfig) {
     if (dataConfig) this.setDataConfig(dataConfig)
-    if (_.isArray(data)) this._dataModel.setData(data)
+    if (_.isArray(data)) this._dataModel.data = data
   }
   // Todo deprecate setDataConfig. DataModel parser will be set as input parser in dataProvider config.
   /**

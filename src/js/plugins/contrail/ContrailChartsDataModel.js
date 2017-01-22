@@ -10,38 +10,38 @@ const ContrailModel = require('contrail-model')
 class ContrailChartsDataModel extends ContrailModel {
   get defaults () {
     return {
-      // / The formatted data
+      // The formatted data
       data: [],
 
       // to Save the current state of data fetching
       // Todo: integrate properly with ContrailListModel remoteDataHandler.
       dataStatus: undefined,
 
-      // / The current data query limits. For example the data limits set on a query that returned this data.
-      // / example: limit: { x: [0, 100] }
+      // The current data query limits. For example the data limits set on a query that returned this data.
+      // example: limit: { x: [0, 100] }
       limit: {}
     }
   }
 
-  getData () {
+  get data () {
     return this.get('data')
   }
 
-  setData (data) {
+  set data (data) {
     if (_.isFunction(this.get('dataParser'))) {
       data = this.get('dataParser')(data)
     }
     this.set({data: data})
   }
 
-  getQueryLimit () {
+  get queryLimit () {
     return this.get('limit')
   }
 
-  setQueryLimit (limit) {
+  set queryLimit (limit) {
     // Simulate a query. The provided limit should be used to retreive a new data chunk.
     setTimeout(() => {
-      this.set({data: this.getData(), limit: limit})
+      this.set({data: this.data, limit: limit})
     }, 1000)
   }
 
@@ -57,7 +57,7 @@ class ContrailChartsDataModel extends ContrailModel {
   // However an actual DataModel would require some functions to fetch data.
 
   setDataAndLimit (data, limit) {
-    this.setData(data)
+    this.data = data
     this.set({limit: limit})
   }
 }

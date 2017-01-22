@@ -22,7 +22,7 @@ class SerieProvider extends ContrailModel {
   }
 
   parse () {
-    this.set('data', this.get('parent').getData())
+    this.set('data', this.get('parent').get('data'))
   }
 
   getLabels (formatter) {

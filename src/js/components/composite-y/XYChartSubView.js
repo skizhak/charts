@@ -6,17 +6,17 @@ const ContrailChartsView = require('contrail-charts-view')
 class XYChartSubView extends ContrailChartsView {
   get tagName () { return 'g' }
 
-  constructor (options) {
-    super(options)
-    this._parent = options.parent
-    this.axisName = options.axisName
+  constructor (p) {
+    super(p)
+    this._parent = p.parent
+    this.axisName = p.axisName
   }
 
-  getYScale () {
+  get yScale () {
     return this.params.axis[this.axisName].scale
   }
 
-  getXScale () {
+  get xScale () {
     return this.params.axis[this.params.plot.x.axis].scale
   }
 
@@ -25,13 +25,11 @@ class XYChartSubView extends ContrailChartsView {
   }
 
   getScreenX (dataElem, xAccessor) {
-    const xScale = this.getXScale()
-    return xScale(dataElem[xAccessor])
+    return this.xScale(dataElem[xAccessor])
   }
 
   getScreenY (dataElem, yAccessor) {
-    const yScale = this.getYScale()
-    return yScale(dataElem[yAccessor])
+    return this.yScale(dataElem[yAccessor])
   }
 
   render () {

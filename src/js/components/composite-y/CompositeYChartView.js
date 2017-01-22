@@ -396,7 +396,7 @@ class CompositeYChartView extends ContrailChartsView {
   }
 
   getCrosshairData (point) {
-    const data = this.getData()
+    const data = this.model.data
     const xScale = this.params.axis[this.params.plot.x.axis].scale
     const xAccessor = this.params.plot.x.accessor
     const mouseX = xScale.invert(point[0])

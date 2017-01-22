@@ -15,7 +15,6 @@ class BarChartView extends XYChartSubView {
       'mouseout .bar': '_onMouseout',
     }
   }
-
   /**
   * Called by the parent in order to calculate maximum data extents for all of this child's axis.
   * Assumes the params.activeAccessorData for this child view is filled by the parent with the relevent yAccessors for this child only.
@@ -42,7 +41,6 @@ class BarChartView extends XYChartSubView {
   calculateScales () {}
 
   getScreenX (dataElem, xAccessor, yAccessor) {
-    const xScale = this.getXScale()
     let delta = 0
     _.each(this.params.activeAccessorData, (accessor, j) => {
       if (accessor.accessor === yAccessor) {
@@ -50,13 +48,12 @@ class BarChartView extends XYChartSubView {
         delta = innerBandScale(j) + innerBandScale.bandwidth() / 2
       }
     })
-    return xScale(dataElem[xAccessor]) + delta
+    return this.xScale(dataElem[xAccessor]) + delta
   }
 
   getScreenY (dataElem, yAccessor) {
-    const yScale = this.getYScale()
-    const zeroValue = yScale.domain()[0]
-    return yScale(zeroValue + dataElem[yAccessor])
+    const zeroValue = this.yScale.domain()[0]
+    return this.yScale(zeroValue + dataElem[yAccessor])
   }
 
   render () {
@@ -65,16 +62,15 @@ class BarChartView extends XYChartSubView {
   }
 
   _render () {
-    const data = this.getData()
-    const yScale = this.getYScale()
-    const xScale = this.getXScale()
+    super.render()
 
     // Create a flat data structure
+    const data = this.model.data
     const flatData = []
     const numOfAccessors = _.keys(this.params.activeAccessorData).length
-    const xValues = _.map(this.getData(), this.params.plot.x.accessor)
+    const xValues = _.map(data, this.params.plot.x.accessor)
     const xValuesExtent = d3.extent(xValues)
-    const xRange = [xScale(xValuesExtent[0]), xScale(xValuesExtent[1])]
+    const xRange = [this.xScale(xValuesExtent[0]), this.xScale(xValuesExtent[1])]
     let len = data.length - 1
     if (len === 0) {
       len = 1
@@ -87,7 +83,7 @@ class BarChartView extends XYChartSubView {
       .paddingInner(0.05)
       .paddingOuter(0.05)
     const innerBandWidth = innerBandScale.bandwidth()
-    const zeroValue = yScale.domain()[0]
+    const zeroValue = this.yScale.domain()[0]
     this.params.axis[this.params.plot.x.axis].innerBandScale = innerBandScale
     _.each(data, (d) => {
       const x = d[this.params.plot.x.accessor]
@@ -97,9 +93,9 @@ class BarChartView extends XYChartSubView {
         const obj = {
           id: x + '-' + key,
           className: 'bar bar-' + key,
-          x: xScale(x) + innerBandScale(j),
-          y: yScale(y),
-          h: yScale(zeroValue) - yScale(y),
+          x: this.xScale(x) + innerBandScale(j),
+          y: this.yScale(y),
+          h: this.yScale(zeroValue) - this.yScale(y),
           w: innerBandWidth,
           color: this.getColor(accessor),
           accessor: accessor,
@@ -115,7 +111,7 @@ class BarChartView extends XYChartSubView {
     svgBarGroups.enter().append('rect')
       .attr('class', (d) => d.className)
       .attr('x', (d) => d.x)
-      .attr('y', yScale.range()[0])
+      .attr('y', this.yScale.range()[0])
       .attr('height', 0)
       .attr('width', (d) => d.w)
       .merge(svgBarGroups).transition().ease(d3.easeLinear).duration(this.params.duration)

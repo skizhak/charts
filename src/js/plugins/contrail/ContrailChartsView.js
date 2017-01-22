@@ -84,12 +84,6 @@ class ContrailChartsView extends ContrailView {
     this.params = this.config.computeParams()
   }
   /**
-  * This is how the view gets its data.
-  */
-  getData () {
-    return this.model.getData()
-  }
-  /**
    * Appends components element to container in the order specified in this._order
    *
    * Components which renders vector graphics should call super.render() firsthand

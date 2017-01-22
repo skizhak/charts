@@ -21,8 +21,8 @@ class ScatterPlotView extends XYChartSubView {
     }
   }
 
-  constructor (options) {
-    super(options)
+  constructor (p) {
+    super(p)
     this.shapeScale = d3Scale.scaleOrdinal()
       .domain(['square', 'triangle', 'circle'])
       .range([d3Shape.symbolSquare, d3Shape.symbolTriangle, d3Shape.symbolCircle])
@@ -98,12 +98,8 @@ class ScatterPlotView extends XYChartSubView {
    * Create a flat data structure
    */
   _prepareData () {
-    const data = this.getData()
-    const yScale = this.getYScale()
-    const xScale = this.params.axis[this.params.plot.x.axis].scale
-
     const flatData = []
-    _.map(data, (d) => {
+    _.map(this.model.data, (d) => {
       const x = d[this.params.plot.x.accessor]
       _.each(this.params.activeAccessorData, (accessor) => {
         const key = accessor.accessor
@@ -113,8 +109,8 @@ class ScatterPlotView extends XYChartSubView {
           id: x + '-' + key,
           className: 'point point-' + key,
           selectClassName: '.point-' + key,
-          x: xScale(x),
-          y: yScale(y),
+          x: this.xScale(x),
+          y: this.yScale(y),
           shape: this.shapeScale(accessor.shape),
           area: 4 * rScale(d[accessor.sizeAccessor]) * rScale(d[accessor.sizeAccessor]),
           color: this.getColor(accessor),
