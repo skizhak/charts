@@ -77,15 +77,13 @@ const chartConfig = {
   }, {
     type: 'tooltip',
     config: {
-      title: 'BUBBLE',
+      title: {
+          accessor: 'x',
+          valueFormatter: timeFormatter,
+      },
+
       dataConfig: [
         {
-          accessor: 'x',
-          labelFormatter: function (key) {
-            return 'Time'
-          },
-          valueFormatter: timeFormatter
-        }, {
           accessor: 'c',
           labelFormatter: function (key) {
             return 'C'
