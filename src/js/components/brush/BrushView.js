@@ -12,30 +12,27 @@ class BrushView extends ContrailChartsView {
   get zIndex () { return 9 }
   constructor (options) {
     super(options)
-    this._throttledRenderBrush = _.throttle(this.render, 100).bind(this)
-    window.addEventListener('resize', this._onWindowResize.bind(this))
+    window.addEventListener('resize', _.throttle(this.render.bind(this), 100))
   }
 
   render () {
     super.render()
-    const xScale = this.params.axis[this.params.plot.x.axis].scale
-    const marginInner = this.params.marginInner
+    this.resetParams()
+    const extent = this.params.extent
     const brushHandleHeight = 16
     this._brush = d3.brushX()
-      .extent([
-        [this.params.xRange[0] - marginInner, this.params.yRange[1] - marginInner],
-        [this.params.xRange[1] + marginInner, this.params.yRange[0] + marginInner]])
+      .extent(extent)
       .handleSize(10)
       .on('brush', () => {
         this._onSelection(d3.event.selection)
       })
       .on('end', () => {
-        const dataWindow = d3.event.selection
-        if (!dataWindow) {
+        const selection = d3.event.selection
+        if (!selection) {
           this.remove()
           this.render()
         } else {
-          this._onSelection(d3.event.selection)
+          this._onSelection(selection)
         }
       })
     this.d3.selectAll('.handle--custom')
@@ -51,8 +48,8 @@ class BrushView extends ContrailChartsView {
     this.d3.call(this._brush)
     if (_.isArray(this.params.selection)) {
       const brushGroup = this.d3.transition().ease(d3Ease.easeLinear).duration(this.params.duration)
-      const xMin = (xScale.range()[1] - xScale.range()[0]) * (this.params.selection[0] / 100) + xScale.range()[0]
-      const xMax = (xScale.range()[1] - xScale.range()[0]) * (this.params.selection[1] / 100) + xScale.range()[0]
+      const xMin = (extent[1][0] - extent[0][0]) * (this.params.selection[0] / 100) + extent[0][0]
+      const xMax = (extent[1][0] - extent[0][0]) * (this.params.selection[1] / 100) + extent[0][0]
       this._brush.move(brushGroup, [xMin, xMax])
     }
   }
@@ -62,20 +59,14 @@ class BrushView extends ContrailChartsView {
     this._brush = null
     this.d3.selectAll('.handle--custom')
       .classed('hide', true)
-    // this.config.unset('focusDomain', { silent: true })
-    // const newFocusDomain = {}
-    // this._focusDataProvider.setRangeAndFilterData(newFocusDomain)
   }
 
   // Event handlers
 
   _onSelection (selection) {
-    const xScale = this.params.axis[this.params.plot.x.axis].scale
-    const brushHandleCenter = (this.params.yRange[0] - this.params.yRange[1] + 2 * this.params.marginInner) / 2
-    let xMin = xScale.invert(selection[0])
-    let xMax = xScale.invert(selection[1])
-    if (_.isDate(xMin)) xMin = xMin.getTime()
-    if (_.isDate(xMax)) xMax = xMax.getTime()
+    if (!selection) return
+    const extent = this.params.extent
+    const brushHandleCenter = (extent[1][1] - extent[0][1]) / 2
     const gHandles = this.d3.selectAll('.handle--custom')
     gHandles
       // TODO class should be reapplied
@@ -83,11 +74,7 @@ class BrushView extends ContrailChartsView {
       .attr('transform', (d, i) => {
         return `translate(${selection[i]},${brushHandleCenter}) scale(1,2)`
       })
-    this.trigger('brush', [xMin, xMax])
-  }
-
-  _onWindowResize () {
-    this._throttledRenderBrush()
+    this.trigger('selection', selection)
   }
 }
 

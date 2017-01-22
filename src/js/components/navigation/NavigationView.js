@@ -5,8 +5,8 @@ const _ = require('lodash')
 const ContrailChartsView = require('contrail-charts-view')
 const DataProvider = require('handlers/DataProvider')
 const CompositeYChartView = require('components/composite-y/CompositeYChartView')
-const BrushView = require('./BrushView')
-const ContrailChartsConfigModel = require('contrail-charts-config-model')
+const BrushView = require('components/brush/BrushView')
+const BrushConfigModel = require('components/brush/BrushConfigModel')
 const CompositeYChartConfigModel = require('components/composite-y/CompositeYChartConfigModel')
 
 class NavigationView extends ContrailChartsView {
@@ -22,7 +22,10 @@ class NavigationView extends ContrailChartsView {
   constructor (p) {
     super(p)
     this._brush = new BrushView({
-      config: new ContrailChartsConfigModel({isSharedContainer: true}),
+      config: new BrushConfigModel({
+        isSharedContainer: true,
+        selection: this.config.get('selection'),
+      }),
     })
     const compositeYConfig = new CompositeYChartConfigModel()
     this._compositeYChartView = new CompositeYChartView({
