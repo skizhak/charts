@@ -20,7 +20,8 @@ function getValue (serie) {
 
 const chartConfig = {
   container: '#chart',
-  components: [{
+  components: [
+  {
     id: 'pieChart',
     type: 'pieChart',
     config: {
@@ -33,7 +34,8 @@ const chartConfig = {
         valueFormatter: numberFormatter,
       }
     },
-  }, {
+  },
+  {
     type: 'tooltip',
     config: {
       dataConfig: [
@@ -44,12 +46,14 @@ const chartConfig = {
         },
       ],
     },
-  }, {
+  },
+  {
     type: 'legendUniversal',
     config: {
       sourceComponent: 'pieChart',
     },
-  }]
+  }
+  ]
 }
 const chartView = new coCharts.charts.RadialChartView()
 chartView.setConfig(chartConfig)
