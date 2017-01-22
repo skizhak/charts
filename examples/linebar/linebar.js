@@ -177,6 +177,7 @@ cpuMemChartView.setConfig({
     id: 'defaultTooltip',
     type: 'tooltip',
     config: {
+      sourceComponent: 'cpuMemCompositeY',
       dataConfig: [
         {
           accessor: 'T',

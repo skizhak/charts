@@ -235,6 +235,8 @@ complexChartView.setConfig({
     id: 'defaultTooltip',
     type: 'tooltip',
     config: {
+      sourceComponent: 'complexChartCompositeY',
+      title: 'HI',
       dataConfig: [
         {
           accessor: 'x',

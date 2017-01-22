@@ -87,9 +87,7 @@ class PieChartView extends ContrailChartsView {
     const chartOffset = this.svg.node().getBoundingClientRect()
     const tooltipOffset = {
       left: chartOffset.left + this.params.chartWidth / 2 - innerRadius * 0.707,
-      top: chartOffset.top + this.params.chartHeight / 2 - innerRadius * 0.707,
-      width: innerRadius * 0.707 * 2,
-      height: innerRadius * 0.707 * 2,
+      top: chartOffset.top + this.params.chartHeight / 2 - innerRadius * 0.707
     }
     const arc = shape.arc(sector)
       .innerRadius(outerRadius)
@@ -102,6 +100,8 @@ class PieChartView extends ContrailChartsView {
       .classed('highlight', true)
       .attr('d', arc)
       .style('fill', this.config.getColor(serieConfig.getLabel(sector.data)))
+
+    sector.data.color = this.config.getColor(serieConfig.getLabel(sector.data))
     this._eventObject.trigger('showTooltip', tooltipOffset, sector.data)
   }
 
