@@ -11,20 +11,16 @@ class TooltipConfigModel extends ContrailChartsConfigModel {
     }
   }
 
-  setParent (model) {
-    this._parent = model
-    model.on('change', () => {
-      this.trigger('change')
-    })
-  }
-
   getFormattedData (inData) {
     var outData = {}
     const dataConfig = this.get('dataConfig')
-    outData.title = dataConfig.title
+
+    if(this.get('title')) {
+      outData.title = _.isString(this.get('title')) ? this.get('title') : this.getFormattedValue(inData, this.get('title'))
+    }
+
     outData.items = _.map(dataConfig, (datumConfig) => {
       return {
-        color: inData.color ? inData.color : this._parent.getColor(datumConfig),
         label: this.getLabel(inData, datumConfig),
         value: this.getFormattedValue(inData, datumConfig),
       }

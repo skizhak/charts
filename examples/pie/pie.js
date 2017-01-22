@@ -36,7 +36,6 @@ const chartConfig = {
   }, {
     type: 'tooltip',
     config: {
-      sourceComponent: 'pieChart',
       dataConfig: [
         {
           accessor: 'value',

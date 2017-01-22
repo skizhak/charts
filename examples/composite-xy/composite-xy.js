@@ -235,14 +235,13 @@ complexChartView.setConfig({
     id: 'defaultTooltip',
     type: 'tooltip',
     config: {
-      sourceComponent: 'complexChartCompositeY',
-      title: 'HI',
+      title: {
+          accessor: 'x',
+          valueFormatter: timeFormatter,
+      },
+
       dataConfig: [
         {
-          accessor: 'x',
-          labelFormatter: 'Time',
-          valueFormatter: timeFormatter,
-        }, {
           accessor: 'a',
           labelFormatter: 'A',
           valueFormatter: numberFormatter,
