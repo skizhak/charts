@@ -18,10 +18,9 @@ class NavigationView extends ContrailChartsView {
       'click .next>a': 'nextChunkSelected',
     }
   }
-  constructor (options) {
-    super(options)
     this._focusDataProvider = new DataProvider({parentDataModel: this.model})
-    this._components = []
+  constructor (p) {
+    super(p)
     this._brush = new BrushView({
       config: new ContrailChartsConfigModel({isSharedContainer: true}),
     })

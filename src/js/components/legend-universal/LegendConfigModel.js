@@ -5,12 +5,6 @@ const _ = require('lodash')
 const ContrailChartsConfigModel = require('contrail-charts-config-model')
 
 class LegendConfigModel extends ContrailChartsConfigModel {
-  set parent (model) {
-    this._parent = model
-    model.on('change', () => {
-      this.trigger('change')
-    })
-  }
   /**
    * Ask parent component for labels and not dataProvider directly as some data series may be filtered out
    */

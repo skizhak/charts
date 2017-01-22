@@ -14,8 +14,8 @@ class TooltipView extends ContrailChartsView {
   get type () { return 'tooltip' }
   get className () { return 'coCharts-tooltip-view' }
 
-  constructor (options) {
-    super(options)
+  constructor (p) {
+    super(p)
     this.resetParams()
     this.listenTo(this.config, 'change', this.resetParams)
     _.each(_actions, action => this._actionman.set(action, this))

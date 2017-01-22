@@ -27,8 +27,8 @@ class MessageView extends ContrailChartsView {
     })
   }
 
-  constructor (options) {
-    super(options)
+  constructor (p) {
+    super(p)
     this.render()
     _.each(_actions, action => this._actionman.set(action, this))
   }

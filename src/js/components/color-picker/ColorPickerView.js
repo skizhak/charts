@@ -15,9 +15,8 @@ class ColorPickerView extends ContrailChartsView {
     }
   }
 
-  constructor (options) {
-    super(options)
-    this.listenTo(this.model, 'change', this.render)
+  constructor (p) {
+    super(p)
     this.listenTo(this.config, 'change', this.render)
   }
 
@@ -48,7 +47,7 @@ class ColorPickerView extends ContrailChartsView {
 
   _onSelectColor (d, el) {
     const color = el.style['background-color']
-    this._actionman.fire('selectColor', this._accessor, color)
+    this._actionman.fire('SelectColor', this._accessor, color)
   }
 }
 

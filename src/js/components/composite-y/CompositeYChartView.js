@@ -26,14 +26,12 @@ class CompositeYChartView extends ContrailChartsView {
     }
   }
 
-  constructor (options) {
-    super(options)
+  constructor (p) {
+    super(p)
     this._drawings = []
-    // TODO: Every model change will trigger a redraw. This might not be desired - dedicated redraw event?
-    // / View params hold values from the config and computed values.
 
-    this.listenTo(this.model, 'change', this._onDataModelChange)
-    this.listenTo(this.config, 'change', this._onConfigModelChange)
+    this.listenTo(this.model, 'change', this.render)
+    this.listenTo(this.config, 'change', this.render)
     this.listenTo(this._eventObject, 'refresh', this.refresh)
     window.addEventListener('resize', this._onWindowResize.bind(this))
 
@@ -48,11 +46,11 @@ class CompositeYChartView extends ContrailChartsView {
   changeModel (model) {
     this.stopListening(this.model)
     this.model = model
-    this.listenTo(this.model, 'change', this._onDataModelChange)
+    this.listenTo(this.model, 'change', this.render)
     _.each(this._drawings, (drawing) => {
       drawing.model = model
     })
-    this._onDataModelChange()
+    this.render()
   }
   /**
   * Calculates the activeAccessorData that holds only the verified and enabled accessors from the 'plot' structure.
@@ -523,14 +521,6 @@ class CompositeYChartView extends ContrailChartsView {
   }
 
   // Event handlers
-
-  _onDataModelChange () {
-    this.render()
-  }
-
-  _onConfigModelChange () {
-    this.render()
-  }
 
   _onWindowResize () {
     this._throttledRender()

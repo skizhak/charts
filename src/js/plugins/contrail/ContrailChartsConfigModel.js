@@ -13,6 +13,12 @@ class ContrailChartsConfigModel extends ContrailModel {
     return _.extend(this._computed, JSON.parse(JSON.stringify(this.toJSON())))
   }
 
+  set parent (model) {
+    model.on('change', () => { this.trigger('change') })
+    this._parent = model
+    this.trigger('change')
+  }
+
   getValue (data, datumConfig) {
     const getValue = datumConfig.accessor
     if (_.isNil(data)) return undefined

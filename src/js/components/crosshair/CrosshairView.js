@@ -12,8 +12,8 @@ class CrosshairView extends ContrailChartsView {
   get className () { return 'coCharts-crosshair-view' }
   get zIndex () { return 9 }
 
-  constructor (options) {
-    super(options)
+  constructor (p) {
+    super(p)
     this.render()
     this.listenTo(this.config, 'change', this.render)
     _.each(_actions, action => this._actionman.set(action, this))

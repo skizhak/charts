@@ -16,8 +16,8 @@ class PieChartView extends ContrailChartsView {
     }
   }
 
-  constructor (options = {}) {
-    super(options)
+  constructor (p = {}) {
+    super(p)
     this._highlightRadius = 10
     this.listenTo(this.model, 'change', this._onDataModelChange)
     this.listenTo(this.config, 'change', this._onConfigModelChange)

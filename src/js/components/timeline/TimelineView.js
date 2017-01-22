@@ -12,8 +12,8 @@ class TimelineView extends ContrailChartsView {
   get tagName () { return 'g' }
   get className () { return 'timeline-view' }
 
-  constructor (options) {
-    super(options)
+  constructor (p) {
+    super(p)
     this._focusDataProvider = new DataProvider({parentDataModel: this.model})
     this.brush = null
     this._throttledTriggerWindowChangedEvent = _.throttle(this._triggerWindowChangedEvent, 100).bind(this)

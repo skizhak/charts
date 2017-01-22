@@ -26,13 +26,6 @@ class ColorPickerConfigModel extends ContrailChartsConfigModel {
     })
     return data
   }
-
-  set parent (model) {
-    this._parent = model
-    model.on('change', () => {
-      this.trigger('change')
-    })
-  }
 }
 
 module.exports = ColorPickerConfigModel
