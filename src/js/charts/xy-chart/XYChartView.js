@@ -10,6 +10,7 @@ const Actionman = require('../../plugins/Actionman')
 const _actions = [
   require('actions/SelectSerie'),
   require('actions/SelectColor'),
+  require('actions/ChangeSelection'),
 ]
 /**
 * Chart with a common X axis and many possible child components rendering data on the Y axis (for example: line, bar, stackedBar).
@@ -56,7 +57,6 @@ class XYChartView extends ContrailChartsView {
     }
     // Todo make dataConfig part of handlers? as dataProvider
     if (this._config.dataConfig) this.setDataConfig(this._config.dataConfig)
-    this._initHandlers()
     this._initComponents()
   }
   /**
@@ -94,12 +94,6 @@ class XYChartView extends ContrailChartsView {
     this._actionman.fire('ClearMessage', msgObj)
   }
 
-  _initHandlers () {
-    _.each(this._config.handlers, (handler) => {
-      this._registerHandler(handler.type, handler.config)
-    })
-  }
-
   _registerHandler (type, config) {
     if (!this._isEnabledHandler(type)) return false
     if (type === 'dataProvider') {
@@ -115,7 +109,6 @@ class XYChartView extends ContrailChartsView {
    * Initialize configured components
    */
   _initComponents () {
-    let dataModel
     _.each(this._config.components, (component, index) => {
       component.config.order = index
       this._registerComponent(component.type, component.config, this._dataProvider, component.id)
@@ -136,14 +129,6 @@ class XYChartView extends ContrailChartsView {
         component.config.toggleComponent('crosshair', true)
       }
     })
-    if (this._isEnabledComponent('navigation')) {
-      dataModel = this.getComponentsByType('navigation')[0].focusDataProvider
-      _.each(this.getComponentsByType('compositeY'), (compositeY) => compositeY.changeModel(dataModel))
-    }
-    if (this._isEnabledComponent('timeline')) {
-      dataModel = this.getComponentsByType('timeline')[0].focusDataProvider
-      _.each(this.getComponentsByType('compositeY'), (compositeY) => compositeY.changeModel(dataModel))
-    }
   }
   /**
    * Initialize individual component by type, given config, data model and id
@@ -161,7 +146,6 @@ class XYChartView extends ContrailChartsView {
       id: id,
       config: configModel,
       model: model,
-      eventObject: this._eventObject,
       container: this.el,
       // actionman is passed as parameter to each component for it to be able to register action
       actionman: this._actionman,

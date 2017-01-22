@@ -32,7 +32,6 @@ class CompositeYChartView extends ContrailChartsView {
 
     this.listenTo(this.model, 'change', this.render)
     this.listenTo(this.config, 'change', this.render)
-    this.listenTo(this._eventObject, 'refresh', this.refresh)
     window.addEventListener('resize', this._onWindowResize.bind(this))
 
     this._debouncedRenderFunction = _.bind(_.debounce(this._render, 10), this)
@@ -517,7 +516,7 @@ class CompositeYChartView extends ContrailChartsView {
       drawing.render()
     })
 
-    this.trigger('rendered')
+    this.trigger('render')
   }
 
   // Event handlers

@@ -31,18 +31,10 @@ class ChartView extends ContrailChartsView {
   */
   setConfig (config) {
     this._config = config
-    // Initialize parent handlers
-    this._initHandlers()
     // Initialize child charts
     this._initCharts()
     // Initialize parent components
     this._initComponents()
-  }
-
-  _initHandlers () {
-    _.each(this._config.handlers, (handler) => {
-      this._registerHandler(handler.type, handler.config)
-    })
   }
 
   _registerHandler (type, config) {
@@ -93,7 +85,6 @@ class ChartView extends ContrailChartsView {
       id: id,
       config: configModel,
       model: model,
-      eventObject: this._eventObject
     })
     const component = new components[type].View(viewOptions)
     this._components.push(component)
