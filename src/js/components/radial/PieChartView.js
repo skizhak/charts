@@ -59,8 +59,7 @@ class PieChartView extends ContrailChartsView {
       .sort(null)
       .value((d) => serieConfig.getValue(d))(data)
 
-    this.d3
-      .attr('transform', `translate(${this.params.chartWidth / 2}, ${this.params.chartHeight / 2})`)
+    this.d3.attr('transform', `translate(${this.params.chartWidth / 2}, ${this.params.chartHeight / 2})`)
 
     this.d3.selectAll('arc')
       .data(pie)
@@ -80,33 +79,29 @@ class PieChartView extends ContrailChartsView {
     this.render()
   }
 
-  _onMouseover (sector) {
+  _onMouseover (sector, el) {
+
     const serieConfig = this.config.get('serie')
     const outerRadius = this.config.get('radius')
     const innerRadius = this.config.getInnerRadius()
-    const chartOffset = this.svg.node().getBoundingClientRect()
+
+    const arc = shape.arc(sector).innerRadius(innerRadius).outerRadius(outerRadius)
+
+    this.d3.select(() => el).classed('highlight', true)
+
+    const labelPos = arc.centroid(sector)
     const tooltipOffset = {
-      left: chartOffset.left + this.params.chartWidth / 2 - innerRadius * 0.707,
-      top: chartOffset.top + this.params.chartHeight / 2 - innerRadius * 0.707
+      left: this.params.chartWidth / 2 + labelPos[0],
+      top: this.params.chartHeight / 2 + labelPos[1]
     }
-    const arc = shape.arc(sector)
-      .innerRadius(outerRadius)
-      .outerRadius(outerRadius + this._highlightRadius)
-      .startAngle(sector.startAngle)
-      .endAngle(sector.endAngle)
-    this.d3
-      .append('path')
-      .classed('arc', true)
-      .classed('highlight', true)
-      .attr('d', arc)
-      .style('fill', this.config.getColor(serieConfig.getLabel(sector.data)))
 
     sector.data.color = this.config.getColor(serieConfig.getLabel(sector.data))
     this._eventObject.trigger('showTooltip', tooltipOffset, sector.data)
   }
 
-  _onMouseout (e) {
-    this.d3.select('.highlight').remove()
+  _onMouseout (d, el) {
+    this.d3.select(() => el).classed('highlight', false)
+    this._eventObject.trigger('hideTooltip')
   }
 }
 

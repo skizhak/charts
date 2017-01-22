@@ -2,6 +2,8 @@
 @import "colors";
 @import "tooltip";
 
+@import "pie-chart";
+
 * {
 	box-sizing: border-box;
 }
@@ -218,6 +220,11 @@ button:focus {
 }
 
 .coCharts-legend-view {
+	border: 1px solid #f8f8f8;
+	border-radius: 4px;
+	white-space: nowrap;
+  overflow-x: auto;
+
 	.legend-group {
 		display: inline-block;
 		padding: 10px;
@@ -286,13 +293,4 @@ button:focus {
 			}
 		}
 	}
-}
-
-.coCharts-pie-chart {
-  path.arc {
-    stroke: white;
-  }
-  path.highlight  {
-    opacity: 0.3;
-  }
 }
