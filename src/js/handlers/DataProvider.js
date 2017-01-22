@@ -160,7 +160,7 @@ class DataProvider extends ContrailModel {
   }
 
   setRangeAndFilterData (newRange) {
-    this.setDataAndRanges(this.filterDataByRange(this.getParentData(), newRange), newRange, newRange)
+    this.setDataAndRanges(this.filterByRanges(this.getParentData(), newRange), newRange, newRange)
   }
   /**
    * Worker function used to calculate a data range for provided constaible name.
@@ -193,25 +193,24 @@ class DataProvider extends ContrailModel {
     }
     this.set({data: data, range: range, manualRange: manualRange})
   }
-
-  filterDataByRange (data, range) {
-    return _.filter(data, (d) => {
-      let ok = true
-      _.each(range, (range, key) => {
-        if (!_.has(d, key)) {
-          ok = false
-        } else {
-          if (d[key] < range[0] || d[key] > range[1]) {
-            ok = false
-          }
-        }
-      })
-      return ok
+  /**
+   * Utility function to filter data by inclusion of dataframe inside provided ranges
+   * @param {key: [Array]} ranges
+   */
+  filterByRanges (data, ranges) {
+    return _.filter(data, d => {
+      let pass = true
+      let i = 0
+      const keys = ranges.keys()
+      while (pass && i < keys.length) {
+        const key = keys[i]
+        pass = _.has(d, key) && d[key] >= ranges[key][0] && d[key] <= ranges[key][1]
+        i++
+      }
     })
   }
 
   setRanges (range, manualRange) {
-    // const data = this.getParentData()
     let data = this.getData()
     const formatData = this.get('formatData')
     if (!manualRange) {
