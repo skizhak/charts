@@ -10,6 +10,7 @@ const Actionman = require('../../plugins/Actionman')
 const _actions = [
   require('actions/ShowComponent'),
   require('actions/HideComponent'),
+  require('actions/SelectColor'),
 ]
 /**
 * Group of charts rendered in polar coordinates system

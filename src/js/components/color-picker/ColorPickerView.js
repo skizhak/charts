@@ -25,6 +25,7 @@ class ColorPickerView extends ContrailChartsView {
     const content = template(this.config.data)
 
     super.render(content)
+    this.d3.classed('hide', this.config.get('embedded'))
   }
 
   open (d, el) {
