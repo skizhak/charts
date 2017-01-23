@@ -177,7 +177,6 @@ cpuMemChartView.setConfig({
     id: 'defaultTooltip',
     type: 'tooltip',
     config: {
-      sourceComponent: 'cpuMemCompositeY',
       dataConfig: [
         {
           accessor: 'T',
@@ -215,11 +214,6 @@ cpuMemChartView.setConfig({
       ]
     }
   }, {
-    type: 'standalone',
-    config: {
-      isSharedContainer: false,
-    },
-  }, {
     type: 'message',
     config: {
       enabled: true,
@@ -227,6 +221,7 @@ cpuMemChartView.setConfig({
   }, {
     type: 'crosshair',
     config: {
+      tooltip: 'defaultTooltip'
     }
   }, {
     type: 'colorPicker',
