@@ -4,6 +4,7 @@
 requirejs.config({ // eslint-disable-line
   paths: {
     app: 'app',
+    'underscore': '../../node_modules/underscore/underscore',
     'contrail-charts': '../../build/js/contrail-charts',
     'jquery': '../../node_modules/jquery/dist/jquery',
     'backbone': '../../node_modules/backbone/backbone',

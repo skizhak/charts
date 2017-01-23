@@ -1,4 +1,4 @@
-/* global coCharts */
+/* global _ d3 coCharts */
 
 function timeFormatter (value) {
   return d3.timeFormat('%H:%M:%S')(value)
@@ -40,9 +40,9 @@ const cpuMemChartView = new coCharts.charts.XYChartView()
 cpuMemChartView.setConfig({
   container: '#cpuMemChart',
   components: [{
-    type: 'legend',
+    type: 'legendPanel',
     config: {
-      sourceComponent: 'cpuMemCompositeY'
+      sourceComponent: 'cpuMemCompositeY',
     }
   }, {
     id: 'cpuMemCompositeY',
@@ -213,11 +213,7 @@ cpuMemChartView.setConfig({
     id: 'crosshairId',
     type: 'crosshair',
     config: {
-    }
-  }, {
-    type: 'colorPicker',
-    config: {
-      sourceComponent: 'cpuMemCompositeY',
+      tooltip: 'defaultTooltip',
     }
   }]
 })

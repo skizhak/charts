@@ -22,6 +22,12 @@ for (let i = 0; i < 100; i++) {
 const chartConfig = {
   container: '#chart',
   components: [{
+    type: 'legendPanel',
+    config: {
+      sourceComponent: 'scatterPlot',
+    },
+  }, {
+    id: 'scatterPlot',
     type: 'compositeY',
     config: {
       marginInner: 25,
@@ -38,7 +44,7 @@ const chartConfig = {
             sizeAccessor: 'r',
             sizeAxis: 'rAxis',
             shape: 'circle',
-            axis: 'y1'
+            axis: 'y1',
           }, {
             enabled: true,
             accessor: 's',
@@ -46,7 +52,7 @@ const chartConfig = {
             sizeAccessor: 's',
             sizeAxis: 'rAxis',
             shape: 'square',
-            axis: 'y2'
+            axis: 'y2',
           }, {
             enabled: true,
             accessor: 't',
@@ -54,7 +60,7 @@ const chartConfig = {
             sizeAccessor: 's',
             sizeAxis: 'rAxis',
             shape: 'triangle',
-            axis: 'y2'
+            axis: 'y2',
           }
         ]
       },
@@ -81,34 +87,24 @@ const chartConfig = {
       dataConfig: [
         {
           accessor: 'x',
-          labelFormatter: function (key) {
-            return 'Time'
-          },
-          valueFormatter: timeFormatter
+          labelFormatter: 'Time',
+          valueFormatter: timeFormatter,
         }, {
           accessor: 'c',
-          labelFormatter: function (key) {
-            return 'C'
-          },
-          valueFormatter: numberFormatter
+          labelFormatter: 'C',
+          valueFormatter: numberFormatter,
         }, {
           accessor: 's',
-          labelFormatter: function (key) {
-            return 'S'
-          },
-          valueFormatter: numberFormatter
+          labelFormatter: 'S',
+          valueFormatter: numberFormatter,
         }, {
           accessor: 't',
-          labelFormatter: function (key) {
-            return 'T'
-          },
-          valueFormatter: numberFormatter
+          labelFormatter: 'T',
+          valueFormatter: numberFormatter,
         }, {
           accessor: 'r',
-          labelFormatter: function (key) {
-            return 'R'
-          },
-          valueFormatter: numberFormatter
+          labelFormatter: 'R',
+          valueFormatter: numberFormatter,
         }
       ]
     }

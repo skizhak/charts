@@ -106,25 +106,6 @@ define([ // eslint-disable-line no-undef
           }
         ]
       }
-    }, {
-      type: 'controlPanel',
-      config: {
-        enabled: true,
-        buttons: [
-          {
-            name: 'filter',
-            title: 'Filter',
-            iconClass: 'fa fa-filter',
-            events: {
-              click: 'filterVariables'
-            },
-            panel: {
-              name: 'accessorData',
-              width: '350px'
-            }
-          }
-        ]
-      }
     }]
   })
   complexChartView.render()

@@ -1,4 +1,4 @@
-/* global coCharts */
+/* global d3 coCharts */
 
 function timeFormatter (value) {
   return d3.timeFormat('%H:%M:%S')(value)
@@ -34,6 +34,13 @@ complexChartView.setConfig({
       coloPicker: true,
       filter: true,
       chartSelector: true,
+    },
+  }, {
+    type: 'controlPanel',
+    config: {
+      menu: [
+        { id: 'Refresh' },
+      ],
     },
   }, {
     id: 'complexChartCompositeY',
@@ -270,11 +277,6 @@ complexChartView.setConfig({
     type: 'crosshair',
     config: {
       tooltip: 'defaultTooltip',
-    }
-  }, {
-    type: 'colorPicker',
-    config: {
-      sourceComponent: 'complexChartCompositeY',
     }
   }]
 })

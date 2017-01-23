@@ -20,8 +20,7 @@ class ChartView extends ContrailChartsView {
   /**
   * Data can be set separately into every chart so every chart can have different data.
   */
-  setData (data, dataConfig = {}, chartId) {
-    chartId = chartId || 'default'
+  setData (data, dataConfig = {}, chartId = 'default') {
     // Set data to the given chart if it exists.
     if (this._charts[chartId]) this._charts[chartId].setData(data, dataConfig)
   }
