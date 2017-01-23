@@ -34,6 +34,7 @@ plugins.push(new ExtractTextPlugin('css/' + fileName + '.css'))
 const config = {
   entry: {
     'exampleLoader': path.join(__dirname, '/examples/common/js/exampleLoader.js'),
+    'linebar': path.join(__dirname, '/examples/linebar/linebar.js'),
     'port-distribution': path.join(__dirname, '/examples/port-distribution/port-distribution.js')
   },
   devtool: 'source-map',

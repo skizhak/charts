@@ -1,11 +1,16 @@
 /* global coCharts */
 
+const _ = require('lodash')
+
 function timeFormatter (value) {
   return d3.timeFormat('%H:%M:%S')(value)
 }
+
 function cpuFormatter (number) {
+  // console.log(number);
   return number.toFixed(2) + '%'
 }
+
 function memFormatter (number) {
   const bytePrefixes = ['B', 'KB', 'MB', 'GB', 'TB']
   let bytes = parseInt(number * 1024)
@@ -25,15 +30,112 @@ function memFormatter (number) {
   return formattedBytes
 }
 
+const nodes = ['node1', 'node2', 'node3', 'node4']
+const colorMapper = _.zipObject(
+  nodes,
+  [{
+    cpu: '#6baed6',
+    mem: '#4398cb'
+  }, {
+    cpu: '#2ca02c',
+    mem: '#217821'
+  }, {
+    cpu: '#a02c2c',
+    mem: '#782121'
+  }, {
+    cpu: '#fc9ad8',
+    mem: '#fb68c5'
+  }]
+)
+
 // Time series data.
 const tsData = []
 for (let i = 0; i < 100; i++) {
-  tsData.push({
-    'T': 1475760930000 + 1000000 * i,
-    'cpu_stats.cpu_one_min_avg': Math.random() * 100, // Value between 0-100
-    'cpu_stats.rss': Math.random() * (8 * 1048576 - 1024) + 1024, // Value between 8GB - 1MB
-  })
+  tsData.push(nodes.reduce((newDataPoint, currNode) => {
+    return Object.assign(newDataPoint, {
+      [`${currNode}.cpu_stats.cpu_one_min_avg`]: Math.random() * 100, // Value between 0-100
+      [`${currNode}.cpu_stats.rss`]: Math.random() * (8 * 1048576 - 1024) + 1024, // Value between 8GB - 1MB
+    })
+  }, {
+    'T': 1475760930000 + 1000000 * i
+  }))
 }
+// console.log(tsData);
+const chartYPlotConfig = nodes.reduce((config, currNode) => {
+  config.push({
+    accessor: `${currNode}.cpu_stats.cpu_one_min_avg`,
+    label: `${currNode} CPU Utilization (%)`,
+    enabled: true,
+    chart: 'stackedBar',
+    possibleChartTypes: [
+      {
+        label: 'Stacked Bar',
+        chart: 'stackedBar',
+      }, {
+        label: 'Line',
+        chart: 'line',
+      }
+    ],
+    color: colorMapper[currNode].cpu,
+    axis: 'y1',
+  }, {
+    accessor: `${currNode}.cpu_stats.rss`,
+    label: `${currNode} Memory Usage`,
+    enabled: true,
+    chart: 'line',
+    possibleChartTypes: [
+      {
+        label: 'Stacked Bar',
+        chart: 'stackedBar',
+      }, {
+        label: 'Line',
+        chart: 'line'
+      }
+    ],
+    color: colorMapper[currNode].mem,
+    axis: 'y2',
+  })
+
+  return config
+}, [])
+
+const navYPlotConfig = nodes.reduce((config, currNode) => {
+  config.push({
+    enabled: true,
+    accessor: `${currNode}.cpu_stats.cpu_one_min_avg`,
+    labelFormatter: 'CPU',
+    chart: 'stackedBar',
+    color: colorMapper[currNode].cpu,
+    axis: 'y1',
+  }, {
+    enabled: true,
+    accessor: `${currNode}.cpu_stats.rss`,
+    labelFormatter: 'Memory',
+    chart: 'line',
+    color: colorMapper[currNode].mem,
+    axis: 'y2',
+  })
+
+  return config
+}, [])
+
+const tooltipDataConfig = nodes.reduce((config, currNode) => {
+  config.push({
+    accessor: `${currNode}.cpu_stats.cpu_one_min_avg`,
+    labelFormatter: 'CPU',
+    valueFormatter: cpuFormatter
+  }, {
+    accessor: `${currNode}.cpu_stats.rss`,
+    labelFormatter: 'Memory',
+    valueFormatter: memFormatter
+  })
+
+  return config
+}, [{
+  accessor: 'T',
+  labelFormatter: 'Time',
+  valueFormatter: timeFormatter
+}])
 
 // Create chart view.
 const cpuMemChartView = new coCharts.charts.XYChartView()
@@ -74,41 +176,7 @@ cpuMemChartView.setConfig({
           label: 'Time',
           axis: 'x',
         },
-        y: [
-          {
-            accessor: 'cpu_stats.cpu_one_min_avg',
-            label: 'CPU Utilization (%)',
-            enabled: true,
-            chart: 'stackedBar',
-            possibleChartTypes: [
-              {
-                label: 'Stacked Bar',
-                chart: 'stackedBar',
-              }, {
-                label: 'Line',
-                chart: 'line',
-              }
-            ],
-            color: '#6baed6',
-            axis: 'y1',
-          }, {
-            accessor: 'cpu_stats.rss',
-            label: 'Memory Usage',
-            enabled: true,
-            chart: 'line',
-            possibleChartTypes: [
-              {
-                label: 'Stacked Bar',
-                chart: 'stackedBar',
-              }, {
-                label: 'Line',
-                chart: 'line'
-              }
-            ],
-            color: '#2ca02c',
-            axis: 'y2',
-          }
-        ]
+        y: chartYPlotConfig
       },
       axis: {
         x: {},
@@ -139,23 +207,7 @@ cpuMemChartView.setConfig({
           labelFormatter: 'Time',
           axis: 'x',
         },
-        y: [
-          {
-            enabled: true,
-            accessor: 'cpu_stats.cpu_one_min_avg',
-            labelFormatter: 'CPU',
-            chart: 'stackedBar',
-            color: '#6baed6',
-            axis: 'y1',
-          }, {
-            enabled: true,
-            accessor: 'cpu_stats.rss',
-            labelFormatter: 'Memory',
-            chart: 'line',
-            color: '#2ca02c',
-            axis: 'y2',
-          }
-        ]
+        y: navYPlotConfig
       },
       axis: {
         x: {},
@@ -177,21 +229,8 @@ cpuMemChartView.setConfig({
     id: 'defaultTooltip',
     type: 'tooltip',
     config: {
-      dataConfig: [
-        {
-          accessor: 'T',
-          labelFormatter: 'Time',
-          valueFormatter: timeFormatter
-        }, {
-          accessor: 'cpu_stats.cpu_one_min_avg',
-          labelFormatter: 'CPU',
-          valueFormatter: cpuFormatter
-        }, {
-          accessor: 'cpu_stats.rss',
-          labelFormatter: 'Memory',
-          valueFormatter: memFormatter
-        }
-      ]
+      title: 'Usage Details',
+      dataConfig: tooltipDataConfig
     }
   }, {
     id: 'cpuMemChart-controlPanel',
