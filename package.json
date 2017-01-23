@@ -8,6 +8,7 @@
     "build-examples": "webpack --mode=build --config webpack.examples.config.js",
     "build-clean": "rm -rf build/* && webpack --mode=build",
     "dev": "webpack --progress --colors --watch --mode=dev",
+    "dev-examples": "webpack --progress --colors --watch --mode=dev --config webpack.examples.config.js",
     "test": "node test.js",
     "test-headless": "phantomjs tests/run-jasmine.js tests/TestRunner.html",
     "lint": "eslint src/** || true"

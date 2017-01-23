@@ -1,0 +1,899 @@
+{
+  "sport": [
+    {
+      "outBytes": 781066,
+      "outPkts": 1677,
+      "outFlowCount": 5,
+      "sport": 9114,
+      "protocol": 6,
+      "totalPkts": null,
+      "totalBytes": null
+    },
+    {
+      "outBytes": 742130,
+      "outPkts": 1545,
+      "outFlowCount": 5,
+      "sport": 9116,
+      "protocol": 6,
+      "totalPkts": null,
+      "totalBytes": null
+    },
+    {
+      "outBytes": 739686,
+      "outPkts": 1599,
+      "outFlowCount": 5,
+      "sport": 9101,
+      "protocol": 6,
+      "totalPkts": null,
+      "totalBytes": null
+    },
+    {
+      "outBytes": 629308,
+      "outPkts": 1382,
+      "outFlowCount": 4,
+      "sport": 9113,
+      "protocol": 6,
+      "totalPkts": null,
+      "totalBytes": null
+    },
+    {
+      "outBytes": 623106,
+      "outPkts": 1325,
+      "outFlowCount": 4,
+      "sport": 9109,
+      "protocol": 6,
+      "totalPkts": null,
+      "totalBytes": null
+    },
+    {
+      "outBytes": 622480,
+      "outPkts": 1264,
+      "outFlowCount": 4,
+      "sport": 9107,
+      "protocol": 6,
+      "totalPkts": null,
+      "totalBytes": null
+    },
+    {
+      "outBytes": 621520,
+      "outPkts": 1340,
+      "outFlowCount": 4,
+      "sport": 9117,
+      "protocol": 6,
+      "totalPkts": null,
+      "totalBytes": null
+    },
+    {
+      "outBytes": 574856,
+      "outPkts": 1248,
+      "outFlowCount": 4,
+      "sport": 9100,
+      "protocol": 6,
+      "totalPkts": null,
+      "totalBytes": null
+    },
+    {
+      "outBytes": 574138,
+      "outPkts": 1277,
+      "outFlowCount": 4,
+      "sport": 9115,
+      "protocol": 6,
+      "totalPkts": null,
+      "totalBytes": null
+    },
+    {
+      "outBytes": 550672,
+      "outPkts": 1184,
+      "outFlowCount": 4,
+      "sport": 9110,
+      "protocol": 6,
+      "totalPkts": null,
+      "totalBytes": null
+    },
+    {
+      "outBytes": 490158,
+      "outPkts": 1015,
+      "outFlowCount": 3,
+      "sport": 9118,
+      "protocol": 6,
+      "totalPkts": null,
+      "totalBytes": null
+    },
+    {
+      "outBytes": 456070,
+      "outPkts": 991,
+      "outFlowCount": 3,
+      "sport": 9119,
+      "protocol": 6,
+      "totalPkts": null,
+      "totalBytes": null
+    },
+    {
+      "outBytes": 445662,
+      "outPkts": 939,
+      "outFlowCount": 3,
+      "sport": 9105,
+      "protocol": 6,
+      "totalPkts": null,
+      "totalBytes": null
+    },
+    {
+      "outBytes": 442316,
+      "outPkts": 954,
+      "outFlowCount": 3,
+      "sport": 9103,
+      "protocol": 6,
+      "totalPkts": null,
+      "totalBytes": null
+    },
+    {
+      "outBytes": 440512,
+      "outPkts": 932,
+      "outFlowCount": 3,
+      "sport": 9104,
+      "protocol": 6,
+      "totalPkts": null,
+      "totalBytes": null
+    },
+    {
+      "outBytes": 437648,
+      "outPkts": 920,
+      "outFlowCount": 3,
+      "sport": 9102,
+      "protocol": 6,
+      "totalPkts": null,
+      "totalBytes": null
+    },
+    {
+      "outBytes": 432394,
+      "outPkts": 937,
+      "outFlowCount": 3,
+      "sport": 9106,
+      "protocol": 6,
+      "totalPkts": null,
+      "totalBytes": null
+    },
+    {
+      "outBytes": 319340,
+      "outPkts": 690,
+      "outFlowCount": 2,
+      "sport": 9111,
+      "protocol": 6,
+      "totalPkts": null,
+      "totalBytes": null
+    },
+    {
+      "outBytes": 293772,
+      "outPkts": 618,
+      "outFlowCount": 2,
+      "sport": 9108,
+      "protocol": 6,
+      "totalPkts": null,
+      "totalBytes": null
+    },
+    {
+      "outBytes": 179744,
+      "outPkts": 356,
+      "outFlowCount": 1,
+      "sport": 54505,
+      "protocol": 6,
+      "totalPkts": null,
+      "totalBytes": null
+    },
+    {
+      "outBytes": 174580,
+      "outPkts": 334,
+      "outFlowCount": 1,
+      "sport": 36819,
+      "protocol": 6,
+      "totalPkts": null,
+      "totalBytes": null
+    },
+    {
+      "outBytes": 165550,
+      "outPkts": 347,
+      "outFlowCount": 1,
+      "sport": 50880,
+      "protocol": 6,
+      "totalPkts": null,
+      "totalBytes": null
+    },
+    {
+      "outBytes": 165102,
+      "outPkts": 343,
+      "outFlowCount": 1,
+      "sport": 56050,
+      "protocol": 6,
+      "totalPkts": null,
+      "totalBytes": null
+    },
+    {
+      "outBytes": 164608,
+      "outPkts": 316,
+      "outFlowCount": 1,
+      "sport": 49727,
+      "protocol": 6,
+      "totalPkts": null,
+      "totalBytes": null
+    },
+    {
+      "outBytes": 163966,
+      "outPkts": 375,
+      "outFlowCount": 1,
+      "sport": 36818,
+      "protocol": 6,
+      "totalPkts": null,
+      "totalBytes": null
+    },
+    {
+      "outBytes": 163680,
+      "outPkts": 332,
+      "outFlowCount": 1,
+      "sport": 53192,
+      "protocol": 6,
+      "totalPkts": null,
+      "totalBytes": null
+    },
+    {
+      "outBytes": 162718,
+      "outPkts": 351,
+      "outFlowCount": 1,
+      "sport": 56048,
+      "protocol": 6,
+      "totalPkts": null,
+      "totalBytes": null
+    },
+    {
+      "outBytes": 162090,
+      "outPkts": 357,
+      "outFlowCount": 1,
+      "sport": 51387,
+      "protocol": 6,
+      "totalPkts": null,
+      "totalBytes": null
+    },
+    {
+      "outBytes": 159640,
+      "outPkts": 336,
+      "outFlowCount": 1,
+      "sport": 35154,
+      "protocol": 6,
+      "totalPkts": null,
+      "totalBytes": null
+    },
+    {
+      "outBytes": 159280,
+      "outPkts": 344,
+      "outFlowCount": 1,
+      "sport": 54507,
+      "protocol": 6,
+      "totalPkts": null,
+      "totalBytes": null
+    },
+    {
+      "outBytes": 157646,
+      "outPkts": 343,
+      "outFlowCount": 1,
+      "sport": 58219,
+      "protocol": 6,
+      "totalPkts": null,
+      "totalBytes": null
+    },
+    {
+      "outBytes": 157412,
+      "outPkts": 326,
+      "outFlowCount": 1,
+      "sport": 38175,
+      "protocol": 6,
+      "totalPkts": null,
+      "totalBytes": null
+    },
+    {
+      "outBytes": 157402,
+      "outPkts": 329,
+      "outFlowCount": 1,
+      "sport": 50756,
+      "protocol": 6,
+      "totalPkts": null,
+      "totalBytes": null
+    },
+    {
+      "outBytes": 156840,
+      "outPkts": 332,
+      "outFlowCount": 1,
+      "sport": 43881,
+      "protocol": 6,
+      "totalPkts": null,
+      "totalBytes": null
+    },
+    {
+      "outBytes": 156708,
+      "outPkts": 358,
+      "outFlowCount": 1,
+      "sport": 47808,
+      "protocol": 6,
+      "totalPkts": null,
+      "totalBytes": null
+    },
+    {
+      "outBytes": 156650,
+      "outPkts": 349,
+      "outFlowCount": 1,
+      "sport": 57223,
+      "protocol": 6,
+      "totalPkts": null,
+      "totalBytes": null
+    },
+    {
+      "outBytes": 154966,
+      "outPkts": 343,
+      "outFlowCount": 1,
+      "sport": 57224,
+      "protocol": 6,
+      "totalPkts": null,
+      "totalBytes": null
+    },
+    {
+      "outBytes": 152728,
+      "outPkts": 324,
+      "outFlowCount": 1,
+      "sport": 35156,
+      "protocol": 6,
+      "totalPkts": null,
+      "totalBytes": null
+    },
+    {
+      "outBytes": 152654,
+      "outPkts": 331,
+      "outFlowCount": 1,
+      "sport": 35152,
+      "protocol": 6,
+      "totalPkts": null,
+      "totalBytes": null
+    },
+    {
+      "outBytes": 152528,
+      "outPkts": 316,
+      "outFlowCount": 1,
+      "sport": 53190,
+      "protocol": 6,
+      "totalPkts": null,
+      "totalBytes": null
+    },
+    {
+      "outBytes": 152224,
+      "outPkts": 340,
+      "outFlowCount": 1,
+      "sport": 51384,
+      "protocol": 6,
+      "totalPkts": null,
+      "totalBytes": null
+    },
+    {
+      "outBytes": 152168,
+      "outPkts": 336,
+      "outFlowCount": 1,
+      "sport": 50755,
+      "protocol": 6,
+      "totalPkts": null,
+      "totalBytes": null
+    },
+    {
+      "outBytes": 152030,
+      "outPkts": 315,
+      "outFlowCount": 1,
+      "sport": 56049,
+      "protocol": 6,
+      "totalPkts": null,
+      "totalBytes": null
+    },
+    {
+      "outBytes": 151990,
+      "outPkts": 319,
+      "outFlowCount": 1,
+      "sport": 53714,
+      "protocol": 6,
+      "totalPkts": null,
+      "totalBytes": null
+    },
+    {
+      "outBytes": 151778,
+      "outPkts": 345,
+      "outFlowCount": 1,
+      "sport": 50542,
+      "protocol": 6,
+      "totalPkts": null,
+      "totalBytes": null
+    },
+    {
+      "outBytes": 151628,
+      "outPkts": 322,
+      "outFlowCount": 1,
+      "sport": 56183,
+      "protocol": 6,
+      "totalPkts": null,
+      "totalBytes": null
+    },
+    {
+      "outBytes": 151604,
+      "outPkts": 306,
+      "outFlowCount": 1,
+      "sport": 47806,
+      "protocol": 6,
+      "totalPkts": null,
+      "totalBytes": null
+    },
+    {
+      "outBytes": 151388,
+      "outPkts": 318,
+      "outFlowCount": 1,
+      "sport": 38177,
+      "protocol": 6,
+      "totalPkts": null,
+      "totalBytes": null
+    },
+    {
+      "outBytes": 150814,
+      "outPkts": 315,
+      "outFlowCount": 1,
+      "sport": 56179,
+      "protocol": 6,
+      "totalPkts": null,
+      "totalBytes": null
+    },
+    {
+      "outBytes": 150784,
+      "outPkts": 328,
+      "outFlowCount": 1,
+      "sport": 53711,
+      "protocol": 6,
+      "totalPkts": null,
+      "totalBytes": null
+    },
+    {
+      "outBytes": 150234,
+      "outPkts": 333,
+      "outFlowCount": 1,
+      "sport": 47805,
+      "protocol": 6,
+      "totalPkts": null,
+      "totalBytes": null
+    },
+    {
+      "outBytes": 150090,
+      "outPkts": 325,
+      "outFlowCount": 1,
+      "sport": 58424,
+      "protocol": 6,
+      "totalPkts": null,
+      "totalBytes": null
+    },
+    {
+      "outBytes": 149998,
+      "outPkts": 295,
+      "outFlowCount": 1,
+      "sport": 53710,
+      "protocol": 6,
+      "totalPkts": null,
+      "totalBytes": null
+    },
+    {
+      "outBytes": 149362,
+      "outPkts": 313,
+      "outFlowCount": 1,
+      "sport": 50539,
+      "protocol": 6,
+      "totalPkts": null,
+      "totalBytes": null
+    },
+    {
+      "outBytes": 149200,
+      "outPkts": 284,
+      "outFlowCount": 1,
+      "sport": 54508,
+      "protocol": 6,
+      "totalPkts": null,
+      "totalBytes": null
+    },
+    {
+      "outBytes": 149134,
+      "outPkts": 295,
+      "outFlowCount": 1,
+      "sport": 44892,
+      "protocol": 6,
+      "totalPkts": null,
+      "totalBytes": null
+    },
+    {
+      "outBytes": 149124,
+      "outPkts": 346,
+      "outFlowCount": 1,
+      "sport": 57225,
+      "protocol": 6,
+      "totalPkts": null,
+      "totalBytes": null
+    },
+    {
+      "outBytes": 149092,
+      "outPkts": 310,
+      "outFlowCount": 1,
+      "sport": 43883,
+      "protocol": 6,
+      "totalPkts": null,
+      "totalBytes": null
+    },
+    {
+      "outBytes": 149000,
+      "outPkts": 312,
+      "outFlowCount": 1,
+      "sport": 58426,
+      "protocol": 6,
+      "totalPkts": null,
+      "totalBytes": null
+    },
+    {
+      "outBytes": 147730,
+      "outPkts": 309,
+      "outFlowCount": 1,
+      "sport": 50754,
+      "protocol": 6,
+      "totalPkts": null,
+      "totalBytes": null
+    },
+    {
+      "outBytes": 147390,
+      "outPkts": 307,
+      "outFlowCount": 1,
+      "sport": 58220,
+      "protocol": 6,
+      "totalPkts": null,
+      "totalBytes": null
+    },
+    {
+      "outBytes": 147072,
+      "outPkts": 308,
+      "outFlowCount": 1,
+      "sport": 43882,
+      "protocol": 6,
+      "totalPkts": null,
+      "totalBytes": null
+    },
+    {
+      "outBytes": 146996,
+      "outPkts": 306,
+      "outFlowCount": 1,
+      "sport": 50543,
+      "protocol": 6,
+      "totalPkts": null,
+      "totalBytes": null
+    },
+    {
+      "outBytes": 145840,
+      "outPkts": 316,
+      "outFlowCount": 1,
+      "sport": 44889,
+      "protocol": 6,
+      "totalPkts": null,
+      "totalBytes": null
+    },
+    {
+      "outBytes": 145646,
+      "outPkts": 303,
+      "outFlowCount": 1,
+      "sport": 44278,
+      "protocol": 6,
+      "totalPkts": null,
+      "totalBytes": null
+    },
+    {
+      "outBytes": 144906,
+      "outPkts": 313,
+      "outFlowCount": 1,
+      "sport": 57222,
+      "protocol": 6,
+      "totalPkts": null,
+      "totalBytes": null
+    },
+    {
+      "outBytes": 144878,
+      "outPkts": 319,
+      "outFlowCount": 1,
+      "sport": 50883,
+      "protocol": 6,
+      "totalPkts": null,
+      "totalBytes": null
+    },
+    {
+      "outBytes": 144168,
+      "outPkts": 328,
+      "outFlowCount": 1,
+      "sport": 50753,
+      "protocol": 6,
+      "totalPkts": null,
+      "totalBytes": null
+    }
+  ],
+  "dport": [
+    {
+      "inBytes": 742808,
+      "inPkts": 1668,
+      "inFlowCount": 5,
+      "dport": 9114,
+      "protocol": 6,
+      "totalPkts": null,
+      "totalBytes": null
+    },
+    {
+      "inBytes": 742332,
+      "inPkts": 1610,
+      "inFlowCount": 5,
+      "dport": 9116,
+      "protocol": 6,
+      "totalPkts": null,
+      "totalBytes": null
+    },
+    {
+      "inBytes": 723990,
+      "inPkts": 1551,
+      "inFlowCount": 5,
+      "dport": 9101,
+      "protocol": 6,
+      "totalPkts": null,
+      "totalBytes": null
+    },
+    {
+      "inBytes": 625130,
+      "inPkts": 1281,
+      "inFlowCount": 4,
+      "dport": 9110,
+      "protocol": 6,
+      "totalPkts": null,
+      "totalBytes": null
+    },
+    {
+      "inBytes": 615782,
+      "inPkts": 1303,
+      "inFlowCount": 4,
+      "dport": 9100,
+      "protocol": 6,
+      "totalPkts": null,
+      "totalBytes": null
+    },
+    {
+      "inBytes": 605306,
+      "inPkts": 1269,
+      "inFlowCount": 4,
+      "dport": 9113,
+      "protocol": 6,
+      "totalPkts": null,
+      "totalBytes": null
+    },
+    {
+      "inBytes": 600982,
+      "inPkts": 1279,
+      "inFlowCount": 4,
+      "dport": 9107,
+      "protocol": 6,
+      "totalPkts": null,
+      "totalBytes": null
+    },
+    {
+      "inBytes": 595422,
+      "inPkts": 1235,
+      "inFlowCount": 4,
+      "dport": 9117,
+      "protocol": 6,
+      "totalPkts": null,
+      "totalBytes": null
+    },
+    {
+      "inBytes": 587432,
+      "inPkts": 1224,
+      "inFlowCount": 4,
+      "dport": 9115,
+      "protocol": 6,
+      "totalPkts": null,
+      "totalBytes": null
+    },
+    {
+      "inBytes": 567146,
+      "inPkts": 1217,
+      "inFlowCount": 4,
+      "dport": 9109,
+      "protocol": 6,
+      "totalPkts": null,
+      "totalBytes": null
+    },
+    {
+      "inBytes": 458546,
+      "inPkts": 997,
+      "inFlowCount": 3,
+      "dport": 9103,
+      "protocol": 6,
+      "totalPkts": null,
+      "totalBytes": null
+    },
+    {
+      "inBytes": 452772,
+      "inPkts": 942,
+      "inFlowCount": 3,
+      "dport": 9104,
+      "protocol": 6,
+      "totalPkts": null,
+      "totalBytes": null
+    },
+    {
+      "inBytes": 447308,
+      "inPkts": 942,
+      "inFlowCount": 3,
+      "dport": 9118,
+      "protocol": 6,
+      "totalPkts": null,
+      "totalBytes": null
+    },
+    {
+      "inBytes": 443178,
+      "inPkts": 893,
+      "inFlowCount": 3,
+      "dport": 9102,
+      "protocol": 6,
+      "totalPkts": null,
+      "totalBytes": null
+    },
+    {
+      "inBytes": 437538,
+      "inPkts": 925,
+      "inFlowCount": 3,
+      "dport": 9106,
+      "protocol": 6,
+      "totalPkts": null,
+      "totalBytes": null
+    },
+    {
+      "inBytes": 433946,
+      "inPkts": 901,
+      "inFlowCount": 3,
+      "dport": 9105,
+      "protocol": 6,
+      "totalPkts": null,
+      "totalBytes": null
+    },
+    {
+      "inBytes": 433708,
+      "inPkts": 902,
+      "inFlowCount": 3,
+      "dport": 9119,
+      "protocol": 6,
+      "totalPkts": null,
+      "totalBytes": null
+    },
+    {
+      "inBytes": 314314,
+      "inPkts": 697,
+      "inFlowCount": 2,
+      "dport": 9111,
+      "protocol": 6,
+      "totalPkts": null,
+      "totalBytes": null
+    },
+    {
+      "inBytes": 308800,
+      "inPkts": 644,
+      "inFlowCount": 2,
+      "dport": 9108,
+      "protocol": 6,
+      "totalPkts": null,
+      "totalBytes": null
+    },
+    {
+      "inBytes": 183134,
+      "inPkts": 375,
+      "inFlowCount": 1,
+      "dport": 50883,
+      "protocol": 6,
+      "totalPkts": null,
+      "totalBytes": null
+    },
+    {
+      "inBytes": 179562,
+      "inPkts": 369,
+      "inFlowCount": 1,
+      "dport": 57222,
+      "protocol": 6,
+      "totalPkts": null,
+      "totalBytes": null
+    },
+    {
+      "inBytes": 178456,
+      "inPkts": 372,
+      "inFlowCount": 1,
+      "dport": 50879,
+      "protocol": 6,
+      "totalPkts": null,
+      "totalBytes": null
+    },
+    {
+      "inBytes": 174114,
+      "inPkts": 357,
+      "inFlowCount": 1,
+      "dport": 58219,
+      "protocol": 6,
+      "totalPkts": null,
+      "totalBytes": null
+    },
+    {
+      "inBytes": 167036,
+      "inPkts": 334,
+      "inFlowCount": 1,
+      "dport": 43881,
+      "protocol": 6,
+      "totalPkts": null,
+      "totalBytes": null
+    },
+    {
+      "inBytes": 166468,
+      "inPkts": 334,
+      "inFlowCount": 1,
+      "dport": 44892,
+      "protocol": 6,
+      "totalPkts": null,
+      "totalBytes": null
+    },
+    {
+      "inBytes": 164670,
+      "inPkts": 379,
+      "inFlowCount": 1,
+      "dport": 36818,
+      "protocol": 6,
+      "totalPkts": null,
+      "totalBytes": null
+    },
+    {
+      "inBytes": 162464,
+      "inPkts": 332,
+      "inFlowCount": 1,
+      "dport": 35152,
+      "protocol": 6,
+      "totalPkts": null,
+      "totalBytes": null
+    },
+    {
+      "inBytes": 162212,
+      "inPkts": 318,
+      "inFlowCount": 1,
+      "dport": 35155,
+      "protocol": 6,
+      "totalPkts": null,
+      "totalBytes": null
+    },
+    {
+      "inBytes": 161630,
+      "inPkts": 339,
+      "inFlowCount": 1,
+      "dport": 38175,
+      "protocol": 6,
+      "totalPkts": null,
+      "totalBytes": null
+    },
+    {
+      "inBytes": 161522,
+      "inPkts": 361,
+      "inFlowCount": 1,
+      "dport": 36819,
+      "protocol": 6,
+      "totalPkts": null,
+      "totalBytes": null
+    },
+    {
+      "inBytes": 161092,
+      "inPkts": 342,
+      "inFlowCount": 1,
+      "dport": 51384,
+      "protocol": 6,
+      "totalPkts": null,
+      "totalBytes": null
+    }
+  ],
+  "startTime": 1484847796000,
+  "endTime": 1484848396000
+}
