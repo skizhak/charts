@@ -6,62 +6,79 @@ const $ = require('jquery')
 const d3 = require('d3')
 const ContrailChartsView = require('contrail-charts-view')
 const _template = require('./control-panel.html')
+const _panelTemplate = require('./panel.html')
 const _actionTemplate = require('./action.html')
+const _menuItems = {
+}
 
 class ControlPanelView extends ContrailChartsView {
   get type () { return 'controlPanel' }
-  get className () { return 'coCharts-control-panel-view' }
+  get className () { return 'coCharts-control-panel' }
   get events () {
     return {
       'click .control-panel-item': '_onMenuItemClick',
     }
   }
+  get selectors () {
+    return _.extend({}, super.selectors, {
+      panel: '.panel',
+      menuItem: '.control-panel-item',
+      menuItems: '.control-panel-items',
+      container: '.control-panel-expanded-container',
+    })
+  }
+
   constructor (p = {}) {
     super(p)
-
+    super.render(_template())
+    this._opened = false
+    this.render()
     this.listenTo(this.config, 'change', this.render)
-
-    // TODO control panel will operate not with all actions
-    // this may be configured per this component
-    const _actions = this._actionman.getAll()
-    this.render(_template())
-
-    // add menu items for already registered actions
-    _.each(_actions, (action) => {
-      this.addMenuItem(action)
-    })
-    this._actionman.on('add', this.addMenuItem.bind(this))
   }
 
-  addMenuItem (action) {
-    action.on('enable', this.enableMenuItem.bind(this, action))
-    action.on('disable', this.disableMenuItem.bind(this, action))
-    action.on('show', this.addMenuItem.bind(this, action))
-    action.on('hide', this.removeMenuItem.bind(this, action))
-
-    this.$('.control-panel-items').append(_actionTemplate(action))
+  render () {
+    const configs = _.map(this.config.get('menu'), config => _.extend({}, config, _menuItems[config.id]))
+    const menuItems = this.d3.select(this.selectors.menuItems).selectAll(this.selectors.menuItem)
+      .data(configs, config => config.id)
+      .classed('disabled', d => d.disabled)
+    menuItems
+      .enter()
+      .append('div')
+      .classed(this.selectorClass('menuItem'), true)
+      .classed('disabled', d => d.disabled)
+      .html(d => _actionTemplate(d))
+    menuItems.exit()
+      .remove()
   }
 
-  removeMenuItem (action) {
-    const menuItem = this.$(`[data-id="${action.id()}"]`)
-    menuItem.remove()
+  addMenuItem (config) {
+    this.config.set(this.config.get('menu').push(config))
   }
 
-  enableMenuItem (action) {
-    const menuItem = this.$(`[data-id="${action.id()}"]`)
-    menuItem.addClass('enabled')
+  removeMenuItem (id) {
+    this.el.querySelector(`[data-id="${id}"]`).remove()
   }
 
-  disableMenuItem (action) {
-    const menuItem = this.$(`[data-id="${action.id()}"]`)
-    menuItem.removeClass('enabled')
+  enableMenuItem (id) {
+  }
+
+  disableMenuItem (id) {
+  }
+
+  open (config) {
+    const panel = this.el.querySelector(this.selectors.panel)
+    panel.innerHTML = _panelTemplate(config)
+    const container = panel.querySelector(this.selectors.container)
+    $(panel).toggle()
+    const actionId = this._opened ? 'HideComponent' : 'ShowComponent'
+    this._opened = !this._opened
+    this._actionman.fire(actionId, config.component, container)
   }
 
   _onMenuItemClick (d, el) {
     d3.event.stopPropagation()
-    const data = $(el).data()
-    const action = this._actionman.get(data.id)
-    action.apply(data)
+    if (d.component) this.open(d)
+    else this._actionman.fire(d.id, d)
   }
 }
 
