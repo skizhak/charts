@@ -109,6 +109,25 @@ class ContrailChartsView extends ContrailView {
     }
   }
   /**
+   * Convenience method to get class name of selector
+   * Just remove leading dot
+   */
+  selectorClass (selectorName) {
+    return this.selectors[selectorName].substr(1)
+  }
+
+  show (container) {
+    if (this._container !== container) {
+      this._container = container
+      this.render()
+    }
+    this.$el.show()
+  }
+
+  hide () {
+    this.$el.hide()
+  }
+  /**
    * First component which uses shared svg container appends svg element to container
    * There is a div wrapper over svg to workaround FF bug, when svg data-order attribute is not set
    */
@@ -143,19 +162,20 @@ class ContrailChartsView extends ContrailView {
    * insert own element into the DOM in the right order
    */
   _insertSorted (el) {
-    // do nothing if element exists
-    if (document.documentElement.contains(el)) return
+    if (el.parentElement === this._container) return
 
     if (!this.config.get('isSharedContainer') || this.params.isPrimary) {
       el.dataset['order'] = this.config.get('order')
     }
     el.classList.add(this.selectors.component.substr(1))
     this._container.appendChild(el)
-    this.container
-      .selectAll(`#${this._container.id} > ${this.selectors.component}`)
-      .datum(function () { return this.dataset['order'] })
-      .sort()
-      .datum(null)
+    if (this._container.childElementCount > 1 && this.config.has('order')) {
+      this.container
+        .selectAll(`#${this._container.id} > ${this.selectors.component}`)
+        .datum(function () { return this.dataset['order'] })
+        .sort()
+        .datum(null)
+    }
   }
 }
 
