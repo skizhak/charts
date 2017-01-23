@@ -5,8 +5,10 @@
   "main": "src/js/contrail-charts.js",
   "scripts": {
     "build": "webpack --mode=build",
-    "clean-build": "rm -rf build/* && webpack --mode=build",
+    "build-examples": "webpack --mode=build --config webpack.examples.config.js",
+    "build-clean": "rm -rf build/* && webpack --mode=build",
     "dev": "webpack --progress --colors --watch --mode=dev",
+    "dev-examples": "webpack --progress --colors --watch --mode=dev --config webpack.examples.config.js",
     "test": "node test.js",
     "test-headless": "phantomjs tests/run-jasmine.js tests/TestRunner.html",
     "lint": "eslint src/** || true"
@@ -25,8 +27,10 @@
     "font-awesome": "4.7.0",
     "ignore-loader": "0.1.2",
     "jasmine-core": "2.5.2",
+    "json-loader": "^0.5.4",
     "node-sass": "3.13.0",
     "open": "0.0.5",
+    "raw-loader": "^0.5.1",
     "phantomjs-polyfill": "0.0.2",
     "sass-loader": "4.0.2",
     "style-loader": "0.13.1",

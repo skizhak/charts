@@ -205,7 +205,7 @@ class CompositeYChartView extends ContrailChartsView {
       this.params.axis[axisName].domain = domain
       if (!_.isFunction(this.params.axis[axisName].scale) && this.params.axis[axisName].range) {
         let baseScale = null
-        if (this.hasAxisConfig(axisName, 'scale') && _.isFunction(d3[this.config.get('axis')[axisName]])) {
+        if (this.hasAxisConfig(axisName, 'scale') && _.isFunction(d3[this.config.get('axis')[axisName].scale])) {
           baseScale = d3[this.params.axis[axisName].scale]()
         } else if (['bottom', 'top'].indexOf(this.params.axis[axisName].position) >= 0) {
           baseScale = d3.scaleTime()

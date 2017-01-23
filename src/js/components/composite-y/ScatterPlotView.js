@@ -127,11 +127,10 @@ class ScatterPlotView extends XYChartSubView {
 
   _onMouseover (d, el) {
     if (this.config.get('tooltipEnabled')) {
-      this.d3.select(() => el)
-        .classed('active', true)
+      this.d3.select(() => el).classed('active', true)
       const offset = {
-        left: d.x + Math.sqrt(d.area) * 0.71,
-        top: d.y - Math.sqrt(d.area) * 0.71,
+        left: d.x,
+        top: d.y,
       }
       this._actionman.fire('ShowTooltip', offset, d.data, d.accessor.tooltip)
     }
