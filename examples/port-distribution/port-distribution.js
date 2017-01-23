@@ -52,16 +52,20 @@ const chartConfig = {
     type: 'compositeY',
     config: {
       chartHeight: 600,
-      marginInner: 25,
-      rRange: [3, 20],
+      marginInner: 10,
+      marginLeft: 80,
+      marginRight: 80,
+      marginBottom: 40,
       plot: {
         x: {
           accessor: 'port',
-          axis: 'x'
+          axis: 'x',
+          label: 'Port'
         },
         y: [
           {
             accessor: 'inBytes',
+            label: 'In Bytes',
             chart: 'scatterPlot',
             sizeAccessor: 'inBytes',
             sizeAxis: 'rAxis',
@@ -71,6 +75,7 @@ const chartConfig = {
           {
             accessor: 'outBytes',
             chart: 'scatterPlot',
+            label: 'Out Bytes',
             sizeAccessor: 'outBytes',
             sizeAxis: 'rAxis',
             shape: 'triangle',
@@ -80,8 +85,9 @@ const chartConfig = {
       },
       axis: {
         x: {
+          scale: 'scaleLinear',
           formatter: numberFormatter,
-          labelMargin: 15
+          labelMargin: 5
         },
         rAxis: {
           range: [3, 20]
@@ -101,7 +107,7 @@ const chartConfig = {
   }, {
     type: 'tooltip',
     config: {
-      title: 'BUBBLE',
+      title: 'Port Info',
       dataConfig: [
         {
           accessor: 'port',
@@ -156,28 +162,43 @@ const chartConfig = {
   }, {
     type: 'navigation',
     config: {
-      marginInner: 5,
+      marginInner: 10,
+      marginLeft: 80,
+      marginRight: 80,
+      marginBottom: 40,
       chartHeight: 200,
+      selection: [75, 100],
       plot: {
         x: {
           accessor: 'port',
+          label: 'Port',
           axis: 'x',
         },
         y: [
           {
             enabled: true,
             accessor: 'inBytes',
-            chart: 'line',
+            label: 'In Bytes',
+            chart: 'scatterPlot',
             axis: 'y1',
+            sizeAccessor: 'outBytes',
+            sizeAxis: 'rAxis',
+            shape: 'circle',
           }
         ]
       },
       axis: {
+        x: {
+          scale: 'scaleLinear'
+        },
+        rAxis: {
+          range: [3, 20]
+        },
         y1: {
           position: 'left',
           formatter: byteFormatter,
           labelMargin: 15,
-        },
+        }
       }
     }
   }]

@@ -17,7 +17,7 @@ const loaders = [{
 if (env === 'build') {
   plugins.push(new UglifyJsPlugin({
     include: /\.min\.js$/,
-    minimize: true,
+    minimize: false,
   }))
   loaders.push({
     loader: 'babel-loader',
