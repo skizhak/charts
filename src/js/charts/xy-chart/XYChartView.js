@@ -13,6 +13,7 @@ const _actions = [
   require('actions/SelectSerie'),
   require('actions/SelectColor'),
   require('actions/ChangeSelection'),
+  require('actions/Refresh'),
 ]
 /**
 * Chart with a common X axis and many possible child components rendering data on the Y axis (for example: line, bar, stackedBar).

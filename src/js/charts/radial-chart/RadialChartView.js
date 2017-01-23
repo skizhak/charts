@@ -11,6 +11,7 @@ const _actions = [
   require('actions/ShowComponent'),
   require('actions/HideComponent'),
   require('actions/SelectColor'),
+  require('actions/Refresh'),
 ]
 /**
 * Group of charts rendered in polar coordinates system
