@@ -20,14 +20,18 @@ class FilterView extends ContrailChartsView {
   }
 
   render () {
-    super.render(_template(this.config.data.y))
+    const template = this.config.get('template') || _template
+    const content = template(this.config.data)
+
+    super.render(content)
+    this.d3.classed('hide', this.config.get('embedded'))
   }
 
   _onItemClick (d, el) {
     d3.event.stopPropagation()
     const accessorName = el.value
     const isChecked = el.checked
-    this._actionman.fire('selectSerie', accessorName, isChecked)
+    this._actionman.fire('SelectSerie', accessorName, isChecked)
   }
 }
 
