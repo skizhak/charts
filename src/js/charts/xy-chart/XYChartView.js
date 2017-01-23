@@ -8,6 +8,8 @@ const components = require('components/index')
 const handlers = require('handlers/index')
 const Actionman = require('../../plugins/Actionman')
 const _actions = [
+  require('actions/ShowComponent'),
+  require('actions/HideComponent'),
   require('actions/SelectSerie'),
   require('actions/SelectColor'),
   require('actions/ChangeSelection'),

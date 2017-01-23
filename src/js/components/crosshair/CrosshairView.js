@@ -1,10 +1,8 @@
 /*
  * Copyright (c) 2016 Juniper Networks, Inc. All rights reserved.
  */
-const _ = require('lodash')
 const d3 = require('d3')
 const ContrailChartsView = require('contrail-charts-view')
-const _actions = [require('./actions/ShowCrosshair')]
 
 class CrosshairView extends ContrailChartsView {
   get type () { return 'crosshair' }
@@ -16,7 +14,6 @@ class CrosshairView extends ContrailChartsView {
     super(p)
     this.render()
     this.listenTo(this.config, 'change', this.render)
-    _.each(_actions, action => this._actionman.set(action, this))
   }
 
   show (data, point, config) {
@@ -76,15 +73,14 @@ class CrosshairView extends ContrailChartsView {
       left: point[0] + pos.left,
       top: point[1] + pos.top,
     }
-    this._actionman.fire('ShowTooltip', tooltipOffset, data, this.config.get('tooltip'))
+    this._actionman.fire('ShowComponent', this.config.get('tooltip'), tooltipOffset, data)
   }
 
   hide () {
     const svgCrosshair = this.d3.selectAll('.crosshair').data([])
     svgCrosshair.exit().remove()
 
-    // Hide tooltip
-    this._actionman.fire('HideTooltip', this.config.get('tooltip'))
+    this._actionman.fire('HideComponent', this.config.get('tooltip'))
   }
 }
 

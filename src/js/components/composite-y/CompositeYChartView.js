@@ -527,9 +527,10 @@ class CompositeYChartView extends ContrailChartsView {
 
   _onMousemove (d, el, e) {
     const point = [e.offsetX, e.offsetY]
+    const crosshairId = this.config.get('crosshair')
     const data = this.getCrosshairData(point)
     const config = this.getCrosshairConfig()
-    this._actionman.fire('ShowCrosshair', data, point, config)
+    this._actionman.fire('ShowComponent', crosshairId, data, point, config)
   }
 }
 

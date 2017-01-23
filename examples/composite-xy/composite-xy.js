@@ -44,6 +44,7 @@ complexChartView.setConfig({
       marginRight: 80,
       marginBottom: 40,
       chartHeight: 600,
+      crosshair: 'crosshairId',
       plot: {
         x: {
           accessor: 'x',
@@ -256,9 +257,7 @@ complexChartView.setConfig({
     id: 'customTooltip',
     type: 'tooltip',
     config: {
-      template: function (data) {
-        return '<div class="tooltip-content">Custom tooltip</div>'
-      }
+      template: (data) => '<div class="tooltip-content">Custom tooltip</div>',
     }
   }, {
     id: 'messageView',
@@ -267,6 +266,7 @@ complexChartView.setConfig({
       enabled: true,
     }
   }, {
+    id: 'crosshairId',
     type: 'crosshair',
     config: {
       tooltip: 'defaultTooltip',

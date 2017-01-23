@@ -31,9 +31,11 @@ const chartConfig = {
         getValue: getValue,
         getLabel: getLabel,
         valueFormatter: numberFormatter,
-      }
+      },
+      tooltip: 'tooltipId',
     },
   }, {
+    id: 'tooltipId',
     type: 'tooltip',
     config: {
       dataConfig: [

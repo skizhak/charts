@@ -53,6 +53,7 @@ cpuMemChartView.setConfig({
       marginRight: 80,
       marginBottom: 40,
       chartHeight: 600,
+      crosshair: 'crosshairId',
       plot: {
         x: {
           accessor: 'T',
@@ -209,6 +210,7 @@ cpuMemChartView.setConfig({
       enabled: true,
     }
   }, {
+    id: 'crosshairId',
     type: 'crosshair',
     config: {
     }

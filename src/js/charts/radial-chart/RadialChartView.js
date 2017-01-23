@@ -7,6 +7,10 @@ const ContrailView = require('contrail-view') // Todo use contrail-charts-view i
 const components = require('components/index')
 const SerieProvider = require('handlers/SerieProvider')
 const Actionman = require('../../plugins/Actionman')
+const _actions = [
+  require('actions/ShowComponent'),
+  require('actions/HideComponent'),
+]
 /**
 * Group of charts rendered in polar coordinates system
 * TODO merge with ChartView as long as XYChart too
@@ -20,6 +24,7 @@ class RadialChartView extends ContrailView {
     this._dataProvider = new SerieProvider({ parent: this._dataModel })
     this._components = []
     this._actionman = new Actionman()
+    _.each(_actions, action => this._actionman.set(action, this))
   }
 
   render () {
