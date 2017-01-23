@@ -1,3 +1,4 @@
+/* global $ */
 /**
  * Update following to add a new example.
  * @type {*[]}
@@ -7,7 +8,12 @@ const examples = [
     html: 'composite-xy/composite-xy.html',
     js: 'composite-xy/composite-xy.js',
     css: 'composite-xy/composite-xy.css',
-    title: 'Line Bar chart with Control panel',
+    title: 'Line Bar chart with Legend panel',
+  }, {
+    html: 'control-panel/index.html',
+    js: 'control-panel/index.js',
+    css: 'control-panel/index.css',
+    title: 'Line chart with Control Panel with embedded components',
   }, {
     html: 'multi-chart/multi-chart.html',
     js: 'multi-chart/multi-chart.js',
