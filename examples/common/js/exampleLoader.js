@@ -138,5 +138,5 @@ function sideBarLinkOnClick (e) {
         return tabsHTML
       }, []).join('')
 
-  $('#jsContent').html(`<div class="tabs remove-tabs-top-padding">${tabCollections}</div>`)
+  $('#jsContent').html(`<div class="tabs">${tabCollections}</div>`)
 }

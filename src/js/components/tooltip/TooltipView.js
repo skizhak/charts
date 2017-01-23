@@ -32,7 +32,7 @@ class TooltipView extends ContrailChartsView {
     const tooltipPositionTop = offset.top < 0 ? 0 : offset.top
     let tooltipPositionLeft = offset.left
     if ((offset.left + tooltipWidth) > windowWidth) {
-      tooltipPositionLeft = windowWidth - (offset.left + tooltipWidth)
+      tooltipPositionLeft = offset.left - tooltipWidth
     }
     this.$el.css({
       top: tooltipPositionTop,
