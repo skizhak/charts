@@ -7,7 +7,6 @@ function timeFormatter (value) {
 }
 
 function cpuFormatter (number) {
-  // console.log(number);
   return number.toFixed(2) + '%'
 }
 
@@ -60,7 +59,7 @@ for (let i = 0; i < 100; i++) {
     'T': 1475760930000 + 1000000 * i
   }))
 }
-// console.log(tsData);
+
 const chartYPlotConfig = nodes.reduce((config, currNode) => {
   config.push({
     accessor: `${currNode}.cpu_stats.cpu_one_min_avg`,
@@ -265,6 +264,7 @@ cpuMemChartView.setConfig({
   }, {
     type: 'crosshair',
     config: {
+      tooltip: 'defaultTooltip'
     }
   }, {
     type: 'colorPicker',
