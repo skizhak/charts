@@ -39,7 +39,7 @@ complexChartView.setConfig({
     type: 'controlPanel',
     config: {
       menu: [
-        { id: 'Refresh' },
+        { id: 'refresh' },
       ],
     },
   }, {

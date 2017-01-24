@@ -27,7 +27,7 @@ complexChartView.setConfig({
     type: 'controlPanel',
     config: {
       menu: [{
-        id: 'Refresh',
+        id: 'refresh',
       }, {
         id: 'filter',
         component: 'filterId',

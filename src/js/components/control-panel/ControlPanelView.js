@@ -9,7 +9,7 @@ const _template = require('./control-panel.html')
 const _panelTemplate = require('./panel.html')
 const _actionTemplate = require('./action.html')
 const _menuItems = {
-  Refresh: {
+  refresh: {
     title: 'Refresh chart',
     icon: 'fa fa-refresh',
   },
