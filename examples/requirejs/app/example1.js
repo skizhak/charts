@@ -4,7 +4,7 @@
 
 define([ // eslint-disable-line no-undef
   'd3', // Example use of older d3 versions.
-  'underscore',
+  'lodash',
   'contrail-charts'
 ], function (d3, _, coCharts) {
   // Complex example
@@ -23,29 +23,6 @@ define([ // eslint-disable-line no-undef
   const complexChartView = new coCharts.charts.XYChartView()
   complexChartView.setData(complexData)
   complexChartView.setConfig({
-    handlers: [{
-      type: 'bindingHandler',
-      config: {
-        bindings: [
-          {
-            sourceComponent: 'compositeY',
-            sourceModel: 'config',
-            sourcePath: 'plot',
-            targetComponent: 'controlPanel',
-            targetModel: 'config',
-            action: 'sync'
-          }
-        ]
-      }
-    }, {
-      type: 'dataProvider',
-      config: {
-        formatData: (data) => {
-          // Sample dataProvider input data formatter.
-          return data
-        }
-      }
-    }],
     container: '#complexChart',
     components: [{
       type: 'compositeY',
@@ -126,25 +103,6 @@ define([ // eslint-disable-line no-undef
             accessor: 'b',
             labelFormatter: () => 'B',
             valueFormatter: d3.format('.02f')
-          }
-        ]
-      }
-    }, {
-      type: 'controlPanel',
-      config: {
-        enabled: true,
-        buttons: [
-          {
-            name: 'filter',
-            title: 'Filter',
-            iconClass: 'fa fa-filter',
-            events: {
-              click: 'filterVariables'
-            },
-            panel: {
-              name: 'accessorData',
-              width: '350px'
-            }
           }
         ]
       }

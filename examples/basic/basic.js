@@ -1,7 +1,7 @@
 /* global coCharts */
 
 // Time series data.
-var tsData = [
+const tsData = [
   { ts: 1475760930000, mem: 0, cpu: 10 },
   { ts: 1475761930000, mem: 3, cpu: 20 },
   { ts: 1475762930000, mem: 2, cpu: 15 },
@@ -10,7 +10,7 @@ var tsData = [
 ]
 
 // Create chart view.
-var cpuMemChartView = new coCharts.charts.XYChartView()
+const cpuMemChartView = new coCharts.charts.XYChartView()
 cpuMemChartView.setConfig({
   container: '#basicChart',
   components: [{

@@ -4,10 +4,13 @@
 const _ = require('lodash')
 const ContrailChartsView = require('contrail-charts-view')
 const _template = require('./message.html')
+const _actions = [
+  require('./actions/SendMessage'),
+  require('./actions/ClearMessage'),
+]
 
 class MessageView extends ContrailChartsView {
   get type () { return 'message' }
-  get tagName () { return 'div' }
   get className () { return 'coCharts-message-view' }
   get selectors () {
     return _.extend(super.selectors, {
@@ -24,11 +27,10 @@ class MessageView extends ContrailChartsView {
     })
   }
 
-  constructor (options) {
-    super(options)
+  constructor (p) {
+    super(p)
     this.render()
-    this.listenTo(this._eventObject, 'message', this.show)
-    this.listenTo(this._eventObject, 'clearMessage', this.clear)
+    _.each(_actions, action => this._actionman.set(action, this))
   }
 
   show (data) {

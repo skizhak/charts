@@ -10,12 +10,10 @@ class CrosshairView extends ContrailChartsView {
   get className () { return 'coCharts-crosshair-view' }
   get zIndex () { return 9 }
 
-  constructor (options) {
-    super(options)
+  constructor (p) {
+    super(p)
     this.render()
     this.listenTo(this.config, 'change', this.render)
-    this.listenTo(this._eventObject, 'showCrosshair', this.show)
-    this.listenTo(this._eventObject, 'hideCrosshair', this.hide)
   }
 
   show (data, point, config) {
@@ -68,24 +66,21 @@ class CrosshairView extends ContrailChartsView {
       .attr('cy', (d) => d.y(data))
       .attr('r', this.config.get('bubbleR'))
     svgCrosshair.exit().remove()
-    if (this.config.get('tooltip')) {
-      // Show tooltip
-      const pos = this.svg.node().getBoundingClientRect()
-      const tooltipOffset = {
-        left: point[0] + pos.left,
-        top: point[1] + pos.top,
-      }
-      this._eventObject.trigger('showTooltip', tooltipOffset, data, this.config.get('tooltip'))
+
+    // Show tooltip
+    const pos = this.svg.node().getBoundingClientRect()
+    const tooltipOffset = {
+      left: point[0] + pos.left,
+      top: point[1] + pos.top,
     }
+    this._actionman.fire('ShowComponent', this.config.get('tooltip'), tooltipOffset, data)
   }
 
   hide () {
     const svgCrosshair = this.d3.selectAll('.crosshair').data([])
     svgCrosshair.exit().remove()
-    if (this.config.get('tooltip')) {
-      // Hide tooltip
-      this._eventObject.trigger('hideTooltip', this.config.get('tooltip'))
-    }
+
+    this._actionman.fire('HideComponent', this.config.get('tooltip'))
   }
 }
 

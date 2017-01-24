@@ -10,20 +10,17 @@ const charts = {
   RadialChartView: require('charts/radial-chart/RadialChartView'),
 }
 const components = require('components/index')
-const handlers = require('handlers/index')
 
 class ChartView extends ContrailChartsView {
-  constructor () {
-    super()
+  constructor (p) {
+    super(p)
     this._charts = {}
     this._components = []
   }
   /**
   * Data can be set separately into every chart so every chart can have different data.
   */
-  setData (data, dataConfig, chartId) {
-    dataConfig = dataConfig || {}
-    chartId = chartId || 'default'
+  setData (data, dataConfig = {}, chartId = 'default') {
     // Set data to the given chart if it exists.
     if (this._charts[chartId]) this._charts[chartId].setData(data, dataConfig)
   }
@@ -33,44 +30,29 @@ class ChartView extends ContrailChartsView {
   */
   setConfig (config) {
     this._config = config
-    // Initialize parent handlers
-    this._initHandlers()
     // Initialize child charts
     this._initCharts()
     // Initialize parent components
     this._initComponents()
   }
 
-  _initHandlers () {
-    _.each(this._config.handlers, (handler) => {
-      this._registerHandler(handler.type, handler.config)
-    })
-  }
-
   _registerHandler (type, config) {
     if (!this._isEnabledHandler(type)) return false
     // Todo create handlers array similar to components.
-    if (type === 'bindingHandler') {
-      if (!this.bindingHandler) {
-        this.bindingHandler = new handlers.BindingHandler(config)
-      } else {
-        this.bindingHandler.addBindings(config.bindings, this._config.chartId)
-      }
-    }
     if (type === 'dataProvider') {
       // Set dataProvider config. Eg. input data formatter config
       this._dataProvider.set(config, { silent: true })
       // Since we're setting the config, trigger a change to parentDataModel to re-compute based on new config.
       // Triggering the change on parentModel triggers prepareData on all the dataProvider instances of same parentModel.
       // Todo check if we really need to trigger this or simply call prepareData in current dataProvider?
-      this._dataProvider.getParentModel().trigger('change')
+      this._dataProvider.parentModel.trigger('change')
     }
   }
   /**
    * Initialize child chart views.
    */
   _initCharts () {
-    // Iterate through the this._config.charts array, initialize the given charts, set their binding handle and config.
+    // Iterate through the this._config.charts array, initialize the given charts, set their config.
     _.each(this._config.charts, (chart) => {
       this._registerChart(chart)
     })
@@ -81,9 +63,6 @@ class ChartView extends ContrailChartsView {
       if (!this._charts[chart.chartId]) {
         this._charts[chart.chartId] = new charts[chart.type]()
       }
-      if (this._isEnabledHandler('bindingHandler')) {
-        this._charts[chart.chartId].setBindingHandler(this.bindingHandler)
-      }
       this._charts[chart.chartId].setConfig(chart)
     }
   }
@@ -93,13 +72,8 @@ class ChartView extends ContrailChartsView {
       this._registerComponent(component.type, component.config, this._dataProvider, component.id)
     })
     if (this._isEnabledComponent('navigation')) {
-      const dataModel = this.getComponentByType('navigation').focusDataProvider
-      if (this._isEnabledComponent('compositeY')) this.getComponentByType('compositeY').changeModel(dataModel)
-    }
-    if (this._isEnabledHandler('bindingHandler') && !this.hasExternalBindingHandler) {
-      // Only start the binding handler if it is not an external one.
-      // Otherwise assume it will be started by the parent chart.
-      this.bindingHandler.start()
+      const dataModel = this.getComponentsByType('navigation')[0].focusDataProvider
+      _.each(this.getComponentsByType('compositeY'), (compositeY) => compositeY.changeModel(dataModel))
     }
   }
 
@@ -110,14 +84,10 @@ class ChartView extends ContrailChartsView {
       id: id,
       config: configModel,
       model: model,
-      eventObject: this._eventObject
     })
     const component = new components[type].View(viewOptions)
     this._components.push(component)
 
-    if (this._isEnabledHandler('bindingHandler') || this.hasExternalBindingHandler) {
-      this.bindingHandler.addComponent(this._config.chartId, type, component)
-    }
     return component
   }
 

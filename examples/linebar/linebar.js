@@ -1,4 +1,4 @@
-/* global coCharts */
+/* global _ d3 coCharts */
 
 function timeFormatter (value) {
   return d3.timeFormat('%H:%M:%S')(value)
@@ -38,26 +38,11 @@ for (let i = 0; i < 100; i++) {
 // Create chart view.
 const cpuMemChartView = new coCharts.charts.XYChartView()
 cpuMemChartView.setConfig({
-  handlers: [{
-    type: 'bindingHandler',
-    config: {
-      bindings: [
-        {
-          sourceComponent: 'compositeY',
-          sourceModel: 'config',
-          sourcePath: 'plot',
-          targetComponent: 'controlPanel',
-          targetModel: 'config',
-          action: 'sync'
-        }
-      ]
-    }
-  }],
   container: '#cpuMemChart',
   components: [{
-    type: 'legend',
+    type: 'legendPanel',
     config: {
-      sourceComponent: 'cpuMemCompositeY'
+      sourceComponent: 'cpuMemCompositeY',
     }
   }, {
     id: 'cpuMemCompositeY',
@@ -68,6 +53,7 @@ cpuMemChartView.setConfig({
       marginRight: 80,
       marginBottom: 40,
       chartHeight: 600,
+      crosshair: 'crosshairId',
       plot: {
         x: {
           accessor: 'T',
@@ -181,15 +167,15 @@ cpuMemChartView.setConfig({
         {
           accessor: 'T',
           labelFormatter: 'Time',
-          valueFormatter: timeFormatter
+          valueFormatter: timeFormatter,
         }, {
           accessor: 'cpu_stats.cpu_one_min_avg',
           labelFormatter: 'CPU',
-          valueFormatter: cpuFormatter
+          valueFormatter: cpuFormatter,
         }, {
           accessor: 'cpu_stats.rss',
           labelFormatter: 'Memory',
-          valueFormatter: memFormatter
+          valueFormatter: memFormatter,
         }
       ]
     }
@@ -204,11 +190,11 @@ cpuMemChartView.setConfig({
           title: 'Filter',
           iconClass: 'fa fa-filter',
           events: {
-            click: 'filterVariables'
+            click: 'filterVariables',
           },
           panel: {
             name: 'accessorData',
-            width: '350px'
+            width: '350px',
           }
         }
       ]
@@ -224,13 +210,10 @@ cpuMemChartView.setConfig({
       enabled: true,
     }
   }, {
+    id: 'crosshairId',
     type: 'crosshair',
     config: {
-    }
-  }, {
-    type: 'colorPicker',
-    config: {
-      sourceComponent: 'cpuMemCompositeY',
+      tooltip: 'defaultTooltip',
     }
   }]
 })
@@ -241,6 +224,6 @@ cpuMemChartView.renderMessage({
   messages: [{
     level: 'info',
     title: '',
-    message: 'Loading ...'
+    message: 'Loading ...',
   }]
 })

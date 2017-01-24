@@ -13,6 +13,12 @@ class ContrailChartsConfigModel extends ContrailModel {
     return _.extend(this._computed, JSON.parse(JSON.stringify(this.toJSON())))
   }
 
+  set parent (model) {
+    model.on('change', () => { this.trigger('change') })
+    this._parent = model
+    this.trigger('change')
+  }
+
   getValue (data, datumConfig) {
     const getValue = datumConfig.accessor
     if (_.isNil(data)) return undefined
@@ -40,6 +46,12 @@ class ContrailChartsConfigModel extends ContrailModel {
     if (_.isNil(data)) return undefined
     if (_.isFunction(getLabel)) return getLabel(data)
   }
+  /**
+   * Enable / disable event triggering with data preperation for specified component
+   * @param {String} type Component type
+   * @param {Boolean} enable Change state of this component
+   */
+  toggleComponent (type, enable) {}
 }
 
 module.exports = ContrailChartsConfigModel

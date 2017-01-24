@@ -1,4 +1,4 @@
-/* global coCharts */
+/* global d3 coCharts */
 
 function timeFormatter (value) {
   return d3.timeFormat('%H:%M:%S')(value)
@@ -25,27 +25,23 @@ for (let i = 0; i < 100; i++) {
 }
 const complexChartView = new coCharts.charts.XYChartView()
 complexChartView.setConfig({
-  handlers: [{
-    type: 'bindingHandler',
-    config: {
-      bindings: [
-        {
-          sourceComponent: 'compositeY',
-          sourceModel: 'config',
-          sourcePath: 'plot',
-          targetComponent: 'controlPanel',
-          targetModel: 'config',
-          action: 'sync'
-        }
-      ]
-    },
-  }],
   container: '#complexChart',
   components: [{
-    type: 'legend',
+    type: 'legendPanel',
     config: {
-      sourceComponent: 'complexChartCompositeY'
-    }
+      sourceComponent: 'complexChartCompositeY',
+      placement: 'row',
+      coloPicker: true,
+      filter: true,
+      chartSelector: true,
+    },
+  }, {
+    type: 'controlPanel',
+    config: {
+      menu: [
+        { id: 'refresh' },
+      ],
+    },
   }, {
     id: 'complexChartCompositeY',
     type: 'compositeY',
@@ -55,6 +51,7 @@ complexChartView.setConfig({
       marginRight: 80,
       marginBottom: 40,
       chartHeight: 600,
+      crosshair: 'crosshairId',
       plot: {
         x: {
           accessor: 'x',
@@ -267,67 +264,8 @@ complexChartView.setConfig({
     id: 'customTooltip',
     type: 'tooltip',
     config: {
-      template: function (data) {
-        return '<div class="tooltip-content">Custom tooltip</div>'
-      }
+      template: (data) => '<div class="tooltip-content">Custom tooltip</div>',
     }
-  }, {
-    id: 'complexChart-controlPanel',
-    type: 'controlPanel',
-    config: {
-      enabled: true,
-      buttons: [
-        {
-          name: 'filter',
-          title: 'Filter',
-          iconClass: 'fa fa-filter',
-          events: {
-            click: 'filterVariables'
-          },
-          panel: {
-            name: 'accessorData',
-            width: '350px'
-          }
-        }, {
-          // This action button is to demonstrate the message component. May not reflect the correct use-case.
-          name: 'sendMessage',
-          title: 'Send Message',
-          iconClass: 'fa fa-edit',
-          events: {
-            click: function () {
-              this._eventObject.trigger('message', {
-                componentId: 'XYChartView',
-                action: 'new',
-                messages: [
-                  {
-                    title: 'New Message',
-                    message: 'A message was added.'
-                  }
-                ]
-              })
-            }
-          }
-        }, {
-          name: 'clearMessage',
-          title: 'Clear Message',
-          iconClass: 'fa fa-eraser',
-          events: {
-            click: function () {
-              this._eventObject.trigger('clearMessage', 'XYChartView')
-            }
-          }
-        }, {
-          name: 'refresh',
-          title: 'Refresh',
-          iconClass: 'fa fa-refresh',
-          events: {
-            click: function () {
-              this._eventObject.trigger('refresh')
-            }
-          }
-        }
-      ]
-    },
   }, {
     id: 'messageView',
     type: 'message',
@@ -335,14 +273,10 @@ complexChartView.setConfig({
       enabled: true,
     }
   }, {
+    id: 'crosshairId',
     type: 'crosshair',
     config: {
       tooltip: 'defaultTooltip',
-    }
-  }, {
-    type: 'colorPicker',
-    config: {
-      sourceComponent: 'complexChartCompositeY',
     }
   }]
 })

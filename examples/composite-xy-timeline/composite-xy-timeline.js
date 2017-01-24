@@ -11,9 +11,9 @@ function numberFormatter3 (number) {
 }
 
 // Complex example
-var complexData = []
-for (var i = 0; i < 100; i++) {
-  var a = Math.random() * 100
+const complexData = []
+for (let i = 0; i < 100; i++) {
+  const a = Math.random() * 100
   complexData.push({
     x: 1475760930000 + 1000000 * i,
     a: a,
@@ -23,23 +23,8 @@ for (var i = 0; i < 100; i++) {
     e: (Math.random() - 0.5) * 10
   })
 }
-var complexChartView = new coCharts.charts.XYChartView()
+const complexChartView = new coCharts.charts.XYChartView()
 complexChartView.setConfig({
-  handlers: [{
-    type: 'bindingHandler',
-    config: {
-      bindings: [
-        {
-          sourceComponent: 'compositeY',
-          sourceModel: 'config',
-          sourcePath: 'plot',
-          targetComponent: 'controlPanel',
-          targetModel: 'config',
-          action: 'sync'
-        }
-      ]
-    },
-  }],
   container: '#complexChart',
   components: [{
     id: 'complexChartCompositeY',

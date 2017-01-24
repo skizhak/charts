@@ -21,6 +21,13 @@ function getValue (serie) {
 const chartConfig = {
   container: '#chart',
   components: [{
+    type: 'controlPanel',
+    config: {
+      menu: [{
+        id: 'Refresh',
+      }],
+    }
+  }, {
     id: 'pieChart',
     type: 'pieChart',
     config: {
@@ -31,9 +38,11 @@ const chartConfig = {
         getValue: getValue,
         getLabel: getLabel,
         valueFormatter: numberFormatter,
-      }
+      },
+      tooltip: 'tooltipId',
     },
   }, {
+    id: 'tooltipId',
     type: 'tooltip',
     config: {
       dataConfig: [

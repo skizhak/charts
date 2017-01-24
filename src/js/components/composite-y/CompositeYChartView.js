@@ -26,32 +26,16 @@ class CompositeYChartView extends ContrailChartsView {
     }
   }
 
-  constructor (options) {
-    super(options)
+  constructor (p) {
+    super(p)
     this._drawings = []
-    // TODO: Every model change will trigger a redraw. This might not be desired - dedicated redraw event?
-    // / View params hold values from the config and computed values.
 
-    this.listenTo(this.model, 'change', this._onDataModelChange)
-    this.listenTo(this.config, 'change', this._onConfigModelChange)
-    this.listenTo(this._eventObject, 'selectColor', this.selectColor)
-    this.listenTo(this._eventObject, 'refresh', this.refresh)
+    this.listenTo(this.model, 'change', this.render)
+    this.listenTo(this.config, 'change', this.render)
     window.addEventListener('resize', this._onWindowResize.bind(this))
 
     this._debouncedRenderFunction = _.bind(_.debounce(this._render, 10), this)
     this._throttledRender = _.throttle(() => { this.render() }, 100)
-    this._throttledShowCrosshair = _.throttle((point) => {
-      this._eventObject.trigger('showCrosshair', this.getCrosshairData(point), point, this.getCrosshairConfig())
-    }, 100)
-  }
-
-  // Action handler
-  selectColor (accessorName, color) {
-    const configAccessor = _.find(this.config.get('plot').y, (a) => a.accessor === accessorName)
-    if (configAccessor) {
-      configAccessor.color = color
-      this.config.trigger('change', this.config)
-    }
   }
 
   refresh () {
@@ -61,11 +45,11 @@ class CompositeYChartView extends ContrailChartsView {
   changeModel (model) {
     this.stopListening(this.model)
     this.model = model
-    this.listenTo(this.model, 'change', this._onDataModelChange)
+    this.listenTo(this.model, 'change', this.render)
     _.each(this._drawings, (drawing) => {
       drawing.model = model
     })
-    this._onDataModelChange()
+    this.render()
   }
   /**
   * Calculates the activeAccessorData that holds only the verified and enabled accessors from the 'plot' structure.
@@ -283,7 +267,7 @@ class CompositeYChartView extends ContrailChartsView {
       .merge(svgYAxis)
       .attr('transform', 'translate(' + translate + ',0)')
     if (this.config.get('crosshairEnabled')) {
-      this.svg.on('mousemove', this._onMousemove.bind(this))
+      this.svg.delegate('mousemove', 'svg', _.throttle(this._onMousemove.bind(this), 100))
     }
   }
 
@@ -411,7 +395,7 @@ class CompositeYChartView extends ContrailChartsView {
   }
 
   getCrosshairData (point) {
-    const data = this.getData()
+    const data = this.model.data
     const xScale = this.params.axis[this.params.plot.x.axis].scale
     const xAccessor = this.params.plot.x.accessor
     const mouseX = xScale.invert(point[0])
@@ -498,14 +482,13 @@ class CompositeYChartView extends ContrailChartsView {
               const params = _.extend({}, this.params)
               params.isPrimary = false
               const compositeYConfig = new CompositeYChartConfigModel(params)
-              // TODO: pass eventObject to child?
               foundDrawing = new ChildView({
                 model: this.model,
                 config: compositeYConfig,
-                eventObject: this._eventObject,
                 container: this._container,
                 axisName: accessor.axis,
-                parent: this
+                parent: this,
+                actionman: this._actionman,
               })
               this._drawings.push(foundDrawing)
             }
@@ -533,25 +516,21 @@ class CompositeYChartView extends ContrailChartsView {
       drawing.render()
     })
 
-    this.trigger('rendered')
+    this.trigger('render')
   }
 
   // Event handlers
-
-  _onDataModelChange () {
-    this.render()
-  }
-
-  _onConfigModelChange () {
-    this.render()
-  }
 
   _onWindowResize () {
     this._throttledRender()
   }
 
-  _onMousemove () {
-    this._throttledShowCrosshair(d3.mouse(d3.event.currentTarget))
+  _onMousemove (d, el, e) {
+    const point = [e.offsetX, e.offsetY]
+    const crosshairId = this.config.get('crosshair')
+    const data = this.getCrosshairData(point)
+    const config = this.getCrosshairConfig()
+    this._actionman.fire('ShowComponent', crosshairId, data, point, config)
   }
 }
 

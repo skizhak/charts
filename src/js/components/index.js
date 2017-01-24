@@ -1,5 +1,7 @@
 const ControlPanelConfigModel = require('components/control-panel/ControlPanelConfigModel')
 const ControlPanelView = require('components/control-panel/ControlPanelView')
+const FilterView = require('components/filter/FilterView')
+const FilterConfigModel = require('components/filter/FilterConfigModel')
 const MessageConfigModel = require('components/message/MessageConfigModel')
 const MessageView = require('components/message/MessageView')
 const NavigationConfigModel = require('components/navigation/NavigationConfigModel')
@@ -22,51 +24,61 @@ const PieChartConfigModel = require('components/radial/PieChartConfigModel')
 const PieChartView = require('components/radial/PieChartView')
 const StandaloneConfigModel = require('components/standalone/StandaloneConfigModel')
 const StandaloneView = require('components/standalone/StandaloneView')
+var LegendPanelConfigModel = require('components/legend-panel/LegendPanelConfigModel')
+var LegendPanelView = require('components/legend-panel/LegendPanelView')
 
 module.exports = {
   tooltip: {
     ConfigModel: TooltipConfigModel,
-    View: TooltipView
+    View: TooltipView,
   },
   legend: {
     ConfigModel: LegendConfigModel,
-    View: LegendView
+    View: LegendView,
   },
   legendUniversal: {
     ConfigModel: LegendUniversalConfigModel,
     View: LegendUniversalView,
   },
+  legendPanel: {
+    ConfigModel: LegendPanelConfigModel,
+    View: LegendPanelView
+  },
   crosshair: {
     ConfigModel: CrosshairConfigModel,
-    View: CrosshairView
+    View: CrosshairView,
   },
   colorPicker: {
     ConfigModel: ColorPickerConfigModel,
-    View: ColorPickerView
+    View: ColorPickerView,
   },
   navigation: {
     ConfigModel: NavigationConfigModel,
-    View: NavigationView
+    View: NavigationView,
+  },
+  filter: {
+    ConfigModel: FilterConfigModel,
+    View: FilterView,
   },
   timeline: {
     ConfigModel: TimelineConfigModel,
-    View: TimelineView
+    View: TimelineView,
   },
   message: {
     ConfigModel: MessageConfigModel,
-    View: MessageView
+    View: MessageView,
   },
   controlPanel: {
     ConfigModel: ControlPanelConfigModel,
-    View: ControlPanelView
+    View: ControlPanelView,
   },
   compositeY: {
     ConfigModel: CompositeYChartConfigModel,
-    View: CompositeYChartView
+    View: CompositeYChartView,
   },
   pieChart: {
     ConfigModel: PieChartConfigModel,
-    View: PieChartView
+    View: PieChartView,
   },
   standalone: {
     ConfigModel: StandaloneConfigModel,

@@ -49,9 +49,8 @@ class LineChartView extends XYChartSubView {
 
   getTooltipData (data, xPos) {
     const xAccessor = this.params.plot.x.accessor
-    const xScale = this.getXScale()
     const xBisector = d3.bisector((d) => d[xAccessor]).left
-    const xVal = xScale.invert(xPos)
+    const xVal = this.xScale.invert(xPos)
     const index = xBisector(data, xVal, 1)
     const dataItem = xVal - data[index - 1][xAccessor] > data[index][xAccessor] - xVal ? data[index] : data[index - 1]
     return dataItem
@@ -61,26 +60,25 @@ class LineChartView extends XYChartSubView {
     _.defer(() => { this._render() })
     return this
   }
-
+  /**
+   * Draw one line (path) per each Y accessor.
+   */
   _render () {
     super.render()
+    const data = this.model.data
 
-    const data = this.getData()
-    // Draw one line (path) for each Y accessor.
     // Collect linePathData - one line per Y accessor.
     const linePathData = []
     const lines = {}
-    const yScale = this.getYScale()
-    const xScale = this.getXScale()
 
     const zeroLine = d3Shape.line()
-      .x((d) => xScale(d[this.params.plot.x.accessor]))
-      .y((d) => yScale.range()[0])
+      .x((d) => this.xScale(d[this.params.plot.x.accessor]))
+      .y((d) => this.yScale.range()[0])
     _.each(this.params.activeAccessorData, (accessor) => {
       const key = accessor.accessor
       lines[key] = d3Shape.line()
-        .x((d) => xScale(d[this.params.plot.x.accessor]))
-        .y((d) => yScale(d[key]))
+        .x((d) => this.xScale(d[this.params.plot.x.accessor]))
+        .y((d) => this.yScale(d[key]))
         .curve(this.config.get('curve'))
       linePathData.push({ key: key, accessor: accessor, data: data })
     })
@@ -101,24 +99,23 @@ class LineChartView extends XYChartSubView {
   _onMouseover (d, el) {
     if (this.config.get('tooltipEnabled')) {
       const pos = d3.mouse(el)
-      const offset = this.$el.offset()
+      const offset = el.getBoundingClientRect()
       const dataItem = this.getTooltipData(d.data, pos[0])
       const tooltipOffset = {
-        left: offset.left + pos[0] - this.getXScale().range()[0],
+        left: offset.left + pos[0] - this.xScale.range()[0],
         top: offset.top + pos[1],
       }
 
-      this._eventObject.trigger('showTooltip', tooltipOffset, dataItem, d.accessor.tooltip)
+      this._actionman.fire('ShowTooltip', tooltipOffset, dataItem, d.accessor.tooltip)
     }
     this.d3.select(() => el).classed('active', true)
   }
 
   _onMouseout (d, el) {
     if (this.config.get('tooltipEnabled')) {
-      this._eventObject.trigger('hideTooltip', d.accessor.tooltip)
+      this._actionman.fire('HideTooltip', d.accessor.tooltip)
     }
-    this.d3.select(() => el)
-      .classed('active', false)
+    this.d3.select(() => el).classed('active', false)
   }
 }
 

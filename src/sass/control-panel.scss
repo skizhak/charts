@@ -1,0 +1,61 @@
+.coCharts-control-panel {
+	.control-panel-items {
+		width: 32px;
+		float: right;
+
+		.control-panel-item {
+      position: relative;
+      margin: 0 0 5px 0;
+
+      button {
+        width: 100%;
+        font-size: 14px;
+        background-color: #fff;
+        padding: 5px;
+        border: 1px solid #ddd;
+        color: #444;
+        transition: background-color .25s;
+        &:hover {
+          background-color: #ddd;
+        }
+      }
+      .opener {
+        position: absolute;
+        display: block;
+        left: 2px;
+        bottom: 2px;
+        width: 0;
+        height: 0;
+        border-bottom: 5px solid #aaa;
+        border-right: 5px solid transparent;
+      }
+		}
+	}
+	.panel {
+    display: none;
+    width: 350px;
+		margin: 0 33px 0 0;
+		border: 1px solid #ddd;
+		background-color: #fff;
+
+		.head {
+			padding: 5px 10px 5px 10px;
+			background-color: #ddd;
+			color: #444;
+			font-size: 14px;
+
+			.head-icon {
+				margin-right: 10px;
+			}
+			.close {
+				float: right;
+				cursor: pointer;
+			}
+		}
+		.body {
+			padding: 10px;
+			color: #444;
+			font-size: 14px;
+		}
+	}
+}

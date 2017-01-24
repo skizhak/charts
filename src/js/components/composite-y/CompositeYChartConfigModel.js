@@ -54,18 +54,16 @@ class CompositeYChartConfigModel extends ContrailChartsConfigModel {
     return this.get('plot').y
   }
   /**
-   * Enable / disable event triggering with data preperation for specified component
-   * @param {String} type Component type
-   * @param {Boolean} enable Change state of this component
+   * Override parent
    */
   toggleComponent (type, enable) {
     switch (type) {
       case 'tooltip':
-        if (!this.attributes.crosshairEnabled) this.set('tooltipEnabled', enable)
+        if (!this.attributes.crosshairEnabled) this.set('tooltipEnabled', enable, {silent: true})
         break
       case 'crosshair':
-        this.set('tooltipEnabled', !enable)
-        this.set('crosshairEnabled', enable)
+        this.set('tooltipEnabled', !enable, {silent: true})
+        this.set('crosshairEnabled', enable, {silent: true})
         break
       default:
         break
