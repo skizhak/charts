@@ -13,7 +13,7 @@ class PieChartConfigModel extends ContrailChartsConfigModel {
       // The chart width. If not provided will be caculated by View.
       chartWidth: undefined,
 
-      // / The chart height. If not provided will be caculated by View.
+      // The chart height. If not provided will be caculated by View.
       chartHeight: undefined,
 
       colorScale: d3.scaleOrdinal(d3.schemeCategory20),

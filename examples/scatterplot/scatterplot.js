@@ -45,6 +45,7 @@ const chartConfig = {
             sizeAxis: 'rAxis',
             shape: 'circle',
             axis: 'y1',
+            tooltip: 'tooltipId',
           }, {
             enabled: true,
             accessor: 's',
@@ -53,6 +54,7 @@ const chartConfig = {
             sizeAxis: 'rAxis',
             shape: 'square',
             axis: 'y2',
+            tooltip: 'tooltipId',
           }, {
             enabled: true,
             accessor: 't',
@@ -61,6 +63,7 @@ const chartConfig = {
             sizeAxis: 'rAxis',
             shape: 'triangle',
             axis: 'y2',
+            tooltip: 'tooltipId',
           }
         ]
       },

@@ -30,19 +30,6 @@ class PieChartView extends ContrailChartsView {
     this.listenTo(this.model, 'change', this._onDataModelChange)
   }
 
-  _calculateDimensions () {
-    if (!this.params.chartWidth) {
-      this.params.chartWidth = this._container.getBoundingClientRect().width
-    }
-    if (this.params.chartWidthDelta) {
-      this.params.chartWidth += this.params.chartWidthDelta
-    }
-    if (!this.params.chartHeight) {
-      this.params.chartHeight = Math.round(this.params.chartWidth / 2)
-    }
-    // TODO: use the 'axis' param to compute additional margins for the axis
-  }
-
   render () {
     this.resetParams()
     this._calculateDimensions()
@@ -68,6 +55,19 @@ class PieChartView extends ContrailChartsView {
       .classed('arc', true)
       .attr('d', arc)
       .style('fill', (d) => this.config.getColor(serieConfig.getLabel(d.data)))
+  }
+
+  _calculateDimensions () {
+    if (!this.params.chartWidth) {
+      this.params.chartWidth = this._container.getBoundingClientRect().width
+    }
+    if (this.params.chartWidthDelta) {
+      this.params.chartWidth += this.params.chartWidthDelta
+    }
+    if (!this.params.chartHeight) {
+      this.params.chartHeight = Math.round(this.params.chartWidth / 2)
+    }
+    // TODO: use the 'axis' param to compute additional margins for the axis
   }
 
   // Event handlers
