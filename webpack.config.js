@@ -65,6 +65,7 @@ const config = {
       'contrail-charts-config-model': 'plugins/contrail/ContrailChartsConfigModel',
       'contrail-charts-view': 'plugins/contrail/ContrailChartsView',
       'contrail-charts-events': 'plugins/contrail/ContrailChartsEvents',
+      'contrail-charts-utils': 'plugins/contrail/ContrailChartsUtils',
     },
     extensions: ['', '.js']
   },

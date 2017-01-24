@@ -2,6 +2,7 @@
  * Copyright (c) 2016 Juniper Networks, Inc. All rights reserved.
  */
 const _ = require('lodash')
+const Utils = require('contrail-charts-utils')
 const ContrailChartsDataModel = require('contrail-charts-data-model')
 const ContrailChartsView = require('contrail-charts-view')
 const components = require('components/index')
@@ -74,7 +75,7 @@ class XYChartView extends ContrailChartsView {
    * @return {Array}
    */
   getComponentsByType (type) {
-    return _.filter(this._components, {type: type})
+    return _.filter(this._components, component => component.constructor.name === type)
   }
 
   render () {
@@ -125,11 +126,11 @@ class XYChartView extends ContrailChartsView {
         const sourceComponent = this.getComponent(sourceComponentId)
         component.config.parent = sourceComponent.config
       }
-      if (this._isEnabledComponent('tooltip')) {
-        component.config.toggleComponent('tooltip', true)
+      if (this._isEnabledComponent('TooltipView')) {
+        component.config.toggleComponent('TooltipView', true)
       }
-      if (this._isEnabledComponent('crosshair')) {
-        component.config.toggleComponent('crosshair', true)
+      if (this._isEnabledComponent('CrosshairView')) {
+        component.config.toggleComponent('CrosshairView', true)
       }
     })
   }
@@ -142,8 +143,8 @@ class XYChartView extends ContrailChartsView {
   _registerComponent (type, config, model, id) {
     if (!this._isEnabledComponent(type)) return false
     let configModel
-    if (components[type].ConfigModel) {
-      configModel = new components[type].ConfigModel(config)
+    if (components[Utils.getConfigModelName(type)]) {
+      configModel = new components[Utils.getConfigModelName(type)](config)
     }
     const viewOptions = _.extend({}, config, {
       id: id,
@@ -153,7 +154,7 @@ class XYChartView extends ContrailChartsView {
       // actionman is passed as parameter to each component for it to be able to register action
       actionman: this._actionman,
     })
-    const component = new components[type].View(viewOptions)
+    const component = new components[type](viewOptions)
     this._components.push(component)
 
     return component

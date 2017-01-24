@@ -17,7 +17,7 @@ const chartConfigs = [
     type: 'XYChartView',
     container: '#chart1',
     components: [{
-      type: 'compositeY',
+      type: 'CompositeYChartView',
       config: {
         plot: {
           x: {
@@ -28,12 +28,12 @@ const chartConfigs = [
             {
               accessor: 'a',
               enabled: true,
-              chart: 'bar',
+              chart: 'BarChartView',
               axis: 'y',
             }, {
               accessor: 'b',
               enabled: true,
-              chart: 'bar',
+              chart: 'BarChartView',
               axis: 'y',
             }
           ]
@@ -49,7 +49,7 @@ const chartConfigs = [
     type: 'XYChartView',
     container: '#chart2',
     components: [{
-      type: 'compositeY',
+      type: 'CompositeYChartView',
       config: {
         plot: {
           x: {
@@ -60,14 +60,14 @@ const chartConfigs = [
             {
               accessor: 'c',
               enabled: true,
-              chart: 'line',
+              chart: 'LineChartView',
               axis: 'y',
             }
           ]
         }
       },
     }, {
-      type: 'navigation',
+      type: 'NavigationView',
       config: {
         chartHeight: 200,
         plot: {
@@ -79,7 +79,7 @@ const chartConfigs = [
             {
               accessor: 'c',
               enabled: true,
-              chart: 'line',
+              chart: 'LineChartView',
               axis: 'y',
             }
           ]

@@ -10,7 +10,6 @@ const CompositeYChartConfigModel = require('components/composite-y/CompositeYCha
 const Selection = require('handlers/Selection')
 
 class NavigationView extends ContrailChartsView {
-  get type () { return 'navigation' }
   get className () { return 'navigation-view' }
   get events () {
     return {

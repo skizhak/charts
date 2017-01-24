@@ -24,21 +24,21 @@ const complexChartView = new coCharts.charts.XYChartView()
 complexChartView.setConfig({
   container: '#chart',
   components: [{
-    type: 'controlPanel',
+    type: 'ControlPanelView',
     config: {
       menu: [{
-        id: 'refresh',
+        id: 'Refresh',
       }, {
-        id: 'filter',
+        id: 'FilterView',
         component: 'filterId',
       }, {
-        id: 'colorPicker',
+        id: 'ColorPickerView',
         component: 'colorPickerId',
       }],
     }
   }, {
     id: 'compositeYId',
-    type: 'compositeY',
+    type: 'CompositeYChartView',
     config: {
       marginInner: 10,
       marginLeft: 80,
@@ -56,21 +56,21 @@ complexChartView.setConfig({
             accessor: 'a',
             labelFormatter: 'A',
             enabled: true,
-            chart: 'stackedBar',
+            chart: 'StackedBarChartView',
             axis: 'y1',
             tooltip: 'defaultTooltip',
           }, {
             accessor: 'b',
             labelFormatter: 'B',
             enabled: true,
-            chart: 'stackedBar',
+            chart: 'StackedBarChartView',
             axis: 'y1',
             tooltip: 'customTooltip',
           }, {
             accessor: 'c',
             labelFormatter: 'C',
             enabled: false,
-            chart: 'stackedBar',
+            chart: 'StackedBarChartView',
             axis: 'y1',
             tooltip: 'defaultTooltip',
           }, {
@@ -78,7 +78,7 @@ complexChartView.setConfig({
             labelFormatter: 'Megabytes',
             color: '#d62728',
             enabled: true,
-            chart: 'line',
+            chart: 'LineChartView',
             axis: 'y2',
             tooltip: 'defaultTooltip',
           }, {
@@ -86,7 +86,7 @@ complexChartView.setConfig({
             labelFormatter: 'Megabytes',
             color: '#9467bd',
             enabled: true,
-            chart: 'line',
+            chart: 'LineChartView',
             axis: 'y2',
             tooltip: 'defaultTooltip',
           }
@@ -111,14 +111,14 @@ complexChartView.setConfig({
     },
   }, {
     id: 'colorPickerId',
-    type: 'colorPicker',
+    type: 'ColorPickerView',
     config: {
       sourceComponent: 'compositeYId',
       embedded: true,
     }
   }, {
     id: 'filterId',
-    type: 'filter',
+    type: 'FilterView',
     config: {
       sourceComponent: 'compositeYId',
       embedded: true,

@@ -2,6 +2,7 @@
  * Copyright (c) 2016 Juniper Networks, Inc. All rights reserved.
  */
 const _ = require('lodash')
+const Utils = require('contrail-charts-utils')
 const ContrailChartsDataModel = require('contrail-charts-data-model')
 const ContrailView = require('contrail-view') // Todo use contrail-charts-view instead?
 const components = require('components/index')
@@ -90,7 +91,7 @@ class RadialChartView extends ContrailView {
 
   _registerComponent (type, config, model, id) {
     if (!this._isEnabledComponent(type)) return false
-    const configModel = new components[type].ConfigModel(config)
+    const configModel = new components[Utils.getConfigModelName(type)](config)
     const viewOptions = _.extend(config, {
       id: id,
       config: configModel,
@@ -98,7 +99,7 @@ class RadialChartView extends ContrailView {
       actionman: this._actionman,
       container: this.el,
     })
-    const component = new components[type].View(viewOptions)
+    const component = new components[type](viewOptions)
     this._components.push(component)
 
     return component

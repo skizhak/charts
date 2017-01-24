@@ -5,7 +5,6 @@ const d3 = require('d3')
 const ContrailChartsView = require('contrail-charts-view')
 
 class CrosshairView extends ContrailChartsView {
-  get type () { return 'crosshair' }
   get tagName () { return 'g' }
   get className () { return 'coCharts-crosshair-view' }
   get zIndex () { return 9 }

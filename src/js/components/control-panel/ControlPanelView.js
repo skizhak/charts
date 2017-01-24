@@ -9,22 +9,21 @@ const _template = require('./control-panel.html')
 const _panelTemplate = require('./panel.html')
 const _actionTemplate = require('./action.html')
 const _menuItems = {
-  refresh: {
+  Refresh: {
     title: 'Refresh chart',
     icon: 'fa fa-refresh',
   },
-  colorPicker: {
+  ColorPickerView: {
     title: 'Select color for serie',
     icon: 'fa fa-eyedropper',
   },
-  filter: {
+  FilterView: {
     title: 'Select serie to show',
     icon: 'fa fa-filter',
   }
 }
 
 class ControlPanelView extends ContrailChartsView {
-  get type () { return 'controlPanel' }
   get className () { return 'coCharts-control-panel' }
   get events () {
     return {

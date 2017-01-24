@@ -10,7 +10,6 @@ const d3Scale = require('d3-scale')
 const XYChartSubView = require('components/composite-y/XYChartSubView')
 
 class ScatterPlotView extends XYChartSubView {
-  get type () { return 'scatterPlot' }
   get className () { return 'coCharts-scatter-plot' }
   get zIndex () { return 1 }
 
