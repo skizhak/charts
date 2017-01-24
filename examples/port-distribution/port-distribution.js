@@ -68,7 +68,7 @@ const chartConfig = {
             label: 'In Bytes',
             chart: 'scatterPlot',
             sizeAccessor: 'inBytes',
-            sizeAxis: 'rAxis',
+            sizeAxis: 'sizeAxis',
             shape: 'circle',
             axis: 'y1'
           },
@@ -77,7 +77,7 @@ const chartConfig = {
             chart: 'scatterPlot',
             label: 'Out Bytes',
             sizeAccessor: 'outBytes',
-            sizeAxis: 'rAxis',
+            sizeAxis: 'sizeAxis',
             shape: 'triangle',
             axis: 'y2'
           }
@@ -89,8 +89,8 @@ const chartConfig = {
           formatter: numberFormatter,
           labelMargin: 5
         },
-        rAxis: {
-          range: [3, 20]
+        sizeAxis: {
+          range: [3, 500]
         },
         y1: {
           position: 'left',
@@ -182,7 +182,7 @@ const chartConfig = {
             chart: 'scatterPlot',
             axis: 'y1',
             sizeAccessor: 'outBytes',
-            sizeAxis: 'rAxis',
+            sizeAxis: 'sizeAxis',
             shape: 'circle',
           }
         ]
@@ -191,8 +191,8 @@ const chartConfig = {
         x: {
           scale: 'scaleLinear'
         },
-        rAxis: {
-          range: [3, 20]
+        sizeAxis: {
+          range: [3, 500]
         },
         y1: {
           position: 'left',
