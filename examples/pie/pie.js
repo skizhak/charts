@@ -21,15 +21,15 @@ function getValue (serie) {
 const chartConfig = {
   container: '#chart',
   components: [{
-    type: 'controlPanel',
+    type: 'ControlPanel',
     config: {
       menu: [{
         id: 'Refresh',
       }],
     }
   }, {
-    id: 'pieChart',
-    type: 'pieChart',
+    id: 'pieChartId',
+    type: 'PieChart',
     config: {
       type: 'donut',
       radius: 100,
@@ -43,7 +43,7 @@ const chartConfig = {
     },
   }, {
     id: 'tooltipId',
-    type: 'tooltip',
+    type: 'Tooltip',
     config: {
       dataConfig: [
         {
@@ -54,9 +54,9 @@ const chartConfig = {
       ],
     },
   }, {
-    type: 'legendUniversal',
+    type: 'LegendUniversal',
     config: {
-      sourceComponent: 'pieChart',
+      sourceComponent: 'pieChartId',
     },
   }]
 }

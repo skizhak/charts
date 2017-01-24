@@ -24,21 +24,21 @@ const complexChartView = new coCharts.charts.XYChartView()
 complexChartView.setConfig({
   container: '#chart',
   components: [{
-    type: 'controlPanel',
+    type: 'ControlPanel',
     config: {
       menu: [{
-        id: 'refresh',
+        id: 'Refresh',
       }, {
-        id: 'filter',
+        id: 'Filter',
         component: 'filterId',
       }, {
-        id: 'colorPicker',
+        id: 'ColorPicker',
         component: 'colorPickerId',
       }],
     }
   }, {
     id: 'compositeYId',
-    type: 'compositeY',
+    type: 'CompositeYChart',
     config: {
       marginInner: 10,
       marginLeft: 80,
@@ -56,21 +56,21 @@ complexChartView.setConfig({
             accessor: 'a',
             labelFormatter: 'A',
             enabled: true,
-            chart: 'stackedBar',
+            chart: 'StackedBarChart',
             axis: 'y1',
             tooltip: 'defaultTooltip',
           }, {
             accessor: 'b',
             labelFormatter: 'B',
             enabled: true,
-            chart: 'stackedBar',
+            chart: 'StackedBarChart',
             axis: 'y1',
             tooltip: 'customTooltip',
           }, {
             accessor: 'c',
             labelFormatter: 'C',
             enabled: false,
-            chart: 'stackedBar',
+            chart: 'StackedBarChart',
             axis: 'y1',
             tooltip: 'defaultTooltip',
           }, {
@@ -78,7 +78,7 @@ complexChartView.setConfig({
             labelFormatter: 'Megabytes',
             color: '#d62728',
             enabled: true,
-            chart: 'line',
+            chart: 'LineChart',
             axis: 'y2',
             tooltip: 'defaultTooltip',
           }, {
@@ -86,7 +86,7 @@ complexChartView.setConfig({
             labelFormatter: 'Megabytes',
             color: '#9467bd',
             enabled: true,
-            chart: 'line',
+            chart: 'LineChart',
             axis: 'y2',
             tooltip: 'defaultTooltip',
           }
@@ -111,14 +111,14 @@ complexChartView.setConfig({
     },
   }, {
     id: 'colorPickerId',
-    type: 'colorPicker',
+    type: 'ColorPicker',
     config: {
       sourceComponent: 'compositeYId',
       embedded: true,
     }
   }, {
     id: 'filterId',
-    type: 'filter',
+    type: 'Filter',
     config: {
       sourceComponent: 'compositeYId',
       embedded: true,

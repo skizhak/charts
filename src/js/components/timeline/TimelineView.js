@@ -8,7 +8,6 @@ const ContrailChartsView = require('contrail-charts-view')
 const DataProvider = require('handlers/DataProvider')
 
 class TimelineView extends ContrailChartsView {
-  get type () { return 'timeline' }
   get tagName () { return 'g' }
   get className () { return 'timeline-view' }
 

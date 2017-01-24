@@ -10,7 +10,7 @@ const simpleChartView = new coCharts.charts.XYChartView()
 simpleChartView.setConfig({
   container: '#simpleChart',
   components: [{
-    type: 'compositeY',
+    type: 'CompositeYChart',
     config: {
       plot: {
         x: {
@@ -21,7 +21,7 @@ simpleChartView.setConfig({
           {
             enabled: true,
             accessor: 'y',
-            chart: 'area',
+            chart: 'AreaChart',
             axis: 'y',
           }
         ]

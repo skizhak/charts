@@ -6,7 +6,6 @@ const shape = require('d3-shape')
 const ContrailChartsView = require('contrail-charts-view')
 
 class PieChartView extends ContrailChartsView {
-  get type () { return 'pieChart' }
   get tagName () { return 'g' }
   get className () { return 'coCharts-pie-chart' }
   get events () {

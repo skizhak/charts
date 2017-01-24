@@ -14,10 +14,10 @@ for (let i = 0; i < 100; i++) {
 const chartConfigs = [
   {
     chartId: 'chart1',
-    type: 'XYChartView',
+    type: 'XYChart',
     container: '#chart1',
     components: [{
-      type: 'compositeY',
+      type: 'CompositeYChart',
       config: {
         plot: {
           x: {
@@ -28,12 +28,12 @@ const chartConfigs = [
             {
               accessor: 'a',
               enabled: true,
-              chart: 'bar',
+              chart: 'BarChart',
               axis: 'y',
             }, {
               accessor: 'b',
               enabled: true,
-              chart: 'bar',
+              chart: 'BarChart',
               axis: 'y',
             }
           ]
@@ -46,10 +46,10 @@ const chartConfigs = [
     }]
   }, {
     chartId: 'chart2',
-    type: 'XYChartView',
+    type: 'XYChart',
     container: '#chart2',
     components: [{
-      type: 'compositeY',
+      type: 'CompositeYChart',
       config: {
         plot: {
           x: {
@@ -60,14 +60,14 @@ const chartConfigs = [
             {
               accessor: 'c',
               enabled: true,
-              chart: 'line',
+              chart: 'LineChart',
               axis: 'y',
             }
           ]
         }
       },
     }, {
-      type: 'navigation',
+      type: 'Navigation',
       config: {
         chartHeight: 200,
         plot: {
@@ -79,7 +79,7 @@ const chartConfigs = [
             {
               accessor: 'c',
               enabled: true,
-              chart: 'line',
+              chart: 'LineChart',
               axis: 'y',
             }
           ]

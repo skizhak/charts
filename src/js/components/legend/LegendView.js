@@ -5,7 +5,6 @@ const ContrailChartsView = require('contrail-charts-view')
 const _template = require('./legend.html')
 
 class LegendView extends ContrailChartsView {
-  get type () { return 'legend' }
   get className () { return 'coCharts-legend-view' }
 
   constructor (p) {

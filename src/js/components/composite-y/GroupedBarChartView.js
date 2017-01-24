@@ -6,7 +6,6 @@ const d3 = require('d3')
 const XYChartSubView = require('components/composite-y/XYChartSubView')
 
 class BarChartView extends XYChartSubView {
-  get type () { return 'bar' }
   get className () { return 'bar-chart' }
   get zIndex () { return 1 }
   get events () {

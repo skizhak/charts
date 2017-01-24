@@ -10,15 +10,15 @@ class Refresh extends Action {
   _execute (accessorName, color) {
     const chart = this._registrar
 
-    _.each(chart.getComponentsByType('compositeY'), (compositeY) => {
+    _.each(chart.getComponentsByType('CompositeYChart'), (compositeY) => {
       compositeY.config.trigger('change', compositeY.config)
     })
 
-    _.each(chart.getComponentsByType('navigation'), (navigation) => {
+    _.each(chart.getComponentsByType('Navigation'), (navigation) => {
       navigation.config.trigger('change', navigation.config)
     })
 
-    _.each(chart.getComponentsByType('pieChart'), (pieChart) => {
+    _.each(chart.getComponentsByType('PieChart'), (pieChart) => {
       pieChart.config.trigger('change', pieChart.config)
     })
   }

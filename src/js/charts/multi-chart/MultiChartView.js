@@ -6,8 +6,8 @@ const ContrailChartsView = require('contrail-charts-view')
 // Todo doesn't work. loop issue.
 // const charts = require('charts/index')
 const charts = {
-  XYChartView: require('charts/xy-chart/XYChartView'),
-  RadialChartView: require('charts/radial-chart/RadialChartView'),
+  XYChart: require('charts/xy-chart/XYChartView'),
+  RadialChart: require('charts/radial-chart/RadialChartView'),
 }
 const components = require('components/index')
 
@@ -71,21 +71,17 @@ class ChartView extends ContrailChartsView {
     _.each(this._config.components, (component) => {
       this._registerComponent(component.type, component.config, this._dataProvider, component.id)
     })
-    if (this._isEnabledComponent('navigation')) {
-      const dataModel = this.getComponentsByType('navigation')[0].focusDataProvider
-      _.each(this.getComponentsByType('compositeY'), (compositeY) => compositeY.changeModel(dataModel))
-    }
   }
 
   _registerComponent (type, config, model, id) {
     if (!this._isEnabledComponent(type)) return false
-    const configModel = new components[type].ConfigModel(config)
+    const configModel = new components[`${type}ConfigModel`](config)
     const viewOptions = _.extend(config, {
       id: id,
       config: configModel,
       model: model,
     })
-    const component = new components[type].View(viewOptions)
+    const component = new components[`${type}View`](viewOptions)
     this._components.push(component)
 
     return component

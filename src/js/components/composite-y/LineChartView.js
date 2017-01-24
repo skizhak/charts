@@ -13,7 +13,6 @@ const XYChartSubView = require('components/composite-y/XYChartSubView')
 * This is the child view for CompositeYChartView.
 */
 class LineChartView extends XYChartSubView {
-  get type () { return 'line' }
   get className () { return 'line-chart' }
   get zIndex () { return 2 }
   get events () {

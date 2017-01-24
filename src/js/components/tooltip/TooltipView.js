@@ -7,7 +7,6 @@ const ContrailChartsView = require('contrail-charts-view')
 const _template = require('./tooltip.html')
 
 class TooltipView extends ContrailChartsView {
-  get type () { return 'tooltip' }
   get className () { return 'coCharts-tooltip-view' }
 
   constructor (p) {

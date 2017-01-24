@@ -10,7 +10,7 @@ class SelectColor extends Action {
   _execute (accessorName, color) {
     const chart = this._registrar
 
-    _.each(chart.getComponentsByType('compositeY'), (compositeY) => {
+    _.each(chart.getComponentsByType('CompositeYChart'), (compositeY) => {
       const plot = compositeY.config.get('plot')
       const accessor = _.find(plot.y, (a) => a.accessor === accessorName)
       if (accessor) {
@@ -22,7 +22,7 @@ class SelectColor extends Action {
     // Color Picker will be updated as it has CompositeY Config Model as a parent
     // as well as all CompositeY dependant components too
 
-    _.each(chart.getComponentsByType('navigation'), (navigation) => {
+    _.each(chart.getComponentsByType('Navigation'), (navigation) => {
       const plot = navigation.config.get('plot')
       const accessor = _.find(plot.y, (a) => a.accessor === accessorName)
       if (accessor) {

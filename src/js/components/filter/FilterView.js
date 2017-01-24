@@ -6,7 +6,6 @@ const ContrailChartsView = require('contrail-charts-view')
 const _template = require('./filter.html')
 
 class FilterView extends ContrailChartsView {
-  get type () { return 'filter' }
   get className () { return 'coCharts-filter-view' }
   get events () {
     return {
