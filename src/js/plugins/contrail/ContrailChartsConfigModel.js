@@ -6,6 +6,12 @@ const ContrailModel = require('contrail-model')
 
 class ContrailChartsConfigModel extends ContrailModel {
   /**
+   * @return {String} this class name without 'ConfigModel'
+   */
+  get type () {
+    return this.constructor.name.slice(0, -11)
+  }
+  /**
   * Initialize the computed parameters with the config parameters.
   */
   computeParams () {

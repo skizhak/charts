@@ -2,7 +2,6 @@
  * Copyright (c) 2016 Juniper Networks, Inc. All rights reserved.
  */
 const _ = require('lodash')
-const Utils = require('contrail-charts-utils')
 const ContrailChartsDataModel = require('contrail-charts-data-model')
 const ContrailChartsView = require('contrail-charts-view')
 const components = require('components/index')
@@ -21,7 +20,6 @@ const _actions = [
 * Many different Y axis may be configured.
 */
 class XYChartView extends ContrailChartsView {
-  get type () { return 'XYChartView' }
 
   constructor (p) {
     super(p)
@@ -56,9 +54,6 @@ class XYChartView extends ContrailChartsView {
   setConfig (config) {
     this._config = config
     this.setElement(config.container)
-    if (!this._config.chartId) {
-      this._config.chartId = 'XYChartView'
-    }
     // Todo make dataConfig part of handlers? as dataProvider
     if (this._config.dataConfig) this.setDataConfig(this._config.dataConfig)
     this._initComponents()
@@ -75,7 +70,7 @@ class XYChartView extends ContrailChartsView {
    * @return {Array}
    */
   getComponentsByType (type) {
-    return _.filter(this._components, component => component.constructor.name === type)
+    return _.filter(this._components, {type: type})
   }
 
   render () {
@@ -126,11 +121,11 @@ class XYChartView extends ContrailChartsView {
         const sourceComponent = this.getComponent(sourceComponentId)
         component.config.parent = sourceComponent.config
       }
-      if (this._isEnabledComponent('TooltipView')) {
-        component.config.toggleComponent('TooltipView', true)
+      if (this._isEnabledComponent('Tooltip')) {
+        component.config.toggleComponent('Tooltip', true)
       }
-      if (this._isEnabledComponent('CrosshairView')) {
-        component.config.toggleComponent('CrosshairView', true)
+      if (this._isEnabledComponent('Crosshair')) {
+        component.config.toggleComponent('Crosshair', true)
       }
     })
   }
@@ -143,8 +138,8 @@ class XYChartView extends ContrailChartsView {
   _registerComponent (type, config, model, id) {
     if (!this._isEnabledComponent(type)) return false
     let configModel
-    if (components[Utils.getConfigModelName(type)]) {
-      configModel = new components[Utils.getConfigModelName(type)](config)
+    if (components[`${type}ConfigModel`]) {
+      configModel = new components[`${type}ConfigModel`](config)
     }
     const viewOptions = _.extend({}, config, {
       id: id,
@@ -154,7 +149,7 @@ class XYChartView extends ContrailChartsView {
       // actionman is passed as parameter to each component for it to be able to register action
       actionman: this._actionman,
     })
-    const component = new components[type](viewOptions)
+    const component = new components[`${type}View`](viewOptions)
     this._components.push(component)
 
     return component

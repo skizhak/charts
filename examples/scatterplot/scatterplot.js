@@ -22,13 +22,13 @@ for (let i = 0; i < 100; i++) {
 const chartConfig = {
   container: '#chart',
   components: [{
-    type: 'LegendPanelView',
+    type: 'LegendPanel',
     config: {
       sourceComponent: 'scatterPlot',
     },
   }, {
     id: 'scatterPlot',
-    type: 'CompositeYChartView',
+    type: 'CompositeYChart',
     config: {
       marginInner: 25,
       plot: {
@@ -40,7 +40,7 @@ const chartConfig = {
           {
             enabled: true,
             accessor: 'c',
-            chart: 'ScatterPlotView',
+            chart: 'ScatterPlot',
             sizeAccessor: 'r',
             sizeAxis: 'rAxis',
             shape: 'circle',
@@ -49,7 +49,7 @@ const chartConfig = {
           }, {
             enabled: true,
             accessor: 's',
-            chart: 'ScatterPlotView',
+            chart: 'ScatterPlot',
             sizeAccessor: 's',
             sizeAxis: 'rAxis',
             shape: 'square',
@@ -58,7 +58,7 @@ const chartConfig = {
           }, {
             enabled: true,
             accessor: 't',
-            chart: 'ScatterPlotView',
+            chart: 'ScatterPlot',
             sizeAccessor: 's',
             sizeAxis: 'rAxis',
             shape: 'triangle',
@@ -85,7 +85,7 @@ const chartConfig = {
     }
   }, {
     id: 'tooltipId',
-    type: 'TooltipView',
+    type: 'Tooltip',
     config: {
       title: 'BUBBLE',
       dataConfig: [
@@ -113,7 +113,7 @@ const chartConfig = {
       ]
     }
   }, {
-    type: 'NavigationView',
+    type: 'Navigation',
     config: {
       marginInner: 5,
       chartHeight: 200,
@@ -126,7 +126,7 @@ const chartConfig = {
           {
             enabled: true,
             accessor: 'nav',
-            chart: 'LineChartView',
+            chart: 'LineChart',
             axis: 'y1',
           }
         ]

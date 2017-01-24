@@ -13,11 +13,11 @@ const _menuItems = {
     title: 'Refresh chart',
     icon: 'fa fa-refresh',
   },
-  ColorPickerView: {
+  ColorPicker: {
     title: 'Select color for serie',
     icon: 'fa fa-eyedropper',
   },
-  FilterView: {
+  Filter: {
     title: 'Select serie to show',
     icon: 'fa fa-filter',
   }

@@ -39,10 +39,6 @@ class ContrailChartsView extends ContrailView {
   set id (id) {
     // do nothing
   }
-
-  get type () {
-    return this.constructor.name
-  }
   /**
    * @returns {d3 selection} Looks for svg container
    */

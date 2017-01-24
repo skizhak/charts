@@ -9,7 +9,7 @@ class ChangeSelection extends Action {
 
   _execute (dataProvider) {
     const chart = this._registrar
-    _.each(chart.getComponentsByType('CompositeYChartView'), (compositeY) => {
+    _.each(chart.getComponentsByType('CompositeYChart'), (compositeY) => {
       compositeY.changeModel(dataProvider)
     })
   }

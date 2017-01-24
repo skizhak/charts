@@ -14,7 +14,7 @@ const cpuMemChartView = new coCharts.charts.XYChartView()
 cpuMemChartView.setConfig({
   container: '#basicChart',
   components: [{
-    type: 'CompositeYChartView',
+    type: 'CompositeYChart',
     config: {
       plot: {
         x: {

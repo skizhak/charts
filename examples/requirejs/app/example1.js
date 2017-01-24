@@ -25,7 +25,7 @@ define([ // eslint-disable-line no-undef
   complexChartView.setConfig({
     container: '#complexChart',
     components: [{
-      type: 'CompositeYChartView',
+      type: 'CompositeYChart',
       config: {
         marginInner: 10,
         marginLeft: 80,
@@ -42,33 +42,33 @@ define([ // eslint-disable-line no-undef
               accessor: 'a',
               label: 'A',
               enabled: true,
-              chart: 'StackedBarChartView',
+              chart: 'StackedBarChart',
               axis: 'y1',
             }, {
               accessor: 'b',
               label: 'B',
               enabled: true,
-              chart: 'StackedBarChartView',
+              chart: 'StackedBarChart',
               axis: 'y1',
             }, {
               accessor: 'c',
               label: 'C',
               enabled: false,
-              chart: 'StackedBarChartView',
+              chart: 'StackedBarChart',
               axis: 'y1',
             }, {
               accessor: 'd',
               label: 'Megabytes',
               color: '#d62728',
               enabled: true,
-              chart: 'LineChartView',
+              chart: 'LineChart',
               axis: 'y2',
             }, {
               accessor: 'e',
               label: 'Megabytes',
               color: '#9467bd',
               enabled: true,
-              chart: 'LineChartView',
+              chart: 'LineChart',
               axis: 'y2',
             }
           ]
@@ -88,7 +88,7 @@ define([ // eslint-disable-line no-undef
         }
       },
     }, {
-      type: 'TooltipView',
+      type: 'Tooltip',
       config: {
         dataConfig: [
           {
@@ -123,7 +123,7 @@ define([ // eslint-disable-line no-undef
   simpleChartView.setConfig({
     container: '#simpleChart',
     components: [{
-      type: 'CompositeYChartView',
+      type: 'CompositeYChart',
       config: {
         plot: {
           x: {
@@ -134,7 +134,7 @@ define([ // eslint-disable-line no-undef
             {
               enabled: true,
               accessor: 'y',
-              chart: 'LineChartView',
+              chart: 'LineChart',
               axis: 'y',
             }
           ]

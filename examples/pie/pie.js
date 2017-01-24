@@ -21,7 +21,7 @@ function getValue (serie) {
 const chartConfig = {
   container: '#chart',
   components: [{
-    type: 'ControlPanelView',
+    type: 'ControlPanel',
     config: {
       menu: [{
         id: 'Refresh',
@@ -29,7 +29,7 @@ const chartConfig = {
     }
   }, {
     id: 'pieChartId',
-    type: 'PieChartView',
+    type: 'PieChart',
     config: {
       type: 'donut',
       radius: 100,
@@ -43,7 +43,7 @@ const chartConfig = {
     },
   }, {
     id: 'tooltipId',
-    type: 'TooltipView',
+    type: 'Tooltip',
     config: {
       dataConfig: [
         {
@@ -54,7 +54,7 @@ const chartConfig = {
       ],
     },
   }, {
-    type: 'LegendUniversalView',
+    type: 'LegendUniversal',
     config: {
       sourceComponent: 'pieChartId',
     },

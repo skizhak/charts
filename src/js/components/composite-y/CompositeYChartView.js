@@ -17,11 +17,11 @@ class CompositeYChartView extends ContrailChartsView {
   get className () { return 'coCharts-xy-chart' }
   get possibleChildViews () {
     return {
-      LineChartView,
-      AreaChartView,
-      BarChartView,
-      StackedBarChartView,
-      ScatterPlotView,
+      LineChart: LineChartView,
+      AreaChart: AreaChartView,
+      BarChart: BarChartView,
+      StackedBarChart: StackedBarChartView,
+      ScatterPlot: ScatterPlotView,
     }
   }
 

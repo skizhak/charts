@@ -2,7 +2,6 @@
  * Copyright (c) 2016 Juniper Networks, Inc. All rights reserved.
  */
 const _ = require('lodash')
-const Utils = require('contrail-charts-utils')
 const ContrailChartsDataModel = require('contrail-charts-data-model')
 const ContrailView = require('contrail-view') // Todo use contrail-charts-view instead?
 const components = require('components/index')
@@ -19,7 +18,6 @@ const _actions = [
 * TODO merge with ChartView as long as XYChart too
 */
 class RadialChartView extends ContrailView {
-  get type () { return 'RadialChartView' }
 
   constructor (p = {}) {
     super(p)
@@ -54,9 +52,6 @@ class RadialChartView extends ContrailView {
   setConfig (config) {
     this._config = config
     this.setElement(config.container)
-    if (!this._config.chartId) {
-      this._config.chartId = 'RadialChartView'
-    }
     this._initComponents()
   }
 
@@ -91,7 +86,7 @@ class RadialChartView extends ContrailView {
 
   _registerComponent (type, config, model, id) {
     if (!this._isEnabledComponent(type)) return false
-    const configModel = new components[Utils.getConfigModelName(type)](config)
+    const configModel = new components[`${type}ConfigModel`](config)
     const viewOptions = _.extend(config, {
       id: id,
       config: configModel,
@@ -99,7 +94,7 @@ class RadialChartView extends ContrailView {
       actionman: this._actionman,
       container: this.el,
     })
-    const component = new components[type](viewOptions)
+    const component = new components[`${type}View`](viewOptions)
     this._components.push(component)
 
     return component

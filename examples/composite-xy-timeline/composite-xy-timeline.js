@@ -28,7 +28,7 @@ complexChartView.setConfig({
   container: '#complexChart',
   components: [{
     id: 'complexChartCompositeY',
-    type: 'CompositeYChartView',
+    type: 'CompositeYChart',
     config: {
       marginInner: 10,
       marginLeft: 80,
@@ -50,13 +50,13 @@ complexChartView.setConfig({
             possibleChartTypes: [
               {
                 label: 'Stacked Bar',
-                chart: 'StackedBarView'
+                chart: 'StackedBar'
               }, {
                 label: 'Bar',
-                chart: 'BarChartView'
+                chart: 'BarChart'
               }, {
                 label: 'Line',
-                chart: 'LineChartView'
+                chart: 'LineChart'
               }
             ],
             axis: 'y1',
@@ -69,13 +69,13 @@ complexChartView.setConfig({
             possibleChartTypes: [
               {
                 label: 'Stacked Bar',
-                chart: 'StackedBarChartView'
+                chart: 'StackedBarChart'
               }, {
                 label: 'Bar',
-                chart: 'BarChartView'
+                chart: 'BarChart'
               }, {
                 label: 'Line',
-                chart: 'LineChartView'
+                chart: 'LineChart'
               }
             ],
             axis: 'y1',
@@ -84,17 +84,17 @@ complexChartView.setConfig({
             accessor: 'c',
             labelFormatter: 'C',
             enabled: false,
-            chart: 'StackedBarView',
+            chart: 'StackedBar',
             possibleChartTypes: [
               {
                 label: 'Stacked Bar',
-                chart: 'StackedBarChartView'
+                chart: 'StackedBarChart'
               }, {
                 label: 'Bar',
-                chart: 'BarChartView'
+                chart: 'BarChart'
               }, {
                 label: 'Line',
-                chart: 'LineChartView'
+                chart: 'LineChart'
               }
             ],
             axis: 'y1',
@@ -104,17 +104,17 @@ complexChartView.setConfig({
             labelFormatter: 'Megabytes',
             color: '#d62728',
             enabled: true,
-            chart: 'LineChartView',
+            chart: 'LineChart',
             possibleChartTypes: [
               {
                 label: 'Stacked Bar',
-                chart: 'StackedBarChartView',
+                chart: 'StackedBarChart',
               }, {
                 label: 'Bar',
-                chart: 'BarChartView'
+                chart: 'BarChart'
               }, {
                 label: 'Line',
-                chart: 'LineChartView'
+                chart: 'LineChart'
               }
             ],
             axis: 'y2',
@@ -124,17 +124,17 @@ complexChartView.setConfig({
             labelFormatter: 'Megabytes',
             color: '#9467bd',
             enabled: true,
-            chart: 'LineChartView',
+            chart: 'LineChart',
             possibleChartTypes: [
               {
                 label: 'Stacked Bar',
-                chart: 'StackedBarChartView'
+                chart: 'StackedBarChart'
               }, {
                 label: 'Bar',
-                chart: 'BarChartView'
+                chart: 'BarChart'
               }, {
                 label: 'Line',
-                chart: 'LineChartView'
+                chart: 'LineChart'
               }
             ],
             axis: 'y2',
@@ -159,7 +159,7 @@ complexChartView.setConfig({
       }
     }
   }, {
-    type: 'TimelineView',
+    type: 'Timeline',
     config: {
       marginInner: 10,
       marginLeft: 80,

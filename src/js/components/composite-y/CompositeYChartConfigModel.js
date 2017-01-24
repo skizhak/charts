@@ -58,10 +58,10 @@ class CompositeYChartConfigModel extends ContrailChartsConfigModel {
    */
   toggleComponent (type, enable) {
     switch (type) {
-      case 'TooltipView':
+      case 'Tooltip':
         if (!this.attributes.crosshairEnabled) this.set('tooltipEnabled', enable, {silent: true})
         break
-      case 'CrosshairView':
+      case 'Crosshair':
         this.set('tooltipEnabled', !enable, {silent: true})
         this.set('crosshairEnabled', enable, {silent: true})
         break

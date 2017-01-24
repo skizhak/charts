@@ -2,13 +2,12 @@
  * Copyright (c) 2016 Juniper Networks, Inc. All rights reserved.
  */
 const _ = require('lodash')
-const Utils = require('contrail-charts-utils')
 const ContrailChartsView = require('contrail-charts-view')
 // Todo doesn't work. loop issue.
 // const charts = require('charts/index')
 const charts = {
-  XYChartView: require('charts/xy-chart/XYChartView'),
-  RadialChartView: require('charts/radial-chart/RadialChartView'),
+  XYChart: require('charts/xy-chart/XYChartView'),
+  RadialChart: require('charts/radial-chart/RadialChartView'),
 }
 const components = require('components/index')
 
@@ -76,13 +75,13 @@ class ChartView extends ContrailChartsView {
 
   _registerComponent (type, config, model, id) {
     if (!this._isEnabledComponent(type)) return false
-    const configModel = new components[Utils.getConfigModelName(type)](config)
+    const configModel = new components[`${type}ConfigModel`](config)
     const viewOptions = _.extend(config, {
       id: id,
       config: configModel,
       model: model,
     })
-    const component = new components[type](viewOptions)
+    const component = new components[`${type}View`](viewOptions)
     this._components.push(component)
 
     return component
