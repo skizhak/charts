@@ -11,11 +11,25 @@ const complexData = []
 for (let i = 0; i < 100; i++) {
   complexData.push({
     x: 1475760930000 + 1000000 * i,
-    c: (Math.random() - 0.5) * 50,
-    s: Math.random() * 100,
-    t: Math.random() * 100,
-    r: Math.random() * 10,
+    data1: (Math.random() - 0.5) * 50,
+    data2: Math.random() * 100,
+    data3: Math.random() * 100,
+    size1: Math.random() * 10,
+    size2: Math.random() * 20,
     nav: (Math.random() - 0.5) * 50,
+  })
+}
+
+const staticData = []
+for (let i = 0; i < 10; i++) {
+  staticData.push({
+    x: 1475760930000 + 1000000 * i,
+    data1: (i - 0.5) * 50,
+    data2: i * 100,
+    data3: i * 100,
+    size1: i * 10,
+    size2: i * 20,
+    nav: (i - 0.5) * 50,
   })
 }
 
@@ -39,28 +53,28 @@ const chartConfig = {
         y: [
           {
             enabled: true,
-            accessor: 'c',
+            accessor: 'data1',
             chart: 'ScatterPlot',
-            sizeAccessor: 'r',
-            sizeAxis: 'rAxis',
+            sizeAccessor: 'size1',
+            sizeAxis: 'sizeAxis',
             shape: 'circle',
             axis: 'y1',
             tooltip: 'tooltipId',
           }, {
             enabled: true,
-            accessor: 's',
+            accessor: 'data2',
             chart: 'ScatterPlot',
-            sizeAccessor: 's',
-            sizeAxis: 'rAxis',
+            sizeAccessor: 'size2',
+            sizeAxis: 'sizeAxis',
             shape: 'square',
             axis: 'y2',
             tooltip: 'tooltipId',
           }, {
             enabled: true,
-            accessor: 't',
+            accessor: 'data3',
             chart: 'ScatterPlot',
-            sizeAccessor: 's',
-            sizeAxis: 'rAxis',
+            sizeAccessor: 'size2',
+            sizeAxis: 'sizeAxis',
             shape: 'triangle',
             axis: 'y2',
             tooltip: 'tooltipId',
@@ -68,8 +82,8 @@ const chartConfig = {
         ]
       },
       axis: {
-        rAxis: {
-          range: [3, 50]
+        sizeAxis: {
+          range: [1, 500]
         },
         y1: {
           position: 'left',
@@ -94,20 +108,24 @@ const chartConfig = {
           labelFormatter: 'Time',
           valueFormatter: timeFormatter,
         }, {
-          accessor: 'c',
-          labelFormatter: 'C',
+          accessor: 'data1',
+          labelFormatter: 'Data1',
           valueFormatter: numberFormatter,
         }, {
-          accessor: 's',
-          labelFormatter: 'S',
+          accessor: 'data2',
+          labelFormatter: 'Data2',
           valueFormatter: numberFormatter,
         }, {
-          accessor: 't',
-          labelFormatter: 'T',
+          accessor: 'data3',
+          labelFormatter: 'Data3',
           valueFormatter: numberFormatter,
         }, {
-          accessor: 'r',
-          labelFormatter: 'R',
+          accessor: 'size1',
+          labelFormatter: 'Size1',
+          valueFormatter: numberFormatter,
+        }, {
+          accessor: 'size2',
+          labelFormatter: 'Size2',
           valueFormatter: numberFormatter,
         }
       ]
