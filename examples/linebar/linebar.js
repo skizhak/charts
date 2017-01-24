@@ -111,6 +111,7 @@ cpuMemChartView.setConfig({
       }
     }
   }, {
+    id: 'cpuMemChart-navigation',
     type: 'Navigation',
     config: {
       marginInner: 10,
@@ -205,6 +206,7 @@ cpuMemChartView.setConfig({
       isSharedContainer: false,
     },
   }, {
+    id: 'cpuMemChart-message',
     type: 'Message',
     config: {
       enabled: true,
