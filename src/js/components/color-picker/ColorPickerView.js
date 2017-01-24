@@ -5,7 +5,6 @@ const ContrailChartsView = require('contrail-charts-view')
 const _template = require('./color-picker.html')
 
 class ColorPickerView extends ContrailChartsView {
-  get type () { return 'colorPicker' }
   get className () { return 'coCharts-color-picker-view' }
   get events () {
     return {

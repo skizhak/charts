@@ -10,7 +10,6 @@ const _actions = [
 ]
 
 class MessageView extends ContrailChartsView {
-  get type () { return 'message' }
   get className () { return 'coCharts-message-view' }
   get selectors () {
     return _.extend(super.selectors, {

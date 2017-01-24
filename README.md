@@ -19,6 +19,11 @@ To build
 ```
 npm run build
 ```
+to build examples, use
+```
+npm run build-examples
+```
+
 you'll find the `js` and `css` under `build/` directory
 
 Or, download from our releases.
@@ -51,7 +56,7 @@ And we need to plot a line chart for memory 'mem' data over time 'ts'
         container: '#cpumemChart', // Chart container.
         components: [ // Array of child components.
           {
-            type: 'compositeY', // Component type. Let's use composite-y component to render line chart. Refer wiki for more details on component.
+            type: 'CompositeYChart', // Component type. Let's use composite-y component to render line chart. Refer wiki for more details on component.
             config: {
               plot: {
                 x: {
@@ -61,7 +66,7 @@ And we need to plot a line chart for memory 'mem' data over time 'ts'
                 y: [ // Array of plottable accessors on Y axis
                   {
                     accessor: 'mem', // Accessor key from the dataset.
-                    chart: 'line' // Type of the chart
+                    chart: 'LineChart' // Type of the chart
                   }
                 ]
               }
@@ -93,7 +98,7 @@ and use them inside your plot.y config
       {
         accessor: 'mem', // Field name to use on y
         label: 'Memory',
-        chart: 'line', // Type of the chart
+        chart: 'LineChart', // Type of the chart
         axis: y1 // Axis to plot this field on
       }
     ]
@@ -120,13 +125,13 @@ series are different, let's put them on different axis.
     y: [
       {
         accessor: 'mem', // Field name to use on y
-        chart: 'line', // Type of the chart
+        chart: 'LineChart', // Type of the chart
         label: 'Memory', // Label to be displayed on the axis
         axis: y1 // Axis to plot this field on
       },
       {
           accessor: 'cpu', // Field name to use on y
-          chart: 'bar', // Type of the chart
+          chart: 'BarChart', // Type of the chart
           label: 'CPU', // Label to be displayed on the axis
           axis: y2 // Axis to plot this field on
         }

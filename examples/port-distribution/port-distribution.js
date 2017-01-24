@@ -49,7 +49,7 @@ dataSrc = dataProcesser(dataSrc)
 const chartConfig = {
   container: '#chart',
   components: [{
-    type: 'compositeY',
+    type: 'CompositeYChart',
     config: {
       chartHeight: 600,
       marginInner: 10,
@@ -66,7 +66,7 @@ const chartConfig = {
           {
             accessor: 'inBytes',
             label: 'In Bytes',
-            chart: 'scatterPlot',
+            chart: 'ScatterPlot',
             sizeAccessor: 'inBytes',
             sizeAxis: 'sizeAxis',
             shape: 'circle',
@@ -74,7 +74,7 @@ const chartConfig = {
           },
           {
             accessor: 'outBytes',
-            chart: 'scatterPlot',
+            chart: 'ScatterPlot',
             label: 'Out Bytes',
             sizeAccessor: 'outBytes',
             sizeAxis: 'sizeAxis',
@@ -105,7 +105,7 @@ const chartConfig = {
       }
     }
   }, {
-    type: 'tooltip',
+    type: 'Tooltip',
     config: {
       title: 'Port Info',
       dataConfig: [
@@ -160,7 +160,7 @@ const chartConfig = {
       ]
     }
   }, {
-    type: 'navigation',
+    type: 'Navigation',
     config: {
       marginInner: 10,
       marginLeft: 80,
@@ -179,7 +179,7 @@ const chartConfig = {
             enabled: true,
             accessor: 'inBytes',
             label: 'In Bytes',
-            chart: 'scatterPlot',
+            chart: 'ScatterPlot',
             axis: 'y1',
             sizeAccessor: 'outBytes',
             sizeAxis: 'sizeAxis',

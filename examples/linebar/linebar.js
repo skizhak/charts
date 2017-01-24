@@ -40,13 +40,13 @@ const cpuMemChartView = new coCharts.charts.XYChartView()
 cpuMemChartView.setConfig({
   container: '#cpuMemChart',
   components: [{
-    type: 'legendPanel',
+    type: 'LegendPanel',
     config: {
       sourceComponent: 'cpuMemCompositeY',
     }
   }, {
     id: 'cpuMemCompositeY',
-    type: 'compositeY',
+    type: 'CompositeYChart',
     config: {
       marginInner: 10,
       marginLeft: 80,
@@ -65,14 +65,14 @@ cpuMemChartView.setConfig({
             accessor: 'cpu_stats.cpu_one_min_avg',
             label: 'CPU Utilization (%)',
             enabled: true,
-            chart: 'stackedBar',
+            chart: 'StackedBarChart',
             possibleChartTypes: [
               {
                 label: 'Stacked Bar',
-                chart: 'stackedBar',
+                chart: 'StackedBarChart',
               }, {
                 label: 'Line',
-                chart: 'line',
+                chart: 'LineChart',
               }
             ],
             color: '#6baed6',
@@ -81,14 +81,14 @@ cpuMemChartView.setConfig({
             accessor: 'cpu_stats.rss',
             label: 'Memory Usage',
             enabled: true,
-            chart: 'line',
+            chart: 'LineChart',
             possibleChartTypes: [
               {
                 label: 'Stacked Bar',
-                chart: 'stackedBar',
+                chart: 'StackedBarChart',
               }, {
                 label: 'Line',
-                chart: 'line'
+                chart: 'LineChart'
               }
             ],
             color: '#2ca02c',
@@ -111,7 +111,8 @@ cpuMemChartView.setConfig({
       }
     }
   }, {
-    type: 'navigation',
+    id: 'cpuMemChart-navigation',
+    type: 'Navigation',
     config: {
       marginInner: 10,
       marginLeft: 80,
@@ -130,14 +131,14 @@ cpuMemChartView.setConfig({
             enabled: true,
             accessor: 'cpu_stats.cpu_one_min_avg',
             labelFormatter: 'CPU',
-            chart: 'stackedBar',
+            chart: 'StackedBarChart',
             color: '#6baed6',
             axis: 'y1',
           }, {
             enabled: true,
             accessor: 'cpu_stats.rss',
             labelFormatter: 'Memory',
-            chart: 'line',
+            chart: 'LineChart',
             color: '#2ca02c',
             axis: 'y2',
           }
@@ -161,7 +162,7 @@ cpuMemChartView.setConfig({
     }
   }, {
     id: 'defaultTooltip',
-    type: 'tooltip',
+    type: 'Tooltip',
     config: {
       dataConfig: [
         {
@@ -181,7 +182,7 @@ cpuMemChartView.setConfig({
     }
   }, {
     id: 'cpuMemChart-controlPanel',
-    type: 'controlPanel',
+    type: 'ControlPanel',
     config: {
       enabled: true,
       buttons: [
@@ -200,18 +201,19 @@ cpuMemChartView.setConfig({
       ]
     }
   }, {
-    type: 'standalone',
+    type: 'Standalone',
     config: {
       isSharedContainer: false,
     },
   }, {
-    type: 'message',
+    id: 'cpuMemChart-message',
+    type: 'Message',
     config: {
       enabled: true,
     }
   }, {
     id: 'crosshairId',
-    type: 'crosshair',
+    type: 'Crosshair',
     config: {
       tooltip: 'defaultTooltip',
     }
@@ -219,7 +221,7 @@ cpuMemChartView.setConfig({
 })
 cpuMemChartView.setData(tsData)
 cpuMemChartView.renderMessage({
-  componentId: 'XYChartView',
+  componentId: 'XYChart',
   action: 'once',
   messages: [{
     level: 'info',

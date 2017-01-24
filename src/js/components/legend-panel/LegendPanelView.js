@@ -2,7 +2,6 @@ const ContrailChartsView = require('contrail-charts-view')
 const _template = require('./legend.html')
 
 class LegendPanelView extends ContrailChartsView {
-  get type () { return 'legendPanel' }
   get className () { return 'legend-panel' }
   get events () {
     return {

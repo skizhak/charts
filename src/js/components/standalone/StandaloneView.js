@@ -4,7 +4,6 @@
 const ContrailChartsView = require('contrail-charts-view')
 
 class StandaloneView extends ContrailChartsView {
-  get type () { return 'standalone' }
   get tagName () { return 'g' }
   get className () { return 'coCharts-standalone' }
 

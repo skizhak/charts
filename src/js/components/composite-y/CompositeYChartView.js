@@ -13,16 +13,15 @@ const ScatterPlotView = require('components/composite-y/ScatterPlotView')
 const CompositeYChartConfigModel = require('components/composite-y/CompositeYChartConfigModel')
 
 class CompositeYChartView extends ContrailChartsView {
-  get type () { return 'compositeY' }
   get tagName () { return 'g' }
   get className () { return 'coCharts-xy-chart' }
   get possibleChildViews () {
     return {
-      line: LineChartView,
-      area: AreaChartView,
-      bar: BarChartView,
-      stackedBar: StackedBarChartView,
-      scatterPlot: ScatterPlotView,
+      LineChart: LineChartView,
+      AreaChart: AreaChartView,
+      BarChart: BarChartView,
+      StackedBarChart: StackedBarChartView,
+      ScatterPlot: ScatterPlotView,
     }
   }
 

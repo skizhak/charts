@@ -20,7 +20,14 @@ d3.selection.prototype.delegate = function (eventName, targetSelector, handler) 
 }
 
 class ContrailView extends Backbone.View {
+  /**
+   * @return {String} this class name without 'View'
+   */
+  get type () {
+    return this.constructor.name.slice(0, -4)
+  }
   get delegateEventSplitter () { return /^(\S+)\s*(.*)$/ }
+
   // TODO move this function to Utils?
   // instanceof SVGElement works for existing element
   isTagNameSvg (tagName) {

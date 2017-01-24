@@ -20,7 +20,6 @@ const _actions = [
 * Many different Y axis may be configured.
 */
 class XYChartView extends ContrailChartsView {
-  get type () { return 'XYChartView' }
 
   constructor (p) {
     super(p)
@@ -55,9 +54,6 @@ class XYChartView extends ContrailChartsView {
   setConfig (config) {
     this._config = config
     this.setElement(config.container)
-    if (!this._config.chartId) {
-      this._config.chartId = 'XYChartView'
-    }
     // Todo make dataConfig part of handlers? as dataProvider
     if (this._config.dataConfig) this.setDataConfig(this._config.dataConfig)
     this._initComponents()
@@ -125,11 +121,11 @@ class XYChartView extends ContrailChartsView {
         const sourceComponent = this.getComponent(sourceComponentId)
         component.config.parent = sourceComponent.config
       }
-      if (this._isEnabledComponent('tooltip')) {
-        component.config.toggleComponent('tooltip', true)
+      if (this._isEnabledComponent('Tooltip')) {
+        component.config.toggleComponent('Tooltip', true)
       }
-      if (this._isEnabledComponent('crosshair')) {
-        component.config.toggleComponent('crosshair', true)
+      if (this._isEnabledComponent('Crosshair')) {
+        component.config.toggleComponent('Crosshair', true)
       }
     })
   }
@@ -142,8 +138,8 @@ class XYChartView extends ContrailChartsView {
   _registerComponent (type, config, model, id) {
     if (!this._isEnabledComponent(type)) return false
     let configModel
-    if (components[type].ConfigModel) {
-      configModel = new components[type].ConfigModel(config)
+    if (components[`${type}ConfigModel`]) {
+      configModel = new components[`${type}ConfigModel`](config)
     }
     const viewOptions = _.extend({}, config, {
       id: id,
@@ -153,7 +149,7 @@ class XYChartView extends ContrailChartsView {
       // actionman is passed as parameter to each component for it to be able to register action
       actionman: this._actionman,
     })
-    const component = new components[type].View(viewOptions)
+    const component = new components[`${type}View`](viewOptions)
     this._components.push(component)
 
     return component
