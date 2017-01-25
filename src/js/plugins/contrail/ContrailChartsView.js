@@ -1,10 +1,7 @@
 /*
  * Copyright (c) 2016 Juniper Networks, Inc. All rights reserved.
  */
-const $ = require('jquery')
-const _ = require('lodash')
 const d3 = require('d3')
-const Events = require('contrail-charts-events')
 const ContrailView = require('contrail-view')
 /**
  * View base class.
@@ -20,14 +17,14 @@ class ContrailChartsView extends ContrailView {
   }
   get zIndex () { return 0 }
 
-  constructor (options = {}) {
-    super(options)
-    this._id = options.id
+  constructor (p = {}) {
+    super(p)
+    this._id = p.id
     this.d3.attr('id', this.id)
-    this.config = options.config
-    // Container to render into
-    this._container = options.container
-    this._eventObject = options.eventObject || _.extend({}, Events)
+    this.config = p.config
+    this._actionman = p.actionman
+    this._order = p.order
+    this._container = p.container
     this.params = {}
   }
   /**
@@ -43,7 +40,7 @@ class ContrailChartsView extends ContrailView {
     // do nothing
   }
   /**
-   * @returns {d3 selection} Looks for svg container
+   * @returns {Object} d3.selection - Looks for svg container
    */
   get svg () {
     let selector = ''
@@ -63,7 +60,7 @@ class ContrailChartsView extends ContrailView {
     return this.container.select(selector)
   }
   /**
-   * @return {d3 selection} container to render into
+   * @return {Object} d3 selection - container to render into
    */
   get container () {
     return d3.select(this._container)
@@ -81,12 +78,6 @@ class ContrailChartsView extends ContrailView {
   resetParams (params) {
     if (params) this.config.set(params)
     this.params = this.config.computeParams()
-  }
-  /**
-  * This is how the view gets its data.
-  */
-  getData () {
-    return this.model.getData()
   }
   /**
    * Appends components element to container in the order specified in this._order
@@ -118,6 +109,25 @@ class ContrailChartsView extends ContrailView {
     }
   }
   /**
+   * Convenience method to get class name of selector
+   * Just remove leading dot
+   */
+  selectorClass (selectorName) {
+    return this.selectors[selectorName].substr(1)
+  }
+
+  show (container) {
+    if (this._container !== container) {
+      this._container = container
+      this.render()
+    }
+    this.$el.show()
+  }
+
+  hide () {
+    this.$el.hide()
+  }
+  /**
    * First component which uses shared svg container appends svg element to container
    * There is a div wrapper over svg to workaround FF bug, when svg data-order attribute is not set
    */
@@ -140,7 +150,7 @@ class ContrailChartsView extends ContrailView {
     const wrapperPosition = this.svg.node().parentNode.dataset.order
     if (this.params.isPrimary && wrapperPosition !== this.config.get('order')) {
       const wrapper = this.svg.node().parentNode
-      $(wrapper).detach()
+      wrapper.remove() // detach
       this._insertSorted(wrapper)
     }
     this.svg
@@ -152,19 +162,20 @@ class ContrailChartsView extends ContrailView {
    * insert own element into the DOM in the right order
    */
   _insertSorted (el) {
-    // do nothing if element exists
-    if (document.documentElement.contains(el)) return
+    if (el.parentElement === this._container) return
 
     if (!this.config.get('isSharedContainer') || this.params.isPrimary) {
       el.dataset['order'] = this.config.get('order')
     }
     el.classList.add(this.selectors.component.substr(1))
     this._container.appendChild(el)
-    this.container
-      .selectAll(`#${this._container.id} > ${this.selectors.component}`)
-      .datum(function () { return this.dataset['order'] })
-      .sort()
-      .datum(null)
+    if (this._container.childElementCount > 1 && this.config.has('order')) {
+      this.container
+        .selectAll(`#${this._container.id} > ${this.selectors.component}`)
+        .datum(function () { return this.dataset['order'] })
+        .sort()
+        .datum(null)
+    }
   }
 }
 

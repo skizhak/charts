@@ -1,6 +1,6 @@
 {
   "name": "contrail-charts",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "MVC based chart library",
   "main": "src/js/contrail-charts.js",
   "scripts": {
@@ -11,7 +11,8 @@
     "dev-examples": "webpack --progress --colors --watch --mode=dev --config webpack.examples.config.js",
     "test": "node test.js",
     "test-headless": "phantomjs tests/run-jasmine.js tests/TestRunner.html",
-    "lint": "eslint src/** || true"
+    "lint": "eslint src/** || true",
+    "doc": "jsdoc src -r -d docs"
   },
   "license": "Apache-2.0",
   "devDependencies": {
@@ -27,11 +28,12 @@
     "font-awesome": "4.7.0",
     "ignore-loader": "0.1.2",
     "jasmine-core": "2.5.2",
-    "json-loader": "^0.5.4",
+    "jsdoc": "3.4.3",
+    "json-loader": "0.5.4",
     "node-sass": "3.13.0",
     "open": "0.0.5",
-    "raw-loader": "^0.5.1",
     "phantomjs-polyfill": "0.0.2",
+    "raw-loader": "0.5.1",
     "sass-loader": "4.0.2",
     "style-loader": "0.13.1",
     "webpack": "1.13.3",
@@ -39,7 +41,7 @@
   },
   "dependencies": {
     "backbone": "1.3.3",
-    "d3": "4.3.0",
+    "d3": "4.4.3",
     "handlebars": "4.0.6",
     "handlebars-loader": "1.4.0",
     "jquery": "3.1.1",

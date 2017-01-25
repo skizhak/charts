@@ -1,7 +1,7 @@
 /* global coCharts */
 
 // Time series data.
-var tsData = [
+const tsData = [
   { ts: 1475760930000, mem: 0, cpu: 10 },
   { ts: 1475761930000, mem: 3, cpu: 20 },
   { ts: 1475762930000, mem: 2, cpu: 15 },
@@ -10,24 +10,24 @@ var tsData = [
 ]
 
 // Create chart view.
-var cpuMemChartView = new coCharts.charts.XYChartView()
+const cpuMemChartView = new coCharts.charts.XYChartView()
 cpuMemChartView.setConfig({
   container: '#basicChart',
   components: [{
-    type: 'compositeY',
+    type: 'CompositeYChart',
     config: {
       plot: {
         x: {
           accessor: 'ts',
           label: 'Time',
-          //axis: 'x'
+          axis: 'x'
         },
         y: [
           {
             accessor: 'mem',
             label: 'Memory',
             enabled: true,
-            chart: 'line',
+            chart: 'LineChart',
             color: 'green',
             axis: 'y1'
           },
@@ -35,7 +35,7 @@ cpuMemChartView.setConfig({
             accessor: 'cpu',
             label: 'CPU',
             enabled: true,
-            chart: 'bar',
+            chart: 'BarChart',
             color: 'steelblue',
             axis: 'y2'
           }

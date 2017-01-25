@@ -14,10 +14,10 @@ for (let i = 0; i < 100; i++) {
 const chartConfigs = [
   {
     chartId: 'chart1',
-    type: 'XYChartView',
+    type: 'XYChart',
     container: '#chart1',
     components: [{
-      type: 'compositeY',
+      type: 'CompositeYChart',
       config: {
         plot: {
           x: {
@@ -28,12 +28,12 @@ const chartConfigs = [
             {
               accessor: 'a',
               enabled: true,
-              chart: 'bar',
+              chart: 'BarChart',
               axis: 'y',
             }, {
               accessor: 'b',
               enabled: true,
-              chart: 'bar',
+              chart: 'BarChart',
               axis: 'y',
             }
           ]
@@ -46,10 +46,10 @@ const chartConfigs = [
     }]
   }, {
     chartId: 'chart2',
-    type: 'XYChartView',
+    type: 'XYChart',
     container: '#chart2',
     components: [{
-      type: 'compositeY',
+      type: 'CompositeYChart',
       config: {
         plot: {
           x: {
@@ -60,14 +60,14 @@ const chartConfigs = [
             {
               accessor: 'c',
               enabled: true,
-              chart: 'line',
+              chart: 'LineChart',
               axis: 'y',
             }
           ]
         }
       },
     }, {
-      type: 'navigation',
+      type: 'Navigation',
       config: {
         chartHeight: 200,
         plot: {
@@ -79,7 +79,7 @@ const chartConfigs = [
             {
               accessor: 'c',
               enabled: true,
-              chart: 'line',
+              chart: 'LineChart',
               axis: 'y',
             }
           ]
@@ -92,31 +92,10 @@ const chartConfigs = [
 const chartView = new coCharts.charts.MultiChartView()
 chartView.setConfig({
   chartId: 'parentChart',
-  handlers: [{
-    type: 'bindingHandler',
-    config: {
-      bindings: [
-        {
-          sourceChart: 'chart2',
-          sourceComponent: 'navigation',
-          sourceModel: 'events',
-          sourcePath: 'windowChanged',
-          targetChart: 'chart1',
-          targetComponent: 'compositeY',
-          targetModel: 'config',
-          action: function (sourceModel, targetModel, xMin, xMax) {
-            const axis = targetModel.get('axis') || {}
-            axis.x = axis.x || {}
-            axis.x.domain = [xMin, xMax]
-            targetModel.set({ axis: axis }, { silent: true })
-            targetModel.trigger('change')
-          }
-        }
-      ]
-    }
-  }],
-  components: [], // Parent Chart components
-  charts: chartConfigs // Child charts.
+  // Parent Chart components
+  components: [],
+  // Child charts.
+  charts: chartConfigs,
 })
 chartView.setData(complexData, {}, 'chart1')
 chartView.setData(complexData, {}, 'chart2')

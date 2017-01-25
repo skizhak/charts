@@ -15,8 +15,7 @@ class BindingHandler extends ContrailModel {
   * Saves information about a component in a chart.
   * This information will be used later in order to perform bindings defined in a configuration.
   */
-  addComponent (chartId, componentName, component) {
-    chartId = chartId || 'default'
+  addComponent (chartId = 'default', componentName, component) {
     var savedChart = this.get('charts')[chartId]
     if (!savedChart) {
       savedChart = this.get('charts')[chartId] = {}

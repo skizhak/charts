@@ -49,7 +49,7 @@ dataSrc = dataProcesser(dataSrc)
 const chartConfig = {
   container: '#chart',
   components: [{
-    type: 'compositeY',
+    type: 'CompositeYChart',
     config: {
       chartHeight: 600,
       marginInner: 10,
@@ -66,18 +66,18 @@ const chartConfig = {
           {
             accessor: 'inBytes',
             label: 'In Bytes',
-            chart: 'scatterPlot',
+            chart: 'ScatterPlot',
             sizeAccessor: 'inBytes',
-            sizeAxis: 'rAxis',
+            sizeAxis: 'sizeAxis',
             shape: 'circle',
             axis: 'y1'
           },
           {
             accessor: 'outBytes',
-            chart: 'scatterPlot',
+            chart: 'ScatterPlot',
             label: 'Out Bytes',
             sizeAccessor: 'outBytes',
-            sizeAxis: 'rAxis',
+            sizeAxis: 'sizeAxis',
             shape: 'triangle',
             axis: 'y2'
           }
@@ -89,8 +89,8 @@ const chartConfig = {
           formatter: numberFormatter,
           labelMargin: 5
         },
-        rAxis: {
-          range: [3, 20]
+        sizeAxis: {
+          range: [3, 500]
         },
         y1: {
           position: 'left',
@@ -105,7 +105,7 @@ const chartConfig = {
       }
     }
   }, {
-    type: 'tooltip',
+    type: 'Tooltip',
     config: {
       title: 'Port Info',
       dataConfig: [
@@ -160,7 +160,7 @@ const chartConfig = {
       ]
     }
   }, {
-    type: 'navigation',
+    type: 'Navigation',
     config: {
       marginInner: 10,
       marginLeft: 80,
@@ -179,10 +179,10 @@ const chartConfig = {
             enabled: true,
             accessor: 'inBytes',
             label: 'In Bytes',
-            chart: 'scatterPlot',
+            chart: 'ScatterPlot',
             axis: 'y1',
             sizeAccessor: 'outBytes',
-            sizeAxis: 'rAxis',
+            sizeAxis: 'sizeAxis',
             shape: 'circle',
           }
         ]
@@ -191,8 +191,8 @@ const chartConfig = {
         x: {
           scale: 'scaleLinear'
         },
-        rAxis: {
-          range: [3, 20]
+        sizeAxis: {
+          range: [3, 500]
         },
         y1: {
           position: 'left',

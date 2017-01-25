@@ -11,18 +11,38 @@ const complexData = []
 for (let i = 0; i < 100; i++) {
   complexData.push({
     x: 1475760930000 + 1000000 * i,
-    c: (Math.random() - 0.5) * 50,
-    s: Math.random() * 100,
-    t: Math.random() * 100,
-    r: Math.random() * 10,
+    data1: (Math.random() - 0.5) * 50,
+    data2: Math.random() * 100,
+    data3: Math.random() * 100,
+    size1: Math.random() * 10,
+    size2: Math.random() * 20,
     nav: (Math.random() - 0.5) * 50,
+  })
+}
+
+const staticData = []
+for (let i = 0; i < 10; i++) {
+  staticData.push({
+    x: 1475760930000 + 1000000 * i,
+    data1: (i - 0.5) * 50,
+    data2: i * 100,
+    data3: i * 100,
+    size1: i * 10,
+    size2: i * 20,
+    nav: (i - 0.5) * 50,
   })
 }
 
 const chartConfig = {
   container: '#chart',
   components: [{
-    type: 'compositeY',
+    type: 'LegendPanel',
+    config: {
+      sourceComponent: 'scatterPlot',
+    },
+  }, {
+    id: 'scatterPlot',
+    type: 'CompositeYChart',
     config: {
       marginInner: 25,
       plot: {
@@ -33,34 +53,37 @@ const chartConfig = {
         y: [
           {
             enabled: true,
-            accessor: 'c',
-            chart: 'scatterPlot',
-            sizeAccessor: 'r',
-            sizeAxis: 'rAxis',
+            accessor: 'data1',
+            chart: 'ScatterPlot',
+            sizeAccessor: 'size1',
+            sizeAxis: 'sizeAxis',
             shape: 'circle',
-            axis: 'y1'
+            axis: 'y1',
+            tooltip: 'tooltipId',
           }, {
             enabled: true,
-            accessor: 's',
-            chart: 'scatterPlot',
-            sizeAccessor: 's',
-            sizeAxis: 'rAxis',
+            accessor: 'data2',
+            chart: 'ScatterPlot',
+            sizeAccessor: 'size2',
+            sizeAxis: 'sizeAxis',
             shape: 'square',
-            axis: 'y2'
+            axis: 'y2',
+            tooltip: 'tooltipId',
           }, {
             enabled: true,
-            accessor: 't',
-            chart: 'scatterPlot',
-            sizeAccessor: 's',
-            sizeAxis: 'rAxis',
+            accessor: 'data3',
+            chart: 'ScatterPlot',
+            sizeAccessor: 'size2',
+            sizeAxis: 'sizeAxis',
             shape: 'triangle',
-            axis: 'y2'
+            axis: 'y2',
+            tooltip: 'tooltipId',
           }
         ]
       },
       axis: {
-        rAxis: {
-          range: [3, 50]
+        sizeAxis: {
+          range: [1, 500]
         },
         y1: {
           position: 'left',
@@ -75,45 +98,40 @@ const chartConfig = {
       },
     }
   }, {
-    type: 'tooltip',
+    id: 'tooltipId',
+    type: 'Tooltip',
     config: {
       title: 'BUBBLE',
       dataConfig: [
         {
           accessor: 'x',
-          labelFormatter: function (key) {
-            return 'Time'
-          },
-          valueFormatter: timeFormatter
+          labelFormatter: 'Time',
+          valueFormatter: timeFormatter,
         }, {
-          accessor: 'c',
-          labelFormatter: function (key) {
-            return 'C'
-          },
-          valueFormatter: numberFormatter
+          accessor: 'data1',
+          labelFormatter: 'Data1',
+          valueFormatter: numberFormatter,
         }, {
-          accessor: 's',
-          labelFormatter: function (key) {
-            return 'S'
-          },
-          valueFormatter: numberFormatter
+          accessor: 'data2',
+          labelFormatter: 'Data2',
+          valueFormatter: numberFormatter,
         }, {
-          accessor: 't',
-          labelFormatter: function (key) {
-            return 'T'
-          },
-          valueFormatter: numberFormatter
+          accessor: 'data3',
+          labelFormatter: 'Data3',
+          valueFormatter: numberFormatter,
         }, {
-          accessor: 'r',
-          labelFormatter: function (key) {
-            return 'R'
-          },
-          valueFormatter: numberFormatter
+          accessor: 'size1',
+          labelFormatter: 'Size1',
+          valueFormatter: numberFormatter,
+        }, {
+          accessor: 'size2',
+          labelFormatter: 'Size2',
+          valueFormatter: numberFormatter,
         }
       ]
     }
   }, {
-    type: 'navigation',
+    type: 'Navigation',
     config: {
       marginInner: 5,
       chartHeight: 200,
@@ -126,7 +144,7 @@ const chartConfig = {
           {
             enabled: true,
             accessor: 'nav',
-            chart: 'line',
+            chart: 'LineChart',
             axis: 'y1',
           }
         ]

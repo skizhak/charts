@@ -6,11 +6,23 @@ const ContrailModel = require('contrail-model')
 
 class ContrailChartsConfigModel extends ContrailModel {
   /**
+   * @return {String} this class name without 'ConfigModel'
+   */
+  get type () {
+    return this.constructor.name.slice(0, -11)
+  }
+  /**
   * Initialize the computed parameters with the config parameters.
   */
   computeParams () {
     this._computed = {}
     return _.extend(this._computed, JSON.parse(JSON.stringify(this.toJSON())))
+  }
+
+  set parent (model) {
+    model.on('change', () => { this.trigger('change') })
+    this._parent = model
+    this.trigger('change')
   }
 
   getValue (data, datumConfig) {
@@ -40,6 +52,12 @@ class ContrailChartsConfigModel extends ContrailModel {
     if (_.isNil(data)) return undefined
     if (_.isFunction(getLabel)) return getLabel(data)
   }
+  /**
+   * Enable / disable event triggering with data preperation for specified component
+   * @param {String} type Component type
+   * @param {Boolean} enable Change state of this component
+   */
+  toggleComponent (type, enable) {}
 }
 
 module.exports = ContrailChartsConfigModel

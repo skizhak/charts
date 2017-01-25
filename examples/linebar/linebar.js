@@ -1,4 +1,4 @@
-/* global coCharts */
+/* global _ d3 coCharts */
 
 const _ = require('lodash')
 
@@ -65,14 +65,14 @@ const chartYPlotConfig = nodes.reduce((config, currNode) => {
     accessor: `${currNode}.cpu_stats.cpu_one_min_avg`,
     label: `${currNode} CPU Utilization (%)`,
     enabled: true,
-    chart: 'stackedBar',
+    chart: 'StackedBarChart',
     possibleChartTypes: [
       {
         label: 'Stacked Bar',
-        chart: 'stackedBar',
+        chart: 'StackedBarChart',
       }, {
         label: 'Line',
-        chart: 'line',
+        chart: 'LineChart',
       }
     ],
     color: colorMapper[currNode].cpu,
@@ -81,14 +81,14 @@ const chartYPlotConfig = nodes.reduce((config, currNode) => {
     accessor: `${currNode}.cpu_stats.rss`,
     label: `${currNode} Memory Usage`,
     enabled: true,
-    chart: 'line',
+    chart: 'LineChart',
     possibleChartTypes: [
       {
         label: 'Stacked Bar',
-        chart: 'stackedBar',
+        chart: 'StackedBarChart',
       }, {
         label: 'Line',
-        chart: 'line'
+        chart: 'LineChart'
       }
     ],
     color: colorMapper[currNode].mem,
@@ -103,14 +103,14 @@ const navYPlotConfig = nodes.reduce((config, currNode) => {
     enabled: true,
     accessor: `${currNode}.cpu_stats.cpu_one_min_avg`,
     labelFormatter: 'CPU',
-    chart: 'stackedBar',
+    chart: 'StackedBarChart',
     color: colorMapper[currNode].cpu,
     axis: 'y1',
   }, {
     enabled: true,
     accessor: `${currNode}.cpu_stats.rss`,
     labelFormatter: 'Memory',
-    chart: 'line',
+    chart: 'LineChart',
     color: colorMapper[currNode].mem,
     axis: 'y2',
   })
@@ -139,36 +139,22 @@ const tooltipDataConfig = nodes.reduce((config, currNode) => {
 // Create chart view.
 const cpuMemChartView = new coCharts.charts.XYChartView()
 cpuMemChartView.setConfig({
-  handlers: [{
-    type: 'bindingHandler',
-    config: {
-      bindings: [
-        {
-          sourceComponent: 'compositeY',
-          sourceModel: 'config',
-          sourcePath: 'plot',
-          targetComponent: 'controlPanel',
-          targetModel: 'config',
-          action: 'sync'
-        }
-      ]
-    }
-  }],
   container: '#cpuMemChart',
   components: [{
-    type: 'legend',
+    type: 'LegendPanel',
     config: {
-      sourceComponent: 'cpuMemCompositeY'
+      sourceComponent: 'cpuMemCompositeY',
     }
   }, {
     id: 'cpuMemCompositeY',
-    type: 'compositeY',
+    type: 'CompositeYChart',
     config: {
       marginInner: 10,
       marginLeft: 80,
       marginRight: 80,
       marginBottom: 40,
       chartHeight: 600,
+      crosshair: 'crosshairId',
       plot: {
         x: {
           accessor: 'T',
@@ -192,7 +178,8 @@ cpuMemChartView.setConfig({
       }
     }
   }, {
-    type: 'navigation',
+    id: 'cpuMemChart-navigation',
+    type: 'Navigation',
     config: {
       marginInner: 10,
       marginLeft: 80,
@@ -226,14 +213,14 @@ cpuMemChartView.setConfig({
     }
   }, {
     id: 'defaultTooltip',
-    type: 'tooltip',
+    type: 'Tooltip',
     config: {
       title: 'Usage Details',
       dataConfig: tooltipDataConfig
     }
   }, {
     id: 'cpuMemChart-controlPanel',
-    type: 'controlPanel',
+    type: 'ControlPanel',
     config: {
       enabled: true,
       buttons: [
@@ -242,32 +229,34 @@ cpuMemChartView.setConfig({
           title: 'Filter',
           iconClass: 'fa fa-filter',
           events: {
-            click: 'filterVariables'
+            click: 'filterVariables',
           },
           panel: {
             name: 'accessorData',
-            width: '350px'
+            width: '350px',
           }
         }
       ]
     }
   }, {
-    type: 'standalone',
+    type: 'Standalone',
     config: {
       isSharedContainer: false,
     },
   }, {
-    type: 'message',
+    id: 'cpuMemChart-message',
+    type: 'Message',
     config: {
       enabled: true,
     }
   }, {
-    type: 'crosshair',
+    id: 'crosshairId',
+    type: 'Crosshair',
     config: {
       tooltip: 'defaultTooltip'
     }
   }, {
-    type: 'colorPicker',
+    type: 'ColorPicker',
     config: {
       sourceComponent: 'cpuMemCompositeY',
     }
@@ -275,11 +264,11 @@ cpuMemChartView.setConfig({
 })
 cpuMemChartView.setData(tsData)
 cpuMemChartView.renderMessage({
-  componentId: 'XYChartView',
+  componentId: 'XYChart',
   action: 'once',
   messages: [{
     level: 'info',
     title: '',
-    message: 'Loading ...'
+    message: 'Loading ...',
   }]
 })
