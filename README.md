@@ -61,7 +61,8 @@ And we need to plot a line chart for memory 'mem' data over time 'ts'
               plot: {
                 x: {
                   accessor: 'ts', // Accessor key from dataset to plot x axis
-                  label: 'Time' // Label to be displayed
+                  label: 'Time', // Label to be displayed
+                  axis: 'x'
                 },
                 y: [ // Array of plottable accessors on Y axis
                   {
