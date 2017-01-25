@@ -35,6 +35,11 @@ const examples = [
     css: 'pie/pie.css',
     title: 'Pie Chart',
   }, {
+    html: 'tooltip/index.html',
+    js: 'tooltip/index.js',
+    css: 'tooltip/index.css',
+    title: 'Line, Stacked Bar and Line charts with tooltip and custom tooltip',
+  }, {
     html: 'requirejs/requirejs.html',
     js: ['requirejs/requirejs-config.js', 'requirejs/app/example1.js'],
     css: 'requirejs/app/example1.css',
