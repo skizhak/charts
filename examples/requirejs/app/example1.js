@@ -4,7 +4,7 @@
 
 define([ // eslint-disable-line no-undef
   'd3', // Example use of older d3 versions.
-  'underscore',
+  'lodash',
   'contrail-charts'
 ], function (d3, _, coCharts) {
   // Complex example
@@ -23,32 +23,9 @@ define([ // eslint-disable-line no-undef
   const complexChartView = new coCharts.charts.XYChartView()
   complexChartView.setData(complexData)
   complexChartView.setConfig({
-    handlers: [{
-      type: 'bindingHandler',
-      config: {
-        bindings: [
-          {
-            sourceComponent: 'compositeY',
-            sourceModel: 'config',
-            sourcePath: 'plot',
-            targetComponent: 'controlPanel',
-            targetModel: 'config',
-            action: 'sync'
-          }
-        ]
-      }
-    }, {
-      type: 'dataProvider',
-      config: {
-        formatData: (data) => {
-          // Sample dataProvider input data formatter.
-          return data
-        }
-      }
-    }],
     container: '#complexChart',
     components: [{
-      type: 'compositeY',
+      type: 'CompositeYChart',
       config: {
         marginInner: 10,
         marginLeft: 80,
@@ -65,33 +42,33 @@ define([ // eslint-disable-line no-undef
               accessor: 'a',
               label: 'A',
               enabled: true,
-              chart: 'stackedBar',
+              chart: 'StackedBarChart',
               axis: 'y1',
             }, {
               accessor: 'b',
               label: 'B',
               enabled: true,
-              chart: 'stackedBar',
+              chart: 'StackedBarChart',
               axis: 'y1',
             }, {
               accessor: 'c',
               label: 'C',
               enabled: false,
-              chart: 'stackedBar',
+              chart: 'StackedBarChart',
               axis: 'y1',
             }, {
               accessor: 'd',
               label: 'Megabytes',
               color: '#d62728',
               enabled: true,
-              chart: 'line',
+              chart: 'LineChart',
               axis: 'y2',
             }, {
               accessor: 'e',
               label: 'Megabytes',
               color: '#9467bd',
               enabled: true,
-              chart: 'line',
+              chart: 'LineChart',
               axis: 'y2',
             }
           ]
@@ -111,7 +88,7 @@ define([ // eslint-disable-line no-undef
         }
       },
     }, {
-      type: 'tooltip',
+      type: 'Tooltip',
       config: {
         dataConfig: [
           {
@@ -126,25 +103,6 @@ define([ // eslint-disable-line no-undef
             accessor: 'b',
             labelFormatter: () => 'B',
             valueFormatter: d3.format('.02f')
-          }
-        ]
-      }
-    }, {
-      type: 'controlPanel',
-      config: {
-        enabled: true,
-        buttons: [
-          {
-            name: 'filter',
-            title: 'Filter',
-            iconClass: 'fa fa-filter',
-            events: {
-              click: 'filterVariables'
-            },
-            panel: {
-              name: 'accessorData',
-              width: '350px'
-            }
           }
         ]
       }
@@ -165,7 +123,7 @@ define([ // eslint-disable-line no-undef
   simpleChartView.setConfig({
     container: '#simpleChart',
     components: [{
-      type: 'compositeY',
+      type: 'CompositeYChart',
       config: {
         plot: {
           x: {
@@ -176,7 +134,7 @@ define([ // eslint-disable-line no-undef
             {
               enabled: true,
               accessor: 'y',
-              chart: 'line',
+              chart: 'LineChart',
               axis: 'y',
             }
           ]

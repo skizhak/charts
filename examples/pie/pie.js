@@ -20,10 +20,16 @@ function getValue (serie) {
 
 const chartConfig = {
   container: '#chart',
-  components: [
-  {
-    id: 'pieChart',
-    type: 'pieChart',
+  components: [{
+    type: 'ControlPanel',
+    config: {
+      menu: [{
+        id: 'Refresh',
+      }],
+    }
+  }, {
+    id: 'pieChartId',
+    type: 'PieChart',
     config: {
       type: 'donut',
       radius: 100,
@@ -32,11 +38,12 @@ const chartConfig = {
         getValue: getValue,
         getLabel: getLabel,
         valueFormatter: numberFormatter,
-      }
+      },
+      tooltip: 'tooltipId',
     },
-  },
-  {
-    type: 'tooltip',
+  }, {
+    id: 'tooltipId',
+    type: 'Tooltip',
     config: {
       dataConfig: [
         {
@@ -46,11 +53,10 @@ const chartConfig = {
         },
       ],
     },
-  },
-  {
-    type: 'legendUniversal',
+  }, {
+    type: 'LegendUniversal',
     config: {
-      sourceComponent: 'pieChart',
+      sourceComponent: 'pieChartId',
     },
   }
   ]

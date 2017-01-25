@@ -1,8 +1,14 @@
 @import "font";
+@import 'button';
 @import "colors";
 @import "tooltip";
 
 @import "pie-chart";
+
+// Components
+@import './legend.scss';
+@import './filter.scss';
+@import './control-panel.scss';
 
 * {
 	box-sizing: border-box;

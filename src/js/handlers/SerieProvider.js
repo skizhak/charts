@@ -1,6 +1,5 @@
-/**
+/*
  * Copyright (c) 2016 Juniper Networks, Inc. All rights reserved.
- * Handler for single serie data type
  */
 const _ = require('lodash')
 const ContrailModel = require('contrail-model')
@@ -12,7 +11,8 @@ class SerieProvider extends ContrailModel {
     }
   }
 
-  initialize (options) {
+  constructor (p) {
+    super(p)
     if (this.has('parent')) {
       this.listenTo(this.get('parent'), 'change', this.parse)
     }
@@ -22,13 +22,11 @@ class SerieProvider extends ContrailModel {
   }
 
   parse () {
-    this.set('data', this.get('parent').getData())
+    this.set('data', this.get('parent').get('data'))
   }
 
   getLabels (formatter) {
-    return _.map(this.get('data'), function (serie) {
-      return formatter(serie)
-    })
+    return _.map(this.get('data'), (serie) => formatter(serie))
   }
 }
 

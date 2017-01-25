@@ -13,11 +13,17 @@ class PieChartConfigModel extends ContrailChartsConfigModel {
       // The chart width. If not provided will be caculated by View.
       chartWidth: undefined,
 
-      // / The chart height. If not provided will be caculated by View.
+      // The chart height. If not provided will be caculated by View.
       chartHeight: undefined,
 
       colorScale: d3.scaleOrdinal(d3.schemeCategory20),
     }
+  }
+
+  get innerRadius () {
+    const chartType = this.get('type')
+    const innerRadiusCoefficient = chartType === 'pie' ? 0 : 0.75
+    return this.get('radius') * innerRadiusCoefficient
   }
 
   getColor (accessor) {
@@ -31,12 +37,6 @@ class PieChartConfigModel extends ContrailChartsConfigModel {
   getLabels (dataProvider) {
     const labelFormatter = this.get('serie').getLabel
     return dataProvider.getLabels(labelFormatter)
-  }
-
-  getInnerRadius () {
-    const chartType = this.get('type')
-    const innerRadiusCoefficient = chartType === 'pie' ? 0 : 0.75
-    return this.get('radius') * innerRadiusCoefficient
   }
 }
 

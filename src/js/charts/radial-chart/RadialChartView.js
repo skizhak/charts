@@ -2,34 +2,36 @@
  * Copyright (c) 2016 Juniper Networks, Inc. All rights reserved.
  */
 const _ = require('lodash')
-const Events = require('contrail-charts-events')
 const ContrailChartsDataModel = require('contrail-charts-data-model')
 const ContrailView = require('contrail-view') // Todo use contrail-charts-view instead?
 const components = require('components/index')
-const handlers = require('handlers/index')
+const SerieProvider = require('handlers/SerieProvider')
+const Actionman = require('../../plugins/Actionman')
+const _actions = [
+  require('actions/ShowComponent'),
+  require('actions/HideComponent'),
+  require('actions/SelectColor'),
+  require('actions/Refresh'),
+]
 /**
 * Group of charts rendered in polar coordinates system
 * TODO merge with ChartView as long as XYChart too
 */
 class RadialChartView extends ContrailView {
-  get type () { return 'RadialChartView' }
 
-  constructor (options) {
-    super()
-    this.hasExternalBindingHandler = false
+  constructor (p = {}) {
+    super(p)
     this._dataModel = new ContrailChartsDataModel()
-    this._dataProvider = new handlers.SerieProvider({ parent: this._dataModel })
+    this._dataProvider = new SerieProvider({ parent: this._dataModel })
     this._components = []
-    options = options || {}
-    this._eventObject = options.eventObject || _.extend({}, Events)
-    this.listenTo(this._dataProvider, 'change', this._render)
+    this._actionman = new Actionman()
+    _.each(_actions, action => this._actionman.set(action, this))
   }
 
   render () {
     _.each(this._components, (component) => {
       component.render()
     })
-    this._render()
   }
   /**
   * Provide data for this chart as a simple array of objects.
@@ -40,7 +42,7 @@ class RadialChartView extends ContrailView {
     dataConfig = dataConfig || {}
     this._dataModel.set(dataConfig, { silent: true })
 
-    if (_.isArray(data)) this._dataModel.setData(data)
+    if (_.isArray(data)) this._dataModel.data = data
   }
   /**
   * Sets the configuration for this chart as a simple object.
@@ -50,31 +52,23 @@ class RadialChartView extends ContrailView {
   setConfig (config) {
     this._config = config
     this.setElement(config.container)
-    if (!this._config.chartId) {
-      this._config.chartId = 'RadialChartView'
-    }
     this._initComponents()
   }
 
   getComponent (id) {
     return _.find(this._components, {id: id})
   }
-  // TODO should return all instances not first only
-  getComponentByType (type) {
-    return _.find(this._components, {type: type})
+  /**
+   * Get array of components by type
+   * @return {Array}
+   */
+  getComponentsByType (type) {
+    return _.filter(this._components, {type: type})
   }
 
   _initComponents () {
     _.each(this._config.components, (component, index) => {
       component.config.order = index
-      if (component.type === 'bindingHandler' && this._isEnabledComponent('bindingHandler')) {
-        if (!this.bindingHandler) {
-          this.bindingHandler = new handlers.BindingHandler(this._config.bindingHandler)
-        } else {
-          this.bindingHandler.addBindings(this._config.bindingHandler.bindings, this._config.chartId)
-        }
-        return
-      }
       this._registerComponent(component.type, component.config, this._dataProvider, component.id)
     })
     // set parent config model
@@ -82,30 +76,27 @@ class RadialChartView extends ContrailView {
       const sourceComponentId = component.config.get('sourceComponent')
       if (sourceComponentId) {
         const sourceComponent = this.getComponent(sourceComponentId)
-        component.config.setParent(sourceComponent.config)
+        component.config.parent = sourceComponent.config
       }
     })
     if (this._isEnabledComponent('pieChart')) {
-      this.getComponentByType('pieChart').changeModel(this._dataProvider)
+      _.each(this.getComponentsByType('pieChart'), (pieChart) => pieChart.changeModel(this._dataProvider))
     }
   }
 
   _registerComponent (type, config, model, id) {
     if (!this._isEnabledComponent(type)) return false
-    const configModel = new components[type].ConfigModel(config)
+    const configModel = new components[`${type}ConfigModel`](config)
     const viewOptions = _.extend(config, {
       id: id,
       config: configModel,
       model: model,
-      eventObject: this._eventObject,
+      actionman: this._actionman,
       container: this.el,
     })
-    const component = new components[type].View(viewOptions)
+    const component = new components[`${type}View`](viewOptions)
     this._components.push(component)
 
-    if (this._isEnabledComponent('bindingHandler') || this.hasExternalBindingHandler) {
-      this.bindingHandler.addComponent(this._config.chartId, type, component)
-    }
     return component
   }
 
@@ -116,10 +107,6 @@ class RadialChartView extends ContrailView {
       return !(componentConfig.config.enable === false)
     }
     return false
-  }
-
-  _render () {
-    // TODO chart render function should be called after each component render for performance
   }
 }
 

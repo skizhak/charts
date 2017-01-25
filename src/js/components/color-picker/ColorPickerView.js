@@ -5,27 +5,26 @@ const ContrailChartsView = require('contrail-charts-view')
 const _template = require('./color-picker.html')
 
 class ColorPickerView extends ContrailChartsView {
-  get type () { return 'colorPicker' }
   get className () { return 'coCharts-color-picker-view' }
-
   get events () {
     return {
       'click .color-select': 'open',
       'click .color-picker-palette-close': 'close',
-      'click .color-picker-palette-color': 'selectColor',
+      'click .color-picker-palette-color': '_onSelectColor',
     }
   }
 
-  constructor (options) {
-    super(options)
+  constructor (p) {
+    super(p)
     this.listenTo(this.config, 'change', this.render)
   }
 
   render () {
     const template = this.config.get('template') || _template
-    const content = template(this.config.getData())
+    const content = template(this.config.data)
 
     super.render(content)
+    this.d3.classed('hide', this.config.get('embedded'))
   }
 
   open (d, el) {
@@ -44,10 +43,11 @@ class ColorPickerView extends ContrailChartsView {
     this.$('.color-picker-palette').hide()
   }
 
-  selectColor (d, el) {
-    const $elem = this.$(el)
-    const color = $elem.css('background-color')
-    this._eventObject.trigger('selectColor', this._accessor, color)
+  // Event handlers
+
+  _onSelectColor (d, el) {
+    const color = el.style['background-color']
+    this._actionman.fire('SelectColor', this._accessor, color)
   }
 }
 

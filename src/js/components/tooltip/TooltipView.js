@@ -7,22 +7,15 @@ const ContrailChartsView = require('contrail-charts-view')
 const _template = require('./tooltip.html')
 
 class TooltipView extends ContrailChartsView {
-  get type () { return 'tooltip' }
   get className () { return 'coCharts-tooltip-view' }
 
-  constructor (options) {
-    super(options)
+  constructor (p) {
+    super(p)
     this.resetParams()
     this.listenTo(this.config, 'change', this.resetParams)
-    this.listenTo(this._eventObject, 'showTooltip', this.show)
-    this.listenTo(this._eventObject, 'hideTooltip', this.hide)
   }
 
-  show (offset, data, id) {
-    if (id && id !== this.id) return
-    if (_.isArray(this.params.acceptFilters) && this.params.acceptFilters.length > 0) {
-      if (!_.includes(this.params.acceptFilters, id)) return
-    }
+  show (offset, data) {
     this.render(data)
     this.$el.show()
 
@@ -41,8 +34,7 @@ class TooltipView extends ContrailChartsView {
     })
   }
 
-  hide (id) {
-    if (id && id !== this.id) return
+  hide () {
     this.$el.hide()
   }
 

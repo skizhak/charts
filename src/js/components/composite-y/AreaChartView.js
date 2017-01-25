@@ -9,9 +9,14 @@ const XYChartSubView = require('components/composite-y/XYChartSubView')
 * This is the child view for CompositeYChartView.
 */
 class AreaChartView extends XYChartSubView {
-  get type () { return 'area' }
   get className () { return 'area-chart' }
   get zIndex () { return 50 }
+  get events () {
+    return {
+      'mouseover .area': '_onMouseover',
+      'mouseout .area': '_onMouseout',
+    }
+  }
 
   /**
   * Called by the parent in order to calculate maximum data extents for all of this child's axis.
@@ -46,11 +51,10 @@ class AreaChartView extends XYChartSubView {
 
   getTooltipData (data, xPos) {
     const xAccessor = this.params.plot.x.accessor
-    const xScale = this.getXScale()
     const xBisector = d3.bisector((d) => {
       return d[xAccessor]
     }).left
-    const xVal = xScale.invert(xPos)
+    const xVal = this.xScale.invert(xPos)
     // if( _.isDate( xVal ) ) {
     //    xVal = xVal.getTime()
     // }
@@ -59,38 +63,32 @@ class AreaChartView extends XYChartSubView {
     return dataItem
   }
 
-  renderData () {
-    const data = this.getData()
+  _render () {
     super.render()
 
-    // Draw one line (path) for each Y accessor.
-    // Collect linePathData - one line per Y accessor.
+    const data = this.model.data
     const linePathData = []
     const lines = {}
-    const yScale = this.getYScale()
-    const xScale = this.getXScale()
     const zeroLine = d3.line()
-      .x((d) => xScale(d[this.params.plot.x.accessor]))
-      .y((d) => yScale.range()[0])
+      .x((d) => this.xScale(d[this.params.plot.x.accessor]))
+      .y((d) => this.yScale.range()[0])
     _.each(this.params.activeAccessorData, (accessor) => {
       const key = accessor.accessor
       lines[key] = d3.line()
-        .x((d) => xScale(d[this.params.plot.x.accessor]))
-        .y((d) => yScale(d[key]))
+        .x((d) => this.xScale(d[this.params.plot.x.accessor]))
+        .y((d) => this.yScale(d[key]))
         .curve(this.config.get('curve'))
       linePathData.push({ key: key, accessor: accessor, data: data })
     })
-    const x0 = xScale.range()[0]
-    const x1 = xScale.range()[1]
-    const y0 = yScale.range()[0]
+    const x0 = this.xScale.range()[0]
+    const x1 = this.xScale.range()[1]
+    const y0 = this.yScale.range()[0]
     const y1 = y0
     const svgLines = this.d3.selectAll('.area').data(linePathData, (d) => d.key)
     svgLines.enter().append('path')
       .attr('class', (d) => 'area area-' + d.key)
       .attr('d', (d) => zeroLine(data))
       .merge(svgLines)
-      .on('mouseover', this._onMouseover.bind(this))
-      .on('mouseout', this._onMouseout.bind(this))
       .transition().ease(d3.easeLinear).duration(this.params.duration)
       .attr('fill', (d) => this.getColor(d.accessor))
       .attr('d', (d) => {
@@ -101,31 +99,29 @@ class AreaChartView extends XYChartSubView {
   }
 
   render () {
-    _.defer(() => {
-      this.renderData()
-    })
+    _.defer(() => this._render())
     return this
   }
 
-  _onMouseover (d) {
+  _onMouseover (d, el) {
     if (this.config.get('tooltipEnabled')) {
-      const pos = d3.mouse(this)
+      const pos = d3.mouse(el)
       const offset = this.$el.offset()
       const dataItem = this.getTooltipData(d.data, pos[0])
       const tooltipOffset = {
         top: offset.top + pos[1],
-        left: offset.left + pos[0] - this.getXScale().range()[0],
+        left: offset.left + pos[0] - this.xScale.range()[0],
       }
-      this._eventObject.trigger('showTooltip', tooltipOffset, dataItem, d.accessor.tooltip)
+      this._actionman.fire('ShowTooltip', tooltipOffset, dataItem, d.accessor.tooltip)
     }
     d3.select(d3.event.currentTarget).classed('active', true)
   }
 
-  _onMouseout (d) {
+  _onMouseout (d, el) {
     if (this.config.get('tooltipEnabled')) {
-      this._eventObject.trigger('hideTooltip', d.accessor.tooltip)
+      this._actionman.fire('HideTooltip', d.accessor.tooltip)
     }
-    d3.select(d3.event.currentTarget).classed('active', false)
+    el.classList.remove('active')
   }
 }
 

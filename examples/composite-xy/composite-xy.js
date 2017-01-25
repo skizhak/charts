@@ -1,4 +1,4 @@
-/* global coCharts */
+/* global d3 coCharts */
 
 function timeFormatter (value) {
   return d3.timeFormat('%H:%M:%S')(value)
@@ -25,36 +25,33 @@ for (let i = 0; i < 100; i++) {
 }
 const complexChartView = new coCharts.charts.XYChartView()
 complexChartView.setConfig({
-  handlers: [{
-    type: 'bindingHandler',
-    config: {
-      bindings: [
-        {
-          sourceComponent: 'compositeY',
-          sourceModel: 'config',
-          sourcePath: 'plot',
-          targetComponent: 'controlPanel',
-          targetModel: 'config',
-          action: 'sync'
-        }
-      ]
-    },
-  }],
   container: '#complexChart',
   components: [{
-    type: 'legend',
+    type: 'LegendPanel',
     config: {
-      sourceComponent: 'complexChartCompositeY'
-    }
+      sourceComponent: 'complexChartCompositeY',
+      placement: 'row',
+      coloPicker: true,
+      filter: true,
+      chartSelector: true,
+    },
+  }, {
+    type: 'ControlPanel',
+    config: {
+      menu: [
+        { id: 'Refresh' },
+      ],
+    },
   }, {
     id: 'complexChartCompositeY',
-    type: 'compositeY',
+    type: 'CompositeYChart',
     config: {
       marginInner: 10,
       marginLeft: 80,
       marginRight: 80,
       marginBottom: 40,
       chartHeight: 600,
+      crosshair: 'crosshairId',
       plot: {
         x: {
           accessor: 'x',
@@ -66,17 +63,17 @@ complexChartView.setConfig({
             accessor: 'a',
             labelFormatter: 'A',
             enabled: true,
-            chart: 'stackedBar',
+            chart: 'BarChart',
             possibleChartTypes: [
               {
                 label: 'Stacked Bar',
-                chart: 'stackedBar'
+                chart: 'StackedBarChart'
               }, {
                 label: 'Bar',
-                chart: 'bar'
+                chart: 'BarChart'
               }, {
                 label: 'Line',
-                chart: 'line'
+                chart: 'LineChart'
               }
             ],
             axis: 'y1',
@@ -85,17 +82,17 @@ complexChartView.setConfig({
             accessor: 'b',
             labelFormatter: 'B',
             enabled: true,
-            chart: 'stackedBar',
+            chart: 'BarChart',
             possibleChartTypes: [
               {
                 label: 'Stacked Bar',
-                chart: 'stackedBar'
+                chart: 'StackedBarChart'
               }, {
                 label: 'Bar',
-                chart: 'bar'
+                chart: 'BarChart'
               }, {
                 label: 'Line',
-                chart: 'line'
+                chart: 'LineChart'
               }
             ],
             axis: 'y1',
@@ -104,17 +101,17 @@ complexChartView.setConfig({
             accessor: 'c',
             labelFormatter: 'C',
             enabled: false,
-            chart: 'stackedBar',
+            chart: 'BarChart',
             possibleChartTypes: [
               {
                 label: 'Stacked Bar',
-                chart: 'stackedBar'
+                chart: 'StackedBarChart'
               }, {
                 label: 'Bar',
-                chart: 'bar'
+                chart: 'BarChart'
               }, {
                 label: 'Line',
-                chart: 'line'
+                chart: 'LineChart'
               }
             ],
             axis: 'y1',
@@ -124,17 +121,17 @@ complexChartView.setConfig({
             labelFormatter: 'Megabytes',
             color: '#d62728',
             enabled: true,
-            chart: 'line',
+            chart: 'LineChart',
             possibleChartTypes: [
               {
                 label: 'Stacked Bar',
-                chart: 'stackedBar'
+                chart: 'StackedBarChart'
               }, {
                 label: 'Bar',
-                chart: 'bar'
+                chart: 'BarChart'
               }, {
                 label: 'Line',
-                chart: 'line'
+                chart: 'LineChart'
               }
             ],
             axis: 'y2',
@@ -144,17 +141,17 @@ complexChartView.setConfig({
             labelFormatter: 'Megabytes',
             color: '#9467bd',
             enabled: true,
-            chart: 'line',
+            chart: 'LineChart',
             possibleChartTypes: [
               {
                 label: 'Stacked Bar',
-                chart: 'stackedBar'
+                chart: 'StackedBarChart'
               }, {
                 label: 'Bar',
-                chart: 'bar'
+                chart: 'BarChart'
               }, {
                 label: 'Line',
-                chart: 'line'
+                chart: 'LineChart'
               }
             ],
             axis: 'y2',
@@ -180,7 +177,7 @@ complexChartView.setConfig({
       }
     },
   }, {
-    type: 'navigation',
+    type: 'Navigation',
     config: {
       marginInner: 10,
       marginLeft: 80,
@@ -199,19 +196,19 @@ complexChartView.setConfig({
             enabled: true,
             accessor: 'a',
             labelFormatter: 'A',
-            chart: 'stackedBar',
+            chart: 'StackedBarChart',
             axis: 'y1',
           }, {
             enabled: true,
             accessor: 'b',
             labelFormatter: 'B',
-            chart: 'stackedBar',
+            chart: 'StackedBarChart',
             axis: 'y1',
           }, {
             enabled: true,
             accessor: 'd',
             labelFormatter: 'Megabytes',
-            chart: 'line',
+            chart: 'LineChart',
             axis: 'y2',
           }
         ]
@@ -233,7 +230,7 @@ complexChartView.setConfig({
     },
   }, {
     id: 'defaultTooltip',
-    type: 'tooltip',
+    type: 'Tooltip',
     config: {
       title: {
           accessor: 'x',
@@ -266,90 +263,27 @@ complexChartView.setConfig({
     },
   }, {
     id: 'customTooltip',
-    type: 'tooltip',
+    type: 'Tooltip',
     config: {
-      template: function (data) {
-        return '<div class="tooltip-content">Custom tooltip</div>'
-      }
+      template: (data) => '<div class="tooltip-content">Custom tooltip</div>',
     }
   }, {
-    id: 'complexChart-controlPanel',
-    type: 'controlPanel',
-    config: {
-      enabled: true,
-      buttons: [
-        {
-          name: 'filter',
-          title: 'Filter',
-          iconClass: 'fa fa-filter',
-          events: {
-            click: 'filterVariables'
-          },
-          panel: {
-            name: 'accessorData',
-            width: '350px'
-          }
-        }, {
-          // This action button is to demonstrate the message component. May not reflect the correct use-case.
-          name: 'sendMessage',
-          title: 'Send Message',
-          iconClass: 'fa fa-edit',
-          events: {
-            click: function () {
-              this._eventObject.trigger('message', {
-                componentId: 'XYChartView',
-                action: 'new',
-                messages: [
-                  {
-                    title: 'New Message',
-                    message: 'A message was added.'
-                  }
-                ]
-              })
-            }
-          }
-        }, {
-          name: 'clearMessage',
-          title: 'Clear Message',
-          iconClass: 'fa fa-eraser',
-          events: {
-            click: function () {
-              this._eventObject.trigger('clearMessage', 'XYChartView')
-            }
-          }
-        }, {
-          name: 'refresh',
-          title: 'Refresh',
-          iconClass: 'fa fa-refresh',
-          events: {
-            click: function () {
-              this._eventObject.trigger('refresh')
-            }
-          }
-        }
-      ]
-    },
-  }, {
-    id: 'messageView',
-    type: 'message',
+    id: 'messageId',
+    type: 'Message',
     config: {
       enabled: true,
     }
   }, {
-    type: 'crosshair',
+    id: 'crosshairId',
+    type: 'Crosshair',
     config: {
       tooltip: 'defaultTooltip',
-    }
-  }, {
-    type: 'colorPicker',
-    config: {
-      sourceComponent: 'complexChartCompositeY',
     }
   }]
 })
 complexChartView.setData(complexData)
 complexChartView.renderMessage({
-  componentId: 'XYChartView',
+  componentId: 'XYChart',
   action: 'once',
   messages: [{
     level: 'info',

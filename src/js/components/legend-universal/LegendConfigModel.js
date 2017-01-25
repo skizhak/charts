@@ -4,13 +4,7 @@
 const _ = require('lodash')
 const ContrailChartsConfigModel = require('contrail-charts-config-model')
 
-class Self extends ContrailChartsConfigModel {
-  setParent (model) {
-    this._parent = model
-    model.on('change', () => {
-      this.trigger('change')
-    })
-  }
+class LegendConfigModel extends ContrailChartsConfigModel {
   /**
    * Ask parent component for labels and not dataProvider directly as some data series may be filtered out
    */
@@ -25,4 +19,4 @@ class Self extends ContrailChartsConfigModel {
   }
 }
 
-module.exports = Self
+module.exports = LegendConfigModel

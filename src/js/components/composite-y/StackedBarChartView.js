@@ -6,7 +6,6 @@ const d3 = require('d3')
 const XYChartSubView = require('components/composite-y/XYChartSubView')
 
 class StackedBarChartView extends XYChartSubView {
-  get type () { return 'stackedBar' }
   get className () { return 'bar-chart' }
   get zIndex () { return 1 }
   get events () {
@@ -46,8 +45,7 @@ class StackedBarChartView extends XYChartSubView {
   * Used by CrosshairView render data preparation.
   */
   getScreenY (dataElem, yAccessor) {
-    const yScale = this.getYScale()
-    let stackedY = yScale.domain()[0]
+    let stackedY = this.yScale.domain()[0]
     let found = false
     _.each(this.params.activeAccessorData, (accessor) => {
       if (accessor.accessor === yAccessor) {
@@ -57,7 +55,7 @@ class StackedBarChartView extends XYChartSubView {
         stackedY += dataElem[accessor.accessor]
       }
     })
-    return yScale(stackedY + dataElem[yAccessor])
+    return this.yScale(stackedY + dataElem[yAccessor])
   }
 
   render () {
@@ -67,7 +65,6 @@ class StackedBarChartView extends XYChartSubView {
 
   _render () {
     super.render()
-    const yScale = this.getYScale()
 
     const svgBarGroups = this.d3
       .selectAll('.bar')
@@ -75,7 +72,7 @@ class StackedBarChartView extends XYChartSubView {
     svgBarGroups.enter().append('rect')
       .attr('class', (d) => d.className)
       .attr('x', (d) => d.x)
-      .attr('y', yScale.range()[0])
+      .attr('y', this.yScale.range()[0])
       .attr('height', 0)
       .attr('width', (d) => d.w)
       .merge(svgBarGroups).transition().ease(d3.easeLinear).duration(this.params.duration)
@@ -88,28 +85,26 @@ class StackedBarChartView extends XYChartSubView {
   }
 
   _prepareData () {
-    const data = this.getData()
-    const yScale = this.getYScale()
-    const xScale = this.getXScale()
+    const data = this.model.data
     const flatData = []
-    const xValues = _.map(this.getData(), this.params.plot.x.accessor)
+    const xValues = _.map(data, this.params.plot.x.accessor)
     const xValuesExtent = d3.extent(xValues)
-    const xRange = [xScale(xValuesExtent[0]), xScale(xValuesExtent[1])]
+    const xRange = [this.xScale(xValuesExtent[0]), this.xScale(xValuesExtent[1])]
     let len = data.length - 1
     if (len === 0) len = 1
     const bandWidth = (0.95 * ((xRange[1] - xRange[0]) / len) - 1)
     const bandWidthHalf = (bandWidth / 2)
     _.each(data, (d) => {
       const x = d[this.params.plot.x.accessor]
-      let stackedY = yScale.domain()[0]
+      let stackedY = this.yScale.domain()[0]
       _.each(this.params.activeAccessorData, (accessor) => {
         const key = accessor.accessor
         const obj = {
           id: x + '-' + key,
           className: 'bar bar-' + key,
-          x: xScale(x) - bandWidthHalf,
-          y: yScale(stackedY + d[key]),
-          h: yScale(stackedY) - yScale(stackedY + d[key]),
+          x: this.xScale(x) - bandWidthHalf,
+          y: this.yScale(stackedY + d[key]),
+          h: this.yScale(stackedY) - this.yScale(stackedY + d[key]),
           w: bandWidth,
           color: this.getColor(accessor),
           accessor: accessor,
@@ -121,6 +116,7 @@ class StackedBarChartView extends XYChartSubView {
     })
     return flatData
   }
+
   // Event handlers
 
   _onMouseover (d) {
@@ -130,14 +126,14 @@ class StackedBarChartView extends XYChartSubView {
         top: d.y + offset.top,
         left: d.x + offset.left,
       }
-      this._eventObject.trigger('showTooltip', tooltipOffset, d.data, d.accessor.tooltip)
+      this._actionman.fire('ShowTooltip', tooltipOffset, d.data, d.accessor.tooltip)
     }
     this.d3.select(() => d3.event.currentTarget).classed('active', true)
   }
 
   _onMouseout (d) {
     if (this.config.get('tooltipEnabled')) {
-      this._eventObject.trigger('hideTooltip', d.accessor.tooltip)
+      this._actionman.fire('HideTooltip', d.accessor.tooltip)
     }
     this.d3.select(() => d3.event.currentTarget).classed('active', false)
   }

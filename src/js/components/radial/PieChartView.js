@@ -6,7 +6,6 @@ const shape = require('d3-shape')
 const ContrailChartsView = require('contrail-charts-view')
 
 class PieChartView extends ContrailChartsView {
-  get type () { return 'pieChart' }
   get tagName () { return 'g' }
   get className () { return 'coCharts-pie-chart' }
   get events () {
@@ -16,8 +15,8 @@ class PieChartView extends ContrailChartsView {
     }
   }
 
-  constructor (options = {}) {
-    super(options)
+  constructor (p = {}) {
+    super(p)
     this._highlightRadius = 10
     this.listenTo(this.model, 'change', this._onDataModelChange)
     this.listenTo(this.config, 'change', this._onConfigModelChange)
@@ -30,19 +29,6 @@ class PieChartView extends ContrailChartsView {
     this.listenTo(this.model, 'change', this._onDataModelChange)
   }
 
-  _calculateDimensions () {
-    if (!this.params.chartWidth) {
-      this.params.chartWidth = this._container.getBoundingClientRect().width
-    }
-    if (this.params.chartWidthDelta) {
-      this.params.chartWidth += this.params.chartWidthDelta
-    }
-    if (!this.params.chartHeight) {
-      this.params.chartHeight = Math.round(this.params.chartWidth / 2)
-    }
-    // TODO: use the 'axis' param to compute additional margins for the axis
-  }
-
   render () {
     this.resetParams()
     this._calculateDimensions()
@@ -53,7 +39,7 @@ class PieChartView extends ContrailChartsView {
 
     const arc = shape.arc()
       .outerRadius(radius)
-      .innerRadius(this.config.getInnerRadius())
+      .innerRadius(this.config.innerRadius)
 
     const pie = shape.pie()
       .sort(null)
@@ -67,6 +53,19 @@ class PieChartView extends ContrailChartsView {
       .classed('arc', true)
       .attr('d', arc)
       .style('fill', (d) => this.config.getColor(serieConfig.getLabel(d.data)))
+  }
+
+  _calculateDimensions () {
+    if (!this.params.chartWidth) {
+      this.params.chartWidth = this._container.getBoundingClientRect().width
+    }
+    if (this.params.chartWidthDelta) {
+      this.params.chartWidth += this.params.chartWidthDelta
+    }
+    if (!this.params.chartHeight) {
+      this.params.chartHeight = Math.round(this.params.chartWidth / 2)
+    }
+    // TODO: use the 'axis' param to compute additional margins for the axis
   }
 
   // Event handlers
@@ -84,19 +83,18 @@ class PieChartView extends ContrailChartsView {
     const serieConfig = this.config.get('serie')
     const outerRadius = this.config.get('radius')
     const innerRadius = this.config.getInnerRadius()
-
     const arc = shape.arc(sector).innerRadius(innerRadius).outerRadius(outerRadius)
+    const labelPos = arc.centroid(sector)
 
     this.d3.select(() => el).classed('highlight', true)
 
-    const labelPos = arc.centroid(sector)
     const tooltipOffset = {
       left: this.params.chartWidth / 2 + labelPos[0],
       top: this.params.chartHeight / 2 + labelPos[1]
     }
 
     sector.data.color = this.config.getColor(serieConfig.getLabel(sector.data))
-    this._eventObject.trigger('showTooltip', tooltipOffset, sector.data)
+    this._actionman.fire('ShowComponent', this.config.get('tooltip'), tooltipOffset, sector.data)
   }
 
   _onMouseout (d, el) {
