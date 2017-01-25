@@ -20,14 +20,14 @@ cpuMemChartView.setConfig({
         x: {
           accessor: 'ts',
           label: 'Time',
-          //axis: 'x'
+          axis: 'x'
         },
         y: [
           {
             accessor: 'mem',
             label: 'Memory',
             enabled: true,
-            chart: 'line',
+            chart: 'LineChart',
             color: 'green',
             axis: 'y1'
           },
@@ -35,7 +35,7 @@ cpuMemChartView.setConfig({
             accessor: 'cpu',
             label: 'CPU',
             enabled: true,
-            chart: 'bar',
+            chart: 'BarChart',
             color: 'steelblue',
             axis: 'y2'
           }

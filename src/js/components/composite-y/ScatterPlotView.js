@@ -27,7 +27,7 @@ class ScatterPlotView extends XYChartSubView {
   }
   /**
   * Called by the parent in order to calculate maximum data extents for all of this child's axis.
-  * Assumes the params.activeAccessorData for this child view is filled by the parent with the relevent yAccessors for this child only.
+  * Assumes the params.activeAccessorData for this child view is filled by the parent with the relevant yAccessors for this child only.
   * Returns an object with following structure: { y1: [0,10], x: [-10,10] }
   */
   calculateAxisDomains () {
