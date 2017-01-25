@@ -29,7 +29,7 @@ function memFormatter (number) {
   return formattedBytes
 }
 
-const nodes = ['node1', 'node2', 'node3', 'node4']
+const nodes = ['node1', 'node2']
 const colorMapper = _.zipObject(
   nodes,
   [{
@@ -38,12 +38,6 @@ const colorMapper = _.zipObject(
   }, {
     cpu: '#2ca02c',
     mem: '#217821'
-  }, {
-    cpu: '#a02c2c',
-    mem: '#782121'
-  }, {
-    cpu: '#fc9ad8',
-    mem: '#fb68c5'
   }]
 )
 
@@ -65,8 +59,12 @@ const chartYPlotConfig = nodes.reduce((config, currNode) => {
     accessor: `${currNode}.cpu_stats.cpu_one_min_avg`,
     label: `${currNode} CPU Utilization (%)`,
     enabled: true,
-    chart: 'StackedBarChart',
+    chart: 'BarChart',
     possibleChartTypes: [
+      {
+        label: 'Bar',
+        chart: 'BarChart',
+      },
       {
         label: 'Stacked Bar',
         chart: 'StackedBarChart',
@@ -80,7 +78,7 @@ const chartYPlotConfig = nodes.reduce((config, currNode) => {
   }, {
     accessor: `${currNode}.cpu_stats.rss`,
     label: `${currNode} Memory Usage`,
-    enabled: true,
+    enabled: false,
     chart: 'LineChart',
     possibleChartTypes: [
       {
@@ -107,7 +105,7 @@ const navYPlotConfig = nodes.reduce((config, currNode) => {
     color: colorMapper[currNode].cpu,
     axis: 'y1',
   }, {
-    enabled: true,
+    enabled: false,
     accessor: `${currNode}.cpu_stats.rss`,
     labelFormatter: 'Memory',
     chart: 'LineChart',
@@ -199,13 +197,13 @@ cpuMemChartView.setConfig({
         x: {},
         y1: {
           position: 'left',
-          formatter: cpuFormatter,
+          formatter: () => '',
           labelMargin: 15,
           ticks: 4,
         },
         y2: {
           position: 'right',
-          formatter: memFormatter,
+          formatter: () => '',
           labelMargin: 15,
           ticks: 4,
         }
@@ -222,21 +220,12 @@ cpuMemChartView.setConfig({
     id: 'cpuMemChart-controlPanel',
     type: 'ControlPanel',
     config: {
-      enabled: true,
-      buttons: [
-        {
-          name: 'filter',
-          title: 'Filter',
-          iconClass: 'fa fa-filter',
-          events: {
-            click: 'filterVariables',
-          },
-          panel: {
-            name: 'accessorData',
-            width: '350px',
-          }
-        }
-      ]
+      menu: [{
+        id: 'Refresh',
+      }, {
+        id: 'ColorPicker',
+        component: 'cpuMemChart-colorPicker'
+      }],
     }
   }, {
     type: 'Standalone',
@@ -256,9 +245,11 @@ cpuMemChartView.setConfig({
       tooltip: 'defaultTooltip'
     }
   }, {
+    id: 'cpuMemChart-colorPicker',
     type: 'ColorPicker',
     config: {
       sourceComponent: 'cpuMemCompositeY',
+      embedded: true
     }
   }]
 })
