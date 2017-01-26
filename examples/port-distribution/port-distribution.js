@@ -37,7 +37,7 @@ function dataProcesser (data) {
       inPkts: 0,
       outBytes: 0,
       outFlowCount: 0,
-      outPkts: 0
+      outPkts: 0,
     }, flattenedData[key])
   )
 }
@@ -64,28 +64,30 @@ const chartConfig = {
         },
         y: [
           {
+            enabled: true,
             accessor: 'inBytes',
             label: 'In Bytes',
             chart: 'ScatterPlot',
             sizeAccessor: 'inBytes',
             sizeAxis: 'sizeAxis',
             shape: 'circle',
-            axis: 'y1'
-          },
-          {
+            axis: 'y1',
+            tooltip: 'tooltipId',
+          }, {
+            enabled: true,
             accessor: 'outBytes',
             chart: 'ScatterPlot',
             label: 'Out Bytes',
             sizeAccessor: 'outBytes',
             sizeAxis: 'sizeAxis',
             shape: 'triangle',
-            axis: 'y2'
+            axis: 'y2',
+            tooltip: 'tooltipId',
           }
         ]
       },
       axis: {
         x: {
-          scale: 'scaleLinear',
           formatter: numberFormatter,
           labelMargin: 5
         },
@@ -95,67 +97,48 @@ const chartConfig = {
         y1: {
           position: 'left',
           formatter: byteFormatter,
-          labelMargin: 15
+          labelMargin: 15,
         },
         y2: {
           position: 'right',
           formatter: byteFormatter,
-          labelMargin: 15
+          labelMargin: 15,
         }
       }
     }
   }, {
+    id: 'tooltipId',
     type: 'Tooltip',
     config: {
       title: 'Port Info',
       dataConfig: [
         {
           accessor: 'port',
-          labelFormatter: function (key) {
-            return 'Port'
-          }
-        },
-        {
+          labelFormatter: 'Port',
+        }, {
           accessor: 'inBytes',
-          labelFormatter: function (key) {
-            return 'Incoming Traffic'
-          },
-          valueFormatter: byteFormatter
-        },
-        {
+          labelFormatter: 'Incoming Traffic',
+          valueFormatter: byteFormatter,
+        }, {
           accessor: 'outBytes',
-          labelFormatter: function (key) {
-            return 'Outgoing Traffic'
-          },
-          valueFormatter: byteFormatter
-        },
-        {
+          labelFormatter: 'Outgoing Traffic',
+          valueFormatter: byteFormatter,
+        }, {
           accessor: 'inFlowCount',
-          labelFormatter: function (key) {
-            return 'Incoming Flow Count'
-          },
-          valueFormatter: numberFormatter
-        },
-        {
+          labelFormatter: 'Incoming Flow Count',
+          valueFormatter: numberFormatter,
+        }, {
           accessor: 'outFlowCount',
-          labelFormatter: function (key) {
-            return 'Outgoing Flow Count'
-          },
-          valueFormatter: numberFormatter
-        },
-        {
+          labelFormatter: 'Outgoing Flow Count',
+          valueFormatter: numberFormatter,
+        }, {
           accessor: 'inPkts',
-          labelFormatter: function (key) {
-            return 'Incoming Packets'
-          },
-          valueFormatter: numberFormatter
-        },
-        {
+          labelFormatter: 'Incoming Packets',
+          valueFormatter: numberFormatter,
+        }, {
           accessor: 'outPkts',
-          labelFormatter: function (key) {
-            return 'Outgoing Packets'
-          },
-          valueFormatter: numberFormatter
+          labelFormatter: 'Outgoing Packets',
+          valueFormatter: numberFormatter,
         }
       ]
     }
@@ -188,11 +171,9 @@ const chartConfig = {
         ]
       },
       axis: {
-        x: {
-          scale: 'scaleLinear'
-        },
+        x: {},
         sizeAxis: {
-          range: [3, 500]
+          range: [3, 500],
         },
         y1: {
           position: 'left',
