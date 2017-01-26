@@ -1,4 +1,5 @@
-[![Build Status](https://travis-ci.org/absingla/contrail-charts.svg?branch=master)](https://travis-ci.org/absingla/contrail-charts)
+[![Build Status](https://circleci.com/gh/:absingla/:contrail-charts/tree/:master.svg?style=shield&circle-token=:circle-token)](https://circleci.com/gh/absingla/contrail-charts)
+[//]: # ([![Build Status](https://travis-ci.org/absingla/contrail-charts.svg?branch=master)](https://travis-ci.org/absingla/contrail-charts))
 [![JavaScript Style Guide](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](http://standardjs.com/)
 
 # Contrail Charts
