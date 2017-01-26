@@ -35,7 +35,8 @@ const config = {
   entry: {
     'publicExampleLoader': path.join(__dirname, '/demo/app/common/js/publicExampleLoader.js'),
     'internalExampleLoader': path.join(__dirname, '/demo/app/common/js/internalExampleLoader.js'),
-    'port-distribution': path.join(__dirname, '/demo/examples/port-distribution/port-distribution.js')
+    'port-distribution': path.join(__dirname, '/demo/examples/port-distribution/port-distribution.js'),
+    'linebar': path.join(__dirname, '/demo/examples/linebar/linebar.js')
   },
   devtool: 'source-map',
   output: {

@@ -198,6 +198,7 @@ const chartConfig = {
           position: 'left',
           formatter: byteFormatter,
           labelMargin: 15,
+          ticks: 4
         }
       }
     }
