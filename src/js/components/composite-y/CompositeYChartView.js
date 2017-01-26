@@ -28,6 +28,7 @@ class CompositeYChartView extends ContrailChartsView {
   constructor (p) {
     super(p)
     this._drawings = []
+    this._ticking = false
 
     this.listenTo(this.model, 'change', this.render)
     this.listenTo(this.config, 'change', this.render)
@@ -286,7 +287,7 @@ class CompositeYChartView extends ContrailChartsView {
       .merge(svgYAxis)
       .attr('transform', 'translate(' + translate + ',0)')
     if (this.config.get('crosshairEnabled')) {
-      this.svg.delegate('mousemove', 'svg', _.throttle(this._onMousemove.bind(this), 100))
+      this.svg.delegate('mousemove', 'svg', this._onMousemove.bind(this))
     }
   }
 
@@ -517,7 +518,7 @@ class CompositeYChartView extends ContrailChartsView {
     })
     // Order the drawings so the highest order drawings get rendered first.
     this._drawings.sort((a, b) => a.renderOrder - b.renderOrder)
-    _.each(this._drawings, (drawing) => { drawing.resetParams() })
+    _.each(this._drawings, drawing => { drawing.resetParams() })
   }
 
   _render () {
@@ -531,7 +532,7 @@ class CompositeYChartView extends ContrailChartsView {
     super.render()
     this.renderSVG()
     this.renderAxis()
-    _.each(this._drawings, (drawing) => {
+    _.each(this._drawings, drawing => {
       drawing.render()
     })
 
@@ -546,10 +547,20 @@ class CompositeYChartView extends ContrailChartsView {
 
   _onMousemove (d, el, e) {
     const point = [e.offsetX, e.offsetY]
+    if (!this._ticking) {
+      window.requestAnimationFrame(this.showCrosshair.bind(this, point))
+      this._ticking = true
+    }
+  }
+
+  showCrosshair (point) {
     const crosshairId = this.config.get('crosshair')
     const data = this.getCrosshairData(point)
     const config = this.getCrosshairConfig()
     this._actionman.fire('ShowComponent', crosshairId, data, point, config)
+
+    // reset the tick so we can capture the next handler
+    this._ticking = false
   }
 }
 
