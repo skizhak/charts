@@ -17,6 +17,9 @@ class NavigationConfigModel extends ContrailChartsConfigModel {
       // The chart height. If not provided will be caculated by View.
       chartHeight: undefined,
 
+      // Scale to transform values from percentage based selection to visual coordinates
+      selectionScale: d3.scaleLinear().domain([0, 100]),
+
       colorScale: d3.scaleOrdinal(d3.schemeCategory20),
       // Duration of chart transitions.
       duration: 300,
@@ -37,8 +40,25 @@ class NavigationConfigModel extends ContrailChartsConfigModel {
       curve: d3.curveCatmullRom.alpha(0.5),
 
       // The selection to use when first rendered [xMin%, xMax%].
-      selection: [0, 100]
+      selection: [],
     }
+  }
+
+  get rangeMargined () {
+    const margin = this.attributes.marginInner
+    return [
+      [this.attributes.xRange[0] - margin, this.attributes.yRange[1] - margin],
+      [this.attributes.xRange[1] + margin, this.attributes.yRange[0] + margin],
+    ]
+  }
+
+  get selectionRange () {
+    this.attributes.selectionScale.range([this.rangeMargined[0][0], this.rangeMargined[1][0]])
+    if (_.isEmpty(this.attributes.selection)) return []
+    return [
+      this.attributes.selectionScale(this.attributes.selection[0]),
+      this.attributes.selectionScale(this.attributes.selection[1]),
+    ]
   }
 
   getColor (accessor) {
