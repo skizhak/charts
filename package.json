@@ -4,7 +4,7 @@
   "description": "MVC based chart library",
   "main": "src/js/contrail-charts.js",
   "scripts": {
-    "build": "npm run build:lib & npm run build:examples",
+    "build": "npm run build:lib && npm run build:examples",
     "build:lib": "webpack --mode=build",
     "build:examples": "webpack --mode=build --config webpack.examples.config.js",
     "build:clean": "rm -rf build/* && npm run build",
