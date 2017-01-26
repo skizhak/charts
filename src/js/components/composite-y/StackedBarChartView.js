@@ -119,23 +119,23 @@ class StackedBarChartView extends XYChartSubView {
 
   // Event handlers
 
-  _onMouseover (d) {
+  _onMouseover (d, el) {
     if (this.config.get('tooltipEnabled')) {
       const offset = this.$el.offset()
       const tooltipOffset = {
         top: d.y + offset.top,
         left: d.x + offset.left,
       }
-      this._actionman.fire('ShowTooltip', tooltipOffset, d.data, d.accessor.tooltip)
+      this._actionman.fire('ShowComponent', d.accessor.tooltip, tooltipOffset, d.data)
     }
-    this.d3.select(() => d3.event.currentTarget).classed('active', true)
+    el.classList.add('active')
   }
 
-  _onMouseout (d) {
+  _onMouseout (d, el) {
     if (this.config.get('tooltipEnabled')) {
-      this._actionman.fire('HideTooltip', d.accessor.tooltip)
+      this._actionman.fire('HideComponent', d.accessor.tooltip)
     }
-    this.d3.select(() => d3.event.currentTarget).classed('active', false)
+    el.classList.remove('active')
   }
 }
 

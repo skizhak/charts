@@ -200,13 +200,13 @@ cpuMemChartView.setConfig({
         },
         y1: {
           position: 'left',
-          formatter: cpuFormatter,
+          formatter: () => '',
           labelMargin: 15,
           ticks: 4,
         },
         y2: {
           position: 'right',
-          formatter: memFormatter,
+          formatter: () => '',
           labelMargin: 15,
           ticks: 4,
         }
@@ -216,6 +216,7 @@ cpuMemChartView.setConfig({
     id: 'defaultTooltip',
     type: 'Tooltip',
     config: {
+      title: 'Usage Details',
       dataConfig: tooltipDataConfig
     }
   }, {
