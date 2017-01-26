@@ -12,6 +12,7 @@ class TooltipView extends ContrailChartsView {
   constructor (p) {
     super(p)
     this.resetParams()
+    this.config.container = p.container
     this.listenTo(this.config, 'change', this.resetParams)
   }
 
@@ -21,12 +22,16 @@ class TooltipView extends ContrailChartsView {
 
     // Tooltip dimensions will be available after render.
     const tooltipWidth = this.$el.outerWidth()
-    const windowWidth = $(document).width()
+    const containerWidth = this.config.container.offsetWidth
+    const containerHeight = this.config.container.offsetHeight
+
     const tooltipPositionTop = offset.top < 0 ? 0 : offset.top
     let tooltipPositionLeft = offset.left
-    if ((offset.left + tooltipWidth) > windowWidth) {
+
+    if ((offset.left + tooltipWidth) > containerWidth) {
       tooltipPositionLeft = offset.left - tooltipWidth
     }
+
     this.$el.css({
       top: tooltipPositionTop,
       left: tooltipPositionLeft,

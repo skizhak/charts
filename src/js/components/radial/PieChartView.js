@@ -82,7 +82,7 @@ class PieChartView extends ContrailChartsView {
 
     const serieConfig = this.config.get('serie')
     const outerRadius = this.config.get('radius')
-    const innerRadius = this.config.getInnerRadius()
+    const innerRadius = this.config.innerRadius
     const arc = shape.arc(sector).innerRadius(innerRadius).outerRadius(outerRadius)
     const labelPos = arc.centroid(sector)
 
@@ -99,7 +99,7 @@ class PieChartView extends ContrailChartsView {
 
   _onMouseout (d, el) {
     this.d3.select(() => el).classed('highlight', false)
-    this._eventObject.trigger('hideTooltip')
+    this._actionman.fire('HideComponent', this.config.get('tooltip'))
   }
 }
 
