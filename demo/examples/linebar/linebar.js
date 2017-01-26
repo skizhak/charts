@@ -54,14 +54,40 @@ function dataProcesser (rawData) {
   }
 }
 
+/**
+ * Try to use the given colorSchema to assign a color to each attribute of each node
+ *
+ * @param      {Array}  nodeIds      Array of node identifiers
+ * @param      {Array}  nodeAttrs    Array of node attributes to color
+ * @param      {Array}  colorSchema  The color schema
+ * @param      {number}  offset      The offset
+ * @return     {Object}  Generated color palette
+ */
+function generateColorPalette (nodeIds, nodeAttrs, colorSchema, offset) {
+  const colors = colorSchema.length
+
+  return _.reduce(nodeIds, (palette, nodeId, nodeIdx) => {
+    _.forEach(nodeAttrs, (attr, attrIdx) => {
+      palette[`${nodeId}.${attr}`] = colorSchema[(nodeIdx + offset * attrIdx) % colors]
+    })
+
+    return palette
+  }, {})
+}
+
 const dataSrc = require('./data-source.json')
 const dataProcessed = dataProcesser(dataSrc.data)
-const colorSchema = d3.schemeCategory20
+const colorPalette = generateColorPalette(
+    dataProcessed.nodeIds,
+    ['cpu_share', 'mem_res'],
+    d3.schemeCategory20,
+    4
+  )
 
 const mainChartPlotYConfig = _.reduce(dataProcessed.nodeIds, (config, nodeId, idx) => {
   config.push({
     accessor: `${nodeId}.cpu_share`,
-    label: 'CPU Utilization (%)',
+    label: `${nodeId} CPU Utilization (%)`,
     enabled: idx === 0,
     chart: 'StackedBarChart',
     possibleChartTypes: [
@@ -73,11 +99,11 @@ const mainChartPlotYConfig = _.reduce(dataProcessed.nodeIds, (config, nodeId, id
         chart: 'LineChart',
       }
     ],
-    color: colorSchema[idx % 20],
+    color: colorPalette[`${nodeId}.cpu_share`],
     axis: 'y1',
   }, {
     accessor: `${nodeId}.mem_res`,
-    label: 'Memory Usage',
+    label: `${nodeId} Memory Usage`,
     enabled: idx === 0,
     chart: 'LineChart',
     possibleChartTypes: [
@@ -89,7 +115,7 @@ const mainChartPlotYConfig = _.reduce(dataProcessed.nodeIds, (config, nodeId, id
         chart: 'LineChart'
       }
     ],
-    color: colorSchema[(idx + 4) % 20],
+    color: colorPalette[`${nodeId}.mem_res`],
     axis: 'y2',
   })
   return config
@@ -99,16 +125,16 @@ const navPlotYConfig = _.reduce(dataProcessed.nodeIds, (config, nodeId, idx) => 
   config.push({
     enabled: idx === 0,
     accessor: `${nodeId}.cpu_share`,
-    labelFormatter: 'CPU',
+    labelFormatter: 'CPU Utilization (%)',
     chart: 'StackedBarChart',
-    color: '#6baed6',
+    color: colorPalette[`${nodeId}.cpu_share`],
     axis: 'y1',
   }, {
     enabled: idx === 0,
     accessor: `${nodeId}.mem_res`,
-    labelFormatter: 'Memory',
+    labelFormatter: 'Memory Usage',
     chart: 'LineChart',
-    color: '#2ca02c',
+    color: colorPalette[`${nodeId}.mem_res`],
     axis: 'y2',
   })
 
