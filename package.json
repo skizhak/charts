@@ -7,7 +7,7 @@
     "build": "npm run build:lib & npm run build:examples",
     "build:lib": "webpack --mode=build",
     "build:examples": "webpack --mode=build --config webpack.examples.config.js",
-    "build:clean": "rm -rf build/* && webpack --mode=build",
+    "build:clean": "rm -rf build/* && npm run build",
     "dev": "npm run dev:lib & npm run dev:examples",
     "dev:lib": "webpack --progress --colors --watch --mode=dev",
     "dev:examples": "webpack --progress --colors --watch --mode=dev --config webpack.examples.config.js",
