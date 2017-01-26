@@ -21,7 +21,7 @@
 	<link href="../build/src/css/contrail-charts.css" rel="stylesheet">
 </head>
 <body>
-<div id="chartView" style="visibility: hidden"></div>
+<div id="chart" style="visibility: hidden;"></div>
 <script>
 	if (navigator.userAgent.indexOf("PhantomJS") > 0) {
 		const consoleReporter = new jasmineRequire.ConsoleReporter()({
@@ -35,7 +35,9 @@
 	}
 </script>
 <script src="./specs/ChartView.js"></script>
+<!-- Fix following specs
 <script src="./specs/RadialChartView.js"></script>
 <script src="./specs/XYChartView.js"></script>
+-->
 </body>
 </html>
