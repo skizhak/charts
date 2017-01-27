@@ -59,11 +59,6 @@ class StackedBarChartView extends XYChartSubView {
   }
 
   render () {
-    _.defer(() => { this._render() })
-    return this
-  }
-
-  _render () {
     super.render()
 
     const svgBarGroups = this.d3

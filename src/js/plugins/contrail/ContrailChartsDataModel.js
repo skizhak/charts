@@ -41,7 +41,7 @@ class ContrailChartsDataModel extends ContrailModel {
   set queryLimit (limit) {
     // Simulate a query. The provided limit should be used to retreive a new data chunk.
     setTimeout(() => {
-      this.set({data: this.data, limit: limit})
+      this.set({data: this.data, limit})
     }, 1000)
   }
 
@@ -58,7 +58,7 @@ class ContrailChartsDataModel extends ContrailModel {
 
   setDataAndLimit (data, limit) {
     this.data = data
-    this.set({limit: limit})
+    this.set({limit})
   }
 }
 

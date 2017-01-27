@@ -1,7 +1,5 @@
-const d3 = require('d3')
-
 function numberFormatter (number) {
-  return Math.floor(number)
+  return number
 }
 
 function byteFormatter (bytes) {
@@ -14,7 +12,7 @@ function byteFormatter (bytes) {
   const scale = Math.floor(Math.log(bytes) / Math.log(unit))
   const unitPre = 'KMGTPE'.substr(scale - 1, 1)
 
-  return `${Math.floor((bytes / Math.pow(unit, scale))).toFixed(0)} ${unitPre}B`
+  return `${Math.floor((bytes / Math.pow(unit, scale))).toFixed(1)} ${unitPre}B`
 }
 
 function dataProcesser (data) {
@@ -39,18 +37,17 @@ function dataProcesser (data) {
       inPkts: 0,
       outBytes: 0,
       outFlowCount: 0,
-      outPkts: 0
+      outPkts: 0,
     }, flattenedData[key])
   )
 }
 
-const colorSchema = d3.schemeCategory20
 let dataSrc = require('./data-source.json')
 
 dataSrc = dataProcesser(dataSrc)
 
 const chartConfig = {
-  container: '#scatterChart',
+  container: '#chart',
   components: [{
     type: 'CompositeYChart',
     config: {
@@ -62,8 +59,8 @@ const chartConfig = {
       plot: {
         x: {
           accessor: 'port',
-          label: 'Port',
           axis: 'x',
+          label: 'Port'
         },
         y: [
           {
@@ -71,34 +68,31 @@ const chartConfig = {
             accessor: 'inBytes',
             label: 'In Bytes',
             chart: 'ScatterPlot',
-            sizeAccessor: 'outBytes',
-            sizeAxis: 'sizeAxisBytes',
+            sizeAccessor: 'inBytes',
+            sizeAxis: 'sizeAxis',
             shape: 'circle',
-            color: colorSchema[2],
             axis: 'y1',
             tooltip: 'tooltipId',
           }, {
             enabled: true,
             accessor: 'outBytes',
-            label: 'Out Bytes',
             chart: 'ScatterPlot',
+            label: 'Out Bytes',
             sizeAccessor: 'outBytes',
-            sizeAxis: 'sizeAxisBytes',
-            shape: 'circle',
-            color: colorSchema[4],
-            axis: 'y1',
+            sizeAxis: 'sizeAxis',
+            shape: 'triangle',
+            axis: 'y2',
             tooltip: 'tooltipId',
           }
         ]
       },
       axis: {
         x: {
-          scale: 'scaleLinear',
           formatter: numberFormatter,
           labelMargin: 5
         },
-        sizeAxisBytes: {
-          range: [100, 150]
+        sizeAxis: {
+          range: [3, 500]
         },
         y1: {
           position: 'left',
@@ -107,8 +101,8 @@ const chartConfig = {
         },
         y2: {
           position: 'right',
-          formatter: numberFormatter,
-          labelMargin: 15
+          formatter: byteFormatter,
+          labelMargin: 15,
         }
       }
     }
@@ -159,37 +153,32 @@ const chartConfig = {
       selection: [75, 100],
       plot: {
         x: {
-          accessor: 'inBytes',
-          label: 'In Bytes',
+          accessor: 'port',
+          label: 'Port',
           axis: 'x',
         },
         y: [
           {
             enabled: true,
-            accessor: 'outBytes',
-            label: 'Out Bytes',
+            accessor: 'inBytes',
+            label: 'In Bytes',
             chart: 'ScatterPlot',
             axis: 'y1',
             sizeAccessor: 'outBytes',
-            sizeAxis: 'sizeAxisBytes',
+            sizeAxis: 'sizeAxis',
             shape: 'circle',
-            color: colorSchema[8]
           }
         ]
       },
       axis: {
-        x: {
-          scale: 'scaleLinear',
-          formatter: byteFormatter
-        },
-        sizeAxisBytes: {
-          range: [100, 150]
+        x: {},
+        sizeAxis: {
+          range: [3, 500],
         },
         y1: {
           position: 'left',
           formatter: byteFormatter,
           labelMargin: 15,
-          ticks: 4
         }
       }
     }

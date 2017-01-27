@@ -50,11 +50,6 @@ class ScatterPlotView extends XYChartSubView {
   }
 
   render () {
-    _.defer(() => { this._render() })
-    return this
-  }
-
-  _render () {
     super.render()
 
     let points = this.d3.selectAll('.point')
@@ -106,7 +101,6 @@ class ScatterPlotView extends XYChartSubView {
   // Event handlers
 
   _onMouseover (d, el) {
-    console.log(d)
     if (this.config.get('tooltipEnabled')) {
       this.d3.select(() => el).classed('active', true)
       const offset = {
