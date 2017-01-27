@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016 Juniper Networks, Inc. All rights reserved.
+ * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
 const _ = require('lodash')
 const ContrailChartsView = require('contrail-charts-view')
@@ -23,37 +23,45 @@ class NavigationView extends ContrailChartsView {
     this._brush = new BrushView({
       config: new BrushConfigModel({
         isSharedContainer: true,
-        selection: this.config.get('selection'),
       }),
     })
-    const compositeYConfig = new CompositeYChartConfigModel()
+    const compositeYConfig = new CompositeYChartConfigModel(this.config.attributes)
     this._compositeYChartView = new CompositeYChartView({
-      model: this.model,
       config: compositeYConfig,
     })
-    this._compositeYChartView.on('render', this._onCompositeYRendered.bind(this))
     this._components = [this._brush, this._compositeYChartView]
     this.listenTo(this._brush, 'selection', _.throttle(this._onSelection))
     this.listenTo(this.config, 'change', this.render)
     this.listenTo(this.model, 'change', this._onModelChange)
+    window.addEventListener('resize', this._onResize.bind(this))
+    this._debouncedEnable = _.debounce(() => { this._disabled = false }, this.config.get('duration'))
   }
 
   render () {
     super.render()
     this.resetParams()
     this._compositeYChartView.container = this.el
-    this._compositeYChartView.resetParams(this.params)
-    this._compositeYChartView.render()
-    return this
+    // This will render it also
+    this._compositeYChartView.changeModel(this.model)
+
+    const params = this._compositeYChartView.params
+    this.params.xScale = params.axis.x.scale
+    this._brush.container = this.el
+    this.config.set('xRange', params.xRange, {silent: true})
+    this.config.set('yRange', params.yRange, {silent: true})
+    this._brush.config.set({
+      extent: this.config.rangeMargined,
+      selection: this.config.selectionRange,
+    })
   }
 
   prevChunkSelected () {
     const range = this.model.getRange()
     const x = this.params.xAccessor
     const rangeDiff = range[x][1] - range[x][0]
-    const queryLimit = {}
-    queryLimit[x] = [range[x][0] - rangeDiff * 0.5, range[x][1] - rangeDiff * 0.5]
-    this.model.queryLimit = queryLimit
+    this.model.queryLimit = {
+      [x]: [range[x][0] - rangeDiff * 0.5, range[x][1] - rangeDiff * 0.5],
+    }
   // TODO: show some waiting screen?
   }
 
@@ -61,23 +69,10 @@ class NavigationView extends ContrailChartsView {
     const range = this.model.getRange()
     const x = this.params.xAccessor
     const rangeDiff = range[x][1] - range[x][0]
-    const queryLimit = {}
-    queryLimit[x] = [range[x][0] + rangeDiff * 0.5, range[x][1] + rangeDiff * 0.5]
-    this.model.queryLimit = queryLimit
+    this.model.queryLimit = {
+      [x]: [range[x][0] + rangeDiff * 0.5, range[x][1] + rangeDiff * 0.5],
+    }
   // TODO: show some waiting screen?
-  }
-
-  _onCompositeYRendered () {
-    const params = this._compositeYChartView.params
-    this.params.xScale = params.axis.x.scale
-    const marginInner = params.marginInner
-    this._brush.container = this.el
-    const extent = [
-      [params.xRange[0] - marginInner, params.yRange[1] - marginInner],
-      [params.xRange[1] + marginInner, params.yRange[0] + marginInner],
-    ]
-    this._brush.config.set('extent', extent)
-    this._brush.render()
   }
 
   // Event handlers
@@ -88,9 +83,12 @@ class NavigationView extends ContrailChartsView {
   }
 
   _onSelection (range) {
+    if (this._disabled) return
     const xAccessor = this.params.plot.x.accessor
     let xMin = this.params.xScale.invert(range[0])
     let xMax = this.params.xScale.invert(range[1])
+    const sScale = this.config.get('selectionScale')
+    this.config.set('selection', [sScale.invert(range[0]), sScale.invert(range[1])], {silent: true})
 
     // TODO navigation should not know anything about the data it operates
     if (_.isDate(xMin)) xMin = xMin.getTime()
@@ -98,6 +96,13 @@ class NavigationView extends ContrailChartsView {
 
     this._selection.filter(xAccessor, [xMin, xMax])
     this._actionman.fire('ChangeSelection', this._selection)
+  }
+  /**
+   * Turn off selection for the animation period on resize
+   */
+  _onResize () {
+    this._disabled = true
+    this._debouncedEnable()
   }
 }
 

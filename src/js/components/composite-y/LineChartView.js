@@ -54,15 +54,10 @@ class LineChartView extends XYChartSubView {
     const dataItem = xVal - data[index - 1][xAccessor] > data[index][xAccessor] - xVal ? data[index] : data[index - 1]
     return dataItem
   }
-
-  render () {
-    _.defer(() => { this._render() })
-    return this
-  }
   /**
    * Draw one line (path) per each Y accessor.
    */
-  _render () {
+  render () {
     super.render()
     const data = this.model.data
 

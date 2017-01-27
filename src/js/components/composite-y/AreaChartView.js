@@ -62,7 +62,7 @@ class AreaChartView extends XYChartSubView {
     return dataItem
   }
 
-  _render () {
+  render () {
     super.render()
 
     const data = this.model.data
@@ -95,11 +95,6 @@ class AreaChartView extends XYChartSubView {
         return 'M' + x0 + ',' + y0 + line + 'L' + x1 + ',' + y1 + 'Z'
       })
     svgLines.exit().remove()
-  }
-
-  render () {
-    _.defer(() => this._render())
-    return this
   }
 
   _onMouseover (d, el) {

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016 Juniper Networks, Inc. All rights reserved.
+ * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
 
 const _ = require('lodash')
@@ -31,10 +31,7 @@ class CompositeYChartView extends ContrailChartsView {
 
     this.listenTo(this.model, 'change', this.render)
     this.listenTo(this.config, 'change', this.render)
-    window.addEventListener('resize', this._onWindowResize.bind(this))
-
-    this._debouncedRenderFunction = _.bind(_.debounce(this._render, 10), this)
-    this._throttledRender = _.throttle(() => { this.render() }, 100)
+    window.addEventListener('resize', this._onResize.bind(this))
   }
 
   refresh () {
@@ -49,6 +46,25 @@ class CompositeYChartView extends ContrailChartsView {
       drawing.model = model
     })
     this.render()
+  }
+
+  render () {
+    if (!this.config) return
+    this.resetParams()
+    this._updateChildDrawings()
+    this._calculateActiveAccessorData()
+    this._calculateDimensions()
+    this.calculateScales()
+    this.calculateColorScale()
+
+    super.render()
+    this.renderSVG()
+    this.renderAxis()
+    _.each(this._drawings, drawing => {
+      drawing.render()
+    })
+
+    this._ticking = false
   }
   /**
   * Calculates the activeAccessorData that holds only the verified and enabled accessors from the 'plot' structure.
@@ -195,9 +211,9 @@ class CompositeYChartView extends ContrailChartsView {
         }
       }
       if (!this.hasAxisParam(axisName, 'range')) {
-        if (['bottom', 'top'].indexOf(this.params.axis[axisName].position) >= 0) {
+        if (['bottom', 'top'].includes(this.params.axis[axisName].position)) {
           this.params.axis[axisName].range = this.params.xRange
-        } else if (['left', 'right'].indexOf(this.params.axis[axisName].position) >= 0) {
+        } else if (['left', 'right'].includes(this.params.axis[axisName].position)) {
           this.params.axis[axisName].range = this.params.yRange
         }
       }
@@ -224,9 +240,30 @@ class CompositeYChartView extends ContrailChartsView {
         }
       }
     })
+    this.adjustAxisMargin()
+
     // Now update the scales of the appropriate drawings.
     _.each(this._drawings, (drawing) => {
       drawing.params.axis = this.params.axis
+    })
+  }
+  /**
+   * shrink x and y axises range to have margin for displaying of shapes sticking out of scale
+   */
+  adjustAxisMargin () {
+    let sizeMargin = 0
+    const sizeAxises = _.filter(this.params.axis, (axis, name) => name.match('size'))
+    _.each(sizeAxises, axis => {
+      // assume max shape extension out of scale range as of triangle's half edge
+      // TODO margin should be based on the biggest triangle in the visible dataset but not the whole data
+      const axisSizeMargin = Math.sqrt(axis.range[1] / Math.sqrt(3))
+      if (axisSizeMargin > sizeMargin) sizeMargin = axisSizeMargin
+    })
+    if (!sizeMargin) return
+    const axises = _.filter(this.params.axis, axis => axis.position && axis.range)
+    _.each(axises, axis => {
+      const axisMargin = ['left', 'right'].includes(axis.position) ? -sizeMargin : sizeMargin
+      axis.scale.range([axis.range[0] + axisMargin, axis.range[1] - axisMargin])
     })
   }
   /**
@@ -266,7 +303,7 @@ class CompositeYChartView extends ContrailChartsView {
       .merge(svgYAxis)
       .attr('transform', 'translate(' + translate + ',0)')
     if (this.config.get('crosshairEnabled')) {
-      this.svg.delegate('mousemove', 'svg', _.throttle(this._onMousemove.bind(this), 100))
+      this.svg.delegate('mousemove', 'svg', this._onMousemove.bind(this))
     }
   }
 
@@ -450,11 +487,6 @@ class CompositeYChartView extends ContrailChartsView {
     })
     return data
   }
-
-  render () {
-    if (this.config) this._debouncedRenderFunction()
-    return this
-  }
   /**
   * Update the drawings array based on the plot.y.
   */
@@ -497,39 +529,27 @@ class CompositeYChartView extends ContrailChartsView {
     })
     // Order the drawings so the highest order drawings get rendered first.
     this._drawings.sort((a, b) => a.renderOrder - b.renderOrder)
-    _.each(this._drawings, (drawing) => { drawing.resetParams() })
-  }
-
-  _render () {
-    this.resetParams()
-    this._updateChildDrawings()
-    this._calculateActiveAccessorData()
-    this._calculateDimensions()
-    this.calculateScales()
-    this.calculateColorScale()
-
-    super.render()
-    this.renderSVG()
-    this.renderAxis()
-    _.each(this._drawings, (drawing) => {
-      drawing.render()
-    })
-
-    this.trigger('render')
+    _.each(this._drawings, drawing => { drawing.resetParams() })
   }
 
   // Event handlers
 
-  _onWindowResize () {
-    this._throttledRender()
-  }
-
   _onMousemove (d, el, e) {
     const point = [e.offsetX, e.offsetY]
+    if (!this._ticking) {
+      window.requestAnimationFrame(this.showCrosshair.bind(this, point))
+      this._ticking = true
+    }
+  }
+
+  showCrosshair (point) {
     const crosshairId = this.config.get('crosshair')
     const data = this.getCrosshairData(point)
     const config = this.getCrosshairConfig()
     this._actionman.fire('ShowComponent', crosshairId, data, point, config)
+
+    // reset the tick so we can capture the next handler
+    this._ticking = false
   }
 }
 
