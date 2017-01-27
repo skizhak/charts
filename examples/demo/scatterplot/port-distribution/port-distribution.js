@@ -67,6 +67,7 @@ const chartConfig = {
         },
         y: [
           {
+            enabled: true,
             accessor: 'inBytes',
             label: 'In Bytes',
             chart: 'ScatterPlot',
@@ -75,9 +76,9 @@ const chartConfig = {
             shape: 'circle',
             color: colorSchema[2],
             axis: 'y1',
-            tooltip: 'defaultTooltip'
-          },
-          {
+            tooltip: 'tooltipId',
+          }, {
+            enabled: true,
             accessor: 'outBytes',
             label: 'Out Bytes',
             chart: 'ScatterPlot',
@@ -86,7 +87,7 @@ const chartConfig = {
             shape: 'circle',
             color: colorSchema[4],
             axis: 'y1',
-            tooltip: 'defaultTooltip'
+            tooltip: 'tooltipId',
           }
         ]
       },
@@ -102,7 +103,7 @@ const chartConfig = {
         y1: {
           position: 'left',
           formatter: byteFormatter,
-          labelMargin: 15
+          labelMargin: 15,
         },
         y2: {
           position: 'right',
@@ -119,51 +120,31 @@ const chartConfig = {
       dataConfig: [
         {
           accessor: 'port',
-          labelFormatter: function (key) {
-            return 'Port'
-          }
-        },
-        {
+          labelFormatter: 'Port',
+        }, {
           accessor: 'inBytes',
-          labelFormatter: function (key) {
-            return 'Incoming Traffic'
-          },
-          valueFormatter: byteFormatter
-        },
-        {
+          labelFormatter: 'Incoming Traffic',
+          valueFormatter: byteFormatter,
+        }, {
           accessor: 'outBytes',
-          labelFormatter: function (key) {
-            return 'Outgoing Traffic'
-          },
-          valueFormatter: byteFormatter
-        },
-        {
+          labelFormatter: 'Outgoing Traffic',
+          valueFormatter: byteFormatter,
+        }, {
           accessor: 'inFlowCount',
-          labelFormatter: function (key) {
-            return 'Incoming Flow Count'
-          },
-          valueFormatter: numberFormatter
-        },
-        {
+          labelFormatter: 'Incoming Flow Count',
+          valueFormatter: numberFormatter,
+        }, {
           accessor: 'outFlowCount',
-          labelFormatter: function (key) {
-            return 'Outgoing Flow Count'
-          },
-          valueFormatter: numberFormatter
-        },
-        {
+          labelFormatter: 'Outgoing Flow Count',
+          valueFormatter: numberFormatter,
+        }, {
           accessor: 'inPkts',
-          labelFormatter: function (key) {
-            return 'Incoming Packets'
-          },
-          valueFormatter: numberFormatter
-        },
-        {
+          labelFormatter: 'Incoming Packets',
+          valueFormatter: numberFormatter,
+        }, {
           accessor: 'outPkts',
-          labelFormatter: function (key) {
-            return 'Outgoing Packets'
-          },
-          valueFormatter: numberFormatter
+          labelFormatter: 'Outgoing Packets',
+          valueFormatter: numberFormatter,
         }
       ]
     }
