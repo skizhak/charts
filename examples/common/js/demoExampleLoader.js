@@ -8,14 +8,14 @@ const _ = require('lodash')
 
 const examples = [
   {
-    html: 'linebar/linebar.html',
-    js: 'linebar/linebar.js',
-    css: 'linebar/linebar.css',
+    html: 'linebar/cpu-mem/cpu-mem.html',
+    js: 'linebar/cpu-mem/cpu-mem.js',
+    css: 'linebar/cpu-mem/cpu-mem.css',
     title: 'Line Bar chart (CPU/Mem)',
   }, {
-    html: 'port-distribution/port-distribution.html',
-    js: 'port-distribution/port-distribution.js',
-    css: 'port-distribution/port-distribution.css',
+    html: 'scatterplot/port-distribution/port-distribution.html',
+    js: 'scatterplot/port-distribution/port-distribution.js',
+    css: 'scatterplot/port-distribution/port-distribution.css',
     title: 'Port Distribution'
   }
 ]
@@ -26,12 +26,12 @@ const $exampleLinks = $('#exampleLinks')
 examples.forEach(
   (example, idx) => {
     loadedExampleSrc.push({
-      rawHTML: require('raw!../../../examples/' + example.html),
-      rawCSS: require('raw!../../../examples/' + example.css),
+      rawHTML: require('raw!../../demo/' + example.html),
+      rawCSS: require('raw!../../demo/' + example.css),
       rawJS: Array.isArray(example.js) ? example.js.reduce((loadedFiles, currentFile) => {
-        loadedFiles[currentFile] = require('raw!../../../examples/' + currentFile)
+        loadedFiles[currentFile] = require('raw!../../demo/' + currentFile)
         return loadedFiles
-      }, {}) : {[example.js]: require('raw!../../../examples/' + example.js)}
+      }, {}) : {[example.js]: require('raw!../../demo/' + example.js)}
     })
     let $link = $(`<a href="#${idx}" class="link">${example.title}</a>`)
     $link.click(sideBarLinkOnClick)
@@ -66,7 +66,7 @@ function sideBarLinkOnClick (e) {
   const example = examples[index]
   const {rawHTML, rawJS, rawCSS} = loadedExampleSrc[index]
 
-  $('#outputView').find('.output-demo-iframe').attr('src', `../examples/${example.html}`)
+  $('#outputView').find('.output-demo-iframe').attr('src', `./demo/${example.html}`)
   $('#htmlContent').html(reformatHTMLToShow(rawHTML))
   $('#cssContent').html(reformatHTMLToShow(rawCSS))
 

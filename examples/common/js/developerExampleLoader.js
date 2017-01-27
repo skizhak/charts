@@ -7,49 +7,49 @@ require('../sass/contrail-charts-examples.scss')
 const _ = require('lodash')
 const examples = [
   {
-    html: 'composite-xy/composite-xy.html',
-    js: 'composite-xy/composite-xy.js',
-    css: 'composite-xy/composite-xy.css',
+    html: 'linebar-chart/multi-linebar-nav/index.html',
+    js: 'linebar-chart/multi-linebar-nav/index.js',
+    css: 'linebar-chart/multi-linebar-nav/index.css',
     title: 'Line Bar chart with Legend panel',
   }, {
-    html: 'control-panel/index.html',
-    js: 'control-panel/index.js',
-    css: 'control-panel/index.css',
+    html: 'other/control-panel/index.html',
+    js: 'other/control-panel/index.js',
+    css: 'other/control-panel/index.css',
     title: 'Line chart with Control Panel with embedded components',
   }, {
-    html: 'multi-chart/multi-chart.html',
-    js: 'multi-chart/multi-chart.js',
-    css: 'multi-chart/multi-chart.css',
+    html: 'multi-chart/linebar-linebar-nav/index.html',
+    js: 'multi-chart/linebar-linebar-nav/index.js',
+    css: 'multi-chart/linebar-linebar-nav/index.css',
     title: 'Multi Chart with Focus',
   }, {
-    html: 'scatterplot/scatterplot.html',
-    js: 'scatterplot/scatterplot.js',
-    css: 'scatterplot/scatterplot.css',
+    html: 'scatterplot/scatter-nav/index.html',
+    js: 'scatterplot/scatter-nav/index.js',
+    css: 'scatterplot/scatter-nav/index.css',
     title: 'Scatter Plot',
   }, {
-    html: 'area/area.html',
-    js: 'area/area.js',
-    css: 'area/area.css',
+    html: 'area-chart/basic/index.html',
+    js: 'area-chart/basic/index.js',
+    css: 'area-chart/basic/index.css',
     title: 'Area Chart',
   }, {
-    html: 'pie/pie.html',
-    js: 'pie/pie.js',
-    css: 'pie/pie.css',
+    html: 'pie-chart/donut/index.html',
+    js: 'pie-chart/donut/index.js',
+    css: 'pie-chart/donut/index.css',
     title: 'Pie Chart',
   }, {
-    html: 'tooltip/index.html',
-    js: 'tooltip/index.js',
-    css: 'tooltip/index.css',
+    html: 'other/tooltip/index.html',
+    js: 'other/tooltip/index.js',
+    css: 'other/tooltip/index.css',
     title: 'Line, Stacked Bar and Line charts with tooltip and custom tooltip',
   }, {
-    html: 'requirejs/requirejs.html',
-    js: ['requirejs/requirejs-config.js', 'requirejs/app/example1.js'],
-    css: 'requirejs/app/example1.css',
+    html: 'other/requirejs/requirejs.html',
+    js: ['other/requirejs/requirejs-config.js', 'other/requirejs/app/example1.js'],
+    css: 'other/requirejs/app/example1.css',
     title: 'Using RequireJS',
   }, {
-    html: 'composite-xy-timeline/composite-xy-timeline.html',
-    js: 'composite-xy-timeline/composite-xy-timeline.js',
-    css: 'composite-xy-timeline/composite-xy-timeline.css',
+    html: 'timeline-chart/linebar-timeline/index.html',
+    js: 'timeline-chart/linebar-timeline/index.js',
+    css: 'timeline-chart/linebar-timeline/index.css',
     title: 'Simple Timeline navigation'
   }
 ]
@@ -60,12 +60,12 @@ const $exampleLinks = $('#exampleLinks')
 examples.forEach(
   (example, idx) => {
     loadedExampleSrc.push({
-      rawHTML: require('raw!../../../examples/' + example.html),
-      rawCSS: require('raw!../../../examples/' + example.css),
+      rawHTML: require('raw!../../developer/' + example.html),
+      rawCSS: require('raw!../../developer/' + example.css),
       rawJS: Array.isArray(example.js) ? example.js.reduce((loadedFiles, currentFile) => {
-        loadedFiles[currentFile] = require('raw!../../../examples/' + currentFile)
+        loadedFiles[currentFile] = require('raw!../../developer/' + currentFile)
         return loadedFiles
-      }, {}) : {[example.js]: require('raw!../../../examples/' + example.js)}
+      }, {}) : {[example.js]: require('raw!../../developer/' + example.js)}
     })
     let $link = $(`<a href="#${idx}" class="link">${example.title}</a>`)
     $link.click(sideBarLinkOnClick)
@@ -100,7 +100,7 @@ function sideBarLinkOnClick (e) {
   const example = examples[index]
   const {rawHTML, rawJS, rawCSS} = loadedExampleSrc[index]
 
-  $('#outputView').find('.output-demo-iframe').attr('src', `../examples/${example.html}`)
+  $('#outputView').find('.output-demo-iframe').attr('src', `./developer/${example.html}`)
   $('#htmlContent').html(reformatHTMLToShow(rawHTML))
   $('#cssContent').html(reformatHTMLToShow(rawCSS))
 
