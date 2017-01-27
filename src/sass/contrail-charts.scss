@@ -1,5 +1,9 @@
-@import './button.scss';
+@import "font";
+@import 'button';
 @import "colors";
+@import "tooltip";
+
+@import "pie-chart";
 
 // Components
 @import './legend.scss';
@@ -127,31 +131,59 @@ button:focus {
 	}
 }
 
-.coCharts-tooltip-view {
-  position: absolute;
-  pointer-events: none;
-	.tooltip-content {
-		padding: 10px;
-		border: 1px solid #aaa;
-		background-color: rgba( 255, 255, 255, 0.9 );
-		font-size: 12px;
-		color: #555;
+.coCharts-control-panel-view {
+	.control-panel-items {
+		width: 32px;
+		float: right;
 
-		.tooltip-title {
-			text-align: center;
-			font-weight: bold;
+		.control-panel-item {
+			width: 100%;
 			font-size: 14px;
-			padding: 0 0 5px 0;
-			border-bottom: 1px solid #ddd;
-			margin-bottom: 5px;
+			background-color: #fff;
+			padding: 5px;
+			border: 1px solid #ddd;
+			color: #444;
+			margin: 0 0 5px 0;
+			transition: background-color .25s;
 		}
-		.tooltip-item {
-			.tooltip-item-label {
-				font-weight: bold;
+		.control-panel-item:hover {
+			background-color: #ddd;
+		}
+	}
+	.control-panel-expanded-container {
+		margin: 0 33px 0 0;
+		border: 1px solid #ddd;
+		background-color: #fff;
+
+		.control-panel-filter-head {
+			padding: 5px 10px 5px 10px;
+			background-color: #ddd;
+			color: #444;
+			font-size: 14px;
+
+			.control-panel-filter-head-icon {
 				margin-right: 10px;
 			}
-			.tooltip-item-value {
+			.control-panel-filter-close {
 				float: right;
+				cursor: pointer;
+			}
+		}
+		.control-panel-filter-body {
+			padding: 10px;
+			color: #444;
+			font-size: 14px;
+
+			.control-panel-filter-item {
+				.accessor-data-checkbox {
+					cursor: pointer;
+				}
+				.accessor-data-checkbox-label {
+					cursor: pointer;
+				}
+				.accessor-data-chart-type-select {
+					float: right;
+				}
 			}
 		}
 	}
@@ -194,6 +226,7 @@ button:focus {
 }
 
 .coCharts-legend-view {
+
 	.legend-group {
 		display: inline-block;
 		padding: 10px;
@@ -262,13 +295,4 @@ button:focus {
 			}
 		}
 	}
-}
-
-.coCharts-pie-chart {
-  path.arc {
-    stroke: white;
-  }
-  path.highlight  {
-    opacity: 0.3;
-  }
 }

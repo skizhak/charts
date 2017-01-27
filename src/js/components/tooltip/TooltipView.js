@@ -12,6 +12,7 @@ class TooltipView extends ContrailChartsView {
   constructor (p) {
     super(p)
     this.resetParams()
+    this.config.container = p.container
     this.listenTo(this.config, 'change', this.resetParams)
   }
 
@@ -21,17 +22,19 @@ class TooltipView extends ContrailChartsView {
 
     // Tooltip dimensions will be available after render.
     const tooltipWidth = this.$el.outerWidth()
-    // const tooltipHeight = this.$el.outerHeight()
-    const windowWidth = $(document).width()
+    const containerWidth = this.config.container.offsetWidth
+    const containerHeight = this.config.container.offsetHeight
+
     const tooltipPositionTop = offset.top < 0 ? 0 : offset.top
     let tooltipPositionLeft = offset.left
-    if ((offset.left + tooltipWidth) > windowWidth) {
+
+    if ((offset.left + tooltipWidth) > containerWidth) {
       tooltipPositionLeft = offset.left - tooltipWidth
     }
+
     this.$el.css({
       top: tooltipPositionTop,
       left: tooltipPositionLeft,
-      width: offset.width,
       height: offset.height
     })
   }
@@ -41,19 +44,8 @@ class TooltipView extends ContrailChartsView {
   }
 
   render (data) {
-    if (!data) return
-    const tooltipData = {}
-    const dataConfig = this.config.get('dataConfig')
     const template = this.config.get('template') || _template
-    tooltipData.items = _.map(dataConfig, (datumConfig) => {
-      return {
-        label: this.config.getLabel(data, datumConfig),
-        value: this.config.getFormattedValue(data, datumConfig),
-      }
-    })
-    tooltipData.title = this.config.get('title')
-
-    super.render(template(tooltipData))
+    super.render(template(this.config.getFormattedData(data)))
   }
 }
 

@@ -3,12 +3,12 @@
  */
 
 /* global coCharts, describe, it, expect */
-describe('coCharts', function () {
-  it('coCharts is defined', function () {
+describe('coCharts', () => {
+  it('coCharts is defined', () => {
     expect(coCharts).toBeDefined()
   })
 
-  it('coCharts has all charts, handlers and components', function () {
+  it('coCharts has all charts, handlers and components', () => {
     expect(coCharts.charts.MultiChartView).toBeDefined()
     expect(coCharts.charts.XYChartView).toBeDefined()
     expect(coCharts.handlers.DataProvider).toBeDefined()

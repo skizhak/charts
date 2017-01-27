@@ -101,6 +101,7 @@ class ScatterPlotView extends XYChartSubView {
   // Event handlers
 
   _onMouseover (d, el) {
+    console.log(d)
     if (this.config.get('tooltipEnabled')) {
       this.d3.select(() => el).classed('active', true)
       const offset = {

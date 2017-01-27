@@ -20,6 +20,9 @@ if (env === 'build') {
   plugins.push(new UglifyJsPlugin({
     include: /\.min\.js$/,
     minimize: true,
+    compress: {
+      warnings: false
+    }  
   }))
   loaders.push({
     loader: 'babel-loader',

@@ -1,11 +1,11 @@
 /* global coCharts, describe, it, expect, beforeEach */
-describe('RadialChartView', () => {
-  beforeEach(() => {
+describe('RadialChartView', function () {
+  beforeEach(function () {
     this.chartConfig = {
       container: '#chart',
       components: [{
         id: 'pieChart',
-        type: 'pieChart',
+        type: 'PieChart',
         config: {
           type: 'donut',
           radius: 100,
@@ -26,7 +26,7 @@ describe('RadialChartView', () => {
     this.chartView = new coCharts.charts.RadialChartView()
   })
 
-  it('RadialChartView has pie component', () => {
+  it('RadialChartView has pie component', function () {
     this.chartView.setConfig(this.chartConfig)
     expect(this.chartView.getComponent('pieChart')).toBeDefined()
   })
