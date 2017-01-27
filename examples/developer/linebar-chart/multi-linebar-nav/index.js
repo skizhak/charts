@@ -232,12 +232,13 @@ complexChartView.setConfig({
     id: 'defaultTooltip',
     type: 'Tooltip',
     config: {
+      title: {
+          accessor: 'x',
+          valueFormatter: timeFormatter,
+      },
+
       dataConfig: [
         {
-          accessor: 'x',
-          labelFormatter: 'Time',
-          valueFormatter: timeFormatter,
-        }, {
           accessor: 'a',
           labelFormatter: 'A',
           valueFormatter: numberFormatter,

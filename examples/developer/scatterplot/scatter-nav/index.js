@@ -101,13 +101,13 @@ const chartConfig = {
     id: 'tooltipId',
     type: 'Tooltip',
     config: {
-      title: 'BUBBLE',
+      title: {
+          accessor: 'x',
+          valueFormatter: timeFormatter,
+      },
+
       dataConfig: [
         {
-          accessor: 'x',
-          labelFormatter: 'Time',
-          valueFormatter: timeFormatter,
-        }, {
           accessor: 'data1',
           labelFormatter: 'Data1',
           valueFormatter: numberFormatter,

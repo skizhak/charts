@@ -27,7 +27,11 @@ class PieChartConfigModel extends ContrailChartsConfigModel {
   }
 
   getColor (accessor) {
-    return this.attributes.colorScale(accessor)
+    if (_.has(accessor, 'color')) {
+      return accessor.color
+    } else {
+      return this.attributes.colorScale(accessor)
+    }
   }
 
   getLabels (dataProvider) {

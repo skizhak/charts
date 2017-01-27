@@ -1,21 +1,21 @@
 // Most basic chart.
 const pieData = [
-  { x: 'System process', y: 4499890 },
-  { x: 'Process 1', y: 2704659 },
-  { x: 'Process 2', y: 2159981 },
-  { x: 'Process 3', y: 3853788 },
-  { x: 'Process 4', y: 14106543 },
-  { x: 'Process 5', y: 8819342 },
-  { x: 'Process 6', y: 612463 },
+  { label: 'System process', value: 4499890 },
+  { label: 'Process 1', value: 2704659 },
+  { label: 'Process 2', value: 2159981 },
+  { label: 'Process 3', value: 3853788 },
+  { label: 'Process 4', value: 14106543 },
+  { label: 'Process 5', value: 8819342 },
+  { label: 'Process 6', value: 612463 },
 ]
 function numberFormatter (number) {
   return d3.format(',.0f')(number) // eslint-disable-line no-undef
 }
 function getLabel (serie) {
-  return serie.x
+  return serie.label
 }
 function getValue (serie) {
-  return serie.y
+  return serie.value
 }
 
 const chartConfig = {
@@ -47,7 +47,7 @@ const chartConfig = {
     config: {
       dataConfig: [
         {
-          accessor: 'y',
+          accessor: 'value',
           labelFormatter: getLabel,
           valueFormatter: numberFormatter,
         },
@@ -58,7 +58,8 @@ const chartConfig = {
     config: {
       sourceComponent: 'pieChartId',
     },
-  }]
+  }
+  ]
 }
 const chartView = new coCharts.charts.RadialChartView()
 chartView.setConfig(chartConfig)
