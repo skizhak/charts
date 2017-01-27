@@ -41,18 +41,21 @@ class PieChartView extends ContrailChartsView {
       .outerRadius(radius)
       .innerRadius(this.config.innerRadius)
 
-    const pie = shape.pie()
+    const stakes = shape.pie()
       .sort(null)
       .value((d) => serieConfig.getValue(d))(data)
 
     this.d3.attr('transform', `translate(${this.params.chartWidth / 2}, ${this.params.chartHeight / 2})`)
 
-    this.d3.selectAll('arc')
-      .data(pie)
+    const sectors = this.d3.selectAll('.arc')
+      .data(stakes, d => d.value)
+
+    sectors
       .enter().append('path')
       .classed('arc', true)
       .attr('d', arc)
       .style('fill', (d) => this.config.getColor(serieConfig.getLabel(d.data)))
+    sectors.exit().remove()
 
     this._ticking = false
   }
