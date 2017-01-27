@@ -7,7 +7,7 @@ function timeFormatter (value) {
 }
 
 function cpuFormatter (number) {
-  return number.toFixed(2) + '%'
+  return number.toFixed(1) + '%'
 }
 
 function memFormatter (number) {
@@ -16,11 +16,11 @@ function memFormatter (number) {
   let formattedBytes = '-'
   _.each(bytePrefixes, (prefix, idx) => {
     if (bytes < 1024) {
-      formattedBytes = bytes.toFixed(2) + ' ' + prefix
+      formattedBytes = bytes.toFixed(1) + ' ' + prefix
       return false
     } else {
       if (idx === bytePrefixes.length - 1) {
-        formattedBytes = bytes.toFixed(2) + ' ' + prefix
+        formattedBytes = bytes.toFixed(1) + ' ' + prefix
       } else {
         bytes = bytes / 1024
       }

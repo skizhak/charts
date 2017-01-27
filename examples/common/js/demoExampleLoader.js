@@ -11,12 +11,12 @@ const examples = [
     html: 'linebar/cpu-mem/cpu-mem.html',
     js: 'linebar/cpu-mem/cpu-mem.js',
     css: 'linebar/cpu-mem/cpu-mem.css',
-    title: 'Line Bar chart (CPU/Mem)',
+    title: 'Line Bar chart (CPU / Mem)',
   }, {
     html: 'scatterplot/port-distribution/port-distribution.html',
     js: 'scatterplot/port-distribution/port-distribution.js',
     css: 'scatterplot/port-distribution/port-distribution.css',
-    title: 'Port Distribution'
+    title: "Bubble Chart (Ports' Traffic Distribution)"
   }
 ]
 

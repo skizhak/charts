@@ -14,7 +14,7 @@ function byteFormatter (bytes) {
   const scale = Math.floor(Math.log(bytes) / Math.log(unit))
   const unitPre = 'KMGTPE'.substr(scale - 1, 1)
 
-  return `${Math.floor((bytes / Math.pow(unit, scale))).toFixed(1)} ${unitPre}B`
+  return `${Math.floor((bytes / Math.pow(unit, scale))).toFixed(0)} ${unitPre}B`
 }
 
 function dataProcesser (data) {
