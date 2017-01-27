@@ -177,6 +177,13 @@ class ContrailChartsView extends ContrailView {
         .datum(null)
     }
   }
+
+  _onResize () {
+    if (!this._ticking) {
+      window.requestAnimationFrame(this.render.bind(this))
+      this._ticking = true
+    }
+  }
 }
 
 module.exports = ContrailChartsView

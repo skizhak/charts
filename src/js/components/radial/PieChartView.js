@@ -18,15 +18,15 @@ class PieChartView extends ContrailChartsView {
   constructor (p = {}) {
     super(p)
     this._highlightRadius = 10
-    this.listenTo(this.model, 'change', this._onDataModelChange)
+    this.listenTo(this.model, 'change', this.render)
     this.listenTo(this.config, 'change', this._onConfigModelChange)
-    window.addEventListener('resize', _.throttle(() => { this.render() }, 100))
+    window.addEventListener('resize', this._onResize.bind(this))
   }
 
   changeModel (model) {
     this.stopListening(this.model)
     this.model = model
-    this.listenTo(this.model, 'change', this._onDataModelChange)
+    this.listenTo(this.model, 'change', this.render)
   }
 
   render () {
@@ -54,6 +54,8 @@ class PieChartView extends ContrailChartsView {
       .classed('arc', true)
       .attr('d', arc)
       .style('fill', (d) => this.config.getColor(serieConfig.getLabel(d.data)))
+
+    this._ticking = false
   }
 
   _calculateDimensions () {
@@ -70,14 +72,6 @@ class PieChartView extends ContrailChartsView {
   }
 
   // Event handlers
-
-  _onDataModelChange () {
-    this.render()
-  }
-
-  _onConfigModelChange () {
-    this.render()
-  }
 
   _onMouseover (sector) {
     const serieConfig = this.config.get('serie')

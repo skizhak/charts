@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016 Juniper Networks, Inc. All rights reserved.
+ * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
 
 const _ = require('lodash')
@@ -28,14 +28,12 @@ class CompositeYChartView extends ContrailChartsView {
   constructor (p) {
     super(p)
     this._drawings = []
-    this._ticking = false
 
     this.listenTo(this.model, 'change', this.render)
     this.listenTo(this.config, 'change', this.render)
-    window.addEventListener('resize', this._onWindowResize.bind(this))
 
     this._debouncedRenderFunction = _.bind(_.debounce(this._render, 10), this)
-    this._throttledRender = _.throttle(() => { this.render() }, 100)
+    window.addEventListener('resize', this._onResize.bind(this))
   }
 
   refresh () {
@@ -540,10 +538,6 @@ class CompositeYChartView extends ContrailChartsView {
   }
 
   // Event handlers
-
-  _onWindowResize () {
-    this._throttledRender()
-  }
 
   _onMousemove (d, el, e) {
     const point = [e.offsetX, e.offsetY]
