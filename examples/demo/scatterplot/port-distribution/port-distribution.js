@@ -113,7 +113,7 @@ const chartConfig = {
       }
     }
   }, {
-    id: 'defaultTooltip',
+    id: 'tooltipId',
     type: 'Tooltip',
     config: {
       title: 'Port Info',
