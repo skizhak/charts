@@ -56,11 +56,6 @@ class BarChartView extends XYChartSubView {
   }
 
   render () {
-    _.defer(() => { this._render() })
-    return this
-  }
-
-  _render () {
     super.render()
 
     // Create a flat data structure

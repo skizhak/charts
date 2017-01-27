@@ -31,8 +31,6 @@ class CompositeYChartView extends ContrailChartsView {
 
     this.listenTo(this.model, 'change', this.render)
     this.listenTo(this.config, 'change', this.render)
-
-    this._debouncedRenderFunction = _.bind(_.debounce(this._render, 10), this)
     window.addEventListener('resize', this._onResize.bind(this))
   }
 
@@ -48,6 +46,25 @@ class CompositeYChartView extends ContrailChartsView {
       drawing.model = model
     })
     this.render()
+  }
+
+  render () {
+    if (!this.config) return
+    this.resetParams()
+    this._updateChildDrawings()
+    this._calculateActiveAccessorData()
+    this._calculateDimensions()
+    this.calculateScales()
+    this.calculateColorScale()
+
+    super.render()
+    this.renderSVG()
+    this.renderAxis()
+    _.each(this._drawings, drawing => {
+      drawing.render()
+    })
+
+    this._ticking = false
   }
   /**
   * Calculates the activeAccessorData that holds only the verified and enabled accessors from the 'plot' structure.
@@ -469,11 +486,6 @@ class CompositeYChartView extends ContrailChartsView {
     })
     return data
   }
-
-  render () {
-    if (this.config) this._debouncedRenderFunction()
-    return this
-  }
   /**
   * Update the drawings array based on the plot.y.
   */
@@ -517,24 +529,6 @@ class CompositeYChartView extends ContrailChartsView {
     // Order the drawings so the highest order drawings get rendered first.
     this._drawings.sort((a, b) => a.renderOrder - b.renderOrder)
     _.each(this._drawings, drawing => { drawing.resetParams() })
-  }
-
-  _render () {
-    this.resetParams()
-    this._updateChildDrawings()
-    this._calculateActiveAccessorData()
-    this._calculateDimensions()
-    this.calculateScales()
-    this.calculateColorScale()
-
-    super.render()
-    this.renderSVG()
-    this.renderAxis()
-    _.each(this._drawings, drawing => {
-      drawing.render()
-    })
-
-    this.trigger('render')
   }
 
   // Event handlers

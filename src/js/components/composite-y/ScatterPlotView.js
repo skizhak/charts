@@ -50,11 +50,6 @@ class ScatterPlotView extends XYChartSubView {
   }
 
   render () {
-    _.defer(() => { this._render() })
-    return this
-  }
-
-  _render () {
     super.render()
 
     let points = this.d3.selectAll('.point')
