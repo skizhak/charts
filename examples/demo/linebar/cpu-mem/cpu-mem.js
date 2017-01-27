@@ -60,15 +60,17 @@ function dataProcesser (rawData) {
  * @param      {Array}  nodeIds      Array of node identifiers
  * @param      {Array}  nodeAttrs    Array of node attributes to color
  * @param      {Array}  colorSchema  The color schema
- * @param      {number}  offset      The offset
- * @return     {Object}  Generated color palette
+ * @param      {number} offset1      The node index multiplier
+ * @param      {number} offset2      The attribute index multiplier
+ * @param      {number} base         The starting index of the colorSchema
+ * @return     {Object}              Generated color palette
  */
-function generateColorPalette (nodeIds, nodeAttrs, colorSchema, offset) {
+function generateColorPalette (nodeIds, nodeAttrs, colorSchema, offset1, offset2 = 1, base = 0) {
   const colors = colorSchema.length
 
   return _.reduce(nodeIds, (palette, nodeId, nodeIdx) => {
     _.forEach(nodeAttrs, (attr, attrIdx) => {
-      palette[`${nodeId}.${attr}`] = colorSchema[(nodeIdx + offset * attrIdx) % colors]
+      palette[`${nodeId}.${attr}`] = colorSchema[(nodeIdx * offset1 + attrIdx * offset2 + base) % colors]
     })
 
     return palette
@@ -81,7 +83,9 @@ const colorPalette = generateColorPalette(
     dataProcessed.nodeIds,
     ['cpu_share', 'mem_res'],
     d3.schemeCategory20,
-    4
+    2,
+    4,
+    2
   )
 
 const mainChartPlotYConfig = _.reduce(dataProcessed.nodeIds, (config, nodeId, idx) => {
@@ -89,7 +93,7 @@ const mainChartPlotYConfig = _.reduce(dataProcessed.nodeIds, (config, nodeId, id
     accessor: `${nodeId}.cpu_share`,
     label: `${nodeId} CPU Utilization (%)`,
     enabled: idx === 0,
-    chart: 'StackedBarChart',
+    chart: 'BarChart',
     possibleChartTypes: [
       {
         label: 'Stacked Bar',
@@ -126,7 +130,7 @@ const navPlotYConfig = _.reduce(dataProcessed.nodeIds, (config, nodeId, idx) => 
     enabled: idx === 0,
     accessor: `${nodeId}.cpu_share`,
     labelFormatter: 'CPU Utilization (%)',
-    chart: 'StackedBarChart',
+    chart: 'BarChart',
     color: colorPalette[`${nodeId}.cpu_share`],
     axis: 'y1',
   }, {
