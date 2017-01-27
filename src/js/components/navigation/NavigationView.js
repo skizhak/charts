@@ -25,12 +25,10 @@ class NavigationView extends ContrailChartsView {
         isSharedContainer: true,
       }),
     })
-    const compositeYConfig = new CompositeYChartConfigModel()
+    const compositeYConfig = new CompositeYChartConfigModel(this.config.attributes)
     this._compositeYChartView = new CompositeYChartView({
-      model: this.model,
       config: compositeYConfig,
     })
-    this._compositeYChartView.on('render', this._onCompositeYRendered.bind(this))
     this._components = [this._brush, this._compositeYChartView]
     this.listenTo(this._brush, 'selection', _.throttle(this._onSelection))
     this.listenTo(this.config, 'change', this.render)
@@ -43,9 +41,18 @@ class NavigationView extends ContrailChartsView {
     super.render()
     this.resetParams()
     this._compositeYChartView.container = this.el
-    this._compositeYChartView.resetParams(this.params)
-    this._compositeYChartView.render()
-    return this
+    // This will render it also
+    this._compositeYChartView.changeModel(this.model)
+
+    const params = this._compositeYChartView.params
+    this.params.xScale = params.axis.x.scale
+    this._brush.container = this.el
+    this.config.set('xRange', params.xRange, {silent: true})
+    this.config.set('yRange', params.yRange, {silent: true})
+    this._brush.config.set({
+      extent: this.config.rangeMargined,
+      selection: this.config.selectionRange,
+    })
   }
 
   prevChunkSelected () {
@@ -66,18 +73,6 @@ class NavigationView extends ContrailChartsView {
       [x]: [range[x][0] + rangeDiff * 0.5, range[x][1] + rangeDiff * 0.5],
     }
   // TODO: show some waiting screen?
-  }
-
-  _onCompositeYRendered () {
-    const params = this._compositeYChartView.params
-    this.params.xScale = params.axis.x.scale
-    this._brush.container = this.el
-    this.config.set('xRange', params.xRange, {silent: true})
-    this.config.set('yRange', params.yRange, {silent: true})
-    this._brush.config.set({
-      extent: this.config.rangeMargined,
-      selection: this.config.selectionRange,
-    })
   }
 
   // Event handlers

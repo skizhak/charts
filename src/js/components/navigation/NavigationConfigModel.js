@@ -31,11 +31,11 @@ class NavigationConfigModel extends ContrailChartsConfigModel {
       margin: 30,
 
       // Side margins. Will be computed if undefined.
-      marginTop: undefined,
-      marginBottom: undefined,
-      marginLeft: undefined,
-      marginRight: undefined,
-      marginInner: undefined,
+      marginTop: 30,
+      marginBottom: 30,
+      marginLeft: 30,
+      marginRight: 30,
+      marginInner: 0,
 
       curve: d3.curveCatmullRom.alpha(0.5),
 
