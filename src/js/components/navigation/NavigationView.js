@@ -35,6 +35,8 @@ class NavigationView extends ContrailChartsView {
     this.listenTo(this._brush, 'selection', _.throttle(this._onSelection))
     this.listenTo(this.config, 'change', this.render)
     this.listenTo(this.model, 'change', this._onModelChange)
+    window.addEventListener('resize', this._onResize.bind(this))
+    this._debouncedEnable = _.debounce(() => { this._disabled = false }, this.config.get('duration'))
   }
 
   render () {
@@ -86,6 +88,7 @@ class NavigationView extends ContrailChartsView {
   }
 
   _onSelection (range) {
+    if (this._disabled) return
     const xAccessor = this.params.plot.x.accessor
     let xMin = this.params.xScale.invert(range[0])
     let xMax = this.params.xScale.invert(range[1])
@@ -98,6 +101,13 @@ class NavigationView extends ContrailChartsView {
 
     this._selection.filter(xAccessor, [xMin, xMax])
     this._actionman.fire('ChangeSelection', this._selection)
+  }
+  /**
+   * Turn off selection for the animation period on resize
+   */
+  _onResize () {
+    this._disabled = true
+    this._debouncedEnable()
   }
 }
 
