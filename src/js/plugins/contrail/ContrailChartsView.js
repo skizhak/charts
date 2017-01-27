@@ -40,7 +40,7 @@ class ContrailChartsView extends ContrailView {
     // do nothing
   }
   /**
-   * @returns {d3 selection} Looks for svg container
+   * @returns {Object} d3.selection - Looks for svg container
    */
   get svg () {
     let selector = ''
@@ -60,7 +60,7 @@ class ContrailChartsView extends ContrailView {
     return this.container.select(selector)
   }
   /**
-   * @return {d3 selection} container to render into
+   * @return {Object} d3 selection - container to render into
    */
   get container () {
     return d3.select(this._container)

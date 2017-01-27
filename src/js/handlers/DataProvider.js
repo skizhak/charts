@@ -189,7 +189,9 @@ class DataProvider extends ContrailModel {
   }
   /**
    * Utility function to filter data by inclusion of dataframe inside provided ranges
-   * @param {key: [Array]} ranges
+   * @param {Object[]} data
+   * @param {Object} ranges
+   * @param {Object[]} ranges.keys
    */
   filterByRanges (data, ranges) {
     return _.filter(data, d => {
