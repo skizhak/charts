@@ -256,7 +256,7 @@ class CompositeYChartView extends ContrailChartsView {
     _.each(sizeAxises, axis => {
       // assume max shape extension out of scale range as of triangle's half edge
       // TODO margin should be based on the biggest triangle in the visible dataset but not the whole data
-      const axisSizeMargin = Math.sqrt(this.params.axis.sizeAxis.range[1] / Math.sqrt(3))
+      const axisSizeMargin = Math.sqrt(axis.range[1] / Math.sqrt(3))
       if (axisSizeMargin > sizeMargin) sizeMargin = axisSizeMargin
     })
     if (!sizeMargin) return
