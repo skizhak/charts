@@ -1,13 +1,13 @@
-/* global coCharts */
+/* global d3 coCharts */
 
 function timeFormatter (value) {
   return d3.timeFormat('%H:%M:%S')(value)
 }
 function numberFormatter (number) {
-  return number.toFixed(2)
+  return number.toFixed(0)
 }
 function numberFormatter3 (number) {
-  return number.toFixed(3)
+  return number.toFixed(1)
 }
 
 // Complex example
@@ -27,6 +27,22 @@ const complexChartView = new coCharts.charts.XYChartView()
 complexChartView.setConfig({
   container: '#complexChart',
   components: [{
+    type: 'LegendPanel',
+    config: {
+      sourceComponent: 'complexChartCompositeY',
+      placement: 'row',
+      coloPicker: true,
+      filter: true,
+      chartSelector: true,
+    },
+  }, {
+    type: 'ControlPanel',
+    config: {
+      menu: [
+        { id: 'Refresh' },
+      ],
+    },
+  }, {
     id: 'complexChartCompositeY',
     type: 'CompositeYChart',
     config: {
@@ -35,6 +51,7 @@ complexChartView.setConfig({
       marginRight: 80,
       marginBottom: 40,
       chartHeight: 600,
+      crosshair: 'crosshairId',
       plot: {
         x: {
           accessor: 'x',
@@ -44,13 +61,13 @@ complexChartView.setConfig({
         y: [
           {
             accessor: 'a',
-            labelFormatter: 'A',
+            labelFormatter: 'Label A',
             enabled: true,
-            chart: 'stackedBar',
+            chart: 'BarChart',
             possibleChartTypes: [
               {
                 label: 'Stacked Bar',
-                chart: 'StackedBar'
+                chart: 'StackedBarChart'
               }, {
                 label: 'Bar',
                 chart: 'BarChart'
@@ -60,12 +77,12 @@ complexChartView.setConfig({
               }
             ],
             axis: 'y1',
-          },
-          {
+            tooltip: 'defaultTooltip',
+          }, {
             accessor: 'b',
-            labelFormatter: 'B',
+            labelFormatter: 'Label B',
             enabled: true,
-            chart: 'stackedBarChart',
+            chart: 'BarChart',
             possibleChartTypes: [
               {
                 label: 'Stacked Bar',
@@ -79,12 +96,12 @@ complexChartView.setConfig({
               }
             ],
             axis: 'y1',
-          },
-          {
+            tooltip: 'customTooltip',
+          }, {
             accessor: 'c',
-            labelFormatter: 'C',
+            labelFormatter: 'Label C',
             enabled: false,
-            chart: 'StackedBar',
+            chart: 'BarChart',
             possibleChartTypes: [
               {
                 label: 'Stacked Bar',
@@ -98,17 +115,17 @@ complexChartView.setConfig({
               }
             ],
             axis: 'y1',
-          },
-          {
+            tooltip: 'defaultTooltip',
+          }, {
             accessor: 'd',
-            labelFormatter: 'Megabytes',
+            labelFormatter: 'Megabytes D',
             color: '#d62728',
             enabled: true,
             chart: 'LineChart',
             possibleChartTypes: [
               {
                 label: 'Stacked Bar',
-                chart: 'StackedBarChart',
+                chart: 'StackedBarChart'
               }, {
                 label: 'Bar',
                 chart: 'BarChart'
@@ -118,10 +135,10 @@ complexChartView.setConfig({
               }
             ],
             axis: 'y2',
-          },
-          {
+            tooltip: 'defaultTooltip',
+          }, {
             accessor: 'e',
-            labelFormatter: 'Megabytes',
+            labelFormatter: 'Megabytes E',
             color: '#9467bd',
             enabled: true,
             chart: 'LineChart',
@@ -138,6 +155,7 @@ complexChartView.setConfig({
               }
             ],
             axis: 'y2',
+            tooltip: 'defaultTooltip',
           }
         ]
       },
@@ -157,9 +175,9 @@ complexChartView.setConfig({
           labelMargin: 15
         }
       }
-    }
+    },
   }, {
-    type: 'Timeline',
+    type: 'Navigation',
     config: {
       marginInner: 10,
       marginLeft: 80,
@@ -171,16 +189,113 @@ complexChartView.setConfig({
         x: {
           accessor: 'x',
           labelFormatter: 'Time',
-          axis: 'x'
-        }
+          axis: 'x',
+        },
+        y: [
+          {
+            enabled: true,
+            accessor: 'a',
+            labelFormatter: 'Label A',
+            chart: 'StackedBarChart',
+            axis: 'y1',
+          }, {
+            enabled: true,
+            accessor: 'b',
+            labelFormatter: 'Label B',
+            chart: 'StackedBarChart',
+            axis: 'y1',
+          }, {
+            enabled: true,
+            accessor: 'd',
+            labelFormatter: 'Megabytes D',
+            chart: 'LineChart',
+            axis: 'y2',
+          }
+        ]
       },
       axis: {
         x: {
-          formatter: d3.timeFormat('%H:%M:%S')
+        },
+        y1: {
+          position: 'left',
+          formatter: numberFormatter,
+          labelMargin: 15,
+        },
+        y2: {
+          position: 'right',
+          formatter: numberFormatter3,
+          labelMargin: 15,
         }
       }
+    },
+  }, {
+    id: 'defaultTooltip',
+    type: 'Tooltip',
+    config: {
+      title: {
+          accessor: 'x',
+          valueFormatter: timeFormatter,
+      },
+
+      dataConfig: [
+        {
+          accessor: 'a',
+          labelFormatter: 'Label A',
+          valueFormatter: numberFormatter,
+        }, {
+          accessor: 'b',
+          labelFormatter: 'Label B',
+          valueFormatter: numberFormatter,
+        }, {
+          accessor: 'c',
+          labelFormatter: 'Label C',
+          valueFormatter: numberFormatter,
+        }, {
+          accessor: 'd',
+          labelFormatter: 'Label D',
+          valueFormatter: numberFormatter,
+        }, {
+          accessor: 'e',
+          labelFormatter: 'Label E',
+          valueFormatter: numberFormatter,
+        }
+      ]
+    },
+  }, {
+    id: 'customTooltip',
+    type: 'Tooltip',
+    config: {
+      template: (data) => '<div class="tooltip-content">Custom tooltip</div>',
+    }
+  }, {
+    id: 'messageId',
+    type: 'Message',
+    config: {
+      enabled: true,
+    }
+  }, {
+    id: 'crosshairId',
+    type: 'Crosshair',
+    config: {
+      tooltip: 'defaultTooltip',
     }
   }]
 })
 complexChartView.setData(complexData)
-complexChartView.render()
+complexChartView.renderMessage({
+  componentId: 'XYChart',
+  action: 'once',
+  messages: [{
+    level: 'info',
+    title: 'Message 1',
+    message: 'This is an example message. It will disapear after 5 seconds.'
+  }, {
+    level: 'error',
+    title: 'A Fatal Error',
+    message: 'This is an error.'
+  }, {
+    level: 'info',
+    title: 'Message 2',
+    message: 'This is another example message.'
+  }]
+})

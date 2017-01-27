@@ -7,32 +7,44 @@ require('../sass/contrail-charts-examples.scss')
 const _ = require('lodash')
 const examples = [
     {
-        html: 'linebar-chart/multi-linebar-nav/index.html',
-        js: 'linebar-chart/multi-linebar-nav/index.js',
-        css: 'linebar-chart/multi-linebar-nav/index.css',
-        title: 'LineBar Chart with Legend',
+        html: 'linebar-chart/legend/index.html',
+        js: 'linebar-chart/legend/index.js',
+        css: 'linebar-chart/legend/index.css',
+        title: 'Line Grouped Bar Chart with Legend',
     }, {
-        html: 'other/control-panel/index.html',
-        js: 'other/control-panel/index.js',
-        css: 'other/control-panel/index.css',
-        title: 'Line Chart with Control Panel (Embedded Components)',
+        html: 'linebar-chart/control-panel/index.html',
+        js: 'linebar-chart/control-panel/index.js',
+        css: 'linebar-chart/control-panel/index.css',
+        title: 'Line Stacked Bar Chart with Controls',
     },
     {
-        html: 'other/tooltip/index.html',
-        js: 'other/tooltip/index.js',
-        css: 'other/tooltip/index.css',
-        title: 'Line, Stacked Bar, and Line Charts (Tooltip & Custom Tooltip)',
+        html: 'linebar-chart/timeline/index.html',
+        js: 'linebar-chart/timeline/index.js',
+        css: 'linebar-chart/timeline/index.css',
+        title: 'Line Chart with Timeline Navigation'
     },
     {
-        html: 'scatterplot/scatter-nav/index.html',
-        js: 'scatterplot/scatter-nav/index.js',
-        css: 'scatterplot/scatter-nav/index.css',
-        title: 'Scatter Chart',
+        html: 'linebar-chart/tooltip/index.html',
+        js: 'linebar-chart/tooltip/index.js',
+        css: 'linebar-chart/tooltip/index.css',
+        title: 'Line Stacked Bar with Tooltips',
     },
     {
-        html: 'multi-chart/linebar-linebar-nav/index.html',
-        js: 'multi-chart/linebar-linebar-nav/index.js',
-        css: 'multi-chart/linebar-linebar-nav/index.css',
+        html: 'linebar-chart/requirejs/requirejs.html',
+        js: ['linebar-chart/requirejs/requirejs-config.js', 'linebar-chart/requirejs/app/example1.js'],
+        css: 'linebar-chart/requirejs/app/example1.css',
+        title: 'Line Stacked Bar Chart (RequireJS)',
+    },
+    {
+        html: 'bubble-chart/multiple-shapes/index.html',
+        js: 'bubble-chart/multiple-shapes/index.js',
+        css: 'bubble-chart/multiple-shapes/index.css',
+        title: 'Bubble Chart',
+    },
+    {
+        html: 'grouped-chart/linebar-linebar-nav/index.html',
+        js: 'grouped-chart/linebar-linebar-nav/index.js',
+        css: 'grouped-chart/linebar-linebar-nav/index.css',
         title: 'Grouped Charts',
     },
     {
@@ -42,22 +54,10 @@ const examples = [
         title: 'Area Chart',
     },
     {
-        html: 'pie-chart/donut/index.html',
-        js: 'pie-chart/donut/index.js',
-        css: 'pie-chart/donut/index.css',
+        html: 'radial-chart/pie/index.html',
+        js: 'radial-chart/pie/index.js',
+        css: 'radial-chart/pie/index.css',
         title: 'Pie Chart',
-    },
-    {
-        html: 'timeline-chart/linebar-timeline/index.html',
-        js: 'timeline-chart/linebar-timeline/index.js',
-        css: 'timeline-chart/linebar-timeline/index.css',
-        title: 'Chart with Timeline as Navigation'
-    },
-    {
-        html: 'other/requirejs/requirejs.html',
-        js: ['other/requirejs/requirejs-config.js', 'other/requirejs/app/example1.js'],
-        css: 'other/requirejs/app/example1.css',
-        title: 'Charts using RequireJS',
     }
 ]
 

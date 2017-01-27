@@ -4,7 +4,7 @@ function timeFormatter (value) {
   return d3.timeFormat('%H:%M:%S')(value) // eslint-disable-line no-undef
 }
 function numberFormatter (number) {
-  return number.toFixed(2)
+  return number.toFixed(0)
 }
 
 const complexData = []
@@ -109,23 +109,23 @@ const chartConfig = {
       dataConfig: [
         {
           accessor: 'data1',
-          labelFormatter: 'Data1',
+          labelFormatter: 'Label 1',
           valueFormatter: numberFormatter,
         }, {
           accessor: 'data2',
-          labelFormatter: 'Data2',
+          labelFormatter: 'Label 2',
           valueFormatter: numberFormatter,
         }, {
           accessor: 'data3',
-          labelFormatter: 'Data3',
+          labelFormatter: 'Label 3',
           valueFormatter: numberFormatter,
         }, {
           accessor: 'size1',
-          labelFormatter: 'Size1',
+          labelFormatter: 'Size 1',
           valueFormatter: numberFormatter,
         }, {
           accessor: 'size2',
-          labelFormatter: 'Size2',
+          labelFormatter: 'Size 2',
           valueFormatter: numberFormatter,
         }
       ]

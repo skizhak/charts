@@ -40,32 +40,32 @@ define([ // eslint-disable-line no-undef
           y: [
             {
               accessor: 'a',
-              label: 'A',
+              label: 'Label A',
               enabled: true,
               chart: 'StackedBarChart',
               axis: 'y1',
             }, {
               accessor: 'b',
-              label: 'B',
+              label: 'Label B',
               enabled: true,
               chart: 'StackedBarChart',
               axis: 'y1',
             }, {
               accessor: 'c',
-              label: 'C',
+              label: 'Label C',
               enabled: false,
               chart: 'StackedBarChart',
               axis: 'y1',
             }, {
               accessor: 'd',
-              label: 'Megabytes',
+              label: 'Megabytes D',
               color: '#d62728',
               enabled: true,
               chart: 'LineChart',
               axis: 'y2',
             }, {
               accessor: 'e',
-              label: 'Megabytes',
+              label: 'Megabytes E',
               color: '#9467bd',
               enabled: true,
               chart: 'LineChart',
@@ -97,11 +97,11 @@ define([ // eslint-disable-line no-undef
             valueFormatter: d3.format('.0f')
           }, {
             accessor: 'a',
-            labelFormatter: () => 'A',
+            labelFormatter: () => 'Label A',
             valueFormatter: d3.format('.05f')
           }, {
             accessor: 'b',
-            labelFormatter: () => 'B',
+            labelFormatter: () => 'Label B',
             valueFormatter: d3.format('.02f')
           }
         ]
