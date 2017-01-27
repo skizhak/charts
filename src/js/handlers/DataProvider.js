@@ -14,8 +14,6 @@ const ContrailEvents = require('contrail-events')
 class DataProvider extends ContrailModel {
   get defaults () {
     return {
-      _type: 'DataProvider',
-
       // The formatted/filtered data
       data: [],
 
@@ -51,6 +49,9 @@ class DataProvider extends ContrailModel {
     this.listenTo(this, 'change:error', this.triggerError)
   }
 
+  get type () {
+    return 'Data'
+  }
   get parentModel () {
     return this.get('parentDataModel')
   }
@@ -152,10 +153,6 @@ class DataProvider extends ContrailModel {
   resetAllRanges () {
     this.setRanges({}, {})
   }
-
-  setRangeAndFilterData (newRange) {
-    this.setDataAndRanges(this.filterByRanges(this.parentData, newRange), newRange, newRange)
-  }
   /**
    * Worker function used to calculate a data range for provided constaible name.
    */
@@ -175,17 +172,6 @@ class DataProvider extends ContrailModel {
       }
     }
     return constiableRange
-  }
-
-  setDataAndRanges (data, range, manualRange) {
-    if (!data) {
-      data = this.parentData
-    }
-    const formatData = this.get('formatData')
-    if (_.isFunction(formatData)) {
-      data = formatData(data, manualRange)
-    }
-    this.set({data: data, range: range, manualRange: manualRange})
   }
   /**
    * Utility function to filter data by inclusion of dataframe inside provided ranges
@@ -215,22 +201,28 @@ class DataProvider extends ContrailModel {
     if (_.isFunction(formatData)) {
       data = formatData(data, manualRange)
     }
-    this.set({data: data, range: range, manualRange: manualRange})
+    this.set({data, range, manualRange})
   }
   /**
    * Take the parent's data and filter / format it.
    * Called on initialization and when parent data changed.
    */
   prepareData () {
-    // Set the new data array and reset range - leave the manual range.
-    this.setDataAndRanges(null, {}, {})
+    let data = this.parentData
+    if (_.isEmpty(data)) return
+    const formatData = this.get('formatData')
+    if (_.isFunction(formatData)) {
+      data = formatData(data)
+    }
+    this.attributes.data = data
+    this.trigger('change', this)
   }
 
   triggerError () {
     if (this.error) {
-      this.messageEvent.trigger('error', {type: this._type, action: 'show', messages: this.errorList})
+      this.messageEvent.trigger('error', {type: this.type, action: 'show', messages: this.errorList})
     } else {
-      this.messageEvent.trigger('error', {type: this._type, action: 'hide'})
+      this.messageEvent.trigger('error', {type: this.type, action: 'hide'})
     }
   }
 }
