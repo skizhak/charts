@@ -398,23 +398,27 @@ class CompositeYChartView extends ContrailChartsView {
       this.d3.select('.axis.y-axis.' + axisInfo.name + '-axis').call(axisInfo.yAxis)
       // Y axis label
       const yLabelData = []
-      let i = 0
-      // There will be one label per unique accessor label displayed on this axis.
-      _.each(axisInfo.accessors, (key) => {
-        const foundActiveAccessorData = _.find(this.params.activeAccessorData, { accessor: key })
-        if (!foundActiveAccessorData) return
-        const label = foundActiveAccessorData.labelFormatter || foundActiveAccessorData.label
-        if (!label) return
-        const foundYLabelData = _.find(yLabelData, { label: label })
-        if (!foundYLabelData) {
-          let yLabelXDelta = 12 * i
-          if (axisInfo.position === 'right') {
-            yLabelXDelta = -yLabelXDelta
+      if (this.hasAxisConfig(axisInfo.name, 'label')) {
+        yLabelData.push({label: this.config.get('axis')[axisInfo.name].label, x: yLabelX})
+      } else {
+        let i = 0
+        // There will be one label per unique accessor label displayed on this axis.
+        _.each(axisInfo.accessors, (key) => {
+          const foundActiveAccessorData = _.find(this.params.activeAccessorData, { accessor: key })
+          if (!foundActiveAccessorData) return
+          const label = foundActiveAccessorData.labelFormatter || foundActiveAccessorData.label
+          if (!label) return
+          const foundYLabelData = _.find(yLabelData, { label: label })
+          if (!foundYLabelData) {
+            let yLabelXDelta = 12 * i
+            if (axisInfo.position === 'right') {
+              yLabelXDelta = -yLabelXDelta
+            }
+            yLabelData.push({ label: label, x: yLabelX + yLabelXDelta })
+            i++
           }
-          yLabelData.push({ label: label, x: yLabelX + yLabelXDelta })
-          i++
-        }
-      })
+        })
+      }
       const yAxisLabelSvg = this.d3.select(`.axis.y-axis.${axisInfo.name}-axis`)
         .selectAll('.axis-label')
         .data(yLabelData, (d) => d.label)

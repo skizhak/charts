@@ -196,11 +196,13 @@ cpuMemChartView.setConfig({
         },
         y1: {
           position: 'left',
+          label: 'CPU Utilization (%)',
           formatter: cpuFormatter,
           labelMargin: 15,
         },
         y2: {
           position: 'right',
+          label: 'Memory Usage',
           formatter: memFormatter,
           labelMargin: 15,
         }
