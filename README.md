@@ -20,11 +20,6 @@ To build
 ```
 npm run build
 ```
-to build examples, use
-```
-npm run build-examples
-```
-
 you'll find the `js` and `css` under `build/` directory
 
 Or, download from our releases.
@@ -82,7 +77,7 @@ And we need to plot a line chart for memory 'mem' data over time 'ts'
     cpuMemChartView.setData(tsData)
 ```
 
-![create](examples/basic/img/sample1.png)
+![create](examples/developer/basic/img/sample1.png)
 
 Nice, but the axis is missing. Let's add it. Update the config with axis
 
@@ -142,11 +137,11 @@ series are different, let's put them on different axis.
     ...
 ```
 
-![create](examples/basic/img/sample2.png)
+![create](examples/developer/basic/img/sample2.png)
 
 Using the same XYChartView we can render line, bar and zoom charts. Head over to examples for more!
 
-Refer [Documentation](https://github.com/Juniper/contrail-charts/wiki) for different types of charts, components and 
+Refer [Documentation](https://github.com/absingla/contrail-charts/wiki) for different types of charts, components and 
 their config options. 
 
 # Tests
