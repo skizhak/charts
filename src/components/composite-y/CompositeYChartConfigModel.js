@@ -28,15 +28,15 @@ class CompositeYChartConfigModel extends ContrailChartsConfigModel {
       xTicks: 10,
       yTicks: 10,
 
-      // General margin used for computing the side margins.
-      margin: 30,
+      // Margin between label and chart
+      labelMargin: 16,
 
-      // Side margins. Will be computed if undefined.
-      marginTop: 30,
-      marginBottom: 30,
-      marginLeft: 30,
-      marginRight: 30,
-      marginInner: 0,
+      // Side margins.
+      marginTop: 40,
+      marginBottom: 40,
+      marginLeft: 40,
+      marginRight: 40,
+      marginInner: 10,
 
       curve: d3.curveCatmullRom.alpha(0.5)
     }

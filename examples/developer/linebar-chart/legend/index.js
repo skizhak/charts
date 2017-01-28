@@ -166,13 +166,11 @@ complexChartView.setConfig({
         y1: {
           position: 'left',
           formatter: numberFormatter,
-          labelMargin: 15,
-          domain: [-10, undefined]
+          domain: [-10, undefined],
         },
         y2: {
           position: 'right',
           formatter: numberFormatter3,
-          labelMargin: 15
         }
       }
     },
@@ -219,12 +217,12 @@ complexChartView.setConfig({
         y1: {
           position: 'left',
           formatter: numberFormatter,
-          labelMargin: 15,
+          ticks: 5,
         },
         y2: {
           position: 'right',
           formatter: numberFormatter3,
-          labelMargin: 15,
+          ticks: 5,
         }
       }
     },

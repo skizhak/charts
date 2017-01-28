@@ -358,7 +358,7 @@ class CompositeYChartView extends ContrailChartsView {
     let yLabelX = 0
     let yLabelTransform = 'rotate(-90)'
     _.each(this.params.yAxisInfoArray, (axisInfo) => {
-      let yLabelMargin = 12
+      let yLabelMargin = this.config.get('labelMargin')
       if (this.hasAxisParam(axisInfo.name, 'labelMargin')) {
         yLabelMargin = this.params.axis[axisInfo.name].labelMargin
       }
@@ -409,7 +409,7 @@ class CompositeYChartView extends ContrailChartsView {
           if (!label) return
           const foundYLabelData = _.find(yLabelData, { label: label })
           if (!foundYLabelData) {
-            let yLabelXDelta = 12 * i
+            let yLabelXDelta = this.config.get('labelMargin') * i
             if (axisInfo.position === 'right') {
               yLabelXDelta = -yLabelXDelta
             }
@@ -420,15 +420,13 @@ class CompositeYChartView extends ContrailChartsView {
       }
       const yAxisLabelSvg = this.d3.select(`.axis.y-axis.${axisInfo.name}-axis`)
         .selectAll('.axis-label')
-        .data(yLabelData, (d) => d.label)
+        .data(yLabelData, d => d.label)
       yAxisLabelSvg.enter()
         .append('text')
         .attr('class', 'axis-label')
-        .merge(yAxisLabelSvg) // .transition().ease( d3.easeLinear ).duration( this.params.duration )
-        // .attr( "x", yLabelX )
-        // .attr( "y", this.params.yRange[1] + (this.params.yRange[0] - this.params.yRange[1]) / 2 )
-        .attr('transform', (d) => 'translate(' + d.x + ',' + (this.params.yRange[1] + (this.params.yRange[0] - this.params.yRange[1]) / 2) + ') ' + yLabelTransform)
-        .text((d) => d.label)
+        .merge(yAxisLabelSvg)
+        .attr('transform', d => 'translate(' + d.x + ',' + (this.params.yRange[1] + (this.params.yRange[0] - this.params.yRange[1]) / 2) + ') ' + yLabelTransform)
+        .text(d => d.label)
       yAxisLabelSvg.exit().remove()
     })
   }
