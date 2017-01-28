@@ -88,11 +88,13 @@ const chartConfig = {
         y1: {
           position: 'left',
           formatter: numberFormatter,
+          label: 'Size of circles',
           labelMargin: 15,
         },
         y2: {
           position: 'right',
           formatter: numberFormatter,
+          label: 'Size of squares and triangles',
           labelMargin: 15,
         }
       },

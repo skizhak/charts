@@ -87,25 +87,6 @@ define([ // eslint-disable-line no-undef
           }
         }
       },
-    }, {
-      type: 'Tooltip',
-      config: {
-        dataConfig: [
-          {
-            accessor: 'x',
-            labelFormatter: (key) => 'Time',
-            valueFormatter: d3.format('.0f')
-          }, {
-            accessor: 'a',
-            labelFormatter: () => 'Label A',
-            valueFormatter: d3.format('.05f')
-          }, {
-            accessor: 'b',
-            labelFormatter: () => 'Label B',
-            valueFormatter: d3.format('.02f')
-          }
-        ]
-      }
     }]
   })
   complexChartView.render()
