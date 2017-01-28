@@ -1,13 +1,10 @@
 /* global d3 coCharts */
 
-function timeFormatter (value) {
-  return d3.timeFormat('%H:%M:%S')(value)
-}
 function numberFormatter (number) {
-  return number.toFixed(2)
+  return number.toFixed(0)
 }
 function numberFormatter3 (number) {
-  return number.toFixed(3)
+  return number.toFixed(1)
 }
 
 // Complex example
@@ -18,13 +15,28 @@ for (let i = 0; i < 100; i++) {
     x: 1475760930000 + 1000000 * i,
     a: a,
     b: a + Math.random() * 10,
-    c: i + (Math.random() - 0.5) * 10,
+    c: Math.random() * 100,
+    d: i + (Math.random() - 0.5) * 10,
+    e: (Math.random() - 0.5) * 10,
   })
 }
 const complexChartView = new coCharts.charts.XYChartView()
 complexChartView.setConfig({
   container: '#chart',
   components: [{
+    type: 'ControlPanel',
+    config: {
+      menu: [{
+        id: 'Refresh',
+      }, {
+        id: 'Filter',
+        component: 'filterId',
+      }, {
+        id: 'ColorPicker',
+        component: 'colorPickerId',
+      }],
+    }
+  }, {
     id: 'compositeYId',
     type: 'CompositeYChart',
     config: {
@@ -42,26 +54,41 @@ complexChartView.setConfig({
         y: [
           {
             accessor: 'a',
-            labelFormatter: 'A',
+            labelFormatter: 'Label A',
             enabled: true,
             chart: 'StackedBarChart',
             axis: 'y1',
-            tooltip: 'defaultTooltipId',
+            tooltip: 'defaultTooltip',
           }, {
             accessor: 'b',
-            labelFormatter: 'B',
+            labelFormatter: 'Label B',
             enabled: true,
             chart: 'StackedBarChart',
             axis: 'y1',
             tooltip: 'customTooltip',
           }, {
             accessor: 'c',
-            labelFormatter: 'Megabytes',
-            color: 'grey',
+            labelFormatter: 'Label C',
+            enabled: false,
+            chart: 'StackedBarChart',
+            axis: 'y1',
+            tooltip: 'defaultTooltip',
+          }, {
+            accessor: 'd',
+            labelFormatter: 'Megabytes D',
+            color: '#d62728',
             enabled: true,
             chart: 'LineChart',
             axis: 'y2',
-            tooltip: 'defaultTooltipId',
+            tooltip: 'defaultTooltip',
+          }, {
+            accessor: 'e',
+            labelFormatter: 'Megabytes E',
+            color: '#9467bd',
+            enabled: true,
+            chart: 'LineChart',
+            axis: 'y2',
+            tooltip: 'defaultTooltip',
           }
         ]
       },
@@ -73,45 +100,29 @@ complexChartView.setConfig({
           position: 'left',
           formatter: numberFormatter,
           labelMargin: 15,
-          domain: [-10, undefined],
+          domain: [-10, undefined]
         },
         y2: {
           position: 'right',
           formatter: numberFormatter3,
-          labelMargin: 15,
-        },
-      },
-    },
-  }, {
-    id: 'defaultTooltipId',
-    type: 'Tooltip',
-    config: {
-      dataConfig: [
-        {
-          accessor: 'x',
-          labelFormatter: 'Time',
-          valueFormatter: timeFormatter,
-        }, {
-          accessor: 'a',
-          labelFormatter: 'Tooltip A',
-          valueFormatter: numberFormatter,
-        }, {
-          accessor: 'b',
-          labelFormatter: 'Tooltip B',
-          valueFormatter: numberFormatter,
-        }, {
-          accessor: 'c',
-          labelFormatter: 'Tooltip C',
-          valueFormatter: numberFormatter,
+          labelMargin: 15
         }
-      ]
+      }
     },
   }, {
-    id: 'customTooltip',
-    type: 'Tooltip',
+    id: 'colorPickerId',
+    type: 'ColorPicker',
     config: {
-      template: (data) => '<div class="tooltip-content">Custom tooltip</div>',
+      sourceComponent: 'compositeYId',
+      embedded: true,
     }
+  }, {
+    id: 'filterId',
+    type: 'Filter',
+    config: {
+      sourceComponent: 'compositeYId',
+      embedded: true,
+    },
   }]
 })
 complexChartView.setData(complexData)

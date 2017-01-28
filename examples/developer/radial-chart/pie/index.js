@@ -1,12 +1,12 @@
 // Most basic chart.
 const pieData = [
-  { label: 'System process', value: 4499890 },
-  { label: 'Process 1', value: 2704659 },
-  { label: 'Process 2', value: 2159981 },
-  { label: 'Process 3', value: 3853788 },
-  { label: 'Process 4', value: 14106543 },
-  { label: 'Process 5', value: 8819342 },
-  { label: 'Process 6', value: 612463 },
+    { label: 'Process 1', value: 2704659 },
+    { label: 'Process 2', value: 2159981 },
+    { label: 'Process 3', value: 3853788 },
+    { label: 'Process 4', value: 14106543 },
+    { label: 'Process 5', value: 8819342 },
+    { label: 'Process 6', value: 612463 },
+    { label: 'Process 7', value: 4499890 }
 ]
 function numberFormatter (number) {
   return d3.format(',.0f')(number) // eslint-disable-line no-undef

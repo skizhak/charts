@@ -35,8 +35,8 @@ const config = {
   entry: {
     'developerExampleLoader': path.join(__dirname, '/examples/common/js/developerExampleLoader.js'),
     'demoExampleLoader': path.join(__dirname, '/examples/common/js/demoExampleLoader.js'),
-    'demo-scatter-port-distribution': path.join(__dirname, '/examples/demo/scatterplot/port-distribution/port-distribution.js'),
-    'demo-linebar-cpu-mem': path.join(__dirname, '/examples/demo/linebar/cpu-mem/cpu-mem.js')
+    'demo-scatter-port-distribution': path.join(__dirname, '/examples/demo/bubble-chart/port-distribution/port-distribution.js'),
+    'demo-linebar-cpu-mem': path.join(__dirname, '/examples/demo/linebar-chart/cpu-mem/cpu-mem.js')
   },
   devtool: 'source-map',
   output: {

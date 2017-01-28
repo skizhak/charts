@@ -8,14 +8,14 @@ const _ = require('lodash')
 
 const examples = [
   {
-    html: 'linebar/cpu-mem/cpu-mem.html',
-    js: 'linebar/cpu-mem/cpu-mem.js',
-    css: 'linebar/cpu-mem/cpu-mem.css',
+    html: 'linebar-chart/cpu-mem/cpu-mem.html',
+    js: 'linebar-chart/cpu-mem/cpu-mem.js',
+    css: 'linebar-chart/cpu-mem/cpu-mem.css',
     title: 'Line Bar chart (CPU / Mem)',
   }, {
-    html: 'scatterplot/port-distribution/port-distribution.html',
-    js: 'scatterplot/port-distribution/port-distribution.js',
-    css: 'scatterplot/port-distribution/port-distribution.css',
+    html: 'bubble-chart/port-distribution/port-distribution.html',
+    js: 'bubble-chart/port-distribution/port-distribution.js',
+    css: 'bubble-chart/port-distribution/port-distribution.css',
     title: "Bubble Chart (Ports' Traffic Distribution)"
   }
 ]
