@@ -3,7 +3,7 @@
   margin: 30px;
 }
 
-.coCharts-control-panel {
+#controlPanelId {
   position: absolute;
   top: 0px;
   right: 0px;

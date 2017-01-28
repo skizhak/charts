@@ -1,0 +1,21 @@
+.cc-svg {
+	.axis {
+		.domain {
+			display: none;
+		}
+		.tick {
+			line {
+				stroke: #eee;
+			}
+			text {
+				font-size: 10px;
+				fill: #aaa;
+			}
+		}
+		.axis-label {
+			font-size: 10px;
+			fill: #aaa;
+			text-anchor: middle;
+		}
+	}
+}
