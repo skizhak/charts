@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Developer Examples</title>
+    <link href="../build/examples/css/contrail-charts-examples.css" rel="stylesheet">
+    <script src="../node_modules/jquery/dist/jquery.js"></script>
+  </head>
+  <body>
+    <div id="sideBar" class="side-bar">
+      <div class="title">Developer Examples</div>
+      <div id="panel">
+        <div id="content">
+          <ul id="exampleLinks" class="example-links"></ul>
+        </div>
+      </div>
+    </div>
+    <div id="pageContent" class="page-content">
+      <div id="sourceTabs" class="tabs">
+        <div class="tab">
+            <input id="demoTab" type="radio" name="sourceContentTab" checked>
+            <label for="demoTab">Demo</label>
+
+            <div id="demoContent" class="content remove-content-horizontal-padding">
+              <div id="outputView" class="output-view">
+                <iframe src="" class="output-demo-iframe"></iframe>
+              </div>
+            </div>
+        </div>
+        
+        <div class="tab">
+            <input id="htmlTab" type="radio" name="sourceContentTab">
+            <label for="htmlTab">HTML</label>
+
+            <div id="htmlContent" class="content"></div>
+        </div>
+
+        <div class="tab">
+            <input id="cssTab" type="radio" name="sourceContentTab">
+            <label for="cssTab">CSS</label>
+
+            <div id="cssContent" class="content"></div>
+        </div>
+
+        <div class="tab">
+            <input id="jsTab" type="radio" name="sourceContentTab">
+            <label for="jsTab">JS</label>
+
+            <div id="jsContent" class="content"></div>
+        </div>
+      </div>
+    </div>
+  </body>
+  <script src="../build/examples/js/developerExampleLoader.js"></script>
+</html>
