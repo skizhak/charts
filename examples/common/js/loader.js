@@ -11,7 +11,7 @@ const lineBarExamples = [
         html: 'linebar-chart/cpu-mem/cpu-mem.html',
         js: 'linebar-chart/cpu-mem/cpu-mem.js',
         css: 'linebar-chart/cpu-mem/cpu-mem.css',
-        title: 'CPU & Memory',
+        title: 'Memory & CPU',
     }
 ]
 
@@ -29,6 +29,7 @@ const $lineBarLinks = $('#lineBarLinks')
 
 lineBarExamples.forEach(
     (example, idx) => {
+        /*
         loadedExampleSrc.push({
             rawHTML: require('raw!../../demo/' + example.html),
             rawCSS: require('raw!../../demo/' + example.css),
@@ -36,12 +37,22 @@ lineBarExamples.forEach(
                     loadedFiles[currentFile] = require('raw!../../demo/' + currentFile)
                     return loadedFiles
                 }, {}) : {[example.js]: require('raw!../../demo/' + example.js)}
-        })
+        })*/
         let $link = $(`<a href="#${idx}"><span class="nav-text">${example.title}</span></a>`)
-        $link.click(sideBarLinkOnClick)
+        $link.click(onClickLineChart)
         $lineBarLinks.append($('<li>').append($link))
     }
 )
+
+const $bubbleLinks = $('#bubbleLinks');
+bubbleExamples.forEach(
+    (example, idx) => {
+        let $link = $(`<a href="#${idx}"><span class="nav-text">${example.title}</span></a>`)
+        $link.click(onClickBubbleChart)
+        $bubbleLinks.append($('<li>').append($link))
+    }
+)
+
 
 function reformatHTMLToShow(rawHTML) {
     const newlineMarker = '%%%newline%%%'
@@ -65,16 +76,23 @@ function createNewTab(id, title, group = 'js-files', checked, content) {
           </div>`
 }
 
-function sideBarLinkOnClick(e) {
+function onClickLineChart(e) {
     const index = $(this).attr('href').split('#')[1]
-    console.log(index);
-    const example = lineBarExamples[index]
-    const {rawHTML, rawJS, rawCSS} = loadedExampleSrc[index]
+    onClickSidebar(index, lineBarExamples)
 
+}
+
+function onClickBubbleChart(e) {
+    const index = $(this).attr('href').split('#')[1]
+    onClickSidebar(index, bubbleExamples)
+}
+
+function onClickSidebar(index, exampleArray) {
+    const example = exampleArray[index]
+    const {rawHTML, rawJS, rawCSS} = exampleArray[index]
     $('#outputView').find('.output-demo-iframe').attr('src', `./demo/${example.html}`)
-    $('#htmlContent').html(reformatHTMLToShow(rawHTML))
-    $('#cssContent').html(reformatHTMLToShow(rawCSS))
 
+    /*
     const tabCollections = Object.keys(rawJS)
         .reduce((tabsHTML, currentJSFile, idx) => {
             tabsHTML.push(
@@ -89,5 +107,8 @@ function sideBarLinkOnClick(e) {
             return tabsHTML
         }, []).join('')
 
+    $('#htmlContent').html(reformatHTMLToShow(rawHTML))
+    $('#cssContent').html(reformatHTMLToShow(rawCSS))
     $('#jsContent').html(`<div class="tabs">${tabCollections}</div>`)
+    */
 }
