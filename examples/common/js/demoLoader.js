@@ -27,7 +27,7 @@ const demoBubbleExamples = [
 const $lineBarLinks = $('#lineBarLinks')
 demoLBExamples.forEach(
     (example, idx) => {
-        let $link = $(`<a href="#${idx}"><span class="nav-text">${example.title}</span></a>`)
+        let $link = $(`<a id="lb${idx}" href="#${idx}"><span class="nav-text">${example.title}</span></a>`)
         $link.click(onClickLineChart)
         $lineBarLinks.append($('<li>').append($link))
     }
@@ -36,11 +36,14 @@ demoLBExamples.forEach(
 const $bubbleLinks = $('#bubbleLinks');
 demoBubbleExamples.forEach(
     (example, idx) => {
-        let $link = $(`<a href="#${idx}"><span class="nav-text">${example.title}</span></a>`)
+        let $link = $(`<a id="b${idx}" href="#${idx}"><span class="nav-text">${example.title}</span></a>`)
         $link.click(onClickBubbleChart)
         $bubbleLinks.append($('<li>').append($link))
     }
 )
+
+$('#bubble').click();
+$bubbleLinks.find("#b0").click();
 
 function onClickLineChart(e) {
     const index = $(this).attr('href').split('#')[1]

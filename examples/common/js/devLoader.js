@@ -77,7 +77,7 @@ const devAdvanceExamples = [
 const $lineBarLinks = $('#lineBarLinks')
 devLBExamples.forEach(
     (example, idx) => {
-        let $link = $(`<a href="#${idx}"><span class="nav-text">${example.title}</span></a>`)
+        let $link = $(`<a id="lb${idx}" href="#${idx}"><span class="nav-text">${example.title}</span></a>`)
         $link.click(onClickLBChart)
         $lineBarLinks.append($('<li>').append($link))
     }
@@ -118,6 +118,9 @@ devAdvanceExamples.forEach(
         $advanceLinks.append($('<li>').append($link))
     }
 )
+
+$('#linebar').click();
+$lineBarLinks.find("#lb0").click();
 
 function onClickLBChart(e) {
     const index = $(this).attr('href').split('#')[1]
