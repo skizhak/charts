@@ -16,7 +16,7 @@ class TooltipView extends ContrailChartsView {
   }
 
   show (offset, data) {
-    this.render(data)
+    this._loadTemplate(data)
     this.$el.show()
 
     // Tooltip dimensions will be available after render.
@@ -42,7 +42,7 @@ class TooltipView extends ContrailChartsView {
     this.$el.hide()
   }
 
-  render (data) {
+  _loadTemplate (data) {
     const template = this.config.get('template') || _template
     super.render(template(this.config.getFormattedData(data)))
   }

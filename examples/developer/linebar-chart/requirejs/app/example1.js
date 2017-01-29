@@ -44,18 +44,21 @@ define([ // eslint-disable-line no-undef
               enabled: true,
               chart: 'StackedBarChart',
               axis: 'y1',
+              tooltip: 'defaultTooltip',
             }, {
               accessor: 'b',
               label: 'Label B',
               enabled: true,
               chart: 'StackedBarChart',
               axis: 'y1',
+              tooltip: 'defaultTooltip',
             }, {
               accessor: 'c',
               label: 'Label C',
               enabled: false,
               chart: 'StackedBarChart',
               axis: 'y1',
+              tooltip: 'defaultTooltip',
             }, {
               accessor: 'd',
               label: 'Megabytes D',
@@ -63,6 +66,7 @@ define([ // eslint-disable-line no-undef
               enabled: true,
               chart: 'LineChart',
               axis: 'y2',
+              tooltip: 'defaultTooltip',
             }, {
               accessor: 'e',
               label: 'Megabytes E',
@@ -70,6 +74,7 @@ define([ // eslint-disable-line no-undef
               enabled: true,
               chart: 'LineChart',
               axis: 'y2',
+              tooltip: 'defaultTooltip',
             }
           ]
         },
@@ -87,6 +92,26 @@ define([ // eslint-disable-line no-undef
           }
         }
       },
+    }, {
+      id: 'defaultTooltip',
+      type: 'Tooltip',
+      config: {
+        dataConfig: [
+          {
+            accessor: 'x',
+            labelFormatter: (key) => 'Time',
+            valueFormatter: d3.format('.0f')
+          }, {
+            accessor: 'a',
+            labelFormatter: () => 'Label A',
+            valueFormatter: d3.format('.05f')
+          }, {
+            accessor: 'b',
+            labelFormatter: () => 'Label B',
+            valueFormatter: d3.format('.02f')
+          }
+        ]
+      }
     }]
   })
   complexChartView.render()
