@@ -44,7 +44,8 @@ const config = {
     filename: 'js/' + '[name].js',
   },
   module: {loaders},
-  plugins: plugins
+  plugins: plugins,
+  stats: { children: false }
 }
 
 module.exports = config

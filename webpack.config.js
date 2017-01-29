@@ -73,6 +73,7 @@ const config = {
     extensions: ['', '.js']
   },
   plugins: plugins,
+  stats: { children: false }
 }
 
 module.exports = config
