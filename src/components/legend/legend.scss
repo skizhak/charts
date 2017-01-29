@@ -1,0 +1,17 @@
+.legend.cc-component {
+	.legend-group {
+		display: inline-block;
+		padding: 10px;
+
+		.color {
+			display: inline-block;
+			width: 16px;
+			height: 16px;
+			border-radius: 16px;
+			margin-right: 10px;
+		}
+		.label {
+			font-size: 12px;
+		}
+	}
+}

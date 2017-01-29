@@ -24,6 +24,7 @@ const complexChartView = new coCharts.charts.XYChartView()
 complexChartView.setConfig({
   container: '#chart',
   components: [{
+    id: 'controlPanelId',
     type: 'ControlPanel',
     config: {
       menu: [{

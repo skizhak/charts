@@ -39,8 +39,8 @@ plugins.push(new ExtractTextPlugin('css/' + fileName + '.css'))
 
 const config = {
   entry: {
-    'contrail-charts': path.join(__dirname, '/src/js/index.js'),
-    'contrail-charts.min': path.join(__dirname, '/src/js/index.js')
+    'contrail-charts': path.join(__dirname, '/src/index.js'),
+    'contrail-charts.min': path.join(__dirname, '/src/index.js')
   },
   devtool: 'source-map',
   output: {
@@ -58,7 +58,7 @@ const config = {
     backbone: { amd: 'backbone', root: 'Backbone' },
   },
   resolve: {
-    root: path.resolve('./src/js'),
+    root: path.resolve('./src'),
     alias: {
       'contrail-model': 'plugins/' + framework + '/ContrailModel',
       'contrail-view': 'plugins/' + framework + '/ContrailView',
@@ -73,6 +73,7 @@ const config = {
     extensions: ['', '.js']
   },
   plugins: plugins,
+  stats: { children: false }
 }
 
 module.exports = config
