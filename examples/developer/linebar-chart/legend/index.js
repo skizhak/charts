@@ -231,8 +231,8 @@ complexChartView.setConfig({
     type: 'Tooltip',
     config: {
       title: {
-          accessor: 'x',
-          valueFormatter: timeFormatter,
+        accessor: 'x',
+        valueFormatter: timeFormatter,
       },
 
       dataConfig: [
