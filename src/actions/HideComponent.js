@@ -7,7 +7,8 @@ class HideComponent extends Action {
   }
 
   _execute (id, ...args) {
-    this._registrar.getComponent(id).hide(...args)
+    const component = this._registrar.getComponent(id)
+    if (component) component.hide(...args)
   }
 }
 
