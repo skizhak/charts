@@ -44,7 +44,6 @@ const chartConfig = {
     id: 'scatterPlot',
     type: 'CompositeYChart',
     config: {
-      marginInner: 25,
       plot: {
         x: {
           accessor: 'x',
@@ -88,12 +87,12 @@ const chartConfig = {
         y1: {
           position: 'left',
           formatter: numberFormatter,
-          labelMargin: 15,
+          label: 'Size of circles',
         },
         y2: {
           position: 'right',
           formatter: numberFormatter,
-          labelMargin: 15,
+          label: 'Size of squares and triangles',
         }
       },
     }
@@ -153,7 +152,6 @@ const chartConfig = {
         y1: {
           position: 'left',
           formatter: numberFormatter,
-          labelMargin: 15,
         },
       }
     }

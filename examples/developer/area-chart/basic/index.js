@@ -32,7 +32,7 @@ simpleChartView.setConfig({
         },
         y: {
           domain: [0, 10],
-          ticks: 20,
+          ticks: 10,
         }
       }
     }
