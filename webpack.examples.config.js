@@ -33,8 +33,8 @@ plugins.push(new ExtractTextPlugin('css/' + fileName + '.css'))
 
 const config = {
   entry: {
-    'developerExampleLoader': path.join(__dirname, '/examples/common/js/developerExampleLoader.js'),
-    'demoExampleLoader': path.join(__dirname, '/examples/common/js/demoExampleLoader.js'),
+    'demoloader': path.join(__dirname, '/examples/common/js/demoLoader.js'),
+    'devloader': path.join(__dirname, '/examples/common/js/devLoader.js'),
     'demo-scatter-port-distribution': path.join(__dirname, '/examples/demo/bubble-chart/port-distribution/port-distribution.js'),
     'demo-linebar-cpu-mem': path.join(__dirname, '/examples/demo/linebar-chart/cpu-mem/cpu-mem.js')
   },

@@ -2,7 +2,6 @@
  * Copyright (c) 2016 Juniper Networks, Inc. All rights reserved.
  */
 require('./pie-chart.scss')
-const _ = require('lodash')
 const shape = require('d3-shape')
 const ContrailChartsView = require('contrail-charts-view')
 
