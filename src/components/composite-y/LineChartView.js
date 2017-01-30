@@ -66,25 +66,25 @@ class LineChartView extends XYChartSubView {
     const lines = {}
 
     const zeroLine = d3Shape.line()
-      .x((d) => this.xScale(d[this.params.plot.x.accessor]))
-      .y((d) => this.yScale.range()[0])
-    _.each(this.params.activeAccessorData, (accessor) => {
+      .x(d => this.xScale(d[this.params.plot.x.accessor]))
+      .y(d => this.yScale.range()[0])
+    _.each(this.params.activeAccessorData, accessor => {
       const key = accessor.accessor
       lines[key] = d3Shape.line()
-        .x((d) => this.xScale(d[this.params.plot.x.accessor]))
-        .y((d) => this.yScale(d[key]))
+        .x(d => this.xScale(d[this.params.plot.x.accessor]))
+        .y(d => this.yScale(d[key]))
         .curve(this.config.get('curve'))
       linePathData.push({ key: key, accessor: accessor, data: data })
     })
     const svgLines = this.d3.selectAll('.line')
-      .data(linePathData, (d) => d.key)
+      .data(linePathData, d => d.key)
     svgLines.enter().append('path')
-      .attr('class', (d) => 'line line-' + d.key)
-      .attr('d', (d) => zeroLine(data))
+      .attr('class', d => 'line line-' + d.key)
+      .attr('d', d => zeroLine(data))
       .merge(svgLines)
       .transition().ease(d3Ease.easeLinear).duration(this.params.duration)
-      .attr('stroke', (d) => this.getColor(d.accessor))
-      .attr('d', (d) => lines[d.key](data))
+      .attr('stroke', d => this.getColor(d.accessor))
+      .attr('d', d => lines[d.key](data))
     svgLines.exit().remove()
   }
 

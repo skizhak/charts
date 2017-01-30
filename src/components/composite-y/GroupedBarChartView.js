@@ -15,6 +15,16 @@ class BarChartView extends XYChartSubView {
     }
   }
   /**
+   * @override
+   */
+  get xMarginInner () {
+    return this.bandWidth / 2
+  }
+
+  get bandWidth () {
+    return 0.95 * (this.innerWidth / this.model.data.length || 1)
+  }
+  /**
   * Called by the parent in order to calculate maximum data extents for all of this child's axis.
   * Assumes the params.activeAccessorData for this child view is filled by the parent with the relevent yAccessors for this child only.
   * Returns an object with following structure: { y1: [0,10], x: [-10,10] }
@@ -25,7 +35,7 @@ class BarChartView extends XYChartSubView {
     domains[this.axisName] = []
     // The domains calculated here can be overriden in the axis configuration.
     // The overrides are handled by the parent.
-    _.each(this.params.activeAccessorData, (accessor) => {
+    _.each(this.params.activeAccessorData, accessor => {
       const domain = this.model.getRangeFor(accessor.accessor)
       domains[this.axisName] = domains[this.axisName].concat(domain)
     })
@@ -33,11 +43,6 @@ class BarChartView extends XYChartSubView {
     this.params.handledAxisNames = _.keys(domains)
     return domains
   }
-  /**
-   * Called by the parent when all scales have been saved in this child's params.
-   * Can be used by the child to perform any additional calculations.
-   */
-  calculateScales () {}
 
   getScreenX (datum, xAccessor, yAccessor) {
     let delta = 0
@@ -58,13 +63,8 @@ class BarChartView extends XYChartSubView {
     super.render()
 
     // Create a flat data structure
-    const data = this.model.data
     const numOfAccessors = _.keys(this.params.activeAccessorData).length
-    const xRange = this.params.axis.x.range
-    let len = data.length - 1
-    if (len === 0) len = 1
-    const bandWidth = (0.95 * ((xRange[1] - xRange[0]) / len) - 1)
-    const bandWidthHalf = (bandWidth / 2)
+    const bandWidthHalf = this.bandWidth / 2
     const innerBandScale = d3.scaleBand()
       .domain(d3.range(numOfAccessors))
       .range([-bandWidthHalf, bandWidthHalf])
