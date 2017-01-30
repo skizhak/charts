@@ -13,24 +13,42 @@ class XYChartSubView extends ContrailChartsView {
 
   get tagName () { return 'g' }
 
-  get yScale () {
-    return this.params.axis[this.axisName].scale || d3.scaleLinear()
+  get width () {
+    const delta = this.config.get('chartWidthDelta') || 0
+    return (this.config.chartWidth || this._container.getBoundingClientRect().width) + delta
+  }
+
+  get height () {
+    return this.config.get('chartHeight') || Math.round(this.width / 2)
   }
 
   get xScale () {
     return this.params.axis[this.params.plot.x.axis].scale
   }
 
+  get yScale () {
+    return this.params.axis[this.axisName].scale || d3.scaleLinear()
+  }
+
+  get innerWidth () {
+    const p = this.params
+    return this.width - p.marginRight - p.marginLeft - 2 * p.marginInner
+  }
+
+  get xMarginInner () {
+    return 0
+  }
+
   getColor (accessor) {
     return accessor.color
   }
 
-  getScreenX (dataElem, xAccessor) {
-    return this.xScale(dataElem[xAccessor])
+  getScreenX (datum, xAccessor) {
+    return this.xScale(datum[xAccessor])
   }
 
-  getScreenY (dataElem, yAccessor) {
-    return this.yScale(dataElem[yAccessor])
+  getScreenY (datum, yAccessor) {
+    return this.yScale(datum[yAccessor])
   }
 
   render () {

@@ -15,6 +15,16 @@ class BarChartView extends XYChartSubView {
     }
   }
   /**
+   * @override
+   */
+  get xMarginInner () {
+    return this.bandWidth / 2
+  }
+
+  get bandWidth () {
+    return 0.95 * (this.innerWidth / this.model.data.length || 1)
+  }
+  /**
   * Called by the parent in order to calculate maximum data extents for all of this child's axis.
   * Assumes the params.activeAccessorData for this child view is filled by the parent with the relevent yAccessors for this child only.
   * Returns an object with following structure: { y1: [0,10], x: [-10,10] }
@@ -25,7 +35,7 @@ class BarChartView extends XYChartSubView {
     domains[this.axisName] = []
     // The domains calculated here can be overriden in the axis configuration.
     // The overrides are handled by the parent.
-    _.each(this.params.activeAccessorData, (accessor) => {
+    _.each(this.params.activeAccessorData, accessor => {
       const domain = this.model.getRangeFor(accessor.accessor)
       domains[this.axisName] = domains[this.axisName].concat(domain)
     })
@@ -33,13 +43,8 @@ class BarChartView extends XYChartSubView {
     this.params.handledAxisNames = _.keys(domains)
     return domains
   }
-  /**
-   * Called by the parent when all scales have been saved in this child's params.
-   * Can be used by the child to perform any additional calculations.
-   */
-  calculateScales () {}
 
-  getScreenX (dataElem, xAccessor, yAccessor) {
+  getScreenX (datum, xAccessor, yAccessor) {
     let delta = 0
     _.each(this.params.activeAccessorData, (accessor, j) => {
       if (accessor.accessor === yAccessor) {
@@ -47,74 +52,67 @@ class BarChartView extends XYChartSubView {
         delta = innerBandScale(j) + innerBandScale.bandwidth() / 2
       }
     })
-    return this.xScale(dataElem[xAccessor]) + delta
+    return this.xScale(datum[xAccessor]) + delta
   }
 
-  getScreenY (dataElem, yAccessor) {
-    const zeroValue = this.yScale.domain()[0]
-    return this.yScale(zeroValue + dataElem[yAccessor])
+  getScreenY (datum, yAccessor) {
+    return this.yScale(datum[yAccessor])
   }
 
   render () {
     super.render()
 
     // Create a flat data structure
-    const data = this.model.data
-    const flatData = []
     const numOfAccessors = _.keys(this.params.activeAccessorData).length
-    const xValues = _.map(data, this.params.plot.x.accessor)
-    const xValuesExtent = d3.extent(xValues)
-    const xRange = [this.xScale(xValuesExtent[0]), this.xScale(xValuesExtent[1])]
-    let len = data.length - 1
-    if (len === 0) {
-      len = 1
-    }
-    const bandWidth = (0.95 * ((xRange[1] - xRange[0]) / len) - 1)
-    const bandWidthHalf = (bandWidth / 2)
+    const bandWidthHalf = this.bandWidth / 2
     const innerBandScale = d3.scaleBand()
       .domain(d3.range(numOfAccessors))
       .range([-bandWidthHalf, bandWidthHalf])
       .paddingInner(0.05)
       .paddingOuter(0.05)
-    const innerBandWidth = innerBandScale.bandwidth()
-    const zeroValue = this.yScale.domain()[0]
     this.params.axis[this.params.plot.x.axis].innerBandScale = innerBandScale
-    _.each(data, (d) => {
+    // Render the flat data structure
+    const svgBarGroups = this.d3
+      .selectAll('.bar')
+      .data(this._prepareData(), d => d.id)
+    svgBarGroups.enter().append('rect')
+      .attr('class', d => 'bar')
+      .attr('x', d => d.x)
+      .attr('y', this.yScale.range()[0])
+      .attr('height', 0)
+      .attr('width', d => d.w)
+      .merge(svgBarGroups).transition().ease(d3.easeLinear).duration(this.params.duration)
+      .attr('fill', d => d.color)
+      .attr('x', d => d.x)
+      .attr('y', d => d.y)
+      .attr('height', d => d.h)
+      .attr('width', d => d.w)
+    svgBarGroups.exit().remove()
+  }
+
+  _prepareData () {
+    const flatData = []
+    const zeroValue = this.yScale.domain()[0]
+    const innerBandScale = this.params.axis[this.params.plot.x.axis].innerBandScale
+    const innerBandWidth = innerBandScale.bandwidth()
+    _.each(this.model.data, d => {
       const x = d[this.params.plot.x.accessor]
       _.each(this.params.activeAccessorData, (accessor, j) => {
         const key = accessor.accessor
-        const y = zeroValue + d[key]
         const obj = {
           id: x + '-' + key,
-          className: 'bar bar-' + key,
           x: this.xScale(x) + innerBandScale(j),
-          y: this.yScale(y),
-          h: this.yScale(zeroValue) - this.yScale(y),
+          y: this.yScale(d[key]),
+          h: this.yScale(zeroValue) - this.yScale(d[key]),
           w: innerBandWidth,
           color: this.getColor(accessor),
           accessor: accessor,
-          data: d
+          data: d,
         }
         flatData.push(obj)
       })
     })
-    // Render the flat data structure
-    const svgBarGroups = this.d3
-      .selectAll('.bar')
-      .data(flatData, (d) => d.id)
-    svgBarGroups.enter().append('rect')
-      .attr('class', (d) => d.className)
-      .attr('x', (d) => d.x)
-      .attr('y', this.yScale.range()[0])
-      .attr('height', 0)
-      .attr('width', (d) => d.w)
-      .merge(svgBarGroups).transition().ease(d3.easeLinear).duration(this.params.duration)
-      .attr('fill', (d) => d.color)
-      .attr('x', (d) => d.x)
-      .attr('y', (d) => d.y)
-      .attr('height', (d) => d.h)
-      .attr('width', (d) => d.w)
-    svgBarGroups.exit().remove()
+    return flatData
   }
 
   // Event handlers

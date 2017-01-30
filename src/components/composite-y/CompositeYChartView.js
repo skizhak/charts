@@ -23,6 +23,7 @@ class CompositeYChartView extends ContrailChartsView {
   }
 
   get tagName () { return 'g' }
+
   get possibleChildViews () {
     return {
       LineChart: LineChartView,
@@ -33,6 +34,10 @@ class CompositeYChartView extends ContrailChartsView {
     }
   }
 
+  get xMarginInner () {
+    return this.config.get('marginInner') + this.params.xMarginInner
+  }
+
   refresh () {
     this.config.trigger('change', this.config)
   }
@@ -41,7 +46,7 @@ class CompositeYChartView extends ContrailChartsView {
     this.stopListening(this.model)
     this.model = model
     this.listenTo(this.model, 'change', this.render)
-    _.each(this._drawings, (drawing) => {
+    _.each(this._drawings, drawing => {
       drawing.model = model
     })
     this.render()
@@ -65,6 +70,13 @@ class CompositeYChartView extends ContrailChartsView {
 
     this._ticking = false
   }
+
+  _calculateDimensions () {
+    if (this._drawings[0]) {
+      this.params.chartWidth = this._drawings[0].width
+      this.params.chartHeight = this._drawings[0].height
+    }
+  }
   /**
   * Calculates the activeAccessorData that holds only the verified and enabled accessors from the 'plot' structure.
   * Params: activeAccessorData, yAxisInfoArray
@@ -73,12 +85,12 @@ class CompositeYChartView extends ContrailChartsView {
     this.params.activeAccessorData = []
     this.params.yAxisInfoArray = []
     // Initialize the drawings activeAccessorData structure
-    _.each(this._drawings, (drawing) => {
+    _.each(this._drawings, drawing => {
       drawing.params.activeAccessorData = []
       drawing.params.enabled = false
     })
     // Fill the activeAccessorData structure.
-    _.each(this.params.plot.y, (accessor) => {
+    _.each(this.params.plot.y, accessor => {
       const drawing = this.getDrawing(accessor)
       if (drawing) {
         if (accessor.enabled) {
@@ -109,49 +121,26 @@ class CompositeYChartView extends ContrailChartsView {
     })
   }
   /**
-   * Calculates the chart dimensions and margins.
-   * Use the dimensions provided in the config. If not provided use all available width of container and 3/4 of this width for height.
-   * This method should be called before rendering because the available dimensions could have changed.
-   * Params: chartWidth, chartHeight, margin, marginTop, marginBottom, marginLeft, marginRight, marginInner.
-   */
-  _calculateDimensions () {
-    if (!this.params.chartWidth) {
-      this.params.chartWidth = this._container.getBoundingClientRect().width
-    }
-    if (this.params.chartWidthDelta) {
-      this.params.chartWidth += this.params.chartWidthDelta
-    }
-    if (!this.params.chartHeight) {
-      this.params.chartHeight = Math.round(this.params.chartWidth / 2)
-    }
-    // TODO: use the 'axis' param to compute additional margins for the axis
-  }
-  /**
    * Use the scales provided in the config or calculate them to fit data in view.
    * Assumes to have the range values available in the DataProvider (model) and the chart dimensions available in params.
    * Params: xRange, yRange, xDomain, yDomain, xScale, yScale
    */
   calculateScales () {
-    // Calculate the starting and ending positions in pixels of the chart data drawing area.
-    this.params.xRange = [this.params.marginLeft + this.params.marginInner, this.params.chartWidth - this.params.marginRight - this.params.marginInner]
-    this.params.yRange = [this.params.chartHeight - this.params.marginInner - this.params.marginBottom, this.params.marginInner + this.params.marginTop]
+    const p = this.params
+    p.xMarginInner = _.max(_.map(this._drawings, 'xMarginInner'))
+    p.xRange = [p.marginLeft + p.marginInner + p.xMarginInner, p.chartWidth - p.marginRight - p.marginInner - p.xMarginInner]
+    p.yRange = [p.chartHeight - p.marginInner - p.marginBottom, p.marginInner + p.marginTop]
     this.saveScales()
-    // Now let every drawing perform it's own calculations based on the provided X and Y scales.
-    _.each(this._drawings, (drawing) => {
-      if (_.isFunction(drawing.calculateScales)) {
-        drawing.calculateScales()
-      }
-    })
   }
 
   calculateColorScale () {
-    _.each(this.params.plot.y, (accessor) => {
+    _.each(this.params.plot.y, accessor => {
       accessor.color = this.config.getColor(accessor)
     })
   }
 
   getDrawing (accessor) {
-    return _.find(this._drawings, (drawing) => {
+    return _.find(this._drawings, drawing => {
       return drawing.axisName === accessor.axis && drawing.type === accessor.chart
     })
   }
@@ -160,7 +149,7 @@ class CompositeYChartView extends ContrailChartsView {
   */
   combineAxisDomains () {
     const domains = {}
-    _.each(this._drawings, (drawing) => {
+    _.each(this._drawings, drawing => {
       if (drawing.params.enabled) {
         const drawingDomains = drawing.calculateAxisDomains()
         _.each(drawingDomains, (domain, axisName) => {
@@ -242,7 +231,7 @@ class CompositeYChartView extends ContrailChartsView {
     this.adjustAxisMargin()
 
     // Now update the scales of the appropriate drawings.
-    _.each(this._drawings, (drawing) => {
+    _.each(this._drawings, drawing => {
       drawing.params.axis = this.params.axis
     })
   }
@@ -270,15 +259,15 @@ class CompositeYChartView extends ContrailChartsView {
    * Resizes chart dimensions if chart already exists.
    */
   renderSVG () {
-    const translate = this.params.xRange[0] - this.params.marginInner
+    const translate = this.params.xRange[0] - this.xMarginInner
     this.params.rectClipPathId = 'rect-clipPath-' + this.cid
     if (this.d3.select('clipPath').empty()) {
       this.d3.append('clipPath')
         .attr('id', this.params.rectClipPathId)
         .append('rect')
-        .attr('x', this.params.xRange[0] - this.params.marginInner)
+        .attr('x', this.params.xRange[0] - this.xMarginInner)
         .attr('y', this.params.yRange[1] - this.params.marginInner)
-        .attr('width', this.params.xRange[1] - this.params.xRange[0] + 2 * this.params.marginInner)
+        .attr('width', this.params.xRange[1] - this.params.xRange[0] + 2 * this.xMarginInner)
         .attr('height', this.params.yRange[0] - this.params.yRange[1] + 2 * this.params.marginInner)
       this.d3.append('g')
         .attr('class', 'axis x-axis')
@@ -288,19 +277,20 @@ class CompositeYChartView extends ContrailChartsView {
     // Handle (re)size.
     this.d3
       .select('#' + this.params.rectClipPathId).select('rect')
-      .attr('x', this.params.xRange[0] - this.params.marginInner)
+      .attr('x', this.params.xRange[0] - this.xMarginInner)
       .attr('y', this.params.yRange[1] - this.params.marginInner)
-      .attr('width', this.params.xRange[1] - this.params.xRange[0] + 2 * this.params.marginInner)
+      .attr('width', this.params.xRange[1] - this.params.xRange[0] + 2 * this.xMarginInner)
       .attr('height', this.params.yRange[0] - this.params.yRange[1] + 2 * this.params.marginInner)
 
     // Handle Y axis
-    const svgYAxis = this.d3.selectAll('.axis.y-axis').data(this.params.yAxisInfoArray, (d) => d.name)
+    const svgYAxis = this.d3.selectAll('.axis.y-axis').data(this.params.yAxisInfoArray, d => d.name)
     svgYAxis.exit().remove()
     svgYAxis.enter()
       .append('g')
-      .attr('class', (d) => `axis y-axis ${d.name}-axis`)
+      .attr('class', d => `axis y-axis ${d.name}-axis`)
       .merge(svgYAxis)
       .attr('transform', 'translate(' + translate + ',0)')
+
     if (this.config.get('crosshairEnabled')) {
       this.svg.delegate('mousemove', 'svg', this._onMousemove.bind(this))
     }
@@ -350,14 +340,14 @@ class CompositeYChartView extends ContrailChartsView {
       .merge(xAxisLabelSvg) // .transition().ease( d3.easeLinear ).duration( this.params.duration )
       .attr('x', this.params.xRange[0] + (this.params.xRange[1] - this.params.xRange[0]) / 2)
       .attr('y', this.params.chartHeight - this.params.marginTop - xLabelMargin)
-      .text((d) => d)
+      .text(d => d)
     xAxisLabelSvg.exit().remove()
     // We render the yAxis here because there may be multiple drawings for one axis.
     // The parent has aggregated information about all Y axis.
     let referenceYScale = null
     let yLabelX = 0
     let yLabelTransform = 'rotate(-90)'
-    _.each(this.params.yAxisInfoArray, (axisInfo) => {
+    _.each(this.params.yAxisInfoArray, axisInfo => {
       let yLabelMargin = this.config.get('labelMargin')
       if (this.hasAxisParam(axisInfo.name, 'labelMargin')) {
         yLabelMargin = this.params.axis[axisInfo.name].labelMargin
@@ -368,11 +358,11 @@ class CompositeYChartView extends ContrailChartsView {
         yLabelX = this.params.chartWidth - this.params.marginLeft - yLabelMargin
         yLabelTransform = 'rotate(90)'
         axisInfo.yAxis = d3.axisRight(this.params.axis[axisInfo.name].scale)
-          .tickSize((this.params.xRange[1] - this.params.xRange[0] + 2 * this.params.marginInner))
+          .tickSize((this.params.xRange[1] - this.params.xRange[0] + 2 * this.xMarginInner))
           .tickPadding(5)
       } else {
         axisInfo.yAxis = d3.axisLeft(this.params.axis[axisInfo.name].scale)
-          .tickSize(-(this.params.xRange[1] - this.params.xRange[0] + 2 * this.params.marginInner))
+          .tickSize(-(this.params.xRange[1] - this.params.xRange[0] + 2 * this.xMarginInner))
           .tickPadding(5)
       }
       if (this.hasAxisParam(axisInfo.name, 'ticks')) {
@@ -386,7 +376,7 @@ class CompositeYChartView extends ContrailChartsView {
         if (this.hasAxisParam(axisInfo.name, 'ticks')) {
           ticks = referenceYScale.ticks(this.params.axis[axisInfo.name].ticks)
         }
-        const referenceTickValues = _.map(ticks, (tickValue) => {
+        const referenceTickValues = _.map(ticks, tickValue => {
           return axisInfo.yAxis.scale().invert(referenceYScale(tickValue))
         })
         axisInfo.yAxis = axisInfo.yAxis.tickValues(referenceTickValues)
@@ -402,7 +392,7 @@ class CompositeYChartView extends ContrailChartsView {
       } else {
         let i = 0
         // There will be one label per unique accessor label displayed on this axis.
-        _.each(axisInfo.accessors, (key) => {
+        _.each(axisInfo.accessors, key => {
           const foundActiveAccessorData = _.find(this.params.activeAccessorData, { accessor: key })
           if (!foundActiveAccessorData) return
           const label = foundActiveAccessorData.labelFormatter || foundActiveAccessorData.label
@@ -436,7 +426,7 @@ class CompositeYChartView extends ContrailChartsView {
     const xScale = this.params.axis[this.params.plot.x.axis].scale
     const xAccessor = this.params.plot.x.accessor
     const mouseX = xScale.invert(point[0])
-    const xBisector = d3.bisector((d) => d[xAccessor]).right
+    const xBisector = d3.bisector(d => d[xAccessor]).right
     const indexRight = xBisector(data, mouseX, 0, data.length - 1)
     let indexLeft = indexRight - 1
     if (indexLeft < 0) indexLeft = 0
@@ -462,25 +452,25 @@ class CompositeYChartView extends ContrailChartsView {
     }
     // Prepare line coordinates
     data.line = {}
-    data.line.x = (dataElem) => {
-      return globalXScale(dataElem[this.params.plot.x.accessor])
+    data.line.x = datum => {
+      return globalXScale(datum[this.params.plot.x.accessor])
     }
     data.line.y1 = this.params.yRange[0]
     data.line.y2 = this.params.yRange[1]
     // Prepare x label text
-    data.line.text = (dataElem) => {
-      return data.xFormat(dataElem[this.params.plot.x.accessor])
+    data.line.text = datum => {
+      return data.xFormat(datum[this.params.plot.x.accessor])
     }
     // Prepare circle data
-    _.each(this._drawings, (plotTypeComponent) => {
-      _.each(plotTypeComponent.params.activeAccessorData, (accessor) => {
+    _.each(this._drawings, plotTypeComponent => {
+      _.each(plotTypeComponent.params.activeAccessorData, accessor => {
         const circleObject = {}
         circleObject.id = accessor.accessor
-        circleObject.x = (dataElem) => {
-          return plotTypeComponent.getScreenX(dataElem, this.params.plot.x.accessor, accessor.accessor)
+        circleObject.x = datum => {
+          return plotTypeComponent.getScreenX(datum, this.params.plot.x.accessor, accessor.accessor)
         }
-        circleObject.y = (dataElem) => {
-          return plotTypeComponent.getScreenY(dataElem, accessor.accessor)
+        circleObject.y = datum => {
+          return plotTypeComponent.getScreenY(datum, accessor.accessor)
         }
         circleObject.color = accessor.color
         data.circles.push(circleObject)
@@ -497,7 +487,7 @@ class CompositeYChartView extends ContrailChartsView {
       // Default x axis name.
       plot.x.axis = 'x'
     }
-    _.each(plot.y, (accessor) => {
+    _.each(plot.y, accessor => {
       if (!accessor.axis) {
         // Default y axis name.
         accessor.axis = 'y'
