@@ -462,25 +462,25 @@ class CompositeYChartView extends ContrailChartsView {
     }
     // Prepare line coordinates
     data.line = {}
-    data.line.x = (dataElem) => {
-      return globalXScale(dataElem[this.params.plot.x.accessor])
+    data.line.x = datum => {
+      return globalXScale(datum[this.params.plot.x.accessor])
     }
     data.line.y1 = this.params.yRange[0]
     data.line.y2 = this.params.yRange[1]
     // Prepare x label text
-    data.line.text = (dataElem) => {
-      return data.xFormat(dataElem[this.params.plot.x.accessor])
+    data.line.text = datum => {
+      return data.xFormat(datum[this.params.plot.x.accessor])
     }
     // Prepare circle data
     _.each(this._drawings, (plotTypeComponent) => {
       _.each(plotTypeComponent.params.activeAccessorData, (accessor) => {
         const circleObject = {}
         circleObject.id = accessor.accessor
-        circleObject.x = (dataElem) => {
-          return plotTypeComponent.getScreenX(dataElem, this.params.plot.x.accessor, accessor.accessor)
+        circleObject.x = datum => {
+          return plotTypeComponent.getScreenX(datum, this.params.plot.x.accessor, accessor.accessor)
         }
-        circleObject.y = (dataElem) => {
-          return plotTypeComponent.getScreenY(dataElem, accessor.accessor)
+        circleObject.y = datum => {
+          return plotTypeComponent.getScreenY(datum, accessor.accessor)
         }
         circleObject.color = accessor.color
         data.circles.push(circleObject)
@@ -497,7 +497,7 @@ class CompositeYChartView extends ContrailChartsView {
       // Default x axis name.
       plot.x.axis = 'x'
     }
-    _.each(plot.y, (accessor) => {
+    _.each(plot.y, accessor => {
       if (!accessor.axis) {
         // Default y axis name.
         accessor.axis = 'y'
