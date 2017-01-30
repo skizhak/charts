@@ -7,12 +7,18 @@ require('../sass/contrail-charts-examples.scss')
 const _ = require('lodash')
 
 const demoLBExamples = [
-  {
-    html: 'linebar-chart/cpu-mem/cpu-mem.html',
-    js: 'linebar-chart/cpu-mem/cpu-mem.js',
-    css: 'linebar-chart/cpu-mem/cpu-mem.css',
-    title: 'Memory & CPU',
-  }
+    {
+        html: 'linebar-chart/query-db-rw/query-db.html',
+        js: 'linebar-chart/query-db-rw/query-db.js',
+        css: 'linebar-chart/query-db-rw//query-db.css',
+        title: 'Queries & DB R/W',
+    },
+    {
+        html: 'linebar-chart/cpu-mem/cpu-mem.html',
+        js: 'linebar-chart/cpu-mem/cpu-mem.js',
+        css: 'linebar-chart/cpu-mem/cpu-mem.css',
+        title: 'Memory & CPU'
+    }
 ]
 
 const demoBubbleExamples = [

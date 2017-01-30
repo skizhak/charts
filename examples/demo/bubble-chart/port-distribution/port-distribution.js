@@ -173,7 +173,7 @@ const chartConfig = {
             sizeAccessor: 'outBytes',
             sizeAxis: 'sizeAxisBytes',
             shape: 'circle',
-            color: colorSchema[8]
+            color: '#0cc2aa'
           }
         ]
       },

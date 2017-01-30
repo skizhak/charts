@@ -16,11 +16,11 @@ function memFormatter (number) {
   let formattedBytes = '-'
   _.each(bytePrefixes, (prefix, idx) => {
     if (bytes < 1024) {
-      formattedBytes = bytes.toFixed(2) + ' ' + prefix
+      formattedBytes = bytes.toFixed(1) + ' ' + prefix
       return false
     } else {
       if (idx === bytePrefixes.length - 1) {
-        formattedBytes = bytes.toFixed(2) + ' ' + prefix
+        formattedBytes = bytes.toFixed(1) + ' ' + prefix
       } else {
         bytes = bytes / 1024
       }
@@ -79,20 +79,31 @@ function generateColorPalette (nodeIds, nodeAttrs, colorSchema, offset1, offset2
 
 const dataSrc = require('./data-source.json')
 const dataProcessed = dataProcesser(dataSrc.data)
+const fkColors = [
+    '#00bcd4',
+    '#0cc2aa',
+    '#fcc100',
+    '#a88add',
+    '#6cc788',
+    '#6887ff',
+    '#4caf50',
+    '#2196f3'
+];
+
 const colorPalette = generateColorPalette(
     dataProcessed.nodeIds,
     ['cpu_share', 'mem_res'],
-    d3.schemeCategory20,
+    fkColors,
+    1,
     2,
-    4,
-    2
+    1
   )
 
 const mainChartPlotYConfig = _.reduce(dataProcessed.nodeIds, (config, nodeId, idx) => {
   config.push({
     accessor: `${nodeId}.cpu_share`,
     label: `${nodeId} CPU Utilization (%)`,
-    enabled: idx === 0,
+    enabled: true,
     chart: 'BarChart',
     possibleChartTypes: [
       {
@@ -108,7 +119,7 @@ const mainChartPlotYConfig = _.reduce(dataProcessed.nodeIds, (config, nodeId, id
   }, {
     accessor: `${nodeId}.mem_res`,
     label: `${nodeId} Memory Usage`,
-    enabled: idx === 0,
+    enabled: false,
     chart: 'LineChart',
     possibleChartTypes: [
       {
@@ -127,14 +138,14 @@ const mainChartPlotYConfig = _.reduce(dataProcessed.nodeIds, (config, nodeId, id
 
 const navPlotYConfig = _.reduce(dataProcessed.nodeIds, (config, nodeId, idx) => {
   config.push({
-    enabled: idx === 0,
+    enabled: true,
     accessor: `${nodeId}.cpu_share`,
     labelFormatter: 'CPU Utilization (%)',
     chart: 'BarChart',
     color: colorPalette[`${nodeId}.cpu_share`],
     axis: 'y1',
   }, {
-    enabled: idx === 0,
+    enabled: false,
     accessor: `${nodeId}.mem_res`,
     labelFormatter: 'Memory Usage',
     chart: 'LineChart',
