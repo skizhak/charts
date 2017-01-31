@@ -1,0 +1,37 @@
+@import "../../styles/colors.scss";
+
+.message.cc-component {
+	.message-row {
+		overflow: hidden;
+		font-size: 0.75rem;
+
+		&.msg-info {
+			background-color: $infoBlue;
+		}
+
+		&.msg-error {
+			background-color: $errorRed;
+		}
+
+		& .message-heading,
+		& .message-body {
+			width: 100%;
+			padding: 0 5px;
+			margin: 5px 0;
+		}
+
+		.message-heading {
+			display: flex;
+			position: relative;
+
+			.fa {
+				margin-right: 2px;
+			}
+
+			.message-title {
+				flex-grow: 1;
+				font-weight: bold;
+			}
+		}
+	}
+}

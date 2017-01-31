@@ -1,0 +1,16 @@
+.cc-svg .brush {
+  .selection {
+    fill: #aaa;
+  }
+  .handle--custom {
+    opacity: 1;
+    fill: #888;
+    fill-opacity: 0.75;
+    stroke: #444;
+    stroke-width: 1;
+    cursor: ew-resize;
+    &.hide {
+      opacity: 1e-6;
+    }
+  }
+}
