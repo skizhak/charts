@@ -1,5 +1,7 @@
 /* global d3 coCharts */
 
+const _ = require('lodash')
+
 function timeFormatter (value) {
   return d3.timeFormat('%H:%M:%S')(value)
 }
@@ -8,26 +10,26 @@ function numberFormatter (number) {
 }
 
 function memFormatter (number) {
-    const bytePrefixes = ['B', 'KB', 'MB', 'GB', 'TB']
-    let bytes = parseInt(number * 1024)
-    let formattedBytes = '-'
-    _.each(bytePrefixes, (prefix, idx) => {
-        if (bytes < 1024) {
-            formattedBytes = bytes.toFixed(1) + ' ' + prefix
-            return false
-        } else {
-            if (idx === bytePrefixes.length - 1) {
-                formattedBytes = bytes.toFixed(1) + ' ' + prefix
-            } else {
-                bytes = bytes / 1024
-            }
-        }
-    })
-    return formattedBytes
+  const bytePrefixes = ['B', 'KB', 'MB', 'GB', 'TB']
+  let bytes = parseInt(number * 1024)
+  let formattedBytes = '-'
+  _.each(bytePrefixes, (prefix, idx) => {
+    if (bytes < 1024) {
+      formattedBytes = bytes.toFixed(1) + ' ' + prefix
+      return false
+    } else {
+      if (idx === bytePrefixes.length - 1) {
+        formattedBytes = bytes.toFixed(1) + ' ' + prefix
+      } else {
+        bytes = bytes / 1024
+      }
+    }
+  })
+  return formattedBytes
 }
 
-function getRandomArbitrary(min, max) {
-    return Math.random() * (max - min) + min;
+function getRandomArbitrary (min, max) {
+  return Math.random() * (max - min) + min
 }
 
 // Complex example
@@ -82,7 +84,7 @@ complexChartView.setConfig({
             accessor: 'a',
             labelFormatter: 'Cassandra DB Read',
             enabled: true,
-            chart: 'BarChart',
+            chart: 'StackedBarChart',
             possibleChartTypes: [
               {
                 label: 'Stacked Bar',
@@ -101,7 +103,7 @@ complexChartView.setConfig({
             accessor: 'b',
             labelFormatter: 'Cassandra DB Write',
             enabled: true,
-            chart: 'BarChart',
+            chart: 'StackedBarChart',
             possibleChartTypes: [
               {
                 label: 'Stacked Bar',

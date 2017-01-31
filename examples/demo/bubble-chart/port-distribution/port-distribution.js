@@ -45,7 +45,7 @@ function dataProcesser (data) {
 }
 
 const colorSchema = d3.schemeCategory20
-let dataSrc = require('./data-source.json')
+let dataSrc = require('./pd.json')
 
 dataSrc = dataProcesser(dataSrc)
 
