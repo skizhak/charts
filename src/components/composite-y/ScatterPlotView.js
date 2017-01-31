@@ -13,8 +13,8 @@ class ScatterPlotView extends XYChartSubView {
   constructor (p) {
     super(p)
     this.shapeScale = d3Scale.scaleOrdinal()
-      .domain(['square', 'triangle', 'circle'])
-      .range([d3Shape.symbolSquare, d3Shape.symbolTriangle, d3Shape.symbolCircle])
+      .domain(['square', 'triangle', 'circle', 'diamond', 'star', 'cross', 'wye'])
+      .range([d3Shape.symbolSquare, d3Shape.symbolTriangle, d3Shape.symbolCircle, d3Shape.symbolDiamond, d3Shape.symbolStar, d3Shape.symbolCross, d3Shape.symbolWye])
   }
 
   get zIndex () { return 1 }
