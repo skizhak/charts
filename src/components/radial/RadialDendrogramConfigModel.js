@@ -16,7 +16,8 @@ class RadialDendrogramConfigModel extends ContrailChartsConfigModel {
       // The separation in degrees between nodes with different parents
       parentSeparation: 2,
 
-      curve: d3.curveBundle.beta(0.85)
+      //curve: d3.curveBundle.beta(0.85)
+      curve: d3.curveBundle.beta(0.95)
       //curve: d3.curveBundle.beta(1)
       //curve: d3.curveCatmullRom.alpha(0.5)
       //curve: d3.curveCatmullRom.alpha(1)
