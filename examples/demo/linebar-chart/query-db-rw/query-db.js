@@ -28,10 +28,6 @@ function memFormatter (number) {
   return formattedBytes
 }
 
-function getRandomArbitrary (min, max) {
-  return Math.random() * (max - min) + min
-}
-
 // Complex example
 const simpleData = []
 
@@ -40,7 +36,7 @@ for (let i = 0; i < 100; i++) {
   simpleData.push({
     x: 1475760930000 + 1000000 * i,
     a: a,
-    b: getRandomArbitrary(a, a + 1000),
+    b: _.random(a, a + 1000),
     c: Math.ceil(Math.random() * 100),
   })
 }

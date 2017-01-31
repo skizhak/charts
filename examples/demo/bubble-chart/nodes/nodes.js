@@ -1,5 +1,6 @@
 /* global coCharts d3 */
 
+const _ = require('lodash')
 const colorSchema = d3.schemeCategory10
 
 function numberFormatter (number) {
