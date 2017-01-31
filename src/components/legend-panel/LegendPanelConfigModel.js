@@ -17,8 +17,10 @@ class LegendPanelConfigModel extends ContrailChartsConfigModel {
     }
 
     data.attributes = _.map(accessors, (accessor) => {
+      console.log(accessor)
       return {
         accessor: accessor.accessor,
+        axis: accessor.axis,
         label: this.getLabel(undefined, accessor),
         color: this._parent.getColor(accessor),
         checked: accessor.enabled,
