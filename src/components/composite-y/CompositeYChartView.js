@@ -187,43 +187,29 @@ class CompositeYChartView extends ContrailChartsView {
       this.params.axis = {}
     }
     _.each(domains, (domain, axisName) => {
-      if (!_.has(this.params.axis, axisName)) {
-        this.params.axis[axisName] = {}
-      }
-      if (!this.hasAxisParam(axisName, 'position')) {
-        // Default axis position.
-        if (axisName.charAt(0) === 'x') {
-          this.params.axis[axisName].position = 'bottom'
-        } else if (axisName.charAt(0) === 'y') {
-          this.params.axis[axisName].position = 'left'
-        }
-      }
+      if (!_.has(this.params.axis, axisName)) this.params.axis[axisName] = {}
+      const axis = this.params.axis[axisName]
+
+      axis.position = this.config.getPosition(axisName)
       if (!this.hasAxisParam(axisName, 'range')) {
-        if (['bottom', 'top'].includes(this.params.axis[axisName].position)) {
-          this.params.axis[axisName].range = this.params.xRange
-        } else if (['left', 'right'].includes(this.params.axis[axisName].position)) {
-          this.params.axis[axisName].range = this.params.yRange
+        if (['bottom', 'top'].includes(axis.position)) {
+          axis.range = this.params.xRange
+        } else if (['left', 'right'].includes(axis.position)) {
+          axis.range = this.params.yRange
         }
       }
-      this.params.axis[axisName].domain = domain
-      if (!_.isFunction(this.params.axis[axisName].scale) && this.params.axis[axisName].range) {
-        let baseScale = null
-        if (this.hasAxisConfig(axisName, 'scale') && _.isFunction(d3[this.config.get('axis')[axisName].scale])) {
-          baseScale = d3[this.params.axis[axisName].scale]()
-        } else if (['bottom', 'top'].indexOf(this.params.axis[axisName].position) >= 0) {
-          baseScale = d3.scaleTime()
-        } else {
-          baseScale = d3.scaleLinear()
-        }
-        baseScale
-          .domain(this.params.axis[axisName].domain)
-          .range(this.params.axis[axisName].range)
-        this.params.axis[axisName].scale = baseScale
-        if (this.hasAxisParam(axisName, 'nice') && this.params.axis[axisName].nice) {
+      axis.domain = domain
+      if (!_.isFunction(axis.scale) && axis.range) {
+        const scale = this.config.getScale(axisName)
+        scale
+          .domain(axis.domain)
+          .range(axis.range)
+        axis.scale = scale
+        if (this.hasAxisParam(axisName, 'nice') && axis.nice) {
           if (this.hasAxisParam(axisName, 'ticks')) {
-            this.params.axis[axisName].scale = this.params.axis[axisName].scale.nice(this.params.axis[axisName].ticks)
+            axis.scale = axis.scale.nice(axis.ticks)
           } else {
-            this.params.axis[axisName].scale = this.params.axis[axisName].scale.nice()
+            axis.scale = axis.scale.nice()
           }
         }
       }
