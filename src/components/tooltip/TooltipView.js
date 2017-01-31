@@ -2,8 +2,6 @@
  * Copyright (c) 2016 Juniper Networks, Inc. All rights reserved.
  */
 require('./tooltip.scss')
-const $ = require('jquery')
-const _ = require('lodash')
 const ContrailChartsView = require('contrail-charts-view')
 const _template = require('./tooltip.html')
 
@@ -22,7 +20,7 @@ class TooltipView extends ContrailChartsView {
     // Tooltip dimensions will be available after render.
     const tooltipWidth = this.$el.outerWidth()
     const containerWidth = this.config.container.offsetWidth
-    const containerHeight = this.config.container.offsetHeight
+    const containerHeight = this.config.container.offsetHeight // eslint-disable-line
 
     const tooltipPositionTop = offset.top < 0 ? 0 : offset.top
     let tooltipPositionLeft = offset.left
