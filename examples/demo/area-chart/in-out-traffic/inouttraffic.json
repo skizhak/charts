@@ -1,0 +1,3141 @@
+{
+  "data": [
+    {
+      "T": 1485867600000000,
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-a-in",
+      "vn_name": "vnetwork-a",
+      "sum(bytes)": 439132,
+      "sum(packets)": 1258
+    },
+    {
+      "T": 1485867660000000,
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-a-in",
+      "vn_name": "vnetwork-a",
+      "sum(bytes)": 447708,
+      "sum(packets)": 1234
+    },
+    {
+      "T": 1485867720000000,
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-a-in",
+      "vn_name": "vnetwork-a",
+      "sum(bytes)": 450488,
+      "sum(packets)": 1248
+    },
+    {
+      "T": 1485867780000000,
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-a-in",
+      "vn_name": "vnetwork-a",
+      "sum(bytes)": 429522,
+      "sum(packets)": 1281
+    },
+    {
+      "T": 1485867840000000,
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-a-in",
+      "vn_name": "vnetwork-a",
+      "sum(bytes)": 440394,
+      "sum(packets)": 1261
+    },
+    {
+      "T": 1485867900000000,
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-a-in",
+      "vn_name": "vnetwork-a",
+      "sum(bytes)": 408728,
+      "sum(packets)": 1240
+    },
+    {
+      "T": 1485867960000000,
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-a-in",
+      "vn_name": "vnetwork-a",
+      "sum(bytes)": 465646,
+      "sum(packets)": 1275
+    },
+    {
+      "T": 1485868020000000,
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-a-in",
+      "vn_name": "vnetwork-a",
+      "sum(bytes)": 423364,
+      "sum(packets)": 1238
+    },
+    {
+      "T": 1485868080000000,
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-a-in",
+      "vn_name": "vnetwork-a",
+      "sum(bytes)": 396894,
+      "sum(packets)": 1215
+    },
+    {
+      "T": 1485868140000000,
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-a-in",
+      "vn_name": "vnetwork-a",
+      "sum(bytes)": 425022,
+      "sum(packets)": 1255
+    },
+    {
+      "T": 1485868200000000,
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-a-in",
+      "vn_name": "vnetwork-a",
+      "sum(bytes)": 445754,
+      "sum(packets)": 1225
+    },
+    {
+      "T": 1485868260000000,
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-a-in",
+      "vn_name": "vnetwork-a",
+      "sum(bytes)": 433480,
+      "sum(packets)": 1268
+    },
+    {
+      "T": 1485868320000000,
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-a-in",
+      "vn_name": "vnetwork-a",
+      "sum(bytes)": 433088,
+      "sum(packets)": 1288
+    },
+    {
+      "T": 1485868380000000,
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-a-in",
+      "vn_name": "vnetwork-a",
+      "sum(bytes)": 420478,
+      "sum(packets)": 1203
+    },
+    {
+      "T": 1485868440000000,
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-a-in",
+      "vn_name": "vnetwork-a",
+      "sum(bytes)": 400942,
+      "sum(packets)": 1227
+    },
+    {
+      "T": 1485868500000000,
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-a-in",
+      "vn_name": "vnetwork-a",
+      "sum(bytes)": 439110,
+      "sum(packets)": 1283
+    },
+    {
+      "T": 1485868560000000,
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-a-in",
+      "vn_name": "vnetwork-a",
+      "sum(bytes)": 436614,
+      "sum(packets)": 1215
+    },
+    {
+      "T": 1485868620000000,
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-a-in",
+      "vn_name": "vnetwork-a",
+      "sum(bytes)": 422070,
+      "sum(packets)": 1231
+    },
+    {
+      "T": 1485868680000000,
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-a-in",
+      "vn_name": "vnetwork-a",
+      "sum(bytes)": 421068,
+      "sum(packets)": 1258
+    },
+    {
+      "T": 1485868740000000,
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-a-in",
+      "vn_name": "vnetwork-a",
+      "sum(bytes)": 417782,
+      "sum(packets)": 1251
+    },
+    {
+      "T": 1485868800000000,
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-a-in",
+      "vn_name": "vnetwork-a",
+      "sum(bytes)": 449498,
+      "sum(packets)": 1285
+    },
+    {
+      "T": 1485868860000000,
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-a-in",
+      "vn_name": "vnetwork-a",
+      "sum(bytes)": 463530,
+      "sum(packets)": 1309
+    },
+    {
+      "T": 1485868920000000,
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-a-in",
+      "vn_name": "vnetwork-a",
+      "sum(bytes)": 420972,
+      "sum(packets)": 1258
+    },
+    {
+      "T": 1485868980000000,
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-a-in",
+      "vn_name": "vnetwork-a",
+      "sum(bytes)": 427126,
+      "sum(packets)": 1243
+    },
+    {
+      "T": 1485869040000000,
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-a-in",
+      "vn_name": "vnetwork-a",
+      "sum(bytes)": 434770,
+      "sum(packets)": 1293
+    },
+    {
+      "T": 1485869100000000,
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-a-in",
+      "vn_name": "vnetwork-a",
+      "sum(bytes)": 447600,
+      "sum(packets)": 1296
+    },
+    {
+      "T": 1485869160000000,
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-a-in",
+      "vn_name": "vnetwork-a",
+      "sum(bytes)": 395050,
+      "sum(packets)": 1269
+    },
+    {
+      "T": 1485869220000000,
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-a-in",
+      "vn_name": "vnetwork-a",
+      "sum(bytes)": 427760,
+      "sum(packets)": 1256
+    },
+    {
+      "T": 1485869280000000,
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-a-in",
+      "vn_name": "vnetwork-a",
+      "sum(bytes)": 435098,
+      "sum(packets)": 1253
+    },
+    {
+      "T": 1485869340000000,
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-a-in",
+      "vn_name": "vnetwork-a",
+      "sum(bytes)": 417998,
+      "sum(packets)": 1235
+    },
+    {
+      "T": 1485869400000000,
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-a-in",
+      "vn_name": "vnetwork-a",
+      "sum(bytes)": 425312,
+      "sum(packets)": 1276
+    },
+    {
+      "T": 1485869460000000,
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-a-in",
+      "vn_name": "vnetwork-a",
+      "sum(bytes)": 439190,
+      "sum(packets)": 1255
+    },
+    {
+      "T": 1485869520000000,
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-a-in",
+      "vn_name": "vnetwork-a",
+      "sum(bytes)": 435414,
+      "sum(packets)": 1235
+    },
+    {
+      "T": 1485869580000000,
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-a-in",
+      "vn_name": "vnetwork-a",
+      "sum(bytes)": 425354,
+      "sum(packets)": 1261
+    },
+    {
+      "T": 1485869640000000,
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-a-in",
+      "vn_name": "vnetwork-a",
+      "sum(bytes)": 436754,
+      "sum(packets)": 1241
+    },
+    {
+      "T": 1485869700000000,
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-a-in",
+      "vn_name": "vnetwork-a",
+      "sum(bytes)": 423990,
+      "sum(packets)": 1247
+    },
+    {
+      "T": 1485869760000000,
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-a-in",
+      "vn_name": "vnetwork-a",
+      "sum(bytes)": 450530,
+      "sum(packets)": 1257
+    },
+    {
+      "T": 1485869820000000,
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-a-in",
+      "vn_name": "vnetwork-a",
+      "sum(bytes)": 444698,
+      "sum(packets)": 1293
+    },
+    {
+      "T": 1485869880000000,
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-a-in",
+      "vn_name": "vnetwork-a",
+      "sum(bytes)": 439468,
+      "sum(packets)": 1226
+    },
+    {
+      "T": 1485869940000000,
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-a-in",
+      "vn_name": "vnetwork-a",
+      "sum(bytes)": 425050,
+      "sum(packets)": 1269
+    },
+    {
+      "T": 1485870000000000,
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-a-in",
+      "vn_name": "vnetwork-a",
+      "sum(bytes)": 383982,
+      "sum(packets)": 1243
+    },
+    {
+      "T": 1485870060000000,
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-a-in",
+      "vn_name": "vnetwork-a",
+      "sum(bytes)": 441630,
+      "sum(packets)": 1259
+    },
+    {
+      "T": 1485870120000000,
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-a-in",
+      "vn_name": "vnetwork-a",
+      "sum(bytes)": 425768,
+      "sum(packets)": 1240
+    },
+    {
+      "T": 1485870180000000,
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-a-in",
+      "vn_name": "vnetwork-a",
+      "sum(bytes)": 402988,
+      "sum(packets)": 1250
+    },
+    {
+      "T": 1485870240000000,
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-a-in",
+      "vn_name": "vnetwork-a",
+      "sum(bytes)": 447686,
+      "sum(packets)": 1287
+    },
+    {
+      "T": 1485870300000000,
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-a-in",
+      "vn_name": "vnetwork-a",
+      "sum(bytes)": 404660,
+      "sum(packets)": 1214
+    },
+    {
+      "T": 1485870360000000,
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-a-in",
+      "vn_name": "vnetwork-a",
+      "sum(bytes)": 435472,
+      "sum(packets)": 1292
+    },
+    {
+      "T": 1485870420000000,
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-a-in",
+      "vn_name": "vnetwork-a",
+      "sum(bytes)": 435744,
+      "sum(packets)": 1212
+    },
+    {
+      "T": 1485870480000000,
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-a-in",
+      "vn_name": "vnetwork-a",
+      "sum(bytes)": 453666,
+      "sum(packets)": 1317
+    },
+    {
+      "T": 1485870540000000,
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-a-in",
+      "vn_name": "vnetwork-a",
+      "sum(bytes)": 422412,
+      "sum(packets)": 1258
+    },
+    {
+      "T": 1485870600000000,
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-a-in",
+      "vn_name": "vnetwork-a",
+      "sum(bytes)": 445298,
+      "sum(packets)": 1233
+    },
+    {
+      "T": 1485870660000000,
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-a-in",
+      "vn_name": "vnetwork-a",
+      "sum(bytes)": 433390,
+      "sum(packets)": 1299
+    },
+    {
+      "T": 1485870720000000,
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-a-in",
+      "vn_name": "vnetwork-a",
+      "sum(bytes)": 392368,
+      "sum(packets)": 1208
+    },
+    {
+      "T": 1485870780000000,
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-a-in",
+      "vn_name": "vnetwork-a",
+      "sum(bytes)": 420336,
+      "sum(packets)": 1224
+    },
+    {
+      "T": 1485870840000000,
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-a-in",
+      "vn_name": "vnetwork-a",
+      "sum(bytes)": 416074,
+      "sum(packets)": 1213
+    },
+    {
+      "T": 1485870900000000,
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-a-in",
+      "vn_name": "vnetwork-a",
+      "sum(bytes)": 441150,
+      "sum(packets)": 1287
+    },
+    {
+      "T": 1485870960000000,
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-a-in",
+      "vn_name": "vnetwork-a",
+      "sum(bytes)": 446162,
+      "sum(packets)": 1269
+    },
+    {
+      "T": 1485871020000000,
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-a-in",
+      "vn_name": "vnetwork-a",
+      "sum(bytes)": 456378,
+      "sum(packets)": 1305
+    },
+    {
+      "T": 1485871080000000,
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-a-in",
+      "vn_name": "vnetwork-a",
+      "sum(bytes)": 455988,
+      "sum(packets)": 1282
+    },
+    {
+      "T": 1485871140000000,
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-a-in",
+      "vn_name": "vnetwork-a",
+      "sum(bytes)": 446252,
+      "sum(packets)": 1266
+    },
+    {
+      "T": 1485871200000000,
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-a-in",
+      "vn_name": "vnetwork-a",
+      "sum(bytes)": 421720,
+      "sum(packets)": 1280
+    },
+    {
+      "T": 1485871260000000,
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-a-in",
+      "vn_name": "vnetwork-a",
+      "sum(bytes)": 440146,
+      "sum(packets)": 1269
+    },
+    {
+      "T": 1485871320000000,
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-a-in",
+      "vn_name": "vnetwork-a",
+      "sum(bytes)": 465016,
+      "sum(packets)": 1268
+    },
+    {
+      "T": 1485871380000000,
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-a-in",
+      "vn_name": "vnetwork-a",
+      "sum(bytes)": 461600,
+      "sum(packets)": 1304
+    },
+    {
+      "T": 1485871440000000,
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-a-in",
+      "vn_name": "vnetwork-a",
+      "sum(bytes)": 439170,
+      "sum(packets)": 1249
+    },
+    {
+      "T": 1485871500000000,
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-a-in",
+      "vn_name": "vnetwork-a",
+      "sum(bytes)": 406786,
+      "sum(packets)": 1261
+    },
+    {
+      "T": 1485871560000000,
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-a-in",
+      "vn_name": "vnetwork-a",
+      "sum(bytes)": 466338,
+      "sum(packets)": 1281
+    },
+    {
+      "T": 1485871620000000,
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-a-in",
+      "vn_name": "vnetwork-a",
+      "sum(bytes)": 402108,
+      "sum(packets)": 1194
+    },
+    {
+      "T": 1485871680000000,
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-a-in",
+      "vn_name": "vnetwork-a",
+      "sum(bytes)": 425062,
+      "sum(packets)": 1255
+    },
+    {
+      "T": 1485871740000000,
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-a-in",
+      "vn_name": "vnetwork-a",
+      "sum(bytes)": 425462,
+      "sum(packets)": 1267
+    },
+    {
+      "T": 1485871800000000,
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-a-in",
+      "vn_name": "vnetwork-a",
+      "sum(bytes)": 470880,
+      "sum(packets)": 1332
+    },
+    {
+      "T": 1485871860000000,
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-a-in",
+      "vn_name": "vnetwork-a",
+      "sum(bytes)": 418340,
+      "sum(packets)": 1250
+    },
+    {
+      "T": 1485871920000000,
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-a-in",
+      "vn_name": "vnetwork-a",
+      "sum(bytes)": 430714,
+      "sum(packets)": 1241
+    },
+    {
+      "T": 1485871980000000,
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-a-in",
+      "vn_name": "vnetwork-a",
+      "sum(bytes)": 445998,
+      "sum(packets)": 1315
+    },
+    {
+      "T": 1485872040000000,
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-a-in",
+      "vn_name": "vnetwork-a",
+      "sum(bytes)": 440744,
+      "sum(packets)": 1256
+    },
+    {
+      "T": 1485872100000000,
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-a-in",
+      "vn_name": "vnetwork-a",
+      "sum(bytes)": 431730,
+      "sum(packets)": 1317
+    },
+    {
+      "T": 1485872160000000,
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-a-in",
+      "vn_name": "vnetwork-a",
+      "sum(bytes)": 447204,
+      "sum(packets)": 1326
+    },
+    {
+      "T": 1485872220000000,
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-a-in",
+      "vn_name": "vnetwork-a",
+      "sum(bytes)": 454204,
+      "sum(packets)": 1278
+    },
+    {
+      "T": 1485872280000000,
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-a-in",
+      "vn_name": "vnetwork-a",
+      "sum(bytes)": 424554,
+      "sum(packets)": 1229
+    },
+    {
+      "T": 1485872340000000,
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-a-in",
+      "vn_name": "vnetwork-a",
+      "sum(bytes)": 412162,
+      "sum(packets)": 1237
+    },
+    {
+      "T": 1485872400000000,
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-a-in",
+      "vn_name": "vnetwork-a",
+      "sum(bytes)": 429450,
+      "sum(packets)": 1261
+    },
+    {
+      "T": 1485872460000000,
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-a-in",
+      "vn_name": "vnetwork-a",
+      "sum(bytes)": 420276,
+      "sum(packets)": 1274
+    },
+    {
+      "T": 1485872520000000,
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-a-in",
+      "vn_name": "vnetwork-a",
+      "sum(bytes)": 408458,
+      "sum(packets)": 1245
+    },
+    {
+      "T": 1485872580000000,
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-a-in",
+      "vn_name": "vnetwork-a",
+      "sum(bytes)": 437892,
+      "sum(packets)": 1246
+    },
+    {
+      "T": 1485872640000000,
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-a-in",
+      "vn_name": "vnetwork-a",
+      "sum(bytes)": 448086,
+      "sum(packets)": 1283
+    },
+    {
+      "T": 1485872700000000,
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-a-in",
+      "vn_name": "vnetwork-a",
+      "sum(bytes)": 455312,
+      "sum(packets)": 1308
+    },
+    {
+      "T": 1485872760000000,
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-a-in",
+      "vn_name": "vnetwork-a",
+      "sum(bytes)": 451584,
+      "sum(packets)": 1300
+    },
+    {
+      "T": 1485872820000000,
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-a-in",
+      "vn_name": "vnetwork-a",
+      "sum(bytes)": 392604,
+      "sum(packets)": 1238
+    },
+    {
+      "T": 1485872880000000,
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-a-in",
+      "vn_name": "vnetwork-a",
+      "sum(bytes)": 402224,
+      "sum(packets)": 1224
+    },
+    {
+      "T": 1485872940000000,
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-a-in",
+      "vn_name": "vnetwork-a",
+      "sum(bytes)": 444434,
+      "sum(packets)": 1269
+    },
+    {
+      "T": 1485873000000000,
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-a-in",
+      "vn_name": "vnetwork-a",
+      "sum(bytes)": 424012,
+      "sum(packets)": 1230
+    },
+    {
+      "T": 1485873060000000,
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-a-in",
+      "vn_name": "vnetwork-a",
+      "sum(bytes)": 433822,
+      "sum(packets)": 1271
+    },
+    {
+      "T": 1485873120000000,
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-a-in",
+      "vn_name": "vnetwork-a",
+      "sum(bytes)": 447608,
+      "sum(packets)": 1288
+    },
+    {
+      "T": 1485873180000000,
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-a-in",
+      "vn_name": "vnetwork-a",
+      "sum(bytes)": 440188,
+      "sum(packets)": 1238
+    },
+    {
+      "T": 1485873240000000,
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-a-in",
+      "vn_name": "vnetwork-a",
+      "sum(bytes)": 310208,
+      "sum(packets)": 324
+    },
+    {
+      "T": 1485873300000000,
+      "vn_name": "vnetwork-a",
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-a-in",
+      "sum(bytes)": 522382,
+      "sum(packets)": 1175
+    },
+    {
+      "T": 1485873360000000,
+      "vn_name": "vnetwork-a",
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-a-in",
+      "sum(bytes)": 447520,
+      "sum(packets)": 1228
+    },
+    {
+      "T": 1485873420000000,
+      "vn_name": "vnetwork-a",
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-a-in",
+      "sum(bytes)": 341854,
+      "sum(packets)": 339
+    },
+    {
+      "T": 1485867600000000,
+      "vn_name": "vnetwork-a",
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-a-out",
+      "sum(bytes)": 417956,
+      "sum(packets)": 1170
+    },
+    {
+      "T": 1485867660000000,
+      "vn_name": "vnetwork-a",
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-a-out",
+      "sum(bytes)": 395950,
+      "sum(packets)": 1143
+    },
+    {
+      "T": 1485867720000000,
+      "vn_name": "vnetwork-a",
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-a-out",
+      "sum(bytes)": 417128,
+      "sum(packets)": 1156
+    },
+    {
+      "T": 1485867780000000,
+      "vn_name": "vnetwork-a",
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-a-out",
+      "sum(bytes)": 436794,
+      "sum(packets)": 1185
+    },
+    {
+      "T": 1485867840000000,
+      "vn_name": "vnetwork-a",
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-a-out",
+      "sum(bytes)": 442438,
+      "sum(packets)": 1131
+    },
+    {
+      "T": 1485867900000000,
+      "vn_name": "vnetwork-a",
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-a-out",
+      "sum(bytes)": 436584,
+      "sum(packets)": 1124
+    },
+    {
+      "T": 1485867960000000,
+      "vn_name": "vnetwork-a",
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-a-out",
+      "sum(bytes)": 412030,
+      "sum(packets)": 1127
+    },
+    {
+      "T": 1485868020000000,
+      "vn_name": "vnetwork-a",
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-a-out",
+      "sum(bytes)": 415818,
+      "sum(packets)": 1057
+    },
+    {
+      "T": 1485868080000000,
+      "vn_name": "vnetwork-a",
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-a-out",
+      "sum(bytes)": 424638,
+      "sum(packets)": 1119
+    },
+    {
+      "T": 1485868140000000,
+      "vn_name": "vnetwork-a",
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-a-out",
+      "sum(bytes)": 403172,
+      "sum(packets)": 1142
+    },
+    {
+      "T": 1485868200000000,
+      "vn_name": "vnetwork-a",
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-a-out",
+      "sum(bytes)": 424086,
+      "sum(packets)": 1123
+    },
+    {
+      "T": 1485868260000000,
+      "vn_name": "vnetwork-a",
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-a-out",
+      "sum(bytes)": 427180,
+      "sum(packets)": 1146
+    },
+    {
+      "T": 1485868320000000,
+      "vn_name": "vnetwork-a",
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-a-out",
+      "sum(bytes)": 433320,
+      "sum(packets)": 1216
+    },
+    {
+      "T": 1485868380000000,
+      "vn_name": "vnetwork-a",
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-a-out",
+      "sum(bytes)": 407120,
+      "sum(packets)": 1112
+    },
+    {
+      "T": 1485868440000000,
+      "vn_name": "vnetwork-a",
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-a-out",
+      "sum(bytes)": 402948,
+      "sum(packets)": 1146
+    },
+    {
+      "T": 1485868500000000,
+      "vn_name": "vnetwork-a",
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-a-out",
+      "sum(bytes)": 425674,
+      "sum(packets)": 1193
+    },
+    {
+      "T": 1485868560000000,
+      "vn_name": "vnetwork-a",
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-a-out",
+      "sum(bytes)": 411054,
+      "sum(packets)": 1135
+    },
+    {
+      "T": 1485868620000000,
+      "vn_name": "vnetwork-a",
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-a-out",
+      "sum(bytes)": 431446,
+      "sum(packets)": 1119
+    },
+    {
+      "T": 1485868680000000,
+      "vn_name": "vnetwork-a",
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-a-out",
+      "sum(bytes)": 419862,
+      "sum(packets)": 1191
+    },
+    {
+      "T": 1485868740000000,
+      "vn_name": "vnetwork-a",
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-a-out",
+      "sum(bytes)": 419268,
+      "sum(packets)": 1158
+    },
+    {
+      "T": 1485868800000000,
+      "vn_name": "vnetwork-a",
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-a-out",
+      "sum(bytes)": 419190,
+      "sum(packets)": 1203
+    },
+    {
+      "T": 1485868860000000,
+      "vn_name": "vnetwork-a",
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-a-out",
+      "sum(bytes)": 450976,
+      "sum(packets)": 1252
+    },
+    {
+      "T": 1485868920000000,
+      "vn_name": "vnetwork-a",
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-a-out",
+      "sum(bytes)": 416512,
+      "sum(packets)": 1200
+    },
+    {
+      "T": 1485868980000000,
+      "vn_name": "vnetwork-a",
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-a-out",
+      "sum(bytes)": 408312,
+      "sum(packets)": 1184
+    },
+    {
+      "T": 1485869040000000,
+      "vn_name": "vnetwork-a",
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-a-out",
+      "sum(bytes)": 423474,
+      "sum(packets)": 1209
+    },
+    {
+      "T": 1485869100000000,
+      "vn_name": "vnetwork-a",
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-a-out",
+      "sum(bytes)": 443876,
+      "sum(packets)": 1210
+    },
+    {
+      "T": 1485869160000000,
+      "vn_name": "vnetwork-a",
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-a-out",
+      "sum(bytes)": 445820,
+      "sum(packets)": 1226
+    },
+    {
+      "T": 1485869220000000,
+      "vn_name": "vnetwork-a",
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-a-out",
+      "sum(bytes)": 419392,
+      "sum(packets)": 1172
+    },
+    {
+      "T": 1485869280000000,
+      "vn_name": "vnetwork-a",
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-a-out",
+      "sum(bytes)": 411952,
+      "sum(packets)": 1176
+    },
+    {
+      "T": 1485869340000000,
+      "vn_name": "vnetwork-a",
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-a-out",
+      "sum(bytes)": 418066,
+      "sum(packets)": 1141
+    },
+    {
+      "T": 1485869400000000,
+      "vn_name": "vnetwork-a",
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-a-out",
+      "sum(bytes)": 451296,
+      "sum(packets)": 1196
+    },
+    {
+      "T": 1485869460000000,
+      "vn_name": "vnetwork-a",
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-a-out",
+      "sum(bytes)": 412278,
+      "sum(packets)": 1159
+    },
+    {
+      "T": 1485869520000000,
+      "vn_name": "vnetwork-a",
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-a-out",
+      "sum(bytes)": 421568,
+      "sum(packets)": 1144
+    },
+    {
+      "T": 1485869580000000,
+      "vn_name": "vnetwork-a",
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-a-out",
+      "sum(bytes)": 418328,
+      "sum(packets)": 1176
+    },
+    {
+      "T": 1485869640000000,
+      "vn_name": "vnetwork-a",
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-a-out",
+      "sum(bytes)": 411758,
+      "sum(packets)": 1147
+    },
+    {
+      "T": 1485869700000000,
+      "vn_name": "vnetwork-a",
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-a-out",
+      "sum(bytes)": 423014,
+      "sum(packets)": 1139
+    },
+    {
+      "T": 1485869760000000,
+      "vn_name": "vnetwork-a",
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-a-out",
+      "sum(bytes)": 402570,
+      "sum(packets)": 1197
+    },
+    {
+      "T": 1485869820000000,
+      "vn_name": "vnetwork-a",
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-a-out",
+      "sum(bytes)": 407592,
+      "sum(packets)": 1184
+    },
+    {
+      "T": 1485869880000000,
+      "vn_name": "vnetwork-a",
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-a-out",
+      "sum(bytes)": 438222,
+      "sum(packets)": 1187
+    },
+    {
+      "T": 1485869940000000,
+      "vn_name": "vnetwork-a",
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-a-out",
+      "sum(bytes)": 422222,
+      "sum(packets)": 1203
+    },
+    {
+      "T": 1485870000000000,
+      "vn_name": "vnetwork-a",
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-a-out",
+      "sum(bytes)": 438924,
+      "sum(packets)": 1154
+    },
+    {
+      "T": 1485870060000000,
+      "vn_name": "vnetwork-a",
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-a-out",
+      "sum(bytes)": 414802,
+      "sum(packets)": 1153
+    },
+    {
+      "T": 1485870120000000,
+      "vn_name": "vnetwork-a",
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-a-out",
+      "sum(bytes)": 432386,
+      "sum(packets)": 1153
+    },
+    {
+      "T": 1485870180000000,
+      "vn_name": "vnetwork-a",
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-a-out",
+      "sum(bytes)": 430320,
+      "sum(packets)": 1180
+    },
+    {
+      "T": 1485870240000000,
+      "vn_name": "vnetwork-a",
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-a-out",
+      "sum(bytes)": 430766,
+      "sum(packets)": 1175
+    },
+    {
+      "T": 1485870300000000,
+      "vn_name": "vnetwork-a",
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-a-out",
+      "sum(bytes)": 402382,
+      "sum(packets)": 1099
+    },
+    {
+      "T": 1485870360000000,
+      "vn_name": "vnetwork-a",
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-a-out",
+      "sum(bytes)": 431380,
+      "sum(packets)": 1174
+    },
+    {
+      "T": 1485870420000000,
+      "vn_name": "vnetwork-a",
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-a-out",
+      "sum(bytes)": 402868,
+      "sum(packets)": 1098
+    },
+    {
+      "T": 1485870480000000,
+      "vn_name": "vnetwork-a",
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-a-out",
+      "sum(bytes)": 443826,
+      "sum(packets)": 1201
+    },
+    {
+      "T": 1485870540000000,
+      "vn_name": "vnetwork-a",
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-a-out",
+      "sum(bytes)": 438910,
+      "sum(packets)": 1155
+    },
+    {
+      "T": 1485870600000000,
+      "vn_name": "vnetwork-a",
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-a-out",
+      "sum(bytes)": 417110,
+      "sum(packets)": 1119
+    },
+    {
+      "T": 1485870660000000,
+      "vn_name": "vnetwork-a",
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-a-out",
+      "sum(bytes)": 441728,
+      "sum(packets)": 1164
+    },
+    {
+      "T": 1485870720000000,
+      "vn_name": "vnetwork-a",
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-a-out",
+      "sum(bytes)": 443638,
+      "sum(packets)": 1103
+    },
+    {
+      "T": 1485870780000000,
+      "vn_name": "vnetwork-a",
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-a-out",
+      "sum(bytes)": 406614,
+      "sum(packets)": 1091
+    },
+    {
+      "T": 1485870840000000,
+      "vn_name": "vnetwork-a",
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-a-out",
+      "sum(bytes)": 389570,
+      "sum(packets)": 1081
+    },
+    {
+      "T": 1485870900000000,
+      "vn_name": "vnetwork-a",
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-a-out",
+      "sum(bytes)": 447070,
+      "sum(packets)": 1187
+    },
+    {
+      "T": 1485870960000000,
+      "vn_name": "vnetwork-a",
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-a-out",
+      "sum(bytes)": 425116,
+      "sum(packets)": 1126
+    },
+    {
+      "T": 1485871020000000,
+      "vn_name": "vnetwork-a",
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-a-out",
+      "sum(bytes)": 454606,
+      "sum(packets)": 1179
+    },
+    {
+      "T": 1485871080000000,
+      "vn_name": "vnetwork-a",
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-a-out",
+      "sum(bytes)": 437730,
+      "sum(packets)": 1213
+    },
+    {
+      "T": 1485871140000000,
+      "vn_name": "vnetwork-a",
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-a-out",
+      "sum(bytes)": 415126,
+      "sum(packets)": 1171
+    },
+    {
+      "T": 1485871200000000,
+      "vn_name": "vnetwork-a",
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-a-out",
+      "sum(bytes)": 428850,
+      "sum(packets)": 1197
+    },
+    {
+      "T": 1485871260000000,
+      "vn_name": "vnetwork-a",
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-a-out",
+      "sum(bytes)": 422356,
+      "sum(packets)": 1170
+    },
+    {
+      "T": 1485871320000000,
+      "vn_name": "vnetwork-a",
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-a-out",
+      "sum(bytes)": 406010,
+      "sum(packets)": 1137
+    },
+    {
+      "T": 1485871380000000,
+      "vn_name": "vnetwork-a",
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-a-out",
+      "sum(bytes)": 448768,
+      "sum(packets)": 1160
+    },
+    {
+      "T": 1485871440000000,
+      "vn_name": "vnetwork-a",
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-a-out",
+      "sum(bytes)": 399482,
+      "sum(packets)": 1133
+    },
+    {
+      "T": 1485871500000000,
+      "vn_name": "vnetwork-a",
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-a-out",
+      "sum(bytes)": 472094,
+      "sum(packets)": 1119
+    },
+    {
+      "T": 1485871560000000,
+      "vn_name": "vnetwork-a",
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-a-out",
+      "sum(bytes)": 407084,
+      "sum(packets)": 1166
+    },
+    {
+      "T": 1485871620000000,
+      "vn_name": "vnetwork-a",
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-a-out",
+      "sum(bytes)": 405472,
+      "sum(packets)": 1144
+    },
+    {
+      "T": 1485871680000000,
+      "vn_name": "vnetwork-a",
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-a-out",
+      "sum(bytes)": 428276,
+      "sum(packets)": 1094
+    },
+    {
+      "T": 1485871740000000,
+      "vn_name": "vnetwork-a",
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-a-out",
+      "sum(bytes)": 429076,
+      "sum(packets)": 1158
+    },
+    {
+      "T": 1485871800000000,
+      "vn_name": "vnetwork-a",
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-a-out",
+      "sum(bytes)": 456772,
+      "sum(packets)": 1226
+    },
+    {
+      "T": 1485871860000000,
+      "vn_name": "vnetwork-a",
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-a-out",
+      "sum(bytes)": 438460,
+      "sum(packets)": 1134
+    },
+    {
+      "T": 1485871920000000,
+      "vn_name": "vnetwork-a",
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-a-out",
+      "sum(bytes)": 411750,
+      "sum(packets)": 1151
+    },
+    {
+      "T": 1485871980000000,
+      "vn_name": "vnetwork-a",
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-a-out",
+      "sum(bytes)": 444752,
+      "sum(packets)": 1240
+    },
+    {
+      "T": 1485872040000000,
+      "vn_name": "vnetwork-a",
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-a-out",
+      "sum(bytes)": 433072,
+      "sum(packets)": 1168
+    },
+    {
+      "T": 1485872100000000,
+      "vn_name": "vnetwork-a",
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-a-out",
+      "sum(bytes)": 435296,
+      "sum(packets)": 1212
+    },
+    {
+      "T": 1485872160000000,
+      "vn_name": "vnetwork-a",
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-a-out",
+      "sum(bytes)": 449074,
+      "sum(packets)": 1249
+    },
+    {
+      "T": 1485872220000000,
+      "vn_name": "vnetwork-a",
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-a-out",
+      "sum(bytes)": 407550,
+      "sum(packets)": 1207
+    },
+    {
+      "T": 1485872280000000,
+      "vn_name": "vnetwork-a",
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-a-out",
+      "sum(bytes)": 435760,
+      "sum(packets)": 1136
+    },
+    {
+      "T": 1485872340000000,
+      "vn_name": "vnetwork-a",
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-a-out",
+      "sum(bytes)": 453618,
+      "sum(packets)": 1153
+    },
+    {
+      "T": 1485872400000000,
+      "vn_name": "vnetwork-a",
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-a-out",
+      "sum(bytes)": 568528,
+      "sum(packets)": 1152
+    },
+    {
+      "T": 1485872460000000,
+      "vn_name": "vnetwork-a",
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-a-out",
+      "sum(bytes)": 431074,
+      "sum(packets)": 1185
+    },
+    {
+      "T": 1485872520000000,
+      "vn_name": "vnetwork-a",
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-a-out",
+      "sum(bytes)": 427806,
+      "sum(packets)": 1143
+    },
+    {
+      "T": 1485872580000000,
+      "vn_name": "vnetwork-a",
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-a-out",
+      "sum(bytes)": 418548,
+      "sum(packets)": 1126
+    },
+    {
+      "T": 1485872640000000,
+      "vn_name": "vnetwork-a",
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-a-out",
+      "sum(bytes)": 415686,
+      "sum(packets)": 1175
+    },
+    {
+      "T": 1485872700000000,
+      "vn_name": "vnetwork-a",
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-a-out",
+      "sum(bytes)": 447646,
+      "sum(packets)": 1219
+    },
+    {
+      "T": 1485872760000000,
+      "vn_name": "vnetwork-a",
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-a-out",
+      "sum(bytes)": 387416,
+      "sum(packets)": 1180
+    },
+    {
+      "T": 1485872820000000,
+      "vn_name": "vnetwork-a",
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-a-out",
+      "sum(bytes)": 407326,
+      "sum(packets)": 1143
+    },
+    {
+      "T": 1485872880000000,
+      "vn_name": "vnetwork-a",
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-a-out",
+      "sum(bytes)": 382088,
+      "sum(packets)": 1140
+    },
+    {
+      "T": 1485872940000000,
+      "vn_name": "vnetwork-a",
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-a-out",
+      "sum(bytes)": 426328,
+      "sum(packets)": 1180
+    },
+    {
+      "T": 1485873000000000,
+      "vn_name": "vnetwork-a",
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-a-out",
+      "sum(bytes)": 428064,
+      "sum(packets)": 1124
+    },
+    {
+      "T": 1485873060000000,
+      "vn_name": "vnetwork-a",
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-a-out",
+      "sum(bytes)": 431700,
+      "sum(packets)": 1190
+    },
+    {
+      "T": 1485873120000000,
+      "vn_name": "vnetwork-a",
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-a-out",
+      "sum(bytes)": 425112,
+      "sum(packets)": 1152
+    },
+    {
+      "T": 1485873180000000,
+      "vn_name": "vnetwork-a",
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-a-out",
+      "sum(bytes)": 407804,
+      "sum(packets)": 1134
+    },
+    {
+      "T": 1485873240000000,
+      "vn_name": "vnetwork-a",
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-a-out",
+      "sum(bytes)": 404604,
+      "sum(packets)": 1194
+    },
+    {
+      "T": 1485873300000000,
+      "vn_name": "vnetwork-a",
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-a-out",
+      "sum(bytes)": 422382,
+      "sum(packets)": 1175
+    },
+    {
+      "T": 1485873360000000,
+      "vn_name": "vnetwork-a",
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-a-out",
+      "sum(bytes)": 447520,
+      "sum(packets)": 1228
+    },
+    {
+      "T": 1485873420000000,
+      "vn_name": "vnetwork-a",
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-a-out",
+      "sum(bytes)": 461854,
+      "sum(packets)": 339
+    },
+    {
+      "T": 1485867600000000,
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-b-out",
+      "vn_name": "vnetwork-b",
+      "sum(bytes)": 439132,
+      "sum(packets)": 1258
+    },
+    {
+      "T": 1485867660000000,
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-b-out",
+      "vn_name": "vnetwork-b",
+      "sum(bytes)": 447708,
+      "sum(packets)": 1234
+    },
+    {
+      "T": 1485867720000000,
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-b-out",
+      "vn_name": "vnetwork-b",
+      "sum(bytes)": 450488,
+      "sum(packets)": 1248
+    },
+    {
+      "T": 1485867780000000,
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-b-out",
+      "vn_name": "vnetwork-b",
+      "sum(bytes)": 429522,
+      "sum(packets)": 1281
+    },
+    {
+      "T": 1485867840000000,
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-b-out",
+      "vn_name": "vnetwork-b",
+      "sum(bytes)": 440394,
+      "sum(packets)": 1261
+    },
+    {
+      "T": 1485867900000000,
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-b-out",
+      "vn_name": "vnetwork-b",
+      "sum(bytes)": 408728,
+      "sum(packets)": 1240
+    },
+    {
+      "T": 1485867960000000,
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-b-out",
+      "vn_name": "vnetwork-b",
+      "sum(bytes)": 465646,
+      "sum(packets)": 1275
+    },
+    {
+      "T": 1485868020000000,
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-b-out",
+      "vn_name": "vnetwork-b",
+      "sum(bytes)": 423364,
+      "sum(packets)": 1238
+    },
+    {
+      "T": 1485868080000000,
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-b-out",
+      "vn_name": "vnetwork-b",
+      "sum(bytes)": 396894,
+      "sum(packets)": 1215
+    },
+    {
+      "T": 1485868140000000,
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-b-out",
+      "vn_name": "vnetwork-b",
+      "sum(bytes)": 425022,
+      "sum(packets)": 1255
+    },
+    {
+      "T": 1485868200000000,
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-b-out",
+      "vn_name": "vnetwork-b",
+      "sum(bytes)": 445754,
+      "sum(packets)": 1225
+    },
+    {
+      "T": 1485868260000000,
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-b-out",
+      "vn_name": "vnetwork-b",
+      "sum(bytes)": 433480,
+      "sum(packets)": 1268
+    },
+    {
+      "T": 1485868320000000,
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-b-out",
+      "vn_name": "vnetwork-b",
+      "sum(bytes)": 433088,
+      "sum(packets)": 1288
+    },
+    {
+      "T": 1485868380000000,
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-b-out",
+      "vn_name": "vnetwork-b",
+      "sum(bytes)": 420478,
+      "sum(packets)": 1203
+    },
+    {
+      "T": 1485868440000000,
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-b-out",
+      "vn_name": "vnetwork-b",
+      "sum(bytes)": 400942,
+      "sum(packets)": 1227
+    },
+    {
+      "T": 1485868500000000,
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-b-out",
+      "vn_name": "vnetwork-b",
+      "sum(bytes)": 439110,
+      "sum(packets)": 1283
+    },
+    {
+      "T": 1485868560000000,
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-b-out",
+      "vn_name": "vnetwork-b",
+      "sum(bytes)": 436614,
+      "sum(packets)": 1215
+    },
+    {
+      "T": 1485868620000000,
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-b-out",
+      "vn_name": "vnetwork-b",
+      "sum(bytes)": 422070,
+      "sum(packets)": 1231
+    },
+    {
+      "T": 1485868680000000,
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-b-out",
+      "vn_name": "vnetwork-b",
+      "sum(bytes)": 421068,
+      "sum(packets)": 1258
+    },
+    {
+      "T": 1485868740000000,
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-b-out",
+      "vn_name": "vnetwork-b",
+      "sum(bytes)": 417782,
+      "sum(packets)": 1251
+    },
+    {
+      "T": 1485868800000000,
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-b-out",
+      "vn_name": "vnetwork-b",
+      "sum(bytes)": 449498,
+      "sum(packets)": 1285
+    },
+    {
+      "T": 1485868860000000,
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-b-out",
+      "vn_name": "vnetwork-b",
+      "sum(bytes)": 463530,
+      "sum(packets)": 1309
+    },
+    {
+      "T": 1485868920000000,
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-b-out",
+      "vn_name": "vnetwork-b",
+      "sum(bytes)": 420972,
+      "sum(packets)": 1258
+    },
+    {
+      "T": 1485868980000000,
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-b-out",
+      "vn_name": "vnetwork-b",
+      "sum(bytes)": 427126,
+      "sum(packets)": 1243
+    },
+    {
+      "T": 1485869040000000,
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-b-out",
+      "vn_name": "vnetwork-b",
+      "sum(bytes)": 434770,
+      "sum(packets)": 1293
+    },
+    {
+      "T": 1485869100000000,
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-b-out",
+      "vn_name": "vnetwork-b",
+      "sum(bytes)": 447600,
+      "sum(packets)": 1296
+    },
+    {
+      "T": 1485869160000000,
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-b-out",
+      "vn_name": "vnetwork-b",
+      "sum(bytes)": 395050,
+      "sum(packets)": 1269
+    },
+    {
+      "T": 1485869220000000,
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-b-out",
+      "vn_name": "vnetwork-b",
+      "sum(bytes)": 427760,
+      "sum(packets)": 1256
+    },
+    {
+      "T": 1485869280000000,
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-b-out",
+      "vn_name": "vnetwork-b",
+      "sum(bytes)": 435098,
+      "sum(packets)": 1253
+    },
+    {
+      "T": 1485869340000000,
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-b-out",
+      "vn_name": "vnetwork-b",
+      "sum(bytes)": 417998,
+      "sum(packets)": 1235
+    },
+    {
+      "T": 1485869400000000,
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-b-out",
+      "vn_name": "vnetwork-b",
+      "sum(bytes)": 425312,
+      "sum(packets)": 1276
+    },
+    {
+      "T": 1485869460000000,
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-b-out",
+      "vn_name": "vnetwork-b",
+      "sum(bytes)": 439190,
+      "sum(packets)": 1255
+    },
+    {
+      "T": 1485869520000000,
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-b-out",
+      "vn_name": "vnetwork-b",
+      "sum(bytes)": 435414,
+      "sum(packets)": 1235
+    },
+    {
+      "T": 1485869580000000,
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-b-out",
+      "vn_name": "vnetwork-b",
+      "sum(bytes)": 425354,
+      "sum(packets)": 1261
+    },
+    {
+      "T": 1485869640000000,
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-b-out",
+      "vn_name": "vnetwork-b",
+      "sum(bytes)": 436754,
+      "sum(packets)": 1241
+    },
+    {
+      "T": 1485869700000000,
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-b-out",
+      "vn_name": "vnetwork-b",
+      "sum(bytes)": 423990,
+      "sum(packets)": 1247
+    },
+    {
+      "T": 1485869760000000,
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-b-out",
+      "vn_name": "vnetwork-b",
+      "sum(bytes)": 450530,
+      "sum(packets)": 1257
+    },
+    {
+      "T": 1485869820000000,
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-b-out",
+      "vn_name": "vnetwork-b",
+      "sum(bytes)": 444698,
+      "sum(packets)": 1293
+    },
+    {
+      "T": 1485869880000000,
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-b-out",
+      "vn_name": "vnetwork-b",
+      "sum(bytes)": 439468,
+      "sum(packets)": 1226
+    },
+    {
+      "T": 1485869940000000,
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-b-out",
+      "vn_name": "vnetwork-b",
+      "sum(bytes)": 425050,
+      "sum(packets)": 1269
+    },
+    {
+      "T": 1485870000000000,
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-b-out",
+      "vn_name": "vnetwork-b",
+      "sum(bytes)": 383982,
+      "sum(packets)": 1243
+    },
+    {
+      "T": 1485870060000000,
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-b-out",
+      "vn_name": "vnetwork-b",
+      "sum(bytes)": 441630,
+      "sum(packets)": 1259
+    },
+    {
+      "T": 1485870120000000,
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-b-out",
+      "vn_name": "vnetwork-b",
+      "sum(bytes)": 425768,
+      "sum(packets)": 1240
+    },
+    {
+      "T": 1485870180000000,
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-b-out",
+      "vn_name": "vnetwork-b",
+      "sum(bytes)": 402988,
+      "sum(packets)": 1250
+    },
+    {
+      "T": 1485870240000000,
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-b-out",
+      "vn_name": "vnetwork-b",
+      "sum(bytes)": 447686,
+      "sum(packets)": 1287
+    },
+    {
+      "T": 1485870300000000,
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-b-out",
+      "vn_name": "vnetwork-b",
+      "sum(bytes)": 404660,
+      "sum(packets)": 1214
+    },
+    {
+      "T": 1485870360000000,
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-b-out",
+      "vn_name": "vnetwork-b",
+      "sum(bytes)": 435472,
+      "sum(packets)": 1292
+    },
+    {
+      "T": 1485870420000000,
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-b-out",
+      "vn_name": "vnetwork-b",
+      "sum(bytes)": 435744,
+      "sum(packets)": 1212
+    },
+    {
+      "T": 1485870480000000,
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-b-out",
+      "vn_name": "vnetwork-b",
+      "sum(bytes)": 453666,
+      "sum(packets)": 1317
+    },
+    {
+      "T": 1485870540000000,
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-b-out",
+      "vn_name": "vnetwork-b",
+      "sum(bytes)": 422412,
+      "sum(packets)": 1258
+    },
+    {
+      "T": 1485870600000000,
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-b-out",
+      "vn_name": "vnetwork-b",
+      "sum(bytes)": 445298,
+      "sum(packets)": 1233
+    },
+    {
+      "T": 1485870660000000,
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-b-out",
+      "vn_name": "vnetwork-b",
+      "sum(bytes)": 433390,
+      "sum(packets)": 1299
+    },
+    {
+      "T": 1485870720000000,
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-b-out",
+      "vn_name": "vnetwork-b",
+      "sum(bytes)": 392368,
+      "sum(packets)": 1208
+    },
+    {
+      "T": 1485870780000000,
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-b-out",
+      "vn_name": "vnetwork-b",
+      "sum(bytes)": 420336,
+      "sum(packets)": 1224
+    },
+    {
+      "T": 1485870840000000,
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-b-out",
+      "vn_name": "vnetwork-b",
+      "sum(bytes)": 416074,
+      "sum(packets)": 1213
+    },
+    {
+      "T": 1485870900000000,
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-b-out",
+      "vn_name": "vnetwork-b",
+      "sum(bytes)": 441150,
+      "sum(packets)": 1287
+    },
+    {
+      "T": 1485870960000000,
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-b-out",
+      "vn_name": "vnetwork-b",
+      "sum(bytes)": 446162,
+      "sum(packets)": 1269
+    },
+    {
+      "T": 1485871020000000,
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-b-out",
+      "vn_name": "vnetwork-b",
+      "sum(bytes)": 456378,
+      "sum(packets)": 1305
+    },
+    {
+      "T": 1485871080000000,
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-b-out",
+      "vn_name": "vnetwork-b",
+      "sum(bytes)": 455988,
+      "sum(packets)": 1282
+    },
+    {
+      "T": 1485871140000000,
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-b-out",
+      "vn_name": "vnetwork-b",
+      "sum(bytes)": 446252,
+      "sum(packets)": 1266
+    },
+    {
+      "T": 1485871200000000,
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-b-out",
+      "vn_name": "vnetwork-b",
+      "sum(bytes)": 421720,
+      "sum(packets)": 1280
+    },
+    {
+      "T": 1485871260000000,
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-b-out",
+      "vn_name": "vnetwork-b",
+      "sum(bytes)": 440146,
+      "sum(packets)": 1269
+    },
+    {
+      "T": 1485871320000000,
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-b-out",
+      "vn_name": "vnetwork-b",
+      "sum(bytes)": 465016,
+      "sum(packets)": 1268
+    },
+    {
+      "T": 1485871380000000,
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-b-out",
+      "vn_name": "vnetwork-b",
+      "sum(bytes)": 461600,
+      "sum(packets)": 1304
+    },
+    {
+      "T": 1485871440000000,
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-b-out",
+      "vn_name": "vnetwork-b",
+      "sum(bytes)": 439170,
+      "sum(packets)": 1249
+    },
+    {
+      "T": 1485871500000000,
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-b-out",
+      "vn_name": "vnetwork-b",
+      "sum(bytes)": 406786,
+      "sum(packets)": 1261
+    },
+    {
+      "T": 1485871560000000,
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-b-out",
+      "vn_name": "vnetwork-b",
+      "sum(bytes)": 466338,
+      "sum(packets)": 1281
+    },
+    {
+      "T": 1485871620000000,
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-b-out",
+      "vn_name": "vnetwork-b",
+      "sum(bytes)": 402108,
+      "sum(packets)": 1194
+    },
+    {
+      "T": 1485871680000000,
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-b-out",
+      "vn_name": "vnetwork-b",
+      "sum(bytes)": 425062,
+      "sum(packets)": 1255
+    },
+    {
+      "T": 1485871740000000,
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-b-out",
+      "vn_name": "vnetwork-b",
+      "sum(bytes)": 425462,
+      "sum(packets)": 1267
+    },
+    {
+      "T": 1485871800000000,
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-b-out",
+      "vn_name": "vnetwork-b",
+      "sum(bytes)": 470880,
+      "sum(packets)": 1332
+    },
+    {
+      "T": 1485871860000000,
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-b-out",
+      "vn_name": "vnetwork-b",
+      "sum(bytes)": 418340,
+      "sum(packets)": 1250
+    },
+    {
+      "T": 1485871920000000,
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-b-out",
+      "vn_name": "vnetwork-b",
+      "sum(bytes)": 430714,
+      "sum(packets)": 1241
+    },
+    {
+      "T": 1485871980000000,
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-b-out",
+      "vn_name": "vnetwork-b",
+      "sum(bytes)": 445998,
+      "sum(packets)": 1315
+    },
+    {
+      "T": 1485872040000000,
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-b-out",
+      "vn_name": "vnetwork-b",
+      "sum(bytes)": 440744,
+      "sum(packets)": 1256
+    },
+    {
+      "T": 1485872100000000,
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-b-out",
+      "vn_name": "vnetwork-b",
+      "sum(bytes)": 431730,
+      "sum(packets)": 1317
+    },
+    {
+      "T": 1485872160000000,
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-b-out",
+      "vn_name": "vnetwork-b",
+      "sum(bytes)": 447204,
+      "sum(packets)": 1326
+    },
+    {
+      "T": 1485872220000000,
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-b-out",
+      "vn_name": "vnetwork-b",
+      "sum(bytes)": 454204,
+      "sum(packets)": 1278
+    },
+    {
+      "T": 1485872280000000,
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-b-out",
+      "vn_name": "vnetwork-b",
+      "sum(bytes)": 424554,
+      "sum(packets)": 1229
+    },
+    {
+      "T": 1485872340000000,
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-b-out",
+      "vn_name": "vnetwork-b",
+      "sum(bytes)": 412162,
+      "sum(packets)": 1237
+    },
+    {
+      "T": 1485872400000000,
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-b-out",
+      "vn_name": "vnetwork-b",
+      "sum(bytes)": 429450,
+      "sum(packets)": 1261
+    },
+    {
+      "T": 1485872460000000,
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-b-out",
+      "vn_name": "vnetwork-b",
+      "sum(bytes)": 420276,
+      "sum(packets)": 1274
+    },
+    {
+      "T": 1485872520000000,
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-b-out",
+      "vn_name": "vnetwork-b",
+      "sum(bytes)": 408458,
+      "sum(packets)": 1245
+    },
+    {
+      "T": 1485872580000000,
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-b-out",
+      "vn_name": "vnetwork-b",
+      "sum(bytes)": 437892,
+      "sum(packets)": 1246
+    },
+    {
+      "T": 1485872640000000,
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-b-out",
+      "vn_name": "vnetwork-b",
+      "sum(bytes)": 448086,
+      "sum(packets)": 1283
+    },
+    {
+      "T": 1485872700000000,
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-b-out",
+      "vn_name": "vnetwork-b",
+      "sum(bytes)": 455312,
+      "sum(packets)": 1308
+    },
+    {
+      "T": 1485872760000000,
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-b-out",
+      "vn_name": "vnetwork-b",
+      "sum(bytes)": 451584,
+      "sum(packets)": 1300
+    },
+    {
+      "T": 1485872820000000,
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-b-out",
+      "vn_name": "vnetwork-b",
+      "sum(bytes)": 392604,
+      "sum(packets)": 1238
+    },
+    {
+      "T": 1485872880000000,
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-b-out",
+      "vn_name": "vnetwork-b",
+      "sum(bytes)": 402224,
+      "sum(packets)": 1224
+    },
+    {
+      "T": 1485872940000000,
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-b-out",
+      "vn_name": "vnetwork-b",
+      "sum(bytes)": 444434,
+      "sum(packets)": 1269
+    },
+    {
+      "T": 1485873000000000,
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-b-out",
+      "vn_name": "vnetwork-b",
+      "sum(bytes)": 424012,
+      "sum(packets)": 1230
+    },
+    {
+      "T": 1485873060000000,
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-b-out",
+      "vn_name": "vnetwork-b",
+      "sum(bytes)": 433822,
+      "sum(packets)": 1271
+    },
+    {
+      "T": 1485873120000000,
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-b-out",
+      "vn_name": "vnetwork-b",
+      "sum(bytes)": 447608,
+      "sum(packets)": 1288
+    },
+    {
+      "T": 1485873180000000,
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-b-out",
+      "vn_name": "vnetwork-b",
+      "sum(bytes)": 440188,
+      "sum(packets)": 1238
+    },
+    {
+      "T": 1485873240000000,
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-b-out",
+      "vn_name": "vnetwork-b",
+      "sum(bytes)": 310208,
+      "sum(packets)": 324
+    },
+    {
+      "T": 1485873300000000,
+      "vn_name": "vnetwork-b",
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-b-out",
+      "sum(bytes)": 522382,
+      "sum(packets)": 1175
+    },
+    {
+      "T": 1485873360000000,
+      "vn_name": "vnetwork-b",
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-b-out",
+      "sum(bytes)": 447520,
+      "sum(packets)": 1228
+    },
+    {
+      "T": 1485873420000000,
+      "vn_name": "vnetwork-b",
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-b-out",
+      "sum(bytes)": 341854,
+      "sum(packets)": 339
+    },
+    {
+      "T": 1485867600000000,
+      "vn_name": "vnetwork-b",
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-b-in",
+      "sum(bytes)": 417956,
+      "sum(packets)": 1170
+    },
+    {
+      "T": 1485867660000000,
+      "vn_name": "vnetwork-b",
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-b-in",
+      "sum(bytes)": 395950,
+      "sum(packets)": 1143
+    },
+    {
+      "T": 1485867720000000,
+      "vn_name": "vnetwork-b",
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-b-in",
+      "sum(bytes)": 417128,
+      "sum(packets)": 1156
+    },
+    {
+      "T": 1485867780000000,
+      "vn_name": "vnetwork-b",
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-b-in",
+      "sum(bytes)": 436794,
+      "sum(packets)": 1185
+    },
+    {
+      "T": 1485867840000000,
+      "vn_name": "vnetwork-b",
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-b-in",
+      "sum(bytes)": 442438,
+      "sum(packets)": 1131
+    },
+    {
+      "T": 1485867900000000,
+      "vn_name": "vnetwork-b",
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-b-in",
+      "sum(bytes)": 436584,
+      "sum(packets)": 1124
+    },
+    {
+      "T": 1485867960000000,
+      "vn_name": "vnetwork-b",
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-b-in",
+      "sum(bytes)": 412030,
+      "sum(packets)": 1127
+    },
+    {
+      "T": 1485868020000000,
+      "vn_name": "vnetwork-b",
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-b-in",
+      "sum(bytes)": 415818,
+      "sum(packets)": 1057
+    },
+    {
+      "T": 1485868080000000,
+      "vn_name": "vnetwork-b",
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-b-in",
+      "sum(bytes)": 424638,
+      "sum(packets)": 1119
+    },
+    {
+      "T": 1485868140000000,
+      "vn_name": "vnetwork-b",
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-b-in",
+      "sum(bytes)": 403172,
+      "sum(packets)": 1142
+    },
+    {
+      "T": 1485868200000000,
+      "vn_name": "vnetwork-b",
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-b-in",
+      "sum(bytes)": 424086,
+      "sum(packets)": 1123
+    },
+    {
+      "T": 1485868260000000,
+      "vn_name": "vnetwork-b",
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-b-in",
+      "sum(bytes)": 427180,
+      "sum(packets)": 1146
+    },
+    {
+      "T": 1485868320000000,
+      "vn_name": "vnetwork-b",
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-b-in",
+      "sum(bytes)": 433320,
+      "sum(packets)": 1216
+    },
+    {
+      "T": 1485868380000000,
+      "vn_name": "vnetwork-b",
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-b-in",
+      "sum(bytes)": 407120,
+      "sum(packets)": 1112
+    },
+    {
+      "T": 1485868440000000,
+      "vn_name": "vnetwork-b",
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-b-in",
+      "sum(bytes)": 402948,
+      "sum(packets)": 1146
+    },
+    {
+      "T": 1485868500000000,
+      "vn_name": "vnetwork-b",
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-b-in",
+      "sum(bytes)": 425674,
+      "sum(packets)": 1193
+    },
+    {
+      "T": 1485868560000000,
+      "vn_name": "vnetwork-b",
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-b-in",
+      "sum(bytes)": 411054,
+      "sum(packets)": 1135
+    },
+    {
+      "T": 1485868620000000,
+      "vn_name": "vnetwork-b",
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-b-in",
+      "sum(bytes)": 431446,
+      "sum(packets)": 1119
+    },
+    {
+      "T": 1485868680000000,
+      "vn_name": "vnetwork-b",
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-b-in",
+      "sum(bytes)": 419862,
+      "sum(packets)": 1191
+    },
+    {
+      "T": 1485868740000000,
+      "vn_name": "vnetwork-b",
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-b-in",
+      "sum(bytes)": 419268,
+      "sum(packets)": 1158
+    },
+    {
+      "T": 1485868800000000,
+      "vn_name": "vnetwork-b",
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-b-in",
+      "sum(bytes)": 419190,
+      "sum(packets)": 1203
+    },
+    {
+      "T": 1485868860000000,
+      "vn_name": "vnetwork-b",
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-b-in",
+      "sum(bytes)": 450976,
+      "sum(packets)": 1252
+    },
+    {
+      "T": 1485868920000000,
+      "vn_name": "vnetwork-b",
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-b-in",
+      "sum(bytes)": 416512,
+      "sum(packets)": 1200
+    },
+    {
+      "T": 1485868980000000,
+      "vn_name": "vnetwork-b",
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-b-in",
+      "sum(bytes)": 408312,
+      "sum(packets)": 1184
+    },
+    {
+      "T": 1485869040000000,
+      "vn_name": "vnetwork-b",
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-b-in",
+      "sum(bytes)": 423474,
+      "sum(packets)": 1209
+    },
+    {
+      "T": 1485869100000000,
+      "vn_name": "vnetwork-b",
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-b-in",
+      "sum(bytes)": 443876,
+      "sum(packets)": 1210
+    },
+    {
+      "T": 1485869160000000,
+      "vn_name": "vnetwork-b",
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-b-in",
+      "sum(bytes)": 445820,
+      "sum(packets)": 1226
+    },
+    {
+      "T": 1485869220000000,
+      "vn_name": "vnetwork-b",
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-b-in",
+      "sum(bytes)": 419392,
+      "sum(packets)": 1172
+    },
+    {
+      "T": 1485869280000000,
+      "vn_name": "vnetwork-b",
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-b-in",
+      "sum(bytes)": 411952,
+      "sum(packets)": 1176
+    },
+    {
+      "T": 1485869340000000,
+      "vn_name": "vnetwork-b",
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-b-in",
+      "sum(bytes)": 418066,
+      "sum(packets)": 1141
+    },
+    {
+      "T": 1485869400000000,
+      "vn_name": "vnetwork-b",
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-b-in",
+      "sum(bytes)": 451296,
+      "sum(packets)": 1196
+    },
+    {
+      "T": 1485869460000000,
+      "vn_name": "vnetwork-b",
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-b-in",
+      "sum(bytes)": 412278,
+      "sum(packets)": 1159
+    },
+    {
+      "T": 1485869520000000,
+      "vn_name": "vnetwork-b",
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-b-in",
+      "sum(bytes)": 421568,
+      "sum(packets)": 1144
+    },
+    {
+      "T": 1485869580000000,
+      "vn_name": "vnetwork-b",
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-b-in",
+      "sum(bytes)": 418328,
+      "sum(packets)": 1176
+    },
+    {
+      "T": 1485869640000000,
+      "vn_name": "vnetwork-b",
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-b-in",
+      "sum(bytes)": 411758,
+      "sum(packets)": 1147
+    },
+    {
+      "T": 1485869700000000,
+      "vn_name": "vnetwork-b",
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-b-in",
+      "sum(bytes)": 423014,
+      "sum(packets)": 1139
+    },
+    {
+      "T": 1485869760000000,
+      "vn_name": "vnetwork-b",
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-b-in",
+      "sum(bytes)": 402570,
+      "sum(packets)": 1197
+    },
+    {
+      "T": 1485869820000000,
+      "vn_name": "vnetwork-b",
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-b-in",
+      "sum(bytes)": 407592,
+      "sum(packets)": 1184
+    },
+    {
+      "T": 1485869880000000,
+      "vn_name": "vnetwork-b",
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-b-in",
+      "sum(bytes)": 438222,
+      "sum(packets)": 1187
+    },
+    {
+      "T": 1485869940000000,
+      "vn_name": "vnetwork-b",
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-b-in",
+      "sum(bytes)": 422222,
+      "sum(packets)": 1203
+    },
+    {
+      "T": 1485870000000000,
+      "vn_name": "vnetwork-b",
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-b-in",
+      "sum(bytes)": 438924,
+      "sum(packets)": 1154
+    },
+    {
+      "T": 1485870060000000,
+      "vn_name": "vnetwork-b",
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-b-in",
+      "sum(bytes)": 414802,
+      "sum(packets)": 1153
+    },
+    {
+      "T": 1485870120000000,
+      "vn_name": "vnetwork-b",
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-b-in",
+      "sum(bytes)": 432386,
+      "sum(packets)": 1153
+    },
+    {
+      "T": 1485870180000000,
+      "vn_name": "vnetwork-b",
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-b-in",
+      "sum(bytes)": 430320,
+      "sum(packets)": 1180
+    },
+    {
+      "T": 1485870240000000,
+      "vn_name": "vnetwork-b",
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-b-in",
+      "sum(bytes)": 430766,
+      "sum(packets)": 1175
+    },
+    {
+      "T": 1485870300000000,
+      "vn_name": "vnetwork-b",
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-b-in",
+      "sum(bytes)": 402382,
+      "sum(packets)": 1099
+    },
+    {
+      "T": 1485870360000000,
+      "vn_name": "vnetwork-b",
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-b-in",
+      "sum(bytes)": 431380,
+      "sum(packets)": 1174
+    },
+    {
+      "T": 1485870420000000,
+      "vn_name": "vnetwork-b",
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-b-in",
+      "sum(bytes)": 402868,
+      "sum(packets)": 1098
+    },
+    {
+      "T": 1485870480000000,
+      "vn_name": "vnetwork-b",
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-b-in",
+      "sum(bytes)": 443826,
+      "sum(packets)": 1201
+    },
+    {
+      "T": 1485870540000000,
+      "vn_name": "vnetwork-b",
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-b-in",
+      "sum(bytes)": 438910,
+      "sum(packets)": 1155
+    },
+    {
+      "T": 1485870600000000,
+      "vn_name": "vnetwork-b",
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-b-in",
+      "sum(bytes)": 417110,
+      "sum(packets)": 1119
+    },
+    {
+      "T": 1485870660000000,
+      "vn_name": "vnetwork-b",
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-b-in",
+      "sum(bytes)": 441728,
+      "sum(packets)": 1164
+    },
+    {
+      "T": 1485870720000000,
+      "vn_name": "vnetwork-b",
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-b-in",
+      "sum(bytes)": 443638,
+      "sum(packets)": 1103
+    },
+    {
+      "T": 1485870780000000,
+      "vn_name": "vnetwork-b",
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-b-in",
+      "sum(bytes)": 406614,
+      "sum(packets)": 1091
+    },
+    {
+      "T": 1485870840000000,
+      "vn_name": "vnetwork-b",
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-b-in",
+      "sum(bytes)": 389570,
+      "sum(packets)": 1081
+    },
+    {
+      "T": 1485870900000000,
+      "vn_name": "vnetwork-b",
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-b-in",
+      "sum(bytes)": 447070,
+      "sum(packets)": 1187
+    },
+    {
+      "T": 1485870960000000,
+      "vn_name": "vnetwork-b",
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-b-in",
+      "sum(bytes)": 425116,
+      "sum(packets)": 1126
+    },
+    {
+      "T": 1485871020000000,
+      "vn_name": "vnetwork-b",
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-b-in",
+      "sum(bytes)": 454606,
+      "sum(packets)": 1179
+    },
+    {
+      "T": 1485871080000000,
+      "vn_name": "vnetwork-b",
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-b-in",
+      "sum(bytes)": 437730,
+      "sum(packets)": 1213
+    },
+    {
+      "T": 1485871140000000,
+      "vn_name": "vnetwork-b",
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-b-in",
+      "sum(bytes)": 415126,
+      "sum(packets)": 1171
+    },
+    {
+      "T": 1485871200000000,
+      "vn_name": "vnetwork-b",
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-b-in",
+      "sum(bytes)": 428850,
+      "sum(packets)": 1197
+    },
+    {
+      "T": 1485871260000000,
+      "vn_name": "vnetwork-b",
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-b-in",
+      "sum(bytes)": 422356,
+      "sum(packets)": 1170
+    },
+    {
+      "T": 1485871320000000,
+      "vn_name": "vnetwork-b",
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-b-in",
+      "sum(bytes)": 406010,
+      "sum(packets)": 1137
+    },
+    {
+      "T": 1485871380000000,
+      "vn_name": "vnetwork-b",
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-b-in",
+      "sum(bytes)": 448768,
+      "sum(packets)": 1160
+    },
+    {
+      "T": 1485871440000000,
+      "vn_name": "vnetwork-b",
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-b-in",
+      "sum(bytes)": 399482,
+      "sum(packets)": 1133
+    },
+    {
+      "T": 1485871500000000,
+      "vn_name": "vnetwork-b",
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-b-in",
+      "sum(bytes)": 472094,
+      "sum(packets)": 1119
+    },
+    {
+      "T": 1485871560000000,
+      "vn_name": "vnetwork-b",
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-b-in",
+      "sum(bytes)": 407084,
+      "sum(packets)": 1166
+    },
+    {
+      "T": 1485871620000000,
+      "vn_name": "vnetwork-b",
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-b-in",
+      "sum(bytes)": 405472,
+      "sum(packets)": 1144
+    },
+    {
+      "T": 1485871680000000,
+      "vn_name": "vnetwork-b",
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-b-in",
+      "sum(bytes)": 428276,
+      "sum(packets)": 1094
+    },
+    {
+      "T": 1485871740000000,
+      "vn_name": "vnetwork-b",
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-b-in",
+      "sum(bytes)": 429076,
+      "sum(packets)": 1158
+    },
+    {
+      "T": 1485871800000000,
+      "vn_name": "vnetwork-b",
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-b-in",
+      "sum(bytes)": 456772,
+      "sum(packets)": 1226
+    },
+    {
+      "T": 1485871860000000,
+      "vn_name": "vnetwork-b",
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-b-in",
+      "sum(bytes)": 438460,
+      "sum(packets)": 1134
+    },
+    {
+      "T": 1485871920000000,
+      "vn_name": "vnetwork-b",
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-b-in",
+      "sum(bytes)": 411750,
+      "sum(packets)": 1151
+    },
+    {
+      "T": 1485871980000000,
+      "vn_name": "vnetwork-b",
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-b-in",
+      "sum(bytes)": 444752,
+      "sum(packets)": 1240
+    },
+    {
+      "T": 1485872040000000,
+      "vn_name": "vnetwork-b",
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-b-in",
+      "sum(bytes)": 433072,
+      "sum(packets)": 1168
+    },
+    {
+      "T": 1485872100000000,
+      "vn_name": "vnetwork-b",
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-b-in",
+      "sum(bytes)": 435296,
+      "sum(packets)": 1212
+    },
+    {
+      "T": 1485872160000000,
+      "vn_name": "vnetwork-b",
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-b-in",
+      "sum(bytes)": 449074,
+      "sum(packets)": 1249
+    },
+    {
+      "T": 1485872220000000,
+      "vn_name": "vnetwork-b",
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-b-in",
+      "sum(bytes)": 407550,
+      "sum(packets)": 1207
+    },
+    {
+      "T": 1485872280000000,
+      "vn_name": "vnetwork-b",
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-b-in",
+      "sum(bytes)": 435760,
+      "sum(packets)": 1136
+    },
+    {
+      "T": 1485872340000000,
+      "vn_name": "vnetwork-b",
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-b-in",
+      "sum(bytes)": 453618,
+      "sum(packets)": 1153
+    },
+    {
+      "T": 1485872400000000,
+      "vn_name": "vnetwork-b",
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-b-in",
+      "sum(bytes)": 568528,
+      "sum(packets)": 1152
+    },
+    {
+      "T": 1485872460000000,
+      "vn_name": "vnetwork-b",
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-b-in",
+      "sum(bytes)": 431074,
+      "sum(packets)": 1185
+    },
+    {
+      "T": 1485872520000000,
+      "vn_name": "vnetwork-b",
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-b-in",
+      "sum(bytes)": 427806,
+      "sum(packets)": 1143
+    },
+    {
+      "T": 1485872580000000,
+      "vn_name": "vnetwork-b",
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-b-in",
+      "sum(bytes)": 418548,
+      "sum(packets)": 1126
+    },
+    {
+      "T": 1485872640000000,
+      "vn_name": "vnetwork-b",
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-b-in",
+      "sum(bytes)": 415686,
+      "sum(packets)": 1175
+    },
+    {
+      "T": 1485872700000000,
+      "vn_name": "vnetwork-b",
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-b-in",
+      "sum(bytes)": 447646,
+      "sum(packets)": 1219
+    },
+    {
+      "T": 1485872760000000,
+      "vn_name": "vnetwork-b",
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-b-in",
+      "sum(bytes)": 387416,
+      "sum(packets)": 1180
+    },
+    {
+      "T": 1485872820000000,
+      "vn_name": "vnetwork-b",
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-b-in",
+      "sum(bytes)": 407326,
+      "sum(packets)": 1143
+    },
+    {
+      "T": 1485872880000000,
+      "vn_name": "vnetwork-b",
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-b-in",
+      "sum(bytes)": 382088,
+      "sum(packets)": 1140
+    },
+    {
+      "T": 1485872940000000,
+      "vn_name": "vnetwork-b",
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-b-in",
+      "sum(bytes)": 426328,
+      "sum(packets)": 1180
+    },
+    {
+      "T": 1485873000000000,
+      "vn_name": "vnetwork-b",
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-b-in",
+      "sum(bytes)": 428064,
+      "sum(packets)": 1124
+    },
+    {
+      "T": 1485873060000000,
+      "vn_name": "vnetwork-b",
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-b-in",
+      "sum(bytes)": 431700,
+      "sum(packets)": 1190
+    },
+    {
+      "T": 1485873120000000,
+      "vn_name": "vnetwork-b",
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-b-in",
+      "sum(bytes)": 425112,
+      "sum(packets)": 1152
+    },
+    {
+      "T": 1485873180000000,
+      "vn_name": "vnetwork-b",
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-b-in",
+      "sum(bytes)": 407804,
+      "sum(packets)": 1134
+    },
+    {
+      "T": 1485873240000000,
+      "vn_name": "vnetwork-b",
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-b-in",
+      "sum(bytes)": 404604,
+      "sum(packets)": 1194
+    },
+    {
+      "T": 1485873300000000,
+      "vn_name": "vnetwork-b",
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-b-in",
+      "sum(bytes)": 422382,
+      "sum(packets)": 1175
+    },
+    {
+      "T": 1485873360000000,
+      "vn_name": "vnetwork-b",
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-b-in",
+      "sum(bytes)": 447520,
+      "sum(packets)": 1228
+    },
+    {
+      "T": 1485873420000000,
+      "vn_name": "vnetwork-b",
+      "direction_ing": 1,
+      "traffic_type": "vnetwork-b-in",
+      "sum(bytes)": 461854,
+      "sum(packets)": 339
+    }
+  ]
+}
+

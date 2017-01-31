@@ -36,6 +36,21 @@ const demoBubbleExamples = [
   }
 ]
 
+const areaExamples = [
+  {
+    html: 'area-chart/vrtraffic/vrtraffic.html',
+    js: 'area-chart/vrtraffic/vrtraffic.js',
+    css: 'area-chart/vrtraffic/vrtraffic.css',
+    title: 'vRouter Traffic'
+  },
+  {
+    html: 'area-chart/in-out-traffic/inouttraffic.html',
+    js: 'area-chart/in-out-traffic/inouttraffic.js',
+    css: 'area-chart/in-out-traffic/inouttraffic.css',
+    title: 'VN Traffic In/Out'
+  }
+]
+
 const radialExamples = [
   {
     html: 'radial-chart/disk-usage/disk.html',
@@ -69,6 +84,15 @@ demoBubbleExamples.forEach(
   }
 )
 
+const $areaLinks = $('#areaLinks')
+areaExamples.forEach(
+  (example, idx) => {
+    let $link = $(`<a id="b${idx}" href="#${idx}"><span class="nav-text">${example.title}</span></a>`)
+    $link.click(onClickAreaChart)
+    $areaLinks.append($('<li>').append($link))
+  }
+)
+
 const $radialLinks = $('#radialLinks')
 radialExamples.forEach(
   (example, idx) => {
@@ -89,6 +113,11 @@ function onClickLineChart (e) {
 function onClickBubbleChart (e) {
   const index = $(this).attr('href').split('#')[1]
   onClickSidebar(index, demoBubbleExamples)
+}
+
+function onClickAreaChart (e) {
+  const index = $(this).attr('href').split('#')[1]
+  onClickSidebar(index, areaExamples)
 }
 
 function onClickRadialChart (e) {

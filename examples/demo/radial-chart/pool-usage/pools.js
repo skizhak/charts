@@ -49,7 +49,7 @@ const chartConfig = {
     id: 'pieChartId',
     type: 'PieChart',
     config: {
-      type: 'donut',
+      type: 'pie',
       radius: 100,
       colorScale: d3.scaleOrdinal().range([
         '#4caf50',
