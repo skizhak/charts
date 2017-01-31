@@ -21,6 +21,7 @@ class NavigationView extends ContrailChartsView {
     const compositeYConfig = new CompositeYChartConfigModel(this.config.attributes)
     this._compositeYChartView = new CompositeYChartView({
       config: compositeYConfig,
+      model: this.model,
     })
     this._components = [this._brush, this._compositeYChartView]
     this.listenTo(this._brush, 'selection', _.throttle(this._onSelection))
@@ -41,18 +42,8 @@ class NavigationView extends ContrailChartsView {
     super.render()
     this.resetParams()
     this._compositeYChartView.container = this.el
-    // This will render it also
-    this._compositeYChartView.changeModel(this.model)
-
-    const params = this._compositeYChartView.params
-    this.params.xScale = params.axis.x.scale
-    this._brush.container = this.el
-    this.config.set('xRange', params.xRange, {silent: true})
-    this.config.set('yRange', params.yRange, {silent: true})
-    this._brush.config.set({
-      extent: this.config.rangeMargined,
-      selection: this.config.selectionRange,
-    })
+    this._compositeYChartView.render()
+    this._update()
   }
 
   prevChunkSelected () {
@@ -103,6 +94,27 @@ class NavigationView extends ContrailChartsView {
   _onResize () {
     this._disabled = true
     this._debouncedEnable()
+    if (!this._ticking) {
+      window.requestAnimationFrame(this._update.bind(this))
+      this._ticking = true
+    }
+  }
+  /**
+   * Composite Y component is updated on resize on its own
+   */
+  _update () {
+    const p = this._compositeYChartView.params
+    this.params.xScale = p.axis.x.scale
+    this._brush.container = this.el
+    this.config.set('xRange', p.xRange, {silent: true})
+    this.config.set('yRange', p.yRange, {silent: true})
+    this._brush.config.set({
+      selection: this.config.selectionRange,
+      xRange: p.xRange,
+      yRange: p.yRange,
+    }, {silent: true})
+    this._brush.render()
+    this._ticking = false
   }
 }
 

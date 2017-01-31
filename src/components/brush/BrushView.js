@@ -19,7 +19,7 @@ class BrushView extends ContrailChartsView {
   render () {
     super.render()
     this._brush
-      .extent(this.config.get('extent'))
+      .extent(this.config.extent)
       .handleSize(10)
       .on('start brush end', this._onSelection.bind(this))
     this.d3.selectAll('.handle--custom')
@@ -57,8 +57,8 @@ class BrushView extends ContrailChartsView {
       })
     // selection is removed when clicking outside a brush
     if (selection[0] === selection[1]) {
-      const extent = this.config.get('extent')
-      selection = [extent[0][0], extent[1][0]]
+      const xRange = this.config.get('xRange')
+      selection = [xRange[0], xRange[1]]
     }
     this.trigger('selection', selection)
   }
