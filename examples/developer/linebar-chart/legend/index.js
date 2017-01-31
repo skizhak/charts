@@ -30,10 +30,7 @@ complexChartView.setConfig({
     type: 'LegendPanel',
     config: {
       sourceComponent: 'complexChartCompositeY',
-      placement: 'row',
-      coloPicker: true,
-      filter: true,
-      chartSelector: true,
+      editable: true
     },
   }, {
     type: 'ControlPanel',
