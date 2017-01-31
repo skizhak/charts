@@ -36,6 +36,21 @@ const demoBubbleExamples = [
   }
 ]
 
+const radialExamples = [
+  {
+    html: 'radial-chart/disk-usage/disk.html',
+    js: 'radial-chart/disk-usage/disk.js',
+    css: 'radial-chart/disk-usage/disk.css',
+    title: 'Disk Status'
+  },
+  {
+    html: 'radial-chart/pool-usage/pools.html',
+    js: 'radial-chart/pool-usage/pools.js',
+    css: 'radial-chart/pool-usage/pools.css',
+    title: 'Storage Pools'
+  }
+]
+
 const $lineBarLinks = $('#lineBarLinks')
 demoLBExamples.forEach(
   (example, idx) => {
@@ -54,6 +69,15 @@ demoBubbleExamples.forEach(
   }
 )
 
+const $radialLinks = $('#radialLinks')
+radialExamples.forEach(
+  (example, idx) => {
+    let $link = $(`<a id="b${idx}" href="#${idx}"><span class="nav-text">${example.title}</span></a>`)
+    $link.click(onClickRadialChart)
+    $radialLinks.append($('<li>').append($link))
+  }
+)
+
 $('#bubble').click()
 $bubbleLinks.find('#b0').click()
 
@@ -65,6 +89,11 @@ function onClickLineChart (e) {
 function onClickBubbleChart (e) {
   const index = $(this).attr('href').split('#')[1]
   onClickSidebar(index, demoBubbleExamples)
+}
+
+function onClickRadialChart (e) {
+  const index = $(this).attr('href').split('#')[1]
+  onClickSidebar(index, radialExamples)
 }
 
 function createNewTab (id, title, group = 'js-files', checked, content) {
