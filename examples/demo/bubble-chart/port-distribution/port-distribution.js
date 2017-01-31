@@ -1,4 +1,5 @@
 const d3 = require('d3')
+const formatter = require('formatter')
 
 function dataProcesser (data) {
   const portTraffic = [...data.sport, ...data.dport]
@@ -28,7 +29,7 @@ function dataProcesser (data) {
 }
 
 const colorSchema = d3.schemeCategory20
-let dataSrc = require('./data-source.json')
+let dataSrc = require('./pd.json')
 
 dataSrc = dataProcesser(dataSrc)
 
@@ -77,7 +78,7 @@ const chartConfig = {
       axis: {
         x: {
           scale: 'scaleLinear',
-          formatter: coCharts.formatter.toInteger,
+          formatter: formatter.toInteger,
           labelMargin: 5
         },
         sizeAxisBytes: {
@@ -85,12 +86,12 @@ const chartConfig = {
         },
         y1: {
           position: 'left',
-          formatter: coCharts.formatter.byteFormatter,
+          formatter: formatter.byteFormatter,
           labelMargin: 15,
         },
         y2: {
           position: 'right',
-          formatter: coCharts.formatter.toInteger,
+          formatter: formatter.toInteger,
           labelMargin: 15
         }
       }
@@ -107,27 +108,27 @@ const chartConfig = {
         }, {
           accessor: 'inBytes',
           labelFormatter: 'Incoming Traffic',
-          valueFormatter: coCharts.formatter.byteFormatter,
+          valueFormatter: formatter.byteFormatter,
         }, {
           accessor: 'outBytes',
           labelFormatter: 'Outgoing Traffic',
-          valueFormatter: coCharts.formatter.byteFormatter,
+          valueFormatter: formatter.byteFormatter,
         }, {
           accessor: 'inFlowCount',
           labelFormatter: 'Incoming Flow Count',
-          valueFormatter: coCharts.formatter.toInteger,
+          valueFormatter: formatter.toInteger,
         }, {
           accessor: 'outFlowCount',
           labelFormatter: 'Outgoing Flow Count',
-          valueFormatter: coCharts.formatter.toInteger,
+          valueFormatter: formatter.toInteger,
         }, {
           accessor: 'inPkts',
           labelFormatter: 'Incoming Packets',
-          valueFormatter: coCharts.formatter.toInteger,
+          valueFormatter: formatter.toInteger,
         }, {
           accessor: 'outPkts',
           labelFormatter: 'Outgoing Packets',
-          valueFormatter: coCharts.formatter.toInteger,
+          valueFormatter: formatter.toInteger,
         }
       ]
     }
@@ -156,21 +157,21 @@ const chartConfig = {
             sizeAccessor: 'outBytes',
             sizeAxis: 'sizeAxisBytes',
             shape: 'circle',
-            color: colorSchema[8]
+            color: '#0cc2aa'
           }
         ]
       },
       axis: {
         x: {
           scale: 'scaleLinear',
-          formatter: coCharts.formatter.byteFormatter
+          formatter: formatter.byteFormatter
         },
         sizeAxisBytes: {
           range: [100, 150]
         },
         y1: {
           position: 'left',
-          formatter: coCharts.formatter.byteFormatter,
+          formatter: formatter.byteFormatter,
           labelMargin: 15,
           ticks: 4
         }

@@ -1,4 +1,7 @@
 // Most basic chart.
+
+const formatter = require('formatter')
+
 const pieData = [
     { label: 'Process 1', value: 2704659 },
     { label: 'Process 2', value: 2159981 },
@@ -35,7 +38,7 @@ const chartConfig = {
       serie: {
         getValue: getValue,
         getLabel: getLabel,
-        valueFormatter: coCharts.formatter.commaGroupedInteger,
+        valueFormatter: formatter.commaGroupedInteger,
       },
       tooltip: 'tooltipId',
     },
@@ -47,7 +50,7 @@ const chartConfig = {
         {
           accessor: 'value',
           labelFormatter: getLabel,
-          valueFormatter: coCharts.formatter.commaGroupedInteger,
+          valueFormatter: formatter.commaGroupedInteger,
         },
       ],
     },

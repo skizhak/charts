@@ -1,5 +1,7 @@
 /* global coCharts */
 
+const formatter = require('formatter')
+
 const complexData = []
 for (let i = 0; i < 100; i++) {
   complexData.push({
@@ -79,12 +81,12 @@ const chartConfig = {
         },
         y1: {
           position: 'left',
-          formatter: coCharts.formatter.toInteger,
+          formatter: formatter.toInteger,
           label: 'Size of circles',
         },
         y2: {
           position: 'right',
-          formatter: coCharts.formatter.toInteger,
+          formatter: formatter.toInteger,
           label: 'Size of squares and triangles',
         }
       },
@@ -95,30 +97,30 @@ const chartConfig = {
     config: {
       title: {
         accessor: 'x',
-        valueFormatter: coCharts.formatter.extendISOTime,
+        valueFormatter: formatter.extendISOTime,
       },
 
       dataConfig: [
         {
           accessor: 'data1',
           labelFormatter: 'Label 1',
-          valueFormatter: coCharts.formatter.toInteger,
+          valueFormatter: formatter.toInteger,
         }, {
           accessor: 'data2',
           labelFormatter: 'Label 2',
-          valueFormatter: coCharts.formatter.toInteger,
+          valueFormatter: formatter.toInteger,
         }, {
           accessor: 'data3',
           labelFormatter: 'Label 3',
-          valueFormatter: coCharts.formatter.toInteger,
+          valueFormatter: formatter.toInteger,
         }, {
           accessor: 'size1',
           labelFormatter: 'Size 1',
-          valueFormatter: coCharts.formatter.toInteger,
+          valueFormatter: formatter.toInteger,
         }, {
           accessor: 'size2',
           labelFormatter: 'Size 2',
-          valueFormatter: coCharts.formatter.toInteger,
+          valueFormatter: formatter.toInteger,
         }
       ]
     }
@@ -144,7 +146,7 @@ const chartConfig = {
       axis: {
         y1: {
           position: 'left',
-          formatter: coCharts.formatter.toInteger,
+          formatter: formatter.toInteger,
         },
       }
     }

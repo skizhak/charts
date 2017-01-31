@@ -1,18 +1,18 @@
 /* global coCharts */
 
+const _ = require('lodash')
 const formatter = require('formatter')
 
 // Complex example
-const complexData = []
+const simpleData = []
+
 for (let i = 0; i < 100; i++) {
-  const a = Math.random() * 100
-  complexData.push({
+  const a = Math.random() * 10000
+  simpleData.push({
     x: 1475760930000 + 1000000 * i,
     a: a,
-    b: a + Math.random() * 10,
-    c: Math.random() * 100,
-    d: i + (Math.random() - 0.5) * 10,
-    e: (Math.random() - 0.5) * 10
+    b: _.random(a, a + 1000),
+    c: Math.ceil(Math.random() * 100),
   })
 }
 const complexChartView = new coCharts.charts.XYChartView()
@@ -53,9 +53,9 @@ complexChartView.setConfig({
         y: [
           {
             accessor: 'a',
-            labelFormatter: 'Label A',
+            labelFormatter: 'Cassandra DB Read',
             enabled: true,
-            chart: 'BarChart',
+            chart: 'StackedBarChart',
             possibleChartTypes: [
               {
                 label: 'Stacked Bar',
@@ -72,9 +72,9 @@ complexChartView.setConfig({
             tooltip: 'defaultTooltip',
           }, {
             accessor: 'b',
-            labelFormatter: 'Label B',
+            labelFormatter: 'Cassandra DB Write',
             enabled: true,
-            chart: 'BarChart',
+            chart: 'StackedBarChart',
             possibleChartTypes: [
               {
                 label: 'Stacked Bar',
@@ -91,47 +91,7 @@ complexChartView.setConfig({
             tooltip: 'customTooltip',
           }, {
             accessor: 'c',
-            labelFormatter: 'Label C',
-            enabled: false,
-            chart: 'BarChart',
-            possibleChartTypes: [
-              {
-                label: 'Stacked Bar',
-                chart: 'StackedBarChart'
-              }, {
-                label: 'Bar',
-                chart: 'BarChart'
-              }, {
-                label: 'Line',
-                chart: 'LineChart'
-              }
-            ],
-            axis: 'y1',
-            tooltip: 'defaultTooltip',
-          }, {
-            accessor: 'd',
-            labelFormatter: 'Megabytes D',
-            color: '#d62728',
-            enabled: true,
-            chart: 'LineChart',
-            possibleChartTypes: [
-              {
-                label: 'Stacked Bar',
-                chart: 'StackedBarChart'
-              }, {
-                label: 'Bar',
-                chart: 'BarChart'
-              }, {
-                label: 'Line',
-                chart: 'LineChart'
-              }
-            ],
-            axis: 'y2',
-            tooltip: 'defaultTooltip',
-          }, {
-            accessor: 'e',
-            labelFormatter: 'Megabytes E',
-            color: '#9467bd',
+            labelFormatter: 'QE Queries',
             enabled: true,
             chart: 'LineChart',
             possibleChartTypes: [
@@ -157,12 +117,12 @@ complexChartView.setConfig({
         },
         y1: {
           position: 'left',
-          formatter: formatter.toInteger,
-          domain: [-10, undefined],
+          formatter: formatter.byteFormatter,
+          domain: [0, undefined],
         },
         y2: {
           position: 'right',
-          formatter: formatter.toFixed1,
+          formatter: formatter.toInteger,
         }
       }
     },
@@ -185,19 +145,19 @@ complexChartView.setConfig({
           {
             enabled: true,
             accessor: 'a',
-            labelFormatter: 'Label A',
+            labelFormatter: 'DB Read',
             chart: 'StackedBarChart',
             axis: 'y1',
           }, {
             enabled: true,
             accessor: 'b',
-            labelFormatter: 'Label B',
+            labelFormatter: 'DB Write',
             chart: 'StackedBarChart',
             axis: 'y1',
           }, {
             enabled: true,
-            accessor: 'd',
-            labelFormatter: 'Megabytes D',
+            accessor: 'c',
+            labelFormatter: 'Queries',
             chart: 'LineChart',
             axis: 'y2',
           }
@@ -213,7 +173,7 @@ complexChartView.setConfig({
         },
         y2: {
           position: 'right',
-          formatter: formatter.toFixed1,
+          formatter: formatter.toInteger,
           ticks: 5,
         }
       }
@@ -230,23 +190,15 @@ complexChartView.setConfig({
       dataConfig: [
         {
           accessor: 'a',
-          labelFormatter: 'Label A',
+          labelFormatter: 'DB Read',
           valueFormatter: formatter.toInteger,
         }, {
           accessor: 'b',
-          labelFormatter: 'Label B',
+          labelFormatter: 'DB Write',
           valueFormatter: formatter.toInteger,
         }, {
           accessor: 'c',
-          labelFormatter: 'Label C',
-          valueFormatter: formatter.toInteger,
-        }, {
-          accessor: 'd',
-          labelFormatter: 'Label D',
-          valueFormatter: formatter.toInteger,
-        }, {
-          accessor: 'e',
-          labelFormatter: 'Label E',
+          labelFormatter: 'Queries',
           valueFormatter: formatter.toInteger,
         }
       ]
@@ -271,7 +223,7 @@ complexChartView.setConfig({
     }
   }]
 })
-complexChartView.setData(complexData)
+complexChartView.setData(simpleData)
 complexChartView.renderMessage({
   componentId: 'XYChart',
   action: 'once',

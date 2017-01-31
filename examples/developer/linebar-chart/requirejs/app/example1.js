@@ -5,8 +5,9 @@
 define([ // eslint-disable-line no-undef
   'd3', // Example use of older d3 versions.
   'lodash',
-  'contrail-charts'
-], function (d3, _, coCharts) {
+  'contrail-charts',
+  'formatter'
+], function (d3, _, coCharts, formatter) {
   // Complex example
   const complexData = []
   _.each(d3.range(100), (i) => {
@@ -20,8 +21,8 @@ define([ // eslint-disable-line no-undef
       e: (Math.random() - 0.5) * 10
     })
   })
-  const toFixed2 = coCharts.formatter.toFixedNumberFactory(2)
-  const toFixed5 = coCharts.formatter.toFixedNumberFactory(5)
+  const toFixed2 = formatter.toFixedNumberFactory(2)
+  const toFixed5 = formatter.toFixedNumberFactory(5)
   const complexChartView = new coCharts.charts.XYChartView()
   complexChartView.setData(complexData)
   complexChartView.setConfig({
@@ -84,7 +85,7 @@ define([ // eslint-disable-line no-undef
           x: {},
           y1: {
             position: 'left',
-            formatter: coCharts.formatter.toInteger,
+            formatter: formatter.toInteger,
             labelMargin: 15
           },
           y2: {
@@ -102,7 +103,7 @@ define([ // eslint-disable-line no-undef
           {
             accessor: 'x',
             labelFormatter: (key) => 'Time',
-            valueFormatter: coCharts.formatter.toInteger
+            valueFormatter: formatter.toInteger
           }, {
             accessor: 'a',
             labelFormatter: () => 'Label A',

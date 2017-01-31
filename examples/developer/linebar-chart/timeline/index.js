@@ -1,5 +1,7 @@
 /* global coCharts */
 
+const formatter = require('formatter')
+
 // Complex example
 const complexData = []
 for (let i = 0; i < 100; i++) {
@@ -133,17 +135,17 @@ complexChartView.setConfig({
       },
       axis: {
         x: {
-          formatter: coCharts.formatter.extendedISOTime,
+          formatter: formatter.extendedISOTime,
         },
         y1: {
           position: 'left',
-          formatter: coCharts.formatter.toInteger,
+          formatter: formatter.toInteger,
           labelMargin: 15,
           domain: [-10, undefined]
         },
         y2: {
           position: 'right',
-          formatter: coCharts.formatter.toInteger,
+          formatter: formatter.toInteger,
           labelMargin: 15
         }
       }
@@ -166,7 +168,7 @@ complexChartView.setConfig({
       },
       axis: {
         x: {
-          formatter: coCharts.formatter.extendedISOTime,
+          formatter: formatter.extendedISOTime,
         }
       }
     }

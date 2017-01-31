@@ -36,7 +36,7 @@ function byteFormatter (bytes) {
 }
 
 function toFixedPercentage1 (number) {
-  number.toFixed(1) + '%'
+  return number.toFixed(1) + '%'
 }
 
 module.exports = {
