@@ -15,6 +15,16 @@ class StackedBarChartView extends XYChartSubView {
     }
   }
   /**
+   * @override
+   */
+  get xMarginInner () {
+    return this.bandWidth / 2
+  }
+  // TODO use memoize function
+  get bandWidth () {
+    return 0.95 * (this.innerWidth / this.model.data.length || 1)
+  }
+  /**
   * Called by the parent in order to calculate maximum data extents for all of this child's axis.
   * Assumes the params.activeAccessorData for this child view is filled by the parent with the relevent yAccessors for this child only.
   * Returns an object with following structure: { y1: [0,10], x: [-10,10] } - axisName: axisDomain
@@ -24,7 +34,7 @@ class StackedBarChartView extends XYChartSubView {
     domains[this.params.plot.x.axis] = this.model.getRangeFor(this._parent.params.plot.x.accessor)
     // The domains calculated here can be overriden in the axis configuration.
     // The overrides are handled by the parent.
-    _.each(this.params.activeAccessorData, (accessor) => {
+    _.each(this.params.activeAccessorData, accessor => {
       const domain = this.model.getRangeFor(accessor.accessor)
       if (_.has(domains, this.axisName)) {
         domains[this.axisName][1] += domain[1]
@@ -36,18 +46,13 @@ class StackedBarChartView extends XYChartSubView {
     return domains
   }
   /**
-   * Called by the parent when all scales have been saved in this child's params.
-   * Can be used by the child to perform any additional calculations.
-   */
-  calculateScales () {}
-  /**
   * Override for calculating the Y coordinate of a stacked elem.
   * Used by CrosshairView render data preparation.
   */
   getScreenY (dataElem, yAccessor) {
     let stackedY = this.yScale.domain()[0]
     let found = false
-    _.each(this.params.activeAccessorData, (accessor) => {
+    _.each(this.params.activeAccessorData, accessor => {
       if (accessor.accessor === yAccessor) {
         found = true
       }
@@ -63,44 +68,37 @@ class StackedBarChartView extends XYChartSubView {
 
     const svgBarGroups = this.d3
       .selectAll('.bar')
-      .data(this._prepareData(), (d) => d.id)
+      .data(this._prepareData(), d => d.id)
     svgBarGroups.enter().append('rect')
-      .attr('class', (d) => d.className)
-      .attr('x', (d) => d.x)
+      .attr('class', d => 'bar')
+      .attr('x', d => d.x)
       .attr('y', this.yScale.range()[0])
       .attr('height', 0)
-      .attr('width', (d) => d.w)
+      .attr('width', d => d.w)
       .merge(svgBarGroups).transition().ease(d3.easeLinear).duration(this.params.duration)
-      .attr('fill', (d) => d.color)
-      .attr('x', (d) => d.x)
-      .attr('y', (d) => d.y)
-      .attr('height', (d) => d.h)
-      .attr('width', (d) => d.w)
+      .attr('fill', d => d.color)
+      .attr('x', d => d.x)
+      .attr('y', d => d.y)
+      .attr('height', d => d.h)
+      .attr('width', d => d.w)
     svgBarGroups.exit().remove()
   }
 
   _prepareData () {
     const data = this.model.data
     const flatData = []
-    const xValues = _.map(data, this.params.plot.x.accessor)
-    const xValuesExtent = d3.extent(xValues)
-    const xRange = [this.xScale(xValuesExtent[0]), this.xScale(xValuesExtent[1])]
-    let len = data.length - 1
-    if (len === 0) len = 1
-    const bandWidth = (0.95 * ((xRange[1] - xRange[0]) / len) - 1)
-    const bandWidthHalf = (bandWidth / 2)
-    _.each(data, (d) => {
+    const bandWidthHalf = (this.bandWidth / 2)
+    _.each(data, d => {
       const x = d[this.params.plot.x.accessor]
       let stackedY = this.yScale.domain()[0]
-      _.each(this.params.activeAccessorData, (accessor) => {
+      _.each(this.params.activeAccessorData, accessor => {
         const key = accessor.accessor
         const obj = {
           id: x + '-' + key,
-          className: 'bar bar-' + key,
           x: this.xScale(x) - bandWidthHalf,
           y: this.yScale(stackedY + d[key]),
           h: this.yScale(stackedY) - this.yScale(stackedY + d[key]),
-          w: bandWidth,
+          w: this.bandWidth,
           color: this.getColor(accessor),
           accessor: accessor,
           data: d,

@@ -7,7 +7,8 @@ class ShowComponent extends Action {
   }
 
   _execute (id, ...args) {
-    this._registrar.getComponent(id).show(...args)
+    const component = this._registrar.getComponent(id)
+    if (component) component.show(...args)
   }
 }
 
