@@ -53,7 +53,7 @@ class CompositeYChartView extends ContrailChartsView {
   }
 
   render () {
-    if (!this.config) return
+    if (!this.config || !this._container) return
     this.resetParams()
     this._updateChildDrawings()
     this._calculateActiveAccessorData()
@@ -63,7 +63,8 @@ class CompositeYChartView extends ContrailChartsView {
 
     super.render()
     this.renderSVG()
-    this.renderAxis()
+    this.renderXAxis()
+    this.renderYAxes()
     _.each(this._drawings, drawing => {
       drawing.render()
     })
@@ -187,43 +188,29 @@ class CompositeYChartView extends ContrailChartsView {
       this.params.axis = {}
     }
     _.each(domains, (domain, axisName) => {
-      if (!_.has(this.params.axis, axisName)) {
-        this.params.axis[axisName] = {}
-      }
-      if (!this.hasAxisParam(axisName, 'position')) {
-        // Default axis position.
-        if (axisName.charAt(0) === 'x') {
-          this.params.axis[axisName].position = 'bottom'
-        } else if (axisName.charAt(0) === 'y') {
-          this.params.axis[axisName].position = 'left'
-        }
-      }
+      if (!_.has(this.params.axis, axisName)) this.params.axis[axisName] = {}
+      const axis = this.params.axis[axisName]
+
+      axis.position = this.config.getPosition(axisName)
       if (!this.hasAxisParam(axisName, 'range')) {
-        if (['bottom', 'top'].includes(this.params.axis[axisName].position)) {
-          this.params.axis[axisName].range = this.params.xRange
-        } else if (['left', 'right'].includes(this.params.axis[axisName].position)) {
-          this.params.axis[axisName].range = this.params.yRange
+        if (['bottom', 'top'].includes(axis.position)) {
+          axis.range = this.params.xRange
+        } else if (['left', 'right'].includes(axis.position)) {
+          axis.range = this.params.yRange
         }
       }
-      this.params.axis[axisName].domain = domain
-      if (!_.isFunction(this.params.axis[axisName].scale) && this.params.axis[axisName].range) {
-        let baseScale = null
-        if (this.hasAxisConfig(axisName, 'scale') && _.isFunction(d3[this.config.get('axis')[axisName].scale])) {
-          baseScale = d3[this.params.axis[axisName].scale]()
-        } else if (['bottom', 'top'].indexOf(this.params.axis[axisName].position) >= 0) {
-          baseScale = d3.scaleTime()
-        } else {
-          baseScale = d3.scaleLinear()
-        }
-        baseScale
-          .domain(this.params.axis[axisName].domain)
-          .range(this.params.axis[axisName].range)
-        this.params.axis[axisName].scale = baseScale
-        if (this.hasAxisParam(axisName, 'nice') && this.params.axis[axisName].nice) {
+      axis.domain = domain
+      if (!_.isFunction(axis.scale) && axis.range) {
+        const scale = this.config.getScale(axisName)
+        scale
+          .domain(axis.domain)
+          .range(axis.range)
+        axis.scale = scale
+        if (this.hasAxisParam(axisName, 'nice') && axis.nice) {
           if (this.hasAxisParam(axisName, 'ticks')) {
-            this.params.axis[axisName].scale = this.params.axis[axisName].scale.nice(this.params.axis[axisName].ticks)
+            axis.scale = axis.scale.nice(axis.ticks)
           } else {
-            this.params.axis[axisName].scale = this.params.axis[axisName].scale.nice()
+            axis.scale = axis.scale.nice()
           }
         }
       }
@@ -284,7 +271,13 @@ class CompositeYChartView extends ContrailChartsView {
 
     // Handle Y axis
     const svgYAxis = this.d3.selectAll('.axis.y-axis').data(this.params.yAxisInfoArray, d => d.name)
-    svgYAxis.exit().remove()
+
+    // Do not remove last axis
+    if (svgYAxis.nodes().length < 1) {
+      const toRemove = svgYAxis.exit().nodes()
+      _.each(toRemove.slice(1), node => node.remove())
+    } else svgYAxis.exit().remove()
+
     svgYAxis.enter()
       .append('g')
       .attr('class', d => `axis y-axis ${d.name}-axis`)
@@ -305,15 +298,17 @@ class CompositeYChartView extends ContrailChartsView {
     return _.isObject(this.params.axis) && _.isObject(this.params.axis[axisName]) && !_.isUndefined(this.params.axis[axisName][axisAttributeName])
   }
   /**
-   * Renders the axis.
+   * Render x axis
    */
-  renderAxis () {
-    const xAxisName = this.params.plot.x.axis
-    let xAxis = d3.axisBottom(this.params.axis[xAxisName].scale)
+  renderXAxis () {
+    const name = this.params.plot.x.axis
+    if (!this.params.axis[name].scale) return
+
+    let xAxis = d3.axisBottom(this.params.axis[name].scale)
       .tickSize(this.params.yRange[0] - this.params.yRange[1] + 2 * this.params.marginInner)
       .tickPadding(10)
     if (this.hasAxisParam('x', 'ticks')) {
-      xAxis = xAxis.ticks(this.params.axis[xAxisName].ticks)
+      xAxis = xAxis.ticks(this.params.axis[name].ticks)
     }
     if (this.hasAxisConfig('x', 'formatter')) {
       xAxis = xAxis.tickFormat(this.config.get('axis').x.formatter)
@@ -323,12 +318,12 @@ class CompositeYChartView extends ContrailChartsView {
     // X axis label
     const xLabelData = []
     let xLabelMargin = 5
-    if (this.hasAxisParam(xAxisName, 'labelMargin')) {
-      xLabelMargin = this.params.axis[xAxisName].labelMargin
+    if (this.hasAxisParam(name, 'labelMargin')) {
+      xLabelMargin = this.params.axis[name].labelMargin
     }
     let xLabel = this.params.plot.x.labelFormatter || this.params.plot.x.label
-    if (this.hasAxisParam(xAxisName, 'label')) {
-      xLabel = this.params.axis[xAxisName].label
+    if (this.hasAxisParam(name, 'label')) {
+      xLabel = this.params.axis[name].label
     }
     if (xLabel) {
       xLabelData.push(xLabel)
@@ -342,6 +337,9 @@ class CompositeYChartView extends ContrailChartsView {
       .attr('y', this.params.chartHeight - this.params.marginTop - xLabelMargin)
       .text(d => d)
     xAxisLabelSvg.exit().remove()
+  }
+
+  renderYAxes () {
     // We render the yAxis here because there may be multiple drawings for one axis.
     // The parent has aggregated information about all Y axis.
     let referenceYScale = null
