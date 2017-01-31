@@ -1,15 +1,5 @@
 /* global coCharts */
 
-function timeFormatter (value) {
-  return d3.timeFormat('%H:%M:%S')(value)
-}
-function numberFormatter (number) {
-  return number.toFixed(0)
-}
-function numberFormatter3 (number) {
-  return number.toFixed(0)
-}
-
 // Complex example
 const complexData = []
 for (let i = 0; i < 100; i++) {
@@ -143,17 +133,17 @@ complexChartView.setConfig({
       },
       axis: {
         x: {
-          formatter: d3.timeFormat('%H:%M:%S')
+          formatter: coCharts.formatter.extendedISOTime,
         },
         y1: {
           position: 'left',
-          formatter: numberFormatter,
+          formatter: coCharts.formatter.toInteger,
           labelMargin: 15,
           domain: [-10, undefined]
         },
         y2: {
           position: 'right',
-          formatter: numberFormatter3,
+          formatter: coCharts.formatter.toInteger,
           labelMargin: 15
         }
       }
@@ -176,7 +166,7 @@ complexChartView.setConfig({
       },
       axis: {
         x: {
-          formatter: d3.timeFormat('%H:%M:%S')
+          formatter: coCharts.formatter.extendedISOTime,
         }
       }
     }

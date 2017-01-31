@@ -20,6 +20,8 @@ define([ // eslint-disable-line no-undef
       e: (Math.random() - 0.5) * 10
     })
   })
+  const toFixed2 = coCharts.formatter.toFixedNumberFactory(2)
+  const toFixed5 = coCharts.formatter.toFixedNumberFactory(5)
   const complexChartView = new coCharts.charts.XYChartView()
   complexChartView.setData(complexData)
   complexChartView.setConfig({
@@ -82,12 +84,12 @@ define([ // eslint-disable-line no-undef
           x: {},
           y1: {
             position: 'left',
-            formatter: d3.format('.0f'),
+            formatter: coCharts.formatter.toInteger,
             labelMargin: 15
           },
           y2: {
             position: 'right',
-            formatter: d3.format('.02f'),
+            formatter: toFixed2,
             labelMargin: 15
           }
         }
@@ -100,15 +102,15 @@ define([ // eslint-disable-line no-undef
           {
             accessor: 'x',
             labelFormatter: (key) => 'Time',
-            valueFormatter: d3.format('.0f')
+            valueFormatter: coCharts.formatter.toInteger
           }, {
             accessor: 'a',
             labelFormatter: () => 'Label A',
-            valueFormatter: d3.format('.05f')
+            valueFormatter: toFixed5
           }, {
             accessor: 'b',
             labelFormatter: () => 'Label B',
-            valueFormatter: d3.format('.02f')
+            valueFormatter: toFixed2
           }
         ]
       }

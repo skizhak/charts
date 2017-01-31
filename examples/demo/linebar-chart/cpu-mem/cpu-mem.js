@@ -2,33 +2,6 @@
 
 const _ = require('lodash')
 
-function timeFormatter (value) {
-  return d3.timeFormat('%H:%M:%S')(value / 1000)
-}
-
-function cpuFormatter (number) {
-  return number.toFixed(1) + '%'
-}
-
-function memFormatter (number) {
-  const bytePrefixes = ['B', 'KB', 'MB', 'GB', 'TB']
-  let bytes = parseInt(number * 1024)
-  let formattedBytes = '-'
-  _.each(bytePrefixes, (prefix, idx) => {
-    if (bytes < 1024) {
-      formattedBytes = bytes.toFixed(2) + ' ' + prefix
-      return false
-    } else {
-      if (idx === bytePrefixes.length - 1) {
-        formattedBytes = bytes.toFixed(2) + ' ' + prefix
-      } else {
-        bytes = bytes / 1024
-      }
-    }
-  })
-  return formattedBytes
-}
-
 function dataProcesser (rawData) {
   const keyMapper = {
     'T=': () => 'T',
@@ -81,11 +54,11 @@ const dataSrc = require('./data-source.json')
 const dataProcessed = dataProcesser(dataSrc.data)
 const colorPalette = generateColorPalette(
     dataProcessed.nodeIds,
-    ['cpu_share', 'mem_res'],
-    d3.schemeCategory20,
-    2,
+    ['mem_res', 'cpu_share'],
+    d3.schemeCategory20c,
     4,
-    2
+    1,
+    4
   )
 
 const mainChartPlotYConfig = _.reduce(dataProcessed.nodeIds, (config, nodeId, idx) => {
@@ -149,18 +122,18 @@ const tooltipDataConfig = _.reduce(dataProcessed.nodeIds, (config, nodeId) => {
   config.push({
     accessor: `${nodeId}.cpu_share`,
     labelFormatter: `${nodeId} CPU Share`,
-    valueFormatter: cpuFormatter,
+    valueFormatter: coCharts.formatter.toFixedPercentage1,
   }, {
     accessor: `${nodeId}.mem_res`,
     labelFormatter: `${nodeId} Memory Usage`,
-    valueFormatter: memFormatter,
+    valueFormatter: coCharts.formatter.byteFormatter,
   })
 
   return config
 }, [{
   accessor: 'T',
   labelFormatter: 'Time',
-  valueFormatter: timeFormatter,
+  valueFormatter: coCharts.formatter.extendedISOTime,
 }])
 
 // Create chart view.
@@ -192,18 +165,18 @@ cpuMemChartView.setConfig({
       },
       axis: {
         x: {
-          formatter: timeFormatter
+          formatter: coCharts.formatter.extendedISOTime
         },
         y1: {
           position: 'left',
           label: 'CPU Utilization (%)',
-          formatter: cpuFormatter,
+          formatter: coCharts.formatter.toFixedPercentage1,
           labelMargin: 15,
         },
         y2: {
           position: 'right',
           label: 'Memory Usage',
-          formatter: memFormatter,
+          formatter: coCharts.formatter.byteFormatter,
           labelMargin: 15,
         }
       }
@@ -228,7 +201,7 @@ cpuMemChartView.setConfig({
       },
       axis: {
         x: {
-          formatter: timeFormatter
+          formatter: coCharts.formatter.extendedISOTime
         },
         y1: {
           position: 'left',
