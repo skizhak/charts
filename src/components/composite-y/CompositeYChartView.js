@@ -53,7 +53,7 @@ class CompositeYChartView extends ContrailChartsView {
   }
 
   render () {
-    if (!this.config) return
+    if (!this.config || !this._container) return
     this.resetParams()
     this._updateChildDrawings()
     this._calculateActiveAccessorData()
