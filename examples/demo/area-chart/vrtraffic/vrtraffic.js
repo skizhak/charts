@@ -6,8 +6,8 @@ function timeFormatter (value) {
   return d3.timeFormat('%H:%M:%S')(value / 1000)
 }
 
-function cpuFormatter (number) {
-  return number.toFixed(1) + '%'
+function numberFormatter (number) {
+  return number.toFixed(0)
 }
 
 function memFormatter (number) {
@@ -31,16 +31,15 @@ function memFormatter (number) {
 
 function dataProcesser (rawData) {
   const keyMapper = {
-    'T=': () => 'T',
-    'process_mem_cpu_usage.__key': (id) => `${id}.key`,
-    'SUM(process_mem_cpu_usage.cpu_share)': (id) => `${id}.cpu_share`,
-    'SUM(process_mem_cpu_usage.mem_res)': (id) => `${id}.mem_res`,
-    'SUM(process_mem_cpu_usage.mem_virt)': (id) => `${id}.mem_virt`
+    'T': () => 'T',
+    'vrouter': (id) => `${id}.key`,
+    'sum(packets)': (id) => `${id}.sum_packets`,
+    'sum(bytes)': (id) => `${id}.sum_bytes`,
   }
 
   const _kernel = _.partialRight(_.mapKeys,
     (val, key, obj) => {
-      const _key = obj['process_mem_cpu_usage.__key']
+      const _key = obj['vrouter']
       return keyMapper[key] ? keyMapper[key](_key) : `${_key}.${key}`
     }
   )
@@ -50,7 +49,7 @@ function dataProcesser (rawData) {
       _.groupBy(_.map(rawData, (val) => _kernel(val)), 'T'),
       (val) => _.reduce(val, (merged, curr) => _.merge(merged, curr), {})
     ),
-    nodeIds: _.uniq(_.map(rawData, 'process_mem_cpu_usage.__key'))
+    nodeIds: _.uniq(_.map(rawData, 'vrouter'))
   }
 }
 
@@ -77,63 +76,60 @@ function generateColorPalette (nodeIds, nodeAttrs, colorSchema, offset1, offset2
   }, {})
 }
 
-const dataSrc = require('./data-source.json')
+const dataSrc = require('./2vr-traffic.json')
 const dataProcessed = dataProcesser(dataSrc.data)
 
-console.log(dataProcessed)
-
 const fkColors = [
-  '#00bcd4',
-  '#0cc2aa',
-  '#fcc100',
-  '#a88add',
-  '#6cc788',
   '#6887ff',
-  '#4caf50',
+  '#fcc100',
+  '#0cc2aa',
+  '#a88add',
   '#2196f3'
 ]
 
 const colorPalette = generateColorPalette(
-    dataProcessed.nodeIds,
-    ['cpu_share', 'mem_res'],
-    fkColors,
-    1,
-    2,
-    1
-  )
+  dataProcessed.nodeIds,
+  ['sum_bytes', 'sum_packets'],
+  fkColors,
+  1,
+  2,
+  1
+)
 
 const mainChartPlotYConfig = _.reduce(dataProcessed.nodeIds, (config, nodeId, idx) => {
   config.push({
-    accessor: `${nodeId}.cpu_share`,
-    label: `${nodeId} CPU Utilization (%)`,
+    accessor: `${nodeId}.sum_bytes`,
+    label: `Sum(Bytes) ${nodeId}`,
     enabled: true,
-    chart: 'BarChart',
+    chart: 'AreaChart',
     possibleChartTypes: [
       {
-        label: 'Stacked Bar',
-        chart: 'StackedBarChart',
-      }, {
-        label: 'Line',
-        chart: 'LineChart',
+        label: 'Bar',
+        chart: 'BarChart',
+      },
+      {
+        label: 'Area',
+        chart: 'AreaChart',
       }
     ],
-    color: colorPalette[`${nodeId}.cpu_share`],
+    color: colorPalette[`${nodeId}.sum_bytes`],
     axis: 'y1',
   }, {
-    accessor: `${nodeId}.mem_res`,
-    label: `${nodeId} Memory Usage`,
+    accessor: `${nodeId}.sum_packets`,
+    label: `Sum(Packets) ${nodeId}`,
     enabled: false,
     chart: 'LineChart',
     possibleChartTypes: [
       {
-        label: 'Stacked Bar',
-        chart: 'StackedBarChart',
-      }, {
         label: 'Line',
-        chart: 'LineChart'
+        chart: 'LineChart',
+      },
+      {
+        label: 'Area',
+        chart: 'AreaChart'
       }
     ],
-    color: colorPalette[`${nodeId}.mem_res`],
+    color: colorPalette[`${nodeId}.sum_packets`],
     axis: 'y2',
   })
   return config
@@ -142,17 +138,17 @@ const mainChartPlotYConfig = _.reduce(dataProcessed.nodeIds, (config, nodeId, id
 const navPlotYConfig = _.reduce(dataProcessed.nodeIds, (config, nodeId, idx) => {
   config.push({
     enabled: true,
-    accessor: `${nodeId}.cpu_share`,
-    labelFormatter: 'CPU Utilization (%)',
-    chart: 'BarChart',
-    color: colorPalette[`${nodeId}.cpu_share`],
+    accessor: `${nodeId}.sum_bytes`,
+    labelFormatter: 'Sum(Bytes)',
+    chart: 'AreaChart',
+    color: colorPalette[`${nodeId}.sum_bytes`],
     axis: 'y1',
   }, {
     enabled: false,
-    accessor: `${nodeId}.mem_res`,
-    labelFormatter: 'Memory Usage',
-    chart: 'LineChart',
-    color: colorPalette[`${nodeId}.mem_res`],
+    accessor: `${nodeId}.sum_packet`,
+    labelFormatter: 'Sum(Packets)',
+    chart: 'StackedBarChart',
+    color: colorPalette[`${nodeId}.sum_packets`],
     axis: 'y2',
   })
 
@@ -161,13 +157,13 @@ const navPlotYConfig = _.reduce(dataProcessed.nodeIds, (config, nodeId, idx) => 
 
 const tooltipDataConfig = _.reduce(dataProcessed.nodeIds, (config, nodeId) => {
   config.push({
-    accessor: `${nodeId}.cpu_share`,
-    labelFormatter: `${nodeId} CPU Share`,
-    valueFormatter: cpuFormatter,
-  }, {
-    accessor: `${nodeId}.mem_res`,
-    labelFormatter: `${nodeId} Memory Usage`,
+    accessor: `${nodeId}.sum_bytes`,
+    labelFormatter: `${nodeId} Sum(Bytes)`,
     valueFormatter: memFormatter,
+  }, {
+    accessor: `${nodeId}.sum_packets`,
+    labelFormatter: `${nodeId} Sum(Packets)`,
+    valueFormatter: numberFormatter,
   })
 
   return config
@@ -178,8 +174,8 @@ const tooltipDataConfig = _.reduce(dataProcessed.nodeIds, (config, nodeId) => {
 }])
 
 // Create chart view.
-const cpuMemChartView = new coCharts.charts.XYChartView()
-cpuMemChartView.setConfig({
+const trafficView = new coCharts.charts.XYChartView()
+trafficView.setConfig({
   container: '#cpuMemChart',
   components: [{
     type: 'LegendPanel',
@@ -210,14 +206,14 @@ cpuMemChartView.setConfig({
         },
         y1: {
           position: 'left',
-          label: 'CPU Utilization (%)',
-          formatter: cpuFormatter,
+          label: 'Sum(Bytes)',
+          formatter: memFormatter,
           labelMargin: 15,
         },
         y2: {
           position: 'right',
-          label: 'Memory Usage',
-          formatter: memFormatter,
+          label: 'Sum(Packets)',
+          formatter: numberFormatter,
           labelMargin: 15,
         }
       }
@@ -304,8 +300,8 @@ cpuMemChartView.setConfig({
     }
   }]
 })
-cpuMemChartView.setData(dataProcessed.data)
-cpuMemChartView.renderMessage({
+trafficView.setData(dataProcessed.data)
+trafficView.renderMessage({
   componentId: 'XYChart',
   action: 'once',
   messages: [{

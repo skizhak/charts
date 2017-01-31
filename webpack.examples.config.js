@@ -39,6 +39,8 @@ const config = {
     'demo-bubble-nodes': path.join(__dirname, '/examples/demo/bubble-chart/nodes/nodes.js'),
     'demo-linebar-cpu-mem': path.join(__dirname, '/examples/demo/linebar-chart/cpu-mem/cpu-mem.js'),
     'demo-linebar-query-db': path.join(__dirname, '/examples/demo/linebar-chart/query-db-rw/query-db.js'),
+    'demo-area-vr-traffic': path.join(__dirname, '/examples/demo/area-chart/vrtraffic/vrtraffic.js'),
+    'demo-area-in-out-traffic': path.join(__dirname, '/examples/demo/area-chart/in-out-traffic/inouttraffic.js'),
   },
   devtool: 'source-map',
   output: {
