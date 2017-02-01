@@ -1,8 +1,9 @@
 /*
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
+/* global d3 */
 
-const colorSchema = d3.schemeCategory20
+const colorScheme = d3.schemeCategory10
 
 const simpleData = [
   { x: (new Date(2016, 11, 1)).getTime(), y: 0 },
@@ -29,7 +30,7 @@ simpleChartView.setConfig({
             accessor: 'y',
             chart: 'AreaChart',
             axis: 'y',
-            color: colorSchema[1]
+            color: colorScheme[1]
           }
         ]
       },

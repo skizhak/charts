@@ -43,7 +43,7 @@ const chartConfig = {
             sizeAccessor: 'size1',
             sizeAxis: 'sizeAxis',
             // this is a circle symbol from fontawesome
-            shape: '&#f111;',
+            shape: '&#xf111;',
             color: colorScheme[0],
             axis: 'y1',
             tooltip: 'tooltipId',
