@@ -16,7 +16,9 @@ class LegendPanelView extends ContrailChartsView {
       'change .legend-attribute': '_onItemClick',
       'click .edit-legend': '_toggleEditMode',
       'click .select.select--color': '_toggleColorSelectMenu',
-      'click .swatch': '_selectColor'
+      'click .select.select--chart': '_toggleChartSelectMenu',
+      'click .swatch': '_selectColor',
+      'click .chart-type': '_selectChartType'
     }
   }
 
@@ -38,6 +40,9 @@ class LegendPanelView extends ContrailChartsView {
     this.$el.find('.attribute').toggleClass('edit')
     this.$el.find('.color-selector').hide()
 
+    if(!this.config.attributes.editable.colorSelector) this.d3.selectAll('.select--color').hide()
+    if(!this.config.attributes.editable.chartSelector) this.d3.selectAll('.select--chart').style('display', 'none')
+
     _.each(this.$el.find('.legend-attribute > input'), function (el) {
       if ($(el).prop('disabled')) {
         $(el).prop('disabled', false)
@@ -48,9 +53,17 @@ class LegendPanelView extends ContrailChartsView {
   }
 
   _toggleColorSelectMenu (d, el) {
-    $(el).toggleClass('pressed')
     this._accessor = $(el).parents('.attribute').data('accessor')
     const paletteElement = this.$('.color-selector')
+    const elemOffset = $(el).position()
+    elemOffset.top += $(el).outerHeight(true) + 1
+    paletteElement.css(elemOffset)
+    paletteElement.toggle()
+  }
+
+  _toggleChartSelectMenu (d, el) {
+    this._accessor = $(el).parents('.attribute').data('accessor')
+    const paletteElement = this.$('.chart-selector')
     const elemOffset = $(el).position()
     elemOffset.top += $(el).outerHeight(true) + 1
     paletteElement.css(elemOffset)
