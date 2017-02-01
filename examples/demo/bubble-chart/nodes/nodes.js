@@ -61,7 +61,7 @@ const chartConfig = {
             label: 'Compute',
             sizeAccessor: 'size',
             sizeAxis: 'sizeAxis',
-            shape: 'circle',
+            shape: '&#xf111;', // circle
             axis: 'y1',
             color: colorScheme[0],
             tooltip: 'tooltipId',
@@ -73,7 +73,7 @@ const chartConfig = {
             label: 'Control',
             sizeAccessor: 'size',
             sizeAxis: 'sizeAxis',
-            shape: 'star',
+            shape: '&#xf005;', // star
             axis: 'y1',
             color: colorScheme[1],
             tooltip: 'tooltipId',
@@ -85,7 +85,7 @@ const chartConfig = {
             label: 'Config',
             sizeAccessor: 'size',
             sizeAxis: 'sizeAxis',
-            shape: 'diamond',
+            shape: '&lozf;', // diamond
             axis: 'y1',
             color: colorScheme[2],
             tooltip: 'tooltipId',
@@ -97,7 +97,7 @@ const chartConfig = {
             label: 'Collector',
             sizeAccessor: 'size',
             sizeAxis: 'sizeAxis',
-            shape: 'cross',
+            shape: '&#xf067;', // cross
             axis: 'y1',
             color: colorScheme[3],
             tooltip: 'tooltipId',
@@ -109,7 +109,7 @@ const chartConfig = {
             label: 'WebUI',
             sizeAccessor: 'size',
             sizeAxis: 'sizeAxis',
-            shape: 'triangle',
+            shape: '&blacktriangle;', // triangle
             axis: 'y1',
             color: colorScheme[4],
             tooltip: 'tooltipId',
@@ -171,7 +171,7 @@ const chartConfig = {
             axis: 'y1',
             sizeAccessor: 'size',
             sizeAxis: 'sizeAxis',
-            shape: 'circle',
+            shape: '&#xf111;', // circle
             color: colorScheme[0]
           },
           {
@@ -181,7 +181,7 @@ const chartConfig = {
             axis: 'y1',
             sizeAccessor: 'size',
             sizeAxis: 'sizeAxis',
-            shape: 'star',
+            shape: '&#xf005;', // star
             color: colorScheme[5]
           },
           {
@@ -191,7 +191,7 @@ const chartConfig = {
             axis: 'y1',
             sizeAccessor: 'size',
             sizeAxis: 'sizeAxis',
-            shape: 'diamond',
+            shape: '&lozf;', // diamond
             color: colorScheme[2]
           },
           {
@@ -201,7 +201,7 @@ const chartConfig = {
             axis: 'y1',
             sizeAccessor: 'size',
             sizeAxis: 'sizeAxis',
-            shape: 'cross',
+            shape: '&#xf067;', // cross
             color: colorScheme[4]
           },
           {
@@ -211,7 +211,7 @@ const chartConfig = {
             axis: 'y1',
             sizeAccessor: 'size',
             sizeAxis: 'sizeAxis',
-            shape: 'triangle',
+            shape: '&bigtriangleup;', // triangle
             color: colorScheme[9]
           }
         ]
