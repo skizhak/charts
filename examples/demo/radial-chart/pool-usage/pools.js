@@ -12,6 +12,9 @@ const pieData = [
 
 const d3 = require('d3')
 const formatter = require('formatter')
+const _c = require('constants')
+
+const radialColorScheme6 = _c.radialColorScheme6
 
 function getLabel (serie) {
   return serie.label
@@ -35,13 +38,7 @@ const chartConfig = {
     config: {
       type: 'pie',
       radius: 100,
-      colorScale: d3.scaleOrdinal().range([
-        '#4caf50',
-        '#a88add',
-        '#fcc100',
-        '#6887ff',
-        '#00bcd4',
-        '#2196f3']), // eslint-disable-line no-undef
+      colorScale: d3.scaleOrdinal().range(radialColorScheme6), // eslint-disable-line no-undef
       serie: {
         getValue: getValue,
         getLabel: getLabel,

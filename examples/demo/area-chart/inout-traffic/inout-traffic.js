@@ -5,6 +5,10 @@
 const _ = require('lodash')
 const dataSrc = require('./inout-traffic.json')
 const formatter = require('formatter')
+const _c = require('constants')
+
+const lbColorScheme5 = _c.lbColorScheme7
+
 
 function dataProcesser (rawData) {
   const keyMapper = {
@@ -60,20 +64,12 @@ _.each(dataSrc.data, function (data) {
 })
 
 const dataProcessed = dataProcesser(dataSrc.data)
-
-const fkColors = [
-  '#fcc100',
-  '#a88add',
-  '#0cc2aa',
-  '#6887ff',
-]
-
 const colorPalette = generateColorPalette(
   dataProcessed.nodeIds,
   ['sum_bytes'],
-  fkColors,
+  lbColorScheme5,
   1,
-  2,
+  0,
   1
 )
 

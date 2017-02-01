@@ -4,20 +4,12 @@
 
 const _ = require('lodash')
 const formatter = require('formatter')
+const _c = require('constants')
+
+const lbColorScheme7 = _c.lbColorScheme7
 
 const dataSrc = require('./cpu-mem.json')
 const dataProcessed = dataProcesser(dataSrc.data)
-
-const fkColors = [
-  '#00bcd4',
-  '#0cc2aa',
-  '#fcc100',
-  '#a88add',
-  '#6cc788',
-  '#6887ff',
-  '#4caf50',
-  '#2196f3'
-]
 
 function dataProcesser (rawData) {
   const keyMapper = {
@@ -70,7 +62,7 @@ function generateColorPalette (nodeIds, nodeAttrs, colorSchema, offset1, offset2
 const colorPalette = generateColorPalette(
     dataProcessed.nodeIds,
     ['cpu_share', 'mem_res'],
-    fkColors,
+    lbColorScheme7,
     1,
     2,
     1

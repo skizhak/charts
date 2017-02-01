@@ -4,6 +4,9 @@
 
 const d3 = require('d3')
 const formatter = require('formatter')
+const _c = require('constants')
+
+const bubbleShapes = _c.bubbleShapes
 
 function dataProcesser (data) {
   const portTraffic = [...data.sport, ...data.dport]
@@ -61,7 +64,7 @@ const chartConfig = {
             chart: 'ScatterPlot',
             sizeAccessor: 'outBytes',
             sizeAxis: 'sizeAxisBytes',
-            shape: '&larr;',
+            shape: bubbleShapes.signin,
             color: colorScheme[1],
             axis: 'y1',
             tooltip: 'tooltip-id',
@@ -72,7 +75,7 @@ const chartConfig = {
             chart: 'ScatterPlot',
             sizeAccessor: 'outBytes',
             sizeAxis: 'sizeAxisBytes',
-            shape: '&rarr;',
+            shape: bubbleShapes.signout,
             color: colorScheme[2],
             axis: 'y1',
             tooltip: 'tooltip-id',
@@ -160,8 +163,8 @@ const chartConfig = {
             axis: 'y1',
             sizeAccessor: 'outBytes',
             sizeAxis: 'sizeAxisBytes',
-            shape: '&bigcirc;',
-            color: colorScheme[4]
+            shape: bubbleShapes.circleFill,
+            color: colorScheme[0]
           }
         ]
       },
@@ -171,7 +174,7 @@ const chartConfig = {
           formatter: formatter.byteFormatter
         },
         sizeAxisBytes: {
-          range: [100, 150]
+          range: [100, 200]
         },
         y1: {
           position: 'left',

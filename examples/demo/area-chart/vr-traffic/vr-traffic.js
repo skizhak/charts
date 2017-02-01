@@ -4,6 +4,8 @@
 
 const _ = require('lodash')
 const formatter = require('formatter')
+const _c = require('constants')
+const lbColorScheme7 = _c.lbColorScheme7
 
 function dataProcesser (rawData) {
   const keyMapper = {
@@ -53,21 +55,12 @@ function generateColorPalette (nodeIds, nodeAttrs, colorSchema, offset1, offset2
 }
 
 const dataSrc = require('./2vr-traffic.json')
-
 const dataProcessed = dataProcesser(dataSrc.data)
-
-const fkColors = [
-  '#6887ff',
-  '#fcc100',
-  '#0cc2aa',
-  '#a88add',
-  '#2196f3'
-]
 
 const colorPalette = generateColorPalette(
   dataProcessed.nodeIds,
   ['sum_bytes', 'sum_packets'],
-  fkColors,
+  lbColorScheme7,
   1,
   2,
   1

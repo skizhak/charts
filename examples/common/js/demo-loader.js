@@ -35,14 +35,14 @@ const demoBubbleExamples = [
 
 const areaExamples = [
   {
-    html: 'area-chart/vr-traffic/vr-traffic.html',
-    js: 'area-chart/vr-traffic/vr-traffic.js',
-    title: 'vRouter Traffic'
-  },
-  {
     html: 'area-chart/inout-traffic/inout-traffic.html',
     js: 'area-chart/inout-traffic/inout-traffic.js',
     title: 'VN Traffic In/Out'
+  },
+  {
+    html: 'area-chart/vr-traffic/vr-traffic.html',
+    js: 'area-chart/vr-traffic/vr-traffic.js',
+    title: 'vRouter Traffic'
   }
 ]
 
