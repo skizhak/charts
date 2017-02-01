@@ -21,7 +21,7 @@ function getValue (serie) {
 }
 
 const chartConfig = {
-  container: '#chart',
+  container: '#donut-chart',
   components: [{
     type: 'ControlPanel',
     config: {
@@ -30,7 +30,7 @@ const chartConfig = {
       }],
     }
   }, {
-    id: 'pieChartId',
+    id: 'donut-chart-id',
     type: 'PieChart',
     config: {
       type: 'donut',
@@ -41,10 +41,10 @@ const chartConfig = {
         getLabel: getLabel,
         valueFormatter: formatter.commaGroupedInteger,
       },
-      tooltip: 'tooltipId',
+      tooltip: 'tooltip-id',
     },
   }, {
-    id: 'tooltipId',
+    id: 'tooltip-id',
     type: 'Tooltip',
     config: {
       dataConfig: [
@@ -58,7 +58,7 @@ const chartConfig = {
   }, {
     type: 'LegendUniversal',
     config: {
-      sourceComponent: 'pieChartId',
+      sourceComponent: 'donut-chart-id',
     },
   }
   ]

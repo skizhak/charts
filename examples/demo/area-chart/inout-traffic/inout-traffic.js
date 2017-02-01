@@ -129,14 +129,14 @@ const tooltipDataConfig = _.reduce(dataProcessed.nodeIds, (config, nodeId) => {
 // Create chart view.
 const trafficView = new coCharts.charts.XYChartView()
 trafficView.setConfig({
-  container: '#cpuMemChart',
+  container: '#inout-traffic',
   components: [{
     type: 'LegendPanel',
     config: {
-      sourceComponent: 'cpuMemCompositeY',
+      sourceComponent: 'inout-traffic-compositey',
     }
   }, {
-    id: 'cpuMemCompositeY',
+    id: 'inout-traffic-compositey',
     type: 'CompositeYChart',
     config: {
       marginInner: 10,
@@ -144,7 +144,7 @@ trafficView.setConfig({
       marginRight: 80,
       marginBottom: 40,
       chartHeight: 600,
-      crosshair: 'crosshairId',
+      crosshair: 'crosshair-id',
       plot: {
         x: {
           accessor: 'T',
@@ -166,7 +166,7 @@ trafficView.setConfig({
       }
     }
   }, {
-    id: 'cpuMemChart-navigation',
+    id: 'inout-traffic-navigation',
     type: 'Navigation',
     config: {
       marginInner: 10,
@@ -196,14 +196,14 @@ trafficView.setConfig({
       }
     }
   }, {
-    id: 'defaultTooltip',
+    id: 'default-tooltip',
     type: 'Tooltip',
     config: {
       title: 'Usage Details',
       dataConfig: tooltipDataConfig
     }
   }, {
-    id: 'cpuMemChart-controlPanel',
+    id: 'inout-traffic-controlPanel',
     type: 'ControlPanel',
     config: {
       enabled: true,
@@ -228,16 +228,16 @@ trafficView.setConfig({
       isSharedContainer: false,
     },
   }, {
-    id: 'cpuMemChart-message',
+    id: 'inout-traffic-message',
     type: 'Message',
     config: {
       enabled: true,
     }
   }, {
-    id: 'crosshairId',
+    id: 'crosshair-id',
     type: 'Crosshair',
     config: {
-      tooltip: 'defaultTooltip',
+      tooltip: 'default-tooltip',
     }
   }]
 })

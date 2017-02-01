@@ -19,9 +19,9 @@ for (let i = 0; i < 100; i++) {
 }
 const complexChartView = new coCharts.charts.XYChartView()
 complexChartView.setConfig({
-  container: '#complexChart',
+  container: '#timeline-chart',
   components: [{
-    id: 'complexChartCompositeY',
+    id: 'timeline-compositey',
     type: 'CompositeYChart',
     config: {
       marginInner: 10,
