@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) Juniper Networks, Inc. All rights reserved.
+ */
+
 const SerieProvider = require('./SerieProvider')
 const DataProvider = require('./DataProvider')
 

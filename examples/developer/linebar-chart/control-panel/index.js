@@ -1,4 +1,6 @@
-/* global coCharts */
+/*
+ * Copyright (c) Juniper Networks, Inc. All rights reserved.
+ */
 
 const formatter = require('formatter')
 

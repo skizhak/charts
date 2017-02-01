@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016 Juniper Networks, Inc. All rights reserved.
+ * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
 const _ = require('lodash')
 const ContrailModel = require('contrail-model')

@@ -1,7 +1,9 @@
-/* global coCharts */
+/*
+ * Copyright (c) Juniper Networks, Inc. All rights reserved.
+ */
 
 const _ = require('lodash')
-const dataSrc = require('./inouttraffic.json')
+const dataSrc = require('./inout-traffic.json')
 const formatter = require('formatter')
 
 function dataProcesser (rawData) {
@@ -79,12 +81,12 @@ const mainChartPlotYConfig = _.reduce(dataProcessed.nodeIds, (config, nodeId, id
   config.push({
     accessor: `${nodeId}.sum_bytes`,
     label: `Sum(Bytes) ${nodeId}`,
-    enabled: true,
+    enabled: (nodeId.indexOf('in') !== -1),
     chart: 'AreaChart',
     possibleChartTypes: [
       {
         label: 'Line',
-        chart: 'LineChart',
+        chart: 'LineChart'
       },
       {
         label: 'Area',

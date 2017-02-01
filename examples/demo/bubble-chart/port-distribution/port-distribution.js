@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) Juniper Networks, Inc. All rights reserved.
+ */
+
 const d3 = require('d3')
 const formatter = require('formatter')
 
@@ -28,8 +32,8 @@ function dataProcesser (data) {
   )
 }
 
-const colorSchema = d3.schemeCategory20
-let dataSrc = require('./pd.json')
+const colorScheme = d3.schemeCategory10
+let dataSrc = require('./port-distribution.json')
 
 dataSrc = dataProcesser(dataSrc)
 
@@ -58,7 +62,7 @@ const chartConfig = {
             sizeAccessor: 'outBytes',
             sizeAxis: 'sizeAxisBytes',
             shape: 'circle',
-            color: colorSchema[2],
+            color: colorScheme[1],
             axis: 'y1',
             tooltip: 'tooltipId',
           }, {
@@ -69,7 +73,7 @@ const chartConfig = {
             sizeAccessor: 'outBytes',
             sizeAxis: 'sizeAxisBytes',
             shape: 'circle',
-            color: colorSchema[4],
+            color: colorScheme[2],
             axis: 'y1',
             tooltip: 'tooltipId',
           }
@@ -157,7 +161,7 @@ const chartConfig = {
             sizeAccessor: 'outBytes',
             sizeAxis: 'sizeAxisBytes',
             shape: 'circle',
-            color: '#0cc2aa'
+            color: colorScheme[4]
           }
         ]
       },

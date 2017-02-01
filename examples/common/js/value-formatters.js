@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) Juniper Networks, Inc. All rights reserved.
+ */
+
 const d3Format = require('d3-format')
 const d3TimeFormat = require('d3-time-format')
 

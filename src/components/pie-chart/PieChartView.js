@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016 Juniper Networks, Inc. All rights reserved.
+ * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
 require('./pie-chart.scss')
 const shape = require('d3-shape')

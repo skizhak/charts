@@ -1,8 +1,7 @@
-/* global $ */
-/**
- * Update following to add a new example.
- * @type {*[]}
+/*
+ * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
+
 require('../sass/contrail-charts-examples.scss')
 const _ = require('lodash')
 
@@ -38,15 +37,15 @@ const demoBubbleExamples = [
 
 const areaExamples = [
   {
-    html: 'area-chart/vrtraffic/vrtraffic.html',
-    js: 'area-chart/vrtraffic/vrtraffic.js',
-    css: 'area-chart/vrtraffic/vrtraffic.css',
+    html: 'area-chart/vr-traffic/vr-traffic.html',
+    js: 'area-chart/vr-traffic/vr-traffic.js',
+    css: 'area-chart/vr-traffic/vr-traffic.css',
     title: 'vRouter Traffic'
   },
   {
-    html: 'area-chart/in-out-traffic/inouttraffic.html',
-    js: 'area-chart/in-out-traffic/inouttraffic.js',
-    css: 'area-chart/in-out-traffic/inouttraffic.css',
+    html: 'area-chart/inout-traffic/inout-traffic.html',
+    js: 'area-chart/inout-traffic/inout-traffic.js',
+    css: 'area-chart/inout-traffic/inout-traffic.css',
     title: 'VN Traffic In/Out'
   }
 ]

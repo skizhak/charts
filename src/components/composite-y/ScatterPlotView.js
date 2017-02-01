@@ -1,5 +1,5 @@
 /*
- * © 2016 Juniper Networks, Inc. All rights reserved.
+ * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
 require('./scatter-plot.scss')
 const _ = require('lodash')

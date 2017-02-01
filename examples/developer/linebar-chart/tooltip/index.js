@@ -1,8 +1,8 @@
-/* global coCharts */
+/*
+ * Copyright (c) Juniper Networks, Inc. All rights reserved.
+ */
 
 const formatter = require('formatter')
-
-// Complex example
 const complexData = []
 for (let i = 0; i < 100; i++) {
   const a = Math.random() * 100

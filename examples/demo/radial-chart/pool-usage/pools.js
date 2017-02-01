@@ -1,4 +1,7 @@
-// Most basic chart.
+/*
+ * Copyright (c) Juniper Networks, Inc. All rights reserved.
+ */
+
 const pieData = [
   {label: 'Volumes', value: 112704659},
   {label: 'Images', value: 96853788},
