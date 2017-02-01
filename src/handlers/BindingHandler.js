@@ -1,6 +1,7 @@
 /*
- * Copyright (c) 2016 Juniper Networks, Inc. All rights reserved.
+ * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
+
 var _ = require('lodash')
 var ContrailModel = require('contrail-model')
 

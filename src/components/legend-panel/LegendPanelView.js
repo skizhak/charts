@@ -39,8 +39,7 @@ class LegendPanelView extends ContrailChartsView {
     this.$el.find('.color-selector').hide()
 
     _.each(this.$el.find('.legend-attribute > input'), function (el) {
-
-      if($(el).prop('disabled')) {
+      if ($(el).prop('disabled')) {
         $(el).prop('disabled', false)
       } else {
         $(el).prop('disabled', true)

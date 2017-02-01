@@ -29,9 +29,6 @@ function memFormatter (number) {
   return formattedBytes
 }
 
-function numberFormatter (number) {
-  return d3.format(',.0f')(number) // eslint-disable-line no-undef
-}
 function getLabel (serie) {
   return serie.label
 }

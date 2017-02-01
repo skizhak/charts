@@ -81,8 +81,6 @@ function generateColorPalette (nodeIds, nodeAttrs, colorSchema, offset1, offset2
 const dataSrc = require('./cpu-mem.json')
 const dataProcessed = dataProcesser(dataSrc.data)
 
-console.log(dataProcessed)
-
 const fkColors = [
   '#00bcd4',
   '#0cc2aa',

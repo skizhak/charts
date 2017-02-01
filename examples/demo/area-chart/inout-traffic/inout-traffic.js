@@ -9,16 +9,10 @@ function timeFormatter (value) {
   return d3.timeFormat('%H:%M:%S')(value / 1000)
 }
 
-function numberFormatter (number) {
-  return number.toFixed(0)
-}
-
 function memFormatter (number) {
   const bytePrefixes = ['B', 'KB', 'MB', 'GB', 'TB']
-  var negative = false
   if (number < 0) {
     number *= -1
-    negative = true
   }
   let bytes = parseInt(number * 1024)
   let formattedBytes = '-'

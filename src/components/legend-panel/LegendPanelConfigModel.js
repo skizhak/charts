@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) Juniper Networks, Inc. All rights reserved.
+ */
+
 const _ = require('lodash')
 const ContrailChartsConfigModel = require('contrail-charts-config-model')
 
@@ -17,7 +21,6 @@ class LegendPanelConfigModel extends ContrailChartsConfigModel {
     }
 
     data.attributes = _.map(accessors, (accessor) => {
-      console.log(accessor)
       return {
         accessor: accessor.accessor,
         axis: accessor.axis,

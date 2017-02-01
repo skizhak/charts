@@ -1,6 +1,7 @@
 /*
- * Copyright (c) 2016 Juniper Networks, Inc. All rights reserved.
+ * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
+
 require('./tooltip.scss')
 const ContrailChartsView = require('contrail-charts-view')
 const _template = require('./tooltip.html')

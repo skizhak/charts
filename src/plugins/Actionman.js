@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) Juniper Networks, Inc. All rights reserved.
+ */
+
 const _ = require('lodash')
 const Events = require('contrail-charts-events')
 /**

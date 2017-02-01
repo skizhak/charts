@@ -38,7 +38,7 @@ const chartConfig = {
         '#fcc100',
         '#4caf50',
         '#c62828',
-        ]), // eslint-disable-line no-undef
+      ]), // eslint-disable-line no-undef
       serie: {
         getValue: getValue,
         getLabel: getLabel,
