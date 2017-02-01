@@ -58,8 +58,9 @@ const config = {
   },
   module: {loaders},
   resolve: {
+    root: path.resolve('./examples'),
     alias: {
-      'formatter': path.join(__dirname, '/examples/common/js/valueFormatters.js'),
+      'formatter': 'common/js/valueFormatters.js',
     },
     extensions: ['', '.js']
   },

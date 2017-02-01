@@ -1,7 +1,8 @@
-const d3 = require('d3')
+const d3Format = require('d3-format')
+const d3TimeFormat = require('d3-time-format')
 
 function extendedISOTime (value) {
-  return d3.timeFormat('%H:%M:%S')(value)
+  return d3TimeFormat.timeFormat('%H:%M:%S')(value)
 }
 
 function toInteger (number) {
@@ -19,7 +20,7 @@ function toFixedNumberFactory (digits) {
 }
 
 function commaGroupedInteger (number) {
-  return d3.format(',.0f')(number)
+  return d3Format.format(',.0f')(number)
 }
 
 function byteFormatter (bytes) {
