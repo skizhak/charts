@@ -1,4 +1,8 @@
-// Most basic chart.
+/*
+ * Copyright (c) Juniper Networks, Inc. All rights reserved.
+ */
+const formatter = require('formatter')
+
 const pieData = [
     { label: 'Process 1', value: 2704659 },
     { label: 'Process 2', value: 2159981 },
@@ -8,9 +12,7 @@ const pieData = [
     { label: 'Process 6', value: 612463 },
     { label: 'Process 7', value: 4499890 }
 ]
-function numberFormatter (number) {
-  return d3.format(',.0f')(number) // eslint-disable-line no-undef
-}
+
 function getLabel (serie) {
   return serie.label
 }
@@ -33,11 +35,11 @@ const chartConfig = {
     config: {
       type: 'donut',
       radius: 100,
-      colorScale: d3.scaleOrdinal().range(['#3366cc', '#dc3912', '#ff9900', '#109618', '#990099', '#0099c6', '#dd4477', '#66aa00', '#b82e2e', '#316395', '#994499', '#22aa99', '#aaaa11', '#6633cc', '#e67300', '#8b0707', '#651067', '#329262', '#5574a6', '#3b3eac']), // eslint-disable-line no-undef
+      colorScale: d3.scaleOrdinal().range(d3.schemeCategory20), // eslint-disable-line no-undef
       serie: {
         getValue: getValue,
         getLabel: getLabel,
-        valueFormatter: numberFormatter,
+        valueFormatter: formatter.commaGroupedInteger,
       },
       tooltip: 'tooltipId',
     },
@@ -49,7 +51,7 @@ const chartConfig = {
         {
           accessor: 'value',
           labelFormatter: getLabel,
-          valueFormatter: numberFormatter,
+          valueFormatter: formatter.commaGroupedInteger,
         },
       ],
     },

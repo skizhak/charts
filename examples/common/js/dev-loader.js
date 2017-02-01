@@ -1,8 +1,7 @@
-/* global $ */
-/**
- * Update following to add a new example.
- * @type {*[]}
+/*
+ * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
+
 require('../sass/contrail-charts-examples.scss')
 const _ = require('lodash')
 

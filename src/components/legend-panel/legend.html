@@ -1,13 +1,23 @@
+<div class="edit-legend {{#if editable}} active {{/if}}"><i class="fa fa-pencil-square" aria-hidden="true"></i></div>
 <div class="attributes">
 	{{#each attributes}}
-	<label class="legend-attribute checkbox" data-value="{{ key }}">{{ label }}
-		<input type="checkbox" {{#if checked}} checked {{/if}} />
-		<div class="edit">
-			<div class="select select--color" style="background-color: {{ color }}"><div class="triangle"></div></div>
-			<div class="select select--chart fa fa-area-chart"><div class="triangle"></div></div>
+	<div class="attribute" data-accessor="{{ accessor }}">
+		<div class="edit-attribute">
+			<div class="select select--color" style="background-color: {{ color }}; border-color: {{ color }}"><div class="triangle"></div></div>
+			<!-- <div class="select select--chart fa fa-area-chart"><div class="triangle"></div></div> -->
 		</div>
-		<div class="indicator" style="border-color: {{ color }}; {{#if checked}} background-color: {{ color }} {{/if}}"></div>
-	</label>
+		<label class="legend-attribute checkbox"><span class="axis">{{ axis }}</span>{{ label }}
+			<input type="checkbox" {{#if checked}} checked {{/if}} />
+			<div class="indicator" style="border-color: {{ color }}; {{#if checked}} background-color: {{ color }} {{/if}}"></div>
+		</label>
+	</div>
 	{{/each}}
 </div>
-<div class="button edit">edit</div>
+
+<div class="color-selector">
+  <div class="swatches">
+  	{{#each colors}}
+    <div class="swatch" style="background-color: {{this}}; border-color: {{this}}"></div>
+    {{/each}}
+  </div>
+</div>

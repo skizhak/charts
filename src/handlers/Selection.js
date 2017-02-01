@@ -1,6 +1,9 @@
-/**
- * Selection object for dataframes
+/*
+ * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
+
+// Selection object for dataframes
+
 const _ = require('lodash')
 const d3 = require('d3')
 const Events = require('contrail-charts-events')

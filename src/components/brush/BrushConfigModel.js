@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017 Juniper Networks, Inc. All rights reserved.
+ * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
 const ContrailChartsConfigModel = require('contrail-charts-config-model')
 

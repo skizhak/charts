@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) Juniper Networks, Inc. All rights reserved.
+ */
+
 module.exports = {
   ControlPanelConfigModel: require('components/control-panel/ControlPanelConfigModel'),
   ControlPanelView: require('components/control-panel/ControlPanelView'),

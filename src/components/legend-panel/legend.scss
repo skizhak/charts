@@ -1,50 +1,104 @@
+$border-color: #fafafa;
+
 .legend-panel.cc-component {
   * {
     box-sizing: content-box;
   }
   font-family: sans-serif;
-  font-size: 13px;
+  font-size: 11px;
   color: #707070;
   position: relative;
-  border: 1px solid #eee;
-  border-radius: 2px;
-  
+  border: 1px solid $border-color;
+  border-radius: 4px;
+  padding: 4px 8px;
+  display: inline-block;
+
   .attributes {
-    padding: 4px;
+    display: inline-block;
+    line-height: 11px;
+    vertical-align: middle;
   }
   
-  .button.edit {
-    position: absolute;
-    right: 3px;
-    top: 3px;
-    color: #0481d0;
-    border: 1px solid #0481d0;
+  .edit-legend {
+    display: none;
+    border-right: 1px solid $border-color;
+    padding-right: 8px;
+    margin-right: 4px;
+    font-size: 14px;
+    vertical-align: middle;
+    color: #eee;
+
+    &:hover {
+      cursor: pointer;
+    }
+
+    &.active {
+      display: inline-block;
+    }
+  }
+
+  &:hover, &.edit-mode {
+    border: 1px solid #f1f1f1;
+    border-right-color: #f1f1f1;
+
+    .edit-legend {
+      color: #aaa;
+    }
   }
 }
 
-.legend-attribute {  
+.attribute {
   display: inline-block;
-  padding: 2px;
-  position: relative;
+  border: 1px solid #fff;
+  padding: 2px 4px;
 
-  .edit {
+  .edit-attribute {
     display: none;
   }
 
   &.edit {
-    border: 1px solid #eee;
+    border: 1px solid $border-color;
     border-radius: 2px;
-    padding-left: 76px;
 
-    .edit {
+    .edit-attribute {
       display: inline-block;
     }
-  }  
+
+    .legend-attribute {
+      padding-left: 12px;
+    }
+
+    .indicator {
+      display: none;
+    }
+  }
+
+}
+
+.legend-attribute {  
+  display: inline-block;
+  padding: 3px;
+  position: relative;
+
+  .axis {
+    text-transform: uppercase;
+    color: #ccc;
+    border: 1px solid #eee;
+    padding: 1px;
+    border-radius: 4px;
+    font-size: 10px;
+    margin-right: 2px;
+  }
+
+  &:hover {
+    cursor: pointer;
+  }
 }
 
 .checkbox  {
   position: relative;
-  padding-left: 20px;
+  padding-left: 18px;
+  margin-right: 10px;
   
   input[type=checkbox] {
     display: none;
@@ -55,8 +109,8 @@
   position: absolute;
   left: 2px;
   top: 2px;
-  width: 12px;
-  height: 12px;
+  width: 10px;
+  height: 10px;
   border-radius: 100px;
   background-color: white;
   border: 1px solid black;
@@ -75,72 +129,41 @@
     }
     
     .checkbox & {
-      left: 4px;
-      top: 1px;
-      width: 2px;
-      height: 6px;
+      left: 0px;
+      top: 0px;
+      width: 8px;
+      height: 8px;
       border: solid white;
-      border-width: 0 2px 2px 0;
-      transform: rotate(45deg);
+      border-width: 1px 1px 1px 1px;
+      border-radius: 100px;
     }
   }
 }
 
 .select {
-  position: absolute;
-  top: 2px;
+  position: relative;
   display: inline-block;
   height: 12px;
-  width: 12px;
+  width: 20px;
   border: 1px solid #aaa;
-  border-top-left-radius: 2px;
-  border-bottom-left-radius: 2px;
+  border-radius: 2px;
+  vertical-align: text-bottom;
   
   &:hover {
     cursor: pointer;
-  }
-  
-  &:after {
-    z-index: -1;
-    content: '';
-    position: absolute;
-    left: 12px;
-    top: -1px;
-    display: block;
-    width: 9px;
-    height: 12px;
-    border: 1px solid #aaa;
-    border-top-right-radius: 2px;
-    border-bottom-right-radius: 2px;
-  }
-  
-  &.pressed {
-    border-color: #707070;
-    
-    &:after {
-      background-color: #707070;
-      border-color: #707070;
-    }
-
-    .triangle {
-      border-bottom: 5px solid #fff;
-    }
+    border-color: #333 !important;
   }
   
   .triangle {
     position: absolute;
     display: block;
-    right: -8px;
+    right: 2px;
     top: 5px;
     width: 0;
     height: 0;
-    border-bottom: 5px solid #aaa;
+    border-bottom: 5px solid #fff;
     border-left: 5px solid transparent;
   }
-}
-
-.select--color {
-  left: 18px;
 }
 
 .select--chart {
@@ -151,5 +174,45 @@
 
   &:after {
     left: 16px;
+  }
+}
+
+.color-selector {
+  display: none;
+  position: absolute;
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 2px;
+  width: 154px;
+  padding: 5px 5px 2px;
+
+  &.active {
+    display: inline-block;
+  }
+  
+  .header {
+    border-bottom: 1px solid #eee;
+    margin-bottom: 5px;
+    padding-bottom: 5px;
+    color: #aaa;
+  }
+
+  .swatch {
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+    border: 1px solid white;
+    border-radius: 2px;
+    background-color: white;
+    
+    &:hover {
+      cursor: pointer;
+      border-color: #333 !important;
+    }
+    
+    &.selected {
+      border: 1px solid white;
+      box-shadow: 0px 0px 0px 1px rgba(0,0,0,0.75);
+    }
   }
 }

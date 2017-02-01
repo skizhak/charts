@@ -1,21 +1,9 @@
+/*
+ * Copyright (c) Juniper Networks, Inc. All rights reserved.
+ */
+
 const d3 = require('d3')
-
-function numberFormatter (number) {
-  return Math.floor(number)
-}
-
-function byteFormatter (bytes) {
-  const unit = 1000
-
-  if (bytes < unit) {
-    return bytes + ' B'
-  }
-
-  const scale = Math.floor(Math.log(bytes) / Math.log(unit))
-  const unitPre = 'KMGTPE'.substr(scale - 1, 1)
-
-  return `${Math.floor((bytes / Math.pow(unit, scale))).toFixed(0)} ${unitPre}B`
-}
+const formatter = require('formatter')
 
 function dataProcesser (data) {
   const portTraffic = [...data.sport, ...data.dport]
@@ -44,8 +32,8 @@ function dataProcesser (data) {
   )
 }
 
-const colorSchema = d3.schemeCategory20
-let dataSrc = require('./pd.json')
+const colorScheme = d3.schemeCategory10
+let dataSrc = require('./port-distribution.json')
 
 dataSrc = dataProcesser(dataSrc)
 
@@ -74,7 +62,7 @@ const chartConfig = {
             sizeAccessor: 'outBytes',
             sizeAxis: 'sizeAxisBytes',
             shape: '&larr;',
-            color: colorSchema[2],
+            color: colorScheme[1],
             axis: 'y1',
             tooltip: 'tooltipId',
           }, {
@@ -85,7 +73,7 @@ const chartConfig = {
             sizeAccessor: 'outBytes',
             sizeAxis: 'sizeAxisBytes',
             shape: '&rarr;',
-            color: colorSchema[4],
+            color: colorScheme[2],
             axis: 'y1',
             tooltip: 'tooltipId',
           }
@@ -94,7 +82,7 @@ const chartConfig = {
       axis: {
         x: {
           scale: 'scaleLinear',
-          formatter: numberFormatter,
+          formatter: formatter.toInteger,
           labelMargin: 5
         },
         sizeAxisBytes: {
@@ -102,12 +90,12 @@ const chartConfig = {
         },
         y1: {
           position: 'left',
-          formatter: byteFormatter,
+          formatter: formatter.byteFormatter,
           labelMargin: 15,
         },
         y2: {
           position: 'right',
-          formatter: numberFormatter,
+          formatter: formatter.toInteger,
           labelMargin: 15
         }
       }
@@ -124,27 +112,27 @@ const chartConfig = {
         }, {
           accessor: 'inBytes',
           labelFormatter: 'Incoming Traffic',
-          valueFormatter: byteFormatter,
+          valueFormatter: formatter.byteFormatter,
         }, {
           accessor: 'outBytes',
           labelFormatter: 'Outgoing Traffic',
-          valueFormatter: byteFormatter,
+          valueFormatter: formatter.byteFormatter,
         }, {
           accessor: 'inFlowCount',
           labelFormatter: 'Incoming Flow Count',
-          valueFormatter: numberFormatter,
+          valueFormatter: formatter.toInteger,
         }, {
           accessor: 'outFlowCount',
           labelFormatter: 'Outgoing Flow Count',
-          valueFormatter: numberFormatter,
+          valueFormatter: formatter.toInteger,
         }, {
           accessor: 'inPkts',
           labelFormatter: 'Incoming Packets',
-          valueFormatter: numberFormatter,
+          valueFormatter: formatter.toInteger,
         }, {
           accessor: 'outPkts',
           labelFormatter: 'Outgoing Packets',
-          valueFormatter: numberFormatter,
+          valueFormatter: formatter.toInteger,
         }
       ]
     }
@@ -173,21 +161,21 @@ const chartConfig = {
             sizeAccessor: 'outBytes',
             sizeAxis: 'sizeAxisBytes',
             shape: '&bigcirc;',
-            color: '#0cc2aa'
+            color: colorScheme[4]
           }
         ]
       },
       axis: {
         x: {
           scale: 'scaleLinear',
-          formatter: byteFormatter
+          formatter: formatter.byteFormatter
         },
         sizeAxisBytes: {
           range: [100, 150]
         },
         y1: {
           position: 'left',
-          formatter: byteFormatter,
+          formatter: formatter.byteFormatter,
           labelMargin: 15,
           ticks: 4
         }

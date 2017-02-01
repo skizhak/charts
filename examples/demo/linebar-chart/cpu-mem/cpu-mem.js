@@ -1,33 +1,8 @@
-/* global d3 coCharts */
-
+/*
+ * Copyright (c) Juniper Networks, Inc. All rights reserved.
+ */
 const _ = require('lodash')
-
-function timeFormatter (value) {
-  return d3.timeFormat('%H:%M:%S')(value / 1000)
-}
-
-function cpuFormatter (number) {
-  return number.toFixed(1) + '%'
-}
-
-function memFormatter (number) {
-  const bytePrefixes = ['B', 'KB', 'MB', 'GB', 'TB']
-  let bytes = parseInt(number * 1024)
-  let formattedBytes = '-'
-  _.each(bytePrefixes, (prefix, idx) => {
-    if (bytes < 1024) {
-      formattedBytes = bytes.toFixed(1) + ' ' + prefix
-      return false
-    } else {
-      if (idx === bytePrefixes.length - 1) {
-        formattedBytes = bytes.toFixed(1) + ' ' + prefix
-      } else {
-        bytes = bytes / 1024
-      }
-    }
-  })
-  return formattedBytes
-}
+const formatter = require('formatter')
 
 function dataProcesser (rawData) {
   const keyMapper = {
@@ -77,8 +52,9 @@ function generateColorPalette (nodeIds, nodeAttrs, colorSchema, offset1, offset2
   }, {})
 }
 
-const dataSrc = require('./data-source.json')
+const dataSrc = require('./cpu-mem.json')
 const dataProcessed = dataProcesser(dataSrc.data)
+
 const fkColors = [
   '#00bcd4',
   '#0cc2aa',
@@ -140,14 +116,14 @@ const navPlotYConfig = _.reduce(dataProcessed.nodeIds, (config, nodeId, idx) => 
   config.push({
     enabled: true,
     accessor: `${nodeId}.cpu_share`,
-    labelFormatter: 'CPU Utilization (%)',
+    // labelFormatter: 'CPU Utilization (%)',
     chart: 'BarChart',
     color: colorPalette[`${nodeId}.cpu_share`],
     axis: 'y1',
   }, {
     enabled: false,
     accessor: `${nodeId}.mem_res`,
-    labelFormatter: 'Memory Usage',
+    // labelFormatter: 'Memory Usage',
     chart: 'LineChart',
     color: colorPalette[`${nodeId}.mem_res`],
     axis: 'y2',
@@ -160,18 +136,18 @@ const tooltipDataConfig = _.reduce(dataProcessed.nodeIds, (config, nodeId) => {
   config.push({
     accessor: `${nodeId}.cpu_share`,
     labelFormatter: `${nodeId} CPU Share`,
-    valueFormatter: cpuFormatter,
+    valueFormatter: formatter.toFixedPercentage1,
   }, {
     accessor: `${nodeId}.mem_res`,
     labelFormatter: `${nodeId} Memory Usage`,
-    valueFormatter: memFormatter,
+    valueFormatter: formatter.byteFormatter,
   })
 
   return config
 }, [{
   accessor: 'T',
   labelFormatter: 'Time',
-  valueFormatter: timeFormatter,
+  valueFormatter: formatter.extendedISOTime,
 }])
 
 // Create chart view.
@@ -203,18 +179,18 @@ cpuMemChartView.setConfig({
       },
       axis: {
         x: {
-          formatter: timeFormatter
+          formatter: formatter.extendedISOTime
         },
         y1: {
           position: 'left',
           label: 'CPU Utilization (%)',
-          formatter: cpuFormatter,
+          formatter: formatter.toFixedPercentage1,
           labelMargin: 15,
         },
         y2: {
           position: 'right',
           label: 'Memory Usage',
-          formatter: memFormatter,
+          formatter: formatter.byteFormatter,
           labelMargin: 15,
         }
       }
@@ -239,7 +215,7 @@ cpuMemChartView.setConfig({
       },
       axis: {
         x: {
-          formatter: timeFormatter
+          formatter: formatter.extendedISOTime
         },
         y1: {
           position: 'left',
