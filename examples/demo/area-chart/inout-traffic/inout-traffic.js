@@ -9,7 +9,6 @@ const _c = require('constants')
 
 const lbColorScheme5 = _c.lbColorScheme7
 
-
 function dataProcesser (rawData) {
   const keyMapper = {
     'T': () => 'T',
