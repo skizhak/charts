@@ -56,7 +56,8 @@ const chartConfig = {
             chart: 'ScatterPlot',
             sizeAccessor: 'size1',
             sizeAxis: 'sizeAxis',
-            shape: 'circle',
+            // this is a circle symbol from fontawesome
+            shape: '&#f111;',
             axis: 'y1',
             tooltip: 'tooltipId',
           }, {
@@ -65,7 +66,7 @@ const chartConfig = {
             chart: 'ScatterPlot',
             sizeAccessor: 'size2',
             sizeAxis: 'sizeAxis',
-            shape: 'square',
+            shape: '&FilledSmallSquare;',
             axis: 'y2',
             tooltip: 'tooltipId',
           }, {
@@ -74,7 +75,7 @@ const chartConfig = {
             chart: 'ScatterPlot',
             sizeAccessor: 'size2',
             sizeAxis: 'sizeAxis',
-            shape: 'triangle',
+            shape: '&blacktriangle;',
             axis: 'y2',
             tooltip: 'tooltipId',
           }
