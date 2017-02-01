@@ -47,9 +47,9 @@ const chartConfig = {
     config: {
       chartHeight: 600,
       marginInner: 10,
-      marginLeft: 80,
+      marginLeft: 100,
       marginRight: 80,
-      marginBottom: 40,
+      marginBottom: 60,
       plot: {
         x: {
           accessor: 'port',
@@ -60,7 +60,7 @@ const chartConfig = {
           {
             enabled: true,
             accessor: 'inBytes',
-            label: 'In Bytes',
+            label: 'Traffic In',
             chart: 'ScatterPlot',
             sizeAccessor: 'outBytes',
             sizeAxis: 'sizeAxisBytes',
@@ -71,7 +71,7 @@ const chartConfig = {
           }, {
             enabled: true,
             accessor: 'outBytes',
-            label: 'Out Bytes',
+            label: 'Traffic Out',
             chart: 'ScatterPlot',
             sizeAccessor: 'outBytes',
             sizeAxis: 'sizeAxisBytes',
@@ -107,18 +107,18 @@ const chartConfig = {
     id: 'tooltip-id',
     type: 'Tooltip',
     config: {
-      title: 'Port Info',
+      title: 'Port Traffic',
       dataConfig: [
         {
           accessor: 'port',
-          labelFormatter: 'Port',
+          labelFormatter: 'Port Number',
         }, {
           accessor: 'inBytes',
-          labelFormatter: 'Incoming Traffic',
+          labelFormatter: 'Traffic In',
           valueFormatter: formatter.byteFormatter,
         }, {
           accessor: 'outBytes',
-          labelFormatter: 'Outgoing Traffic',
+          labelFormatter: 'Traffic Out',
           valueFormatter: formatter.byteFormatter,
         }, {
           accessor: 'inFlowCount',
@@ -127,14 +127,6 @@ const chartConfig = {
         }, {
           accessor: 'outFlowCount',
           labelFormatter: 'Outgoing Flow Count',
-          valueFormatter: formatter.toInteger,
-        }, {
-          accessor: 'inPkts',
-          labelFormatter: 'Incoming Packets',
-          valueFormatter: formatter.toInteger,
-        }, {
-          accessor: 'outPkts',
-          labelFormatter: 'Outgoing Packets',
           valueFormatter: formatter.toInteger,
         }
       ]
@@ -145,20 +137,20 @@ const chartConfig = {
       marginInner: 10,
       marginLeft: 80,
       marginRight: 80,
-      marginBottom: 40,
+      marginBottom: 60,
       chartHeight: 200,
       selection: [75, 100],
       plot: {
         x: {
           accessor: 'inBytes',
-          label: 'In Bytes',
+          label: 'Port Traffic In',
           axis: 'x',
         },
         y: [
           {
             enabled: true,
             accessor: 'outBytes',
-            label: 'Out Bytes',
+            label: 'Port Traffic Out',
             chart: 'ScatterPlot',
             axis: 'y1',
             sizeAccessor: 'outBytes',

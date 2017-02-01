@@ -128,11 +128,11 @@ const navPlotYConfig = _.reduce(dataProcessed.nodeIds, (config, nodeId, idx) => 
 const tooltipDataConfig = _.reduce(dataProcessed.nodeIds, (config, nodeId) => {
   config.push({
     accessor: `${nodeId}.sum_bytes`,
-    labelFormatter: `${nodeId} Sum(Bytes)`,
+    labelFormatter: `Sum(Bytes) ${nodeId} `,
     valueFormatter: formatter.byteFormatter,
   }, {
     accessor: `${nodeId}.sum_packets`,
-    labelFormatter: `${nodeId} Sum(Packets)`,
+    labelFormatter: `Sum(Packets) ${nodeId}`,
     valueFormatter: formatter.toInteger,
   })
 

@@ -3,11 +3,12 @@
  */
 /* global d3 */
 
-/* global d3 */
-
-const colorScheme = d3.schemeCategory10
-const simpleData = []
 const formatter = require('formatter')
+const _c = require('constants')
+
+const colorScheme = _c.bubbleColorScheme6
+const bubbleShapes = _c.bubbleShapes
+const simpleData = []
 
 for (let i = 0; i < 40; i++) {
   simpleData.push({
@@ -32,6 +33,8 @@ const chartConfig = {
     id: 'multishape-bubble-chart',
     type: 'CompositeYChart',
     config: {
+      marginLeft: 50,
+      marginRight: 50,
       plot: {
         x: {
           accessor: 'x',
@@ -41,32 +44,35 @@ const chartConfig = {
           {
             enabled: true,
             accessor: 'data1',
+            label: 'Data 1',
             chart: 'ScatterPlot',
             sizeAccessor: 'size1',
             sizeAxis: 'sizeAxis',
             // this is a circle symbol from fontawesome
-            shape: '&#xf111;',
+            shape: bubbleShapes.circleFill,
             color: colorScheme[0],
             axis: 'y1',
             tooltip: 'tooltip-id',
           }, {
             enabled: true,
             accessor: 'data2',
+            label: 'Data 2',
             chart: 'ScatterPlot',
             sizeAccessor: 'size2',
             sizeAxis: 'sizeAxis',
-            shape: '&FilledSmallSquare;',
-            color: colorScheme[3],
+            shape: bubbleShapes.square,
+            color: colorScheme[4],
             axis: 'y2',
             tooltip: 'tooltip-id',
           }, {
             enabled: true,
             accessor: 'data3',
+            label: 'Data 3',
             chart: 'ScatterPlot',
             sizeAccessor: 'size2',
             sizeAxis: 'sizeAxis',
-            shape: '&blacktriangle;',
-            color: colorScheme[2],
+            shape: bubbleShapes.star,
+            color: colorScheme[5],
             axis: 'y2',
             tooltip: 'tooltip-id',
           }

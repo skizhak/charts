@@ -151,16 +151,29 @@ const chartConfig = {
     id: 'tooltip-id',
     type: 'Tooltip',
     config: {
-      title: {
-        accessor: 'cpu',
-        valueFormatter: formatter.toFixed1,
-      },
+      title: 'Node Memory & CPU',
 
       dataConfig: [
         {
-          accessor: 'size',
-          labelFormatter: 'Size',
-          valueFormatter: formatter.toInteger
+          accessor: 'cpu',
+          labelFormatter: 'CPU Share',
+          valueFormatter: formatter.toFixed1
+        },
+        {
+          labelFormatter: 'Memory',
+          valueFormatter: (point) => {
+            let nodes = ['compute', 'control', 'config', 'collector', 'db', 'webui']
+            let memory = '-'
+
+            for (var i in nodes) {
+              if(point[nodes[i]]) {
+                memory = formatter.byteFormatter(point[nodes[i]])
+                break
+              }
+            }
+
+            return memory
+          }
         }
       ]
     }
