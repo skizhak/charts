@@ -78,7 +78,7 @@ function generateColorPalette (nodeIds, nodeAttrs, colorSchema, offset1, offset2
   }, {})
 }
 
-const dataSrc = require('./data-source.json')
+const dataSrc = require('./cpu-mem.json')
 const dataProcessed = dataProcesser(dataSrc.data)
 
 console.log(dataProcessed)
