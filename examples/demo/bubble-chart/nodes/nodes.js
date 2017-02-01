@@ -2,37 +2,7 @@
 
 const _ = require('lodash')
 const colorSchema = d3.schemeCategory10
-
-function numberFormatter (number) {
-  return number.toFixed(0)
-}
-
-function numberFormatter1 (number) {
-  return number.toFixed(1)
-}
-
-function memFormatter (number) {
-  const bytePrefixes = ['B', 'KB', 'MB', 'GB', 'TB']
-  let bytes = parseInt(number * 1024)
-  let formattedBytes = '-'
-  _.each(bytePrefixes, (prefix, idx) => {
-    if (bytes < 1024) {
-      formattedBytes = bytes.toFixed(1) + ' ' + prefix
-      return false
-    } else {
-      if (idx === bytePrefixes.length - 1) {
-        formattedBytes = bytes.toFixed(1) + ' ' + prefix
-      } else {
-        bytes = bytes / 1024
-      }
-    }
-  })
-  return formattedBytes
-}
-
-function randomFromInterval (min, max) {
-  return Math.random() * (max - min + 1) + min
-}
+const formatter = require('formatter')
 
 const simpleData = []
 const nodes = {
@@ -50,12 +20,12 @@ var data = {}
 for (var n in nodes) {
   count = nodes[n]
   for (let i = 0; i < count; i++) {
-    cpu = randomFromInterval(0, 100)
+    cpu = _.random(0, 100)
     data = {
       cpu: cpu,
       size: Math.random() * 10
     }
-    data[n] = Math.random() * 10000
+    data[n] = Math.random() * 10000 * 1024
     simpleData.push(data)
   }
 }
@@ -147,14 +117,14 @@ const chartConfig = {
       axis: {
         x: {
           scale: 'scaleLinear',
-          formatter: numberFormatter
+          formatter: formatter.toInteger
         },
         sizeAxis: {
           range: [100, 300]
         },
         y1: {
           position: 'left',
-          formatter: memFormatter,
+          formatter: formatter.byteFormatter,
           label: 'Memory',
         }
       },
@@ -165,14 +135,14 @@ const chartConfig = {
     config: {
       title: {
         accessor: 'cpu',
-        valueFormatter: numberFormatter1,
+        valueFormatter: formatter.toFixed1,
       },
 
       dataConfig: [
         {
           accessor: 'size',
           labelFormatter: 'Size',
-          valueFormatter: numberFormatter
+          valueFormatter: formatter.toInteger
         }
       ]
     }
@@ -247,14 +217,15 @@ const chartConfig = {
       axis: {
         x: {
           scale: 'scaleLinear',
-          formatter: numberFormatter
+          formatter: formatter.toInteger
         },
         sizeAxis: {
           range: [50, 150]
         },
         y1: {
           position: 'left',
-          formatter: memFormatter,
+          label: 'Memory',
+          formatter: formatter.byteFormatter,
           labelMargin: 15,
           ticks: 4
         }

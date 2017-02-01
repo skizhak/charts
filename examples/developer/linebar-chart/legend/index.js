@@ -1,14 +1,6 @@
-/* global d3 coCharts */
+/* global coCharts */
 
-function timeFormatter (value) {
-  return d3.timeFormat('%H:%M:%S')(value)
-}
-function numberFormatter (number) {
-  return number.toFixed(0)
-}
-function numberFormatter3 (number) {
-  return number.toFixed(1)
-}
+const formatter = require('formatter')
 
 // Complex example
 const complexData = []
@@ -158,16 +150,16 @@ complexChartView.setConfig({
       },
       axis: {
         x: {
-          formatter: d3.timeFormat('%H:%M:%S')
+          formatter: formatter.extendedISOTime,
         },
         y1: {
           position: 'left',
-          formatter: numberFormatter,
+          formatter: formatter.toInteger,
           domain: [-10, undefined],
         },
         y2: {
           position: 'right',
-          formatter: numberFormatter3,
+          formatter: formatter.toFixed1,
         }
       }
     },
@@ -213,12 +205,12 @@ complexChartView.setConfig({
         },
         y1: {
           position: 'left',
-          formatter: numberFormatter,
+          formatter: formatter.toInteger,
           ticks: 5,
         },
         y2: {
           position: 'right',
-          formatter: numberFormatter3,
+          formatter: formatter.toFixed1,
           ticks: 5,
         }
       }
@@ -229,30 +221,30 @@ complexChartView.setConfig({
     config: {
       title: {
         accessor: 'x',
-        valueFormatter: timeFormatter,
+        valueFormatter: formatter.extendedISOTime,
       },
 
       dataConfig: [
         {
           accessor: 'a',
           labelFormatter: 'Label A',
-          valueFormatter: numberFormatter,
+          valueFormatter: formatter.toInteger,
         }, {
           accessor: 'b',
           labelFormatter: 'Label B',
-          valueFormatter: numberFormatter,
+          valueFormatter: formatter.toInteger,
         }, {
           accessor: 'c',
           labelFormatter: 'Label C',
-          valueFormatter: numberFormatter,
+          valueFormatter: formatter.toInteger,
         }, {
           accessor: 'd',
           labelFormatter: 'Label D',
-          valueFormatter: numberFormatter,
+          valueFormatter: formatter.toInteger,
         }, {
           accessor: 'e',
           labelFormatter: 'Label E',
-          valueFormatter: numberFormatter,
+          valueFormatter: formatter.toInteger,
         }
       ]
     },

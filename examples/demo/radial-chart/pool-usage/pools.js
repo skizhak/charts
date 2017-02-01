@@ -7,28 +7,9 @@ const pieData = [
   {label: 'Volumns HDD B', value: 1127576593},
 ]
 
-function memFormatter (number) {
-  const bytePrefixes = ['B', 'KB', 'MB', 'GB', 'TB']
-  let bytes = parseInt(number * 1024)
-  let formattedBytes = '-'
-  _.each(bytePrefixes, (prefix, idx) => {
-    if (bytes < 1024) {
-      formattedBytes = bytes.toFixed(1) + ' ' + prefix
-      return false
-    } else {
-      if (idx === bytePrefixes.length - 1) {
-        formattedBytes = bytes.toFixed(1) + ' ' + prefix
-      } else {
-        bytes = bytes / 1024
-      }
-    }
-  })
-  return formattedBytes
-}
+const d3 = require('d3')
+const formatter = require('formatter')
 
-function numberFormatter (number) {
-  return d3.format(',.0f')(number) // eslint-disable-line no-undef
-}
 function getLabel (serie) {
   return serie.label
 }
@@ -61,7 +42,7 @@ const chartConfig = {
       serie: {
         getValue: getValue,
         getLabel: getLabel,
-        valueFormatter: memFormatter,
+        valueFormatter: formatter.byteFormatter,
       },
       tooltip: 'tooltipId',
     },
@@ -73,7 +54,7 @@ const chartConfig = {
         {
           accessor: 'value',
           labelFormatter: getLabel,
-          valueFormatter: memFormatter,
+          valueFormatter: formatter.byteFormatter,
         },
       ],
     },
