@@ -24,7 +24,7 @@ define([ // eslint-disable-line no-undef
   const complexChartView = new coCharts.charts.XYChartView()
   complexChartView.setData(complexData)
   complexChartView.setConfig({
-    container: '#complexChart',
+    container: '#chart-requirejs',
     components: [{
       type: 'CompositeYChart',
       config: {
@@ -45,21 +45,21 @@ define([ // eslint-disable-line no-undef
               enabled: true,
               chart: 'StackedBarChart',
               axis: 'y1',
-              tooltip: 'defaultTooltip',
+              tooltip: 'default-tooltip',
             }, {
               accessor: 'b',
               label: 'Label B',
               enabled: true,
               chart: 'StackedBarChart',
               axis: 'y1',
-              tooltip: 'defaultTooltip',
+              tooltip: 'default-tooltip',
             }, {
               accessor: 'c',
               label: 'Label C',
               enabled: false,
               chart: 'StackedBarChart',
               axis: 'y1',
-              tooltip: 'defaultTooltip',
+              tooltip: 'default-tooltip',
             }, {
               accessor: 'd',
               label: 'Megabytes D',
@@ -67,7 +67,7 @@ define([ // eslint-disable-line no-undef
               enabled: true,
               chart: 'LineChart',
               axis: 'y2',
-              tooltip: 'defaultTooltip',
+              tooltip: 'default-tooltip',
             }, {
               accessor: 'e',
               label: 'Megabytes E',
@@ -75,7 +75,7 @@ define([ // eslint-disable-line no-undef
               enabled: true,
               chart: 'LineChart',
               axis: 'y2',
-              tooltip: 'defaultTooltip',
+              tooltip: 'default-tooltip',
             }
           ]
         },
@@ -94,7 +94,7 @@ define([ // eslint-disable-line no-undef
         }
       },
     }, {
-      id: 'defaultTooltip',
+      id: 'default-tooltip',
       type: 'Tooltip',
       config: {
         dataConfig: [
@@ -128,7 +128,7 @@ define([ // eslint-disable-line no-undef
   const simpleChartView = new coCharts.charts.XYChartView()
   simpleChartView.setData(simpleData)
   simpleChartView.setConfig({
-    container: '#simpleChart',
+    container: '#chart-requirejs',
     components: [{
       type: 'CompositeYChart',
       config: {

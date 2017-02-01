@@ -14,9 +14,9 @@ for (let i = 1; i <= 5; i++) {
 
 const complexChartView = new coCharts.charts.XYChartView()
 complexChartView.setConfig({
-  container: '#chart',
+  container: '#grouped-bar-chart',
   components: [{
-    id: 'compositeYId',
+    id: 'grouped-bar-compositey',
     type: 'CompositeYChart',
     config: {
       marginInner: 10,
@@ -43,7 +43,7 @@ complexChartView.setConfig({
             enabled: true,
             chart: 'BarChart',
             axis: 'y1',
-            tooltip: 'defaultTooltipId',
+            tooltip: 'default-tooltip',
           }, {
             accessor: 'c',
             labelFormatter: 'Label C',
@@ -51,7 +51,7 @@ complexChartView.setConfig({
             enabled: true,
             chart: 'BarChart',
             axis: 'y1',
-            tooltip: 'defaultTooltipId',
+            tooltip: 'default-tooltip',
           }
         ]
       },
@@ -66,7 +66,7 @@ complexChartView.setConfig({
       },
     },
   }, {
-    id: 'defaultTooltipId',
+    id: 'default-tooltip',
     type: 'Tooltip',
     config: {
       dataConfig: [

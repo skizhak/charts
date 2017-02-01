@@ -1,24 +1,4 @@
-#complexChart {
-    position: relative;
-    margin: 30px;
-}
-
-#complexChart-xyChart {
-    position: relative;
-}
-
-#complexChart-controlPanel {
-    position: absolute;
-    top: 0px;
-    right: 0px;
-}
-
-#complexChart-navigation {
-    position: relative;
-    margin-bottom: 25px;
-}
-
-#messageId {
+#message-id {
     position: absolute;
     top: 50%;
     left: 50%;

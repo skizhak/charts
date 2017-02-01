@@ -2,7 +2,9 @@
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
 
-const colorSchema = d3.schemeCategory20
+/* global d3 */
+
+const colorScheme = d3.schemeCategory20
 
 const simpleData = [
   { x: (new Date(2016, 11, 1)).getTime(), y: 0 },
@@ -14,7 +16,7 @@ const simpleData = [
 
 const simpleChartView = new coCharts.charts.XYChartView()
 simpleChartView.setConfig({
-  container: '#simpleChart',
+  container: '#basic-area-chart',
   components: [{
     type: 'CompositeYChart',
     config: {
@@ -29,7 +31,7 @@ simpleChartView.setConfig({
             accessor: 'y',
             chart: 'AreaChart',
             axis: 'y',
-            color: colorSchema[1]
+            color: colorScheme[1]
           }
         ]
       },

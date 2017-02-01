@@ -15,9 +15,9 @@ for (let i = 0; i < 100; i++) {
 }
 const complexChartView = new coCharts.charts.XYChartView()
 complexChartView.setConfig({
-  container: '#chart',
+  container: '#chart-tooltip',
   components: [{
-    id: 'compositeYId',
+    id: 'compositey-id',
     type: 'CompositeYChart',
     config: {
       marginInner: 10,
@@ -38,14 +38,14 @@ complexChartView.setConfig({
             enabled: true,
             chart: 'StackedBarChart',
             axis: 'y1',
-            tooltip: 'defaultTooltipId',
+            tooltip: 'default-tooltip',
           }, {
             accessor: 'b',
             labelFormatter: 'Label B',
             enabled: true,
             chart: 'StackedBarChart',
             axis: 'y1',
-            tooltip: 'customTooltip',
+            tooltip: 'custom-tooltip',
           }, {
             accessor: 'c',
             labelFormatter: 'Megabytes C',
@@ -53,7 +53,7 @@ complexChartView.setConfig({
             enabled: true,
             chart: 'LineChart',
             axis: 'y2',
-            tooltip: 'defaultTooltipId',
+            tooltip: 'default-tooltip',
           }
         ]
       },
@@ -73,7 +73,7 @@ complexChartView.setConfig({
       },
     },
   }, {
-    id: 'defaultTooltipId',
+    id: 'default-tooltip',
     type: 'Tooltip',
     config: {
       dataConfig: [
@@ -97,7 +97,7 @@ complexChartView.setConfig({
       ]
     },
   }, {
-    id: 'customTooltip',
+    id: 'custom-tooltip',
     type: 'Tooltip',
     config: {
       template: (data) => '<div class="tooltip-content">Custom tooltip</div>',

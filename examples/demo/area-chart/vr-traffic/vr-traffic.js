@@ -153,14 +153,14 @@ const tooltipDataConfig = _.reduce(dataProcessed.nodeIds, (config, nodeId) => {
 // Create chart view.
 const trafficView = new coCharts.charts.XYChartView()
 trafficView.setConfig({
-  container: '#cpuMemChart',
+  container: '#vr-traffic',
   components: [{
     type: 'LegendPanel',
     config: {
-      sourceComponent: 'cpuMemCompositeY',
+      sourceComponent: 'vr-traffic-compositey',
     }
   }, {
-    id: 'cpuMemCompositeY',
+    id: 'vr-traffic-compositey',
     type: 'CompositeYChart',
     config: {
       marginInner: 10,
@@ -168,7 +168,7 @@ trafficView.setConfig({
       marginRight: 80,
       marginBottom: 40,
       chartHeight: 600,
-      crosshair: 'crosshairId',
+      crosshair: 'crosshair-id',
       plot: {
         x: {
           accessor: 'T',
@@ -196,7 +196,7 @@ trafficView.setConfig({
       }
     }
   }, {
-    id: 'cpuMemChart-navigation',
+    id: 'vr-traffic-navigation',
     type: 'Navigation',
     config: {
       marginInner: 10,
@@ -232,14 +232,14 @@ trafficView.setConfig({
       }
     }
   }, {
-    id: 'defaultTooltip',
+    id: 'default-tooltip',
     type: 'Tooltip',
     config: {
       title: 'Usage Details',
       dataConfig: tooltipDataConfig
     }
   }, {
-    id: 'cpuMemChart-controlPanel',
+    id: 'vr-traffic-controlpanel',
     type: 'ControlPanel',
     config: {
       enabled: true,
@@ -264,16 +264,16 @@ trafficView.setConfig({
       isSharedContainer: false,
     },
   }, {
-    id: 'cpuMemChart-message',
+    id: 'vrTrafficMessage',
     type: 'Message',
     config: {
       enabled: true,
     }
   }, {
-    id: 'crosshairId',
+    id: 'crosshair-id',
     type: 'Crosshair',
     config: {
-      tooltip: 'defaultTooltip',
+      tooltip: 'default-tooltip',
     }
   }]
 })

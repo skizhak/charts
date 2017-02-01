@@ -2,6 +2,8 @@
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
 
+/* global $ */
+
 require('../sass/contrail-charts-examples.scss')
 const _ = require('lodash')
 
@@ -9,13 +11,11 @@ const demoLBExamples = [
   {
     html: 'linebar-chart/query-db-rw/query-db.html',
     js: 'linebar-chart/query-db-rw/query-db.js',
-    css: 'linebar-chart/query-db-rw//query-db.css',
     title: 'Queries & DB R/W',
   },
   {
     html: 'linebar-chart/cpu-mem/cpu-mem.html',
     js: 'linebar-chart/cpu-mem/cpu-mem.js',
-    css: 'linebar-chart/cpu-mem/cpu-mem.css',
     title: 'Memory & CPU'
   }
 ]
@@ -24,14 +24,12 @@ const demoBubbleExamples = [
   {
     html: 'bubble-chart/port-distribution/port-distribution.html',
     js: 'bubble-chart/port-distribution/port-distribution.js',
-    css: 'bubble-chart/port-distribution/port-distribution.css',
     title: "Ports' Traffic"
   },
   {
     html: 'bubble-chart/nodes/nodes.html',
     js: 'bubble-chart/nodes/nodes.js',
-    css: 'bubble-chart/nodes/nodes.css',
-    title: 'Nodes'
+    title: "Nodes' CPU / Mem"
   }
 ]
 
@@ -39,13 +37,11 @@ const areaExamples = [
   {
     html: 'area-chart/vr-traffic/vr-traffic.html',
     js: 'area-chart/vr-traffic/vr-traffic.js',
-    css: 'area-chart/vr-traffic/vr-traffic.css',
     title: 'vRouter Traffic'
   },
   {
     html: 'area-chart/inout-traffic/inout-traffic.html',
     js: 'area-chart/inout-traffic/inout-traffic.js',
-    css: 'area-chart/inout-traffic/inout-traffic.css',
     title: 'VN Traffic In/Out'
   }
 ]
