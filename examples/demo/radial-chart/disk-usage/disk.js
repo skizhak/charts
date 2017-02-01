@@ -1,4 +1,7 @@
-// Most basic chart.
+/*
+ * Copyright (c) Juniper Networks, Inc. All rights reserved.
+ */
+
 const pieData = [
   {label: 'Disks In', value: 55},
   {label: 'Disks Out', value: 6},

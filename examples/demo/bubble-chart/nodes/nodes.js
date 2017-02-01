@@ -1,7 +1,9 @@
-/* global coCharts d3 */
+/*
+ * Copyright (c) Juniper Networks, Inc. All rights reserved.
+ */
 
 const _ = require('lodash')
-const colorSchema = d3.schemeCategory10
+const colorScheme = d3.schemeCategory10
 
 function numberFormatter (number) {
   return number.toFixed(0)
@@ -91,7 +93,7 @@ const chartConfig = {
             sizeAxis: 'sizeAxis',
             shape: 'circle',
             axis: 'y1',
-            color: colorSchema[0],
+            color: colorScheme[0],
             tooltip: 'tooltipId',
           },
           {
@@ -103,7 +105,7 @@ const chartConfig = {
             sizeAxis: 'sizeAxis',
             shape: 'star',
             axis: 'y1',
-            color: colorSchema[5],
+            color: colorScheme[1],
             tooltip: 'tooltipId',
           },
           {
@@ -115,7 +117,7 @@ const chartConfig = {
             sizeAxis: 'sizeAxis',
             shape: 'diamond',
             axis: 'y1',
-            color: colorSchema[2],
+            color: colorScheme[2],
             tooltip: 'tooltipId',
           },
           {
@@ -127,7 +129,7 @@ const chartConfig = {
             sizeAxis: 'sizeAxis',
             shape: 'cross',
             axis: 'y1',
-            color: colorSchema[4],
+            color: colorScheme[3],
             tooltip: 'tooltipId',
           },
           {
@@ -139,7 +141,7 @@ const chartConfig = {
             sizeAxis: 'sizeAxis',
             shape: 'triangle',
             axis: 'y1',
-            color: colorSchema[9],
+            color: colorScheme[4],
             tooltip: 'tooltipId',
           }
         ]
@@ -200,7 +202,7 @@ const chartConfig = {
             sizeAccessor: 'size',
             sizeAxis: 'sizeAxis',
             shape: 'circle',
-            color: colorSchema[0]
+            color: colorScheme[0]
           },
           {
             enabled: true,
@@ -210,7 +212,7 @@ const chartConfig = {
             sizeAccessor: 'size',
             sizeAxis: 'sizeAxis',
             shape: 'star',
-            color: colorSchema[5]
+            color: colorScheme[5]
           },
           {
             enabled: true,
@@ -220,7 +222,7 @@ const chartConfig = {
             sizeAccessor: 'size',
             sizeAxis: 'sizeAxis',
             shape: 'diamond',
-            color: colorSchema[2]
+            color: colorScheme[2]
           },
           {
             enabled: true,
@@ -230,7 +232,7 @@ const chartConfig = {
             sizeAccessor: 'size',
             sizeAxis: 'sizeAxis',
             shape: 'cross',
-            color: colorSchema[4]
+            color: colorScheme[4]
           },
           {
             enabled: true,
@@ -240,7 +242,7 @@ const chartConfig = {
             sizeAccessor: 'size',
             sizeAxis: 'sizeAxis',
             shape: 'triangle',
-            color: colorSchema[9]
+            color: colorScheme[9]
           }
         ]
       },

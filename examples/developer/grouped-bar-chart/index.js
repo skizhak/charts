@@ -1,4 +1,6 @@
-/* global coCharts */
+/*
+ * Copyright (c) Juniper Networks, Inc. All rights reserved.
+ */
 
 const staticData = []
 for (let i = 1; i <= 5; i++) {

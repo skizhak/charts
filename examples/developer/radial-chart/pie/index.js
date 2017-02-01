@@ -1,4 +1,7 @@
-// Most basic chart.
+/*
+ * Copyright (c) Juniper Networks, Inc. All rights reserved.
+ */
+
 const pieData = [
     { label: 'Process 1', value: 2704659 },
     { label: 'Process 2', value: 2159981 },
@@ -33,7 +36,7 @@ const chartConfig = {
     config: {
       type: 'donut',
       radius: 100,
-      colorScale: d3.scaleOrdinal().range(['#3366cc', '#dc3912', '#ff9900', '#109618', '#990099', '#0099c6', '#dd4477', '#66aa00', '#b82e2e', '#316395', '#994499', '#22aa99', '#aaaa11', '#6633cc', '#e67300', '#8b0707', '#651067', '#329262', '#5574a6', '#3b3eac']), // eslint-disable-line no-undef
+      colorScale: d3.scaleOrdinal().range(d3.schemeCategory20), // eslint-disable-line no-undef
       serie: {
         getValue: getValue,
         getLabel: getLabel,

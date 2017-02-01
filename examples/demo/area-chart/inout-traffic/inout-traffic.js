@@ -1,7 +1,9 @@
-/* global d3 coCharts */
+/*
+ * Copyright (c) Juniper Networks, Inc. All rights reserved.
+ */
 
 const _ = require('lodash')
-const dataSrc = require('./inouttraffic.json')
+const dataSrc = require('./inout-traffic.json')
 
 function timeFormatter (value) {
   return d3.timeFormat('%H:%M:%S')(value / 1000)

@@ -1,4 +1,6 @@
-/* global coCharts */
+/*
+ * Copyright (c) Juniper Networks, Inc. All rights reserved.
+ */
 
 const complexData = []
 for (let i = 0; i < 100; i++) {

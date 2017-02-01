@@ -1,4 +1,6 @@
-/* global coCharts */
+/*
+ * Copyright (c) Juniper Networks, Inc. All rights reserved.
+ */
 
 function timeFormatter (value) {
   return d3.timeFormat('%H:%M:%S')(value)

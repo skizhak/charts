@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) Juniper Networks, Inc. All rights reserved.
+ */
+
 const handlers = require('handlers/index')
 const components = require('components/index')
 const charts = require('charts/index')

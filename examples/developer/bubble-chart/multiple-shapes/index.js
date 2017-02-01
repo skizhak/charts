@@ -1,4 +1,9 @@
-/* global coCharts d3 */
+/*
+ * Copyright (c) Juniper Networks, Inc. All rights reserved.
+ */
+
+const colorScheme = d3.schemeCategory10
+const simpleData = []
 
 function timeFormatter (value) {
   return d3.timeFormat('%H:%M:%S')(value) // eslint-disable-line no-undef
@@ -7,29 +12,15 @@ function numberFormatter (number) {
   return number.toFixed(0)
 }
 
-const complexData = []
-for (let i = 0; i < 100; i++) {
-  complexData.push({
+for (let i = 0; i < 40; i++) {
+  simpleData.push({
     x: 1475760930000 + 1000000 * i,
-    data1: (Math.random() - 0.5) * 50,
+    data1: Math.random() * 50,
     data2: Math.random() * 100,
     data3: Math.random() * 100,
     size1: Math.random() * 10,
     size2: Math.random() * 20,
-    nav: (Math.random() - 0.5) * 50,
-  })
-}
-
-const staticData = []
-for (let i = 0; i < 10; i++) {
-  staticData.push({
-    x: 1475760930000 + 1000000 * i,
-    data1: (i - 0.5) * 50,
-    data2: i * 100,
-    data3: i * 100,
-    size1: i * 10,
-    size2: i * 20,
-    nav: (i - 0.5) * 50,
+    nav: Math.random() * 10,
   })
 }
 
@@ -57,6 +48,7 @@ const chartConfig = {
             sizeAccessor: 'size1',
             sizeAxis: 'sizeAxis',
             shape: 'circle',
+            color: colorScheme[0],
             axis: 'y1',
             tooltip: 'tooltipId',
           }, {
@@ -66,6 +58,7 @@ const chartConfig = {
             sizeAccessor: 'size2',
             sizeAxis: 'sizeAxis',
             shape: 'square',
+            color: colorScheme[3],
             axis: 'y2',
             tooltip: 'tooltipId',
           }, {
@@ -75,6 +68,7 @@ const chartConfig = {
             sizeAccessor: 'size2',
             sizeAxis: 'sizeAxis',
             shape: 'triangle',
+            color: colorScheme[2],
             axis: 'y2',
             tooltip: 'tooltipId',
           }
@@ -144,6 +138,7 @@ const chartConfig = {
             enabled: true,
             accessor: 'nav',
             chart: 'LineChart',
+            color: colorScheme[1],
             axis: 'y1',
           }
         ]
@@ -160,4 +155,4 @@ const chartConfig = {
 
 const chartView = new coCharts.charts.XYChartView()
 chartView.setConfig(chartConfig)
-chartView.setData(complexData)
+chartView.setData(simpleData)

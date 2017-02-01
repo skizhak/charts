@@ -1,5 +1,6 @@
-/* global d3 coCharts */
-
+/*
+ * Copyright (c) Juniper Networks, Inc. All rights reserved.
+ */
 const _ = require('lodash')
 
 function timeFormatter (value) {

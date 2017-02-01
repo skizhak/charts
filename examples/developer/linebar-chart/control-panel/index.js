@@ -1,4 +1,6 @@
-/* global d3 coCharts */
+/*
+ * Copyright (c) Juniper Networks, Inc. All rights reserved.
+ */
 
 function numberFormatter (number) {
   return number.toFixed(0)

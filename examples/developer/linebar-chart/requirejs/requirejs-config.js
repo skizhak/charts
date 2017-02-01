@@ -1,6 +1,7 @@
 /*
- * Copyright (c) 2016 Juniper Networks, Inc. All rights reserved.
+ * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
+
 requirejs.config({ // eslint-disable-line
   paths: {
     app: 'app',
@@ -16,4 +17,4 @@ requirejs.config({ // eslint-disable-line
 })
 
 // Start the main app logic.
-requirejs(['app/example1']) // eslint-disable-line
+requirejs(['app/example']) // eslint-disable-line
