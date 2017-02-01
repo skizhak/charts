@@ -165,16 +165,17 @@ complexChartView.setConfig({
       },
       axis: {
         x: {
+          formatter: formatter.extendedISOTime
         },
         y1: {
           position: 'left',
-          formatter: formatter.toInteger,
+          formatter: formatter.byteFormatter,
           ticks: 5,
         },
         y2: {
           position: 'right',
           formatter: formatter.toInteger,
-          ticks: 5,
+          ticks: 5
         }
       }
     },

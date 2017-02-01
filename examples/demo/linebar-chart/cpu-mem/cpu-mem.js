@@ -54,8 +54,6 @@ function generateColorPalette (nodeIds, nodeAttrs, colorSchema, offset1, offset2
 const dataSrc = require('./data-source.json')
 const dataProcessed = dataProcesser(dataSrc.data)
 
-console.log(dataProcessed)
-
 const fkColors = [
   '#00bcd4',
   '#0cc2aa',
@@ -117,14 +115,14 @@ const navPlotYConfig = _.reduce(dataProcessed.nodeIds, (config, nodeId, idx) => 
   config.push({
     enabled: true,
     accessor: `${nodeId}.cpu_share`,
-    labelFormatter: 'CPU Utilization (%)',
+    // labelFormatter: 'CPU Utilization (%)',
     chart: 'BarChart',
     color: colorPalette[`${nodeId}.cpu_share`],
     axis: 'y1',
   }, {
     enabled: false,
     accessor: `${nodeId}.mem_res`,
-    labelFormatter: 'Memory Usage',
+    // labelFormatter: 'Memory Usage',
     chart: 'LineChart',
     color: colorPalette[`${nodeId}.mem_res`],
     axis: 'y2',

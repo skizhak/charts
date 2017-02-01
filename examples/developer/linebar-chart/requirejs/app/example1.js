@@ -6,8 +6,7 @@ define([ // eslint-disable-line no-undef
   'd3', // Example use of older d3 versions.
   'lodash',
   'contrail-charts',
-  'formatter'
-], function (d3, _, coCharts, formatter) {
+], function (d3, _, coCharts) {
   // Complex example
   const complexData = []
   _.each(d3.range(100), (i) => {
@@ -21,8 +20,7 @@ define([ // eslint-disable-line no-undef
       e: (Math.random() - 0.5) * 10
     })
   })
-  const toFixed2 = formatter.toFixedNumberFactory(2)
-  const toFixed5 = formatter.toFixedNumberFactory(5)
+
   const complexChartView = new coCharts.charts.XYChartView()
   complexChartView.setData(complexData)
   complexChartView.setConfig({
@@ -85,12 +83,12 @@ define([ // eslint-disable-line no-undef
           x: {},
           y1: {
             position: 'left',
-            formatter: formatter.toInteger,
+            formatter: (value) => value.toFixed(0),
             labelMargin: 15
           },
           y2: {
             position: 'right',
-            formatter: toFixed2,
+            formatter: (value) => value.toFixed(2),
             labelMargin: 15
           }
         }
@@ -103,15 +101,15 @@ define([ // eslint-disable-line no-undef
           {
             accessor: 'x',
             labelFormatter: (key) => 'Time',
-            valueFormatter: formatter.toInteger
+            valueFormatter: (value) => value.toFixed(0)
           }, {
             accessor: 'a',
             labelFormatter: () => 'Label A',
-            valueFormatter: toFixed5
+            valueFormatter: (value) => value.toFixed(5)
           }, {
             accessor: 'b',
             labelFormatter: () => 'Label B',
-            valueFormatter: toFixed2
+            valueFormatter: (value) => value.toFixed(2)
           }
         ]
       }

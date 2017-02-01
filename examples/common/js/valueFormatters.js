@@ -25,6 +25,10 @@ function commaGroupedInteger (number) {
 function byteFormatter (bytes) {
   const unit = 1024
 
+  if (bytes < 0) {
+    bytes *= -1
+  }
+
   if (bytes < unit) {
     return bytes + ' B'
   }
