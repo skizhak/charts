@@ -29,6 +29,16 @@ const devLBExamples = [
     title: 'Tooltips',
   },
   {
+    html: 'linebar-chart/grouped-bar-chart/index.html',
+    js: 'linebar-chart/grouped-bar-chart/index.js',
+    title: 'Grouped Bar',
+  },
+  {
+    html: 'linebar-chart/navigation/index.html',
+    js: 'linebar-chart/navigation/index.js',
+    title: 'Navigation',
+  },
+  {
     html: 'linebar-chart/requirejs/requirejs.html',
     js: ['linebar-chart/requirejs/requirejs-config.js', 'linebar-chart/requirejs/app/example.js'],
     title: 'RequireJS',
