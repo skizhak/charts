@@ -1,6 +1,7 @@
 /*
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
+/* global d3 */
 
 /* global d3 */
 
@@ -43,7 +44,8 @@ const chartConfig = {
             chart: 'ScatterPlot',
             sizeAccessor: 'size1',
             sizeAxis: 'sizeAxis',
-            shape: 'circle',
+            // this is a circle symbol from fontawesome
+            shape: '&#xf111;',
             color: colorScheme[0],
             axis: 'y1',
             tooltip: 'tooltip-id',
@@ -53,7 +55,7 @@ const chartConfig = {
             chart: 'ScatterPlot',
             sizeAccessor: 'size2',
             sizeAxis: 'sizeAxis',
-            shape: 'square',
+            shape: '&FilledSmallSquare;',
             color: colorScheme[3],
             axis: 'y2',
             tooltip: 'tooltip-id',
@@ -63,7 +65,7 @@ const chartConfig = {
             chart: 'ScatterPlot',
             sizeAccessor: 'size2',
             sizeAxis: 'sizeAxis',
-            shape: 'triangle',
+            shape: '&blacktriangle;',
             color: colorScheme[2],
             axis: 'y2',
             tooltip: 'tooltip-id',

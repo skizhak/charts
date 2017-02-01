@@ -61,7 +61,7 @@ const chartConfig = {
             chart: 'ScatterPlot',
             sizeAccessor: 'outBytes',
             sizeAxis: 'sizeAxisBytes',
-            shape: 'circle',
+            shape: '&larr;',
             color: colorScheme[1],
             axis: 'y1',
             tooltip: 'tooltip-id',
@@ -72,7 +72,7 @@ const chartConfig = {
             chart: 'ScatterPlot',
             sizeAccessor: 'outBytes',
             sizeAxis: 'sizeAxisBytes',
-            shape: 'circle',
+            shape: '&rarr;',
             color: colorScheme[2],
             axis: 'y1',
             tooltip: 'tooltip-id',
@@ -86,7 +86,7 @@ const chartConfig = {
           labelMargin: 5
         },
         sizeAxisBytes: {
-          range: [100, 150]
+          range: [200, 400]
         },
         y1: {
           position: 'left',
@@ -160,7 +160,7 @@ const chartConfig = {
             axis: 'y1',
             sizeAccessor: 'outBytes',
             sizeAxis: 'sizeAxisBytes',
-            shape: 'circle',
+            shape: '&bigcirc;',
             color: colorScheme[4]
           }
         ]
