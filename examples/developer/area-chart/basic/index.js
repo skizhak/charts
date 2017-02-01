@@ -3,7 +3,7 @@
  */
 /* global d3 */
 
-const colorScheme = d3.schemeCategory10
+const colorScheme = d3.schemeCategory20
 
 const simpleData = [
   { x: (new Date(2016, 11, 1)).getTime(), y: 0 },
@@ -15,7 +15,7 @@ const simpleData = [
 
 const simpleChartView = new coCharts.charts.XYChartView()
 simpleChartView.setConfig({
-  container: '#simpleChart',
+  container: '#basic-area-chart',
   components: [{
     type: 'CompositeYChart',
     config: {

@@ -17,7 +17,7 @@ for (let i = 1; i <= 20; i++) {
 const barChart = new coCharts.charts.XYChartView()
 const areaChart = new coCharts.charts.XYChartView()
 areaChart.setConfig({
-  container: '#chart1',
+  container: '#chart-area',
   components: [{
     type: 'Navigation',
     config: {
@@ -83,7 +83,7 @@ areaChart.setConfig({
   }]
 })
 barChart.setConfig({
-  container: '#chart2',
+  container: '#chart-bar',
   components: [{
     type: 'CompositeYChart',
     config: {
@@ -119,7 +119,7 @@ barChart.setConfig({
       },
     },
   }, {
-    id: 'defaultTooltipId',
+    id: 'default-tooltip-id',
     type: 'Tooltip',
     config: {
       dataConfig: [

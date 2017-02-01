@@ -2,6 +2,8 @@
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
 
+/* global d3 */
+
 const _ = require('lodash')
 const colorScheme = d3.schemeCategory10
 const formatter = require('formatter')
@@ -15,9 +17,9 @@ const nodes = {
   collector: 2
 }
 
-var cpu = 0
-var count = 0
-var data = {}
+let cpu = 0
+let count = 0
+let data = {}
 
 for (var n in nodes) {
   count = nodes[n]
@@ -33,14 +35,14 @@ for (var n in nodes) {
 }
 
 const chartConfig = {
-  container: '#chart',
+  container: '#nodes-bubble-chart',
   components: [{
     type: 'LegendPanel',
     config: {
-      sourceComponent: 'scatterPlot',
+      sourceComponent: 'scatter-plot',
     },
   }, {
-    id: 'scatterPlot',
+    id: 'scatter-plot',
     type: 'CompositeYChart',
     config: {
       marginInner: 10,
@@ -64,7 +66,7 @@ const chartConfig = {
             shape: '&#xf111;', // circle
             axis: 'y1',
             color: colorScheme[0],
-            tooltip: 'tooltipId',
+            tooltip: 'tooltip-id',
           },
           {
             enabled: true,
@@ -76,7 +78,7 @@ const chartConfig = {
             shape: '&#xf005;', // star
             axis: 'y1',
             color: colorScheme[1],
-            tooltip: 'tooltipId',
+            tooltip: 'tooltip-id',
           },
           {
             enabled: true,
@@ -88,7 +90,7 @@ const chartConfig = {
             shape: '&lozf;', // diamond
             axis: 'y1',
             color: colorScheme[2],
-            tooltip: 'tooltipId',
+            tooltip: 'tooltip-id',
           },
           {
             enabled: true,
@@ -100,7 +102,7 @@ const chartConfig = {
             shape: '&#xf067;', // cross
             axis: 'y1',
             color: colorScheme[3],
-            tooltip: 'tooltipId',
+            tooltip: 'tooltip-id',
           },
           {
             enabled: true,
@@ -112,7 +114,7 @@ const chartConfig = {
             shape: '&blacktriangle;', // triangle
             axis: 'y1',
             color: colorScheme[4],
-            tooltip: 'tooltipId',
+            tooltip: 'tooltip-id',
           }
         ]
       },
@@ -132,7 +134,7 @@ const chartConfig = {
       },
     }
   }, {
-    id: 'tooltipId',
+    id: 'tooltip-id',
     type: 'Tooltip',
     config: {
       title: {

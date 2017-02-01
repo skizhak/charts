@@ -19,23 +19,23 @@ for (let i = 0; i < 100; i++) {
 }
 const complexChartView = new coCharts.charts.XYChartView()
 complexChartView.setConfig({
-  container: '#chart',
+  container: '#chart-control-panel',
   components: [{
-    id: 'controlPanelId',
+    id: 'control-panel-id',
     type: 'ControlPanel',
     config: {
       menu: [{
         id: 'Refresh',
       }, {
         id: 'Filter',
-        component: 'filterId',
+        component: 'filter-id',
       }, {
         id: 'ColorPicker',
-        component: 'colorPickerId',
+        component: 'color-picker-id',
       }],
     }
   }, {
-    id: 'compositeYId',
+    id: 'compositey-id',
     type: 'CompositeYChart',
     config: {
       marginInner: 10,
@@ -56,21 +56,21 @@ complexChartView.setConfig({
             enabled: true,
             chart: 'StackedBarChart',
             axis: 'y1',
-            tooltip: 'defaultTooltip',
+            tooltip: 'default-tooltip',
           }, {
             accessor: 'b',
             labelFormatter: 'Label B',
             enabled: true,
             chart: 'StackedBarChart',
             axis: 'y1',
-            tooltip: 'customTooltip',
+            tooltip: 'custom-tooltip',
           }, {
             accessor: 'c',
             labelFormatter: 'Label C',
             enabled: false,
             chart: 'StackedBarChart',
             axis: 'y1',
-            tooltip: 'defaultTooltip',
+            tooltip: 'default-tooltip',
           }, {
             accessor: 'd',
             labelFormatter: 'Megabytes D',
@@ -78,7 +78,7 @@ complexChartView.setConfig({
             enabled: true,
             chart: 'LineChart',
             axis: 'y2',
-            tooltip: 'defaultTooltip',
+            tooltip: 'default-tooltip',
           }, {
             accessor: 'e',
             labelFormatter: 'Megabytes E',
@@ -86,7 +86,7 @@ complexChartView.setConfig({
             enabled: true,
             chart: 'LineChart',
             axis: 'y2',
-            tooltip: 'defaultTooltip',
+            tooltip: 'default-tooltip',
           }
         ]
       },
@@ -108,17 +108,17 @@ complexChartView.setConfig({
       }
     },
   }, {
-    id: 'colorPickerId',
+    id: 'color-picker-id',
     type: 'ColorPicker',
     config: {
-      sourceComponent: 'compositeYId',
+      sourceComponent: 'compositey-id',
       embedded: true,
     }
   }, {
-    id: 'filterId',
+    id: 'filter-id',
     type: 'Filter',
     config: {
-      sourceComponent: 'compositeYId',
+      sourceComponent: 'compositey-id',
       embedded: true,
     },
   }]

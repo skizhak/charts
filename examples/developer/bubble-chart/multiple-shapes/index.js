@@ -3,6 +3,8 @@
  */
 /* global d3 */
 
+/* global d3 */
+
 const colorScheme = d3.schemeCategory10
 const simpleData = []
 const formatter = require('formatter')
@@ -20,14 +22,14 @@ for (let i = 0; i < 40; i++) {
 }
 
 const chartConfig = {
-  container: '#chart',
+  container: '#multi-shape-bubble',
   components: [{
     type: 'LegendPanel',
     config: {
-      sourceComponent: 'scatterPlot',
+      sourceComponent: 'multishape-bubble-chart',
     },
   }, {
-    id: 'scatterPlot',
+    id: 'multishape-bubble-chart',
     type: 'CompositeYChart',
     config: {
       plot: {
@@ -46,7 +48,7 @@ const chartConfig = {
             shape: '&#xf111;',
             color: colorScheme[0],
             axis: 'y1',
-            tooltip: 'tooltipId',
+            tooltip: 'tooltip-id',
           }, {
             enabled: true,
             accessor: 'data2',
@@ -56,7 +58,7 @@ const chartConfig = {
             shape: '&FilledSmallSquare;',
             color: colorScheme[3],
             axis: 'y2',
-            tooltip: 'tooltipId',
+            tooltip: 'tooltip-id',
           }, {
             enabled: true,
             accessor: 'data3',
@@ -66,7 +68,7 @@ const chartConfig = {
             shape: '&blacktriangle;',
             color: colorScheme[2],
             axis: 'y2',
-            tooltip: 'tooltipId',
+            tooltip: 'tooltip-id',
           }
         ]
       },
@@ -87,12 +89,12 @@ const chartConfig = {
       },
     }
   }, {
-    id: 'tooltipId',
+    id: 'tooltip-id',
     type: 'Tooltip',
     config: {
       title: {
         accessor: 'x',
-        valueFormatter: formatter.extendISOTime,
+        valueFormatter: formatter.extendedISOTime,
       },
 
       dataConfig: [

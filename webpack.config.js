@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) Juniper Networks, Inc. All rights reserved.
+ */
+
 const webpack = require('webpack')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const UglifyJsPlugin = webpack.optimize.UglifyJsPlugin

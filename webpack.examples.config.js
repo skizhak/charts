@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) Juniper Networks, Inc. All rights reserved.
+ */
+
 const webpack = require('webpack')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const UglifyJsPlugin = webpack.optimize.UglifyJsPlugin
@@ -49,7 +53,7 @@ const config = {
     'developer-linebar-legend': path.join(__dirname, '/examples/developer/linebar-chart/legend/'),
     'developer-linebar-timeline': path.join(__dirname, '/examples/developer/linebar-chart/timeline/'),
     'developer-linebar-tooltip': path.join(__dirname, '/examples/developer/linebar-chart/tooltip/'),
-    'developer-navigation': path.join(__dirname, '/examples/developer/navigation/'),
+    'developer-navigation': path.join(__dirname, '/examples/developer/linebar-chart/navigation/'),
     'developer-radial-pie': path.join(__dirname, '/examples/developer/radial-chart/pie/'),
   },
   devtool: 'source-map',

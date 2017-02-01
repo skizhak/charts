@@ -2,6 +2,8 @@
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
 
+/* global d3 */
+
 const _ = require('lodash')
 const ContrailChartsConfigModel = require('contrail-charts-config-model')
 

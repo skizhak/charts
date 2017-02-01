@@ -19,11 +19,11 @@ for (let i = 0; i < 100; i++) {
 }
 const complexChartView = new coCharts.charts.XYChartView()
 complexChartView.setConfig({
-  container: '#complexChart',
+  container: '#chart-legend',
   components: [{
     type: 'LegendPanel',
     config: {
-      sourceComponent: 'complexChartCompositeY',
+      sourceComponent: 'compositey-chart-id',
       editable: true
     },
   }, {
@@ -34,7 +34,7 @@ complexChartView.setConfig({
       ],
     },
   }, {
-    id: 'complexChartCompositeY',
+    id: 'compositey-chart-id',
     type: 'CompositeYChart',
     config: {
       marginInner: 10,
@@ -42,7 +42,7 @@ complexChartView.setConfig({
       marginRight: 80,
       marginBottom: 40,
       chartHeight: 600,
-      crosshair: 'crosshairId',
+      crosshair: 'crosshair-id',
       plot: {
         x: {
           accessor: 'x',
@@ -68,7 +68,7 @@ complexChartView.setConfig({
               }
             ],
             axis: 'y1',
-            tooltip: 'defaultTooltip',
+            tooltip: 'default-tooltip',
           }, {
             accessor: 'b',
             labelFormatter: 'Label B',
@@ -87,7 +87,7 @@ complexChartView.setConfig({
               }
             ],
             axis: 'y1',
-            tooltip: 'customTooltip',
+            tooltip: 'custom-tooltip',
           }, {
             accessor: 'c',
             labelFormatter: 'Label C',
@@ -106,7 +106,7 @@ complexChartView.setConfig({
               }
             ],
             axis: 'y1',
-            tooltip: 'defaultTooltip',
+            tooltip: 'default-tooltip',
           }, {
             accessor: 'd',
             labelFormatter: 'Megabytes D',
@@ -126,7 +126,7 @@ complexChartView.setConfig({
               }
             ],
             axis: 'y2',
-            tooltip: 'defaultTooltip',
+            tooltip: 'default-tooltip',
           }, {
             accessor: 'e',
             labelFormatter: 'Megabytes E',
@@ -146,7 +146,7 @@ complexChartView.setConfig({
               }
             ],
             axis: 'y2',
-            tooltip: 'defaultTooltip',
+            tooltip: 'default-tooltip',
           }
         ]
       },
@@ -218,7 +218,7 @@ complexChartView.setConfig({
       }
     },
   }, {
-    id: 'defaultTooltip',
+    id: 'default-tooltip',
     type: 'Tooltip',
     config: {
       title: {
@@ -251,22 +251,22 @@ complexChartView.setConfig({
       ]
     },
   }, {
-    id: 'customTooltip',
+    id: 'custom-tooltip',
     type: 'Tooltip',
     config: {
       template: (data) => '<div class="tooltip-content">Custom tooltip</div>',
     }
   }, {
-    id: 'messageId',
+    id: 'message-id',
     type: 'Message',
     config: {
       enabled: true,
     }
   }, {
-    id: 'crosshairId',
+    id: 'crosshair-id',
     type: 'Crosshair',
     config: {
-      tooltip: 'defaultTooltip',
+      tooltip: 'default-tooltip',
     }
   }]
 })

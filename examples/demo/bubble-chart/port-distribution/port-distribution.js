@@ -38,7 +38,7 @@ let dataSrc = require('./port-distribution.json')
 dataSrc = dataProcesser(dataSrc)
 
 const chartConfig = {
-  container: '#scatterChart',
+  container: '#pd-bubble-chart',
   components: [{
     type: 'CompositeYChart',
     config: {
@@ -64,7 +64,7 @@ const chartConfig = {
             shape: '&larr;',
             color: colorScheme[1],
             axis: 'y1',
-            tooltip: 'tooltipId',
+            tooltip: 'tooltip-id',
           }, {
             enabled: true,
             accessor: 'outBytes',
@@ -75,7 +75,7 @@ const chartConfig = {
             shape: '&rarr;',
             color: colorScheme[2],
             axis: 'y1',
-            tooltip: 'tooltipId',
+            tooltip: 'tooltip-id',
           }
         ]
       },
@@ -101,7 +101,7 @@ const chartConfig = {
       }
     }
   }, {
-    id: 'tooltipId',
+    id: 'tooltip-id',
     type: 'Tooltip',
     config: {
       title: 'Port Info',
