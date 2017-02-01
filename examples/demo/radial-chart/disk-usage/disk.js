@@ -2,6 +2,8 @@
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
 
+/* global d3 */
+
 const pieData = [
   {label: 'Disks In', value: 55},
   {label: 'Disks Out', value: 6},
@@ -9,7 +11,6 @@ const pieData = [
   {label: 'Disks Down', value: 4}
 ]
 
-const d3 = require('d3')
 const formatter = require('formatter')
 
 function getLabel (serie) {

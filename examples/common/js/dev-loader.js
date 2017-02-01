@@ -2,6 +2,8 @@
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
 
+/* global $ */
+
 require('../sass/contrail-charts-examples.scss')
 const _ = require('lodash')
 

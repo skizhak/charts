@@ -2,6 +2,8 @@
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
 
+/* global d3 */
+
 const _ = require('lodash')
 const colorScheme = d3.schemeCategory10
 const formatter = require('formatter')

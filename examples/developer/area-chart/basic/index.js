@@ -2,6 +2,8 @@
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
 
+/* global d3 */
+
 const colorScheme = d3.schemeCategory20
 
 const simpleData = [
