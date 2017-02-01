@@ -2,15 +2,7 @@
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
 
-function timeFormatter (value) {
-  return d3.timeFormat('%H:%M:%S')(value)
-}
-function numberFormatter (number) {
-  return number.toFixed(0)
-}
-function numberFormatter3 (number) {
-  return number.toFixed(1)
-}
+const formatter = require('formatter')
 const complexData = []
 for (let i = 0; i < 100; i++) {
   const a = Math.random() * 100
@@ -67,16 +59,16 @@ complexChartView.setConfig({
       },
       axis: {
         x: {
-          formatter: d3.timeFormat('%H:%M:%S')
+          formatter: formatter.extendedISOTime,
         },
         y1: {
           position: 'left',
-          formatter: numberFormatter,
+          formatter: formatter.toInteger,
           domain: [-10, undefined],
         },
         y2: {
           position: 'right',
-          formatter: numberFormatter3,
+          formatter: formatter.toFixed1,
         },
       },
     },
@@ -88,19 +80,19 @@ complexChartView.setConfig({
         {
           accessor: 'x',
           labelFormatter: 'Time',
-          valueFormatter: timeFormatter,
+          valueFormatter: formatter.extendedISOTime,
         }, {
           accessor: 'a',
           labelFormatter: 'Tooltip A',
-          valueFormatter: numberFormatter,
+          valueFormatter: formatter.toInteger,
         }, {
           accessor: 'b',
           labelFormatter: 'Tooltip B',
-          valueFormatter: numberFormatter,
+          valueFormatter: formatter.toInteger,
         }, {
           accessor: 'c',
           labelFormatter: 'Tooltip C',
-          valueFormatter: numberFormatter,
+          valueFormatter: formatter.toInteger,
         }
       ]
     },

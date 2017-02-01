@@ -1,6 +1,7 @@
 /*
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
+const formatter = require('formatter')
 
 const pieData = [
     { label: 'Process 1', value: 2704659 },
@@ -11,9 +12,7 @@ const pieData = [
     { label: 'Process 6', value: 612463 },
     { label: 'Process 7', value: 4499890 }
 ]
-function numberFormatter (number) {
-  return d3.format(',.0f')(number) // eslint-disable-line no-undef
-}
+
 function getLabel (serie) {
   return serie.label
 }
@@ -40,7 +39,7 @@ const chartConfig = {
       serie: {
         getValue: getValue,
         getLabel: getLabel,
-        valueFormatter: numberFormatter,
+        valueFormatter: formatter.commaGroupedInteger,
       },
       tooltip: 'tooltipId',
     },
@@ -52,7 +51,7 @@ const chartConfig = {
         {
           accessor: 'value',
           labelFormatter: getLabel,
-          valueFormatter: numberFormatter,
+          valueFormatter: formatter.commaGroupedInteger,
         },
       ],
     },

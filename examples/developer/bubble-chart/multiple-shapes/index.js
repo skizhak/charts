@@ -4,13 +4,7 @@
 
 const colorScheme = d3.schemeCategory10
 const simpleData = []
-
-function timeFormatter (value) {
-  return d3.timeFormat('%H:%M:%S')(value) // eslint-disable-line no-undef
-}
-function numberFormatter (number) {
-  return number.toFixed(0)
-}
+const formatter = require('formatter')
 
 for (let i = 0; i < 40; i++) {
   simpleData.push({
@@ -80,12 +74,12 @@ const chartConfig = {
         },
         y1: {
           position: 'left',
-          formatter: numberFormatter,
+          formatter: formatter.toInteger,
           label: 'Size of circles',
         },
         y2: {
           position: 'right',
-          formatter: numberFormatter,
+          formatter: formatter.toInteger,
           label: 'Size of squares and triangles',
         }
       },
@@ -96,30 +90,30 @@ const chartConfig = {
     config: {
       title: {
         accessor: 'x',
-        valueFormatter: timeFormatter,
+        valueFormatter: formatter.extendISOTime,
       },
 
       dataConfig: [
         {
           accessor: 'data1',
           labelFormatter: 'Label 1',
-          valueFormatter: numberFormatter,
+          valueFormatter: formatter.toInteger,
         }, {
           accessor: 'data2',
           labelFormatter: 'Label 2',
-          valueFormatter: numberFormatter,
+          valueFormatter: formatter.toInteger,
         }, {
           accessor: 'data3',
           labelFormatter: 'Label 3',
-          valueFormatter: numberFormatter,
+          valueFormatter: formatter.toInteger,
         }, {
           accessor: 'size1',
           labelFormatter: 'Size 1',
-          valueFormatter: numberFormatter,
+          valueFormatter: formatter.toInteger,
         }, {
           accessor: 'size2',
           labelFormatter: 'Size 2',
-          valueFormatter: numberFormatter,
+          valueFormatter: formatter.toInteger,
         }
       ]
     }
@@ -146,7 +140,7 @@ const chartConfig = {
       axis: {
         y1: {
           position: 'left',
-          formatter: numberFormatter,
+          formatter: formatter.toInteger,
         },
       }
     }

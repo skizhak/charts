@@ -3,32 +3,7 @@
  */
 
 const _ = require('lodash')
-
-function timeFormatter (value) {
-  return d3.timeFormat('%H:%M:%S')(value)
-}
-function numberFormatter (number) {
-  return number.toFixed(0)
-}
-
-function memFormatter (number) {
-  const bytePrefixes = ['B', 'KB', 'MB', 'GB', 'TB']
-  let bytes = parseInt(number * 1024)
-  let formattedBytes = '-'
-  _.each(bytePrefixes, (prefix, idx) => {
-    if (bytes < 1024) {
-      formattedBytes = bytes.toFixed(1) + ' ' + prefix
-      return false
-    } else {
-      if (idx === bytePrefixes.length - 1) {
-        formattedBytes = bytes.toFixed(1) + ' ' + prefix
-      } else {
-        bytes = bytes / 1024
-      }
-    }
-  })
-  return formattedBytes
-}
+const formatter = require('formatter')
 
 // Complex example
 const simpleData = []
@@ -140,16 +115,16 @@ complexChartView.setConfig({
       },
       axis: {
         x: {
-          formatter: d3.timeFormat('%H:%M:%S')
+          formatter: formatter.extendedISOTime,
         },
         y1: {
           position: 'left',
-          formatter: memFormatter,
+          formatter: formatter.byteFormatter,
           domain: [0, undefined],
         },
         y2: {
           position: 'right',
-          formatter: numberFormatter,
+          formatter: formatter.toInteger,
         }
       }
     },
@@ -192,16 +167,17 @@ complexChartView.setConfig({
       },
       axis: {
         x: {
+          formatter: formatter.extendedISOTime
         },
         y1: {
           position: 'left',
-          formatter: numberFormatter,
+          formatter: formatter.byteFormatter,
           ticks: 5,
         },
         y2: {
           position: 'right',
-          formatter: numberFormatter,
-          ticks: 5,
+          formatter: formatter.toInteger,
+          ticks: 5
         }
       }
     },
@@ -211,22 +187,22 @@ complexChartView.setConfig({
     config: {
       title: {
         accessor: 'x',
-        valueFormatter: timeFormatter,
+        valueFormatter: formatter.extendedISOTime,
       },
 
       dataConfig: [
         {
           accessor: 'a',
           labelFormatter: 'DB Read',
-          valueFormatter: numberFormatter,
+          valueFormatter: formatter.toInteger,
         }, {
           accessor: 'b',
           labelFormatter: 'DB Write',
-          valueFormatter: numberFormatter,
+          valueFormatter: formatter.toInteger,
         }, {
           accessor: 'c',
           labelFormatter: 'Queries',
-          valueFormatter: numberFormatter,
+          valueFormatter: formatter.toInteger,
         }
       ]
     },

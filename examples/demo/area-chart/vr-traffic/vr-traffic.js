@@ -3,33 +3,7 @@
  */
 
 const _ = require('lodash')
-
-function timeFormatter (value) {
-  return d3.timeFormat('%H:%M:%S')(value / 1000)
-}
-
-function numberFormatter (number) {
-  return number.toFixed(0)
-}
-
-function memFormatter (number) {
-  const bytePrefixes = ['B', 'KB', 'MB', 'GB', 'TB']
-  let bytes = parseInt(number * 1024)
-  let formattedBytes = '-'
-  _.each(bytePrefixes, (prefix, idx) => {
-    if (bytes < 1024) {
-      formattedBytes = bytes.toFixed(1) + ' ' + prefix
-      return false
-    } else {
-      if (idx === bytePrefixes.length - 1) {
-        formattedBytes = bytes.toFixed(1) + ' ' + prefix
-      } else {
-        bytes = bytes / 1024
-      }
-    }
-  })
-  return formattedBytes
-}
+const formatter = require('formatter')
 
 function dataProcesser (rawData) {
   const keyMapper = {
@@ -79,6 +53,7 @@ function generateColorPalette (nodeIds, nodeAttrs, colorSchema, offset1, offset2
 }
 
 const dataSrc = require('./2vr-traffic.json')
+
 const dataProcessed = dataProcesser(dataSrc.data)
 
 const fkColors = [
@@ -141,14 +116,14 @@ const navPlotYConfig = _.reduce(dataProcessed.nodeIds, (config, nodeId, idx) => 
   config.push({
     enabled: true,
     accessor: `${nodeId}.sum_bytes`,
-    labelFormatter: 'Sum(Bytes)',
+    // labelFormatter: 'Sum(Bytes)',
     chart: 'AreaChart',
     color: colorPalette[`${nodeId}.sum_bytes`],
     axis: 'y1',
   }, {
     enabled: false,
     accessor: `${nodeId}.sum_packet`,
-    labelFormatter: 'Sum(Packets)',
+    // labelFormatter: 'Sum(Packets)',
     chart: 'StackedBarChart',
     color: colorPalette[`${nodeId}.sum_packets`],
     axis: 'y2',
@@ -161,18 +136,18 @@ const tooltipDataConfig = _.reduce(dataProcessed.nodeIds, (config, nodeId) => {
   config.push({
     accessor: `${nodeId}.sum_bytes`,
     labelFormatter: `${nodeId} Sum(Bytes)`,
-    valueFormatter: memFormatter,
+    valueFormatter: formatter.byteFormatter,
   }, {
     accessor: `${nodeId}.sum_packets`,
     labelFormatter: `${nodeId} Sum(Packets)`,
-    valueFormatter: numberFormatter,
+    valueFormatter: formatter.toInteger,
   })
 
   return config
 }, [{
   accessor: 'T',
   labelFormatter: 'Time',
-  valueFormatter: timeFormatter,
+  valueFormatter: formatter.extendedISOTime,
 }])
 
 // Create chart view.
@@ -204,18 +179,18 @@ trafficView.setConfig({
       },
       axis: {
         x: {
-          formatter: timeFormatter
+          formatter: formatter.extendedISOTime
         },
         y1: {
           position: 'left',
           label: 'Sum(Bytes)',
-          formatter: memFormatter,
+          formatter: formatter.byteFormatter,
           labelMargin: 15,
         },
         y2: {
           position: 'right',
           label: 'Sum(Packets)',
-          formatter: numberFormatter,
+          formatter: formatter.toInteger,
           labelMargin: 15,
         }
       }
@@ -240,7 +215,7 @@ trafficView.setConfig({
       },
       axis: {
         x: {
-          formatter: timeFormatter
+          formatter: formatter.extendedISOTime
         },
         y1: {
           position: 'left',
