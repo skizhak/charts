@@ -70,19 +70,21 @@ class ScatterPlotView extends XYChartSubView {
       const x = d[this.params.plot.x.accessor]
       _.each(this.params.activeAccessorData, accessor => {
         const key = accessor.accessor
-        const y = d[key]
-        const sizeScale = this.params.axis[accessor.sizeAxis].scale
-        const obj = {
-          id: x + '-' + key,
-          x: this.xScale(x),
-          y: this.yScale(y),
-          shape: accessor.shape,
-          area: sizeScale(d[accessor.sizeAccessor]),
-          color: this.getColor(accessor),
-          accessor: accessor,
-          data: d,
+        if (_.has(d, key)) { // key may not exist in all the data set.
+          const y = d[key]
+          const sizeScale = this.params.axis[accessor.sizeAxis].scale
+          const obj = {
+            id: x + '-' + key,
+            x: this.xScale(x),
+            y: this.yScale(y),
+            shape: accessor.shape,
+            area: sizeScale(d[accessor.sizeAccessor]),
+            color: this.getColor(accessor),
+            accessor: accessor,
+            data: d,
+          }
+          flatData.push(obj)
         }
-        flatData.push(obj)
       })
     })
     return flatData
