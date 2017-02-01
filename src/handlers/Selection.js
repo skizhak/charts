@@ -22,6 +22,7 @@ class Selection {
     this._data = data || []
   }
   /**
+   * TODO do not trigger change if range doesn't actually change selection
    * Filter out dataframes which have no provided key or its value is not within provided range
    * @param {String} key - serie accessor to filter dataframes by
    * @param {Array} range - [min, max] values of a serie

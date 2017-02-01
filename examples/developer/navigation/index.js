@@ -1,7 +1,9 @@
 /*
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
+/* global d3 */
 
+const colorScheme = d3.schemeCategory10
 const staticData = []
 for (let i = 1; i <= 20; i++) {
   staticData.push({
@@ -12,11 +14,77 @@ for (let i = 1; i <= 20; i++) {
   })
 }
 
-const complexChartView = new coCharts.charts.XYChartView()
-complexChartView.setConfig({
-  container: '#chart',
+const barChart = new coCharts.charts.XYChartView()
+const areaChart = new coCharts.charts.XYChartView()
+areaChart.setConfig({
+  container: '#chart1',
   components: [{
-    id: 'compositeYId',
+    type: 'Navigation',
+    config: {
+      marginInner: 10,
+      marginLeft: 80,
+      marginRight: 80,
+      marginBottom: 40,
+      chartHeight: 200,
+      selection: [0, 50],
+      plot: {
+        x: {
+          accessor: 'x',
+          labelFormatter: 'Navigation Value',
+          axis: 'x',
+        },
+        y: [
+          {
+            enabled: true,
+            accessor: 'a',
+            labelFormatter: 'Nav Label A',
+            chart: 'LineChart',
+            axis: 'y',
+          }
+        ]
+      },
+      axis: {
+        x: {
+          scale: 'scaleLinear',
+        },
+        y: {
+          position: 'left',
+          ticks: 5,
+        },
+      }
+    },
+  }, {
+    type: 'CompositeYChart',
+    config: {
+      plot: {
+        x: {
+          accessor: 'x',
+          axis: 'x',
+        },
+        y: [
+          {
+            enabled: true,
+            accessor: 'a',
+            chart: 'AreaChart',
+            axis: 'y',
+            color: colorScheme[1]
+          }
+        ]
+      },
+      axis: {
+        x: {
+          scale: 'scaleLinear',
+        },
+        y: {
+          ticks: 10,
+        }
+      }
+    }
+  }]
+})
+barChart.setConfig({
+  container: '#chart2',
+  components: [{
     type: 'CompositeYChart',
     config: {
       marginInner: 10,
@@ -45,44 +113,10 @@ complexChartView.setConfig({
           scale: 'scaleLinear',
         },
         y1: {
+          domain: [0, 30],
           position: 'left',
         },
       },
-    },
-  }, {
-    type: 'Navigation',
-    config: {
-      marginInner: 10,
-      marginLeft: 80,
-      marginRight: 80,
-      marginBottom: 40,
-      chartHeight: 200,
-      selection: [0, 50],
-      plot: {
-        x: {
-          accessor: 'x',
-          labelFormatter: 'Navigation Value',
-          axis: 'x',
-        },
-        y: [
-          {
-            enabled: true,
-            accessor: 'a',
-            labelFormatter: 'Nav Label A',
-            chart: 'LineChart',
-            axis: 'y1',
-          }
-        ]
-      },
-      axis: {
-        x: {
-          scale: 'scaleLinear',
-        },
-        y1: {
-          position: 'left',
-          ticks: 5,
-        },
-      }
     },
   }, {
     id: 'defaultTooltipId',
@@ -106,4 +140,5 @@ complexChartView.setConfig({
     },
   }]
 })
-complexChartView.setData(staticData)
+areaChart.setData(staticData)
+barChart.setData(staticData)
