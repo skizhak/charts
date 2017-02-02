@@ -12,6 +12,7 @@ const _actions = [
   require('actions/HideComponent'),
   require('actions/SelectSerie'),
   require('actions/SelectColor'),
+  require('actions/SelectChartType'),
   require('actions/ChangeSelection'),
   require('actions/Refresh'),
 ]

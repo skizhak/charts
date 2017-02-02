@@ -76,6 +76,12 @@ class LegendPanelView extends ContrailChartsView {
     $(el).parents('.color-selector').hide()
     this._actionman.fire('SelectColor', this._accessor, color)
   }
+
+  _selectChartType (d, el) {
+    const chartType = $(el).data('type')
+    $(el).parents('.chart-selector').hide()
+    this._actionman.fire('SelectChartType', this._accessor, chartType)
+  }
 }
 
 module.exports = LegendPanelView

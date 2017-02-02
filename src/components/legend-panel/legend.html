@@ -4,7 +4,7 @@
 	<div class="attribute" data-accessor="{{ accessor }}">
 		<div class="edit-attribute">
 			<div class="select select--color" style="background-color: {{ color }}; border-color: {{ color }}"><div class="triangle"></div></div>
-			<div class="select select--chart fa {{ chartType }}"><div class="triangle"></div></div>
+			<div class="select select--chart fa {{ chartIcon }}"><div class="triangle"></div></div>
 		</div>
 		<label class="legend-attribute checkbox"><span class="axis">{{ axis }}</span>{{ label }}
 			<input type="checkbox" {{#if checked}} checked {{/if}} />
@@ -25,7 +25,7 @@
 <div class="selector chart-selector">
   <div class="chart-types">
     {{#each possibleChartTypes}}
-    <div class="chart-type fa {{ this }}"></div>
+    <div class="chart-type fa {{ chartIcon }}" data-type="{{ chartType }}"></div>
     {{/each}}
   </div>
 </div>
