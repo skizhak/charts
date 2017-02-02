@@ -24,13 +24,14 @@ complexChartView.setConfig({
     type: 'LegendPanel',
     config: {
       sourceComponent: 'query-db-compositey',
-      placement: 'row',
-      coloPicker: true,
+      editable: {
+        colorSelector: true,
+        chartSelector: true
+      },
+      placement: 'horizontal',
       filter: true,
-      chartSelector: true,
     },
   }, {
-    type: 'ControlPanel',
     type: 'ControlPanel',
     config: {
       menu: [
@@ -47,6 +48,7 @@ complexChartView.setConfig({
       marginBottom: 40,
       chartHeight: 600,
       crosshair: 'crosshair-id',
+      possibleChartTypes: ['BarChart', 'StackedBarChart', 'LineChart'],
       plot: {
         x: {
           accessor: 'x',
@@ -59,18 +61,6 @@ complexChartView.setConfig({
             labelFormatter: 'DB Read',
             enabled: true,
             chart: 'StackedBarChart',
-            possibleChartTypes: [
-              {
-                label: 'Stacked Bar',
-                chart: 'StackedBarChart'
-              }, {
-                label: 'Bar',
-                chart: 'BarChart'
-              }, {
-                label: 'Line',
-                chart: 'LineChart'
-              }
-            ],
             axis: 'y1',
             tooltip: 'default-tooltip',
           }, {
@@ -78,18 +68,6 @@ complexChartView.setConfig({
             labelFormatter: 'DB Write',
             enabled: true,
             chart: 'StackedBarChart',
-            possibleChartTypes: [
-              {
-                label: 'Stacked Bar',
-                chart: 'StackedBarChart'
-              }, {
-                label: 'Bar',
-                chart: 'BarChart'
-              }, {
-                label: 'Line',
-                chart: 'LineChart'
-              }
-            ],
             axis: 'y1',
             tooltip: 'custom-tooltip',
           }, {
@@ -97,18 +75,6 @@ complexChartView.setConfig({
             labelFormatter: 'QE Queries',
             enabled: true,
             chart: 'LineChart',
-            possibleChartTypes: [
-              {
-                label: 'Stacked Bar',
-                chart: 'StackedBarChart'
-              }, {
-                label: 'Bar',
-                chart: 'BarChart'
-              }, {
-                label: 'Line',
-                chart: 'LineChart'
-              }
-            ],
             axis: 'y2',
             tooltip: 'default-tooltip',
           }

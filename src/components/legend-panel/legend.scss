@@ -5,7 +5,7 @@ $border-color: #fafafa;
     box-sizing: content-box;
   }
   font-family: sans-serif;
-  font-size: 11px;
+  font-size: 12px;
   color: #707070;
   position: relative;
   border: 1px solid $border-color;
@@ -13,14 +13,29 @@ $border-color: #fafafa;
   padding: 4px 8px;
   display: inline-block;
 
+  &.vertical {
+    .edit-legend {
+      vertical-align: bottom;
+      margin-bottom: 4px;
+    }
+    
+    .attribute {
+      display: block;
+
+      &:not(:last-child) {
+        margin-bottom: 4px;
+      }
+    }
+  }
+
   .attributes {
     display: inline-block;
-    line-height: 11px;
+    line-height: 12px;
     vertical-align: middle;
   }
   
   .edit-legend {
-    display: none;
+    display: inline-block;
     border-right: 1px solid $border-color;
     padding-right: 8px;
     margin-right: 4px;
@@ -30,10 +45,6 @@ $border-color: #fafafa;
 
     &:hover {
       cursor: pointer;
-    }
-
-    &.active {
-      display: inline-block;
     }
   }
 
@@ -51,6 +62,7 @@ $border-color: #fafafa;
   display: inline-block;
   border: 1px solid #fff;
   padding: 2px 4px;
+  margin-right: 4px;
 
   .edit-attribute {
     display: none;
@@ -65,7 +77,7 @@ $border-color: #fafafa;
     }
 
     .legend-attribute {
-      padding-left: 12px;
+      padding-left: 0;
     }
 
     .indicator {
@@ -77,8 +89,14 @@ $border-color: #fafafa;
 
 .legend-attribute {  
   display: inline-block;
-  padding: 3px;
+  padding: 3px 0;
+  padding-left: 18px;
   position: relative;
+  vertical-align: middle;
+
+  input[type=checkbox] {
+    display: none;
+  }
 
   .axis {
     text-transform: uppercase;
@@ -90,32 +108,26 @@ $border-color: #fafafa;
     margin-right: 2px;
   }
 
+  &.disabled:hover {
+    cursor: default;
+  }
+
   &:hover {
     cursor: pointer;
-  }
-}
-
-.checkbox  {
-  position: relative;
-  padding-left: 18px;
-  margin-right: 10px;
-  
-  input[type=checkbox] {
-    display: none;
   }
 }
 
 .indicator {
   position: absolute;
   left: 2px;
-  top: 2px;
+  top: 3px;
   width: 10px;
   height: 10px;
   border-radius: 100px;
   background-color: white;
   border: 1px solid black;
   
-  .checkbox input:checked ~ & {
+  .legend-attribute input:checked ~ & {
     background-color: black;
   }
   
@@ -124,11 +136,15 @@ $border-color: #fafafa;
     display: none;
     content: '';
     
-    .checkbox input:checked ~ & {
+    .legend-attribute input:checked ~ & {
       display: block;
     }
+
+    .legend-attribute.disabled input:checked ~ & {
+      display: none;
+    }
     
-    .checkbox & {
+    .legend-attribute & {
       left: 0px;
       top: 0px;
       width: 8px;
@@ -143,11 +159,21 @@ $border-color: #fafafa;
 .select {
   position: relative;
   display: inline-block;
-  height: 12px;
-  width: 20px;
+  height: 15px;
+  line-height: 15px;
+  width: 24px;
   border: 1px solid #aaa;
   border-radius: 2px;
-  vertical-align: text-bottom;
+  vertical-align: middle;
+
+  &.select--chart {
+    font-size: 13px;
+    padding: 0 2px;
+    background-color: #666;
+    border-color: #666;
+    color: white;
+    width: 24px;
+  }
   
   &:hover {
     cursor: pointer;
@@ -157,8 +183,8 @@ $border-color: #fafafa;
   .triangle {
     position: absolute;
     display: block;
-    right: 2px;
-    top: 5px;
+    right: 3px;
+    top: 8px;
     width: 0;
     height: 0;
     border-bottom: 5px solid #fff;
@@ -166,43 +192,43 @@ $border-color: #fafafa;
   }
 }
 
-.select--chart {
-  left: 44px;
-  font-size: 12px;
-  padding-left: 2px;
-  padding-right: 2px;
-
-  &:after {
-    left: 16px;
-  }
-}
-
-.color-selector {
+.selector {
   display: none;
   position: absolute;
   background-color: white;
   border: 1px solid #ddd;
   border-radius: 2px;
-  width: 154px;
-  padding: 5px 5px 2px;
+  max-width: 140px;
+  padding: 5px;
+
+  div[class*="swatches--"] {
+    display: none;
+  }
 
   &.active {
-    display: inline-block;
+    display: block;
   }
-  
-  .header {
-    border-bottom: 1px solid #eee;
-    margin-bottom: 5px;
-    padding-bottom: 5px;
-    color: #aaa;
+
+  &.select--color {
+    .swatches--colors {
+      display: block;
+    }
+  }
+
+  &.select--chart {
+    .swatches--charts {
+      display: block;
+    }
   }
 
   .swatch {
-    display: inline-block;
-    width: 14px;
-    height: 14px;
-    border: 1px solid white;
-    border-radius: 2px;
+    box-sizing: border-box;
+    float: left;
+    margin: 2px;
+    width: 24px;
+    height: 24px;
+    border: 1px solid #eee;
+    border-radius: 4px;
     background-color: white;
     
     &:hover {
@@ -214,5 +240,12 @@ $border-color: #fafafa;
       border: 1px solid white;
       box-shadow: 0px 0px 0px 1px rgba(0,0,0,0.75);
     }
+  }
+
+  .swatch--chart {
+    padding: 4px;
+    text-align: center;
+    font-size: 12px;
+    line-height: 16px;
   }
 }

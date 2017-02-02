@@ -24,7 +24,12 @@ complexChartView.setConfig({
     type: 'LegendPanel',
     config: {
       sourceComponent: 'compositey-chart-id',
-      editable: true
+      editable: {
+        colorSelector: true,
+        chartSelector: true
+      },
+      placement: 'horizontal',
+      filter: true,
     },
   }, {
     type: 'ControlPanel',
@@ -43,6 +48,7 @@ complexChartView.setConfig({
       marginBottom: 40,
       chartHeight: 600,
       crosshair: 'crosshair-id',
+      possibleChartTypes: ['BarChart', 'LineChart'],
       plot: {
         x: {
           accessor: 'x',
@@ -55,18 +61,6 @@ complexChartView.setConfig({
             labelFormatter: 'Label A',
             enabled: true,
             chart: 'BarChart',
-            possibleChartTypes: [
-              {
-                label: 'Stacked Bar',
-                chart: 'StackedBarChart'
-              }, {
-                label: 'Bar',
-                chart: 'BarChart'
-              }, {
-                label: 'Line',
-                chart: 'LineChart'
-              }
-            ],
             axis: 'y1',
             tooltip: 'default-tooltip',
           }, {
@@ -74,18 +68,6 @@ complexChartView.setConfig({
             labelFormatter: 'Label B',
             enabled: true,
             chart: 'BarChart',
-            possibleChartTypes: [
-              {
-                label: 'Stacked Bar',
-                chart: 'StackedBarChart'
-              }, {
-                label: 'Bar',
-                chart: 'BarChart'
-              }, {
-                label: 'Line',
-                chart: 'LineChart'
-              }
-            ],
             axis: 'y1',
             tooltip: 'custom-tooltip',
           }, {
@@ -93,18 +75,6 @@ complexChartView.setConfig({
             labelFormatter: 'Label C',
             enabled: false,
             chart: 'BarChart',
-            possibleChartTypes: [
-              {
-                label: 'Stacked Bar',
-                chart: 'StackedBarChart'
-              }, {
-                label: 'Bar',
-                chart: 'BarChart'
-              }, {
-                label: 'Line',
-                chart: 'LineChart'
-              }
-            ],
             axis: 'y1',
             tooltip: 'default-tooltip',
           }, {
@@ -113,18 +83,6 @@ complexChartView.setConfig({
             color: '#d62728',
             enabled: true,
             chart: 'LineChart',
-            possibleChartTypes: [
-              {
-                label: 'Stacked Bar',
-                chart: 'StackedBarChart'
-              }, {
-                label: 'Bar',
-                chart: 'BarChart'
-              }, {
-                label: 'Line',
-                chart: 'LineChart'
-              }
-            ],
             axis: 'y2',
             tooltip: 'default-tooltip',
           }, {
@@ -133,18 +91,6 @@ complexChartView.setConfig({
             color: '#9467bd',
             enabled: true,
             chart: 'LineChart',
-            possibleChartTypes: [
-              {
-                label: 'Stacked Bar',
-                chart: 'StackedBarChart'
-              }, {
-                label: 'Bar',
-                chart: 'BarChart'
-              }, {
-                label: 'Line',
-                chart: 'LineChart'
-              }
-            ],
             axis: 'y2',
             tooltip: 'default-tooltip',
           }

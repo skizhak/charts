@@ -78,16 +78,6 @@ const mainChartPlotYConfig = _.reduce(dataProcessed.nodeIds, (config, nodeId, id
     label: `Sum(Bytes) ${nodeId}`,
     enabled: (nodeId.indexOf('in') !== -1),
     chart: 'AreaChart',
-    possibleChartTypes: [
-      {
-        label: 'Line',
-        chart: 'LineChart'
-      },
-      {
-        label: 'Area',
-        chart: 'AreaChart',
-      }
-    ],
     color: colorPalette[`${nodeId}.sum_bytes`],
     axis: 'y1',
   })
@@ -129,6 +119,12 @@ trafficView.setConfig({
     type: 'LegendPanel',
     config: {
       sourceComponent: 'inout-traffic-compositey',
+      editable: {
+        colorSelector: true,
+        chartSelector: true
+      },
+      placement: 'horizontal',
+      filter: true,
     }
   }, {
     id: 'inout-traffic-compositey',
@@ -140,6 +136,7 @@ trafficView.setConfig({
       marginBottom: 40,
       chartHeight: 600,
       crosshair: 'crosshair-id',
+      possibleChartTypes: ['AreaChart', 'LineChart'],
       plot: {
         x: {
           accessor: 'T',

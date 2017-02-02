@@ -74,15 +74,6 @@ const mainChartPlotYConfig = _.reduce(dataProcessed.nodeIds, (config, nodeId, id
     label: `${nodeId} CPU Utilization (%)`,
     enabled: true,
     chart: 'BarChart',
-    possibleChartTypes: [
-      {
-        label: 'Stacked Bar',
-        chart: 'StackedBarChart',
-      }, {
-        label: 'Line',
-        chart: 'LineChart',
-      }
-    ],
     color: colorPalette[`${nodeId}.cpu_share`],
     axis: 'y1',
   }, {
@@ -90,15 +81,6 @@ const mainChartPlotYConfig = _.reduce(dataProcessed.nodeIds, (config, nodeId, id
     label: `${nodeId} Memory Usage`,
     enabled: false,
     chart: 'LineChart',
-    possibleChartTypes: [
-      {
-        label: 'Stacked Bar',
-        chart: 'StackedBarChart',
-      }, {
-        label: 'Line',
-        chart: 'LineChart'
-      }
-    ],
     color: colorPalette[`${nodeId}.mem_res`],
     axis: 'y2',
   })
@@ -151,6 +133,12 @@ cpuMemChartView.setConfig({
     type: 'LegendPanel',
     config: {
       sourceComponent: 'cpu-mem-compositey',
+      editable: {
+        colorSelector: true,
+        chartSelector: true
+      },
+      placement: 'horizontal',
+      filter: true,
     }
   }, {
     id: 'cpu-mem-compositey',
@@ -162,6 +150,7 @@ cpuMemChartView.setConfig({
       marginBottom: 40,
       chartHeight: 600,
       crosshair: 'crosshair-id',
+      possibleChartTypes: ['BarChart', 'LineChart'],
       plot: {
         x: {
           accessor: 'T',
