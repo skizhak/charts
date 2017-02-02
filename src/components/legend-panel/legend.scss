@@ -93,6 +93,10 @@ $border-color: #fafafa;
     margin-right: 2px;
   }
 
+  &.disabled:hover {
+    cursor: default;
+  }
+
   &:hover {
     cursor: pointer;
   }
@@ -119,6 +123,10 @@ $border-color: #fafafa;
     
     .legend-attribute input:checked ~ & {
       display: block;
+    }
+
+    .legend-attribute.disabled input:checked ~ & {
+      display: none;
     }
     
     .legend-attribute & {

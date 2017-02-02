@@ -28,8 +28,14 @@ class LegendPanelView extends ContrailChartsView {
   render () {
     const template = this.config.get('template') || _template
     const content = template(this.config.data)
-
     super.render(content)
+
+    if(!this.config.attributes.filter) {
+      this.d3.selectAll('.legend-attribute')
+             .classed('disabled', true)
+             .select('input')
+             .property('disabled', true)
+    }
   }
 
   _onItemClick (d, el) {

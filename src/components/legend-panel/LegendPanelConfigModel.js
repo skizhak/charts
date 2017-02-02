@@ -21,7 +21,8 @@ class LegendPanelConfigModel extends ContrailChartsConfigModel {
       editable: {
         colorSelector: true,
         chartSelector: true
-      }
+      },
+      filter: true
     }
   }
 
@@ -35,7 +36,8 @@ class LegendPanelConfigModel extends ContrailChartsConfigModel {
           chartIcon: chartTypeIconMap[chartType]
         }
       }),
-      editable: this.attributes.editable.colorSelector || this.attributes.editable.chartSelector
+      editable: this.attributes.editable.colorSelector || this.attributes.editable.chartSelector,
+      filter: this.attributes.filter
     }
 
     data.attributes = _.map(accessors, (accessor) => {
@@ -45,7 +47,7 @@ class LegendPanelConfigModel extends ContrailChartsConfigModel {
         label: this.getLabel(undefined, accessor),
         color: this._parent.getColor(accessor),
         chartIcon: chartTypeIconMap[accessor.chart],
-        checked: accessor.enabled,
+        checked: this.attributes.filter ? accessor.enabled : true,
       }
     })
 
