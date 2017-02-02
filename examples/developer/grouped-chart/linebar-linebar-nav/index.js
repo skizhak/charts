@@ -39,10 +39,6 @@ const chartConfigs = [
               axis: 'y',
             }
           ]
-        },
-        axis: {
-          x: {},
-          y: {},
         }
       }
     }]

@@ -24,7 +24,7 @@ define([ // eslint-disable-line no-undef
   const complexChartView = new coCharts.charts.XYChartView()
   complexChartView.setData(complexData)
   complexChartView.setConfig({
-    container: '#chart-requirejs',
+    container: '#requirejs-linebar-chart',
     components: [{
       type: 'CompositeYChart',
       config: {
@@ -128,7 +128,7 @@ define([ // eslint-disable-line no-undef
   const simpleChartView = new coCharts.charts.XYChartView()
   simpleChartView.setData(simpleData)
   simpleChartView.setConfig({
-    container: '#chart-requirejs',
+    container: '#requirejs-line-chart',
     components: [{
       type: 'CompositeYChart',
       config: {

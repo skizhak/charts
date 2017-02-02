@@ -40,6 +40,8 @@ class CompositeYChartConfigModel extends ContrailChartsConfigModel {
 
       curve: d3.curveCatmullRom.alpha(0.5),
       axisPositions: ['left', 'right', 'top', 'bottom'],
+      plot: {},
+      axis: {},
     }
   }
   /**
