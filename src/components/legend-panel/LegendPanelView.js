@@ -1,6 +1,9 @@
 /*
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
+
+/* global $ _ */
+
 require('./legend.scss')
 const ContrailChartsView = require('contrail-charts-view')
 const _template = require('./legend.html')

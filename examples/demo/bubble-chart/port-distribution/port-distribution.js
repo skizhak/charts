@@ -4,6 +4,9 @@
 
 const d3 = require('d3')
 const formatter = require('formatter')
+const _c = require('constants')
+
+const bubbleShapes = _c.bubbleShapes
 
 function dataProcesser (data) {
   const portTraffic = [...data.sport, ...data.dport]
@@ -38,15 +41,15 @@ let dataSrc = require('./port-distribution.json')
 dataSrc = dataProcesser(dataSrc)
 
 const chartConfig = {
-  container: '#scatterChart',
+  container: '#pd-bubble-chart',
   components: [{
     type: 'CompositeYChart',
     config: {
       chartHeight: 600,
       marginInner: 10,
-      marginLeft: 80,
+      marginLeft: 100,
       marginRight: 80,
-      marginBottom: 40,
+      marginBottom: 60,
       plot: {
         x: {
           accessor: 'port',
@@ -57,25 +60,25 @@ const chartConfig = {
           {
             enabled: true,
             accessor: 'inBytes',
-            label: 'In Bytes',
+            label: 'Traffic In',
             chart: 'ScatterPlot',
             sizeAccessor: 'outBytes',
             sizeAxis: 'sizeAxisBytes',
-            shape: 'circle',
+            shape: bubbleShapes.signin,
             color: colorScheme[1],
             axis: 'y1',
-            tooltip: 'tooltipId',
+            tooltip: 'tooltip-id',
           }, {
             enabled: true,
             accessor: 'outBytes',
-            label: 'Out Bytes',
+            label: 'Traffic Out',
             chart: 'ScatterPlot',
             sizeAccessor: 'outBytes',
             sizeAxis: 'sizeAxisBytes',
-            shape: 'circle',
+            shape: bubbleShapes.signout,
             color: colorScheme[2],
             axis: 'y1',
-            tooltip: 'tooltipId',
+            tooltip: 'tooltip-id',
           }
         ]
       },
@@ -86,7 +89,7 @@ const chartConfig = {
           labelMargin: 5
         },
         sizeAxisBytes: {
-          range: [100, 150]
+          range: [200, 400]
         },
         y1: {
           position: 'left',
@@ -101,21 +104,21 @@ const chartConfig = {
       }
     }
   }, {
-    id: 'tooltipId',
+    id: 'tooltip-id',
     type: 'Tooltip',
     config: {
-      title: 'Port Info',
+      title: 'Port Traffic',
       dataConfig: [
         {
           accessor: 'port',
-          labelFormatter: 'Port',
+          labelFormatter: 'Port Number',
         }, {
           accessor: 'inBytes',
-          labelFormatter: 'Incoming Traffic',
+          labelFormatter: 'Traffic In',
           valueFormatter: formatter.byteFormatter,
         }, {
           accessor: 'outBytes',
-          labelFormatter: 'Outgoing Traffic',
+          labelFormatter: 'Traffic Out',
           valueFormatter: formatter.byteFormatter,
         }, {
           accessor: 'inFlowCount',
@@ -124,14 +127,6 @@ const chartConfig = {
         }, {
           accessor: 'outFlowCount',
           labelFormatter: 'Outgoing Flow Count',
-          valueFormatter: formatter.toInteger,
-        }, {
-          accessor: 'inPkts',
-          labelFormatter: 'Incoming Packets',
-          valueFormatter: formatter.toInteger,
-        }, {
-          accessor: 'outPkts',
-          labelFormatter: 'Outgoing Packets',
           valueFormatter: formatter.toInteger,
         }
       ]
@@ -142,26 +137,26 @@ const chartConfig = {
       marginInner: 10,
       marginLeft: 80,
       marginRight: 80,
-      marginBottom: 40,
+      marginBottom: 60,
       chartHeight: 200,
       selection: [75, 100],
       plot: {
         x: {
           accessor: 'inBytes',
-          label: 'In Bytes',
+          label: 'Port Traffic In',
           axis: 'x',
         },
         y: [
           {
             enabled: true,
             accessor: 'outBytes',
-            label: 'Out Bytes',
+            label: 'Port Traffic Out',
             chart: 'ScatterPlot',
             axis: 'y1',
             sizeAccessor: 'outBytes',
             sizeAxis: 'sizeAxisBytes',
-            shape: 'circle',
-            color: colorScheme[4]
+            shape: bubbleShapes.circleFill,
+            color: colorScheme[0]
           }
         ]
       },
@@ -171,7 +166,7 @@ const chartConfig = {
           formatter: formatter.byteFormatter
         },
         sizeAxisBytes: {
-          range: [100, 150]
+          range: [100, 200]
         },
         y1: {
           position: 'left',

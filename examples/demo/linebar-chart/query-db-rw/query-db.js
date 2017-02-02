@@ -19,11 +19,11 @@ for (let i = 0; i < 100; i++) {
 }
 const complexChartView = new coCharts.charts.XYChartView()
 complexChartView.setConfig({
-  container: '#complexChart',
+  container: '#query-db-chart',
   components: [{
     type: 'LegendPanel',
     config: {
-      sourceComponent: 'complexChartCompositeY',
+      sourceComponent: 'query-db-compositey',
       placement: 'row',
       coloPicker: true,
       filter: true,
@@ -31,13 +31,14 @@ complexChartView.setConfig({
     },
   }, {
     type: 'ControlPanel',
+    type: 'ControlPanel',
     config: {
       menu: [
-        { id: 'Refresh' },
+        {id: 'Refresh'},
       ],
     },
   }, {
-    id: 'complexChartCompositeY',
+    id: 'query-db-compositey',
     type: 'CompositeYChart',
     config: {
       marginInner: 10,
@@ -45,7 +46,7 @@ complexChartView.setConfig({
       marginRight: 80,
       marginBottom: 40,
       chartHeight: 600,
-      crosshair: 'crosshairId',
+      crosshair: 'crosshair-id',
       plot: {
         x: {
           accessor: 'x',
@@ -55,7 +56,7 @@ complexChartView.setConfig({
         y: [
           {
             accessor: 'a',
-            labelFormatter: 'Cassandra DB Read',
+            labelFormatter: 'DB Read',
             enabled: true,
             chart: 'StackedBarChart',
             possibleChartTypes: [
@@ -71,10 +72,10 @@ complexChartView.setConfig({
               }
             ],
             axis: 'y1',
-            tooltip: 'defaultTooltip',
+            tooltip: 'default-tooltip',
           }, {
             accessor: 'b',
-            labelFormatter: 'Cassandra DB Write',
+            labelFormatter: 'DB Write',
             enabled: true,
             chart: 'StackedBarChart',
             possibleChartTypes: [
@@ -90,7 +91,7 @@ complexChartView.setConfig({
               }
             ],
             axis: 'y1',
-            tooltip: 'customTooltip',
+            tooltip: 'custom-tooltip',
           }, {
             accessor: 'c',
             labelFormatter: 'QE Queries',
@@ -109,7 +110,7 @@ complexChartView.setConfig({
               }
             ],
             axis: 'y2',
-            tooltip: 'defaultTooltip',
+            tooltip: 'default-tooltip',
           }
         ]
       },
@@ -182,7 +183,7 @@ complexChartView.setConfig({
       }
     },
   }, {
-    id: 'defaultTooltip',
+    id: 'default-tooltip',
     type: 'Tooltip',
     config: {
       title: {
@@ -207,22 +208,22 @@ complexChartView.setConfig({
       ]
     },
   }, {
-    id: 'customTooltip',
+    id: 'custom-tooltip',
     type: 'Tooltip',
     config: {
       template: (data) => '<div class="tooltip-content">Custom tooltip</div>',
     }
   }, {
-    id: 'messageId',
+    id: 'message-id',
     type: 'Message',
     config: {
       enabled: true,
     }
   }, {
-    id: 'crosshairId',
+    id: 'crosshair-id',
     type: 'Crosshair',
     config: {
-      tooltip: 'defaultTooltip',
+      tooltip: 'default-tooltip',
     }
   }]
 })

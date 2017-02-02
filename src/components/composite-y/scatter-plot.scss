@@ -1,8 +1,10 @@
 .cc-svg .scatter-plot {
   .point {
     opacity: 0.55;
-    stroke-width: 0;
     shape-rendering: geometricPrecision;
+    font-family: FontAwesome;
+    alignment-baseline: middle;
+    text-anchor: middle;
     &:hover {
       opacity: 0.85;
       stroke-width: 2;

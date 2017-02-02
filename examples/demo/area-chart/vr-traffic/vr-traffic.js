@@ -4,6 +4,8 @@
 
 const _ = require('lodash')
 const formatter = require('formatter')
+const _c = require('constants')
+const lbColorScheme7 = _c.lbColorScheme7
 
 function dataProcesser (rawData) {
   const keyMapper = {
@@ -53,21 +55,12 @@ function generateColorPalette (nodeIds, nodeAttrs, colorSchema, offset1, offset2
 }
 
 const dataSrc = require('./2vr-traffic.json')
-
 const dataProcessed = dataProcesser(dataSrc.data)
-
-const fkColors = [
-  '#6887ff',
-  '#fcc100',
-  '#0cc2aa',
-  '#a88add',
-  '#2196f3'
-]
 
 const colorPalette = generateColorPalette(
   dataProcessed.nodeIds,
   ['sum_bytes', 'sum_packets'],
-  fkColors,
+  lbColorScheme7,
   1,
   2,
   1
@@ -135,11 +128,11 @@ const navPlotYConfig = _.reduce(dataProcessed.nodeIds, (config, nodeId, idx) => 
 const tooltipDataConfig = _.reduce(dataProcessed.nodeIds, (config, nodeId) => {
   config.push({
     accessor: `${nodeId}.sum_bytes`,
-    labelFormatter: `${nodeId} Sum(Bytes)`,
+    labelFormatter: `Sum(Bytes) ${nodeId} `,
     valueFormatter: formatter.byteFormatter,
   }, {
     accessor: `${nodeId}.sum_packets`,
-    labelFormatter: `${nodeId} Sum(Packets)`,
+    labelFormatter: `Sum(Packets) ${nodeId}`,
     valueFormatter: formatter.toInteger,
   })
 
@@ -153,14 +146,14 @@ const tooltipDataConfig = _.reduce(dataProcessed.nodeIds, (config, nodeId) => {
 // Create chart view.
 const trafficView = new coCharts.charts.XYChartView()
 trafficView.setConfig({
-  container: '#cpuMemChart',
+  container: '#vr-traffic',
   components: [{
     type: 'LegendPanel',
     config: {
-      sourceComponent: 'cpuMemCompositeY',
+      sourceComponent: 'vr-traffic-compositey',
     }
   }, {
-    id: 'cpuMemCompositeY',
+    id: 'vr-traffic-compositey',
     type: 'CompositeYChart',
     config: {
       marginInner: 10,
@@ -168,7 +161,7 @@ trafficView.setConfig({
       marginRight: 80,
       marginBottom: 40,
       chartHeight: 600,
-      crosshair: 'crosshairId',
+      crosshair: 'crosshair-id',
       plot: {
         x: {
           accessor: 'T',
@@ -196,7 +189,7 @@ trafficView.setConfig({
       }
     }
   }, {
-    id: 'cpuMemChart-navigation',
+    id: 'vr-traffic-navigation',
     type: 'Navigation',
     config: {
       marginInner: 10,
@@ -232,14 +225,14 @@ trafficView.setConfig({
       }
     }
   }, {
-    id: 'defaultTooltip',
+    id: 'default-tooltip',
     type: 'Tooltip',
     config: {
       title: 'Usage Details',
       dataConfig: tooltipDataConfig
     }
   }, {
-    id: 'cpuMemChart-controlPanel',
+    id: 'vr-traffic-controlpanel',
     type: 'ControlPanel',
     config: {
       enabled: true,
@@ -264,16 +257,16 @@ trafficView.setConfig({
       isSharedContainer: false,
     },
   }, {
-    id: 'cpuMemChart-message',
+    id: 'vrTrafficMessage',
     type: 'Message',
     config: {
       enabled: true,
     }
   }, {
-    id: 'crosshairId',
+    id: 'crosshair-id',
     type: 'Crosshair',
     config: {
-      tooltip: 'defaultTooltip',
+      tooltip: 'default-tooltip',
     }
   }]
 })

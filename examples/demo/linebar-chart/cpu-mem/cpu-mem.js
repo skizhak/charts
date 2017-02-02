@@ -1,8 +1,15 @@
 /*
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
+
 const _ = require('lodash')
 const formatter = require('formatter')
+const _c = require('constants')
+
+const lbColorScheme7 = _c.lbColorScheme7
+
+const dataSrc = require('./cpu-mem.json')
+const dataProcessed = dataProcesser(dataSrc.data)
 
 function dataProcesser (rawData) {
   const keyMapper = {
@@ -52,24 +59,10 @@ function generateColorPalette (nodeIds, nodeAttrs, colorSchema, offset1, offset2
   }, {})
 }
 
-const dataSrc = require('./cpu-mem.json')
-const dataProcessed = dataProcesser(dataSrc.data)
-
-const fkColors = [
-  '#00bcd4',
-  '#0cc2aa',
-  '#fcc100',
-  '#a88add',
-  '#6cc788',
-  '#6887ff',
-  '#4caf50',
-  '#2196f3'
-]
-
 const colorPalette = generateColorPalette(
     dataProcessed.nodeIds,
     ['cpu_share', 'mem_res'],
-    fkColors,
+    lbColorScheme7,
     1,
     2,
     1
@@ -153,14 +146,14 @@ const tooltipDataConfig = _.reduce(dataProcessed.nodeIds, (config, nodeId) => {
 // Create chart view.
 const cpuMemChartView = new coCharts.charts.XYChartView()
 cpuMemChartView.setConfig({
-  container: '#cpuMemChart',
+  container: '#cpu-mem-chart',
   components: [{
     type: 'LegendPanel',
     config: {
-      sourceComponent: 'cpuMemCompositeY',
+      sourceComponent: 'cpu-mem-compositey',
     }
   }, {
-    id: 'cpuMemCompositeY',
+    id: 'cpu-mem-compositey',
     type: 'CompositeYChart',
     config: {
       marginInner: 10,
@@ -168,7 +161,7 @@ cpuMemChartView.setConfig({
       marginRight: 80,
       marginBottom: 40,
       chartHeight: 600,
-      crosshair: 'crosshairId',
+      crosshair: 'crosshair-id',
       plot: {
         x: {
           accessor: 'T',
@@ -196,7 +189,7 @@ cpuMemChartView.setConfig({
       }
     }
   }, {
-    id: 'cpuMemChart-navigation',
+    id: 'cpu-mem-navigation',
     type: 'Navigation',
     config: {
       marginInner: 10,
@@ -232,14 +225,14 @@ cpuMemChartView.setConfig({
       }
     }
   }, {
-    id: 'defaultTooltip',
+    id: 'default-tooltip',
     type: 'Tooltip',
     config: {
       title: 'Usage Details',
       dataConfig: tooltipDataConfig
     }
   }, {
-    id: 'cpuMemChart-controlPanel',
+    id: 'cpu-mem-controlpanel',
     type: 'ControlPanel',
     config: {
       enabled: true,
@@ -264,16 +257,16 @@ cpuMemChartView.setConfig({
       isSharedContainer: false,
     },
   }, {
-    id: 'cpuMemChart-message',
+    id: 'cpu-mem-message',
     type: 'Message',
     config: {
       enabled: true,
     }
   }, {
-    id: 'crosshairId',
+    id: 'crosshair-id',
     type: 'Crosshair',
     config: {
-      tooltip: 'defaultTooltip',
+      tooltip: 'default-tooltip',
     }
   }]
 })

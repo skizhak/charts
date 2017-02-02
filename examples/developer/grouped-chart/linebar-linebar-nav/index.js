@@ -15,9 +15,9 @@ for (let i = 0; i < 100; i++) {
 
 const chartConfigs = [
   {
-    chartId: 'chart1',
+    chartId: 'grouped-chart1',
     type: 'XYChart',
-    container: '#chart1',
+    container: '#grouped-chart1',
     components: [{
       type: 'CompositeYChart',
       config: {
@@ -39,17 +39,13 @@ const chartConfigs = [
               axis: 'y',
             }
           ]
-        },
-        axis: {
-          x: {},
-          y: {},
         }
       }
     }]
   }, {
-    chartId: 'chart2',
+    chartId: 'grouped-chart2',
     type: 'XYChart',
-    container: '#chart2',
+    container: '#grouped-chart2',
     components: [{
       type: 'CompositeYChart',
       config: {
@@ -93,12 +89,12 @@ const chartConfigs = [
 
 const chartView = new coCharts.charts.MultiChartView()
 chartView.setConfig({
-  chartId: 'parentChart',
+  chartId: 'grouped-parent-chart',
   // Parent Chart components
   components: [],
   // Child charts.
   charts: chartConfigs,
 })
-chartView.setData(complexData, {}, 'chart1')
-chartView.setData(complexData, {}, 'chart2')
+chartView.setData(complexData, {}, 'grouped-chart1')
+chartView.setData(complexData, {}, 'grouped-chart2')
 chartView.render()

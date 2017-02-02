@@ -1,7 +1,7 @@
 {
   "extends": "standard",
   "globals": {
-    'coCharts': true,
+    'coCharts': true
   },
   rules: {
     'comma-dangle': 0,

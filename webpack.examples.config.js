@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) Juniper Networks, Inc. All rights reserved.
+ */
+
 const webpack = require('webpack')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const UglifyJsPlugin = webpack.optimize.UglifyJsPlugin
@@ -45,10 +49,11 @@ const config = {
     'demo-radial-pool-usage': path.join(__dirname, '/examples/demo/radial-chart/pool-usage/pools.js'),
     'developer-bubble-multi-shape': path.join(__dirname, '/examples/developer/bubble-chart/multiple-shapes/'),
     'developer-linebar-control-panel': path.join(__dirname, '/examples/developer/linebar-chart/control-panel/'),
+    'developer-area-chart': path.join(__dirname, '/examples/developer/area-chart/basic/'),
     'developer-linebar-legend': path.join(__dirname, '/examples/developer/linebar-chart/legend/'),
     'developer-linebar-timeline': path.join(__dirname, '/examples/developer/linebar-chart/timeline/'),
     'developer-linebar-tooltip': path.join(__dirname, '/examples/developer/linebar-chart/tooltip/'),
-    'developer-navigation': path.join(__dirname, '/examples/developer/navigation/'),
+    'developer-linebar-navigation': path.join(__dirname, '/examples/developer/linebar-chart/navigation/'),
     'developer-radial-pie': path.join(__dirname, '/examples/developer/radial-chart/pie/'),
   },
   devtool: 'source-map',
@@ -61,6 +66,7 @@ const config = {
     root: path.resolve('./examples'),
     alias: {
       'formatter': 'common/js/value-formatters.js',
+      'constants': 'common/js/constants.js'
     },
     extensions: ['', '.js']
   },

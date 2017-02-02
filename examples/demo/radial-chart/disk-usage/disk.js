@@ -2,6 +2,8 @@
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
 
+/* global d3 */
+
 const pieData = [
   {label: 'Disks In', value: 55},
   {label: 'Disks Out', value: 6},
@@ -9,8 +11,10 @@ const pieData = [
   {label: 'Disks Down', value: 4}
 ]
 
-const d3 = require('d3')
 const formatter = require('formatter')
+const _c = require('constants')
+
+const radialColorScheme6 = _c.radialColorScheme6
 
 function getLabel (serie) {
   return serie.label
@@ -20,7 +24,7 @@ function getValue (serie) {
 }
 
 const chartConfig = {
-  container: '#chart',
+  container: '#disk-donut-chart',
   components: [{
     type: 'ControlPanel',
     config: {
@@ -29,26 +33,21 @@ const chartConfig = {
       }],
     }
   }, {
-    id: 'pieChartId',
+    id: 'donut-chart',
     type: 'PieChart',
     config: {
       type: 'donut',
       radius: 100,
-      colorScale: d3.scaleOrdinal().range([
-        '#00bcd4',
-        '#fcc100',
-        '#4caf50',
-        '#c62828',
-      ]), // eslint-disable-line no-undef
+      colorScale: d3.scaleOrdinal().range(radialColorScheme6), // eslint-disable-line no-undef
       serie: {
         getValue: getValue,
         getLabel: getLabel,
         valueFormatter: formatter.commaGroupedInteger,
       },
-      tooltip: 'tooltipId',
+      tooltip: 'tooltip-id',
     },
   }, {
-    id: 'tooltipId',
+    id: 'tooltip-id',
     type: 'Tooltip',
     config: {
       dataConfig: [
@@ -62,7 +61,7 @@ const chartConfig = {
   }, {
     type: 'LegendUniversal',
     config: {
-      sourceComponent: 'pieChartId',
+      sourceComponent: 'donut-chart',
     },
   }
   ]

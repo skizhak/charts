@@ -1,10 +1,14 @@
 /*
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
+/* global d3 */
 
-const colorScheme = d3.schemeCategory10
-const simpleData = []
 const formatter = require('formatter')
+const _c = require('constants')
+
+const colorScheme = _c.bubbleColorScheme6
+const bubbleShapes = _c.bubbleShapes
+const simpleData = []
 
 for (let i = 0; i < 40; i++) {
   simpleData.push({
@@ -19,16 +23,18 @@ for (let i = 0; i < 40; i++) {
 }
 
 const chartConfig = {
-  container: '#chart',
+  container: '#multi-shape-bubble',
   components: [{
     type: 'LegendPanel',
     config: {
-      sourceComponent: 'scatterPlot',
+      sourceComponent: 'multishape-bubble-chart',
     },
   }, {
-    id: 'scatterPlot',
+    id: 'multishape-bubble-chart',
     type: 'CompositeYChart',
     config: {
+      marginLeft: 50,
+      marginRight: 50,
       plot: {
         x: {
           accessor: 'x',
@@ -38,33 +44,37 @@ const chartConfig = {
           {
             enabled: true,
             accessor: 'data1',
+            label: 'Data 1',
             chart: 'ScatterPlot',
             sizeAccessor: 'size1',
             sizeAxis: 'sizeAxis',
-            shape: 'circle',
+            // this is a circle symbol from fontawesome
+            shape: bubbleShapes.circleFill,
             color: colorScheme[0],
             axis: 'y1',
-            tooltip: 'tooltipId',
+            tooltip: 'tooltip-id',
           }, {
             enabled: true,
             accessor: 'data2',
+            label: 'Data 2',
             chart: 'ScatterPlot',
             sizeAccessor: 'size2',
             sizeAxis: 'sizeAxis',
-            shape: 'square',
-            color: colorScheme[3],
+            shape: bubbleShapes.square,
+            color: colorScheme[4],
             axis: 'y2',
-            tooltip: 'tooltipId',
+            tooltip: 'tooltip-id',
           }, {
             enabled: true,
             accessor: 'data3',
+            label: 'Data 3',
             chart: 'ScatterPlot',
             sizeAccessor: 'size2',
             sizeAxis: 'sizeAxis',
-            shape: 'triangle',
-            color: colorScheme[2],
+            shape: bubbleShapes.star,
+            color: colorScheme[5],
             axis: 'y2',
-            tooltip: 'tooltipId',
+            tooltip: 'tooltip-id',
           }
         ]
       },
@@ -85,12 +95,12 @@ const chartConfig = {
       },
     }
   }, {
-    id: 'tooltipId',
+    id: 'tooltip-id',
     type: 'Tooltip',
     config: {
       title: {
         accessor: 'x',
-        valueFormatter: formatter.extendISOTime,
+        valueFormatter: formatter.extendedISOTime,
       },
 
       dataConfig: [

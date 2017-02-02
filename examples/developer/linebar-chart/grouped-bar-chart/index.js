@@ -3,7 +3,7 @@
  */
 
 const staticData = []
-for (let i = 1; i <= 20; i++) {
+for (let i = 1; i <= 5; i++) {
   staticData.push({
     x: i,
     a: i * 3,
@@ -14,9 +14,9 @@ for (let i = 1; i <= 20; i++) {
 
 const complexChartView = new coCharts.charts.XYChartView()
 complexChartView.setConfig({
-  container: '#chart',
+  container: '#grouped-bar-chart',
   components: [{
-    id: 'compositeYId',
+    id: 'grouped-bar-compositey',
     type: 'CompositeYChart',
     config: {
       marginInner: 10,
@@ -34,43 +34,24 @@ complexChartView.setConfig({
             accessor: 'a',
             labelFormatter: 'Label A',
             enabled: true,
-            chart: 'StackedBarChart',
+            chart: 'BarChart',
             axis: 'y1',
             tooltip: 'defaultTooltipId',
-          },
-        ]
-      },
-      axis: {
-        x: {
-          scale: 'scaleLinear',
-        },
-        y1: {
-          position: 'left',
-        },
-      },
-    },
-  }, {
-    type: 'Navigation',
-    config: {
-      marginInner: 10,
-      marginLeft: 80,
-      marginRight: 80,
-      marginBottom: 40,
-      chartHeight: 200,
-      selection: [0, 50],
-      plot: {
-        x: {
-          accessor: 'x',
-          labelFormatter: 'Navigation Value',
-          axis: 'x',
-        },
-        y: [
-          {
+          }, {
+            accessor: 'b',
+            labelFormatter: 'Label B',
             enabled: true,
-            accessor: 'a',
-            labelFormatter: 'Nav Label A',
-            chart: 'LineChart',
+            chart: 'BarChart',
             axis: 'y1',
+            tooltip: 'default-tooltip',
+          }, {
+            accessor: 'c',
+            labelFormatter: 'Label C',
+            color: 'grey',
+            enabled: true,
+            chart: 'BarChart',
+            axis: 'y1',
+            tooltip: 'default-tooltip',
           }
         ]
       },
@@ -79,13 +60,13 @@ complexChartView.setConfig({
           scale: 'scaleLinear',
         },
         y1: {
+          domain: [0, 25],
           position: 'left',
-          ticks: 5,
         },
-      }
+      },
     },
   }, {
-    id: 'defaultTooltipId',
+    id: 'default-tooltip',
     type: 'Tooltip',
     config: {
       dataConfig: [

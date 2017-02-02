@@ -5,6 +5,9 @@
 const _ = require('lodash')
 const dataSrc = require('./inout-traffic.json')
 const formatter = require('formatter')
+const _c = require('constants')
+
+const lbColorScheme5 = _c.lbColorScheme7
 
 function dataProcesser (rawData) {
   const keyMapper = {
@@ -60,20 +63,12 @@ _.each(dataSrc.data, function (data) {
 })
 
 const dataProcessed = dataProcesser(dataSrc.data)
-
-const fkColors = [
-  '#fcc100',
-  '#a88add',
-  '#0cc2aa',
-  '#6887ff',
-]
-
 const colorPalette = generateColorPalette(
   dataProcessed.nodeIds,
   ['sum_bytes'],
-  fkColors,
+  lbColorScheme5,
   1,
-  2,
+  0,
   1
 )
 
@@ -115,7 +110,7 @@ const navPlotYConfig = _.reduce(dataProcessed.nodeIds, (config, nodeId, idx) => 
 const tooltipDataConfig = _.reduce(dataProcessed.nodeIds, (config, nodeId) => {
   config.push({
     accessor: `${nodeId}.sum_bytes`,
-    labelFormatter: `${nodeId} Sum(Bytes)`,
+    labelFormatter: `Sum(Bytes) ${nodeId} `,
     valueFormatter: formatter.byteFormatter,
   })
 
@@ -129,14 +124,14 @@ const tooltipDataConfig = _.reduce(dataProcessed.nodeIds, (config, nodeId) => {
 // Create chart view.
 const trafficView = new coCharts.charts.XYChartView()
 trafficView.setConfig({
-  container: '#cpuMemChart',
+  container: '#inout-traffic',
   components: [{
     type: 'LegendPanel',
     config: {
-      sourceComponent: 'cpuMemCompositeY',
+      sourceComponent: 'inout-traffic-compositey',
     }
   }, {
-    id: 'cpuMemCompositeY',
+    id: 'inout-traffic-compositey',
     type: 'CompositeYChart',
     config: {
       marginInner: 10,
@@ -144,7 +139,7 @@ trafficView.setConfig({
       marginRight: 80,
       marginBottom: 40,
       chartHeight: 600,
-      crosshair: 'crosshairId',
+      crosshair: 'crosshair-id',
       plot: {
         x: {
           accessor: 'T',
@@ -166,7 +161,7 @@ trafficView.setConfig({
       }
     }
   }, {
-    id: 'cpuMemChart-navigation',
+    id: 'inout-traffic-navigation',
     type: 'Navigation',
     config: {
       marginInner: 10,
@@ -196,14 +191,14 @@ trafficView.setConfig({
       }
     }
   }, {
-    id: 'defaultTooltip',
+    id: 'default-tooltip',
     type: 'Tooltip',
     config: {
       title: 'Usage Details',
       dataConfig: tooltipDataConfig
     }
   }, {
-    id: 'cpuMemChart-controlPanel',
+    id: 'inout-traffic-controlPanel',
     type: 'ControlPanel',
     config: {
       enabled: true,
@@ -228,16 +223,16 @@ trafficView.setConfig({
       isSharedContainer: false,
     },
   }, {
-    id: 'cpuMemChart-message',
+    id: 'inout-traffic-message',
     type: 'Message',
     config: {
       enabled: true,
     }
   }, {
-    id: 'crosshairId',
+    id: 'crosshair-id',
     type: 'Crosshair',
     config: {
-      tooltip: 'defaultTooltip',
+      tooltip: 'default-tooltip',
     }
   }]
 })
