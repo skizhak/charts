@@ -23,18 +23,24 @@ class ScatterPlotView extends XYChartSubView {
   */
   calculateAxisDomains () {
     const domains = {}
-    domains[this.params.plot.x.axis] = this.model.getRangeFor(this.params.plot.x.accessor)
+    let isFull = false
+    if (this.model.data.length < 2) isFull = true
+    domains[this.params.plot.x.axis] = this.model.getRangeFor(this.params.plot.x.accessor, isFull)
     domains[this.axisName] = []
     // The domains calculated here can be overriden in the axis configuration.
     // The overrides are handled by the parent.
     _.each(this.params.activeAccessorData, accessor => {
-      const domain = this.model.getRangeFor(accessor.accessor)
+      let domain = this.model.getRangeFor(accessor.accessor, isFull)
+      if (domain[0] === domain[1]) {
+        isFull = true
+        domain = this.model.getRangeFor(accessor.accessor, isFull)
+      }
       domains[this.axisName] = domains[this.axisName].concat(domain)
       if (accessor.sizeAccessor && accessor.shape && accessor.sizeAxis) {
         if (!domains[accessor.sizeAxis]) {
           domains[accessor.sizeAxis] = []
         }
-        domains[accessor.sizeAxis] = domains[accessor.sizeAxis].concat(this.model.getRangeFor(accessor.sizeAccessor))
+        domains[accessor.sizeAxis] = domains[accessor.sizeAxis].concat(this.model.getRangeFor(accessor.sizeAccessor, isFull))
       }
     })
     return domains
