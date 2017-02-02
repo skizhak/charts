@@ -20,8 +20,8 @@ class LegendPanelView extends ContrailChartsView {
       'click .edit-legend': '_toggleEditMode',
       'click .select.select--color': '_toggleColorSelectMenu',
       'click .select.select--chart': '_toggleChartSelectMenu',
-      'click .swatch': '_selectColor',
-      'click .chart-type': '_selectChartType'
+      'click .swatch--color': '_selectColor',
+      'click .swatch--chart': '_selectChartType'
     }
   }
 
