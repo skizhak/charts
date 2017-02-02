@@ -22,7 +22,8 @@ class LegendPanelConfigModel extends ContrailChartsConfigModel {
         colorSelector: true,
         chartSelector: true
       },
-      filter: true
+      filter: true,
+      placement: 'horizontal'
     }
   }
 
@@ -37,7 +38,8 @@ class LegendPanelConfigModel extends ContrailChartsConfigModel {
         }
       }),
       editable: this.attributes.editable.colorSelector || this.attributes.editable.chartSelector,
-      filter: this.attributes.filter
+      filter: this.attributes.filter,
+      placement: this.attributes.placement
     }
 
     data.attributes = _.map(accessors, (accessor) => {

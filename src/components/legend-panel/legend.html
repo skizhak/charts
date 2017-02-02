@@ -1,5 +1,5 @@
 {{#if editable}}<div class="edit-legend"><i class="fa fa-pencil-square" aria-hidden="true"></i></div>{{/if}}
-<div class="attributes">
+<div class="attributes {{ placement }}">
 	{{#each attributes}}
 	<div class="attribute" data-accessor="{{ accessor }}">
 		<div class="edit-attribute">
@@ -17,15 +17,15 @@
 <div class="selector color-selector">
   <div class="swatches">
   	{{#each colors}}
-    <div class="swatch" style="background-color: {{this}}; border-color: {{this}}"></div>
+    <div class="swatch swatch--color" style="background-color: {{this}}; border-color: {{this}}"></div>
     {{/each}}
   </div>
 </div>
 
 <div class="selector chart-selector">
-  <div class="chart-types">
+  <div class="swatches">
     {{#each possibleChartTypes}}
-    <div class="chart-type fa {{ chartIcon }}" data-type="{{ chartType }}"></div>
+    <div class="swatch swatch--chart fa {{ chartIcon }}" data-type="{{ chartType }}"></div>
     {{/each}}
   </div>
 </div>

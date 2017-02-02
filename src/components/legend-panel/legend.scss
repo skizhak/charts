@@ -49,6 +49,11 @@ $border-color: #fafafa;
   padding: 2px 4px;
   margin-right: 4px;
 
+  .attributes.vertical & {
+    display: block;
+    margin-bottom: 4px;
+  }
+
   .edit-attribute {
     display: none;
   }
@@ -198,13 +203,13 @@ $border-color: #fafafa;
   }
 
   .swatch {
-    display: inline-block;
+    box-sizing: border-box;
     float: left;
     margin: 2px;
-    width: 14px;
-    height: 14px;
-    border: 1px solid white;
-    border-radius: 2px;
+    width: 24px;
+    height: 24px;
+    border: 1px solid #eee;
+    border-radius: 4px;
     background-color: white;
     
     &:hover {
@@ -218,9 +223,10 @@ $border-color: #fafafa;
     }
   }
 
-  .chart-type {
+  .swatch--chart {
     padding: 4px;
-    border: 1px solid #eee;
-    border-radius: 4px;
+    text-align: center;
+    font-size: 12px;
+    line-height: 16px;
   }
 }

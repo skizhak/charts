@@ -28,7 +28,7 @@ complexChartView.setConfig({
         colorSelector: true,
         chartSelector: true
       },
-      placement: 'horizontal',
+      placement: 'vertical',
       filter: true,
     },
   }, {
