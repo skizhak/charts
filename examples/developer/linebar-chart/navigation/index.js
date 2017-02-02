@@ -3,16 +3,8 @@
  */
 /* global d3 */
 
+const data = require('fixture').simpleStatic
 const colorScheme = d3.schemeCategory10
-const staticData = []
-for (let i = 1; i <= 20; i++) {
-  staticData.push({
-    x: i,
-    a: i * 3,
-    b: i * 5,
-    c: i * 7,
-  })
-}
 
 const barChart = new coCharts.charts.XYChartView()
 const areaChart = new coCharts.charts.XYChartView()
@@ -140,5 +132,6 @@ barChart.setConfig({
     },
   }]
 })
-areaChart.setData(staticData)
-barChart.setData(staticData)
+
+// Navigation component of areaChart will push the data to barChart
+areaChart.setData(data)

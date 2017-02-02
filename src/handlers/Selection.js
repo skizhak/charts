@@ -37,10 +37,15 @@ class Selection {
   /**
    * Calculate and cache range of a serie
    * @param {String} key - serie accessor
+   * @param {Boolean} isFull if true get range of the whole data, not just selection
    * @return {Array} [min, max] extent of values of the serie
    */
-  getRangeFor (key) {
-    if (!_.has(this._ranges, key)) this._ranges[key] = d3.extent(this.data, d => d[key])
+  getRangeFor (key, isFull) {
+    if (isFull) return d3.extent(this._data, d => d[key])
+
+    if (!_.has(this._ranges, key)) {
+      this._ranges[key] = d3.extent(this.data, d => d[key])
+    }
     return this._ranges[key]
   }
 }

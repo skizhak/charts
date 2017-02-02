@@ -2,17 +2,8 @@
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
 
+const data = require('fixture').simpleStatic
 const formatter = require('formatter')
-const complexData = []
-for (let i = 0; i < 100; i++) {
-  const a = Math.random() * 100
-  complexData.push({
-    x: 1475760930000 + 1000000 * i,
-    a: a,
-    b: a + Math.random() * 10,
-    c: i + (Math.random() - 0.5) * 10,
-  })
-}
 const complexChartView = new coCharts.charts.XYChartView()
 complexChartView.setConfig({
   container: '#chart-tooltip',
@@ -27,27 +18,27 @@ complexChartView.setConfig({
       chartHeight: 600,
       plot: {
         x: {
-          accessor: 'x',
+          accessor: 't',
           labelFormatter: 'Time',
           axis: 'x'
         },
         y: [
           {
-            accessor: 'a',
+            accessor: 'randomN',
             labelFormatter: 'Label A',
             enabled: true,
             chart: 'StackedBarChart',
             axis: 'y1',
             tooltip: 'default-tooltip',
           }, {
-            accessor: 'b',
+            accessor: 'random5',
             labelFormatter: 'Label B',
             enabled: true,
             chart: 'StackedBarChart',
             axis: 'y1',
             tooltip: 'custom-tooltip',
           }, {
-            accessor: 'c',
+            accessor: 'random10',
             labelFormatter: 'Megabytes C',
             color: 'grey',
             enabled: true,
@@ -64,7 +55,6 @@ complexChartView.setConfig({
         y1: {
           position: 'left',
           formatter: formatter.toInteger,
-          domain: [-10, undefined],
         },
         y2: {
           position: 'right',
@@ -78,19 +68,19 @@ complexChartView.setConfig({
     config: {
       dataConfig: [
         {
-          accessor: 'x',
+          accessor: 't',
           labelFormatter: 'Time',
           valueFormatter: formatter.extendedISOTime,
         }, {
-          accessor: 'a',
+          accessor: 'randomN',
           labelFormatter: 'Tooltip A',
           valueFormatter: formatter.toInteger,
         }, {
-          accessor: 'b',
+          accessor: 'random5',
           labelFormatter: 'Tooltip B',
           valueFormatter: formatter.toInteger,
         }, {
-          accessor: 'c',
+          accessor: 'random10',
           labelFormatter: 'Tooltip C',
           valueFormatter: formatter.toInteger,
         }
@@ -104,4 +94,4 @@ complexChartView.setConfig({
     }
   }]
 })
-complexChartView.setData(complexData)
+complexChartView.setData(data)

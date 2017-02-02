@@ -148,7 +148,7 @@ class CompositeYChartView extends ContrailChartsView {
   /**
   * Combine the axis domains (extents) from all enabled drawings.
   */
-  combineAxisDomains () {
+  combineAxesDomains () {
     const domains = {}
     _.each(this._drawings, drawing => {
       if (drawing.params.enabled) {
@@ -183,7 +183,7 @@ class CompositeYChartView extends ContrailChartsView {
   * Save all scales in the params and drawing.params structures.
   */
   saveScales () {
-    const domains = this.combineAxisDomains()
+    const domains = this.combineAxesDomains()
     if (!_.has(this.params, 'axis')) {
       this.params.axis = {}
     }
@@ -302,41 +302,39 @@ class CompositeYChartView extends ContrailChartsView {
    */
   renderXAxis () {
     const name = this.params.plot.x.axis
-    if (!this.params.axis[name].scale) return
+    const axis = this.params.axis[name]
+    if (!axis.scale) return
 
-    let xAxis = d3.axisBottom(this.params.axis[name].scale)
+    let d3Axis = d3.axisBottom(axis.scale)
       .tickSize(this.params.yRange[0] - this.params.yRange[1] + 2 * this.params.marginInner)
       .tickPadding(10)
     if (this.hasAxisParam('x', 'ticks')) {
-      xAxis = xAxis.ticks(this.params.axis[name].ticks)
+      d3Axis = d3Axis.ticks(axis.ticks)
     }
     if (this.hasAxisConfig('x', 'formatter')) {
-      xAxis = xAxis.tickFormat(this.config.get('axis').x.formatter)
+      d3Axis = d3Axis.tickFormat(this.config.get('axis').x.formatter)
     }
     this.d3.transition().ease(d3.easeLinear).duration(this.params.duration)
-    this.d3.select('.axis.x-axis').call(xAxis)
-    // X axis label
-    const xLabelData = []
-    let xLabelMargin = 5
+    this.d3.select('.axis.x-axis').call(d3Axis)
+
+    const labelData = []
+    let labelMargin = 5
     if (this.hasAxisParam(name, 'labelMargin')) {
-      xLabelMargin = this.params.axis[name].labelMargin
+      labelMargin = axis.labelMargin
     }
-    let xLabel = this.params.plot.x.labelFormatter || this.params.plot.x.label
-    if (this.hasAxisParam(name, 'label')) {
-      xLabel = this.params.axis[name].label
-    }
-    if (xLabel) {
-      xLabelData.push(xLabel)
-    }
-    const xAxisLabelSvg = this.d3.select('.axis.x-axis').selectAll('.axis-label').data(xLabelData)
-    xAxisLabelSvg.enter()
+    let label = this.params.plot.x.labelFormatter || this.params.plot.x.label
+    if (this.hasAxisParam(name, 'label')) label = axis.label
+    if (label) labelData.push(label)
+
+    const axisLabelElements = this.d3.select('.axis.x-axis').selectAll('.axis-label').data(labelData)
+    axisLabelElements.enter()
       .append('text')
       .attr('class', 'axis-label')
-      .merge(xAxisLabelSvg) // .transition().ease( d3.easeLinear ).duration( this.params.duration )
+      .merge(axisLabelElements)
       .attr('x', this.params.xRange[0] + (this.params.xRange[1] - this.params.xRange[0]) / 2)
-      .attr('y', this.params.chartHeight - this.params.marginTop - xLabelMargin)
+      .attr('y', this.params.chartHeight - this.params.marginTop - labelMargin)
       .text(d => d)
-    xAxisLabelSvg.exit().remove()
+    axisLabelElements.exit().remove()
   }
 
   renderYAxes () {

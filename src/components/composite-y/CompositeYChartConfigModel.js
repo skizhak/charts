@@ -42,6 +42,9 @@ class CompositeYChartConfigModel extends ContrailChartsConfigModel {
       axisPositions: ['left', 'right', 'top', 'bottom'],
       plot: {},
       axis: {},
+      // TODO move to the BarChartConfigModel
+      // Padding between series in percents of bar width
+      barPadding: 15,
     }
   }
   /**
