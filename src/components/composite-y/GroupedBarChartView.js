@@ -18,12 +18,15 @@ class BarChartView extends XYChartSubView {
    * @override
    */
   get xMarginInner () {
+    if (this.model.data.length < 2) return 0
     return this.bandWidth / 2
   }
 
   get bandWidth () {
+    if (_.isEmpty(this.model.data)) return 0
     const paddedPart = 1 - (this.config.get('barPadding') / 2 / 100)
-    return this.innerWidth / (this.model.data.length || 1) * paddedPart
+    // TODO do not use model.data.length as there can be gaps
+    return this.innerWidth / this.model.data.length * paddedPart
   }
   /**
   * Called by the parent in order to calculate maximum data extents for all of this child's axis.
@@ -32,12 +35,14 @@ class BarChartView extends XYChartSubView {
   */
   calculateAxisDomains () {
     const domains = {}
-    domains[this.params.plot.x.axis] = this.model.getRangeFor(this.params.plot.x.accessor)
+    let isFull = false
+    if (this.model.data.length < 2) isFull = true
+    domains[this.params.plot.x.axis] = this.model.getRangeFor(this.params.plot.x.accessor, isFull)
     domains[this.axisName] = []
     // The domains calculated here can be overriden in the axis configuration.
     // The overrides are handled by the parent.
     _.each(this.params.activeAccessorData, accessor => {
-      const domain = this.model.getRangeFor(accessor.accessor)
+      const domain = this.model.getRangeFor(accessor.accessor, isFull)
       domains[this.axisName] = domains[this.axisName].concat(domain)
     })
     domains[this.axisName] = d3.extent(domains[this.axisName])
