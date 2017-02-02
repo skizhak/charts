@@ -22,7 +22,8 @@ class BarChartView extends XYChartSubView {
   }
 
   get bandWidth () {
-    return 0.95 * (this.innerWidth / this.model.data.length || 1)
+    const paddedPart = 1 - (this.config.get('barPadding') / 2 / 100)
+    return this.innerWidth / (this.model.data.length || 1) * paddedPart
   }
   /**
   * Called by the parent in order to calculate maximum data extents for all of this child's axis.

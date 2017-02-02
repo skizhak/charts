@@ -96,11 +96,6 @@ const chartConfig = {
           formatter: formatter.byteFormatter,
           labelMargin: 15,
         },
-        y2: {
-          position: 'right',
-          formatter: formatter.toInteger,
-          labelMargin: 15
-        }
       }
     }
   }, {
@@ -156,23 +151,23 @@ const chartConfig = {
             sizeAccessor: 'outBytes',
             sizeAxis: 'sizeAxisBytes',
             shape: bubbleShapes.circleFill,
-            color: colorScheme[0]
+            color: colorScheme[0],
           }
         ]
       },
       axis: {
         x: {
           scale: 'scaleLinear',
-          formatter: formatter.byteFormatter
+          formatter: formatter.byteFormatter,
         },
         sizeAxisBytes: {
-          range: [100, 200]
+          range: [100, 200],
         },
         y1: {
           position: 'left',
           formatter: formatter.byteFormatter,
           labelMargin: 15,
-          ticks: 4
+          ticks: 4,
         }
       }
     }
