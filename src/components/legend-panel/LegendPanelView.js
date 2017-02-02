@@ -36,6 +36,10 @@ class LegendPanelView extends ContrailChartsView {
              .select('input')
              .property('disabled', true)
     }
+
+    if(this.config.attributes.placement === 'vertical') {
+      this.$el.addClass('vertical')
+    }
   }
 
   _onItemClick (d, el) {

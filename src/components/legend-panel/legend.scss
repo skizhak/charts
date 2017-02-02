@@ -13,6 +13,21 @@ $border-color: #fafafa;
   padding: 4px 8px;
   display: inline-block;
 
+  &.vertical {
+    .edit-legend {
+      vertical-align: bottom;
+      margin-bottom: 4px;
+    }
+    
+    .attribute {
+      display: block;
+
+      &:not(:last-child) {
+        margin-bottom: 4px;
+      }
+    }
+  }
+
   .attributes {
     display: inline-block;
     line-height: 12px;
@@ -48,11 +63,6 @@ $border-color: #fafafa;
   border: 1px solid #fff;
   padding: 2px 4px;
   margin-right: 4px;
-
-  .attributes.vertical & {
-    display: block;
-    margin-bottom: 4px;
-  }
 
   .edit-attribute {
     display: none;
