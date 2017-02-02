@@ -14,16 +14,14 @@
 	{{/each}}
 </div>
 
-<div class="selector color-selector">
-  <div class="swatches">
-  	{{#each colors}}
+<div class="selector">
+  <div class="swatches swatches--colors">
+    {{#each colors}}
     <div class="swatch swatch--color" style="background-color: {{this}}; border-color: {{this}}"></div>
     {{/each}}
   </div>
-</div>
 
-<div class="selector chart-selector">
-  <div class="swatches">
+  <div class="swatches swatches--charts">
     {{#each possibleChartTypes}}
     <div class="swatch swatch--chart fa {{ chartIcon }}" data-type="{{ chartType }}"></div>
     {{/each}}

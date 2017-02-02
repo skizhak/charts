@@ -16,10 +16,9 @@ class LegendPanelView extends ContrailChartsView {
 
   get events () {
     return {
-      'change .legend-attribute': '_onItemClick',
+      'change .legend-attribute': '_toggleAttribute',
       'click .edit-legend': '_toggleEditMode',
-      'click .select.select--color': '_toggleColorSelectMenu',
-      'click .select.select--chart': '_toggleChartSelectMenu',
+      'click .select': '_toggleSelector',
       'click .swatch--color': '_selectColor',
       'click .swatch--chart': '_selectChartType'
     }
@@ -42,7 +41,7 @@ class LegendPanelView extends ContrailChartsView {
     }
   }
 
-  _onItemClick (d, el) {
+  _toggleAttribute (d, el) {
     const accessorName = $(el).parents('.attribute').data('accessor')
     const isChecked = el.querySelector('input').checked
     this._actionman.fire('SelectSerie', accessorName, isChecked)
@@ -51,7 +50,7 @@ class LegendPanelView extends ContrailChartsView {
   _toggleEditMode (d, el) {
     this.$el.toggleClass('edit-mode')
     this.$el.find('.attribute').toggleClass('edit')
-    this.$el.find('.color-selector').hide()
+    this.$el.find('.selector').removeClass('active')
 
     if(!this.config.attributes.editable.colorSelector) this.d3.selectAll('.select--color').hide()
     if(!this.config.attributes.editable.chartSelector) this.d3.selectAll('.select--chart').style('display', 'none')
@@ -65,22 +64,24 @@ class LegendPanelView extends ContrailChartsView {
     })
   }
 
-  _toggleColorSelectMenu (d, el) {
+  _toggleSelector (d, el) {
     this._accessor = $(el).parents('.attribute').data('accessor')
-    const paletteElement = this.$('.color-selector')
-    const elemOffset = $(el).position()
-    elemOffset.top += $(el).outerHeight(true) + 1
-    paletteElement.css(elemOffset)
-    paletteElement.toggle()
-  }
+    const selectorElement = this.d3.select('.selector')
+    selectorElement.classed('select--color', false).classed('select--chart', false)
+    
+    if(this.$el.find('.selector').hasClass('active')) {
+      selectorElement.classed('active', false)
+    } else if($(el).hasClass('select--color')) {
+      selectorElement.classed('active', true).classed('select--color', true)
+    } else if ($(el).hasClass('select--chart')) {
+      selectorElement.classed('active', true).classed('select--chart', true)
+    }
 
-  _toggleChartSelectMenu (d, el) {
-    this._accessor = $(el).parents('.attribute').data('accessor')
-    const paletteElement = this.$('.chart-selector')
     const elemOffset = $(el).position()
     elemOffset.top += $(el).outerHeight(true) + 1
-    paletteElement.css(elemOffset)
-    paletteElement.toggle()
+    selectorElement
+    .style('top', elemOffset.top + 'px')
+    .style('left', elemOffset.left + 'px')
   }
 
   _selectColor (d, el) {

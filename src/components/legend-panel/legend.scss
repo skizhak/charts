@@ -165,6 +165,15 @@ $border-color: #fafafa;
   border: 1px solid #aaa;
   border-radius: 2px;
   vertical-align: middle;
+
+  &.select--chart {
+    font-size: 13px;
+    padding: 0 2px;
+    background-color: #666;
+    border-color: #666;
+    color: white;
+    width: 24px;
+  }
   
   &:hover {
     cursor: pointer;
@@ -183,16 +192,7 @@ $border-color: #fafafa;
   }
 }
 
-.select--chart {
-  font-size: 13px;
-  padding: 0 2px;
-  background-color: #666;
-  border-color: #666;
-  color: white;
-  width: 24px;
-}
-
-.color-selector, .chart-selector {
+.selector {
   display: none;
   position: absolute;
   background-color: white;
@@ -201,15 +201,24 @@ $border-color: #fafafa;
   max-width: 140px;
   padding: 5px;
 
-  &.active {
-    display: inline-block;
+  div[class*="swatches--"] {
+    display: none;
   }
-  
-  .header {
-    border-bottom: 1px solid #eee;
-    margin-bottom: 5px;
-    padding-bottom: 5px;
-    color: #aaa;
+
+  &.active {
+    display: block;
+  }
+
+  &.select--color {
+    .swatches--colors {
+      display: block;
+    }
+  }
+
+  &.select--chart {
+    .swatches--charts {
+      display: block;
+    }
   }
 
   .swatch {
