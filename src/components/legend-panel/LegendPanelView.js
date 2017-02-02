@@ -93,6 +93,7 @@ class LegendPanelView extends ContrailChartsView {
 
   _selectChartType (d, el) {
     const chartType = $(el).data('type')
+    this.$el.removeClass('edit-mode')
     $(el).parents('.chart-selector').hide()
     this._actionman.fire('SelectChartType', this._accessor, chartType)
   }
