@@ -66,6 +66,7 @@ const config = {
     root: path.resolve('./examples'),
     alias: {
       'formatter': 'common/js/value-formatters.js',
+      'constants': 'common/js/constants.js'
     },
     extensions: ['', '.js']
   },

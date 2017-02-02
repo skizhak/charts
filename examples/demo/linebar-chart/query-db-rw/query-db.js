@@ -31,6 +31,7 @@ complexChartView.setConfig({
     },
   }, {
     type: 'ControlPanel',
+    type: 'ControlPanel',
     config: {
       menu: [
         {id: 'Refresh'},
@@ -55,7 +56,7 @@ complexChartView.setConfig({
         y: [
           {
             accessor: 'a',
-            labelFormatter: 'Cassandra DB Read',
+            labelFormatter: 'DB Read',
             enabled: true,
             chart: 'StackedBarChart',
             possibleChartTypes: [
@@ -74,7 +75,7 @@ complexChartView.setConfig({
             tooltip: 'default-tooltip',
           }, {
             accessor: 'b',
-            labelFormatter: 'Cassandra DB Write',
+            labelFormatter: 'DB Write',
             enabled: true,
             chart: 'StackedBarChart',
             possibleChartTypes: [
