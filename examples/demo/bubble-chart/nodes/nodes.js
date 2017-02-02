@@ -42,6 +42,12 @@ const chartConfig = {
     type: 'LegendPanel',
     config: {
       sourceComponent: 'scatter-plot',
+      editable: {
+        colorSelector: true,
+        chartSelector: false
+      },
+      placement: 'horizontal',
+      filter: true,
     },
   }, {
     id: 'scatter-plot',

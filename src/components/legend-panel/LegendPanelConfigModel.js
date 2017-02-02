@@ -8,6 +8,7 @@ const _ = require('lodash')
 const ContrailChartsConfigModel = require('contrail-charts-config-model')
 const chartTypeIconMap = {
   'BarChart': 'fa-bar-chart',
+  'StackedBarChart': 'fa-signal', // Todo find something better
   'LineChart': 'fa-line-chart',
   'AreaChart': 'fa-area-chart',
   'PieChart': 'fa-pie-chart'

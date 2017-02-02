@@ -72,16 +72,6 @@ const mainChartPlotYConfig = _.reduce(dataProcessed.nodeIds, (config, nodeId, id
     label: `Sum(Bytes) ${nodeId}`,
     enabled: true,
     chart: 'AreaChart',
-    possibleChartTypes: [
-      {
-        label: 'Bar',
-        chart: 'BarChart',
-      },
-      {
-        label: 'Area',
-        chart: 'AreaChart',
-      }
-    ],
     color: colorPalette[`${nodeId}.sum_bytes`],
     axis: 'y1',
   }, {
@@ -89,16 +79,6 @@ const mainChartPlotYConfig = _.reduce(dataProcessed.nodeIds, (config, nodeId, id
     label: `Sum(Packets) ${nodeId}`,
     enabled: false,
     chart: 'LineChart',
-    possibleChartTypes: [
-      {
-        label: 'Line',
-        chart: 'LineChart',
-      },
-      {
-        label: 'Area',
-        chart: 'AreaChart'
-      }
-    ],
     color: colorPalette[`${nodeId}.sum_packets`],
     axis: 'y2',
   })
@@ -151,6 +131,12 @@ trafficView.setConfig({
     type: 'LegendPanel',
     config: {
       sourceComponent: 'vr-traffic-compositey',
+      editable: {
+        colorSelector: true,
+        chartSelector: true
+      },
+      placement: 'horizontal',
+      filter: true,
     }
   }, {
     id: 'vr-traffic-compositey',
@@ -162,6 +148,7 @@ trafficView.setConfig({
       marginBottom: 40,
       chartHeight: 600,
       crosshair: 'crosshair-id',
+      possibleChartTypes: ['AreaChart', 'LineChart'],
       plot: {
         x: {
           accessor: 'T',
