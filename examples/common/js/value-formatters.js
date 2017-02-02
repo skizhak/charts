@@ -49,11 +49,11 @@ function toFixedPercentage1 (number) {
 }
 
 module.exports = {
-  extendedISOTime: extendedISOTime,
-  toInteger: toInteger,
-  toFixed1: toFixed1,
-  toFixedNumberFactory: toFixedNumberFactory,
-  commaGroupedInteger: commaGroupedInteger,
-  byteFormatter: byteFormatter,
-  toFixedPercentage1: toFixedPercentage1,
+  extendedISOTime,
+  toInteger,
+  toFixed1,
+  toFixedNumberFactory,
+  commaGroupedInteger,
+  byteFormatter,
+  toFixedPercentage1,
 }

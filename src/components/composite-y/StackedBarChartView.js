@@ -23,6 +23,7 @@ class StackedBarChartView extends XYChartSubView {
   // TODO use memoize function
   get bandWidth () {
     const paddedPart = 1 - (this.config.get('barPadding') / 2 / 100)
+    // TODO do not use model.data.length as there can be gaps
     return this.innerWidth / (this.model.data.length || 1) * paddedPart
   }
   /**
