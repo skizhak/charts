@@ -1,8 +1,9 @@
 .cc-svg .pie-chart {
+  opacity: 0.9;
   path.arc {
     stroke: white;
   }
   path.highlight  {
-    opacity: 0.3;
+    opacity: 0.45;
   }
 }

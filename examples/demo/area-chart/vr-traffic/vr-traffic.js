@@ -131,6 +131,7 @@ trafficView.setConfig({
     type: 'LegendPanel',
     config: {
       sourceComponent: 'vr-traffic-compositey',
+      palette: _c.lbColorScheme17,
       editable: {
         colorSelector: true,
         chartSelector: true

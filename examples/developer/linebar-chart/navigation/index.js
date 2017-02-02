@@ -59,7 +59,7 @@ areaChart.setConfig({
             accessor: 'a',
             chart: 'AreaChart',
             axis: 'y',
-            color: colorScheme[1]
+            color: colorScheme[2]
           }
         ]
       },

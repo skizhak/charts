@@ -3,7 +3,7 @@
  */
 /* global d3 */
 
-const colorScheme = d3.schemeCategory20
+const colorScheme = d3.schemeCategory10
 
 const simpleData = [
   { x: (new Date(2016, 11, 1)).getTime(), y: 0 },
@@ -30,7 +30,7 @@ simpleChartView.setConfig({
             accessor: 'y',
             chart: 'AreaChart',
             axis: 'y',
-            color: colorScheme[1]
+            color: colorScheme[2]
           }
         ]
       },
