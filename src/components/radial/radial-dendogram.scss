@@ -2,8 +2,13 @@
   .link {
 	stroke: steelblue;
 	stroke-opacity: .4;
-	stroke-width: 1;
 	fill: none;
+	pointer-events: none;
+  }
+  .ribbon {
+	stroke: steelblue;
+	fill: steelblue;
+	fill-opacity: 0.4;
 	pointer-events: none;
   }
   .circle {

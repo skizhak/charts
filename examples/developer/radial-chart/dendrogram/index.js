@@ -6,6 +6,8 @@ const chartConfig = {
     type: 'RadialDendrogram',
     config: {
       //radius: 100,
+      parentSeparation: 1,
+      parentSeparationThreshold: 2,
       colorScale: d3.scaleOrdinal().range(['#3366cc', '#dc3912', '#ff9900', '#109618', '#990099', '#0099c6', '#dd4477', '#66aa00', '#b82e2e', '#316395', '#994499', '#22aa99', '#aaaa11', '#6633cc', '#e67300', '#8b0707', '#651067', '#329262', '#5574a6', '#3b3eac']), // eslint-disable-line no-undef
       hierarchyConfig: {
         parse: function(d) {

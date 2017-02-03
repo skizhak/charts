@@ -3,6 +3,7 @@
  */
 require('./radial-dendogram.scss')
 const _ = require('lodash')
+const d3 = require('d3')
 const shape = require('d3-shape')
 const ContrailChartsView = require('contrail-charts-view')
 
@@ -63,7 +64,7 @@ class RadialDendrogramView extends ContrailChartsView {
       name: 'root',
       children: []
     }
-
+    let valueSum = 0
     _.each(data, (d, index) => {
       const leafs = hierarchyConfig.parse(d)
       // Parsing a data element should return a 2 element array: [source, destination]
@@ -92,15 +93,19 @@ class RadialDendrogramView extends ContrailChartsView {
         node.index = index
         node.id = 'i' + index
         node.key = leaf.key
+        valueSum += node.value
       })
     })
-    console.log('rootNode: ', rootNode)
-
-    const hierarchyRootNode = d3.hierarchy(rootNode).sum((d) => d.value ).sort( (a, b) => b.value - a.value)
+    console.log('rootNode: ', rootNode, valueSum)
+    const valueScale = this.config.get('valueScale').domain([1,valueSum]).range([0,360])
+    console.log('valueScale: ', valueScale, valueScale(valueSum/2))
+    const hierarchyRootNode = d3.hierarchy(rootNode).sum((d) => valueScale(d.value)).sort((a, b) => b.value - a.value)
     console.log('hierarchyRootNode: ', hierarchyRootNode)
     // Creat a map of destination nodes
     const destinations = {}
+    let maxDepth = 0
     _.each(hierarchyRootNode.leaves(), (leaf) => {
+      maxDepth = Math.max(maxDepth, leaf.depth)
       if (leaf.data.type === 'dst') {
         destinations[leaf.data.id] = leaf
       }
@@ -113,6 +118,9 @@ class RadialDendrogramView extends ContrailChartsView {
       }
     })
     this.links = links
+    console.log('maxDepth: ', maxDepth)
+    console.log('Links: ', links)
+    const extraPaddingPerDepth = _.fill(_.range(maxDepth+1), 0)
     // Create the cluster layout.
     const cluster = d3.cluster().size([360, innerRadius]).separation((a, b) => {
       let distance = (a.value + b.value) / 2
@@ -120,22 +128,89 @@ class RadialDendrogramView extends ContrailChartsView {
         // Count how many ancestors differ the two nodes.
         const aAncestors = a.ancestors()
         const bAncestors = b.ancestors()
-        const differences = _.difference(aAncestors, bAncestors).length
-        distance += this.params.parentSeparation * differences * hierarchyRootNode.value / 360
+        const differences = Math.max(0, _.difference(aAncestors, bAncestors).length - this.params.parentSeparationThreshold)
+        const extraPadding = this.params.parentSeparation * differences * hierarchyRootNode.value / 360
+        distance += extraPadding
+        extraPaddingPerDepth[a.depth] += extraPadding
       }
       return distance
     })
+    console.log('extraPaddingPerDepth: ', extraPaddingPerDepth)
     console.log('cluster: ', cluster(hierarchyRootNode))
     this.cluster = cluster
     // Create circles
     const circles = []
     hierarchyRootNode.each((n) => {
+      const valueAngle = n.value * 360 / (hierarchyRootNode.value + extraPaddingPerDepth[n.depth])
+      n.startAngle = n.x - valueAngle / 2
+      n.endAngle = n.x + valueAngle / 2
       if (circles.length === n.depth) {
         circles[n.depth] = { r: n.y }
       }
     })
     this.circles = circles
     console.log('circles: ', circles)
+    // Create grouped links
+    const groupedLinks = []
+    _.each(links, (link) => {
+      _.each(link, (origin, index) => {
+        if (index <= 1 && index + 1 < link.length) {
+        //if (index == 0) {          
+          // source is the lower node
+          let source = link[index]
+          let target = link[index + 1]
+          if (source.depth < target.depth) {
+            target = link[index]
+            source = link[index + 1]
+          }
+          let sourceStartAngle = source.startAngle
+          let foundChild = false
+          if (source.children) {
+            _.each(source.children, (child) => {
+              if (foundChild) {
+                return
+              }
+              if (child.parent === source) {
+                foundChild = true
+              }
+              else {
+                sourceStartAngle += child.endAngle - child.startAngle
+              }
+            })
+          }
+
+          let targetStartAngle = target.startAngle
+          foundChild = false
+          _.each(target.children, (child) => {
+            if (foundChild) {
+              return
+            }
+            if (child === source) {
+              foundChild = true
+            }
+            else {
+              targetStartAngle += child.endAngle - child.startAngle
+            }
+          })
+          const groupedLink = {
+            source: {
+              startAngle: sourceStartAngle * Math.PI / 180,
+              endAngle: (sourceStartAngle + (link[0].endAngle - link[0].startAngle)) * Math.PI / 180,
+              radius: source.y
+            },
+            target: {
+              startAngle: targetStartAngle * Math.PI / 180,
+              endAngle: (targetStartAngle + (link[0].endAngle - link[0].startAngle)) * Math.PI / 180,
+              radius: target.y
+            },
+            key: link[0].data.key
+          }
+          groupedLinks.push(groupedLink)
+        }
+      })
+    })
+    this.groupedLinks = groupedLinks
+    console.log('groupedLinks: ', groupedLinks)
   }
 
   _render () {
@@ -145,9 +220,32 @@ class RadialDendrogramView extends ContrailChartsView {
     const svgLinks = this.d3.selectAll('.link').data(this.links)
     svgLinks.enter().append('path')
       .attr('class', (d) => 'link ' + d[0].data.key)
+      .style('stroke-width', 0)
       .attr('d',(d) => radialLine(d[0]))
     .merge(svgLinks)
-      .attr('d',radialLine)
+      .style('stroke-width', (d) => ( d[0].y * Math.sin((d[0].endAngle - d[0].startAngle) * Math.PI / 180)) + 'px')
+      .attr('d', radialLine)
+      
+    /*
+    // Ribbons
+    const ribbon = d3.ribbon()
+    const svgLinks = this.d3.selectAll('.ribbon').data(this.groupedLinks)
+    svgLinks.enter().append('path')
+      .attr('class', (d) => 'ribbon ' + d.key)
+      .attr('d', (d) => {
+        const x0 = d.source.radius * Math.cos(d.source.startAngle)
+        const x1 = d.source.radius * Math.cos(d.source.endAngle)
+        const x2 = d.target.radius * Math.cos(d.target.endAngle)
+        const x3 = d.target.radius * Math.cos(d.target.startAngle)
+        const y0 = d.source.radius * Math.sin(d.source.startAngle)
+        const y1 = d.source.radius * Math.sin(d.source.endAngle)
+        const y2 = d.target.radius * Math.sin(d.target.endAngle)
+        const y3 = d.target.radius * Math.sin(d.target.startAngle)
+        return 'M' + x0 + ',' + y0 + 'L' + x1 + ',' + y1 + 'L' + x2 + ',' + y2 + 'L' + x3 + ',' + y3 + 'Z'
+      })
+    .merge(svgLinks)
+      //.attr('d', ribbon)
+    */
     // Circles
     const svgCircles = this.d3.selectAll('.circle').data(this.circles)
     svgCircles.enter().append('circle')
