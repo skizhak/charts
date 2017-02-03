@@ -99,6 +99,7 @@ $border-color: #fafafa;
   }
 
   .axis {
+    display: none;
     text-transform: uppercase;
     color: #ccc;
     border: 1px solid #eee;
@@ -106,6 +107,10 @@ $border-color: #fafafa;
     border-radius: 4px;
     font-size: 10px;
     margin-right: 2px;
+
+    &.active {
+      display: inline;
+    }
   }
 
   &.disabled:hover {
