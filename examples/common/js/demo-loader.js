@@ -22,14 +22,19 @@ const demoLBExamples = [
 
 const demoBubbleExamples = [
   {
-    html: 'bubble-chart/port-distribution/port-distribution.html',
-    js: 'bubble-chart/port-distribution/port-distribution.js',
-    title: "Ports' Traffic"
-  },
-  {
     html: 'bubble-chart/nodes/nodes.html',
     js: 'bubble-chart/nodes/nodes.js',
-    title: "Nodes' CPU / Mem"
+    title: "Node CPU/Mem"
+  },
+  {
+    html: 'bubble-chart/port-distribution/port-distribution.html',
+    js: 'bubble-chart/port-distribution/port-distribution.js',
+    title: "Port Distribution"
+  },
+  {
+    html: 'bubble-chart/vrouter-vmi/vrouter-vmi.html',
+    js: 'bubble-chart/vrouter-vmi/vrouter-vmi.js',
+    title: "vRouters"
   }
 ]
 
