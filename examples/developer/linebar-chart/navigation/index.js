@@ -26,7 +26,7 @@ areaChart.setConfig({
       marginLeft: 80,
       marginRight: 80,
       marginBottom: 40,
-      chartHeight: 200,
+      chartHeight: 300,
       selection: [0, 50],
       plot: {
         x: {
@@ -57,6 +57,11 @@ areaChart.setConfig({
   }, {
     type: 'CompositeYChart',
     config: {
+      marginInner: 10,
+      marginLeft: 80,
+      marginRight: 80,
+      marginBottom: 40,
+      chartHeight: 300,
       plot: {
         x: {
           accessor: 'x',
@@ -92,6 +97,7 @@ barChart.setConfig({
       marginLeft: 80,
       marginRight: 80,
       marginBottom: 40,
+      chartHeight: 300,
       plot: {
         x: {
           accessor: 'x',
