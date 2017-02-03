@@ -14,31 +14,6 @@ class AreaChartView extends XYChartSubView {
       'mouseout .area': '_onMouseout',
     }
   }
-  /**
-  * Called by the parent in order to calculate maximum data extents for all of this child's axis.
-  * Assumes the params.activeAccessorData for this child view is filled by the parent with the relevent yAccessors for this child only.
-  * Returns an object with following structure: { y1: [0,10], x: [-10,10] }
-  */
-  calculateAxisDomains () {
-    const domains = {}
-    domains[this.params.plot.x.axis] = this.model.getRangeFor(this.params.plot.x.accessor)
-    domains[this.axisName] = []
-    // The domains calculated here can be overriden in the axis configuration.
-    // The overrides are handled by the parent.
-    _.each(this.params.activeAccessorData, accessor => {
-      const domain = this.model.getRangeFor(accessor.accessor)
-      domains[this.axisName] = domains[this.axisName].concat(domain)
-    })
-    domains[this.axisName] = d3.extent(domains[this.axisName])
-    this.params.handledAxisNames = _.keys(domains)
-    return domains
-  }
-  /**
-   * Called by the parent to allow the child to add some initialization code into the provided entering selection.
-   */
-  renderSVG (enteringSelection) {
-    enteringSelection.append('g').attr('class', 'lines')
-  }
 
   getTooltipData (data, xPos) {
     const xAccessor = this.params.plot.x.accessor

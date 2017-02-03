@@ -3,7 +3,7 @@
  */
 
 const _ = require('lodash')
-const d3 = require('d3')
+const d3Array = require('d3-array')
 const ContrailModel = require('contrail-model')
 const ContrailEvents = require('contrail-events')
 /**
@@ -166,7 +166,7 @@ class DataProvider extends ContrailModel {
     } else {
       // Otherwise calculate the range from data.
       if (data.length) {
-        constiableRange = d3.extent(data, (d) => d[constiableName])
+        constiableRange = d3Array.extent(data, d => _.get(d, constiableName))
       } else {
         // No data available so assume a [0..1] range.
         constiableRange = [0, 1]
@@ -203,6 +203,15 @@ class DataProvider extends ContrailModel {
       data = formatData(data, manualRange)
     }
     this.set({data, range, manualRange})
+  }
+  /**
+   * @return {Array} [min, max] values of provided series values combined
+   */
+  combineDomains (accessors) {
+    const domains = _.map(accessors, accessor => {
+      return this.getRangeFor(accessor)
+    })
+    return d3Array.extent(_.concat(...domains))
   }
   /**
    * Take the parent's data and filter / format it.

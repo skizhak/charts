@@ -4,6 +4,7 @@
 require('./composite-y.scss')
 const _ = require('lodash')
 const d3 = require('d3')
+const d3Array = require('d3-array')
 const ContrailChartsView = require('contrail-charts-view')
 const LineChartView = require('components/composite-y/LineChartView')
 const AreaChartView = require('components/composite-y/AreaChartView')
@@ -146,36 +147,14 @@ class CompositeYChartView extends ContrailChartsView {
     })
   }
   /**
-  * Combine the axis domains (extents) from all enabled drawings.
-  */
-  combineAxesDomains () {
+   * Combine series domains (extents) by axis
+   */
+  combineDomains () {
     const domains = {}
     _.each(this._drawings, drawing => {
-      if (drawing.params.enabled) {
-        const drawingDomains = drawing.calculateAxisDomains()
-        _.each(drawingDomains, (domain, axisName) => {
-          if (!_.has(domains, axisName)) {
-            domains[axisName] = [domain[0], domain[1]]
-          } else {
-            // check if the new domains extent extends the current one
-            if (domain[0] < domains[axisName][0]) {
-              domains[axisName][0] = domain[0]
-            }
-            if (domain[1] > domains[axisName][1]) {
-              domains[axisName][1] = domain[1]
-            }
-          }
-          // Override axis domain based on axis config.
-          if (this.hasAxisParam(axisName, 'domain')) {
-            if (!_.isUndefined(this.config.get('axis')[axisName].domain[0])) {
-              domains[axisName][0] = this.config.get('axis')[axisName].domain[0]
-            }
-            if (!_.isUndefined(this.config.get('axis')[axisName].domain[1])) {
-              domains[axisName][1] = this.config.get('axis')[axisName].domain[1]
-            }
-          }
-        })
-      }
+      _.each(drawing.combineDomains(), (drawingDomain, axisName) => {
+        domains[axisName] = d3Array.extent(_.concat(domains[axisName] || [], drawingDomain))
+      })
     })
     return domains
   }
@@ -183,7 +162,7 @@ class CompositeYChartView extends ContrailChartsView {
   * Save all scales in the params and drawing.params structures.
   */
   saveScales () {
-    const domains = this.combineAxesDomains()
+    const domains = this.combineDomains()
     if (!_.has(this.params, 'axis')) {
       this.params.axis = {}
     }
@@ -497,14 +476,15 @@ class CompositeYChartView extends ContrailChartsView {
           // The child drawing with this name does not exist yet. Instantiate the child drawing.
           _.each(this.possibleChildViews, (ChildView, chartType) => {
             if (chartType === accessor.chart) {
-              const params = _.extend({}, this.params)
-              params.isPrimary = false
+              const params = _.extend({}, this.params, {
+                isPrimary: false,
+                axisName: accessor.axis,
+              })
               const compositeYConfig = new CompositeYChartConfigModel(params)
               foundDrawing = new ChildView({
                 model: this.model,
                 config: compositeYConfig,
                 container: this._container,
-                axisName: accessor.axis,
                 parent: this,
                 actionman: this._actionman,
               })
