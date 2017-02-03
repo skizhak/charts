@@ -1,8 +1,9 @@
-/* global $ */
-/**
- * Update following to add a new example.
- * @type {*[]}
+/*
+ * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
+
+/* global $ */
+
 require('../sass/contrail-charts-examples.scss')
 const _ = require('lodash')
 
@@ -10,29 +11,58 @@ const demoLBExamples = [
   {
     html: 'linebar-chart/query-db-rw/query-db.html',
     js: 'linebar-chart/query-db-rw/query-db.js',
-    css: 'linebar-chart/query-db-rw//query-db.css',
     title: 'Queries & DB R/W',
   },
   {
     html: 'linebar-chart/cpu-mem/cpu-mem.html',
     js: 'linebar-chart/cpu-mem/cpu-mem.js',
-    css: 'linebar-chart/cpu-mem/cpu-mem.css',
     title: 'Memory & CPU'
   }
 ]
 
 const demoBubbleExamples = [
   {
-    html: 'bubble-chart/port-distribution/port-distribution.html',
-    js: 'bubble-chart/port-distribution/port-distribution.js',
-    css: 'bubble-chart/port-distribution/port-distribution.css',
-    title: "Ports' Traffic"
-  },
-  {
     html: 'bubble-chart/nodes/nodes.html',
     js: 'bubble-chart/nodes/nodes.js',
-    css: 'bubble-chart/nodes/nodes.css',
-    title: 'Nodes'
+    title: "Node CPU/Mem"
+  },
+  {
+    html: 'bubble-chart/port-distribution/port-distribution.html',
+    js: 'bubble-chart/port-distribution/port-distribution.js',
+    title: "Port Distribution"
+  },
+  {
+    html: 'bubble-chart/vrouter-vmi/vrouter-vmi.html',
+    js: 'bubble-chart/vrouter-vmi/vrouter-vmi.js',
+    title: "vRouters"
+  }
+]
+
+const areaExamples = [
+  {
+    html: 'area-chart/inout-traffic/inout-traffic.html',
+    js: 'area-chart/inout-traffic/inout-traffic.js',
+    title: 'VN Traffic In/Out'
+  },
+  {
+    html: 'area-chart/vr-traffic/vr-traffic.html',
+    js: 'area-chart/vr-traffic/vr-traffic.js',
+    title: 'vRouter Traffic'
+  }
+]
+
+const radialExamples = [
+  {
+    html: 'radial-chart/disk-usage/disk.html',
+    js: 'radial-chart/disk-usage/disk.js',
+    css: 'radial-chart/disk-usage/disk.css',
+    title: 'Disk Status'
+  },
+  {
+    html: 'radial-chart/pool-usage/pools.html',
+    js: 'radial-chart/pool-usage/pools.js',
+    css: 'radial-chart/pool-usage/pools.css',
+    title: 'Storage Pools'
   }
 ]
 
@@ -54,6 +84,24 @@ demoBubbleExamples.forEach(
   }
 )
 
+const $areaLinks = $('#areaLinks')
+areaExamples.forEach(
+  (example, idx) => {
+    let $link = $(`<a id="b${idx}" href="#${idx}"><span class="nav-text">${example.title}</span></a>`)
+    $link.click(onClickAreaChart)
+    $areaLinks.append($('<li>').append($link))
+  }
+)
+
+const $radialLinks = $('#radialLinks')
+radialExamples.forEach(
+  (example, idx) => {
+    let $link = $(`<a id="b${idx}" href="#${idx}"><span class="nav-text">${example.title}</span></a>`)
+    $link.click(onClickRadialChart)
+    $radialLinks.append($('<li>').append($link))
+  }
+)
+
 $('#bubble').click()
 $bubbleLinks.find('#b0').click()
 
@@ -65,6 +113,16 @@ function onClickLineChart (e) {
 function onClickBubbleChart (e) {
   const index = $(this).attr('href').split('#')[1]
   onClickSidebar(index, demoBubbleExamples)
+}
+
+function onClickAreaChart (e) {
+  const index = $(this).attr('href').split('#')[1]
+  onClickSidebar(index, areaExamples)
+}
+
+function onClickRadialChart (e) {
+  const index = $(this).attr('href').split('#')[1]
+  onClickSidebar(index, radialExamples)
 }
 
 function createNewTab (id, title, group = 'js-files', checked, content) {

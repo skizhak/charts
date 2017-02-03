@@ -1,22 +1,13 @@
 /*
- * © 2016 Juniper Networks, Inc. All rights reserved.
+ * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
 require('./scatter-plot.scss')
 const _ = require('lodash')
 require('d3-transition')
-const d3Shape = require('d3-shape')
 const d3Ease = require('d3-ease')
-const d3Scale = require('d3-scale')
 const XYChartSubView = require('components/composite-y/XYChartSubView')
 
 class ScatterPlotView extends XYChartSubView {
-  constructor (p) {
-    super(p)
-    this.shapeScale = d3Scale.scaleOrdinal()
-      .domain(['square', 'triangle', 'circle', 'diamond', 'star', 'cross', 'wye'])
-      .range([d3Shape.symbolSquare, d3Shape.symbolTriangle, d3Shape.symbolCircle, d3Shape.symbolDiamond, d3Shape.symbolStar, d3Shape.symbolCross, d3Shape.symbolWye])
-  }
-
   get zIndex () { return 1 }
 
   get events () {
@@ -32,18 +23,24 @@ class ScatterPlotView extends XYChartSubView {
   */
   calculateAxisDomains () {
     const domains = {}
-    domains[this.params.plot.x.axis] = this.model.getRangeFor(this.params.plot.x.accessor)
+    let isFull = false
+    if (this.model.data.length < 2) isFull = true
+    domains[this.params.plot.x.axis] = this.model.getRangeFor(this.params.plot.x.accessor, isFull)
     domains[this.axisName] = []
     // The domains calculated here can be overriden in the axis configuration.
     // The overrides are handled by the parent.
-    _.each(this.params.activeAccessorData, (accessor) => {
-      const domain = this.model.getRangeFor(accessor.accessor)
+    _.each(this.params.activeAccessorData, accessor => {
+      let domain = this.model.getRangeFor(accessor.accessor, isFull)
+      if (domain[0] === domain[1]) {
+        isFull = true
+        domain = this.model.getRangeFor(accessor.accessor, isFull)
+      }
       domains[this.axisName] = domains[this.axisName].concat(domain)
       if (accessor.sizeAccessor && accessor.shape && accessor.sizeAxis) {
         if (!domains[accessor.sizeAxis]) {
           domains[accessor.sizeAxis] = []
         }
-        domains[accessor.sizeAxis] = domains[accessor.sizeAxis].concat(this.model.getRangeFor(accessor.sizeAccessor))
+        domains[accessor.sizeAxis] = domains[accessor.sizeAxis].concat(this.model.getRangeFor(accessor.sizeAccessor, isFull))
       }
     })
     return domains
@@ -53,21 +50,20 @@ class ScatterPlotView extends XYChartSubView {
     super.render()
 
     let points = this.d3.selectAll('.point')
-      .data(this._prepareData(), (d) => d.id)
+      .data(this._prepareData(), d => d.id)
 
     points.enter()
-      .append('path')
+      .append('text')
       .classed('point', true)
-      .attr('d', (d) => {
-        return d3Shape.symbol().type(d.shape).size(d.area)()
-      })
-      .attr('transform', (d) => `translate(${d.x},${d.y})`)
-      .attr('fill', (d) => d.color)
+      .attr('transform', d => `translate(${d.x},${d.y})`)
+      .html(d => d.shape)
+      .attr('fill', d => d.color)
+      .style('font-size', d => Math.sqrt(d.area))
 
     // Update
     points
       .transition().ease(d3Ease.easeLinear).duration(this.params.duration)
-      .attr('transform', (d) => `translate(${d.x},${d.y})`)
+      .attr('transform', d => `translate(${d.x},${d.y})`)
 
     points.exit().remove()
   }
@@ -76,23 +72,25 @@ class ScatterPlotView extends XYChartSubView {
    */
   _prepareData () {
     const flatData = []
-    _.map(this.model.data, (d) => {
+    _.map(this.model.data, d => {
       const x = d[this.params.plot.x.accessor]
       _.each(this.params.activeAccessorData, accessor => {
         const key = accessor.accessor
-        const y = d[key]
-        const sizeScale = this.params.axis[accessor.sizeAxis].scale
-        const obj = {
-          id: x + '-' + key,
-          x: this.xScale(x),
-          y: this.yScale(y),
-          shape: this.shapeScale(accessor.shape),
-          area: sizeScale(d[accessor.sizeAccessor]),
-          color: this.getColor(accessor),
-          accessor: accessor,
-          data: d,
+        if (_.has(d, key)) { // key may not exist in all the data set.
+          const y = d[key]
+          const sizeScale = this.params.axis[accessor.sizeAxis].scale
+          const obj = {
+            id: x + '-' + key,
+            x: this.xScale(x),
+            y: this.yScale(y),
+            shape: accessor.shape,
+            area: sizeScale(d[accessor.sizeAccessor]),
+            color: this.getColor(accessor),
+            accessor: accessor,
+            data: d,
+          }
+          flatData.push(obj)
         }
-        flatData.push(obj)
       })
     })
     return flatData

@@ -38,8 +38,30 @@ class CompositeYChartConfigModel extends ContrailChartsConfigModel {
       marginRight: 40,
       marginInner: 10,
 
-      curve: d3.curveCatmullRom.alpha(0.5)
+      curve: d3.curveCatmullRom.alpha(0.5),
+      axisPositions: ['left', 'right', 'top', 'bottom'],
+      plot: {},
+      axis: {},
+      // TODO move to the BarChartConfigModel
+      // Padding between series in percents of bar width
+      barPadding: 15,
     }
+  }
+  /**
+   * @param {String} name of axis
+   */
+  getScale (name) {
+    const axis = this.attributes.axis[name] || {}
+    if (_.isFunction(d3[axis.scale])) return d3[axis.scale]()
+    if (['bottom', 'top'].includes(this.getPosition(name))) return d3.scaleTime()
+    return d3.scaleLinear()
+  }
+
+  getPosition (name) {
+    const axis = this.attributes.axis[name] || {}
+    if (this.attributes.axisPositions.includes(axis.position)) return axis.position
+    if (name.startsWith('x')) return 'bottom'
+    if (name.startsWith('y')) return 'left'
   }
 
   getColor (accessor) {

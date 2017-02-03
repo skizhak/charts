@@ -53,7 +53,7 @@ class CompositeYChartView extends ContrailChartsView {
   }
 
   render () {
-    if (!this.config) return
+    if (!this.config || !this._container) return
     this.resetParams()
     this._updateChildDrawings()
     this._calculateActiveAccessorData()
@@ -63,7 +63,8 @@ class CompositeYChartView extends ContrailChartsView {
 
     super.render()
     this.renderSVG()
-    this.renderAxis()
+    this.renderXAxis()
+    this.renderYAxes()
     _.each(this._drawings, drawing => {
       drawing.render()
     })
@@ -147,7 +148,7 @@ class CompositeYChartView extends ContrailChartsView {
   /**
   * Combine the axis domains (extents) from all enabled drawings.
   */
-  combineAxisDomains () {
+  combineAxesDomains () {
     const domains = {}
     _.each(this._drawings, drawing => {
       if (drawing.params.enabled) {
@@ -182,48 +183,34 @@ class CompositeYChartView extends ContrailChartsView {
   * Save all scales in the params and drawing.params structures.
   */
   saveScales () {
-    const domains = this.combineAxisDomains()
+    const domains = this.combineAxesDomains()
     if (!_.has(this.params, 'axis')) {
       this.params.axis = {}
     }
     _.each(domains, (domain, axisName) => {
-      if (!_.has(this.params.axis, axisName)) {
-        this.params.axis[axisName] = {}
-      }
-      if (!this.hasAxisParam(axisName, 'position')) {
-        // Default axis position.
-        if (axisName.charAt(0) === 'x') {
-          this.params.axis[axisName].position = 'bottom'
-        } else if (axisName.charAt(0) === 'y') {
-          this.params.axis[axisName].position = 'left'
-        }
-      }
+      if (!_.has(this.params.axis, axisName)) this.params.axis[axisName] = {}
+      const axis = this.params.axis[axisName]
+
+      axis.position = this.config.getPosition(axisName)
       if (!this.hasAxisParam(axisName, 'range')) {
-        if (['bottom', 'top'].includes(this.params.axis[axisName].position)) {
-          this.params.axis[axisName].range = this.params.xRange
-        } else if (['left', 'right'].includes(this.params.axis[axisName].position)) {
-          this.params.axis[axisName].range = this.params.yRange
+        if (['bottom', 'top'].includes(axis.position)) {
+          axis.range = this.params.xRange
+        } else if (['left', 'right'].includes(axis.position)) {
+          axis.range = this.params.yRange
         }
       }
-      this.params.axis[axisName].domain = domain
-      if (!_.isFunction(this.params.axis[axisName].scale) && this.params.axis[axisName].range) {
-        let baseScale = null
-        if (this.hasAxisConfig(axisName, 'scale') && _.isFunction(d3[this.config.get('axis')[axisName].scale])) {
-          baseScale = d3[this.params.axis[axisName].scale]()
-        } else if (['bottom', 'top'].indexOf(this.params.axis[axisName].position) >= 0) {
-          baseScale = d3.scaleTime()
-        } else {
-          baseScale = d3.scaleLinear()
-        }
-        baseScale
-          .domain(this.params.axis[axisName].domain)
-          .range(this.params.axis[axisName].range)
-        this.params.axis[axisName].scale = baseScale
-        if (this.hasAxisParam(axisName, 'nice') && this.params.axis[axisName].nice) {
+      axis.domain = domain
+      if (!_.isFunction(axis.scale) && axis.range) {
+        const scale = this.config.getScale(axisName)
+        scale
+          .domain(axis.domain)
+          .range(axis.range)
+        axis.scale = scale
+        if (this.hasAxisParam(axisName, 'nice') && axis.nice) {
           if (this.hasAxisParam(axisName, 'ticks')) {
-            this.params.axis[axisName].scale = this.params.axis[axisName].scale.nice(this.params.axis[axisName].ticks)
+            axis.scale = axis.scale.nice(axis.ticks)
           } else {
-            this.params.axis[axisName].scale = this.params.axis[axisName].scale.nice()
+            axis.scale = axis.scale.nice()
           }
         }
       }
@@ -284,7 +271,13 @@ class CompositeYChartView extends ContrailChartsView {
 
     // Handle Y axis
     const svgYAxis = this.d3.selectAll('.axis.y-axis').data(this.params.yAxisInfoArray, d => d.name)
-    svgYAxis.exit().remove()
+
+    // Do not remove last axis
+    if (svgYAxis.nodes().length < 1) {
+      const toRemove = svgYAxis.exit().nodes()
+      _.each(toRemove.slice(1), node => node.remove())
+    } else svgYAxis.exit().remove()
+
     svgYAxis.enter()
       .append('g')
       .attr('class', d => `axis y-axis ${d.name}-axis`)
@@ -305,43 +298,46 @@ class CompositeYChartView extends ContrailChartsView {
     return _.isObject(this.params.axis) && _.isObject(this.params.axis[axisName]) && !_.isUndefined(this.params.axis[axisName][axisAttributeName])
   }
   /**
-   * Renders the axis.
+   * Render x axis
    */
-  renderAxis () {
-    const xAxisName = this.params.plot.x.axis
-    let xAxis = d3.axisBottom(this.params.axis[xAxisName].scale)
+  renderXAxis () {
+    const name = this.params.plot.x.axis
+    const axis = this.params.axis[name]
+    if (!axis.scale) return
+
+    let d3Axis = d3.axisBottom(axis.scale)
       .tickSize(this.params.yRange[0] - this.params.yRange[1] + 2 * this.params.marginInner)
       .tickPadding(10)
     if (this.hasAxisParam('x', 'ticks')) {
-      xAxis = xAxis.ticks(this.params.axis[xAxisName].ticks)
+      d3Axis = d3Axis.ticks(axis.ticks)
     }
     if (this.hasAxisConfig('x', 'formatter')) {
-      xAxis = xAxis.tickFormat(this.config.get('axis').x.formatter)
+      d3Axis = d3Axis.tickFormat(this.config.get('axis').x.formatter)
     }
     this.d3.transition().ease(d3.easeLinear).duration(this.params.duration)
-    this.d3.select('.axis.x-axis').call(xAxis)
-    // X axis label
-    const xLabelData = []
-    let xLabelMargin = 5
-    if (this.hasAxisParam(xAxisName, 'labelMargin')) {
-      xLabelMargin = this.params.axis[xAxisName].labelMargin
+    this.d3.select('.axis.x-axis').call(d3Axis)
+
+    const labelData = []
+    let labelMargin = 5
+    if (this.hasAxisParam(name, 'labelMargin')) {
+      labelMargin = axis.labelMargin
     }
-    let xLabel = this.params.plot.x.labelFormatter || this.params.plot.x.label
-    if (this.hasAxisParam(xAxisName, 'label')) {
-      xLabel = this.params.axis[xAxisName].label
-    }
-    if (xLabel) {
-      xLabelData.push(xLabel)
-    }
-    const xAxisLabelSvg = this.d3.select('.axis.x-axis').selectAll('.axis-label').data(xLabelData)
-    xAxisLabelSvg.enter()
+    let label = this.params.plot.x.labelFormatter || this.params.plot.x.label
+    if (this.hasAxisParam(name, 'label')) label = axis.label
+    if (label) labelData.push(label)
+
+    const axisLabelElements = this.d3.select('.axis.x-axis').selectAll('.axis-label').data(labelData)
+    axisLabelElements.enter()
       .append('text')
       .attr('class', 'axis-label')
-      .merge(xAxisLabelSvg) // .transition().ease( d3.easeLinear ).duration( this.params.duration )
+      .merge(axisLabelElements)
       .attr('x', this.params.xRange[0] + (this.params.xRange[1] - this.params.xRange[0]) / 2)
-      .attr('y', this.params.chartHeight - this.params.marginTop - xLabelMargin)
+      .attr('y', this.params.chartHeight - this.params.marginTop - labelMargin)
       .text(d => d)
-    xAxisLabelSvg.exit().remove()
+    axisLabelElements.exit().remove()
+  }
+
+  renderYAxes () {
     // We render the yAxis here because there may be multiple drawings for one axis.
     // The parent has aggregated information about all Y axis.
     let referenceYScale = null

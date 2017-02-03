@@ -1,29 +1,14 @@
-/* global d3 coCharts */
+/*
+ * Copyright (c) Juniper Networks, Inc. All rights reserved.
+ */
 
-function timeFormatter (value) {
-  return d3.timeFormat('%H:%M:%S')(value)
-}
-function numberFormatter (number) {
-  return number.toFixed(0)
-}
-function numberFormatter3 (number) {
-  return number.toFixed(1)
-}
-const complexData = []
-for (let i = 0; i < 100; i++) {
-  const a = Math.random() * 100
-  complexData.push({
-    x: 1475760930000 + 1000000 * i,
-    a: a,
-    b: a + Math.random() * 10,
-    c: i + (Math.random() - 0.5) * 10,
-  })
-}
+const data = require('fixture').simpleStatic
+const formatter = require('formatter')
 const complexChartView = new coCharts.charts.XYChartView()
 complexChartView.setConfig({
-  container: '#chart',
+  container: '#chart-tooltip',
   components: [{
-    id: 'compositeYId',
+    id: 'compositey-id',
     type: 'CompositeYChart',
     config: {
       marginInner: 10,
@@ -33,81 +18,80 @@ complexChartView.setConfig({
       chartHeight: 600,
       plot: {
         x: {
-          accessor: 'x',
+          accessor: 't',
           labelFormatter: 'Time',
           axis: 'x'
         },
         y: [
           {
-            accessor: 'a',
+            accessor: 'randomN',
             labelFormatter: 'Label A',
             enabled: true,
             chart: 'StackedBarChart',
             axis: 'y1',
-            tooltip: 'defaultTooltipId',
+            tooltip: 'default-tooltip',
           }, {
-            accessor: 'b',
+            accessor: 'random5',
             labelFormatter: 'Label B',
             enabled: true,
             chart: 'StackedBarChart',
             axis: 'y1',
-            tooltip: 'customTooltip',
+            tooltip: 'custom-tooltip',
           }, {
-            accessor: 'c',
+            accessor: 'random10',
             labelFormatter: 'Megabytes C',
             color: 'grey',
             enabled: true,
             chart: 'LineChart',
             axis: 'y2',
-            tooltip: 'defaultTooltipId',
+            tooltip: 'default-tooltip',
           }
         ]
       },
       axis: {
         x: {
-          formatter: d3.timeFormat('%H:%M:%S')
+          formatter: formatter.extendedISOTime,
         },
         y1: {
           position: 'left',
-          formatter: numberFormatter,
-          domain: [-10, undefined],
+          formatter: formatter.toInteger,
         },
         y2: {
           position: 'right',
-          formatter: numberFormatter3,
+          formatter: formatter.toFixed1,
         },
       },
     },
   }, {
-    id: 'defaultTooltipId',
+    id: 'default-tooltip',
     type: 'Tooltip',
     config: {
       dataConfig: [
         {
-          accessor: 'x',
+          accessor: 't',
           labelFormatter: 'Time',
-          valueFormatter: timeFormatter,
+          valueFormatter: formatter.extendedISOTime,
         }, {
-          accessor: 'a',
+          accessor: 'randomN',
           labelFormatter: 'Tooltip A',
-          valueFormatter: numberFormatter,
+          valueFormatter: formatter.toInteger,
         }, {
-          accessor: 'b',
+          accessor: 'random5',
           labelFormatter: 'Tooltip B',
-          valueFormatter: numberFormatter,
+          valueFormatter: formatter.toInteger,
         }, {
-          accessor: 'c',
+          accessor: 'random10',
           labelFormatter: 'Tooltip C',
-          valueFormatter: numberFormatter,
+          valueFormatter: formatter.toInteger,
         }
       ]
     },
   }, {
-    id: 'customTooltip',
+    id: 'custom-tooltip',
     type: 'Tooltip',
     config: {
       template: (data) => '<div class="tooltip-content">Custom tooltip</div>',
     }
   }]
 })
-complexChartView.setData(complexData)
+complexChartView.setData(data)

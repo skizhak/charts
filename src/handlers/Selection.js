@@ -1,6 +1,9 @@
-/**
- * Selection object for dataframes
+/*
+ * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
+
+// Selection object for dataframes
+
 const _ = require('lodash')
 const d3 = require('d3')
 const Events = require('contrail-charts-events')
@@ -19,6 +22,7 @@ class Selection {
     this._data = data || []
   }
   /**
+   * TODO do not trigger change if range doesn't actually change selection
    * Filter out dataframes which have no provided key or its value is not within provided range
    * @param {String} key - serie accessor to filter dataframes by
    * @param {Array} range - [min, max] values of a serie
@@ -33,10 +37,15 @@ class Selection {
   /**
    * Calculate and cache range of a serie
    * @param {String} key - serie accessor
+   * @param {Boolean} isFull if true get range of the whole data, not just selection
    * @return {Array} [min, max] extent of values of the serie
    */
-  getRangeFor (key) {
-    if (!_.has(this._ranges, key)) this._ranges[key] = d3.extent(this.data, d => d[key])
+  getRangeFor (key, isFull) {
+    if (isFull) return d3.extent(this._data, d => d[key])
+
+    if (!_.has(this._ranges, key)) {
+      this._ranges[key] = d3.extent(this.data, d => d[key])
+    }
     return this._ranges[key]
   }
 }

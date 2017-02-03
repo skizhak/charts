@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016 Juniper Networks, Inc. All rights reserved.
+ * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
 const _ = require('lodash')
 const d3 = require('d3')
@@ -30,7 +30,6 @@ class NavigationConfigModel extends ContrailChartsConfigModel {
       // Margin between label and chart
       labelMargin: 16,
 
-      // Side margins. Will be computed if undefined.
       marginTop: 40,
       marginBottom: 40,
       marginLeft: 40,
@@ -44,16 +43,8 @@ class NavigationConfigModel extends ContrailChartsConfigModel {
     }
   }
 
-  get rangeMargined () {
-    const margin = this.attributes.marginInner
-    return [
-      [this.attributes.xRange[0] - margin, this.attributes.yRange[1] - margin],
-      [this.attributes.xRange[1] + margin, this.attributes.yRange[0] + margin],
-    ]
-  }
-
   get selectionRange () {
-    this.attributes.selectionScale.range([this.rangeMargined[0][0], this.rangeMargined[1][0]])
+    this.attributes.selectionScale.range([this.attributes.xRange[0], this.attributes.xRange[1]])
     if (_.isEmpty(this.attributes.selection)) return []
     return [
       this.attributes.selectionScale(this.attributes.selection[0]),

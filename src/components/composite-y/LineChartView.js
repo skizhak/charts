@@ -1,6 +1,7 @@
 /*
- * © Juniper Networks, Inc. All rights reserved.
+ * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
+
 require('./line-chart.scss')
 const _ = require('lodash')
 const d3 = require('d3')

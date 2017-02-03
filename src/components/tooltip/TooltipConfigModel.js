@@ -1,4 +1,6 @@
-// Copyright (c) 2016 Juniper Networks, Inc. All rights reserved.
+/*
+ * Copyright (c) Juniper Networks, Inc. All rights reserved.
+ */
 
 const _ = require('lodash')
 const ContrailChartsConfigModel = require('contrail-charts-config-model')

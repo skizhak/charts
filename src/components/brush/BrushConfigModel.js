@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017 Juniper Networks, Inc. All rights reserved.
+ * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
 const ContrailChartsConfigModel = require('contrail-charts-config-model')
 
@@ -21,8 +21,14 @@ class BrushConfigModel extends ContrailChartsConfigModel {
   }
 
   get handleCenter () {
-    const extent = this.attributes.extent
-    return (extent[1][1] - extent[0][1]) / 2
+    return (this.attributes.yRange[0] - this.attributes.yRange[1])
+  }
+
+  get extent () {
+    return [
+      [this.attributes.xRange[0], this.attributes.yRange[1]],
+      [this.attributes.xRange[1], this.attributes.yRange[0]],
+    ]
   }
 }
 

@@ -1,7 +1,7 @@
 {
   "name": "contrail-charts",
   "version": "0.1.0",
-  "description": "MVC based chart library",
+  "description": "Contrail Chart library",
   "main": "src/js/contrail-charts.js",
   "scripts": {
     "build": "npm run build:lib && npm run build:examples",
