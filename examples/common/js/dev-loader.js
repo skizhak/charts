@@ -1,8 +1,9 @@
-/* global $ */
-/**
- * Update following to add a new example.
- * @type {*[]}
+/*
+ * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
+
+/* global $ */
+
 require('../sass/contrail-charts-examples.scss')
 const _ = require('lodash')
 
@@ -15,25 +16,31 @@ const devLBExamples = [
   }, {
     html: 'linebar-chart/control-panel/index.html',
     js: 'linebar-chart/control-panel/index.js',
-    css: 'linebar-chart/control-panel/index.css',
     title: 'Controls',
   },
   {
     html: 'linebar-chart/timeline/index.html',
     js: 'linebar-chart/timeline/index.js',
-    css: 'linebar-chart/timeline/index.css',
     title: 'Timeline'
   },
   {
     html: 'linebar-chart/tooltip/index.html',
     js: 'linebar-chart/tooltip/index.js',
-    css: 'linebar-chart/tooltip/index.css',
     title: 'Tooltips',
   },
   {
+    html: 'linebar-chart/grouped-bar-chart/index.html',
+    js: 'linebar-chart/grouped-bar-chart/index.js',
+    title: 'Grouped Bar',
+  },
+  {
+    html: 'linebar-chart/navigation/index.html',
+    js: 'linebar-chart/navigation/index.js',
+    title: 'Navigation',
+  },
+  {
     html: 'linebar-chart/requirejs/requirejs.html',
-    js: ['linebar-chart/requirejs/requirejs-config.js', 'linebar-chart/requirejs/app/example1.js'],
-    css: 'linebar-chart/requirejs/app/example1.css',
+    js: ['linebar-chart/requirejs/requirejs-config.js', 'linebar-chart/requirejs/app/example.js'],
     title: 'RequireJS',
   }
 ]
@@ -42,7 +49,6 @@ const devBubbleExamples = [
   {
     html: 'bubble-chart/multiple-shapes/index.html',
     js: 'bubble-chart/multiple-shapes/index.js',
-    css: 'bubble-chart/multiple-shapes/index.css',
     title: 'Shapes',
   }
 ]
@@ -52,7 +58,13 @@ const devRadialExamples = [
     html: 'radial-chart/pie/index.html',
     js: 'radial-chart/pie/index.js',
     css: 'radial-chart/pie/index.css',
-    title: 'Example',
+    title: 'Pie Chart',
+  },
+  {
+    html: 'radial-chart/dendrogram/index.html',
+    js: 'radial-chart/dendrogram/index.js',
+    css: 'radial-chart/dendrogram/index.css',
+    title: 'Dendrogram',
   }
 ]
 
@@ -60,7 +72,6 @@ const devAreaExamples = [
   {
     html: 'area-chart/basic/index.html',
     js: 'area-chart/basic/index.js',
-    css: 'area-chart/basic/index.css',
     title: 'Example',
   }
 ]

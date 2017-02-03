@@ -1,33 +1,15 @@
-/* global d3 coCharts */
+/*
+ * Copyright (c) Juniper Networks, Inc. All rights reserved.
+ */
 
 const _ = require('lodash')
+const formatter = require('formatter')
+const _c = require('constants')
 
-function timeFormatter (value) {
-  return d3.timeFormat('%H:%M:%S')(value / 1000)
-}
+const lbColorScheme7 = _c.lbColorScheme7
 
-function cpuFormatter (number) {
-  return number.toFixed(1) + '%'
-}
-
-function memFormatter (number) {
-  const bytePrefixes = ['B', 'KB', 'MB', 'GB', 'TB']
-  let bytes = parseInt(number * 1024)
-  let formattedBytes = '-'
-  _.each(bytePrefixes, (prefix, idx) => {
-    if (bytes < 1024) {
-      formattedBytes = bytes.toFixed(1) + ' ' + prefix
-      return false
-    } else {
-      if (idx === bytePrefixes.length - 1) {
-        formattedBytes = bytes.toFixed(1) + ' ' + prefix
-      } else {
-        bytes = bytes / 1024
-      }
-    }
-  })
-  return formattedBytes
-}
+const dataSrc = require('./cpu-mem.json')
+const dataProcessed = dataProcesser(dataSrc.data)
 
 function dataProcesser (rawData) {
   const keyMapper = {
@@ -77,23 +59,10 @@ function generateColorPalette (nodeIds, nodeAttrs, colorSchema, offset1, offset2
   }, {})
 }
 
-const dataSrc = require('./data-source.json')
-const dataProcessed = dataProcesser(dataSrc.data)
-const fkColors = [
-  '#00bcd4',
-  '#0cc2aa',
-  '#fcc100',
-  '#a88add',
-  '#6cc788',
-  '#6887ff',
-  '#4caf50',
-  '#2196f3'
-]
-
 const colorPalette = generateColorPalette(
     dataProcessed.nodeIds,
     ['cpu_share', 'mem_res'],
-    fkColors,
+    lbColorScheme7,
     1,
     2,
     1
@@ -105,15 +74,6 @@ const mainChartPlotYConfig = _.reduce(dataProcessed.nodeIds, (config, nodeId, id
     label: `${nodeId} CPU Utilization (%)`,
     enabled: true,
     chart: 'BarChart',
-    possibleChartTypes: [
-      {
-        label: 'Stacked Bar',
-        chart: 'StackedBarChart',
-      }, {
-        label: 'Line',
-        chart: 'LineChart',
-      }
-    ],
     color: colorPalette[`${nodeId}.cpu_share`],
     axis: 'y1',
   }, {
@@ -121,15 +81,6 @@ const mainChartPlotYConfig = _.reduce(dataProcessed.nodeIds, (config, nodeId, id
     label: `${nodeId} Memory Usage`,
     enabled: false,
     chart: 'LineChart',
-    possibleChartTypes: [
-      {
-        label: 'Stacked Bar',
-        chart: 'StackedBarChart',
-      }, {
-        label: 'Line',
-        chart: 'LineChart'
-      }
-    ],
     color: colorPalette[`${nodeId}.mem_res`],
     axis: 'y2',
   })
@@ -140,14 +91,14 @@ const navPlotYConfig = _.reduce(dataProcessed.nodeIds, (config, nodeId, idx) => 
   config.push({
     enabled: true,
     accessor: `${nodeId}.cpu_share`,
-    labelFormatter: 'CPU Utilization (%)',
+    // labelFormatter: 'CPU Utilization (%)',
     chart: 'BarChart',
     color: colorPalette[`${nodeId}.cpu_share`],
     axis: 'y1',
   }, {
     enabled: false,
     accessor: `${nodeId}.mem_res`,
-    labelFormatter: 'Memory Usage',
+    // labelFormatter: 'Memory Usage',
     chart: 'LineChart',
     color: colorPalette[`${nodeId}.mem_res`],
     axis: 'y2',
@@ -160,31 +111,38 @@ const tooltipDataConfig = _.reduce(dataProcessed.nodeIds, (config, nodeId) => {
   config.push({
     accessor: `${nodeId}.cpu_share`,
     labelFormatter: `${nodeId} CPU Share`,
-    valueFormatter: cpuFormatter,
+    valueFormatter: formatter.toFixedPercentage1,
   }, {
     accessor: `${nodeId}.mem_res`,
     labelFormatter: `${nodeId} Memory Usage`,
-    valueFormatter: memFormatter,
+    valueFormatter: formatter.byteFormatter,
   })
 
   return config
 }, [{
   accessor: 'T',
   labelFormatter: 'Time',
-  valueFormatter: timeFormatter,
+  valueFormatter: formatter.extendedISOTime,
 }])
 
 // Create chart view.
 const cpuMemChartView = new coCharts.charts.XYChartView()
 cpuMemChartView.setConfig({
-  container: '#cpuMemChart',
+  container: '#cpu-mem-chart',
   components: [{
     type: 'LegendPanel',
     config: {
-      sourceComponent: 'cpuMemCompositeY',
+      sourceComponent: 'cpu-mem-compositey',
+      palette: _c.lbColorScheme7.concat(_c.d3ColorScheme20),
+      editable: {
+        colorSelector: true,
+        chartSelector: true
+      },
+      placement: 'horizontal',
+      filter: true,
     }
   }, {
-    id: 'cpuMemCompositeY',
+    id: 'cpu-mem-compositey',
     type: 'CompositeYChart',
     config: {
       marginInner: 10,
@@ -192,7 +150,8 @@ cpuMemChartView.setConfig({
       marginRight: 80,
       marginBottom: 40,
       chartHeight: 600,
-      crosshair: 'crosshairId',
+      crosshair: 'crosshair-id',
+      possibleChartTypes: ['BarChart', 'LineChart'],
       plot: {
         x: {
           accessor: 'T',
@@ -203,24 +162,24 @@ cpuMemChartView.setConfig({
       },
       axis: {
         x: {
-          formatter: timeFormatter
+          formatter: formatter.extendedISOTime
         },
         y1: {
           position: 'left',
           label: 'CPU Utilization (%)',
-          formatter: cpuFormatter,
+          formatter: formatter.toFixedPercentage1,
           labelMargin: 15,
         },
         y2: {
           position: 'right',
           label: 'Memory Usage',
-          formatter: memFormatter,
+          formatter: formatter.byteFormatter,
           labelMargin: 15,
         }
       }
     }
   }, {
-    id: 'cpuMemChart-navigation',
+    id: 'cpu-mem-navigation',
     type: 'Navigation',
     config: {
       marginInner: 10,
@@ -239,7 +198,7 @@ cpuMemChartView.setConfig({
       },
       axis: {
         x: {
-          formatter: timeFormatter
+          formatter: formatter.extendedISOTime
         },
         y1: {
           position: 'left',
@@ -256,14 +215,14 @@ cpuMemChartView.setConfig({
       }
     }
   }, {
-    id: 'defaultTooltip',
+    id: 'default-tooltip',
     type: 'Tooltip',
     config: {
       title: 'Usage Details',
       dataConfig: tooltipDataConfig
     }
   }, {
-    id: 'cpuMemChart-controlPanel',
+    id: 'cpu-mem-controlpanel',
     type: 'ControlPanel',
     config: {
       enabled: true,
@@ -288,16 +247,16 @@ cpuMemChartView.setConfig({
       isSharedContainer: false,
     },
   }, {
-    id: 'cpuMemChart-message',
+    id: 'cpu-mem-message',
     type: 'Message',
     config: {
       enabled: true,
     }
   }, {
-    id: 'crosshairId',
+    id: 'crosshair-id',
     type: 'Crosshair',
     config: {
-      tooltip: 'defaultTooltip',
+      tooltip: 'default-tooltip',
     }
   }]
 })

@@ -1,11 +1,11 @@
 /*
- * Copyright (c) 2016 Juniper Networks, Inc. All rights reserved.
+ * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
 
 define([ // eslint-disable-line no-undef
   'd3', // Example use of older d3 versions.
   'lodash',
-  'contrail-charts'
+  'contrail-charts',
 ], function (d3, _, coCharts) {
   // Complex example
   const complexData = []
@@ -20,10 +20,11 @@ define([ // eslint-disable-line no-undef
       e: (Math.random() - 0.5) * 10
     })
   })
+
   const complexChartView = new coCharts.charts.XYChartView()
   complexChartView.setData(complexData)
   complexChartView.setConfig({
-    container: '#complexChart',
+    container: '#requirejs-linebar-chart',
     components: [{
       type: 'CompositeYChart',
       config: {
@@ -44,21 +45,21 @@ define([ // eslint-disable-line no-undef
               enabled: true,
               chart: 'StackedBarChart',
               axis: 'y1',
-              tooltip: 'defaultTooltip',
+              tooltip: 'default-tooltip',
             }, {
               accessor: 'b',
               label: 'Label B',
               enabled: true,
               chart: 'StackedBarChart',
               axis: 'y1',
-              tooltip: 'defaultTooltip',
+              tooltip: 'default-tooltip',
             }, {
               accessor: 'c',
               label: 'Label C',
               enabled: false,
               chart: 'StackedBarChart',
               axis: 'y1',
-              tooltip: 'defaultTooltip',
+              tooltip: 'default-tooltip',
             }, {
               accessor: 'd',
               label: 'Megabytes D',
@@ -66,7 +67,7 @@ define([ // eslint-disable-line no-undef
               enabled: true,
               chart: 'LineChart',
               axis: 'y2',
-              tooltip: 'defaultTooltip',
+              tooltip: 'default-tooltip',
             }, {
               accessor: 'e',
               label: 'Megabytes E',
@@ -74,7 +75,7 @@ define([ // eslint-disable-line no-undef
               enabled: true,
               chart: 'LineChart',
               axis: 'y2',
-              tooltip: 'defaultTooltip',
+              tooltip: 'default-tooltip',
             }
           ]
         },
@@ -82,33 +83,33 @@ define([ // eslint-disable-line no-undef
           x: {},
           y1: {
             position: 'left',
-            formatter: d3.format('.0f'),
+            formatter: (value) => value.toFixed(0),
             labelMargin: 15
           },
           y2: {
             position: 'right',
-            formatter: d3.format('.02f'),
+            formatter: (value) => value.toFixed(2),
             labelMargin: 15
           }
         }
       },
     }, {
-      id: 'defaultTooltip',
+      id: 'default-tooltip',
       type: 'Tooltip',
       config: {
         dataConfig: [
           {
             accessor: 'x',
             labelFormatter: (key) => 'Time',
-            valueFormatter: d3.format('.0f')
+            valueFormatter: (value) => value.toFixed(0)
           }, {
             accessor: 'a',
             labelFormatter: () => 'Label A',
-            valueFormatter: d3.format('.05f')
+            valueFormatter: (value) => value.toFixed(5)
           }, {
             accessor: 'b',
             labelFormatter: () => 'Label B',
-            valueFormatter: d3.format('.02f')
+            valueFormatter: (value) => value.toFixed(2)
           }
         ]
       }
@@ -127,7 +128,7 @@ define([ // eslint-disable-line no-undef
   const simpleChartView = new coCharts.charts.XYChartView()
   simpleChartView.setData(simpleData)
   simpleChartView.setConfig({
-    container: '#simpleChart',
+    container: '#requirejs-line-chart',
     components: [{
       type: 'CompositeYChart',
       config: {

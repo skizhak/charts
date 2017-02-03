@@ -1,32 +1,10 @@
-/* global d3 coCharts */
+/*
+ * Copyright (c) Juniper Networks, Inc. All rights reserved.
+ */
 
 const _ = require('lodash')
-
-function timeFormatter (value) {
-  return d3.timeFormat('%H:%M:%S')(value)
-}
-function numberFormatter (number) {
-  return number.toFixed(0)
-}
-
-function memFormatter (number) {
-  const bytePrefixes = ['B', 'KB', 'MB', 'GB', 'TB']
-  let bytes = parseInt(number * 1024)
-  let formattedBytes = '-'
-  _.each(bytePrefixes, (prefix, idx) => {
-    if (bytes < 1024) {
-      formattedBytes = bytes.toFixed(1) + ' ' + prefix
-      return false
-    } else {
-      if (idx === bytePrefixes.length - 1) {
-        formattedBytes = bytes.toFixed(1) + ' ' + prefix
-      } else {
-        bytes = bytes / 1024
-      }
-    }
-  })
-  return formattedBytes
-}
+const formatter = require('formatter')
+const _c = require('constants')
 
 // Complex example
 const simpleData = []
@@ -42,25 +20,28 @@ for (let i = 0; i < 100; i++) {
 }
 const complexChartView = new coCharts.charts.XYChartView()
 complexChartView.setConfig({
-  container: '#complexChart',
+  container: '#query-db-chart',
   components: [{
     type: 'LegendPanel',
     config: {
-      sourceComponent: 'complexChartCompositeY',
-      placement: 'row',
-      coloPicker: true,
+      sourceComponent: 'query-db-compositey',
+      palette: _c.lbColorScheme17,
+      editable: {
+        colorSelector: true,
+        chartSelector: true
+      },
+      placement: 'horizontal',
       filter: true,
-      chartSelector: true,
     },
   }, {
     type: 'ControlPanel',
     config: {
       menu: [
-        { id: 'Refresh' },
+        {id: 'Refresh'},
       ],
     },
   }, {
-    id: 'complexChartCompositeY',
+    id: 'query-db-compositey',
     type: 'CompositeYChart',
     config: {
       marginInner: 10,
@@ -68,7 +49,8 @@ complexChartView.setConfig({
       marginRight: 80,
       marginBottom: 40,
       chartHeight: 600,
-      crosshair: 'crosshairId',
+      crosshair: 'crosshair-id',
+      possibleChartTypes: ['BarChart', 'StackedBarChart', 'LineChart'],
       plot: {
         x: {
           accessor: 'x',
@@ -78,76 +60,40 @@ complexChartView.setConfig({
         y: [
           {
             accessor: 'a',
-            labelFormatter: 'Cassandra DB Read',
+            labelFormatter: 'DB Read',
             enabled: true,
             chart: 'StackedBarChart',
-            possibleChartTypes: [
-              {
-                label: 'Stacked Bar',
-                chart: 'StackedBarChart'
-              }, {
-                label: 'Bar',
-                chart: 'BarChart'
-              }, {
-                label: 'Line',
-                chart: 'LineChart'
-              }
-            ],
             axis: 'y1',
-            tooltip: 'defaultTooltip',
+            tooltip: 'default-tooltip',
           }, {
             accessor: 'b',
-            labelFormatter: 'Cassandra DB Write',
+            labelFormatter: 'DB Write',
             enabled: true,
             chart: 'StackedBarChart',
-            possibleChartTypes: [
-              {
-                label: 'Stacked Bar',
-                chart: 'StackedBarChart'
-              }, {
-                label: 'Bar',
-                chart: 'BarChart'
-              }, {
-                label: 'Line',
-                chart: 'LineChart'
-              }
-            ],
             axis: 'y1',
-            tooltip: 'customTooltip',
+            tooltip: 'custom-tooltip',
           }, {
             accessor: 'c',
             labelFormatter: 'QE Queries',
             enabled: true,
             chart: 'LineChart',
-            possibleChartTypes: [
-              {
-                label: 'Stacked Bar',
-                chart: 'StackedBarChart'
-              }, {
-                label: 'Bar',
-                chart: 'BarChart'
-              }, {
-                label: 'Line',
-                chart: 'LineChart'
-              }
-            ],
             axis: 'y2',
-            tooltip: 'defaultTooltip',
+            tooltip: 'default-tooltip',
           }
         ]
       },
       axis: {
         x: {
-          formatter: d3.timeFormat('%H:%M:%S')
+          formatter: formatter.extendedISOTime,
         },
         y1: {
           position: 'left',
-          formatter: memFormatter,
+          formatter: formatter.byteFormatter,
           domain: [0, undefined],
         },
         y2: {
           position: 'right',
-          formatter: numberFormatter,
+          formatter: formatter.toInteger,
         }
       }
     },
@@ -190,61 +136,62 @@ complexChartView.setConfig({
       },
       axis: {
         x: {
+          formatter: formatter.extendedISOTime
         },
         y1: {
           position: 'left',
-          formatter: numberFormatter,
+          formatter: formatter.byteFormatter,
           ticks: 5,
         },
         y2: {
           position: 'right',
-          formatter: numberFormatter,
-          ticks: 5,
+          formatter: formatter.toInteger,
+          ticks: 5
         }
       }
     },
   }, {
-    id: 'defaultTooltip',
+    id: 'default-tooltip',
     type: 'Tooltip',
     config: {
       title: {
         accessor: 'x',
-        valueFormatter: timeFormatter,
+        valueFormatter: formatter.extendedISOTime,
       },
 
       dataConfig: [
         {
           accessor: 'a',
           labelFormatter: 'DB Read',
-          valueFormatter: numberFormatter,
+          valueFormatter: formatter.toInteger,
         }, {
           accessor: 'b',
           labelFormatter: 'DB Write',
-          valueFormatter: numberFormatter,
+          valueFormatter: formatter.toInteger,
         }, {
           accessor: 'c',
           labelFormatter: 'Queries',
-          valueFormatter: numberFormatter,
+          valueFormatter: formatter.toInteger,
         }
       ]
     },
   }, {
-    id: 'customTooltip',
+    id: 'custom-tooltip',
     type: 'Tooltip',
     config: {
       template: (data) => '<div class="tooltip-content">Custom tooltip</div>',
     }
   }, {
-    id: 'messageId',
+    id: 'message-id',
     type: 'Message',
     config: {
       enabled: true,
     }
   }, {
-    id: 'crosshairId',
+    id: 'crosshair-id',
     type: 'Crosshair',
     config: {
-      tooltip: 'defaultTooltip',
+      tooltip: 'default-tooltip',
     }
   }]
 })

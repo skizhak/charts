@@ -1,14 +1,10 @@
-#chart {
+#radial-dendrogram-chart {
   position: relative;
   width: 100%;
   border: 1px solid #eee;
   border-radius: 4px;
   margin: 0 auto;
   padding: 2px;
-}
-
-.svg-wrapper {
-  border-bottom: 1px solid #f8f8f8;
 }
 
 .title {

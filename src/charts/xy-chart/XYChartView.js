@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016 Juniper Networks, Inc. All rights reserved.
+ * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
 const _ = require('lodash')
 const ContrailChartsDataModel = require('contrail-charts-data-model')
@@ -12,6 +12,7 @@ const _actions = [
   require('actions/HideComponent'),
   require('actions/SelectSerie'),
   require('actions/SelectColor'),
+  require('actions/SelectChartType'),
   require('actions/ChangeSelection'),
   require('actions/Refresh'),
 ]

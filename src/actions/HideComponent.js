@@ -1,3 +1,6 @@
+/*
+ * Copyright (c) Juniper Networks, Inc. All rights reserved.
+ */
 const Action = require('../plugins/Action')
 
 class HideComponent extends Action {

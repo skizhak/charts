@@ -18,11 +18,15 @@ class StackedBarChartView extends XYChartSubView {
    * @override
    */
   get xMarginInner () {
+    if (this.model.data.length < 2) return 0
     return this.bandWidth / 2
   }
   // TODO use memoize function
   get bandWidth () {
-    return 0.95 * (this.innerWidth / this.model.data.length || 1)
+    if (_.isEmpty(this.model.data)) return 0
+    const paddedPart = 1 - (this.config.get('barPadding') / 2 / 100)
+    // TODO do not use model.data.length as there can be gaps
+    return this.innerWidth / this.model.data.length * paddedPart
   }
   /**
   * Called by the parent in order to calculate maximum data extents for all of this child's axis.
@@ -31,11 +35,15 @@ class StackedBarChartView extends XYChartSubView {
   */
   calculateAxisDomains () {
     const domains = {}
-    domains[this.params.plot.x.axis] = this.model.getRangeFor(this._parent.params.plot.x.accessor)
+    const xAxisName = this.params.plot.x.axis
+    const xAccessor = this._parent.params.plot.x.accessor
+    let isFull = false
+    if (this.model.data.length < 2) isFull = true
+    domains[xAxisName] = this.model.getRangeFor(xAccessor, isFull)
     // The domains calculated here can be overriden in the axis configuration.
     // The overrides are handled by the parent.
     _.each(this.params.activeAccessorData, accessor => {
-      const domain = this.model.getRangeFor(accessor.accessor)
+      const domain = this.model.getRangeFor(accessor.accessor, isFull)
       if (_.has(domains, this.axisName)) {
         domains[this.axisName][1] += domain[1]
       } else {

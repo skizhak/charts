@@ -1,22 +1,55 @@
+/*
+ * Copyright (c) Juniper Networks, Inc. All rights reserved.
+ */
+
+/* global d3 */
+
 const _ = require('lodash')
 const ContrailChartsConfigModel = require('contrail-charts-config-model')
+const chartTypeIconMap = {
+  'BarChart': 'fa-bar-chart',
+  'StackedBarChart': 'fa-signal', // Todo find something better
+  'LineChart': 'fa-line-chart',
+  'AreaChart': 'fa-area-chart',
+  'PieChart': 'fa-pie-chart'
+}
 
 class LegendPanelConfigModel extends ContrailChartsConfigModel {
   get defaults () {
     return {
-      placement: 'row',
+      palette: d3.schemeCategory20,
+      editable: {
+        colorSelector: true,
+        chartSelector: true
+      },
+      filter: true,
+      placement: 'horizontal'
     }
   }
 
   get data () {
     const accessors = this._parent.getAccessors()
-    const data = {}
+    const data = {
+      colors: this.attributes.palette,
+      possibleChartTypes: _.map(this._parent.attributes.possibleChartTypes, (chartType) => {
+        return {
+          chartType: chartType,
+          chartIcon: chartTypeIconMap[chartType]
+        }
+      }),
+      editable: this.attributes.editable.colorSelector || this.attributes.editable.chartSelector,
+      filter: this.attributes.filter,
+      placement: this.attributes.placement
+    }
+
     data.attributes = _.map(accessors, (accessor) => {
       return {
-        key: accessor.accessor,
+        accessor: accessor.accessor,
+        axis: accessor.axis,
         label: this.getLabel(undefined, accessor),
         color: this._parent.getColor(accessor),
-        checked: accessor.enabled,
+        chartIcon: chartTypeIconMap[accessor.chart],
+        checked: this.attributes.filter ? accessor.enabled : true,
       }
     })
 

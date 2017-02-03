@@ -1,0 +1,1007 @@
+{
+  "data": [
+    {
+      "T": 1485866400000,
+      "direction_ing": 1,
+      "flow_class_id": 2938960514233673700,
+      "sum(bytes)": 450760704,
+      "sum(packets)": 1102,
+      "vrouter": "a3s28"
+    },
+    {
+      "T": 1485866400000,
+      "direction_ing": 1,
+      "flow_class_id": 2938960514233673700,
+      "sum(bytes)": 391360512,
+      "sum(packets)": 1218,
+      "vrouter": "a3s27"
+    },
+    {
+      "T": 1485866460000,
+      "direction_ing": 1,
+      "flow_class_id": 2938960514233673700,
+      "sum(bytes)": 444567552,
+      "sum(packets)": 1166,
+      "vrouter": "a3s28"
+    },
+    {
+      "T": 1485866460000,
+      "direction_ing": 1,
+      "flow_class_id": 2938960514233673700,
+      "sum(bytes)": 435611648,
+      "sum(packets)": 1271,
+      "vrouter": "a3s27"
+    },
+    {
+      "T": 1485866520000,
+      "direction_ing": 1,
+      "flow_class_id": 2938960514233673700,
+      "sum(bytes)": 436414464,
+      "sum(packets)": 1222,
+      "vrouter": "a3s27"
+    },
+    {
+      "T": 1485866520000,
+      "direction_ing": 1,
+      "flow_class_id": 2938960514233673700,
+      "sum(bytes)": 435400704,
+      "sum(packets)": 1110,
+      "vrouter": "a3s28"
+    },
+    {
+      "T": 1485866580000,
+      "direction_ing": 1,
+      "flow_class_id": 2938960514233673700,
+      "sum(bytes)": 449017856,
+      "sum(packets)": 1237,
+      "vrouter": "a3s27"
+    },
+    {
+      "T": 1485866580000,
+      "direction_ing": 1,
+      "flow_class_id": 2938960514233673700,
+      "sum(bytes)": 404535296,
+      "sum(packets)": 1107,
+      "vrouter": "a3s28"
+    },
+    {
+      "T": 1485866640000,
+      "direction_ing": 1,
+      "flow_class_id": 2938960514233673700,
+      "sum(bytes)": 455487488,
+      "sum(packets)": 1279,
+      "vrouter": "a3s27"
+    },
+    {
+      "T": 1485866640000,
+      "direction_ing": 1,
+      "flow_class_id": 2938960514233673700,
+      "sum(bytes)": 449329152,
+      "sum(packets)": 1147,
+      "vrouter": "a3s28"
+    },
+    {
+      "T": 1485866700000,
+      "direction_ing": 1,
+      "flow_class_id": 2938960514233673700,
+      "sum(bytes)": 466931712,
+      "sum(packets)": 1308,
+      "vrouter": "a3s27"
+    },
+    {
+      "T": 1485866700000,
+      "direction_ing": 1,
+      "flow_class_id": 2938960514233673700,
+      "sum(bytes)": 450447360,
+      "sum(packets)": 1173,
+      "vrouter": "a3s28"
+    },
+    {
+      "T": 1485866760000,
+      "direction_ing": 1,
+      "flow_class_id": 2938960514233673700,
+      "sum(bytes)": 466507776,
+      "sum(packets)": 1284,
+      "vrouter": "a3s27"
+    },
+    {
+      "T": 1485866760000,
+      "direction_ing": 1,
+      "flow_class_id": 2938960514233673700,
+      "sum(bytes)": 440453120,
+      "sum(packets)": 1141,
+      "vrouter": "a3s28"
+    },
+    {
+      "T": 1485866820000,
+      "direction_ing": 1,
+      "flow_class_id": 2938960514233673700,
+      "sum(bytes)": 444487680,
+      "sum(packets)": 1239,
+      "vrouter": "a3s27"
+    },
+    {
+      "T": 1485866820000,
+      "direction_ing": 1,
+      "flow_class_id": 2938960514233673700,
+      "sum(bytes)": 445243392,
+      "sum(packets)": 1144,
+      "vrouter": "a3s28"
+    },
+    {
+      "T": 1485866880000,
+      "direction_ing": 1,
+      "flow_class_id": 2938960514233673700,
+      "sum(bytes)": 459956224,
+      "sum(packets)": 1262,
+      "vrouter": "a3s27"
+    },
+    {
+      "T": 1485866880000,
+      "direction_ing": 1,
+      "flow_class_id": 2938960514233673700,
+      "sum(bytes)": 449382400,
+      "sum(packets)": 1169,
+      "vrouter": "a3s28"
+    },
+    {
+      "T": 1485866940000,
+      "direction_ing": 1,
+      "flow_class_id": 2938960514233673700,
+      "sum(bytes)": 436185088,
+      "sum(packets)": 1249,
+      "vrouter": "a3s27"
+    },
+    {
+      "T": 1485866940000,
+      "direction_ing": 1,
+      "flow_class_id": 2938960514233673700,
+      "sum(bytes)": 435462144,
+      "sum(packets)": 1104,
+      "vrouter": "a3s28"
+    },
+    {
+      "T": 1485867000000,
+      "direction_ing": 1,
+      "flow_class_id": 2938960514233673700,
+      "sum(bytes)": 432994304,
+      "sum(packets)": 1258,
+      "vrouter": "a3s27"
+    },
+    {
+      "T": 1485867000000,
+      "direction_ing": 1,
+      "flow_class_id": 2938960514233673700,
+      "sum(bytes)": 421974016,
+      "sum(packets)": 1154,
+      "vrouter": "a3s28"
+    },
+    {
+      "T": 1485867060000,
+      "direction_ing": 1,
+      "flow_class_id": 2938960514233673700,
+      "sum(bytes)": 455446528,
+      "sum(packets)": 1222,
+      "vrouter": "a3s28"
+    },
+    {
+      "T": 1485867060000,
+      "direction_ing": 1,
+      "flow_class_id": 2938960514233673700,
+      "sum(bytes)": 446404608,
+      "sum(packets)": 1288,
+      "vrouter": "a3s27"
+    },
+    {
+      "T": 1485867120000,
+      "direction_ing": 1,
+      "flow_class_id": 2938960514233673700,
+      "sum(bytes)": 425023488,
+      "sum(packets)": 1151,
+      "vrouter": "a3s28"
+    },
+    {
+      "T": 1485867120000,
+      "direction_ing": 1,
+      "flow_class_id": 2938960514233673700,
+      "sum(bytes)": 447242240,
+      "sum(packets)": 1256,
+      "vrouter": "a3s27"
+    },
+    {
+      "T": 1485867180000,
+      "direction_ing": 1,
+      "flow_class_id": 2938960514233673700,
+      "sum(bytes)": 428822528,
+      "sum(packets)": 1110,
+      "vrouter": "a3s28"
+    },
+    {
+      "T": 1485867180000,
+      "direction_ing": 1,
+      "flow_class_id": 2938960514233673700,
+      "sum(bytes)": 430297088,
+      "sum(packets)": 1213,
+      "vrouter": "a3s27"
+    },
+    {
+      "T": 1485867240000,
+      "direction_ing": 1,
+      "flow_class_id": 2938960514233673700,
+      "sum(bytes)": 441452544,
+      "sum(packets)": 1173,
+      "vrouter": "a3s28"
+    },
+    {
+      "T": 1485867240000,
+      "direction_ing": 1,
+      "flow_class_id": 2938960514233673700,
+      "sum(bytes)": 440897536,
+      "sum(packets)": 1278,
+      "vrouter": "a3s27"
+    },
+    {
+      "T": 1485867300000,
+      "direction_ing": 1,
+      "flow_class_id": 2938960514233673700,
+      "sum(bytes)": 455436288,
+      "sum(packets)": 1145,
+      "vrouter": "a3s28"
+    },
+    {
+      "T": 1485867300000,
+      "direction_ing": 1,
+      "flow_class_id": 2938960514233673700,
+      "sum(bytes)": 437137408,
+      "sum(packets)": 1270,
+      "vrouter": "a3s27"
+    },
+    {
+      "T": 1485867360000,
+      "direction_ing": 1,
+      "flow_class_id": 2938960514233673700,
+      "sum(bytes)": 441561088,
+      "sum(packets)": 1246,
+      "vrouter": "a3s27"
+    },
+    {
+      "T": 1485867360000,
+      "direction_ing": 1,
+      "flow_class_id": 2938960514233673700,
+      "sum(bytes)": 427229184,
+      "sum(packets)": 1160,
+      "vrouter": "a3s28"
+    },
+    {
+      "T": 1485867420000,
+      "direction_ing": 1,
+      "flow_class_id": 2938960514233673700,
+      "sum(bytes)": 435718144,
+      "sum(packets)": 1173,
+      "vrouter": "a3s28"
+    },
+    {
+      "T": 1485867420000,
+      "direction_ing": 1,
+      "flow_class_id": 2938960514233673700,
+      "sum(bytes)": 438441984,
+      "sum(packets)": 1251,
+      "vrouter": "a3s27"
+    },
+    {
+      "T": 1485867480000,
+      "direction_ing": 1,
+      "flow_class_id": 2938960514233673700,
+      "sum(bytes)": 434860032,
+      "sum(packets)": 1094,
+      "vrouter": "a3s28"
+    },
+    {
+      "T": 1485867480000,
+      "direction_ing": 1,
+      "flow_class_id": 2938960514233673700,
+      "sum(bytes)": 430884864,
+      "sum(packets)": 1223,
+      "vrouter": "a3s27"
+    },
+    {
+      "T": 1485867540000,
+      "direction_ing": 1,
+      "flow_class_id": 2938960514233673700,
+      "sum(bytes)": 456247296,
+      "sum(packets)": 1153,
+      "vrouter": "a3s28"
+    },
+    {
+      "T": 1485867540000,
+      "direction_ing": 1,
+      "flow_class_id": 2938960514233673700,
+      "sum(bytes)": 417896448,
+      "sum(packets)": 1264,
+      "vrouter": "a3s27"
+    },
+    {
+      "T": 1485867600000,
+      "direction_ing": 1,
+      "flow_class_id": 2938960514233673700,
+      "sum(bytes)": 427986944,
+      "sum(packets)": 1170,
+      "vrouter": "a3s28"
+    },
+    {
+      "T": 1485867600000,
+      "direction_ing": 1,
+      "flow_class_id": 2938960514233673700,
+      "sum(bytes)": 449671168,
+      "sum(packets)": 1258,
+      "vrouter": "a3s27"
+    },
+    {
+      "T": 1485867660000,
+      "direction_ing": 1,
+      "flow_class_id": 2938960514233673700,
+      "sum(bytes)": 405452800,
+      "sum(packets)": 1143,
+      "vrouter": "a3s28"
+    },
+    {
+      "T": 1485867660000,
+      "direction_ing": 1,
+      "flow_class_id": 2938960514233673700,
+      "sum(bytes)": 458452992,
+      "sum(packets)": 1234,
+      "vrouter": "a3s27"
+    },
+    {
+      "T": 1485867720000,
+      "direction_ing": 1,
+      "flow_class_id": 2938960514233673700,
+      "sum(bytes)": 427139072,
+      "sum(packets)": 1156,
+      "vrouter": "a3s28"
+    },
+    {
+      "T": 1485867720000,
+      "direction_ing": 1,
+      "flow_class_id": 2938960514233673700,
+      "sum(bytes)": 461299712,
+      "sum(packets)": 1248,
+      "vrouter": "a3s27"
+    },
+    {
+      "T": 1485867780000,
+      "direction_ing": 1,
+      "flow_class_id": 2938960514233673700,
+      "sum(bytes)": 447277056,
+      "sum(packets)": 1185,
+      "vrouter": "a3s28"
+    },
+    {
+      "T": 1485867780000,
+      "direction_ing": 1,
+      "flow_class_id": 2938960514233673700,
+      "sum(bytes)": 439830528,
+      "sum(packets)": 1281,
+      "vrouter": "a3s27"
+    },
+    {
+      "T": 1485867840000,
+      "direction_ing": 1,
+      "flow_class_id": 2938960514233673700,
+      "sum(bytes)": 450963456,
+      "sum(packets)": 1261,
+      "vrouter": "a3s27"
+    },
+    {
+      "T": 1485867840000,
+      "direction_ing": 1,
+      "flow_class_id": 2938960514233673700,
+      "sum(bytes)": 453056512,
+      "sum(packets)": 1131,
+      "vrouter": "a3s28"
+    },
+    {
+      "T": 1485867900000,
+      "direction_ing": 1,
+      "flow_class_id": 2938960514233673700,
+      "sum(bytes)": 418537472,
+      "sum(packets)": 1240,
+      "vrouter": "a3s27"
+    },
+    {
+      "T": 1485867900000,
+      "direction_ing": 1,
+      "flow_class_id": 2938960514233673700,
+      "sum(bytes)": 447062016,
+      "sum(packets)": 1124,
+      "vrouter": "a3s28"
+    },
+    {
+      "T": 1485867960000,
+      "direction_ing": 1,
+      "flow_class_id": 2938960514233673700,
+      "sum(bytes)": 476821504,
+      "sum(packets)": 1275,
+      "vrouter": "a3s27"
+    },
+    {
+      "T": 1485867960000,
+      "direction_ing": 1,
+      "flow_class_id": 2938960514233673700,
+      "sum(bytes)": 421918720,
+      "sum(packets)": 1127,
+      "vrouter": "a3s28"
+    },
+    {
+      "T": 1485868020000,
+      "direction_ing": 1,
+      "flow_class_id": 2938960514233673700,
+      "sum(bytes)": 425797632,
+      "sum(packets)": 1057,
+      "vrouter": "a3s28"
+    },
+    {
+      "T": 1485868020000,
+      "direction_ing": 1,
+      "flow_class_id": 2938960514233673700,
+      "sum(bytes)": 433524736,
+      "sum(packets)": 1238,
+      "vrouter": "a3s27"
+    },
+    {
+      "T": 1485868080000,
+      "direction_ing": 1,
+      "flow_class_id": 2938960514233673700,
+      "sum(bytes)": 434829312,
+      "sum(packets)": 1119,
+      "vrouter": "a3s28"
+    },
+    {
+      "T": 1485868080000,
+      "direction_ing": 1,
+      "flow_class_id": 2938960514233673700,
+      "sum(bytes)": 406419456,
+      "sum(packets)": 1215,
+      "vrouter": "a3s27"
+    },
+    {
+      "T": 1485868140000,
+      "direction_ing": 1,
+      "flow_class_id": 2938960514233673700,
+      "sum(bytes)": 412848128,
+      "sum(packets)": 1142,
+      "vrouter": "a3s28"
+    },
+    {
+      "T": 1485868140000,
+      "direction_ing": 1,
+      "flow_class_id": 2938960514233673700,
+      "sum(bytes)": 435378176,
+      "sum(packets)": 1257,
+      "vrouter": "a3s27"
+    },
+    {
+      "T": 1485868200000,
+      "direction_ing": 1,
+      "flow_class_id": 2938960514233673700,
+      "sum(bytes)": 434264064,
+      "sum(packets)": 1123,
+      "vrouter": "a3s28"
+    },
+    {
+      "T": 1485868200000,
+      "direction_ing": 1,
+      "flow_class_id": 2938960514233673700,
+      "sum(bytes)": 456685568,
+      "sum(packets)": 1228,
+      "vrouter": "a3s27"
+    },
+    {
+      "T": 1485868260000,
+      "direction_ing": 1,
+      "flow_class_id": 2938960514233673700,
+      "sum(bytes)": 443883520,
+      "sum(packets)": 1268,
+      "vrouter": "a3s27"
+    },
+    {
+      "T": 1485868260000,
+      "direction_ing": 1,
+      "flow_class_id": 2938960514233673700,
+      "sum(bytes)": 437432320,
+      "sum(packets)": 1146,
+      "vrouter": "a3s28"
+    },
+    {
+      "T": 1485868320000,
+      "direction_ing": 1,
+      "flow_class_id": 2938960514233673700,
+      "sum(bytes)": 443482112,
+      "sum(packets)": 1288,
+      "vrouter": "a3s27"
+    },
+    {
+      "T": 1485868320000,
+      "direction_ing": 1,
+      "flow_class_id": 2938960514233673700,
+      "sum(bytes)": 443719680,
+      "sum(packets)": 1216,
+      "vrouter": "a3s28"
+    },
+    {
+      "T": 1485868380000,
+      "direction_ing": 1,
+      "flow_class_id": 2938960514233673700,
+      "sum(bytes)": 430569472,
+      "sum(packets)": 1203,
+      "vrouter": "a3s27"
+    },
+    {
+      "T": 1485868380000,
+      "direction_ing": 1,
+      "flow_class_id": 2938960514233673700,
+      "sum(bytes)": 416890880,
+      "sum(packets)": 1112,
+      "vrouter": "a3s28"
+    },
+    {
+      "T": 1485868440000,
+      "direction_ing": 1,
+      "flow_class_id": 2938960514233673700,
+      "sum(bytes)": 410564608,
+      "sum(packets)": 1227,
+      "vrouter": "a3s27"
+    },
+    {
+      "T": 1485868440000,
+      "direction_ing": 1,
+      "flow_class_id": 2938960514233673700,
+      "sum(bytes)": 412618752,
+      "sum(packets)": 1146,
+      "vrouter": "a3s28"
+    },
+    {
+      "T": 1485868500000,
+      "direction_ing": 1,
+      "flow_class_id": 2938960514233673700,
+      "sum(bytes)": 449648640,
+      "sum(packets)": 1283,
+      "vrouter": "a3s27"
+    },
+    {
+      "T": 1485868500000,
+      "direction_ing": 1,
+      "flow_class_id": 2938960514233673700,
+      "sum(bytes)": 435890176,
+      "sum(packets)": 1193,
+      "vrouter": "a3s28"
+    },
+    {
+      "T": 1485868560000,
+      "direction_ing": 1,
+      "flow_class_id": 2938960514233673700,
+      "sum(bytes)": 420919296,
+      "sum(packets)": 1135,
+      "vrouter": "a3s28"
+    },
+    {
+      "T": 1485868560000,
+      "direction_ing": 1,
+      "flow_class_id": 2938960514233673700,
+      "sum(bytes)": 447092736,
+      "sum(packets)": 1215,
+      "vrouter": "a3s27"
+    },
+    {
+      "T": 1485868620000,
+      "direction_ing": 1,
+      "flow_class_id": 2938960514233673700,
+      "sum(bytes)": 441800704,
+      "sum(packets)": 1119,
+      "vrouter": "a3s28"
+    },
+    {
+      "T": 1485868620000,
+      "direction_ing": 1,
+      "flow_class_id": 2938960514233673700,
+      "sum(bytes)": 432199680,
+      "sum(packets)": 1231,
+      "vrouter": "a3s27"
+    },
+    {
+      "T": 1485868680000,
+      "direction_ing": 1,
+      "flow_class_id": 2938960514233673700,
+      "sum(bytes)": 429938688,
+      "sum(packets)": 1191,
+      "vrouter": "a3s28"
+    },
+    {
+      "T": 1485868680000,
+      "direction_ing": 1,
+      "flow_class_id": 2938960514233673700,
+      "sum(bytes)": 431173632,
+      "sum(packets)": 1258,
+      "vrouter": "a3s27"
+    },
+    {
+      "T": 1485868740000,
+      "direction_ing": 1,
+      "flow_class_id": 2938960514233673700,
+      "sum(bytes)": 429330432,
+      "sum(packets)": 1158,
+      "vrouter": "a3s28"
+    },
+    {
+      "T": 1485868740000,
+      "direction_ing": 1,
+      "flow_class_id": 2938960514233673700,
+      "sum(bytes)": 427808768,
+      "sum(packets)": 1251,
+      "vrouter": "a3s27"
+    },
+    {
+      "T": 1485868800000,
+      "direction_ing": 1,
+      "flow_class_id": 2938960514233673700,
+      "sum(bytes)": 460285952,
+      "sum(packets)": 1285,
+      "vrouter": "a3s27"
+    },
+    {
+      "T": 1485868800000,
+      "direction_ing": 1,
+      "flow_class_id": 2938960514233673700,
+      "sum(bytes)": 429250560,
+      "sum(packets)": 1203,
+      "vrouter": "a3s28"
+    },
+    {
+      "T": 1485868860000,
+      "direction_ing": 1,
+      "flow_class_id": 2938960514233673700,
+      "sum(bytes)": 461799424,
+      "sum(packets)": 1252,
+      "vrouter": "a3s28"
+    },
+    {
+      "T": 1485868860000,
+      "direction_ing": 1,
+      "flow_class_id": 2938960514233673700,
+      "sum(bytes)": 474654720,
+      "sum(packets)": 1309,
+      "vrouter": "a3s27"
+    },
+    {
+      "T": 1485868920000,
+      "direction_ing": 1,
+      "flow_class_id": 2938960514233673700,
+      "sum(bytes)": 426508288,
+      "sum(packets)": 1200,
+      "vrouter": "a3s28"
+    },
+    {
+      "T": 1485868920000,
+      "direction_ing": 1,
+      "flow_class_id": 2938960514233673700,
+      "sum(bytes)": 431075328,
+      "sum(packets)": 1258,
+      "vrouter": "a3s27"
+    },
+    {
+      "T": 1485868980000,
+      "direction_ing": 1,
+      "flow_class_id": 2938960514233673700,
+      "sum(bytes)": 418111488,
+      "sum(packets)": 1184,
+      "vrouter": "a3s28"
+    },
+    {
+      "T": 1485868980000,
+      "direction_ing": 1,
+      "flow_class_id": 2938960514233673700,
+      "sum(bytes)": 437377024,
+      "sum(packets)": 1243,
+      "vrouter": "a3s27"
+    },
+    {
+      "T": 1485869040000,
+      "direction_ing": 1,
+      "flow_class_id": 2938960514233673700,
+      "sum(bytes)": 433637376,
+      "sum(packets)": 1209,
+      "vrouter": "a3s28"
+    },
+    {
+      "T": 1485869040000,
+      "direction_ing": 1,
+      "flow_class_id": 2938960514233673700,
+      "sum(bytes)": 445204480,
+      "sum(packets)": 1293,
+      "vrouter": "a3s27"
+    },
+    {
+      "T": 1485869100000,
+      "direction_ing": 1,
+      "flow_class_id": 2938960514233673700,
+      "sum(bytes)": 458342400,
+      "sum(packets)": 1296,
+      "vrouter": "a3s27"
+    },
+    {
+      "T": 1485869100000,
+      "direction_ing": 1,
+      "flow_class_id": 2938960514233673700,
+      "sum(bytes)": 454529024,
+      "sum(packets)": 1210,
+      "vrouter": "a3s28"
+    },
+    {
+      "T": 1485869160000,
+      "direction_ing": 1,
+      "flow_class_id": 2938960514233673700,
+      "sum(bytes)": 404531200,
+      "sum(packets)": 1269,
+      "vrouter": "a3s27"
+    },
+    {
+      "T": 1485869160000,
+      "direction_ing": 1,
+      "flow_class_id": 2938960514233673700,
+      "sum(bytes)": 456519680,
+      "sum(packets)": 1226,
+      "vrouter": "a3s28"
+    },
+    {
+      "T": 1485869220000,
+      "direction_ing": 1,
+      "flow_class_id": 2938960514233673700,
+      "sum(bytes)": 438026240,
+      "sum(packets)": 1256,
+      "vrouter": "a3s27"
+    },
+    {
+      "T": 1485869220000,
+      "direction_ing": 1,
+      "flow_class_id": 2938960514233673700,
+      "sum(bytes)": 429457408,
+      "sum(packets)": 1172,
+      "vrouter": "a3s28"
+    },
+    {
+      "T": 1485869280000,
+      "direction_ing": 1,
+      "flow_class_id": 2938960514233673700,
+      "sum(bytes)": 445540352,
+      "sum(packets)": 1253,
+      "vrouter": "a3s27"
+    },
+    {
+      "T": 1485869280000,
+      "direction_ing": 1,
+      "flow_class_id": 2938960514233673700,
+      "sum(bytes)": 421838848,
+      "sum(packets)": 1176,
+      "vrouter": "a3s28"
+    },
+    {
+      "T": 1485869340000,
+      "direction_ing": 1,
+      "flow_class_id": 2938960514233673700,
+      "sum(bytes)": 428029952,
+      "sum(packets)": 1235,
+      "vrouter": "a3s27"
+    },
+    {
+      "T": 1485869340000,
+      "direction_ing": 1,
+      "flow_class_id": 2938960514233673700,
+      "sum(bytes)": 428099584,
+      "sum(packets)": 1141,
+      "vrouter": "a3s28"
+    },
+    {
+      "T": 1485869400000,
+      "direction_ing": 1,
+      "flow_class_id": 2938960514233673700,
+      "sum(bytes)": 435519488,
+      "sum(packets)": 1276,
+      "vrouter": "a3s27"
+    },
+    {
+      "T": 1485869400000,
+      "direction_ing": 1,
+      "flow_class_id": 2938960514233673700,
+      "sum(bytes)": 462127104,
+      "sum(packets)": 1196,
+      "vrouter": "a3s28"
+    },
+    {
+      "T": 1485869460000,
+      "direction_ing": 1,
+      "flow_class_id": 2938960514233673700,
+      "sum(bytes)": 422172672,
+      "sum(packets)": 1159,
+      "vrouter": "a3s28"
+    },
+    {
+      "T": 1485869460000,
+      "direction_ing": 1,
+      "flow_class_id": 2938960514233673700,
+      "sum(bytes)": 449730560,
+      "sum(packets)": 1255,
+      "vrouter": "a3s27"
+    },
+    {
+      "T": 1485869520000,
+      "direction_ing": 1,
+      "flow_class_id": 2938960514233673700,
+      "sum(bytes)": 431685632,
+      "sum(packets)": 1144,
+      "vrouter": "a3s28"
+    },
+    {
+      "T": 1485869520000,
+      "direction_ing": 1,
+      "flow_class_id": 2938960514233673700,
+      "sum(bytes)": 445863936,
+      "sum(packets)": 1235,
+      "vrouter": "a3s27"
+    },
+    {
+      "T": 1485869580000,
+      "direction_ing": 1,
+      "flow_class_id": 2938960514233673700,
+      "sum(bytes)": 428367872,
+      "sum(packets)": 1176,
+      "vrouter": "a3s28"
+    },
+    {
+      "T": 1485869580000,
+      "direction_ing": 1,
+      "flow_class_id": 2938960514233673700,
+      "sum(bytes)": 435562496,
+      "sum(packets)": 1261,
+      "vrouter": "a3s27"
+    },
+    {
+      "T": 1485869640000,
+      "direction_ing": 1,
+      "flow_class_id": 2938960514233673700,
+      "sum(bytes)": 421640192,
+      "sum(packets)": 1147,
+      "vrouter": "a3s28"
+    },
+    {
+      "T": 1485869640000,
+      "direction_ing": 1,
+      "flow_class_id": 2938960514233673700,
+      "sum(bytes)": 447236096,
+      "sum(packets)": 1241,
+      "vrouter": "a3s27"
+    },
+    {
+      "T": 1485869700000,
+      "direction_ing": 1,
+      "flow_class_id": 2938960514233673700,
+      "sum(bytes)": 434165760,
+      "sum(packets)": 1247,
+      "vrouter": "a3s27"
+    },
+    {
+      "T": 1485869700000,
+      "direction_ing": 1,
+      "flow_class_id": 2938960514233673700,
+      "sum(bytes)": 433166336,
+      "sum(packets)": 1139,
+      "vrouter": "a3s28"
+    },
+    {
+      "T": 1485869760000,
+      "direction_ing": 1,
+      "flow_class_id": 2938960514233673700,
+      "sum(bytes)": 461342720,
+      "sum(packets)": 1257,
+      "vrouter": "a3s27"
+    },
+    {
+      "T": 1485869760000,
+      "direction_ing": 1,
+      "flow_class_id": 2938960514233673700,
+      "sum(bytes)": 412231680,
+      "sum(packets)": 1197,
+      "vrouter": "a3s28"
+    },
+    {
+      "T": 1485869820000,
+      "direction_ing": 1,
+      "flow_class_id": 2938960514233673700,
+      "sum(bytes)": 455370752,
+      "sum(packets)": 1293,
+      "vrouter": "a3s27"
+    },
+    {
+      "T": 1485869820000,
+      "direction_ing": 1,
+      "flow_class_id": 2938960514233673700,
+      "sum(bytes)": 417374208,
+      "sum(packets)": 1184,
+      "vrouter": "a3s28"
+    },
+    {
+      "T": 1485869880000,
+      "direction_ing": 1,
+      "flow_class_id": 2938960514233673700,
+      "sum(bytes)": 448739328,
+      "sum(packets)": 1187,
+      "vrouter": "a3s28"
+    },
+    {
+      "T": 1485869880000,
+      "direction_ing": 1,
+      "flow_class_id": 2938960514233673700,
+      "sum(bytes)": 624095232,
+      "sum(packets)": 1826,
+      "vrouter": "a3s27"
+    },
+    {
+      "T": 1485869940000,
+      "direction_ing": 1,
+      "flow_class_id": 2938960514233673700,
+      "sum(bytes)": 432355328,
+      "sum(packets)": 1203,
+      "vrouter": "a3s28"
+    },
+    {
+      "T": 1485869940000,
+      "direction_ing": 1,
+      "flow_class_id": 2938960514233673700,
+      "sum(bytes)": 517171200,
+      "sum(packets)": 1509,
+      "vrouter": "a3s27"
+    }
+  ],
+  "total": 120,
+  "queryJSON": {
+    "table": "FlowSeriesTable",
+    "start_time": 1485866400000,
+    "end_time": 1485870000000,
+    "select_fields": [
+      "flow_class_id",
+      "direction_ing",
+      "T",
+      "T=60",
+      "vrouter",
+      "sum(packets)",
+      "sum(bytes)"
+    ],
+    "filter": [
+      []
+    ],
+    "sort_fields": [
+      "T"
+    ],
+    "sort": 1,
+    "where": [
+      [
+        {
+          "name": "vrouter",
+          "value": "a3s27",
+          "op": 1
+        }
+      ],
+      [
+        {
+          "name": "vrouter",
+          "value": "a3s28",
+          "op": 1
+        }
+      ]
+    ],
+    "limit": 150000,
+    "dir": 1
+  },
+  "chunk": 1,
+  "chunkSize": 120,
+  "serverSideChunking": true
+}

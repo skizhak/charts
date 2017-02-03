@@ -1,4 +1,10 @@
-// Most basic chart.
+/*
+ * Copyright (c) Juniper Networks, Inc. All rights reserved.
+ */
+/* global d3 */
+
+const colorScheme = d3.schemeCategory10
+
 const simpleData = [
   { x: (new Date(2016, 11, 1)).getTime(), y: 0 },
   { x: (new Date(2016, 11, 2)).getTime(), y: 3 },
@@ -6,9 +12,10 @@ const simpleData = [
   { x: (new Date(2016, 11, 4)).getTime(), y: 4 },
   { x: (new Date(2016, 11, 5)).getTime(), y: 5 },
 ]
+
 const simpleChartView = new coCharts.charts.XYChartView()
 simpleChartView.setConfig({
-  container: '#simpleChart',
+  container: '#basic-area-chart',
   components: [{
     type: 'CompositeYChart',
     config: {
@@ -23,6 +30,7 @@ simpleChartView.setConfig({
             accessor: 'y',
             chart: 'AreaChart',
             axis: 'y',
+            color: colorScheme[2]
           }
         ]
       },

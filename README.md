@@ -4,7 +4,7 @@
 
 # Contrail Charts
 
-A chart library in MVC using D3
+A chart library using D3.
 
 # Installation
 

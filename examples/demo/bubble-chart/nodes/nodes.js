@@ -1,74 +1,57 @@
-/* global coCharts d3 */
+/*
+ * Copyright (c) Juniper Networks, Inc. All rights reserved.
+ */
 
 const _ = require('lodash')
-const colorSchema = d3.schemeCategory10
+const formatter = require('formatter')
+const _c = require('constants')
 
-function numberFormatter (number) {
-  return number.toFixed(0)
-}
-
-function numberFormatter1 (number) {
-  return number.toFixed(1)
-}
-
-function memFormatter (number) {
-  const bytePrefixes = ['B', 'KB', 'MB', 'GB', 'TB']
-  let bytes = parseInt(number * 1024)
-  let formattedBytes = '-'
-  _.each(bytePrefixes, (prefix, idx) => {
-    if (bytes < 1024) {
-      formattedBytes = bytes.toFixed(1) + ' ' + prefix
-      return false
-    } else {
-      if (idx === bytePrefixes.length - 1) {
-        formattedBytes = bytes.toFixed(1) + ' ' + prefix
-      } else {
-        bytes = bytes / 1024
-      }
-    }
-  })
-  return formattedBytes
-}
-
-function randomFromInterval (min, max) {
-  return Math.random() * (max - min + 1) + min
-}
+const bubbleShapes = _c.bubbleShapes
+const colorScheme = _c.bubbleColorScheme6
 
 const simpleData = []
 const nodes = {
   compute: 25,
   control: 2,
   config: 2,
-  webui: 2,
-  collector: 2
+  db: 2,
+  collector: 2,
+  webui: 2
 }
 
-var cpu = 0
-var count = 0
-var data = {}
+let cpu = 0
+let count = 0
+let data = {}
 
 for (var n in nodes) {
   count = nodes[n]
   for (let i = 0; i < count; i++) {
-    cpu = randomFromInterval(0, 100)
+    cpu = _.random(0, (i < .7 * count) ? 30 : ((i < .8 * count) ? 80 : 100))
     data = {
       cpu: cpu,
       size: Math.random() * 10
     }
-    data[n] = Math.random() * 10000
+    data[n] = Math.random() * 10000 * 1024
     simpleData.push(data)
   }
 }
 
 const chartConfig = {
-  container: '#chart',
+  container: '#nodes-bubble-chart',
   components: [{
     type: 'LegendPanel',
     config: {
-      sourceComponent: 'scatterPlot',
+      sourceComponent: 'scatter-plot',
+      palette: _c.bubbleColorScheme14,
+      editable: {
+        colorSelector: true,
+        chartSelector: false
+      },
+      placement: 'horizontal',
+      filter: true,
     },
   }, {
-    id: 'scatterPlot',
+    id: 'scatter-plot',
     type: 'CompositeYChart',
     config: {
       marginInner: 10,
@@ -89,10 +72,10 @@ const chartConfig = {
             label: 'Compute',
             sizeAccessor: 'size',
             sizeAxis: 'sizeAxis',
-            shape: 'circle',
+            shape: bubbleShapes.certificate,
             axis: 'y1',
-            color: colorSchema[0],
-            tooltip: 'tooltipId',
+            color: colorScheme[0],
+            tooltip: 'tooltip-id',
           },
           {
             enabled: true,
@@ -101,10 +84,10 @@ const chartConfig = {
             label: 'Control',
             sizeAccessor: 'size',
             sizeAxis: 'sizeAxis',
-            shape: 'star',
+            shape: bubbleShapes.dotCircle,
             axis: 'y1',
-            color: colorSchema[5],
-            tooltip: 'tooltipId',
+            color: colorScheme[1],
+            tooltip: 'tooltip-id',
           },
           {
             enabled: true,
@@ -113,10 +96,10 @@ const chartConfig = {
             label: 'Config',
             sizeAccessor: 'size',
             sizeAxis: 'sizeAxis',
-            shape: 'diamond',
+            shape: bubbleShapes.cog,
             axis: 'y1',
-            color: colorSchema[2],
-            tooltip: 'tooltipId',
+            color: colorScheme[2],
+            tooltip: 'tooltip-id',
           },
           {
             enabled: true,
@@ -125,10 +108,22 @@ const chartConfig = {
             label: 'Collector',
             sizeAccessor: 'size',
             sizeAxis: 'sizeAxis',
-            shape: 'cross',
+            shape: bubbleShapes.dashboard,
             axis: 'y1',
-            color: colorSchema[4],
-            tooltip: 'tooltipId',
+            color: colorScheme[3],
+            tooltip: 'tooltip-id',
+          },
+          {
+            enabled: true,
+            accessor: 'db',
+            chart: 'ScatterPlot',
+            label: 'DB',
+            sizeAccessor: 'size',
+            sizeAxis: 'sizeAxis',
+            shape: bubbleShapes.db,
+            axis: 'y1',
+            color: colorScheme[4],
+            tooltip: 'tooltip-id',
           },
           {
             enabled: true,
@@ -137,42 +132,55 @@ const chartConfig = {
             label: 'WebUI',
             sizeAccessor: 'size',
             sizeAxis: 'sizeAxis',
-            shape: 'triangle',
+            shape: bubbleShapes.desktop,
             axis: 'y1',
-            color: colorSchema[9],
-            tooltip: 'tooltipId',
+            color: colorScheme[5],
+            tooltip: 'tooltip-id',
           }
         ]
       },
       axis: {
         x: {
           scale: 'scaleLinear',
-          formatter: numberFormatter
+          formatter: formatter.toInteger
         },
         sizeAxis: {
-          range: [100, 300]
+          range: [200, 400]
         },
         y1: {
           position: 'left',
-          formatter: memFormatter,
+          formatter: formatter.byteFormatter,
           label: 'Memory',
         }
       },
     }
   }, {
-    id: 'tooltipId',
+    id: 'tooltip-id',
     type: 'Tooltip',
     config: {
-      title: {
-        accessor: 'cpu',
-        valueFormatter: numberFormatter1,
-      },
+      title: 'Node Memory & CPU',
 
       dataConfig: [
         {
-          accessor: 'size',
-          labelFormatter: 'Size',
-          valueFormatter: numberFormatter
+          accessor: 'cpu',
+          labelFormatter: 'CPU Share',
+          valueFormatter: formatter.toFixed1
+        },
+        {
+          labelFormatter: 'Memory',
+          valueFormatter: (point) => {
+            let nodes = ['compute', 'control', 'config', 'collector', 'db', 'webui']
+            let memory = '-'
+
+            for (var i in nodes) {
+              if(point[nodes[i]]) {
+                memory = formatter.byteFormatter(point[nodes[i]])
+                break
+              }
+            }
+
+            return memory
+          }
         }
       ]
     }
@@ -199,8 +207,8 @@ const chartConfig = {
             axis: 'y1',
             sizeAccessor: 'size',
             sizeAxis: 'sizeAxis',
-            shape: 'circle',
-            color: colorSchema[0]
+            shape: bubbleShapes.certificate,
+            color: colorScheme[0]
           },
           {
             enabled: true,
@@ -209,8 +217,8 @@ const chartConfig = {
             axis: 'y1',
             sizeAccessor: 'size',
             sizeAxis: 'sizeAxis',
-            shape: 'star',
-            color: colorSchema[5]
+            shape: bubbleShapes.dotCircle,
+            color: colorScheme[1]
           },
           {
             enabled: true,
@@ -219,8 +227,8 @@ const chartConfig = {
             axis: 'y1',
             sizeAccessor: 'size',
             sizeAxis: 'sizeAxis',
-            shape: 'diamond',
-            color: colorSchema[2]
+            shape: bubbleShapes.cog,
+            color: colorScheme[2]
           },
           {
             enabled: true,
@@ -229,8 +237,18 @@ const chartConfig = {
             axis: 'y1',
             sizeAccessor: 'size',
             sizeAxis: 'sizeAxis',
-            shape: 'cross',
-            color: colorSchema[4]
+            shape: bubbleShapes.dashboard,
+            color: colorScheme[3]
+          },
+          {
+            enabled: true,
+            accessor: 'db',
+            chart: 'ScatterPlot',
+            axis: 'y1',
+            sizeAccessor: 'size',
+            sizeAxis: 'sizeAxis',
+            shape: bubbleShapes.db,
+            color: colorScheme[4]
           },
           {
             enabled: true,
@@ -239,22 +257,23 @@ const chartConfig = {
             axis: 'y1',
             sizeAccessor: 'size',
             sizeAxis: 'sizeAxis',
-            shape: 'triangle',
-            color: colorSchema[9]
+            shape: bubbleShapes.desktop,
+            color: colorScheme[5]
           }
         ]
       },
       axis: {
         x: {
           scale: 'scaleLinear',
-          formatter: numberFormatter
+          formatter: formatter.toInteger
         },
         sizeAxis: {
-          range: [50, 150]
+          range: [75, 150]
         },
         y1: {
           position: 'left',
-          formatter: memFormatter,
+          label: 'Memory',
+          formatter: formatter.byteFormatter,
           labelMargin: 15,
           ticks: 4
         }

@@ -1,20 +1,14 @@
-/* global coCharts */
+/*
+ * Copyright (c) Juniper Networks, Inc. All rights reserved.
+ */
 
-const staticData = []
-for (let i = 1; i <= 5; i++) {
-  staticData.push({
-    x: i,
-    a: i * 3,
-    b: i * 5,
-    c: i * 7,
-  })
-}
+let data = require('fixture').simpleStatic
 
 const complexChartView = new coCharts.charts.XYChartView()
 complexChartView.setConfig({
-  container: '#chart',
+  container: '#grouped-bar-chart',
   components: [{
-    id: 'compositeYId',
+    id: 'grouped-bar-compositey',
     type: 'CompositeYChart',
     config: {
       marginInner: 10,
@@ -25,7 +19,7 @@ complexChartView.setConfig({
         x: {
           accessor: 'x',
           labelFormatter: 'Value',
-          axis: 'x'
+          axis: 'x',
         },
         y: [
           {
@@ -34,22 +28,21 @@ complexChartView.setConfig({
             enabled: true,
             chart: 'BarChart',
             axis: 'y1',
-            tooltip: 'defaultTooltipId',
+            tooltip: 'default-tooltip',
           }, {
             accessor: 'b',
             labelFormatter: 'Label B',
             enabled: true,
             chart: 'BarChart',
             axis: 'y1',
-            tooltip: 'defaultTooltipId',
+            tooltip: 'default-tooltip',
           }, {
             accessor: 'c',
             labelFormatter: 'Label C',
-            color: 'grey',
             enabled: true,
             chart: 'BarChart',
             axis: 'y1',
-            tooltip: 'defaultTooltipId',
+            tooltip: 'default-tooltip',
           }
         ]
       },
@@ -58,13 +51,12 @@ complexChartView.setConfig({
           scale: 'scaleLinear',
         },
         y1: {
-          domain: [0, 25],
           position: 'left',
         },
       },
     },
   }, {
-    id: 'defaultTooltipId',
+    id: 'default-tooltip',
     type: 'Tooltip',
     config: {
       dataConfig: [
@@ -85,4 +77,4 @@ complexChartView.setConfig({
     },
   }]
 })
-complexChartView.setData(staticData)
+complexChartView.setData(data)

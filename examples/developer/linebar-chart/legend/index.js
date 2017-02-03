@@ -1,14 +1,8 @@
-/* global d3 coCharts */
+/*
+ * Copyright (c) Juniper Networks, Inc. All rights reserved.
+ */
 
-function timeFormatter (value) {
-  return d3.timeFormat('%H:%M:%S')(value)
-}
-function numberFormatter (number) {
-  return number.toFixed(0)
-}
-function numberFormatter3 (number) {
-  return number.toFixed(1)
-}
+const formatter = require('formatter')
 
 // Complex example
 const complexData = []
@@ -25,15 +19,17 @@ for (let i = 0; i < 100; i++) {
 }
 const complexChartView = new coCharts.charts.XYChartView()
 complexChartView.setConfig({
-  container: '#complexChart',
+  container: '#chart-legend',
   components: [{
     type: 'LegendPanel',
     config: {
-      sourceComponent: 'complexChartCompositeY',
-      placement: 'row',
-      coloPicker: true,
+      sourceComponent: 'compositey-chart-id',
+      editable: {
+        colorSelector: true,
+        chartSelector: true
+      },
+      placement: 'horizontal',
       filter: true,
-      chartSelector: true,
     },
   }, {
     type: 'ControlPanel',
@@ -43,7 +39,7 @@ complexChartView.setConfig({
       ],
     },
   }, {
-    id: 'complexChartCompositeY',
+    id: 'compositey-chart-id',
     type: 'CompositeYChart',
     config: {
       marginInner: 10,
@@ -51,7 +47,8 @@ complexChartView.setConfig({
       marginRight: 80,
       marginBottom: 40,
       chartHeight: 600,
-      crosshair: 'crosshairId',
+      crosshair: 'crosshair-id',
+      possibleChartTypes: ['BarChart', 'LineChart'],
       plot: {
         x: {
           accessor: 'x',
@@ -64,113 +61,53 @@ complexChartView.setConfig({
             labelFormatter: 'Label A',
             enabled: true,
             chart: 'BarChart',
-            possibleChartTypes: [
-              {
-                label: 'Stacked Bar',
-                chart: 'StackedBarChart'
-              }, {
-                label: 'Bar',
-                chart: 'BarChart'
-              }, {
-                label: 'Line',
-                chart: 'LineChart'
-              }
-            ],
             axis: 'y1',
-            tooltip: 'defaultTooltip',
+            tooltip: 'default-tooltip',
           }, {
             accessor: 'b',
             labelFormatter: 'Label B',
             enabled: true,
             chart: 'BarChart',
-            possibleChartTypes: [
-              {
-                label: 'Stacked Bar',
-                chart: 'StackedBarChart'
-              }, {
-                label: 'Bar',
-                chart: 'BarChart'
-              }, {
-                label: 'Line',
-                chart: 'LineChart'
-              }
-            ],
             axis: 'y1',
-            tooltip: 'customTooltip',
+            tooltip: 'custom-tooltip',
           }, {
             accessor: 'c',
             labelFormatter: 'Label C',
             enabled: false,
             chart: 'BarChart',
-            possibleChartTypes: [
-              {
-                label: 'Stacked Bar',
-                chart: 'StackedBarChart'
-              }, {
-                label: 'Bar',
-                chart: 'BarChart'
-              }, {
-                label: 'Line',
-                chart: 'LineChart'
-              }
-            ],
             axis: 'y1',
-            tooltip: 'defaultTooltip',
+            tooltip: 'default-tooltip',
           }, {
             accessor: 'd',
             labelFormatter: 'Megabytes D',
             color: '#d62728',
             enabled: true,
             chart: 'LineChart',
-            possibleChartTypes: [
-              {
-                label: 'Stacked Bar',
-                chart: 'StackedBarChart'
-              }, {
-                label: 'Bar',
-                chart: 'BarChart'
-              }, {
-                label: 'Line',
-                chart: 'LineChart'
-              }
-            ],
             axis: 'y2',
-            tooltip: 'defaultTooltip',
+            tooltip: 'default-tooltip',
           }, {
             accessor: 'e',
             labelFormatter: 'Megabytes E',
             color: '#9467bd',
             enabled: true,
             chart: 'LineChart',
-            possibleChartTypes: [
-              {
-                label: 'Stacked Bar',
-                chart: 'StackedBarChart'
-              }, {
-                label: 'Bar',
-                chart: 'BarChart'
-              }, {
-                label: 'Line',
-                chart: 'LineChart'
-              }
-            ],
             axis: 'y2',
-            tooltip: 'defaultTooltip',
+            tooltip: 'default-tooltip',
           }
         ]
       },
       axis: {
         x: {
-          formatter: d3.timeFormat('%H:%M:%S')
+          formatter: formatter.extendedISOTime,
         },
         y1: {
           position: 'left',
-          formatter: numberFormatter,
+          formatter: formatter.toInteger,
           domain: [-10, undefined],
         },
         y2: {
           position: 'right',
-          formatter: numberFormatter3,
+          formatter: formatter.toFixed1,
         }
       }
     },
@@ -216,66 +153,66 @@ complexChartView.setConfig({
         },
         y1: {
           position: 'left',
-          formatter: numberFormatter,
+          formatter: formatter.toInteger,
           ticks: 5,
         },
         y2: {
           position: 'right',
-          formatter: numberFormatter3,
+          formatter: formatter.toFixed1,
           ticks: 5,
         }
       }
     },
   }, {
-    id: 'defaultTooltip',
+    id: 'default-tooltip',
     type: 'Tooltip',
     config: {
       title: {
         accessor: 'x',
-        valueFormatter: timeFormatter,
+        valueFormatter: formatter.extendedISOTime,
       },
 
       dataConfig: [
         {
           accessor: 'a',
           labelFormatter: 'Label A',
-          valueFormatter: numberFormatter,
+          valueFormatter: formatter.toInteger,
         }, {
           accessor: 'b',
           labelFormatter: 'Label B',
-          valueFormatter: numberFormatter,
+          valueFormatter: formatter.toInteger,
         }, {
           accessor: 'c',
           labelFormatter: 'Label C',
-          valueFormatter: numberFormatter,
+          valueFormatter: formatter.toInteger,
         }, {
           accessor: 'd',
           labelFormatter: 'Label D',
-          valueFormatter: numberFormatter,
+          valueFormatter: formatter.toInteger,
         }, {
           accessor: 'e',
           labelFormatter: 'Label E',
-          valueFormatter: numberFormatter,
+          valueFormatter: formatter.toInteger,
         }
       ]
     },
   }, {
-    id: 'customTooltip',
+    id: 'custom-tooltip',
     type: 'Tooltip',
     config: {
       template: (data) => '<div class="tooltip-content">Custom tooltip</div>',
     }
   }, {
-    id: 'messageId',
+    id: 'message-id',
     type: 'Message',
     config: {
       enabled: true,
     }
   }, {
-    id: 'crosshairId',
+    id: 'crosshair-id',
     type: 'Crosshair',
     config: {
-      tooltip: 'defaultTooltip',
+      tooltip: 'default-tooltip',
     }
   }]
 })
