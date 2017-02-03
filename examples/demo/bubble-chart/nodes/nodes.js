@@ -42,6 +42,7 @@ const chartConfig = {
     type: 'LegendPanel',
     config: {
       sourceComponent: 'scatter-plot',
+      palette: _c.bubbleColorScheme14,
       editable: {
         colorSelector: true,
         chartSelector: false

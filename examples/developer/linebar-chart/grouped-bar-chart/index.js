@@ -39,7 +39,6 @@ complexChartView.setConfig({
           }, {
             accessor: 'c',
             labelFormatter: 'Label C',
-            color: 'grey',
             enabled: true,
             chart: 'BarChart',
             axis: 'y1',

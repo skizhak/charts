@@ -4,6 +4,7 @@
 
 const _ = require('lodash')
 const formatter = require('formatter')
+const _c = require('constants')
 
 // Complex example
 const simpleData = []
@@ -24,6 +25,7 @@ complexChartView.setConfig({
     type: 'LegendPanel',
     config: {
       sourceComponent: 'query-db-compositey',
+      palette: _c.lbColorScheme17,
       editable: {
         colorSelector: true,
         chartSelector: true

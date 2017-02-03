@@ -133,6 +133,7 @@ cpuMemChartView.setConfig({
     type: 'LegendPanel',
     config: {
       sourceComponent: 'cpu-mem-compositey',
+      palette: _c.lbColorScheme7.concat(_c.d3ColorScheme20),
       editable: {
         colorSelector: true,
         chartSelector: true

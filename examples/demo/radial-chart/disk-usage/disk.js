@@ -37,7 +37,7 @@ const chartConfig = {
     type: 'PieChart',
     config: {
       type: 'donut',
-      radius: 100,
+      radius: 150,
       colorScale: d3.scaleOrdinal().range(radialColorScheme6), // eslint-disable-line no-undef
       serie: {
         getValue: getValue,
