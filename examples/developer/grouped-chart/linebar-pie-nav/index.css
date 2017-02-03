@@ -1,0 +1,23 @@
+#grouped-parent-chart {
+  width: 100%;
+}
+
+#grouped-chart1 {
+  width: 45%;
+  display: inline-block;
+}
+
+#grouped-chart2 {
+  width: 45%;
+  display: inline-block;
+}
+
+#donut-chart {
+  width: 20%;
+  display: inline-block;
+}
+#navigation-chart {
+  width: 65%;
+  margin-left: 40px;
+  display: inline-block;
+}

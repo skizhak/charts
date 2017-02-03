@@ -15,7 +15,7 @@ for (let i = 0; i < 100; i++) {
 
 const chartConfigs = [
   {
-    chartId: 'grouped-chart1',
+    id: 'grouped-chart1',
     type: 'XYChart',
     container: '#grouped-chart1',
     components: [{
@@ -43,7 +43,7 @@ const chartConfigs = [
       }
     }]
   }, {
-    chartId: 'grouped-chart2',
+    id: 'grouped-chart2',
     type: 'XYChart',
     container: '#grouped-chart2',
     components: [{
@@ -64,10 +64,16 @@ const chartConfigs = [
           ]
         }
       },
-    }, {
+    }]
+  }, {
+    id: 'grouped-chart-navigation',
+    type: 'XYChart',
+    container: '#grouped-chart-navigation',
+    components: [{
       type: 'Navigation',
       config: {
         chartHeight: 200,
+        selection: [85, 100],
         plot: {
           x: {
             accessor: 'x',
@@ -95,6 +101,8 @@ chartView.setConfig({
   // Child charts.
   charts: chartConfigs,
 })
-chartView.setData(complexData, {}, 'grouped-chart1')
-chartView.setData(complexData, {}, 'grouped-chart2')
+// selection on navigation will set the data on these charts.
+// chartView.setData(complexData, {}, 'grouped-chart1')
+// chartView.setData(complexData, {}, 'grouped-chart2')
+chartView.setData(complexData, {}, 'grouped-chart-navigation')
 chartView.render()

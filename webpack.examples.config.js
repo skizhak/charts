@@ -58,7 +58,8 @@ const config = {
     'developer-linebar-grouped-bar': path.join(__dirname, '/examples/developer/linebar-chart/grouped-bar-chart/'),
     'developer-linebar-navigation': path.join(__dirname, '/examples/developer/linebar-chart/navigation/'),
     'developer-radial-pie': path.join(__dirname, '/examples/developer/radial-chart/pie/'),
-    'developer-radial-dendrogram': path.join(__dirname, '/examples/developer/radial-chart/dendrogram/')
+    'developer-radial-dendrogram': path.join(__dirname, '/examples/developer/radial-chart/dendrogram/'),
+    'developer-linebar-pie-nav': path.join(__dirname, '/examples/developer/grouped-chart/linebar-pie-nav/'),
   },
   devtool: 'source-map',
   output: {

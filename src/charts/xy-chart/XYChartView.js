@@ -55,8 +55,7 @@ class XYChartView extends ContrailChartsView {
   setConfig (config) {
     this._config = config
     this.setElement(config.container)
-    // Todo make dataConfig part of handlers? as dataProvider
-    if (this._config.dataConfig) this.setDataConfig(this._config.dataConfig)
+    if (_.has(config, 'dataProvider.config')) this._dataProvider.setConfig(config.dataProvider.config)
     this._initComponents()
   }
   /**

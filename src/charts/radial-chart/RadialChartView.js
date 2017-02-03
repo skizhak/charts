@@ -12,6 +12,7 @@ const _actions = [
   require('actions/HideComponent'),
   require('actions/SelectColor'),
   require('actions/Refresh'),
+  require('actions/ChangeSelection'),
 ]
 /**
 * Group of charts rendered in polar coordinates system
@@ -43,6 +44,9 @@ class RadialChartView extends ContrailView {
 
     if (_.isArray(data)) this._dataModel.data = data
   }
+  setProviderData (data) {
+    if (_.isArray(data)) this._dataProvider.data = data
+  }
   /**
   * Sets the configuration for this chart as a simple object.
   * Instantiate the required views if they do not exist yet, set their configurations otherwise.
@@ -51,6 +55,7 @@ class RadialChartView extends ContrailView {
   setConfig (config) {
     this._config = config
     this.setElement(config.container)
+    if (_.has(config, 'dataProvider.config')) this._dataProvider.setConfig(config.dataProvider.config)
     this._initComponents()
   }
 
