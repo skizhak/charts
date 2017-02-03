@@ -27,6 +27,8 @@ module.exports = {
   CompositeYChartView: require('components/composite-y/CompositeYChartView'),
   PieChartConfigModel: require('components/pie-chart/PieChartConfigModel'),
   PieChartView: require('components/pie-chart/PieChartView'),
+  RadialDendrogramConfigModel: require('components/radial/RadialDendrogramConfigModel'),
+  RadialDendrogramView: require('components/radial/RadialDendrogramView'),
   StandaloneConfigModel: require('components/standalone/StandaloneConfigModel'),
   StandaloneView: require('components/standalone/StandaloneView'),
   LegendPanelConfigModel: require('components/legend-panel/LegendPanelConfigModel'),

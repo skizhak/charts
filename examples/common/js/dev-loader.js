@@ -58,7 +58,13 @@ const devRadialExamples = [
     html: 'radial-chart/pie/index.html',
     js: 'radial-chart/pie/index.js',
     css: 'radial-chart/pie/index.css',
-    title: 'Example',
+    title: 'Pie Chart',
+  },
+  {
+    html: 'radial-chart/dendrogram/index.html',
+    js: 'radial-chart/dendrogram/index.js',
+    css: 'radial-chart/dendrogram/index.css',
+    title: 'Dendrogram',
   }
 ]
 
