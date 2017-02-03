@@ -83,12 +83,12 @@ const chartConfig = {
         y1: {
           position: 'left',
           formatter: formatter.toInteger,
-          label: 'Size of circles',
+          label: 'Y value of circles',
         },
         y2: {
           position: 'right',
           formatter: formatter.toInteger,
-          label: 'Size of squares and triangles',
+          label: 'Y value of Square and Star',
         }
       },
     }
@@ -104,23 +104,23 @@ const chartConfig = {
       dataConfig: [
         {
           accessor: 'data1',
-          labelFormatter: 'Label 1',
+          labelFormatter: 'Circle',
           valueFormatter: formatter.toInteger,
         }, {
           accessor: 'data2',
-          labelFormatter: 'Label 2',
+          labelFormatter: 'Square',
           valueFormatter: formatter.toInteger,
         }, {
           accessor: 'data3',
-          labelFormatter: 'Label 3',
+          labelFormatter: 'Star',
           valueFormatter: formatter.toInteger,
         }, {
           accessor: 'size1',
-          labelFormatter: 'Size 1',
+          labelFormatter: 'Size of Circle',
           valueFormatter: formatter.toInteger,
         }, {
           accessor: 'size2',
-          labelFormatter: 'Size 2',
+          labelFormatter: 'Size of Square and Star',
           valueFormatter: formatter.toInteger,
         }
       ]
