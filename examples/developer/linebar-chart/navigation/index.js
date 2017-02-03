@@ -3,7 +3,16 @@
  */
 /* global d3 */
 
-const data = require('fixture').simpleStatic
+const length = 20
+const data = require('fixture')({
+  length: 20,
+  data: {
+    x: {linear: true, range: [0, length]},
+    a: {linear: true, range: [0, length * 3], repeat: true, gap: true},
+    b: {linear: true, range: [0, length * 5], repeat: true},
+    c: {linear: true, range: [0, length * 7]},
+  },
+})
 const colorScheme = d3.schemeCategory10
 
 const barChart = new coCharts.charts.XYChartView()
@@ -28,8 +37,8 @@ areaChart.setConfig({
         y: [
           {
             enabled: true,
-            accessor: 'a',
-            labelFormatter: 'Nav Label A',
+            accessor: 'b',
+            labelFormatter: 'Nav Label B',
             chart: 'LineChart',
             axis: 'y',
           }
@@ -105,7 +114,6 @@ barChart.setConfig({
           scale: 'scaleLinear',
         },
         y1: {
-          domain: [0, 30],
           position: 'left',
         },
       },

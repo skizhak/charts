@@ -2,24 +2,23 @@
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
 
+const data = require('fixture')({
+  length: 40,
+  data: {
+    x: {linear: true, range: [1475760930000, 1475800930000]},
+    data1: {random: true, range: [0, 50], gap: true},
+    data2: {random: true, range: [0, 100], repeat: true},
+    data3: {random: true, range: [0, 100]},
+    size1: {random: true, range: [0, 10]},
+    size2: {random: true, range: [0, 20]},
+    nav: {random: true, range: [0, 10]},
+  },
+})
 const formatter = require('formatter')
 const _c = require('constants')
 
 const colorScheme = _c.bubbleColorScheme6
 const bubbleShapes = _c.bubbleShapes
-const simpleData = []
-
-for (let i = 0; i < 40; i++) {
-  simpleData.push({
-    x: 1475760930000 + 1000000 * i,
-    data1: Math.random() * 50,
-    data2: Math.random() * 100,
-    data3: Math.random() * 100,
-    size1: Math.random() * 10,
-    size2: Math.random() * 20,
-    nav: Math.random() * 10,
-  })
-}
 
 const chartConfig = {
   container: '#multi-shape-bubble',
@@ -158,4 +157,4 @@ const chartConfig = {
 
 const chartView = new coCharts.charts.XYChartView()
 chartView.setConfig(chartConfig)
-chartView.setData(simpleData)
+chartView.setData(data)
