@@ -34,7 +34,7 @@ class StackedBarChartView extends XYChartSubView {
     const topY = _.reduce(this.params.activeAccessorData, (sum, accessor) => {
       return sum + this.model.getRangeFor(accessor.accessor)[1]
     }, 0)
-    domains[this.axisName][1] = topY
+    if (domains[this.axisName]) domains[this.axisName][1] = topY
     return domains
   }
   /**

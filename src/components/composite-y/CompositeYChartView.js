@@ -19,7 +19,7 @@ class CompositeYChartView extends ContrailChartsView {
     this._drawings = []
 
     this.listenTo(this.model, 'change', this.render)
-    this.listenTo(this.config, 'change', this.render)
+    this.listenTo(this.config, 'change', this._onConfigModelChange)
     window.addEventListener('resize', this._onResize.bind(this))
   }
 
@@ -467,6 +467,7 @@ class CompositeYChartView extends ContrailChartsView {
         // Default y axis name.
         accessor.axis = 'y'
       }
+      // if accessor is not set to disabled treat it as enabled
       if (!_.has(accessor, 'enabled')) {
         accessor.enabled = true
       }
@@ -500,6 +501,12 @@ class CompositeYChartView extends ContrailChartsView {
   }
 
   // Event handlers
+  _onConfigModelChange () {
+    _.each(this._drawings, drawing => {
+      drawing.config.set(this.config.attributes)
+    })
+    this.render()
+  }
 
   _onMousemove (d, el, e) {
     const point = [e.offsetX, e.offsetY]

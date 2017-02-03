@@ -42,6 +42,8 @@ class NavigationView extends ContrailChartsView {
     super.render()
     this.resetParams()
     this._compositeYChartView.container = this.el
+    // TODO this will also trigger render async, but the next one is needed by following _update immediately
+    this._compositeYChartView.config.set(this.config.attributes)
     this._compositeYChartView.render()
     this._update()
   }
