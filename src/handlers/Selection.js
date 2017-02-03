@@ -5,7 +5,7 @@
 // Selection object for dataframes
 
 const _ = require('lodash')
-const d3 = require('d3')
+const d3Array = require('d3-array')
 const Events = require('contrail-charts-events')
 
 class Selection {
@@ -41,12 +41,21 @@ class Selection {
    * @return {Array} [min, max] extent of values of the serie
    */
   getRangeFor (key, isFull) {
-    if (isFull) return d3.extent(this._data, d => d[key])
+    if (isFull) return d3Array.extent(this._data, d => d[key])
 
     if (!_.has(this._ranges, key)) {
-      this._ranges[key] = d3.extent(this.data, d => d[key])
+      this._ranges[key] = d3Array.extent(this.data, d => d[key])
     }
     return this._ranges[key]
+  }
+  /**
+   * @return {Array} [min, max] values of provided series values combined
+   */
+  combineDomains (accessors) {
+    const domains = _.map(accessors, accessor => {
+      return this.getRangeFor(accessor)
+    })
+    return d3Array.extent(_.concat(...domains))
   }
 }
 _.extend(Selection.prototype, Events)

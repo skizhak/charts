@@ -32,6 +32,7 @@ define([ // eslint-disable-line no-undef
         marginLeft: 80,
         marginRight: 80,
         marginBottom: 40,
+        chartHeight: 500,
         plot: {
           x: {
             accessor: 'x',
@@ -132,6 +133,11 @@ define([ // eslint-disable-line no-undef
     components: [{
       type: 'CompositeYChart',
       config: {
+        marginInner: 10,
+        marginLeft: 80,
+        marginRight: 80,
+        marginBottom: 40,
+        chartHeight: 300,
         plot: {
           x: {
             accessor: 'x',

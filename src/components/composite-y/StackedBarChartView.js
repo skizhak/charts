@@ -28,29 +28,13 @@ class StackedBarChartView extends XYChartSubView {
     // TODO do not use model.data.length as there can be gaps
     return this.innerWidth / this.model.data.length * paddedPart
   }
-  /**
-  * Called by the parent in order to calculate maximum data extents for all of this child's axis.
-  * Assumes the params.activeAccessorData for this child view is filled by the parent with the relevent yAccessors for this child only.
-  * Returns an object with following structure: { y1: [0,10], x: [-10,10] } - axisName: axisDomain
-  */
-  calculateAxisDomains () {
-    const domains = {}
-    const xAxisName = this.params.plot.x.axis
-    const xAccessor = this._parent.params.plot.x.accessor
-    let isFull = false
-    if (this.model.data.length < 2) isFull = true
-    domains[xAxisName] = this.model.getRangeFor(xAccessor, isFull)
-    // The domains calculated here can be overriden in the axis configuration.
-    // The overrides are handled by the parent.
-    _.each(this.params.activeAccessorData, accessor => {
-      const domain = this.model.getRangeFor(accessor.accessor, isFull)
-      if (_.has(domains, this.axisName)) {
-        domains[this.axisName][1] += domain[1]
-      } else {
-        domains[this.axisName] = [0, domain[1]]
-      }
-    })
-    this.params.handledAxisNames = _.keys(domains)
+
+  combineDomains () {
+    const domains = super.combineDomains()
+    const topY = _.reduce(this.params.activeAccessorData, (sum, accessor) => {
+      return sum + this.model.getRangeFor(accessor.accessor)[1]
+    }, 0)
+    domains[this.axisName][1] = topY
     return domains
   }
   /**
@@ -98,7 +82,8 @@ class StackedBarChartView extends XYChartSubView {
     const bandWidthHalf = (this.bandWidth / 2)
     _.each(data, d => {
       const x = d[this.params.plot.x.accessor]
-      let stackedY = this.yScale.domain()[0]
+      // y coordinate to stack next bar to
+      let stackedY = 0
       _.each(this.params.activeAccessorData, accessor => {
         const key = accessor.accessor
         const obj = {

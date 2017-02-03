@@ -3,7 +3,16 @@
  */
 /* global d3 */
 
-const data = require('fixture').simpleStatic
+const length = 20
+const data = require('fixture')({
+  length: 20,
+  data: {
+    x: {linear: true, range: [0, length]},
+    a: {linear: true, range: [0, length * 3], repeat: true, gap: true},
+    b: {linear: true, range: [0, length * 5], repeat: true},
+    c: {linear: true, range: [0, length * 7]},
+  },
+})
 const colorScheme = d3.schemeCategory10
 
 const barChart = new coCharts.charts.XYChartView()
@@ -17,7 +26,7 @@ areaChart.setConfig({
       marginLeft: 80,
       marginRight: 80,
       marginBottom: 40,
-      chartHeight: 200,
+      chartHeight: 300,
       selection: [0, 50],
       plot: {
         x: {
@@ -28,8 +37,8 @@ areaChart.setConfig({
         y: [
           {
             enabled: true,
-            accessor: 'a',
-            labelFormatter: 'Nav Label A',
+            accessor: 'b',
+            labelFormatter: 'Nav Label B',
             chart: 'LineChart',
             axis: 'y',
           }
@@ -48,6 +57,11 @@ areaChart.setConfig({
   }, {
     type: 'CompositeYChart',
     config: {
+      marginInner: 10,
+      marginLeft: 80,
+      marginRight: 80,
+      marginBottom: 40,
+      chartHeight: 300,
       plot: {
         x: {
           accessor: 'x',
@@ -83,6 +97,7 @@ barChart.setConfig({
       marginLeft: 80,
       marginRight: 80,
       marginBottom: 40,
+      chartHeight: 300,
       plot: {
         x: {
           accessor: 'x',
@@ -105,7 +120,6 @@ barChart.setConfig({
           scale: 'scaleLinear',
         },
         y1: {
-          domain: [0, 30],
           position: 'left',
         },
       },

@@ -67,11 +67,11 @@ const config = {
   },
   module: {loaders},
   resolve: {
-    root: path.resolve('./examples'),
+    root: './',
     alias: {
-      'fixture': 'common/js/fixtures.js',
-      'formatter': 'common/js/value-formatters.js',
-      'constants': 'common/js/constants.js'
+      'fixture': 'tests/generator.js',
+      'formatter': 'examples/common/js/value-formatters.js',
+      'constants': 'examples/common/js/constants.js'
     },
     extensions: ['', '.js']
   },

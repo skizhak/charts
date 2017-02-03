@@ -17,31 +17,16 @@ class ScatterPlotView extends XYChartSubView {
     }
   }
   /**
-  * Called by the parent in order to calculate maximum data extents for all of this child's axis.
-  * Assumes the params.activeAccessorData for this child view is filled by the parent with the relevant yAccessors for this child only.
-  * Returns an object with following structure: { y1: [0,10], x: [-10,10] }
-  */
-  calculateAxisDomains () {
-    const domains = {}
-    let isFull = false
-    if (this.model.data.length < 2) isFull = true
-    domains[this.params.plot.x.axis] = this.model.getRangeFor(this.params.plot.x.accessor, isFull)
-    domains[this.axisName] = []
-    // The domains calculated here can be overriden in the axis configuration.
-    // The overrides are handled by the parent.
-    _.each(this.params.activeAccessorData, accessor => {
-      let domain = this.model.getRangeFor(accessor.accessor, isFull)
-      if (domain[0] === domain[1]) {
-        isFull = true
-        domain = this.model.getRangeFor(accessor.accessor, isFull)
-      }
-      domains[this.axisName] = domains[this.axisName].concat(domain)
-      if (accessor.sizeAccessor && accessor.shape && accessor.sizeAxis) {
-        if (!domains[accessor.sizeAxis]) {
-          domains[accessor.sizeAxis] = []
-        }
-        domains[accessor.sizeAxis] = domains[accessor.sizeAxis].concat(this.model.getRangeFor(accessor.sizeAccessor, isFull))
-      }
+   * @return {Object} like:  y1: [0,10], x: [-10,10]
+   */
+  combineDomains () {
+    const domains = super.combineDomains()
+    const accessorsBySizeAxis = _.groupBy(this.params.activeAccessorData, 'sizeAxis')
+    _.each(accessorsBySizeAxis, (accessors, axis) => {
+      const validAccessors = _.filter(accessors, a => a.sizeAccessor && a.shape)
+      const validAccessorNames = _.map(validAccessors, 'sizeAccessor')
+
+      domains[axis] = this.model.combineDomains(validAccessorNames)
     })
     return domains
   }

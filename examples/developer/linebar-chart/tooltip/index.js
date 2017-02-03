@@ -2,7 +2,7 @@
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
 
-const data = require('fixture').simpleStatic
+const data = require('fixture')()
 const formatter = require('formatter')
 const complexChartView = new coCharts.charts.XYChartView()
 complexChartView.setConfig({
@@ -24,21 +24,21 @@ complexChartView.setConfig({
         },
         y: [
           {
-            accessor: 'randomN',
+            accessor: 'a',
             labelFormatter: 'Label A',
             enabled: true,
             chart: 'StackedBarChart',
             axis: 'y1',
             tooltip: 'default-tooltip',
           }, {
-            accessor: 'random5',
+            accessor: 'b',
             labelFormatter: 'Label B',
             enabled: true,
             chart: 'StackedBarChart',
             axis: 'y1',
             tooltip: 'custom-tooltip',
           }, {
-            accessor: 'random10',
+            accessor: 'c',
             labelFormatter: 'Megabytes C',
             color: 'grey',
             enabled: true,
@@ -72,15 +72,15 @@ complexChartView.setConfig({
           labelFormatter: 'Time',
           valueFormatter: formatter.extendedISOTime,
         }, {
-          accessor: 'randomN',
+          accessor: 'a',
           labelFormatter: 'Tooltip A',
           valueFormatter: formatter.toInteger,
         }, {
-          accessor: 'random5',
+          accessor: 'b',
           labelFormatter: 'Tooltip B',
           valueFormatter: formatter.toInteger,
         }, {
-          accessor: 'random10',
+          accessor: 'c',
           labelFormatter: 'Tooltip C',
           valueFormatter: formatter.toInteger,
         }

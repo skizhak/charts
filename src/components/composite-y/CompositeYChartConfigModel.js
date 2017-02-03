@@ -75,6 +75,10 @@ class CompositeYChartConfigModel extends ContrailChartsConfigModel {
   getAccessors () {
     return this.get('plot').y
   }
+
+  getDomain () {
+    return _.get(this, 'attributes.axis.domain')
+  }
   /**
    * Override parent
    */

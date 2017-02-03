@@ -7,13 +7,9 @@ const _ = require('lodash')
 const d3 = require('d3')
 require('d3-transition')
 const d3Shape = require('d3-shape')
-const d3Array = require('d3-array')
 const d3Ease = require('d3-ease')
 const XYChartSubView = require('components/composite-y/XYChartSubView')
 
-/**
-* This is the child view for CompositeYChartView.
-*/
 class LineChartView extends XYChartSubView {
   get zIndex () { return 2 }
   get events () {
@@ -22,30 +18,6 @@ class LineChartView extends XYChartSubView {
       'mouseout .line': '_onMouseout',
     }
   }
-  /**
-  * Called by the parent in order to calculate maximum data extents for all of this child's axis.
-  * Assumes the params.activeAccessorData for this child view is filled by the parent with the relevent yAccessors for this child only.
-  * Returns an object with following structure: { y1: [0,10], x: [-10,10] }
-  */
-  calculateAxisDomains () {
-    const domains = {}
-    domains[this.params.plot.x.axis] = this.model.getRangeFor(this.params.plot.x.accessor)
-    domains[this.axisName] = []
-    // The domains calculated here can be overriden in the axis configuration.
-    // The overrides are handled by the parent.
-    _.each(this.params.activeAccessorData, (accessor) => {
-      const domain = this.model.getRangeFor(accessor.accessor)
-      domains[this.axisName] = domains[this.axisName].concat(domain)
-    })
-    domains[this.axisName] = d3Array.extent(domains[this.axisName])
-    this.params.handledAxisNames = _.keys(domains)
-    return domains
-  }
-  /**
-   * Called by the parent when all scales have been saved in this child's params.
-   * Can be used by the child to perform any additional calculations.
-   */
-  calculateScales () {}
 
   getTooltipData (data, xPos) {
     const xAccessor = this.params.plot.x.accessor
