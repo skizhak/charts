@@ -133,6 +133,10 @@ devAdvanceExamples.forEach(
 $('#linebar').click()
 $lineBarLinks.find('#lb0').click()
 
+$("#demo-link").click(function () {
+  window.open('demo.html')
+})
+
 function onClickLBChart (e) {
   const index = $(this).attr('href').split('#')[1]
   onClickSidebar(index, devLBExamples)
