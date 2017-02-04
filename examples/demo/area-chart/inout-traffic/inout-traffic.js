@@ -215,11 +215,6 @@ trafficView.setConfig({
       ]
     }
   }, {
-    type: 'Standalone',
-    config: {
-      isSharedContainer: false,
-    },
-  }, {
     id: 'inout-traffic-message',
     type: 'Message',
     config: {
