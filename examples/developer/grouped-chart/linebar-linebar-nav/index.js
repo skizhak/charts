@@ -2,14 +2,23 @@
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
 
-const complexData = []
+
+const _ = require('lodash')
+const formatter = require('formatter')
+const constants = require('constants')
+
+const colorScheme = constants.lbColorScheme7
+const simpleData = []
+
+let now = _.now()
+
 for (let i = 0; i < 100; i++) {
-  const a = Math.random() * 100
-  complexData.push({
-    x: 1475760930000 + 1000000 * i,
-    a: a,
-    b: a + Math.random() * 10,
-    c: Math.random() * 10
+  simpleData.push({
+    x: now - (i * 60000),
+    a: _.random(10, 100),
+    b: _.random(10, 100),
+    c: _.random(400, 450),
+    d: _.random(200, 300),
   })
 }
 
@@ -21,6 +30,10 @@ const chartConfigs = [
     components: [{
       type: 'CompositeYChart',
       config: {
+        marginLeft: 60,
+        marginRight: 60,
+        marginBottom: 40,
+        chartHeight: 350,
         plot: {
           x: {
             accessor: 'x',
@@ -29,13 +42,17 @@ const chartConfigs = [
           y: [
             {
               accessor: 'a',
+              label: 'Label A',
               enabled: true,
-              chart: 'BarChart',
+              chart: 'StackedBarChart',
+              color: colorScheme[1],
               axis: 'y',
             }, {
               accessor: 'b',
+              label: 'Label B',
               enabled: true,
-              chart: 'BarChart',
+              chart: 'StackedBarChart',
+              color: colorScheme[3],
               axis: 'y',
             }
           ]
@@ -49,16 +66,22 @@ const chartConfigs = [
     components: [{
       type: 'CompositeYChart',
       config: {
+        marginLeft: 60,
+        marginRight: 60,
+        marginBottom: 40,
+        chartHeight: 350,
         plot: {
           x: {
             accessor: 'x',
-            axis: 'x',
+            axis: 'x'
           },
           y: [
             {
               accessor: 'c',
+              label: 'Label C',
               enabled: true,
-              chart: 'LineChart',
+              chart: 'BarChart',
+              color: colorScheme[4],
               axis: 'y',
             }
           ]
@@ -72,17 +95,23 @@ const chartConfigs = [
     components: [{
       type: 'Navigation',
       config: {
-        chartHeight: 200,
-        selection: [85, 100],
+        marginLeft: 60,
+        marginRight: 60,
+        marginBottom: 40,
+        chartHeight: 250,
+        selection: [75, 100],
         plot: {
           x: {
             accessor: 'x',
             axis: 'x',
+            label: 'Time'
           },
           y: [
             {
-              accessor: 'c',
+              accessor: 'd',
+              label: 'Label D',
               enabled: true,
+              color: colorScheme[2],
               chart: 'LineChart',
               axis: 'y',
             }
@@ -104,5 +133,5 @@ chartView.setConfig({
 // selection on navigation will set the data on these charts.
 // chartView.setData(complexData, {}, 'grouped-chart1')
 // chartView.setData(complexData, {}, 'grouped-chart2')
-chartView.setData(complexData, {}, 'grouped-chart-navigation')
+chartView.setData(simpleData, {}, 'grouped-chart-navigation')
 chartView.render()

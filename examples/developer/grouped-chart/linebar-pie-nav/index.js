@@ -4,15 +4,19 @@
 
 const _ = require('lodash')
 const formatter = require('formatter')
+const _c = require('constants')
 
-const tsData = []
+const now = _.now()
+const colorScheme = _c.d3ColorScheme20
+
+const simpleData = []
 for (let i = 0; i < 100; i++) {
-  const a = Math.random() * 100
-  tsData.push({
-    x: 1475760930000 + 1000000 * i,
-    a: a,
-    b: a + Math.random() * 10,
-    c: Math.random() * 10
+  simpleData.push({
+    x: now - (i * 300000),
+    a: _.random(10, 200),
+    b: _.random(10, 300),
+    c: _.random(10, 900),
+    d: _.random(100, 150),
   })
 }
 
@@ -40,6 +44,10 @@ const chartConfigs = [
     components: [{
       type: 'LegendPanel',
       config: {
+        marginLeft: 90,
+        marginRight: 60,
+        marginBottom: 40,
+        chartHeight: 350,
         sourceComponent: 'compositey-chart-id',
         editable: {
           colorSelector: true,
@@ -65,11 +73,13 @@ const chartConfigs = [
               accessor: 'a',
               enabled: true,
               chart: 'BarChart',
+              color: colorScheme[0],
               axis: 'y',
             }, {
               accessor: 'b',
               enabled: true,
               chart: 'BarChart',
+              color: colorScheme[4],
               axis: 'y',
             }
           ]
@@ -83,6 +93,10 @@ const chartConfigs = [
     components: [{
       type: 'LegendPanel',
       config: {
+        marginLeft: 60,
+        marginRight: 60,
+        marginBottom: 40,
+        chartHeight: 350,
         sourceComponent: 'compositey-chart-id2',
         editable: {
           colorSelector: true,
@@ -108,6 +122,7 @@ const chartConfigs = [
               enabled: true,
               chart: 'LineChart',
               axis: 'y',
+              color: colorScheme[2],
             }
           ]
         }
@@ -126,11 +141,12 @@ const chartConfigs = [
       id: 'donut-chart-id',
       type: 'PieChart',
       config: {
+        marginLeft: 60,
         type: 'donut',
         radius: 100,
         chartWidth: 200,
         chartHeight: 300,
-        colorScale: d3.scaleOrdinal().range(d3.schemeCategory20), // eslint-disable-line no-undef
+        colorScale: d3.scaleOrdinal().range([colorScheme[0], colorScheme[4], colorScheme[2]]), // eslint-disable-line no-undef
         serie: {
           getValue: serie => serie.value,
           getLabel: serie => serie.label,
@@ -163,18 +179,24 @@ const chartConfigs = [
     components: [{
       type: 'Navigation',
       config: {
-        chartHeight: 300,
-        selection: [0, 30],
+        marginLeft: 60,
+        marginRight: 60,
+        marginBottom: 40,
+        chartHeight: 350,
+        selection: [75, 100],
         plot: {
           x: {
             accessor: 'x',
             axis: 'x',
+            label: 'Time'
           },
           y: [
             {
-              accessor: 'c',
+              accessor: 'd',
+              label: 'Label D',
               enabled: true,
               chart: 'LineChart',
+              color: colorScheme[8],
               axis: 'y',
             }
           ]
@@ -196,6 +218,6 @@ chartView.setConfig({
 
 // chartView.setData(tsData, {}, 'grouped-chart1')
 // chartView.setData(tsData, {}, 'grouped-chart2')
-chartView.setData(tsData, {}, 'navigation-chart')
-chartView.setData(tsData, {}, 'grouped-chart3')
+chartView.setData(simpleData, {}, 'navigation-chart')
+chartView.setData(simpleData, {}, 'grouped-chart3')
 chartView.render()

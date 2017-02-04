@@ -86,13 +86,13 @@ const devAdvanceExamples = [
     html: 'grouped-chart/linebar-linebar-nav/index.html',
     js: 'grouped-chart/linebar-linebar-nav/index.js',
     css: 'grouped-chart/linebar-linebar-nav/index.css',
-    title: 'Grouped Line Bar with Navigation',
+    title: '2 Bar Nav',
   },
   {
     html: 'grouped-chart/linebar-pie-nav/index.html',
     js: 'grouped-chart/linebar-pe-nav/index.js',
     css: 'grouped-chart/linebar-pie-nav/index.css',
-    title: 'Grouped Line Bar, Pie with Navigation',
+    title: '2 LineBar 1 Pie Nav',
   }
 ]
 
