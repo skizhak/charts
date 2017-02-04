@@ -50,7 +50,7 @@ complexChartView.setConfig({
       marginBottom: 40,
       chartHeight: 600,
       crosshair: 'crosshair-id',
-      possibleChartTypes: ['BarChart', 'StackedBarChart', 'LineChart'],
+      possibleChartTypes: ['StackedBarChart', 'LineChart'],
       plot: {
         x: {
           accessor: 'x',
