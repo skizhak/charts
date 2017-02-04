@@ -18,6 +18,8 @@ class PieChartConfigModel extends ContrailChartsConfigModel {
       chartHeight: undefined,
 
       colorScale: d3.scaleOrdinal(d3.schemeCategory20),
+
+      onClick: (data, el, chart) => {}
     }
   }
 

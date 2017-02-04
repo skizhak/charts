@@ -100,7 +100,7 @@ class PieChartView extends ContrailChartsView {
 
   _onClick (d, el) {
     el.classList.remove('highlight')
-    this._actionman.fire('OnClick', d.data, this.config.get('onClick'))
+    this._actionman.fire('OnClick', d.data, el, this.config.get('onClick'))
   }
 }
 

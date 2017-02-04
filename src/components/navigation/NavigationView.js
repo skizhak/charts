@@ -88,7 +88,7 @@ class NavigationView extends ContrailChartsView {
     if (_.isDate(xMax)) xMax = xMax.getTime()
 
     this._selection.filter(xAccessor, [xMin, xMax])
-    this._actionman.fire('ChangeSelection', this._selection)
+    this._actionman.fire('ChangeSelection', this._selection, this.config.get('onChangeSelection'))
   }
   /**
    * Turn off selection for the animation period on resize
