@@ -15,6 +15,7 @@ const _actions = [
   require('actions/SelectChartType'),
   require('actions/ChangeSelection'),
   require('actions/Refresh'),
+  require('actions/OnClick'),
 ]
 /**
 * Chart with a common X axis and many possible child components rendering data on the Y axis (for example: line, bar, stackedBar).

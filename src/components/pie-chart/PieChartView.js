@@ -19,6 +19,7 @@ class PieChartView extends ContrailChartsView {
     return {
       'mouseover .arc': '_onMouseover',
       'mouseout .arc': '_onMouseout',
+      'click .arc': '_onClick',
     }
   }
 
@@ -95,6 +96,11 @@ class PieChartView extends ContrailChartsView {
   _onMouseout (d, el) {
     el.classList.remove('highlight')
     this._actionman.fire('HideComponent', this.config.get('tooltip'))
+  }
+
+  _onClick (d, el) {
+    el.classList.remove('highlight')
+    this._actionman.fire('OnClick', d.data, this.config.get('onClick'))
   }
 }
 

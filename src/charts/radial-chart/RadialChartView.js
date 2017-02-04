@@ -13,6 +13,7 @@ const _actions = [
   require('actions/SelectColor'),
   require('actions/Refresh'),
   require('actions/ChangeSelection'),
+  require('actions/OnClick'),
 ]
 /**
 * Group of charts rendered in polar coordinates system

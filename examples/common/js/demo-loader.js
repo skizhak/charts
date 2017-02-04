@@ -66,6 +66,15 @@ const radialExamples = [
   }
 ]
 
+const devAdvanceExamples = [
+  {
+    html: 'grouped-chart/vn-detail/vn-detail.html',
+    js: 'grouped-chart/vn-detail/vn-detail.js',
+    css: 'grouped-chart/vn-detail/vn-detail.css',
+    title: 'Virtual Network Details',
+  }
+]
+
 const $lineBarLinks = $('#lineBarLinks')
 demoLBExamples.forEach(
   (example, idx) => {
@@ -102,6 +111,15 @@ radialExamples.forEach(
   }
 )
 
+const $advanceLinks = $('#advanceLinks')
+devAdvanceExamples.forEach(
+  (example, idx) => {
+    let $link = $(`<a href="#${idx}"><span class="nav-text">${example.title}</span></a>`)
+    $link.click(onClickAdvanceChart)
+    $advanceLinks.append($('<li>').append($link))
+  }
+)
+
 $('#bubble').click()
 $bubbleLinks.find('#b0').click()
 
@@ -123,6 +141,11 @@ function onClickAreaChart (e) {
 function onClickRadialChart (e) {
   const index = $(this).attr('href').split('#')[1]
   onClickSidebar(index, radialExamples)
+}
+
+function onClickAdvanceChart (e) {
+  const index = $(this).attr('href').split('#')[1]
+  onClickSidebar(index, devAdvanceExamples)
 }
 
 function createNewTab (id, title, group = 'js-files', checked, content) {

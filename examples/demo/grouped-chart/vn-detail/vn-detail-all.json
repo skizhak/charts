@@ -1,0 +1,3866 @@
+[
+  {
+    "name": "default-domain:admin:backend",
+    "SUM(vn_stats.in_bytes)": 72006800,
+    "SUM(vn_stats.in_tpkts)": 213656,
+    "SUM(vn_stats.out_bytes)": 71868156,
+    "SUM(vn_stats.out_tpkts)": 211554,
+    "start_time": "now-120m",
+    "end_time": "now",
+    "timeGran_microsecs": 60000000,
+    "flow-series": [
+      {
+        "time": 1486139820000000,
+        "inBytes": 594692,
+        "outBytes": 619056,
+        "inPkts": 1826,
+        "outPkts": 1836,
+        "totalPkts": 3662,
+        "totalBytes": 1213748
+      },
+      {
+        "time": 1486139880000000,
+        "inBytes": 1203820,
+        "outBytes": 1181498,
+        "inPkts": 3558,
+        "outPkts": 3585,
+        "totalPkts": 7143,
+        "totalBytes": 2385318
+      },
+      {
+        "time": 1486139940000000,
+        "inBytes": 1191048,
+        "outBytes": 1164396,
+        "inPkts": 3516,
+        "outPkts": 3530,
+        "totalPkts": 7046,
+        "totalBytes": 2355444
+      },
+      {
+        "time": 1486140000000000,
+        "inBytes": 1197568,
+        "outBytes": 1208870,
+        "inPkts": 3540,
+        "outPkts": 3555,
+        "totalPkts": 7095,
+        "totalBytes": 2406438
+      },
+      {
+        "time": 1486140060000000,
+        "inBytes": 1211206,
+        "outBytes": 1192484,
+        "inPkts": 3611,
+        "outPkts": 3622,
+        "totalPkts": 7233,
+        "totalBytes": 2403690
+      },
+      {
+        "time": 1486140120000000,
+        "inBytes": 1232690,
+        "outBytes": 1198444,
+        "inPkts": 3581,
+        "outPkts": 3578,
+        "totalPkts": 7159,
+        "totalBytes": 2431134
+      },
+      {
+        "time": 1486140180000000,
+        "inBytes": 1153206,
+        "outBytes": 1215452,
+        "inPkts": 3511,
+        "outPkts": 3518,
+        "totalPkts": 7029,
+        "totalBytes": 2368658
+      },
+      {
+        "time": 1486140240000000,
+        "inBytes": 1199778,
+        "outBytes": 1189952,
+        "inPkts": 3549,
+        "outPkts": 3572,
+        "totalPkts": 7121,
+        "totalBytes": 2389730
+      },
+      {
+        "time": 1486140300000000,
+        "inBytes": 1210486,
+        "outBytes": 1195910,
+        "inPkts": 3523,
+        "outPkts": 3535,
+        "totalPkts": 7058,
+        "totalBytes": 2406396
+      },
+      {
+        "time": 1486140360000000,
+        "inBytes": 1157842,
+        "outBytes": 1176868,
+        "inPkts": 3481,
+        "outPkts": 3474,
+        "totalPkts": 6955,
+        "totalBytes": 2334710
+      },
+      {
+        "time": 1486140420000000,
+        "inBytes": 1208372,
+        "outBytes": 1199956,
+        "inPkts": 3606,
+        "outPkts": 3590,
+        "totalPkts": 7196,
+        "totalBytes": 2408328
+      },
+      {
+        "time": 1486140480000000,
+        "inBytes": 1194246,
+        "outBytes": 1223150,
+        "inPkts": 3579,
+        "outPkts": 3587,
+        "totalPkts": 7166,
+        "totalBytes": 2417396
+      },
+      {
+        "time": 1486140540000000,
+        "inBytes": 1250098,
+        "outBytes": 1215300,
+        "inPkts": 3665,
+        "outPkts": 3662,
+        "totalPkts": 7327,
+        "totalBytes": 2465398
+      },
+      {
+        "time": 1486140600000000,
+        "inBytes": 1175392,
+        "outBytes": 1171426,
+        "inPkts": 3488,
+        "outPkts": 3481,
+        "totalPkts": 6969,
+        "totalBytes": 2346818
+      },
+      {
+        "time": 1486140660000000,
+        "inBytes": 1201632,
+        "outBytes": 1231964,
+        "inPkts": 3604,
+        "outPkts": 3590,
+        "totalPkts": 7194,
+        "totalBytes": 2433596
+      },
+      {
+        "time": 1486140720000000,
+        "inBytes": 1190308,
+        "outBytes": 1231528,
+        "inPkts": 3626,
+        "outPkts": 3636,
+        "totalPkts": 7262,
+        "totalBytes": 2421836
+      },
+      {
+        "time": 1486140780000000,
+        "inBytes": 1233552,
+        "outBytes": 1185394,
+        "inPkts": 3556,
+        "outPkts": 3557,
+        "totalPkts": 7113,
+        "totalBytes": 2418946
+      },
+      {
+        "time": 1486140840000000,
+        "inBytes": 1202814,
+        "outBytes": 1233016,
+        "inPkts": 3555,
+        "outPkts": 3560,
+        "totalPkts": 7115,
+        "totalBytes": 2435830
+      },
+      {
+        "time": 1486140900000000,
+        "inBytes": 1215154,
+        "outBytes": 1159530,
+        "inPkts": 3557,
+        "outPkts": 3565,
+        "totalPkts": 7122,
+        "totalBytes": 2374684
+      },
+      {
+        "time": 1486140960000000,
+        "inBytes": 1159492,
+        "outBytes": 1212508,
+        "inPkts": 3526,
+        "outPkts": 3530,
+        "totalPkts": 7056,
+        "totalBytes": 2372000
+      },
+      {
+        "time": 1486141020000000,
+        "inBytes": 1182890,
+        "outBytes": 1194338,
+        "inPkts": 3585,
+        "outPkts": 3561,
+        "totalPkts": 7146,
+        "totalBytes": 2377228
+      },
+      {
+        "time": 1486141080000000,
+        "inBytes": 1172234,
+        "outBytes": 1168158,
+        "inPkts": 3569,
+        "outPkts": 3547,
+        "totalPkts": 7116,
+        "totalBytes": 2340392
+      },
+      {
+        "time": 1486141140000000,
+        "inBytes": 1196984,
+        "outBytes": 1202372,
+        "inPkts": 3544,
+        "outPkts": 3530,
+        "totalPkts": 7074,
+        "totalBytes": 2399356
+      },
+      {
+        "time": 1486141200000000,
+        "inBytes": 1247074,
+        "outBytes": 1199698,
+        "inPkts": 3593,
+        "outPkts": 3577,
+        "totalPkts": 7170,
+        "totalBytes": 2446772
+      },
+      {
+        "time": 1486141260000000,
+        "inBytes": 1171756,
+        "outBytes": 1189312,
+        "inPkts": 3526,
+        "outPkts": 3524,
+        "totalPkts": 7050,
+        "totalBytes": 2361068
+      },
+      {
+        "time": 1486141320000000,
+        "inBytes": 1208006,
+        "outBytes": 1206768,
+        "inPkts": 3587,
+        "outPkts": 3580,
+        "totalPkts": 7167,
+        "totalBytes": 2414774
+      },
+      {
+        "time": 1486141380000000,
+        "inBytes": 1180268,
+        "outBytes": 1224138,
+        "inPkts": 3582,
+        "outPkts": 3561,
+        "totalPkts": 7143,
+        "totalBytes": 2404406
+      },
+      {
+        "time": 1486141440000000,
+        "inBytes": 1129680,
+        "outBytes": 1209546,
+        "inPkts": 3524,
+        "outPkts": 3501,
+        "totalPkts": 7025,
+        "totalBytes": 2339226
+      },
+      {
+        "time": 1486141500000000,
+        "inBytes": 1197278,
+        "outBytes": 1142360,
+        "inPkts": 3495,
+        "outPkts": 3480,
+        "totalPkts": 6975,
+        "totalBytes": 2339638
+      },
+      {
+        "time": 1486141560000000,
+        "inBytes": 1201980,
+        "outBytes": 1206584,
+        "inPkts": 3586,
+        "outPkts": 3576,
+        "totalPkts": 7162,
+        "totalBytes": 2408564
+      },
+      {
+        "time": 1486141620000000,
+        "inBytes": 1155338,
+        "outBytes": 1223906,
+        "inPkts": 3561,
+        "outPkts": 3541,
+        "totalPkts": 7102,
+        "totalBytes": 2379244
+      },
+      {
+        "time": 1486141680000000,
+        "inBytes": 1221362,
+        "outBytes": 1208102,
+        "inPkts": 3625,
+        "outPkts": 3615,
+        "totalPkts": 7240,
+        "totalBytes": 2429464
+      },
+      {
+        "time": 1486141740000000,
+        "inBytes": 1219708,
+        "outBytes": 1171370,
+        "inPkts": 3574,
+        "outPkts": 3573,
+        "totalPkts": 7147,
+        "totalBytes": 2391078
+      },
+      {
+        "time": 1486141800000000,
+        "inBytes": 1243016,
+        "outBytes": 1201912,
+        "inPkts": 3672,
+        "outPkts": 3660,
+        "totalPkts": 7332,
+        "totalBytes": 2444928
+      },
+      {
+        "time": 1486141860000000,
+        "inBytes": 1194908,
+        "outBytes": 1221712,
+        "inPkts": 3606,
+        "outPkts": 3592,
+        "totalPkts": 7198,
+        "totalBytes": 2416620
+      },
+      {
+        "time": 1486141920000000,
+        "inBytes": 1177876,
+        "outBytes": 1233624,
+        "inPkts": 3562,
+        "outPkts": 3564,
+        "totalPkts": 7126,
+        "totalBytes": 2411500
+      },
+      {
+        "time": 1486141980000000,
+        "inBytes": 1206222,
+        "outBytes": 1159230,
+        "inPkts": 3599,
+        "outPkts": 3587,
+        "totalPkts": 7186,
+        "totalBytes": 2365452
+      },
+      {
+        "time": 1486142040000000,
+        "inBytes": 1221480,
+        "outBytes": 1171274,
+        "inPkts": 3596,
+        "outPkts": 3585,
+        "totalPkts": 7181,
+        "totalBytes": 2392754
+      },
+      {
+        "time": 1486142100000000,
+        "inBytes": 1172004,
+        "outBytes": 1176538,
+        "inPkts": 3542,
+        "outPkts": 3533,
+        "totalPkts": 7075,
+        "totalBytes": 2348542
+      },
+      {
+        "time": 1486142160000000,
+        "inBytes": 1173096,
+        "outBytes": 1176690,
+        "inPkts": 3480,
+        "outPkts": 3481,
+        "totalPkts": 6961,
+        "totalBytes": 2349786
+      },
+      {
+        "time": 1486142220000000,
+        "inBytes": 1200022,
+        "outBytes": 1187204,
+        "inPkts": 3571,
+        "outPkts": 3546,
+        "totalPkts": 7117,
+        "totalBytes": 2387226
+      },
+      {
+        "time": 1486142280000000,
+        "inBytes": 1190842,
+        "outBytes": 1197276,
+        "inPkts": 3553,
+        "outPkts": 3530,
+        "totalPkts": 7083,
+        "totalBytes": 2388118
+      },
+      {
+        "time": 1486142340000000,
+        "inBytes": 1192370,
+        "outBytes": 1164846,
+        "inPkts": 3533,
+        "outPkts": 3515,
+        "totalPkts": 7048,
+        "totalBytes": 2357216
+      },
+      {
+        "time": 1486142400000000,
+        "inBytes": 1184934,
+        "outBytes": 1133456,
+        "inPkts": 3447,
+        "outPkts": 3424,
+        "totalPkts": 6871,
+        "totalBytes": 2318390
+      },
+      {
+        "time": 1486142460000000,
+        "inBytes": 1220584,
+        "outBytes": 1212926,
+        "inPkts": 3592,
+        "outPkts": 3567,
+        "totalPkts": 7159,
+        "totalBytes": 2433510
+      },
+      {
+        "time": 1486142520000000,
+        "inBytes": 1190028,
+        "outBytes": 1207646,
+        "inPkts": 3630,
+        "outPkts": 3607,
+        "totalPkts": 7237,
+        "totalBytes": 2397674
+      },
+      {
+        "time": 1486142580000000,
+        "inBytes": 1221766,
+        "outBytes": 1210316,
+        "inPkts": 3627,
+        "outPkts": 3610,
+        "totalPkts": 7237,
+        "totalBytes": 2432082
+      },
+      {
+        "time": 1486142640000000,
+        "inBytes": 1230508,
+        "outBytes": 1177966,
+        "inPkts": 3570,
+        "outPkts": 3555,
+        "totalPkts": 7125,
+        "totalBytes": 2408474
+      },
+      {
+        "time": 1486142700000000,
+        "inBytes": 1152282,
+        "outBytes": 1230224,
+        "inPkts": 3561,
+        "outPkts": 3552,
+        "totalPkts": 7113,
+        "totalBytes": 2382506
+      },
+      {
+        "time": 1486142760000000,
+        "inBytes": 1172798,
+        "outBytes": 1194314,
+        "inPkts": 3527,
+        "outPkts": 3521,
+        "totalPkts": 7048,
+        "totalBytes": 2367112
+      },
+      {
+        "time": 1486142820000000,
+        "inBytes": 1198954,
+        "outBytes": 1159010,
+        "inPkts": 3485,
+        "outPkts": 3465,
+        "totalPkts": 6950,
+        "totalBytes": 2357964
+      },
+      {
+        "time": 1486142880000000,
+        "inBytes": 1216498,
+        "outBytes": 1227134,
+        "inPkts": 3613,
+        "outPkts": 3575,
+        "totalPkts": 7188,
+        "totalBytes": 2443632
+      },
+      {
+        "time": 1486142940000000,
+        "inBytes": 1218200,
+        "outBytes": 1179328,
+        "inPkts": 3576,
+        "outPkts": 3552,
+        "totalPkts": 7128,
+        "totalBytes": 2397528
+      },
+      {
+        "time": 1486143000000000,
+        "inBytes": 1176240,
+        "outBytes": 1221726,
+        "inPkts": 3576,
+        "outPkts": 3547,
+        "totalPkts": 7123,
+        "totalBytes": 2397966
+      },
+      {
+        "time": 1486143060000000,
+        "inBytes": 1218748,
+        "outBytes": 1205514,
+        "inPkts": 3570,
+        "outPkts": 3541,
+        "totalPkts": 7111,
+        "totalBytes": 2424262
+      },
+      {
+        "time": 1486143120000000,
+        "inBytes": 1160682,
+        "outBytes": 1187988,
+        "inPkts": 3549,
+        "outPkts": 3522,
+        "totalPkts": 7071,
+        "totalBytes": 2348670
+      },
+      {
+        "time": 1486143180000000,
+        "inBytes": 1225586,
+        "outBytes": 1192174,
+        "inPkts": 3617,
+        "outPkts": 3583,
+        "totalPkts": 7200,
+        "totalBytes": 2417760
+      },
+      {
+        "time": 1486143240000000,
+        "inBytes": 1216036,
+        "outBytes": 1223022,
+        "inPkts": 3630,
+        "outPkts": 3587,
+        "totalPkts": 7217,
+        "totalBytes": 2439058
+      },
+      {
+        "time": 1486143300000000,
+        "inBytes": 1195570,
+        "outBytes": 1192804,
+        "inPkts": 3529,
+        "outPkts": 3490,
+        "totalPkts": 7019,
+        "totalBytes": 2388374
+      },
+      {
+        "time": 1486143360000000,
+        "inBytes": 1199170,
+        "outBytes": 1211954,
+        "inPkts": 3617,
+        "outPkts": 3577,
+        "totalPkts": 7194,
+        "totalBytes": 2411124
+      },
+      {
+        "time": 1486143420000000,
+        "inBytes": 1218370,
+        "outBytes": 1169356,
+        "inPkts": 3493,
+        "outPkts": 3450,
+        "totalPkts": 6943,
+        "totalBytes": 2387726
+      },
+      {
+        "time": 1486143480000000,
+        "inBytes": 1222558,
+        "outBytes": 1231050,
+        "inPkts": 3651,
+        "outPkts": 3601,
+        "totalPkts": 7252,
+        "totalBytes": 2453608
+      },
+      {
+        "time": 1486143540000000,
+        "inBytes": 1228282,
+        "outBytes": 1258018,
+        "inPkts": 3673,
+        "outPkts": 3629,
+        "totalPkts": 7302,
+        "totalBytes": 2486300
+      },
+      {
+        "time": 1486143600000000,
+        "inBytes": 1169976,
+        "outBytes": 1220994,
+        "inPkts": 3568,
+        "outPkts": 3533,
+        "totalPkts": 7101,
+        "totalBytes": 2390970
+      },
+      {
+        "time": 1486143660000000,
+        "inBytes": 1207972,
+        "outBytes": 1222428,
+        "inPkts": 3582,
+        "outPkts": 3546,
+        "totalPkts": 7128,
+        "totalBytes": 2430400
+      },
+      {
+        "time": 1486143720000000,
+        "inBytes": 1191452,
+        "outBytes": 1190522,
+        "inPkts": 3582,
+        "outPkts": 3549,
+        "totalPkts": 7131,
+        "totalBytes": 2381974
+      },
+      {
+        "time": 1486143780000000,
+        "inBytes": 1225382,
+        "outBytes": 1203078,
+        "inPkts": 3603,
+        "outPkts": 3559,
+        "totalPkts": 7162,
+        "totalBytes": 2428460
+      },
+      {
+        "time": 1486143840000000,
+        "inBytes": 1207670,
+        "outBytes": 1191088,
+        "inPkts": 3619,
+        "outPkts": 3584,
+        "totalPkts": 7203,
+        "totalBytes": 2398758
+      },
+      {
+        "time": 1486143900000000,
+        "inBytes": 1256288,
+        "outBytes": 1177924,
+        "inPkts": 3560,
+        "outPkts": 3530,
+        "totalPkts": 7090,
+        "totalBytes": 2434212
+      },
+      {
+        "time": 1486143960000000,
+        "inBytes": 1156370,
+        "outBytes": 1208270,
+        "inPkts": 3529,
+        "outPkts": 3491,
+        "totalPkts": 7020,
+        "totalBytes": 2364640
+      },
+      {
+        "time": 1486144020000000,
+        "inBytes": 1182214,
+        "outBytes": 1151378,
+        "inPkts": 3415,
+        "outPkts": 3385,
+        "totalPkts": 6800,
+        "totalBytes": 2333592
+      },
+      {
+        "time": 1486144080000000,
+        "inBytes": 1239170,
+        "outBytes": 1215516,
+        "inPkts": 3629,
+        "outPkts": 3578,
+        "totalPkts": 7207,
+        "totalBytes": 2454686
+      },
+      {
+        "time": 1486144140000000,
+        "inBytes": 1201984,
+        "outBytes": 1183396,
+        "inPkts": 3584,
+        "outPkts": 3538,
+        "totalPkts": 7122,
+        "totalBytes": 2385380
+      },
+      {
+        "time": 1486144200000000,
+        "inBytes": 1203962,
+        "outBytes": 1178594,
+        "inPkts": 3529,
+        "outPkts": 3473,
+        "totalPkts": 7002,
+        "totalBytes": 2382556
+      },
+      {
+        "time": 1486144260000000,
+        "inBytes": 1159150,
+        "outBytes": 1170014,
+        "inPkts": 3535,
+        "outPkts": 3491,
+        "totalPkts": 7026,
+        "totalBytes": 2329164
+      },
+      {
+        "time": 1486144320000000,
+        "inBytes": 1198892,
+        "outBytes": 1225042,
+        "inPkts": 3598,
+        "outPkts": 3541,
+        "totalPkts": 7139,
+        "totalBytes": 2423934
+      },
+      {
+        "time": 1486144380000000,
+        "inBytes": 1236628,
+        "outBytes": 1205946,
+        "inPkts": 3622,
+        "outPkts": 3581,
+        "totalPkts": 7203,
+        "totalBytes": 2442574
+      },
+      {
+        "time": 1486144440000000,
+        "inBytes": 1166744,
+        "outBytes": 1189220,
+        "inPkts": 3532,
+        "outPkts": 3494,
+        "totalPkts": 7026,
+        "totalBytes": 2355964
+      },
+      {
+        "time": 1486144500000000,
+        "inBytes": 1178224,
+        "outBytes": 1216752,
+        "inPkts": 3536,
+        "outPkts": 3496,
+        "totalPkts": 7032,
+        "totalBytes": 2394976
+      },
+      {
+        "time": 1486144560000000,
+        "inBytes": 1193860,
+        "outBytes": 1225072,
+        "inPkts": 3558,
+        "outPkts": 3532,
+        "totalPkts": 7090,
+        "totalBytes": 2418932
+      },
+      {
+        "time": 1486144620000000,
+        "inBytes": 1221890,
+        "outBytes": 1201942,
+        "inPkts": 3573,
+        "outPkts": 3543,
+        "totalPkts": 7116,
+        "totalBytes": 2423832
+      },
+      {
+        "time": 1486144680000000,
+        "inBytes": 1226740,
+        "outBytes": 1243942,
+        "inPkts": 3670,
+        "outPkts": 3627,
+        "totalPkts": 7297,
+        "totalBytes": 2470682
+      },
+      {
+        "time": 1486144740000000,
+        "inBytes": 1186638,
+        "outBytes": 1228698,
+        "inPkts": 3535,
+        "outPkts": 3509,
+        "totalPkts": 7044,
+        "totalBytes": 2415336
+      },
+      {
+        "time": 1486144800000000,
+        "inBytes": 1197554,
+        "outBytes": 1183172,
+        "inPkts": 3549,
+        "outPkts": 3514,
+        "totalPkts": 7063,
+        "totalBytes": 2380726
+      },
+      {
+        "time": 1486144860000000,
+        "inBytes": 1143550,
+        "outBytes": 1183342,
+        "inPkts": 3495,
+        "outPkts": 3459,
+        "totalPkts": 6954,
+        "totalBytes": 2326892
+      },
+      {
+        "time": 1486144920000000,
+        "inBytes": 1218884,
+        "outBytes": 1191754,
+        "inPkts": 3542,
+        "outPkts": 3509,
+        "totalPkts": 7051,
+        "totalBytes": 2410638
+      },
+      {
+        "time": 1486144980000000,
+        "inBytes": 1252700,
+        "outBytes": 1178326,
+        "inPkts": 3582,
+        "outPkts": 3531,
+        "totalPkts": 7113,
+        "totalBytes": 2431026
+      },
+      {
+        "time": 1486145040000000,
+        "inBytes": 1172032,
+        "outBytes": 1177074,
+        "inPkts": 3568,
+        "outPkts": 3557,
+        "totalPkts": 7125,
+        "totalBytes": 2349106
+      },
+      {
+        "time": 1486145100000000,
+        "inBytes": 1172272,
+        "outBytes": 1185460,
+        "inPkts": 3504,
+        "outPkts": 3478,
+        "totalPkts": 6982,
+        "totalBytes": 2357732
+      },
+      {
+        "time": 1486145160000000,
+        "inBytes": 1167338,
+        "outBytes": 1202792,
+        "inPkts": 3493,
+        "outPkts": 3480,
+        "totalPkts": 6973,
+        "totalBytes": 2370130
+      },
+      {
+        "time": 1486145220000000,
+        "inBytes": 1221002,
+        "outBytes": 1197900,
+        "inPkts": 3525,
+        "outPkts": 3506,
+        "totalPkts": 7031,
+        "totalBytes": 2418902
+      },
+      {
+        "time": 1486145280000000,
+        "inBytes": 1221990,
+        "outBytes": 1172212,
+        "inPkts": 3563,
+        "outPkts": 3526,
+        "totalPkts": 7089,
+        "totalBytes": 2394202
+      },
+      {
+        "time": 1486145340000000,
+        "inBytes": 1200170,
+        "outBytes": 1195812,
+        "inPkts": 3621,
+        "outPkts": 3610,
+        "totalPkts": 7231,
+        "totalBytes": 2395982
+      },
+      {
+        "time": 1486145400000000,
+        "inBytes": 1210058,
+        "outBytes": 1188428,
+        "inPkts": 3513,
+        "outPkts": 3494,
+        "totalPkts": 7007,
+        "totalBytes": 2398486
+      },
+      {
+        "time": 1486145460000000,
+        "inBytes": 1183686,
+        "outBytes": 1222890,
+        "inPkts": 3551,
+        "outPkts": 3521,
+        "totalPkts": 7072,
+        "totalBytes": 2406576
+      },
+      {
+        "time": 1486145520000000,
+        "inBytes": 1199160,
+        "outBytes": 1163278,
+        "inPkts": 3552,
+        "outPkts": 3527,
+        "totalPkts": 7079,
+        "totalBytes": 2362438
+      },
+      {
+        "time": 1486145580000000,
+        "inBytes": 1199194,
+        "outBytes": 1209936,
+        "inPkts": 3553,
+        "outPkts": 3520,
+        "totalPkts": 7073,
+        "totalBytes": 2409130
+      },
+      {
+        "time": 1486145640000000,
+        "inBytes": 1170104,
+        "outBytes": 1179598,
+        "inPkts": 3512,
+        "outPkts": 3475,
+        "totalPkts": 6987,
+        "totalBytes": 2349702
+      },
+      {
+        "time": 1486145700000000,
+        "inBytes": 1170130,
+        "outBytes": 1200492,
+        "inPkts": 3549,
+        "outPkts": 3506,
+        "totalPkts": 7055,
+        "totalBytes": 2370622
+      },
+      {
+        "time": 1486145760000000,
+        "inBytes": 1184040,
+        "outBytes": 1186296,
+        "inPkts": 3508,
+        "outPkts": 3476,
+        "totalPkts": 6984,
+        "totalBytes": 2370336
+      },
+      {
+        "time": 1486145820000000,
+        "inBytes": 1208378,
+        "outBytes": 1219292,
+        "inPkts": 3565,
+        "outPkts": 3526,
+        "totalPkts": 7091,
+        "totalBytes": 2427670
+      },
+      {
+        "time": 1486145880000000,
+        "inBytes": 1210392,
+        "outBytes": 1200192,
+        "inPkts": 3568,
+        "outPkts": 3520,
+        "totalPkts": 7088,
+        "totalBytes": 2410584
+      },
+      {
+        "time": 1486145940000000,
+        "inBytes": 1191918,
+        "outBytes": 1203806,
+        "inPkts": 3519,
+        "outPkts": 3479,
+        "totalPkts": 6998,
+        "totalBytes": 2395724
+      },
+      {
+        "time": 1486146000000000,
+        "inBytes": 1198822,
+        "outBytes": 1127060,
+        "inPkts": 3499,
+        "outPkts": 3458,
+        "totalPkts": 6957,
+        "totalBytes": 2325882
+      },
+      {
+        "time": 1486146060000000,
+        "inBytes": 1201532,
+        "outBytes": 1229290,
+        "inPkts": 3618,
+        "outPkts": 3573,
+        "totalPkts": 7191,
+        "totalBytes": 2430822
+      },
+      {
+        "time": 1486146120000000,
+        "inBytes": 1184446,
+        "outBytes": 1232006,
+        "inPkts": 3551,
+        "outPkts": 3503,
+        "totalPkts": 7054,
+        "totalBytes": 2416452
+      },
+      {
+        "time": 1486146180000000,
+        "inBytes": 1188316,
+        "outBytes": 1196744,
+        "inPkts": 3574,
+        "outPkts": 3536,
+        "totalPkts": 7110,
+        "totalBytes": 2385060
+      },
+      {
+        "time": 1486146240000000,
+        "inBytes": 1228376,
+        "outBytes": 1187714,
+        "inPkts": 3572,
+        "outPkts": 3549,
+        "totalPkts": 7121,
+        "totalBytes": 2416090
+      },
+      {
+        "time": 1486146300000000,
+        "inBytes": 1189396,
+        "outBytes": 1197862,
+        "inPkts": 3514,
+        "outPkts": 3487,
+        "totalPkts": 7001,
+        "totalBytes": 2387258
+      },
+      {
+        "time": 1486146360000000,
+        "inBytes": 1193302,
+        "outBytes": 1179244,
+        "inPkts": 3523,
+        "outPkts": 3498,
+        "totalPkts": 7021,
+        "totalBytes": 2372546
+      },
+      {
+        "time": 1486146420000000,
+        "inBytes": 1200606,
+        "outBytes": 1134992,
+        "inPkts": 3495,
+        "outPkts": 3472,
+        "totalPkts": 6967,
+        "totalBytes": 2335598
+      },
+      {
+        "time": 1486146480000000,
+        "inBytes": 1217852,
+        "outBytes": 1186738,
+        "inPkts": 3574,
+        "outPkts": 3553,
+        "totalPkts": 7127,
+        "totalBytes": 2404590
+      },
+      {
+        "time": 1486146540000000,
+        "inBytes": 1193520,
+        "outBytes": 1231832,
+        "inPkts": 3584,
+        "outPkts": 3560,
+        "totalPkts": 7144,
+        "totalBytes": 2425352
+      },
+      {
+        "time": 1486146600000000,
+        "inBytes": 1187514,
+        "outBytes": 1252538,
+        "inPkts": 3561,
+        "outPkts": 3537,
+        "totalPkts": 7098,
+        "totalBytes": 2440052
+      },
+      {
+        "time": 1486146660000000,
+        "inBytes": 1204878,
+        "outBytes": 1223948,
+        "inPkts": 3583,
+        "outPkts": 3546,
+        "totalPkts": 7129,
+        "totalBytes": 2428826
+      },
+      {
+        "time": 1486146720000000,
+        "inBytes": 1237752,
+        "outBytes": 1174312,
+        "inPkts": 3532,
+        "outPkts": 3508,
+        "totalPkts": 7040,
+        "totalBytes": 2412064
+      },
+      {
+        "time": 1486146780000000,
+        "inBytes": 1207858,
+        "outBytes": 1212748,
+        "inPkts": 3573,
+        "outPkts": 3538,
+        "totalPkts": 7111,
+        "totalBytes": 2420606
+      },
+      {
+        "time": 1486146840000000,
+        "inBytes": 1170544,
+        "outBytes": 1190054,
+        "inPkts": 3508,
+        "outPkts": 3483,
+        "totalPkts": 6991,
+        "totalBytes": 2360598
+      },
+      {
+        "time": 1486146900000000,
+        "inBytes": 1193528,
+        "outBytes": 1190774,
+        "inPkts": 3548,
+        "outPkts": 3487,
+        "totalPkts": 7035,
+        "totalBytes": 2384302
+      },
+      {
+        "time": 1486146960000000,
+        "inBytes": 1267558,
+        "outBytes": 1167876,
+        "inPkts": 3571,
+        "outPkts": 3538,
+        "totalPkts": 7109,
+        "totalBytes": 2435434
+      },
+      {
+        "time": 1486147020000000,
+        "inBytes": 607016,
+        "outBytes": 594196,
+        "inPkts": 1800,
+        "outPkts": 1790,
+        "totalPkts": 3590,
+        "totalBytes": 1201212
+      }
+    ],
+    "value": {
+      "UveVirtualNetworkAgent": {
+        "udp_sport_bitmap": [
+          "1",
+          "0",
+          "0",
+          "0",
+          "4294967295",
+          "4294967295",
+          "4294963199",
+          "32767"
+        ],
+        "mirror_acl": null,
+        "vrf_stats_list": [
+          {
+            "offload_packet_counts": {
+              "gro": 0
+            },
+            "unknown_unicast_floods": 0,
+            "arp_packet_counts": {
+              "from_vm_interface": {
+                "stats": {
+                  "floods": 0,
+                  "proxies": 170,
+                  "stitches": 0
+                }
+              },
+              "from_physical_interface": {
+                "stats": {
+                  "floods": 0,
+                  "proxies": 0,
+                  "stitches": 0
+                }
+              }
+            },
+            "name": "default-domain:admin:backend:backend",
+            "nh_packet_counts": {
+              "discards": 0,
+              "local_vm_l3_forwards": 0,
+              "resolves": 0,
+              "local_vm_l2_forwards": 0,
+              "l3_receives": 0,
+              "l2_receives": 0,
+              "comp_nh_stats": {
+                "edge_replication_forwards": 0,
+                "source_replication_forwards": 0,
+                "local_vm_l3_forwards": 0,
+                "total_multicast_forwards": 0
+              },
+              "ecmp_forwards": 0,
+              "vrf_translates": 0,
+              "tunnel_nh_stats": {
+                "vxlan_encaps": 0,
+                "mpls_over_udp_encaps": 0,
+                "udp_encaps": 0,
+                "mpls_over_gre_encaps": 0
+              }
+            },
+            "diag_packet_count": 0
+          }
+        ],
+        "total_acl_rules": 4,
+        "in_bandwidth_usage": 172893,
+        "vn_stats": [
+          {
+            "in_bytes": 0,
+            "other_vn": "__UNKNOWN__",
+            "out_bytes": 0,
+            "out_tpkts": 0,
+            "in_tpkts": 0,
+            "vrouter": "a7s12"
+          },
+          {
+            "in_bytes": 0,
+            "other_vn": "default-domain:admin:backend",
+            "out_bytes": 0,
+            "out_tpkts": 0,
+            "in_tpkts": 0,
+            "vrouter": "a7s12"
+          },
+          {
+            "in_bytes": 626740,
+            "other_vn": "default-domain:admin:frontend",
+            "out_bytes": 583326,
+            "out_tpkts": 1791,
+            "in_tpkts": 1802,
+            "vrouter": "a7s12"
+          },
+          {
+            "in_bytes": 0,
+            "other_vn": "default-domain:default-project:ip-fabric",
+            "out_bytes": 0,
+            "out_tpkts": 0,
+            "in_tpkts": 0,
+            "vrouter": "a7s12"
+          }
+        ],
+        "in_stats": [
+          {
+            "bytes": 24864,
+            "other_vn": "__UNKNOWN__",
+            "tpkts": 338
+          },
+          {
+            "bytes": 72094,
+            "other_vn": "default-domain:admin:backend",
+            "tpkts": 831
+          },
+          {
+            "bytes": 191883118492,
+            "other_vn": "default-domain:admin:frontend",
+            "tpkts": 572531276
+          },
+          {
+            "bytes": 13780,
+            "other_vn": "default-domain:default-project:ip-fabric",
+            "tpkts": 153
+          }
+        ],
+        "policy_rule_stats": [
+          {
+            "count": 2,
+            "rule": "00000000-0000-0000-0000-000000000001"
+          },
+          {
+            "count": 0,
+            "rule": "00000000-0000-0000-0000-000000000003"
+          },
+          {
+            "count": 0,
+            "rule": "00000000-0000-0000-0000-000000000004"
+          },
+          {
+            "count": 0,
+            "rule": "62bea881-acd9-4f37-ab6e-330080cdef79"
+          }
+        ],
+        "egress_flow_count": 69,
+        "udp_dport_bitmap": [
+          "1",
+          "0",
+          "0",
+          "0",
+          "4294967295",
+          "4294967295",
+          "4294963199",
+          "32767"
+        ],
+        "associated_fip_count": 1,
+        "out_stats": [
+          {
+            "bytes": 0,
+            "other_vn": "__UNKNOWN__",
+            "tpkts": 0
+          },
+          {
+            "bytes": 72094,
+            "other_vn": "default-domain:admin:backend",
+            "tpkts": 831
+          },
+          {
+            "bytes": 191876624446,
+            "other_vn": "default-domain:admin:frontend",
+            "tpkts": 572380845
+          },
+          {
+            "bytes": 10959,
+            "other_vn": "default-domain:default-project:ip-fabric",
+            "tpkts": 145
+          }
+        ],
+        "virtualmachine_list": [
+          "a14fa2f3-6240-41a7-8dd1-d72018a1b1db"
+        ],
+        "tcp_sport_bitmap": [
+          "2147483649",
+          "8",
+          "0",
+          "0",
+          "27296256",
+          "100702592",
+          "3423765476",
+          "24"
+        ],
+        "interface_list": [
+          "default-domain:admin:cdbc2eb3-b2e1-4a27-b9fc-eda692f2ea06"
+        ],
+        "acl": "default-domain:admin:backend:backend",
+        "tcp_dport_bitmap": [
+          "1",
+          "8",
+          "0",
+          "0",
+          "27296256",
+          "100702592",
+          "3423765476",
+          "24"
+        ],
+        "ingress_flow_count": 69,
+        "out_bandwidth_usage": 160917
+      },
+      "UveVirtualNetworkConfig": {
+        "total_acl_rules": 4,
+        "routing_instance_list": [
+          "default-domain:admin:backend:backend"
+        ],
+        "connected_networks": [
+          "default-domain:admin:frontend"
+        ]
+      }
+    }
+  },
+  {
+    "name": "default-domain:admin:frontend",
+    "SUM(vn_stats.in_bytes)": 72573756,
+    "SUM(vn_stats.in_tpkts)": 218754,
+    "SUM(vn_stats.out_bytes)": 72712400,
+    "SUM(vn_stats.out_tpkts)": 220856,
+    "start_time": "now-120m",
+    "end_time": "now",
+    "timeGran_microsecs": 60000000,
+    "flow-series": [
+      {
+        "time": 1486140180000000,
+        "inBytes": 1227212,
+        "outBytes": 1164966,
+        "inPkts": 3638,
+        "outPkts": 3631,
+        "totalPkts": 7269,
+        "totalBytes": 2392178
+      },
+      {
+        "time": 1486140240000000,
+        "inBytes": 1201712,
+        "outBytes": 1211538,
+        "inPkts": 3692,
+        "outPkts": 3669,
+        "totalPkts": 7361,
+        "totalBytes": 2413250
+      },
+      {
+        "time": 1486140300000000,
+        "inBytes": 1207670,
+        "outBytes": 1222246,
+        "inPkts": 3655,
+        "outPkts": 3643,
+        "totalPkts": 7298,
+        "totalBytes": 2429916
+      },
+      {
+        "time": 1486140360000000,
+        "inBytes": 1188628,
+        "outBytes": 1169602,
+        "inPkts": 3594,
+        "outPkts": 3601,
+        "totalPkts": 7195,
+        "totalBytes": 2358230
+      },
+      {
+        "time": 1486140420000000,
+        "inBytes": 1211716,
+        "outBytes": 1220132,
+        "inPkts": 3710,
+        "outPkts": 3726,
+        "totalPkts": 7436,
+        "totalBytes": 2431848
+      },
+      {
+        "time": 1486140480000000,
+        "inBytes": 1234910,
+        "outBytes": 1206006,
+        "inPkts": 3707,
+        "outPkts": 3699,
+        "totalPkts": 7406,
+        "totalBytes": 2440916
+      },
+      {
+        "time": 1486140540000000,
+        "inBytes": 1227060,
+        "outBytes": 1261858,
+        "inPkts": 3782,
+        "outPkts": 3785,
+        "totalPkts": 7567,
+        "totalBytes": 2488918
+      },
+      {
+        "time": 1486140600000000,
+        "inBytes": 1183186,
+        "outBytes": 1187152,
+        "inPkts": 3601,
+        "outPkts": 3608,
+        "totalPkts": 7209,
+        "totalBytes": 2370338
+      },
+      {
+        "time": 1486140660000000,
+        "inBytes": 1243724,
+        "outBytes": 1213392,
+        "inPkts": 3710,
+        "outPkts": 3724,
+        "totalPkts": 7434,
+        "totalBytes": 2457116
+      },
+      {
+        "time": 1486140720000000,
+        "inBytes": 1243288,
+        "outBytes": 1202068,
+        "inPkts": 3756,
+        "outPkts": 3746,
+        "totalPkts": 7502,
+        "totalBytes": 2445356
+      },
+      {
+        "time": 1486140780000000,
+        "inBytes": 1197154,
+        "outBytes": 1245312,
+        "inPkts": 3677,
+        "outPkts": 3676,
+        "totalPkts": 7353,
+        "totalBytes": 2442466
+      },
+      {
+        "time": 1486140840000000,
+        "inBytes": 1244776,
+        "outBytes": 1214574,
+        "inPkts": 3680,
+        "outPkts": 3675,
+        "totalPkts": 7355,
+        "totalBytes": 2459350
+      },
+      {
+        "time": 1486140900000000,
+        "inBytes": 1171290,
+        "outBytes": 1226914,
+        "inPkts": 3685,
+        "outPkts": 3677,
+        "totalPkts": 7362,
+        "totalBytes": 2398204
+      },
+      {
+        "time": 1486140960000000,
+        "inBytes": 1224268,
+        "outBytes": 1171252,
+        "inPkts": 3650,
+        "outPkts": 3646,
+        "totalPkts": 7296,
+        "totalBytes": 2395520
+      },
+      {
+        "time": 1486141020000000,
+        "inBytes": 1206098,
+        "outBytes": 1194650,
+        "inPkts": 3681,
+        "outPkts": 3705,
+        "totalPkts": 7386,
+        "totalBytes": 2400748
+      },
+      {
+        "time": 1486141080000000,
+        "inBytes": 1179918,
+        "outBytes": 1183994,
+        "inPkts": 3667,
+        "outPkts": 3689,
+        "totalPkts": 7356,
+        "totalBytes": 2363912
+      },
+      {
+        "time": 1486141140000000,
+        "inBytes": 1214132,
+        "outBytes": 1208744,
+        "inPkts": 3650,
+        "outPkts": 3664,
+        "totalPkts": 7314,
+        "totalBytes": 2422876
+      },
+      {
+        "time": 1486141200000000,
+        "inBytes": 1211458,
+        "outBytes": 1258834,
+        "inPkts": 3697,
+        "outPkts": 3713,
+        "totalPkts": 7410,
+        "totalBytes": 2470292
+      },
+      {
+        "time": 1486141260000000,
+        "inBytes": 1201072,
+        "outBytes": 1183516,
+        "inPkts": 3644,
+        "outPkts": 3646,
+        "totalPkts": 7290,
+        "totalBytes": 2384588
+      },
+      {
+        "time": 1486141320000000,
+        "inBytes": 1218528,
+        "outBytes": 1219766,
+        "inPkts": 3700,
+        "outPkts": 3707,
+        "totalPkts": 7407,
+        "totalBytes": 2438294
+      },
+      {
+        "time": 1486141380000000,
+        "inBytes": 1235898,
+        "outBytes": 1192028,
+        "inPkts": 3681,
+        "outPkts": 3702,
+        "totalPkts": 7383,
+        "totalBytes": 2427926
+      },
+      {
+        "time": 1486141440000000,
+        "inBytes": 1221306,
+        "outBytes": 1141440,
+        "inPkts": 3621,
+        "outPkts": 3644,
+        "totalPkts": 7265,
+        "totalBytes": 2362746
+      },
+      {
+        "time": 1486141500000000,
+        "inBytes": 1154120,
+        "outBytes": 1209038,
+        "inPkts": 3600,
+        "outPkts": 3615,
+        "totalPkts": 7215,
+        "totalBytes": 2363158
+      },
+      {
+        "time": 1486141560000000,
+        "inBytes": 1218344,
+        "outBytes": 1213740,
+        "inPkts": 3696,
+        "outPkts": 3706,
+        "totalPkts": 7402,
+        "totalBytes": 2432084
+      },
+      {
+        "time": 1486141620000000,
+        "inBytes": 1235666,
+        "outBytes": 1167098,
+        "inPkts": 3661,
+        "outPkts": 3681,
+        "totalPkts": 7342,
+        "totalBytes": 2402764
+      },
+      {
+        "time": 1486141680000000,
+        "inBytes": 1219862,
+        "outBytes": 1233122,
+        "inPkts": 3735,
+        "outPkts": 3745,
+        "totalPkts": 7480,
+        "totalBytes": 2452984
+      },
+      {
+        "time": 1486141740000000,
+        "inBytes": 1183130,
+        "outBytes": 1231468,
+        "inPkts": 3693,
+        "outPkts": 3694,
+        "totalPkts": 7387,
+        "totalBytes": 2414598
+      },
+      {
+        "time": 1486141800000000,
+        "inBytes": 1213672,
+        "outBytes": 1254776,
+        "inPkts": 3780,
+        "outPkts": 3792,
+        "totalPkts": 7572,
+        "totalBytes": 2468448
+      },
+      {
+        "time": 1486141860000000,
+        "inBytes": 1233472,
+        "outBytes": 1206668,
+        "inPkts": 3712,
+        "outPkts": 3726,
+        "totalPkts": 7438,
+        "totalBytes": 2440140
+      },
+      {
+        "time": 1486141920000000,
+        "inBytes": 1245384,
+        "outBytes": 1189636,
+        "inPkts": 3684,
+        "outPkts": 3682,
+        "totalPkts": 7366,
+        "totalBytes": 2435020
+      },
+      {
+        "time": 1486141980000000,
+        "inBytes": 1170990,
+        "outBytes": 1217982,
+        "inPkts": 3707,
+        "outPkts": 3719,
+        "totalPkts": 7426,
+        "totalBytes": 2388972
+      },
+      {
+        "time": 1486142040000000,
+        "inBytes": 1183034,
+        "outBytes": 1233240,
+        "inPkts": 3705,
+        "outPkts": 3716,
+        "totalPkts": 7421,
+        "totalBytes": 2416274
+      },
+      {
+        "time": 1486142100000000,
+        "inBytes": 1188298,
+        "outBytes": 1183764,
+        "inPkts": 3653,
+        "outPkts": 3662,
+        "totalPkts": 7315,
+        "totalBytes": 2372062
+      },
+      {
+        "time": 1486142160000000,
+        "inBytes": 1188450,
+        "outBytes": 1184856,
+        "inPkts": 3601,
+        "outPkts": 3600,
+        "totalPkts": 7201,
+        "totalBytes": 2373306
+      },
+      {
+        "time": 1486142220000000,
+        "inBytes": 1198964,
+        "outBytes": 1211782,
+        "inPkts": 3666,
+        "outPkts": 3691,
+        "totalPkts": 7357,
+        "totalBytes": 2410746
+      },
+      {
+        "time": 1486142280000000,
+        "inBytes": 1209036,
+        "outBytes": 1202602,
+        "inPkts": 3650,
+        "outPkts": 3673,
+        "totalPkts": 7323,
+        "totalBytes": 2411638
+      },
+      {
+        "time": 1486142340000000,
+        "inBytes": 1176606,
+        "outBytes": 1204130,
+        "inPkts": 3635,
+        "outPkts": 3653,
+        "totalPkts": 7288,
+        "totalBytes": 2380736
+      },
+      {
+        "time": 1486142400000000,
+        "inBytes": 1145216,
+        "outBytes": 1196694,
+        "inPkts": 3544,
+        "outPkts": 3567,
+        "totalPkts": 7111,
+        "totalBytes": 2341910
+      },
+      {
+        "time": 1486142460000000,
+        "inBytes": 1224686,
+        "outBytes": 1232344,
+        "inPkts": 3687,
+        "outPkts": 3712,
+        "totalPkts": 7399,
+        "totalBytes": 2457030
+      },
+      {
+        "time": 1486142520000000,
+        "inBytes": 1219406,
+        "outBytes": 1201788,
+        "inPkts": 3727,
+        "outPkts": 3750,
+        "totalPkts": 7477,
+        "totalBytes": 2421194
+      },
+      {
+        "time": 1486142580000000,
+        "inBytes": 1222076,
+        "outBytes": 1233526,
+        "inPkts": 3730,
+        "outPkts": 3747,
+        "totalPkts": 7477,
+        "totalBytes": 2455602
+      },
+      {
+        "time": 1486142640000000,
+        "inBytes": 1189726,
+        "outBytes": 1242268,
+        "inPkts": 3675,
+        "outPkts": 3690,
+        "totalPkts": 7365,
+        "totalBytes": 2431994
+      },
+      {
+        "time": 1486142700000000,
+        "inBytes": 1241984,
+        "outBytes": 1164042,
+        "inPkts": 3672,
+        "outPkts": 3681,
+        "totalPkts": 7353,
+        "totalBytes": 2406026
+      },
+      {
+        "time": 1486142760000000,
+        "inBytes": 1206074,
+        "outBytes": 1184558,
+        "inPkts": 3641,
+        "outPkts": 3647,
+        "totalPkts": 7288,
+        "totalBytes": 2390632
+      },
+      {
+        "time": 1486142820000000,
+        "inBytes": 1170770,
+        "outBytes": 1210714,
+        "inPkts": 3585,
+        "outPkts": 3605,
+        "totalPkts": 7190,
+        "totalBytes": 2381484
+      },
+      {
+        "time": 1486142880000000,
+        "inBytes": 1238894,
+        "outBytes": 1228258,
+        "inPkts": 3695,
+        "outPkts": 3733,
+        "totalPkts": 7428,
+        "totalBytes": 2467152
+      },
+      {
+        "time": 1486142940000000,
+        "inBytes": 1191088,
+        "outBytes": 1229960,
+        "inPkts": 3672,
+        "outPkts": 3696,
+        "totalPkts": 7368,
+        "totalBytes": 2421048
+      },
+      {
+        "time": 1486143000000000,
+        "inBytes": 1233486,
+        "outBytes": 1188000,
+        "inPkts": 3667,
+        "outPkts": 3696,
+        "totalPkts": 7363,
+        "totalBytes": 2421486
+      },
+      {
+        "time": 1486143060000000,
+        "inBytes": 1217274,
+        "outBytes": 1230508,
+        "inPkts": 3661,
+        "outPkts": 3690,
+        "totalPkts": 7351,
+        "totalBytes": 2447782
+      },
+      {
+        "time": 1486143120000000,
+        "inBytes": 1199748,
+        "outBytes": 1172442,
+        "inPkts": 3642,
+        "outPkts": 3669,
+        "totalPkts": 7311,
+        "totalBytes": 2372190
+      },
+      {
+        "time": 1486143180000000,
+        "inBytes": 1203934,
+        "outBytes": 1237346,
+        "inPkts": 3703,
+        "outPkts": 3737,
+        "totalPkts": 7440,
+        "totalBytes": 2441280
+      },
+      {
+        "time": 1486143240000000,
+        "inBytes": 1234782,
+        "outBytes": 1227796,
+        "inPkts": 3707,
+        "outPkts": 3750,
+        "totalPkts": 7457,
+        "totalBytes": 2462578
+      },
+      {
+        "time": 1486143300000000,
+        "inBytes": 1204564,
+        "outBytes": 1207330,
+        "inPkts": 3610,
+        "outPkts": 3649,
+        "totalPkts": 7259,
+        "totalBytes": 2411894
+      },
+      {
+        "time": 1486143360000000,
+        "inBytes": 1223714,
+        "outBytes": 1210930,
+        "inPkts": 3697,
+        "outPkts": 3737,
+        "totalPkts": 7434,
+        "totalBytes": 2434644
+      },
+      {
+        "time": 1486143420000000,
+        "inBytes": 1181116,
+        "outBytes": 1230130,
+        "inPkts": 3570,
+        "outPkts": 3613,
+        "totalPkts": 7183,
+        "totalBytes": 2411246
+      },
+      {
+        "time": 1486143480000000,
+        "inBytes": 1242810,
+        "outBytes": 1234318,
+        "inPkts": 3721,
+        "outPkts": 3771,
+        "totalPkts": 7492,
+        "totalBytes": 2477128
+      },
+      {
+        "time": 1486143540000000,
+        "inBytes": 1269778,
+        "outBytes": 1240042,
+        "inPkts": 3749,
+        "outPkts": 3793,
+        "totalPkts": 7542,
+        "totalBytes": 2509820
+      },
+      {
+        "time": 1486143600000000,
+        "inBytes": 1232754,
+        "outBytes": 1181736,
+        "inPkts": 3653,
+        "outPkts": 3688,
+        "totalPkts": 7341,
+        "totalBytes": 2414490
+      },
+      {
+        "time": 1486143660000000,
+        "inBytes": 1234188,
+        "outBytes": 1219732,
+        "inPkts": 3666,
+        "outPkts": 3702,
+        "totalPkts": 7368,
+        "totalBytes": 2453920
+      },
+      {
+        "time": 1486143720000000,
+        "inBytes": 1202282,
+        "outBytes": 1203212,
+        "inPkts": 3669,
+        "outPkts": 3702,
+        "totalPkts": 7371,
+        "totalBytes": 2405494
+      },
+      {
+        "time": 1486143780000000,
+        "inBytes": 1214838,
+        "outBytes": 1237142,
+        "inPkts": 3679,
+        "outPkts": 3723,
+        "totalPkts": 7402,
+        "totalBytes": 2451980
+      },
+      {
+        "time": 1486143840000000,
+        "inBytes": 1202848,
+        "outBytes": 1219430,
+        "inPkts": 3704,
+        "outPkts": 3739,
+        "totalPkts": 7443,
+        "totalBytes": 2422278
+      },
+      {
+        "time": 1486143900000000,
+        "inBytes": 1189684,
+        "outBytes": 1268048,
+        "inPkts": 3650,
+        "outPkts": 3680,
+        "totalPkts": 7330,
+        "totalBytes": 2457732
+      },
+      {
+        "time": 1486143960000000,
+        "inBytes": 1220030,
+        "outBytes": 1168130,
+        "inPkts": 3611,
+        "outPkts": 3649,
+        "totalPkts": 7260,
+        "totalBytes": 2388160
+      },
+      {
+        "time": 1486144020000000,
+        "inBytes": 1163138,
+        "outBytes": 1193974,
+        "inPkts": 3505,
+        "outPkts": 3535,
+        "totalPkts": 7040,
+        "totalBytes": 2357112
+      },
+      {
+        "time": 1486144080000000,
+        "inBytes": 1227276,
+        "outBytes": 1250930,
+        "inPkts": 3698,
+        "outPkts": 3749,
+        "totalPkts": 7447,
+        "totalBytes": 2478206
+      },
+      {
+        "time": 1486144140000000,
+        "inBytes": 1195156,
+        "outBytes": 1213744,
+        "inPkts": 3658,
+        "outPkts": 3704,
+        "totalPkts": 7362,
+        "totalBytes": 2408900
+      },
+      {
+        "time": 1486144200000000,
+        "inBytes": 1190354,
+        "outBytes": 1215722,
+        "inPkts": 3593,
+        "outPkts": 3649,
+        "totalPkts": 7242,
+        "totalBytes": 2406076
+      },
+      {
+        "time": 1486144260000000,
+        "inBytes": 1181774,
+        "outBytes": 1170910,
+        "inPkts": 3611,
+        "outPkts": 3655,
+        "totalPkts": 7266,
+        "totalBytes": 2352684
+      },
+      {
+        "time": 1486144320000000,
+        "inBytes": 1236802,
+        "outBytes": 1210652,
+        "inPkts": 3661,
+        "outPkts": 3718,
+        "totalPkts": 7379,
+        "totalBytes": 2447454
+      },
+      {
+        "time": 1486144380000000,
+        "inBytes": 1217706,
+        "outBytes": 1248388,
+        "inPkts": 3701,
+        "outPkts": 3742,
+        "totalPkts": 7443,
+        "totalBytes": 2466094
+      },
+      {
+        "time": 1486144440000000,
+        "inBytes": 1200980,
+        "outBytes": 1178504,
+        "inPkts": 3614,
+        "outPkts": 3652,
+        "totalPkts": 7266,
+        "totalBytes": 2379484
+      },
+      {
+        "time": 1486144500000000,
+        "inBytes": 1228512,
+        "outBytes": 1189984,
+        "inPkts": 3616,
+        "outPkts": 3656,
+        "totalPkts": 7272,
+        "totalBytes": 2418496
+      },
+      {
+        "time": 1486144560000000,
+        "inBytes": 1236832,
+        "outBytes": 1205620,
+        "inPkts": 3652,
+        "outPkts": 3678,
+        "totalPkts": 7330,
+        "totalBytes": 2442452
+      },
+      {
+        "time": 1486144620000000,
+        "inBytes": 1213702,
+        "outBytes": 1233650,
+        "inPkts": 3663,
+        "outPkts": 3693,
+        "totalPkts": 7356,
+        "totalBytes": 2447352
+      },
+      {
+        "time": 1486144680000000,
+        "inBytes": 1255702,
+        "outBytes": 1238500,
+        "inPkts": 3747,
+        "outPkts": 3790,
+        "totalPkts": 7537,
+        "totalBytes": 2494202
+      },
+      {
+        "time": 1486144740000000,
+        "inBytes": 1240458,
+        "outBytes": 1198398,
+        "inPkts": 3629,
+        "outPkts": 3655,
+        "totalPkts": 7284,
+        "totalBytes": 2438856
+      },
+      {
+        "time": 1486144800000000,
+        "inBytes": 1194932,
+        "outBytes": 1209314,
+        "inPkts": 3634,
+        "outPkts": 3669,
+        "totalPkts": 7303,
+        "totalBytes": 2404246
+      },
+      {
+        "time": 1486144860000000,
+        "inBytes": 1195102,
+        "outBytes": 1155310,
+        "inPkts": 3579,
+        "outPkts": 3615,
+        "totalPkts": 7194,
+        "totalBytes": 2350412
+      },
+      {
+        "time": 1486144920000000,
+        "inBytes": 1203514,
+        "outBytes": 1230644,
+        "inPkts": 3629,
+        "outPkts": 3662,
+        "totalPkts": 7291,
+        "totalBytes": 2434158
+      },
+      {
+        "time": 1486144980000000,
+        "inBytes": 1190086,
+        "outBytes": 1264460,
+        "inPkts": 3651,
+        "outPkts": 3702,
+        "totalPkts": 7353,
+        "totalBytes": 2454546
+      },
+      {
+        "time": 1486145040000000,
+        "inBytes": 1188834,
+        "outBytes": 1183792,
+        "inPkts": 3677,
+        "outPkts": 3688,
+        "totalPkts": 7365,
+        "totalBytes": 2372626
+      },
+      {
+        "time": 1486145100000000,
+        "inBytes": 1197220,
+        "outBytes": 1184032,
+        "inPkts": 3598,
+        "outPkts": 3624,
+        "totalPkts": 7222,
+        "totalBytes": 2381252
+      },
+      {
+        "time": 1486145160000000,
+        "inBytes": 1214552,
+        "outBytes": 1179098,
+        "inPkts": 3600,
+        "outPkts": 3613,
+        "totalPkts": 7213,
+        "totalBytes": 2393650
+      },
+      {
+        "time": 1486145220000000,
+        "inBytes": 1209660,
+        "outBytes": 1232762,
+        "inPkts": 3626,
+        "outPkts": 3645,
+        "totalPkts": 7271,
+        "totalBytes": 2442422
+      },
+      {
+        "time": 1486145280000000,
+        "inBytes": 1183972,
+        "outBytes": 1233750,
+        "inPkts": 3646,
+        "outPkts": 3683,
+        "totalPkts": 7329,
+        "totalBytes": 2417722
+      },
+      {
+        "time": 1486145340000000,
+        "inBytes": 1207572,
+        "outBytes": 1211930,
+        "inPkts": 3730,
+        "outPkts": 3741,
+        "totalPkts": 7471,
+        "totalBytes": 2419502
+      },
+      {
+        "time": 1486145400000000,
+        "inBytes": 1200188,
+        "outBytes": 1221818,
+        "inPkts": 3614,
+        "outPkts": 3633,
+        "totalPkts": 7247,
+        "totalBytes": 2422006
+      },
+      {
+        "time": 1486145460000000,
+        "inBytes": 1234650,
+        "outBytes": 1195446,
+        "inPkts": 3641,
+        "outPkts": 3671,
+        "totalPkts": 7312,
+        "totalBytes": 2430096
+      },
+      {
+        "time": 1486145520000000,
+        "inBytes": 1175038,
+        "outBytes": 1210920,
+        "inPkts": 3647,
+        "outPkts": 3672,
+        "totalPkts": 7319,
+        "totalBytes": 2385958
+      },
+      {
+        "time": 1486145580000000,
+        "inBytes": 1221696,
+        "outBytes": 1210954,
+        "inPkts": 3640,
+        "outPkts": 3673,
+        "totalPkts": 7313,
+        "totalBytes": 2432650
+      },
+      {
+        "time": 1486145640000000,
+        "inBytes": 1191358,
+        "outBytes": 1181864,
+        "inPkts": 3595,
+        "outPkts": 3632,
+        "totalPkts": 7227,
+        "totalBytes": 2373222
+      },
+      {
+        "time": 1486145700000000,
+        "inBytes": 1212252,
+        "outBytes": 1181890,
+        "inPkts": 3626,
+        "outPkts": 3669,
+        "totalPkts": 7295,
+        "totalBytes": 2394142
+      },
+      {
+        "time": 1486145760000000,
+        "inBytes": 1198056,
+        "outBytes": 1195800,
+        "inPkts": 3596,
+        "outPkts": 3628,
+        "totalPkts": 7224,
+        "totalBytes": 2393856
+      },
+      {
+        "time": 1486145820000000,
+        "inBytes": 1231052,
+        "outBytes": 1220138,
+        "inPkts": 3646,
+        "outPkts": 3685,
+        "totalPkts": 7331,
+        "totalBytes": 2451190
+      },
+      {
+        "time": 1486145880000000,
+        "inBytes": 1211952,
+        "outBytes": 1222152,
+        "inPkts": 3640,
+        "outPkts": 3688,
+        "totalPkts": 7328,
+        "totalBytes": 2434104
+      },
+      {
+        "time": 1486145940000000,
+        "inBytes": 1215566,
+        "outBytes": 1203678,
+        "inPkts": 3599,
+        "outPkts": 3639,
+        "totalPkts": 7238,
+        "totalBytes": 2419244
+      },
+      {
+        "time": 1486146000000000,
+        "inBytes": 1138820,
+        "outBytes": 1210582,
+        "inPkts": 3578,
+        "outPkts": 3619,
+        "totalPkts": 7197,
+        "totalBytes": 2349402
+      },
+      {
+        "time": 1486146060000000,
+        "inBytes": 1241050,
+        "outBytes": 1213292,
+        "inPkts": 3693,
+        "outPkts": 3738,
+        "totalPkts": 7431,
+        "totalBytes": 2454342
+      },
+      {
+        "time": 1486146120000000,
+        "inBytes": 1243766,
+        "outBytes": 1196206,
+        "inPkts": 3623,
+        "outPkts": 3671,
+        "totalPkts": 7294,
+        "totalBytes": 2439972
+      },
+      {
+        "time": 1486146180000000,
+        "inBytes": 1208504,
+        "outBytes": 1200076,
+        "inPkts": 3656,
+        "outPkts": 3694,
+        "totalPkts": 7350,
+        "totalBytes": 2408580
+      },
+      {
+        "time": 1486146240000000,
+        "inBytes": 1199474,
+        "outBytes": 1240136,
+        "inPkts": 3669,
+        "outPkts": 3692,
+        "totalPkts": 7361,
+        "totalBytes": 2439610
+      },
+      {
+        "time": 1486146300000000,
+        "inBytes": 1209622,
+        "outBytes": 1201156,
+        "inPkts": 3607,
+        "outPkts": 3634,
+        "totalPkts": 7241,
+        "totalBytes": 2410778
+      },
+      {
+        "time": 1486146360000000,
+        "inBytes": 1191004,
+        "outBytes": 1205062,
+        "inPkts": 3618,
+        "outPkts": 3643,
+        "totalPkts": 7261,
+        "totalBytes": 2396066
+      },
+      {
+        "time": 1486146420000000,
+        "inBytes": 1146752,
+        "outBytes": 1212366,
+        "inPkts": 3592,
+        "outPkts": 3615,
+        "totalPkts": 7207,
+        "totalBytes": 2359118
+      },
+      {
+        "time": 1486146480000000,
+        "inBytes": 1198498,
+        "outBytes": 1229612,
+        "inPkts": 3673,
+        "outPkts": 3694,
+        "totalPkts": 7367,
+        "totalBytes": 2428110
+      },
+      {
+        "time": 1486146540000000,
+        "inBytes": 1243592,
+        "outBytes": 1205280,
+        "inPkts": 3680,
+        "outPkts": 3704,
+        "totalPkts": 7384,
+        "totalBytes": 2448872
+      },
+      {
+        "time": 1486146600000000,
+        "inBytes": 1264298,
+        "outBytes": 1199274,
+        "inPkts": 3657,
+        "outPkts": 3681,
+        "totalPkts": 7338,
+        "totalBytes": 2463572
+      },
+      {
+        "time": 1486146660000000,
+        "inBytes": 1235708,
+        "outBytes": 1216638,
+        "inPkts": 3666,
+        "outPkts": 3703,
+        "totalPkts": 7369,
+        "totalBytes": 2452346
+      },
+      {
+        "time": 1486146720000000,
+        "inBytes": 1186072,
+        "outBytes": 1249512,
+        "inPkts": 3628,
+        "outPkts": 3652,
+        "totalPkts": 7280,
+        "totalBytes": 2435584
+      },
+      {
+        "time": 1486146780000000,
+        "inBytes": 1224508,
+        "outBytes": 1219618,
+        "inPkts": 3658,
+        "outPkts": 3693,
+        "totalPkts": 7351,
+        "totalBytes": 2444126
+      },
+      {
+        "time": 1486146840000000,
+        "inBytes": 1201814,
+        "outBytes": 1182304,
+        "inPkts": 3603,
+        "outPkts": 3628,
+        "totalPkts": 7231,
+        "totalBytes": 2384118
+      },
+      {
+        "time": 1486146900000000,
+        "inBytes": 1202534,
+        "outBytes": 1205288,
+        "inPkts": 3607,
+        "outPkts": 3668,
+        "totalPkts": 7275,
+        "totalBytes": 2407822
+      },
+      {
+        "time": 1486146960000000,
+        "inBytes": 1179636,
+        "outBytes": 1279318,
+        "inPkts": 3658,
+        "outPkts": 3691,
+        "totalPkts": 7349,
+        "totalBytes": 2458954
+      },
+      {
+        "time": 1486147020000000,
+        "inBytes": 1202086,
+        "outBytes": 1243112,
+        "inPkts": 3667,
+        "outPkts": 3704,
+        "totalPkts": 7371,
+        "totalBytes": 2445198
+      },
+      {
+        "time": 1486147080000000,
+        "inBytes": 1186322,
+        "outBytes": 1194626,
+        "inPkts": 3621,
+        "outPkts": 3641,
+        "totalPkts": 7262,
+        "totalBytes": 2380948
+      },
+      {
+        "time": 1486147140000000,
+        "inBytes": 1225124,
+        "outBytes": 1233654,
+        "inPkts": 3678,
+        "outPkts": 3695,
+        "totalPkts": 7373,
+        "totalBytes": 2458778
+      },
+      {
+        "time": 1486147200000000,
+        "inBytes": 1207812,
+        "outBytes": 1206756,
+        "inPkts": 3610,
+        "outPkts": 3642,
+        "totalPkts": 7252,
+        "totalBytes": 2414568
+      },
+      {
+        "time": 1486147260000000,
+        "inBytes": 1186386,
+        "outBytes": 1245016,
+        "inPkts": 3669,
+        "outPkts": 3668,
+        "totalPkts": 7337,
+        "totalBytes": 2431402
+      },
+      {
+        "time": 1486147320000000,
+        "inBytes": 1181604,
+        "outBytes": 1197230,
+        "inPkts": 3606,
+        "outPkts": 3639,
+        "totalPkts": 7245,
+        "totalBytes": 2378834
+      }
+    ],
+    "value": {
+      "UveVirtualNetworkAgent": {
+        "udp_sport_bitmap": [
+          "1",
+          "0",
+          "0",
+          "0",
+          "4294967295",
+          "4294967295",
+          "4294967295",
+          "32767"
+        ],
+        "mirror_acl": null,
+        "vrf_stats_list": [
+          {
+            "offload_packet_counts": {
+              "gro": 0
+            },
+            "unknown_unicast_floods": 0,
+            "arp_packet_counts": {
+              "from_vm_interface": {
+                "stats": {
+                  "floods": 0,
+                  "proxies": 836,
+                  "stitches": 198523
+                }
+              },
+              "from_physical_interface": {
+                "stats": {
+                  "floods": 0,
+                  "proxies": 0,
+                  "stitches": 0
+                }
+              }
+            },
+            "name": "default-domain:admin:frontend:frontend",
+            "nh_packet_counts": {
+              "discards": 0,
+              "local_vm_l3_forwards": 0,
+              "resolves": 0,
+              "local_vm_l2_forwards": 0,
+              "l3_receives": 0,
+              "l2_receives": 0,
+              "comp_nh_stats": {
+                "edge_replication_forwards": 0,
+                "source_replication_forwards": 0,
+                "local_vm_l3_forwards": 0,
+                "total_multicast_forwards": 0
+              },
+              "ecmp_forwards": 0,
+              "vrf_translates": 0,
+              "tunnel_nh_stats": {
+                "vxlan_encaps": 0,
+                "mpls_over_udp_encaps": 0,
+                "udp_encaps": 0,
+                "mpls_over_gre_encaps": 0
+              }
+            },
+            "diag_packet_count": 60
+          }
+        ],
+        "total_acl_rules": 4,
+        "in_bandwidth_usage": 162539,
+        "vn_stats": [
+          {
+            "in_bytes": 0,
+            "other_vn": "__UNKNOWN__",
+            "out_bytes": 0,
+            "out_tpkts": 0,
+            "in_tpkts": 0,
+            "vrouter": "a7s12"
+          },
+          {
+            "in_bytes": 583326,
+            "other_vn": "default-domain:admin:backend",
+            "out_bytes": 626740,
+            "out_tpkts": 1802,
+            "in_tpkts": 1791,
+            "vrouter": "a7s12"
+          },
+          {
+            "in_bytes": 5880,
+            "other_vn": "default-domain:admin:frontend",
+            "out_bytes": 5880,
+            "out_tpkts": 60,
+            "in_tpkts": 60,
+            "vrouter": "a7s12"
+          },
+          {
+            "in_bytes": 0,
+            "other_vn": "default-domain:default-project:ip-fabric",
+            "out_bytes": 0,
+            "out_tpkts": 0,
+            "in_tpkts": 0,
+            "vrouter": "a7s12"
+          }
+        ],
+        "in_stats": [
+          {
+            "bytes": 77494,
+            "other_vn": "__UNKNOWN__",
+            "tpkts": 1052
+          },
+          {
+            "bytes": 191876624446,
+            "other_vn": "default-domain:admin:backend",
+            "tpkts": 572380845
+          },
+          {
+            "bytes": 1319445562,
+            "other_vn": "default-domain:admin:frontend",
+            "tpkts": 13462031
+          },
+          {
+            "bytes": 40152,
+            "other_vn": "default-domain:default-project:ip-fabric",
+            "tpkts": 441
+          }
+        ],
+        "policy_rule_stats": [
+          {
+            "count": 3,
+            "rule": "00000000-0000-0000-0000-000000000001"
+          },
+          {
+            "count": 1,
+            "rule": "00000000-0000-0000-0000-000000000003"
+          },
+          {
+            "count": 0,
+            "rule": "00000000-0000-0000-0000-000000000004"
+          },
+          {
+            "count": 0,
+            "rule": "62bea881-acd9-4f37-ab6e-330080cdef79"
+          }
+        ],
+        "egress_flow_count": 71,
+        "udp_dport_bitmap": [
+          "1",
+          "0",
+          "0",
+          "0",
+          "4294967295",
+          "4294967295",
+          "4294967295",
+          "32767"
+        ],
+        "associated_fip_count": 2,
+        "out_stats": [
+          {
+            "bytes": 0,
+            "other_vn": "__UNKNOWN__",
+            "tpkts": 0
+          },
+          {
+            "bytes": 191883118492,
+            "other_vn": "default-domain:admin:backend",
+            "tpkts": 572531276
+          },
+          {
+            "bytes": 1319445562,
+            "other_vn": "default-domain:admin:frontend",
+            "tpkts": 13462031
+          },
+          {
+            "bytes": 31952,
+            "other_vn": "default-domain:default-project:ip-fabric",
+            "tpkts": 420
+          }
+        ],
+        "virtualmachine_list": [
+          "5199c65e-8b71-4e4c-90cc-58deea9752dd",
+          "c73ed229-bbf2-4e1e-be26-4aee2d1780b3",
+          "faa5b186-5383-4670-b640-ad230fe2100f"
+        ],
+        "tcp_sport_bitmap": [
+          "2147484161",
+          "65544",
+          "0",
+          "0",
+          "136506988",
+          "654350348",
+          "2358411620",
+          "7230"
+        ],
+        "interface_list": [
+          "default-domain:admin:fede15b7-548a-4dac-a7ab-c88749e4dcca",
+          "default-domain:admin:fbf56475-71dc-46dd-bf8e-0f8dc127dc82",
+          "default-domain:admin:08242801-ff6e-44d4-876d-4a001ba21862"
+        ],
+        "acl": "default-domain:admin:frontend:frontend",
+        "tcp_dport_bitmap": [
+          "513",
+          "65544",
+          "0",
+          "0",
+          "136506988",
+          "654350348",
+          "2358411620",
+          "7230"
+        ],
+        "ingress_flow_count": 71,
+        "out_bandwidth_usage": 174515
+      },
+      "UveVirtualNetworkConfig": {
+        "total_acl_rules": 4,
+        "routing_instance_list": [
+          "default-domain:admin:frontend:frontend"
+        ],
+        "connected_networks": [
+          "default-domain:admin:backend"
+        ]
+      }
+    }
+  },
+  {
+    "name": "default-domain:admin:testvn",
+    "SUM(vn_stats.in_bytes)": 0,
+    "SUM(vn_stats.in_tpkts)": 0,
+    "SUM(vn_stats.out_bytes)": 67116,
+    "SUM(vn_stats.out_tpkts)": 799,
+    "start_time": "now-120m",
+    "end_time": "now",
+    "timeGran_microsecs": 60000000,
+    "flow-series": [
+      {
+        "time": 1486140360000000,
+        "inBytes": 0,
+        "outBytes": 504,
+        "inPkts": 0,
+        "outPkts": 6,
+        "totalPkts": 6,
+        "totalBytes": 504
+      },
+      {
+        "time": 1486140420000000,
+        "inBytes": 0,
+        "outBytes": 1176,
+        "inPkts": 0,
+        "outPkts": 14,
+        "totalPkts": 14,
+        "totalBytes": 1176
+      },
+      {
+        "time": 1486140480000000,
+        "inBytes": 0,
+        "outBytes": 1008,
+        "inPkts": 0,
+        "outPkts": 12,
+        "totalPkts": 12,
+        "totalBytes": 1008
+      },
+      {
+        "time": 1486140540000000,
+        "inBytes": 0,
+        "outBytes": 1176,
+        "inPkts": 0,
+        "outPkts": 14,
+        "totalPkts": 14,
+        "totalBytes": 1176
+      },
+      {
+        "time": 1486140600000000,
+        "inBytes": 0,
+        "outBytes": 1176,
+        "inPkts": 0,
+        "outPkts": 14,
+        "totalPkts": 14,
+        "totalBytes": 1176
+      },
+      {
+        "time": 1486140660000000,
+        "inBytes": 0,
+        "outBytes": 1008,
+        "inPkts": 0,
+        "outPkts": 12,
+        "totalPkts": 12,
+        "totalBytes": 1008
+      },
+      {
+        "time": 1486140720000000,
+        "inBytes": 0,
+        "outBytes": 1176,
+        "inPkts": 0,
+        "outPkts": 14,
+        "totalPkts": 14,
+        "totalBytes": 1176
+      },
+      {
+        "time": 1486140780000000,
+        "inBytes": 0,
+        "outBytes": 1176,
+        "inPkts": 0,
+        "outPkts": 14,
+        "totalPkts": 14,
+        "totalBytes": 1176
+      },
+      {
+        "time": 1486140840000000,
+        "inBytes": 0,
+        "outBytes": 1008,
+        "inPkts": 0,
+        "outPkts": 12,
+        "totalPkts": 12,
+        "totalBytes": 1008
+      },
+      {
+        "time": 1486140900000000,
+        "inBytes": 0,
+        "outBytes": 1176,
+        "inPkts": 0,
+        "outPkts": 14,
+        "totalPkts": 14,
+        "totalBytes": 1176
+      },
+      {
+        "time": 1486140960000000,
+        "inBytes": 0,
+        "outBytes": 1176,
+        "inPkts": 0,
+        "outPkts": 14,
+        "totalPkts": 14,
+        "totalBytes": 1176
+      },
+      {
+        "time": 1486141020000000,
+        "inBytes": 0,
+        "outBytes": 1008,
+        "inPkts": 0,
+        "outPkts": 12,
+        "totalPkts": 12,
+        "totalBytes": 1008
+      },
+      {
+        "time": 1486141080000000,
+        "inBytes": 0,
+        "outBytes": 1176,
+        "inPkts": 0,
+        "outPkts": 14,
+        "totalPkts": 14,
+        "totalBytes": 1176
+      },
+      {
+        "time": 1486141140000000,
+        "inBytes": 0,
+        "outBytes": 1176,
+        "inPkts": 0,
+        "outPkts": 14,
+        "totalPkts": 14,
+        "totalBytes": 1176
+      },
+      {
+        "time": 1486141200000000,
+        "inBytes": 0,
+        "outBytes": 1008,
+        "inPkts": 0,
+        "outPkts": 12,
+        "totalPkts": 12,
+        "totalBytes": 1008
+      },
+      {
+        "time": 1486141260000000,
+        "inBytes": 0,
+        "outBytes": 1176,
+        "inPkts": 0,
+        "outPkts": 14,
+        "totalPkts": 14,
+        "totalBytes": 1176
+      },
+      {
+        "time": 1486141320000000,
+        "inBytes": 0,
+        "outBytes": 1176,
+        "inPkts": 0,
+        "outPkts": 14,
+        "totalPkts": 14,
+        "totalBytes": 1176
+      },
+      {
+        "time": 1486141380000000,
+        "inBytes": 0,
+        "outBytes": 1008,
+        "inPkts": 0,
+        "outPkts": 12,
+        "totalPkts": 12,
+        "totalBytes": 1008
+      },
+      {
+        "time": 1486141440000000,
+        "inBytes": 0,
+        "outBytes": 1176,
+        "inPkts": 0,
+        "outPkts": 14,
+        "totalPkts": 14,
+        "totalBytes": 1176
+      },
+      {
+        "time": 1486141500000000,
+        "inBytes": 0,
+        "outBytes": 1176,
+        "inPkts": 0,
+        "outPkts": 14,
+        "totalPkts": 14,
+        "totalBytes": 1176
+      },
+      {
+        "time": 1486141560000000,
+        "inBytes": 0,
+        "outBytes": 1008,
+        "inPkts": 0,
+        "outPkts": 12,
+        "totalPkts": 12,
+        "totalBytes": 1008
+      },
+      {
+        "time": 1486141620000000,
+        "inBytes": 0,
+        "outBytes": 1176,
+        "inPkts": 0,
+        "outPkts": 14,
+        "totalPkts": 14,
+        "totalBytes": 1176
+      },
+      {
+        "time": 1486141680000000,
+        "inBytes": 0,
+        "outBytes": 1176,
+        "inPkts": 0,
+        "outPkts": 14,
+        "totalPkts": 14,
+        "totalBytes": 1176
+      },
+      {
+        "time": 1486141740000000,
+        "inBytes": 0,
+        "outBytes": 1008,
+        "inPkts": 0,
+        "outPkts": 12,
+        "totalPkts": 12,
+        "totalBytes": 1008
+      },
+      {
+        "time": 1486141800000000,
+        "inBytes": 0,
+        "outBytes": 1176,
+        "inPkts": 0,
+        "outPkts": 14,
+        "totalPkts": 14,
+        "totalBytes": 1176
+      },
+      {
+        "time": 1486141860000000,
+        "inBytes": 0,
+        "outBytes": 1176,
+        "inPkts": 0,
+        "outPkts": 14,
+        "totalPkts": 14,
+        "totalBytes": 1176
+      },
+      {
+        "time": 1486141920000000,
+        "inBytes": 0,
+        "outBytes": 1008,
+        "inPkts": 0,
+        "outPkts": 12,
+        "totalPkts": 12,
+        "totalBytes": 1008
+      },
+      {
+        "time": 1486141980000000,
+        "inBytes": 0,
+        "outBytes": 1176,
+        "inPkts": 0,
+        "outPkts": 14,
+        "totalPkts": 14,
+        "totalBytes": 1176
+      },
+      {
+        "time": 1486142040000000,
+        "inBytes": 0,
+        "outBytes": 1176,
+        "inPkts": 0,
+        "outPkts": 14,
+        "totalPkts": 14,
+        "totalBytes": 1176
+      },
+      {
+        "time": 1486142100000000,
+        "inBytes": 0,
+        "outBytes": 1008,
+        "inPkts": 0,
+        "outPkts": 12,
+        "totalPkts": 12,
+        "totalBytes": 1008
+      },
+      {
+        "time": 1486142160000000,
+        "inBytes": 0,
+        "outBytes": 1176,
+        "inPkts": 0,
+        "outPkts": 14,
+        "totalPkts": 14,
+        "totalBytes": 1176
+      },
+      {
+        "time": 1486142220000000,
+        "inBytes": 0,
+        "outBytes": 1176,
+        "inPkts": 0,
+        "outPkts": 14,
+        "totalPkts": 14,
+        "totalBytes": 1176
+      },
+      {
+        "time": 1486142280000000,
+        "inBytes": 0,
+        "outBytes": 1008,
+        "inPkts": 0,
+        "outPkts": 12,
+        "totalPkts": 12,
+        "totalBytes": 1008
+      },
+      {
+        "time": 1486142340000000,
+        "inBytes": 0,
+        "outBytes": 1176,
+        "inPkts": 0,
+        "outPkts": 14,
+        "totalPkts": 14,
+        "totalBytes": 1176
+      },
+      {
+        "time": 1486142400000000,
+        "inBytes": 0,
+        "outBytes": 1176,
+        "inPkts": 0,
+        "outPkts": 14,
+        "totalPkts": 14,
+        "totalBytes": 1176
+      },
+      {
+        "time": 1486142460000000,
+        "inBytes": 0,
+        "outBytes": 1008,
+        "inPkts": 0,
+        "outPkts": 12,
+        "totalPkts": 12,
+        "totalBytes": 1008
+      },
+      {
+        "time": 1486142520000000,
+        "inBytes": 0,
+        "outBytes": 1176,
+        "inPkts": 0,
+        "outPkts": 14,
+        "totalPkts": 14,
+        "totalBytes": 1176
+      },
+      {
+        "time": 1486142580000000,
+        "inBytes": 0,
+        "outBytes": 1092,
+        "inPkts": 0,
+        "outPkts": 13,
+        "totalPkts": 13,
+        "totalBytes": 1092
+      },
+      {
+        "time": 1486142640000000,
+        "inBytes": 0,
+        "outBytes": 1092,
+        "inPkts": 0,
+        "outPkts": 13,
+        "totalPkts": 13,
+        "totalBytes": 1092
+      },
+      {
+        "time": 1486142700000000,
+        "inBytes": 0,
+        "outBytes": 1176,
+        "inPkts": 0,
+        "outPkts": 14,
+        "totalPkts": 14,
+        "totalBytes": 1176
+      },
+      {
+        "time": 1486142760000000,
+        "inBytes": 0,
+        "outBytes": 1092,
+        "inPkts": 0,
+        "outPkts": 13,
+        "totalPkts": 13,
+        "totalBytes": 1092
+      },
+      {
+        "time": 1486142820000000,
+        "inBytes": 0,
+        "outBytes": 1092,
+        "inPkts": 0,
+        "outPkts": 13,
+        "totalPkts": 13,
+        "totalBytes": 1092
+      },
+      {
+        "time": 1486142880000000,
+        "inBytes": 0,
+        "outBytes": 1176,
+        "inPkts": 0,
+        "outPkts": 14,
+        "totalPkts": 14,
+        "totalBytes": 1176
+      },
+      {
+        "time": 1486142940000000,
+        "inBytes": 0,
+        "outBytes": 1092,
+        "inPkts": 0,
+        "outPkts": 13,
+        "totalPkts": 13,
+        "totalBytes": 1092
+      },
+      {
+        "time": 1486143000000000,
+        "inBytes": 0,
+        "outBytes": 1092,
+        "inPkts": 0,
+        "outPkts": 13,
+        "totalPkts": 13,
+        "totalBytes": 1092
+      },
+      {
+        "time": 1486143060000000,
+        "inBytes": 0,
+        "outBytes": 1176,
+        "inPkts": 0,
+        "outPkts": 14,
+        "totalPkts": 14,
+        "totalBytes": 1176
+      },
+      {
+        "time": 1486143120000000,
+        "inBytes": 0,
+        "outBytes": 1092,
+        "inPkts": 0,
+        "outPkts": 13,
+        "totalPkts": 13,
+        "totalBytes": 1092
+      },
+      {
+        "time": 1486143180000000,
+        "inBytes": 0,
+        "outBytes": 1092,
+        "inPkts": 0,
+        "outPkts": 13,
+        "totalPkts": 13,
+        "totalBytes": 1092
+      },
+      {
+        "time": 1486143240000000,
+        "inBytes": 0,
+        "outBytes": 1176,
+        "inPkts": 0,
+        "outPkts": 14,
+        "totalPkts": 14,
+        "totalBytes": 1176
+      },
+      {
+        "time": 1486143300000000,
+        "inBytes": 0,
+        "outBytes": 1092,
+        "inPkts": 0,
+        "outPkts": 13,
+        "totalPkts": 13,
+        "totalBytes": 1092
+      },
+      {
+        "time": 1486143360000000,
+        "inBytes": 0,
+        "outBytes": 1092,
+        "inPkts": 0,
+        "outPkts": 13,
+        "totalPkts": 13,
+        "totalBytes": 1092
+      },
+      {
+        "time": 1486143420000000,
+        "inBytes": 0,
+        "outBytes": 1176,
+        "inPkts": 0,
+        "outPkts": 14,
+        "totalPkts": 14,
+        "totalBytes": 1176
+      },
+      {
+        "time": 1486143480000000,
+        "inBytes": 0,
+        "outBytes": 1092,
+        "inPkts": 0,
+        "outPkts": 13,
+        "totalPkts": 13,
+        "totalBytes": 1092
+      },
+      {
+        "time": 1486143540000000,
+        "inBytes": 0,
+        "outBytes": 1092,
+        "inPkts": 0,
+        "outPkts": 13,
+        "totalPkts": 13,
+        "totalBytes": 1092
+      },
+      {
+        "time": 1486143600000000,
+        "inBytes": 0,
+        "outBytes": 1176,
+        "inPkts": 0,
+        "outPkts": 14,
+        "totalPkts": 14,
+        "totalBytes": 1176
+      },
+      {
+        "time": 1486143660000000,
+        "inBytes": 0,
+        "outBytes": 1092,
+        "inPkts": 0,
+        "outPkts": 13,
+        "totalPkts": 13,
+        "totalBytes": 1092
+      },
+      {
+        "time": 1486143720000000,
+        "inBytes": 0,
+        "outBytes": 1092,
+        "inPkts": 0,
+        "outPkts": 13,
+        "totalPkts": 13,
+        "totalBytes": 1092
+      },
+      {
+        "time": 1486143780000000,
+        "inBytes": 0,
+        "outBytes": 1176,
+        "inPkts": 0,
+        "outPkts": 14,
+        "totalPkts": 14,
+        "totalBytes": 1176
+      },
+      {
+        "time": 1486143840000000,
+        "inBytes": 0,
+        "outBytes": 1092,
+        "inPkts": 0,
+        "outPkts": 13,
+        "totalPkts": 13,
+        "totalBytes": 1092
+      },
+      {
+        "time": 1486143900000000,
+        "inBytes": 0,
+        "outBytes": 1092,
+        "inPkts": 0,
+        "outPkts": 13,
+        "totalPkts": 13,
+        "totalBytes": 1092
+      },
+      {
+        "time": 1486143960000000,
+        "inBytes": 0,
+        "outBytes": 1176,
+        "inPkts": 0,
+        "outPkts": 14,
+        "totalPkts": 14,
+        "totalBytes": 1176
+      },
+      {
+        "time": 1486144020000000,
+        "inBytes": 0,
+        "outBytes": 1008,
+        "inPkts": 0,
+        "outPkts": 12,
+        "totalPkts": 12,
+        "totalBytes": 1008
+      },
+      {
+        "time": 1486144080000000,
+        "inBytes": 0,
+        "outBytes": 1176,
+        "inPkts": 0,
+        "outPkts": 14,
+        "totalPkts": 14,
+        "totalBytes": 1176
+      },
+      {
+        "time": 1486144140000000,
+        "inBytes": 0,
+        "outBytes": 1176,
+        "inPkts": 0,
+        "outPkts": 14,
+        "totalPkts": 14,
+        "totalBytes": 1176
+      },
+      {
+        "time": 1486144200000000,
+        "inBytes": 0,
+        "outBytes": 1008,
+        "inPkts": 0,
+        "outPkts": 12,
+        "totalPkts": 12,
+        "totalBytes": 1008
+      },
+      {
+        "time": 1486144260000000,
+        "inBytes": 0,
+        "outBytes": 1176,
+        "inPkts": 0,
+        "outPkts": 14,
+        "totalPkts": 14,
+        "totalBytes": 1176
+      },
+      {
+        "time": 1486144320000000,
+        "inBytes": 0,
+        "outBytes": 1176,
+        "inPkts": 0,
+        "outPkts": 14,
+        "totalPkts": 14,
+        "totalBytes": 1176
+      },
+      {
+        "time": 1486144380000000,
+        "inBytes": 0,
+        "outBytes": 1008,
+        "inPkts": 0,
+        "outPkts": 12,
+        "totalPkts": 12,
+        "totalBytes": 1008
+      },
+      {
+        "time": 1486144440000000,
+        "inBytes": 0,
+        "outBytes": 1176,
+        "inPkts": 0,
+        "outPkts": 14,
+        "totalPkts": 14,
+        "totalBytes": 1176
+      },
+      {
+        "time": 1486144500000000,
+        "inBytes": 0,
+        "outBytes": 1176,
+        "inPkts": 0,
+        "outPkts": 14,
+        "totalPkts": 14,
+        "totalBytes": 1176
+      },
+      {
+        "time": 1486144560000000,
+        "inBytes": 0,
+        "outBytes": 1008,
+        "inPkts": 0,
+        "outPkts": 12,
+        "totalPkts": 12,
+        "totalBytes": 1008
+      },
+      {
+        "time": 1486144620000000,
+        "inBytes": 0,
+        "outBytes": 1176,
+        "inPkts": 0,
+        "outPkts": 14,
+        "totalPkts": 14,
+        "totalBytes": 1176
+      },
+      {
+        "time": 1486144680000000,
+        "inBytes": 0,
+        "outBytes": 1176,
+        "inPkts": 0,
+        "outPkts": 14,
+        "totalPkts": 14,
+        "totalBytes": 1176
+      },
+      {
+        "time": 1486144740000000,
+        "inBytes": 0,
+        "outBytes": 1008,
+        "inPkts": 0,
+        "outPkts": 12,
+        "totalPkts": 12,
+        "totalBytes": 1008
+      },
+      {
+        "time": 1486144800000000,
+        "inBytes": 0,
+        "outBytes": 1176,
+        "inPkts": 0,
+        "outPkts": 14,
+        "totalPkts": 14,
+        "totalBytes": 1176
+      },
+      {
+        "time": 1486144860000000,
+        "inBytes": 0,
+        "outBytes": 1176,
+        "inPkts": 0,
+        "outPkts": 14,
+        "totalPkts": 14,
+        "totalBytes": 1176
+      },
+      {
+        "time": 1486144920000000,
+        "inBytes": 0,
+        "outBytes": 1008,
+        "inPkts": 0,
+        "outPkts": 12,
+        "totalPkts": 12,
+        "totalBytes": 1008
+      },
+      {
+        "time": 1486144980000000,
+        "inBytes": 0,
+        "outBytes": 1176,
+        "inPkts": 0,
+        "outPkts": 14,
+        "totalPkts": 14,
+        "totalBytes": 1176
+      },
+      {
+        "time": 1486145040000000,
+        "inBytes": 0,
+        "outBytes": 1176,
+        "inPkts": 0,
+        "outPkts": 14,
+        "totalPkts": 14,
+        "totalBytes": 1176
+      },
+      {
+        "time": 1486145100000000,
+        "inBytes": 0,
+        "outBytes": 1008,
+        "inPkts": 0,
+        "outPkts": 12,
+        "totalPkts": 12,
+        "totalBytes": 1008
+      },
+      {
+        "time": 1486145160000000,
+        "inBytes": 0,
+        "outBytes": 1176,
+        "inPkts": 0,
+        "outPkts": 14,
+        "totalPkts": 14,
+        "totalBytes": 1176
+      },
+      {
+        "time": 1486145220000000,
+        "inBytes": 0,
+        "outBytes": 1176,
+        "inPkts": 0,
+        "outPkts": 14,
+        "totalPkts": 14,
+        "totalBytes": 1176
+      },
+      {
+        "time": 1486145280000000,
+        "inBytes": 0,
+        "outBytes": 1008,
+        "inPkts": 0,
+        "outPkts": 12,
+        "totalPkts": 12,
+        "totalBytes": 1008
+      },
+      {
+        "time": 1486145340000000,
+        "inBytes": 0,
+        "outBytes": 1176,
+        "inPkts": 0,
+        "outPkts": 14,
+        "totalPkts": 14,
+        "totalBytes": 1176
+      },
+      {
+        "time": 1486145400000000,
+        "inBytes": 0,
+        "outBytes": 1176,
+        "inPkts": 0,
+        "outPkts": 14,
+        "totalPkts": 14,
+        "totalBytes": 1176
+      },
+      {
+        "time": 1486145460000000,
+        "inBytes": 0,
+        "outBytes": 1008,
+        "inPkts": 0,
+        "outPkts": 12,
+        "totalPkts": 12,
+        "totalBytes": 1008
+      },
+      {
+        "time": 1486145520000000,
+        "inBytes": 0,
+        "outBytes": 1176,
+        "inPkts": 0,
+        "outPkts": 14,
+        "totalPkts": 14,
+        "totalBytes": 1176
+      },
+      {
+        "time": 1486145580000000,
+        "inBytes": 0,
+        "outBytes": 1176,
+        "inPkts": 0,
+        "outPkts": 14,
+        "totalPkts": 14,
+        "totalBytes": 1176
+      },
+      {
+        "time": 1486145640000000,
+        "inBytes": 0,
+        "outBytes": 1008,
+        "inPkts": 0,
+        "outPkts": 12,
+        "totalPkts": 12,
+        "totalBytes": 1008
+      },
+      {
+        "time": 1486145700000000,
+        "inBytes": 0,
+        "outBytes": 1176,
+        "inPkts": 0,
+        "outPkts": 14,
+        "totalPkts": 14,
+        "totalBytes": 1176
+      },
+      {
+        "time": 1486145760000000,
+        "inBytes": 0,
+        "outBytes": 1176,
+        "inPkts": 0,
+        "outPkts": 14,
+        "totalPkts": 14,
+        "totalBytes": 1176
+      },
+      {
+        "time": 1486145820000000,
+        "inBytes": 0,
+        "outBytes": 1008,
+        "inPkts": 0,
+        "outPkts": 12,
+        "totalPkts": 12,
+        "totalBytes": 1008
+      },
+      {
+        "time": 1486145880000000,
+        "inBytes": 0,
+        "outBytes": 1176,
+        "inPkts": 0,
+        "outPkts": 14,
+        "totalPkts": 14,
+        "totalBytes": 1176
+      },
+      {
+        "time": 1486145940000000,
+        "inBytes": 0,
+        "outBytes": 1176,
+        "inPkts": 0,
+        "outPkts": 14,
+        "totalPkts": 14,
+        "totalBytes": 1176
+      },
+      {
+        "time": 1486146000000000,
+        "inBytes": 0,
+        "outBytes": 1008,
+        "inPkts": 0,
+        "outPkts": 12,
+        "totalPkts": 12,
+        "totalBytes": 1008
+      },
+      {
+        "time": 1486146060000000,
+        "inBytes": 0,
+        "outBytes": 1176,
+        "inPkts": 0,
+        "outPkts": 14,
+        "totalPkts": 14,
+        "totalBytes": 1176
+      },
+      {
+        "time": 1486146120000000,
+        "inBytes": 0,
+        "outBytes": 1176,
+        "inPkts": 0,
+        "outPkts": 14,
+        "totalPkts": 14,
+        "totalBytes": 1176
+      },
+      {
+        "time": 1486146180000000,
+        "inBytes": 0,
+        "outBytes": 1008,
+        "inPkts": 0,
+        "outPkts": 12,
+        "totalPkts": 12,
+        "totalBytes": 1008
+      },
+      {
+        "time": 1486146240000000,
+        "inBytes": 0,
+        "outBytes": 1176,
+        "inPkts": 0,
+        "outPkts": 14,
+        "totalPkts": 14,
+        "totalBytes": 1176
+      },
+      {
+        "time": 1486146300000000,
+        "inBytes": 0,
+        "outBytes": 1176,
+        "inPkts": 0,
+        "outPkts": 14,
+        "totalPkts": 14,
+        "totalBytes": 1176
+      },
+      {
+        "time": 1486146360000000,
+        "inBytes": 0,
+        "outBytes": 1008,
+        "inPkts": 0,
+        "outPkts": 12,
+        "totalPkts": 12,
+        "totalBytes": 1008
+      },
+      {
+        "time": 1486146420000000,
+        "inBytes": 0,
+        "outBytes": 1176,
+        "inPkts": 0,
+        "outPkts": 14,
+        "totalPkts": 14,
+        "totalBytes": 1176
+      },
+      {
+        "time": 1486146480000000,
+        "inBytes": 0,
+        "outBytes": 1176,
+        "inPkts": 0,
+        "outPkts": 14,
+        "totalPkts": 14,
+        "totalBytes": 1176
+      },
+      {
+        "time": 1486146540000000,
+        "inBytes": 0,
+        "outBytes": 1008,
+        "inPkts": 0,
+        "outPkts": 12,
+        "totalPkts": 12,
+        "totalBytes": 1008
+      },
+      {
+        "time": 1486146600000000,
+        "inBytes": 0,
+        "outBytes": 1176,
+        "inPkts": 0,
+        "outPkts": 14,
+        "totalPkts": 14,
+        "totalBytes": 1176
+      },
+      {
+        "time": 1486146660000000,
+        "inBytes": 0,
+        "outBytes": 1092,
+        "inPkts": 0,
+        "outPkts": 13,
+        "totalPkts": 13,
+        "totalBytes": 1092
+      },
+      {
+        "time": 1486146720000000,
+        "inBytes": 0,
+        "outBytes": 1092,
+        "inPkts": 0,
+        "outPkts": 13,
+        "totalPkts": 13,
+        "totalBytes": 1092
+      },
+      {
+        "time": 1486146780000000,
+        "inBytes": 0,
+        "outBytes": 1176,
+        "inPkts": 0,
+        "outPkts": 14,
+        "totalPkts": 14,
+        "totalBytes": 1176
+      },
+      {
+        "time": 1486146840000000,
+        "inBytes": 0,
+        "outBytes": 1092,
+        "inPkts": 0,
+        "outPkts": 13,
+        "totalPkts": 13,
+        "totalBytes": 1092
+      },
+      {
+        "time": 1486146900000000,
+        "inBytes": 0,
+        "outBytes": 1092,
+        "inPkts": 0,
+        "outPkts": 13,
+        "totalPkts": 13,
+        "totalBytes": 1092
+      },
+      {
+        "time": 1486146960000000,
+        "inBytes": 0,
+        "outBytes": 1176,
+        "inPkts": 0,
+        "outPkts": 14,
+        "totalPkts": 14,
+        "totalBytes": 1176
+      },
+      {
+        "time": 1486147020000000,
+        "inBytes": 0,
+        "outBytes": 1092,
+        "inPkts": 0,
+        "outPkts": 13,
+        "totalPkts": 13,
+        "totalBytes": 1092
+      },
+      {
+        "time": 1486147080000000,
+        "inBytes": 0,
+        "outBytes": 1092,
+        "inPkts": 0,
+        "outPkts": 13,
+        "totalPkts": 13,
+        "totalBytes": 1092
+      },
+      {
+        "time": 1486147140000000,
+        "inBytes": 0,
+        "outBytes": 1176,
+        "inPkts": 0,
+        "outPkts": 14,
+        "totalPkts": 14,
+        "totalBytes": 1176
+      },
+      {
+        "time": 1486147200000000,
+        "inBytes": 0,
+        "outBytes": 1092,
+        "inPkts": 0,
+        "outPkts": 13,
+        "totalPkts": 13,
+        "totalBytes": 1092
+      },
+      {
+        "time": 1486147260000000,
+        "inBytes": 0,
+        "outBytes": 1092,
+        "inPkts": 0,
+        "outPkts": 13,
+        "totalPkts": 13,
+        "totalBytes": 1092
+      },
+      {
+        "time": 1486147320000000,
+        "inBytes": 0,
+        "outBytes": 1176,
+        "inPkts": 0,
+        "outPkts": 14,
+        "totalPkts": 14,
+        "totalBytes": 1176
+      },
+      {
+        "time": 1486147380000000,
+        "inBytes": 0,
+        "outBytes": 1092,
+        "inPkts": 0,
+        "outPkts": 13,
+        "totalPkts": 13,
+        "totalBytes": 1092
+      },
+      {
+        "time": 1486147440000000,
+        "inBytes": 0,
+        "outBytes": 1092,
+        "inPkts": 0,
+        "outPkts": 13,
+        "totalPkts": 13,
+        "totalBytes": 1092
+      },
+      {
+        "time": 1486147500000000,
+        "inBytes": 0,
+        "outBytes": 1176,
+        "inPkts": 0,
+        "outPkts": 14,
+        "totalPkts": 14,
+        "totalBytes": 1176
+      },
+      {
+        "time": 1486147560000000,
+        "inBytes": 0,
+        "outBytes": 504,
+        "inPkts": 0,
+        "outPkts": 6,
+        "totalPkts": 6,
+        "totalBytes": 504
+      }
+    ],
+    "value": {
+      "UveVirtualNetworkAgent": {
+        "policy_rule_stats": [
+          {
+            "count": 0,
+            "rule": "00000000-0000-0000-0000-000000000001"
+          },
+          {
+            "count": 8,
+            "rule": "00000000-0000-0000-0000-000000000004"
+          }
+        ],
+        "vrf_stats_list": [
+          {
+            "offload_packet_counts": {
+              "gro": 0
+            },
+            "unknown_unicast_floods": 0,
+            "arp_packet_counts": {
+              "from_vm_interface": {
+                "stats": {
+                  "floods": 5171728,
+                  "proxies": 0,
+                  "stitches": 50389
+                }
+              },
+              "from_physical_interface": {
+                "stats": {
+                  "floods": 0,
+                  "proxies": 0,
+                  "stitches": 0
+                }
+              }
+            },
+            "name": "default-domain:admin:testvn:testvn_nitishk",
+            "nh_packet_counts": {
+              "discards": 0,
+              "local_vm_l3_forwards": 0,
+              "resolves": 0,
+              "local_vm_l2_forwards": 0,
+              "l3_receives": 0,
+              "l2_receives": 0,
+              "comp_nh_stats": {
+                "edge_replication_forwards": 0,
+                "source_replication_forwards": 0,
+                "local_vm_l3_forwards": 0,
+                "total_multicast_forwards": 0
+              },
+              "ecmp_forwards": 0,
+              "vrf_translates": 0,
+              "tunnel_nh_stats": {
+                "vxlan_encaps": 0,
+                "mpls_over_udp_encaps": 0,
+                "udp_encaps": 0,
+                "mpls_over_gre_encaps": 0
+              }
+            },
+            "diag_packet_count": 0
+          }
+        ],
+        "total_acl_rules": 0,
+        "out_bandwidth_usage": 139,
+        "vn_stats": [
+          {
+            "in_bytes": 0,
+            "other_vn": "__UNKNOWN__",
+            "out_bytes": 0,
+            "out_tpkts": 0,
+            "in_tpkts": 0,
+            "vrouter": "a7s12"
+          },
+          {
+            "in_bytes": 0,
+            "other_vn": "default-domain:admin:testvn",
+            "out_bytes": 0,
+            "out_tpkts": 0,
+            "in_tpkts": 0,
+            "vrouter": "a7s12"
+          },
+          {
+            "in_bytes": 0,
+            "other_vn": "default-domain:default-project:ip-fabric",
+            "out_bytes": 504,
+            "out_tpkts": 6,
+            "in_tpkts": 0,
+            "vrouter": "a7s12"
+          }
+        ],
+        "in_stats": [
+          {
+            "bytes": 3724,
+            "other_vn": "__UNKNOWN__",
+            "tpkts": 38
+          },
+          {
+            "bytes": 167536292,
+            "other_vn": "default-domain:admin:testvn",
+            "tpkts": 1709554
+          },
+          {
+            "bytes": 0,
+            "other_vn": "default-domain:default-project:ip-fabric",
+            "tpkts": 0
+          }
+        ],
+        "egress_flow_count": 41,
+        "acl": null,
+        "associated_fip_count": 1,
+        "virtualmachine_list": [
+          "06c75bb2-e17b-4ccd-b00c-aa59fdaecb55",
+          "e0219ad7-3212-4e30-abfc-212e4a888538"
+        ],
+        "out_stats": [
+          {
+            "bytes": 0,
+            "other_vn": "__UNKNOWN__",
+            "tpkts": 0
+          },
+          {
+            "bytes": 167536292,
+            "other_vn": "default-domain:admin:testvn",
+            "tpkts": 1709554
+          },
+          {
+            "bytes": 80220368487955520,
+            "other_vn": "default-domain:default-project:ip-fabric",
+            "tpkts": 73667280554506
+          }
+        ],
+        "interface_list": [
+          "default-domain:admin:8ab38e5b-768b-44f6-8883-08d1670ddfec",
+          "default-domain:admin:c43d910c-bafa-4428-bba8-530cdfa94326"
+        ],
+        "mirror_acl": null,
+        "ingress_flow_count": 40,
+        "in_bandwidth_usage": 0
+      },
+      "UveVirtualNetworkConfig": {
+        "total_acl_rules": 0,
+        "routing_instance_list": [
+          "default-domain:admin:testvn:testvn_nitishk"
+        ]
+      }
+    }
+  }
+]

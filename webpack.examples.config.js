@@ -48,6 +48,7 @@ const config = {
     'demo-area-inout-traffic': path.join(__dirname, '/examples/demo/area-chart/inout-traffic/inout-traffic.js'),
     'demo-radial-disk-usage': path.join(__dirname, '/examples/demo/radial-chart/disk-usage/disk.js'),
     'demo-radial-pool-usage': path.join(__dirname, '/examples/demo/radial-chart/pool-usage/pools.js'),
+    'demo-grouped-vn-detail': path.join(__dirname, '/examples/demo/grouped-chart/vn-detail/vn-detail.js'),
 
     'developer-bubble-multi-shape': path.join(__dirname, '/examples/developer/bubble-chart/multiple-shapes/'),
     'developer-linebar-control-panel': path.join(__dirname, '/examples/developer/linebar-chart/control-panel/'),
