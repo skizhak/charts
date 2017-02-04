@@ -105,6 +105,10 @@ radialExamples.forEach(
 $('#bubble').click()
 $bubbleLinks.find('#b0').click()
 
+$("#developer-link").click(function () {
+  window.open('developer.html')
+})
+
 function onClickLineChart (e) {
   const index = $(this).attr('href').split('#')[1]
   onClickSidebar(index, demoLBExamples)
