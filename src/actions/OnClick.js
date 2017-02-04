@@ -10,9 +10,9 @@ class OnClick extends Action {
     this._deny = false
   }
 
-  _execute (data, clickHandler) {
+  _execute (data, el, clickHandler) {
     const chart = this._registrar
-    clickHandler(data, chart)
+    clickHandler(data, el, chart)
   }
 }
 

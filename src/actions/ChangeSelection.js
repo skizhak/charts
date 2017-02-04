@@ -10,21 +10,9 @@ class ChangeSelection extends Action {
     this._deny = false
   }
 
-  _execute (dataProvider) {
+  _execute (dataProvider, changeSelectionHandler) {
     const chart = this._registrar
-    /**
-     * We're assuming one navigation for a visualization.
-     * This action may get triggered for same chart visualization with navigation or navigation from different chart
-     * If the chart has visualization component, we're changing the model of CompositeY
-     * else, set the data of the chart so it goes through the data preparation for that chart visualization.
-     */
-    if (!_.isEmpty(chart.getComponentsByType('Navigation'))) {
-      _.each(chart.getComponentsByType('CompositeYChart'), (compositeY) => {
-        compositeY.changeModel(dataProvider)
-      })
-    } else {
-      chart.setData(dataProvider.data)
-    }
+    changeSelectionHandler(dataProvider, chart)
   }
 }
 
