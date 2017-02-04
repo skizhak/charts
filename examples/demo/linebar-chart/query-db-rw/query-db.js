@@ -6,20 +6,8 @@ const _ = require('lodash')
 const formatter = require('formatter')
 const _c = require('constants')
 
-// Complex example
-const simpleData = []
-
-for (let i = 0; i < 100; i++) {
-  const a = Math.random() * 10000
-  simpleData.push({
-    x: 1475760930000 + 1000000 * i,
-    a: a,
-    b: _.random(a, a + 1000),
-    c: Math.ceil(Math.random() * 100),
-  })
-}
-const complexChartView = new coCharts.charts.XYChartView()
-complexChartView.setConfig({
+const queryChart = new coCharts.charts.XYChartView()
+queryChart.setConfig({
   container: '#query-db-chart',
   components: [{
     type: 'LegendPanel',
@@ -195,21 +183,29 @@ complexChartView.setConfig({
     }
   }]
 })
-complexChartView.setData(simpleData)
-complexChartView.renderMessage({
-  componentId: 'XYChart',
-  action: 'once',
-  messages: [{
-    level: 'info',
-    title: 'Message 1',
-    message: 'This is an example message. It will disapear after 5 seconds.'
-  }, {
-    level: 'error',
-    title: 'A Fatal Error',
-    message: 'This is an error.'
-  }, {
-    level: 'info',
-    title: 'Message 2',
-    message: 'This is another example message.'
-  }]
-})
+
+let simpleData = []
+let now = _.now();
+
+for (let i = 0; i < 100; i++) {
+  simpleData.push(getDataPoint(now - (i * 1000)))
+}
+
+queryChart.setData(simpleData)
+
+setInterval(() => {
+  now += 1000;
+  simpleData.splice(99, 1)
+  simpleData = [getDataPoint(now)].concat(simpleData)
+  queryChart.setData(simpleData)
+}, 1000)
+
+function getDataPoint(x) {
+  const a = Math.random() * 10000
+  return {
+    x: x,
+    a: a,
+    b: _.random(a, a + 1000),
+    c: Math.ceil(Math.random() * 100),
+  }
+}

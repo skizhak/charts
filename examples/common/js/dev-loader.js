@@ -46,7 +46,7 @@ const devLBExamples = [
   {
     html: 'linebar-chart/live/index.html',
     js: 'linebar-chart/live/index.js',
-    title: 'Live',
+    title: 'Live Data',
   }
 ]
 
@@ -92,47 +92,47 @@ const devAdvanceExamples = [
 
 const $lineBarLinks = $('#lineBarLinks')
 devLBExamples.forEach(
-    (example, idx) => {
-      let $link = $(`<a id="lb${idx}" href="#${idx}"><span class="nav-text">${example.title}</span></a>`)
-      $link.click(onClickLBChart)
-      $lineBarLinks.append($('<li>').append($link))
-    }
+  (example, idx) => {
+    let $link = $(`<a id="lb${idx}" href="#${idx}"><span class="nav-text">${example.title}</span></a>`)
+    $link.click(onClickLBChart)
+    $lineBarLinks.append($('<li>').append($link))
+  }
 )
 
 const $bubbleLinks = $('#bubbleLinks')
 devBubbleExamples.forEach(
-    (example, idx) => {
-      let $link = $(`<a href="#${idx}"><span class="nav-text">${example.title}</span></a>`)
-      $link.click(onClickBubbleChart)
-      $bubbleLinks.append($('<li>').append($link))
-    }
+  (example, idx) => {
+    let $link = $(`<a href="#${idx}"><span class="nav-text">${example.title}</span></a>`)
+    $link.click(onClickBubbleChart)
+    $bubbleLinks.append($('<li>').append($link))
+  }
 )
 
 const $areaLinks = $('#areaLinks')
 devAreaExamples.forEach(
-    (example, idx) => {
-      let $link = $(`<a href="#${idx}"><span class="nav-text">${example.title}</span></a>`)
-      $link.click(onClickAreaChart)
-      $areaLinks.append($('<li>').append($link))
-    }
+  (example, idx) => {
+    let $link = $(`<a href="#${idx}"><span class="nav-text">${example.title}</span></a>`)
+    $link.click(onClickAreaChart)
+    $areaLinks.append($('<li>').append($link))
+  }
 )
 
 const $radialLinks = $('#radialLinks')
 devRadialExamples.forEach(
-    (example, idx) => {
-      let $link = $(`<a href="#${idx}"><span class="nav-text">${example.title}</span></a>`)
-      $link.click(onClickRadialChart)
-      $radialLinks.append($('<li>').append($link))
-    }
+  (example, idx) => {
+    let $link = $(`<a href="#${idx}"><span class="nav-text">${example.title}</span></a>`)
+    $link.click(onClickRadialChart)
+    $radialLinks.append($('<li>').append($link))
+  }
 )
 
 const $advanceLinks = $('#advanceLinks')
 devAdvanceExamples.forEach(
-    (example, idx) => {
-      let $link = $(`<a href="#${idx}"><span class="nav-text">${example.title}</span></a>`)
-      $link.click(onClickAdvanceChart)
-      $advanceLinks.append($('<li>').append($link))
-    }
+  (example, idx) => {
+    let $link = $(`<a href="#${idx}"><span class="nav-text">${example.title}</span></a>`)
+    $link.click(onClickAdvanceChart)
+    $advanceLinks.append($('<li>').append($link))
+  }
 )
 
 $('#linebar').click()
@@ -185,8 +185,8 @@ function reformatHTMLToShow (rawHTML) {
   }
 
   return _.escape(rawHTML.replace(/\n/gm, newlineMarker))
-        .replace(regex.indentation, (match) => match.replace(/\s/gm, '&nbsp;'))
-        .replace(regex.recoverNewline, '<br/>')
+    .replace(regex.indentation, (match) => match.replace(/\s/gm, '&nbsp;'))
+    .replace(regex.recoverNewline, '<br/>')
 }
 
 function onClickSidebar (index, exampleArray) {
@@ -194,23 +194,23 @@ function onClickSidebar (index, exampleArray) {
   const {rawHTML, rawJS, rawCSS} = exampleArray[index]
   $('#outputView').find('.output-demo-iframe').attr('src', `./developer/${example.html}`)
 
-    /*
-     const tabCollections = Object.keys(rawJS)
-     .reduce((tabsHTML, currentJSFile, idx) => {
-     tabsHTML.push(
-     createNewTab(
-     'jsFile-' + idx,
-     currentJSFile,
-     undefined,
-     idx === 0 ? 'checked' : '',
-     reformatHTMLToShow(rawJS[currentJSFile])
-     )
-     )
-     return tabsHTML
-     }, []).join('')
+  /*
+   const tabCollections = Object.keys(rawJS)
+   .reduce((tabsHTML, currentJSFile, idx) => {
+   tabsHTML.push(
+   createNewTab(
+   'jsFile-' + idx,
+   currentJSFile,
+   undefined,
+   idx === 0 ? 'checked' : '',
+   reformatHTMLToShow(rawJS[currentJSFile])
+   )
+   )
+   return tabsHTML
+   }, []).join('')
 
-     $('#htmlContent').html(reformatHTMLToShow(rawHTML))
-     $('#cssContent').html(reformatHTMLToShow(rawCSS))
-     $('#jsContent').html(`<div class="tabs">${tabCollections}</div>`)
-     */
+   $('#htmlContent').html(reformatHTMLToShow(rawHTML))
+   $('#cssContent').html(reformatHTMLToShow(rawCSS))
+   $('#jsContent').html(`<div class="tabs">${tabCollections}</div>`)
+   */
 }
