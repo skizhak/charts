@@ -50,11 +50,7 @@ class LegendPanelView extends ContrailChartsView {
     }
 
     if(this._state === _states.EDIT) {
-      this.$el.find('.attribute').toggleClass('edit')
-      this.$el.find('.selector').removeClass('active')
-
-      if(!this.config.attributes.editable.colorSelector) this.d3.selectAll('.select--color').hide()
-      if(!this.config.attributes.editable.chartSelector) this.d3.selectAll('.select--chart').style('display', 'none')
+      this._setEditState()
     }
   }
 
@@ -64,13 +60,11 @@ class LegendPanelView extends ContrailChartsView {
     this._actionman.fire('SelectSerie', accessorName, isChecked)
   }
 
-  _toggleEditMode (d, el) {
-    this._state = this._state === _states.DEFAULT ? _states.EDIT : _states.DEFAULT
-    this.$el.toggleClass('edit-mode')
+  _setEditState () {
     this.$el.find('.attribute').toggleClass('edit')
     this.$el.find('.selector').removeClass('active')
 
-    if(!this.config.attributes.editable.colorSelector) this.d3.selectAll('.select--color').hide()
+    if(!this.config.attributes.editable.colorSelector) this.d3.selectAll('.select--color').style('display', 'none')
     if(!this.config.attributes.editable.chartSelector) this.d3.selectAll('.select--chart').style('display', 'none')
 
     _.each(this.$el.find('.legend-attribute > input'), (el) => {
@@ -80,6 +74,12 @@ class LegendPanelView extends ContrailChartsView {
         $(el).prop('disabled', true)
       }
     })
+  }
+
+  _toggleEditMode (d, el) {
+    this._state = this._state === _states.DEFAULT ? _states.EDIT : _states.DEFAULT
+    this.$el.toggleClass('edit-mode')
+    this._setEditState()
   }
 
   _toggleSelector (d, el) {
