@@ -240,11 +240,6 @@ trafficView.setConfig({
       ]
     }
   }, {
-    type: 'Standalone',
-    config: {
-      isSharedContainer: false,
-    },
-  }, {
     id: 'vrTrafficMessage',
     type: 'Message',
     config: {

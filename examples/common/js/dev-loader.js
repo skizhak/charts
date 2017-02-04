@@ -42,6 +42,11 @@ const devLBExamples = [
     html: 'linebar-chart/requirejs/requirejs.html',
     js: ['linebar-chart/requirejs/requirejs-config.js', 'linebar-chart/requirejs/app/example.js'],
     title: 'RequireJS',
+  },
+  {
+    html: 'linebar-chart/live/index.html',
+    js: 'linebar-chart/live/index.js',
+    title: 'Live',
   }
 ]
 

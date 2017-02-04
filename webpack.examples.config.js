@@ -55,6 +55,7 @@ const config = {
     'developer-linebar-legend': path.join(__dirname, '/examples/developer/linebar-chart/legend/'),
     'developer-linebar-timeline': path.join(__dirname, '/examples/developer/linebar-chart/timeline/'),
     'developer-linebar-tooltip': path.join(__dirname, '/examples/developer/linebar-chart/tooltip/'),
+    'developer-linebar-live': path.join(__dirname, '/examples/developer/linebar-chart/live/'),
     'developer-linebar-grouped-bar': path.join(__dirname, '/examples/developer/linebar-chart/grouped-bar-chart/'),
     'developer-linebar-navigation': path.join(__dirname, '/examples/developer/linebar-chart/navigation/'),
     'developer-radial-pie': path.join(__dirname, '/examples/developer/radial-chart/pie/'),

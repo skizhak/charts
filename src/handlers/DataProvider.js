@@ -219,12 +219,14 @@ class DataProvider extends ContrailModel {
    */
   prepareData () {
     let data = this.parentData
+    // TODO handle empty dataset too
     if (_.isEmpty(data)) return
     const formatData = this.get('formatData')
     if (_.isFunction(formatData)) {
       data = formatData(data)
     }
     this.attributes.data = data
+    this.range = {}
     this.trigger('change', this)
   }
 
