@@ -87,6 +87,12 @@ const chartConfigs = [
               axis: 'y',
             }
           ]
+        },
+        onChangeSelection: (dataProvider, chart) => {
+          const chartToUpdate = ['grouped-chart1', 'grouped-chart2']
+          if (_.includes(chartToUpdate, chart.el.id)) {
+            chart.setData(dataProvider.data)
+          }
         }
       }
     }]

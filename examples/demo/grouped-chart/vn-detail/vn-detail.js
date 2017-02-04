@@ -15,6 +15,13 @@ function pieDataParser (data) {
   return data
 }
 
+function trimTime (data) {
+  _.each(data, d => {
+    d.time /= 1000
+  })
+  return data
+}
+
 function trafficStatsParser (data) {
   let tsData = []
   if (data.length > 1) {
@@ -29,9 +36,9 @@ function trafficStatsParser (data) {
       })
       return d1
     })
-    tsData = data['flow-series']
+    tsData = trimTime(data['flow-series'])
   } else {
-    tsData = data[0]['flow-series']
+    tsData = trimTime(data[0]['flow-series'])
   }
   return tsData
 }
@@ -73,12 +80,14 @@ const trafficPlotAxisConfig = {
   y1: {
     position: 'left',
     label: 'Memory Usage',
+    ticks: 4,
     formatter: formatter.byteFormatter,
     labelMargin: 15,
   },
   y2: {
     position: 'right',
     label: 'Packets',
+    ticks: 4,
     formatter: formatter.commaGroupedInteger,
     labelMargin: 15,
   }
@@ -109,7 +118,7 @@ const chartConfigs = [
           valueFormatter: formatter.commaGroupedInteger,
         },
         tooltip: 'tooltip-id',
-        onClick: (data, chart) => {
+        onClick: (data, el, chart) => {
           if (chart.el.id === 'vn-traffic') chart.setData([].concat([data]))
         }
       },
@@ -174,9 +183,11 @@ const chartConfigs = [
         marginRight: 80,
         marginBottom: 40,
         chartHeight: 150,
-        selection: [75, 100],
         plot: trafficPlotConfig,
-        axis: _.merge(trafficPlotAxisConfig, {y1: {ticks: 2}, y2: {ticks: 2}})
+        axis: _.merge({}, trafficPlotAxisConfig, {y1: {ticks: 1, label: ''}, y2: {ticks: 1, label: ''}}),
+        selection: [75, 100],
+        // We will use default onChangeSelection handler.
+        // onChangeSelection: (dataProvider, chart) => {}
       }
     }]
   }
