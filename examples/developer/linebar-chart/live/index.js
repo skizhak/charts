@@ -10,7 +10,7 @@ const length = 21
 
 setInterval(() => {
   const dataConfig = {
-    length: 21,
+    length: length,
     data: {
       x: {linear: true, range: [counter, counter + length]},
       a: {linear: true, range: [counter, counter + length * 3]},
