@@ -1,9 +1,13 @@
 #grouped-chart1 {
-  width: 45%;
+  width: 47%;
   display: inline-block;
 }
 
 #grouped-chart2 {
-  width: 45%;
+  width: 47%;
   display: inline-block;
+}
+
+#grouped-chart-navigation {
+  width: 94%;
 }

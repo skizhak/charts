@@ -29,14 +29,14 @@ class LegendPanelView extends ContrailChartsView {
     const content = template(this.config.data)
     super.render(content)
 
-    if(!this.config.attributes.filter) {
+    if (!this.config.attributes.filter) {
       this.d3.selectAll('.legend-attribute')
              .classed('disabled', true)
              .select('input')
              .property('disabled', true)
     }
 
-    if(this.config.attributes.placement === 'vertical') {
+    if (this.config.attributes.placement === 'vertical') {
       this.$el.addClass('vertical')
     }
   }
@@ -52,8 +52,8 @@ class LegendPanelView extends ContrailChartsView {
     this.$el.find('.attribute').toggleClass('edit')
     this.$el.find('.selector').removeClass('active')
 
-    if(!this.config.attributes.editable.colorSelector) this.d3.selectAll('.select--color').hide()
-    if(!this.config.attributes.editable.chartSelector) this.d3.selectAll('.select--chart').style('display', 'none')
+    if (!this.config.attributes.editable.colorSelector) this.d3.selectAll('.select--color').hide()
+    if (!this.config.attributes.editable.chartSelector) this.d3.selectAll('.select--chart').style('display', 'none')
 
     _.each(this.$el.find('.legend-attribute > input'), function (el) {
       if ($(el).prop('disabled')) {
@@ -68,10 +68,10 @@ class LegendPanelView extends ContrailChartsView {
     this._accessor = $(el).parents('.attribute').data('accessor')
     const selectorElement = this.d3.select('.selector')
     selectorElement.classed('select--color', false).classed('select--chart', false)
-    
-    if(this.$el.find('.selector').hasClass('active')) {
+
+    if (this.$el.find('.selector').hasClass('active')) {
       selectorElement.classed('active', false)
-    } else if($(el).hasClass('select--color')) {
+    } else if ($(el).hasClass('select--color')) {
       selectorElement.classed('active', true).classed('select--color', true)
     } else if ($(el).hasClass('select--chart')) {
       selectorElement.classed('active', true).classed('select--chart', true)

@@ -58,6 +58,7 @@ const chartConfig = {
       marginLeft: 80,
       marginRight: 80,
       marginBottom: 40,
+      chartHeight: 400,
       plot: {
         x: {
           accessor: 'cpu',
@@ -191,7 +192,7 @@ const chartConfig = {
       marginLeft: 80,
       marginRight: 80,
       marginBottom: 40,
-      chartHeight: 200,
+      chartHeight: 250,
       selection: [0, 100],
       plot: {
         x: {

@@ -60,6 +60,7 @@ const chartConfig = {
         marginLeft: 80,
         marginRight: 80,
         marginBottom: 40,
+        chartHeight: 500,
         plot: {
           x: {
             accessor: 'vmi',
@@ -136,7 +137,7 @@ const chartConfig = {
         marginLeft: 80,
         marginRight: 80,
         marginBottom: 40,
-        chartHeight: 200,
+        chartHeight: 250,
         selection: [80, 100],
         plot: {
           x: {
