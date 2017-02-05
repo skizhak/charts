@@ -48,7 +48,8 @@ class AreaChartView extends XYChartSubView {
       .attr('d', area)
   }
 
-  getTooltipData (data, xPos) {
+  getTooltipData (xPos) {
+    const data = this.model.data
     const xAccessor = this.params.plot.x.accessor
     const xBisector = d3.bisector(d => {
       return d[xAccessor]
@@ -65,19 +66,19 @@ class AreaChartView extends XYChartSubView {
     if (this.config.get('tooltipEnabled')) {
       const pos = d3.mouse(el)
       const offset = el.getBoundingClientRect()
-      const dataItem = this.getTooltipData(d.data, pos[0])
+      const dataItem = this.getTooltipData(pos[0])
       const tooltipOffset = {
         top: offset.top + pos[1],
         left: offset.left + pos[0] - this.xScale.range()[0],
       }
-      this._actionman.fire('ShowComponent', d.accessor.tooltip, tooltipOffset, dataItem)
+      this._actionman.fire('ShowComponent', this.params.activeAccessorData[d.index].tooltip, tooltipOffset, dataItem)
     }
     el.classList.add('active')
   }
 
   _onMouseout (d, el) {
     if (this.config.get('tooltipEnabled')) {
-      this._actionman.fire('HideComponent', d.accessor.tooltip)
+      this._actionman.fire('HideComponent', this.params.activeAccessorData[d.index].tooltip)
     }
     el.classList.remove('active')
   }

@@ -9,7 +9,7 @@ const data = require('fixture')({
   data: {
     t: {linear: true, range: [1475760930000, 1475800930000]},
     a: {random: true, range: [0, length * 3]},
-    b: {random: true, range: [0, -length * 3]},
+    b: {random: true, range: [0, length * 3]},
   },
 })
 const formatter = require('formatter')
@@ -17,7 +17,7 @@ const colorScheme = d3.schemeCategory10
 
 const chart = new coCharts.charts.XYChartView()
 chart.setConfig({
-  container: '#basic-area-chart',
+  container: '#area-chart',
   components: [{
     type: 'LegendPanel',
     config: {
@@ -45,6 +45,7 @@ chart.setConfig({
             axis: 'y',
             label: 'A',
             color: colorScheme[2],
+            tooltip: 'default-tooltip',
           }, {
             enabled: true,
             accessor: 'b',
@@ -52,6 +53,7 @@ chart.setConfig({
             axis: 'y',
             label: 'B',
             color: colorScheme[3],
+            tooltip: 'default-tooltip',
           }
         ]
       },
@@ -64,6 +66,26 @@ chart.setConfig({
         }
       }
     }
+  }, {
+    id: 'default-tooltip',
+    type: 'Tooltip',
+    config: {
+      dataConfig: [
+        {
+          accessor: 't',
+          labelFormatter: 'Time',
+          valueFormatter: formatter.extendedISOTime,
+        }, {
+          accessor: 'a',
+          labelFormatter: 'Tooltip A',
+          valueFormatter: formatter.toInteger,
+        }, {
+          accessor: 'b',
+          labelFormatter: 'Tooltip B',
+          valueFormatter: formatter.toInteger,
+        }
+      ]
+    },
   }]
 })
 chart.setData(data)
