@@ -75,7 +75,8 @@ const config = {
     alias: {
       'fixture': 'tests/generator.js',
       'formatter': 'examples/common/js/value-formatters.js',
-      'constants': 'examples/common/js/constants.js'
+      'constants': 'examples/common/js/constants.js',
+      'data-generator': 'examples/common/js/data-generator.js'
     },
     extensions: ['', '.js']
   },

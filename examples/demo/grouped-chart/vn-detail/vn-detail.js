@@ -3,21 +3,23 @@
  */
 
 const _ = require('lodash')
+const _c = require('constants')
 const formatter = require('formatter')
+const dg = require('data-generator')
+const data = dg.projectVNTraffic({vnCount: 4, flowCount: 50})
 
-// const data = require('file?name=[name].[ext]&publicPath=./  &outputPath=js/!./vn-detail-all.json')
-const data = require('./vn-detail-all.json')
+const radialColorScheme = _c.d3ColorScheme10
 
 function pieDataParser (data) {
   _.each(data, (vn) => {
-    vn.vmi_count = vn.value.UveVirtualNetworkAgent.interface_list.length
+    //Data parser for pie
   })
   return data
 }
 
 function trimTime (data) {
   _.each(data, d => {
-    d.time /= 1000
+    //Data parser for pie
   })
   return data
 }
@@ -26,20 +28,19 @@ function trafficStatsParser (data) {
   let tsData = []
   if (data.length > 1) {
     data = _.reduce(data, function (d1, d2) {
-      _.each(d2['flow-series'], (flow, index) => {
-        d1['flow-series'][index].inBytes += flow.inBytes
-        d1['flow-series'][index].outBytes += flow.outBytes
-        d1['flow-series'][index].inPkts += flow.inPkts
-        d1['flow-series'][index].outPkts += flow.outPkts
-        d1['flow-series'][index].totalPkts += flow.totalPkts
-        d1['flow-series'][index].totalBytes += flow.totalBytes
+      _.each(d2['flows'], (flow, index) => {
+        d1['flows'][index].inTraffic += flow.inTraffic
+        d1['flows'][index].outTraffic += flow.outTraffic
+        d1['flows'][index].inPacket += flow.inPacket
+        d1['flows'][index].outPacket += flow.outPacket
       })
       return d1
     })
-    tsData = trimTime(data['flow-series'])
+    tsData = data['flows']
   } else {
-    tsData = trimTime(data[0]['flow-series'])
+    tsData = data[0]['flows']
   }
+
   return tsData
 }
 
@@ -50,22 +51,26 @@ const trafficPlotConfig = {
   },
   y: [
     {
-      accessor: 'inBytes',
+      accessor: 'inTraffic',
+      label: 'Traffic In',
       enabled: true,
       chart: 'BarChart',
       axis: 'y1',
     }, {
-      accessor: 'outBytes',
+      accessor: 'outTraffic',
+      label: 'Traffic Out',
       enabled: true,
       chart: 'BarChart',
       axis: 'y1',
     }, {
-      accessor: 'inPkts',
+      accessor: 'inPacket',
+      label: 'Packets In',
       enabled: true,
       chart: 'LineChart',
       axis: 'y2',
     }, {
-      accessor: 'outPkts',
+      accessor: 'outPacket',
+      label: 'Packets Out',
       enabled: true,
       chart: 'LineChart',
       axis: 'y2',
@@ -79,7 +84,7 @@ const trafficPlotAxisConfig = {
   },
   y1: {
     position: 'left',
-    label: 'Memory Usage',
+    label: 'Traffic',
     ticks: 4,
     formatter: formatter.byteFormatter,
     labelMargin: 15,
@@ -108,18 +113,20 @@ const chartConfigs = [
       type: 'PieChart',
       config: {
         type: 'donut',
-        radius: 100,
-        chartWidth: 200,
-        chartHeight: 300,
-        colorScale: d3.scaleOrdinal().range(d3.schemeCategory20), // eslint-disable-line no-undef
+        radius: 120,
+        chartWidth: 275,
+        chartHeight: 275,
+        colorScale: d3.scaleOrdinal().range([radialColorScheme[0], radialColorScheme[6], radialColorScheme[2], radialColorScheme[4]]), // eslint-disable-line no-undef
         serie: {
-          getValue: serie => serie.vmi_count,
-          getLabel: serie => serie.name,
+          getValue: serie => serie.vmiCount,
+          getLabel: serie => serie.vnName,
           valueFormatter: formatter.commaGroupedInteger,
         },
         tooltip: 'tooltip-id',
         onClick: (data, el, chart) => {
-          if (chart.el.id === 'vn-traffic') chart.setData([].concat([data]))
+          if (chart.el.id === 'vn-traffic') {
+            chart.setData([data])
+          }
         }
       },
     }, {
@@ -128,7 +135,7 @@ const chartConfigs = [
       config: {
         dataConfig: [
           {
-            accessor: 'vmi_count',
+            accessor: 'vmiCount',
             labelFormatter: serie => serie.name,
             valueFormatter: formatter.commaGroupedInteger,
           },
@@ -165,11 +172,9 @@ const chartConfigs = [
       id: 'compositey-chart-id',
       type: 'CompositeYChart',
       config: {
-        marginInner: 10,
         marginLeft: 80,
         marginRight: 80,
-        marginBottom: 40,
-        chartHeight: 300,
+        chartHeight: 275,
         xTicks: 6,
         possibleChartTypes: ['BarChart', 'LineChart'],
         plot: trafficPlotConfig,
@@ -181,11 +186,10 @@ const chartConfigs = [
         marginInner: 10,
         marginLeft: 80,
         marginRight: 80,
-        marginBottom: 40,
-        chartHeight: 150,
+        chartHeight: 175,
         plot: trafficPlotConfig,
         axis: _.merge({}, trafficPlotAxisConfig, {y1: {ticks: 1, label: ''}, y2: {ticks: 1, label: ''}}),
-        selection: [75, 100],
+        selection: [50, 100],
         // We will use default onChangeSelection handler.
         // onChangeSelection: (dataProvider, chart) => {}
       }
@@ -202,6 +206,7 @@ chartView.setConfig({
   // Child charts.
   charts: chartConfigs,
 })
+
 chartView.setData(data, {}, 'vn-pie')
 chartView.setData(data, {}, 'vn-traffic')
 chartView.render()

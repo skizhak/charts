@@ -1,0 +1,14 @@
+#grouped-parent-chart {
+    width: 100%;
+}
+
+#vn-pie {
+    width: 30%;
+    margin-left: 50px;
+    display: inline-block;
+}
+
+#vn-traffic {
+    width: 100%;
+    display: inline-block;
+}

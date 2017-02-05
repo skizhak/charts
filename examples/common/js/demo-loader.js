@@ -66,12 +66,12 @@ const radialExamples = [
   }
 ]
 
-const devAdvanceExamples = [
+const devGroupedExamples = [
   {
     html: 'grouped-chart/vn-detail/vn-detail.html',
     js: 'grouped-chart/vn-detail/vn-detail.js',
     css: 'grouped-chart/vn-detail/vn-detail.css',
-    title: 'Virtual Network Details',
+    title: 'Project Details',
   }
 ]
 
@@ -111,12 +111,12 @@ radialExamples.forEach(
   }
 )
 
-const $advanceLinks = $('#advanceLinks')
-devAdvanceExamples.forEach(
+const $groupedLinks = $('#groupdedLinks')
+devGroupedExamples.forEach(
   (example, idx) => {
     let $link = $(`<a href="#${idx}"><span class="nav-text">${example.title}</span></a>`)
-    $link.click(onClickAdvanceChart)
-    $advanceLinks.append($('<li>').append($link))
+    $link.click(onClickGroupedChart)
+    $groupedLinks.append($('<li>').append($link))
   }
 )
 
@@ -147,9 +147,9 @@ function onClickRadialChart (e) {
   onClickSidebar(index, radialExamples)
 }
 
-function onClickAdvanceChart (e) {
+function onClickGroupedChart (e) {
   const index = $(this).attr('href').split('#')[1]
-  onClickSidebar(index, devAdvanceExamples)
+  onClickSidebar(index, devGroupedExamples)
 }
 
 function createNewTab (id, title, group = 'js-files', checked, content) {
