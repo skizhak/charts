@@ -124,7 +124,7 @@ class LegendPanelView extends ContrailChartsView {
   }
 
   _selectChartType (d, el) {
-    const chartType = $(el).data('type')
+    const chartType = $(el).data('chart-type')
     this._actionman.fire('SelectChartType', this._accessor, chartType)
   }
 }
