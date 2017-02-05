@@ -3,47 +3,67 @@
  */
 /* global d3 */
 
+const length = 10
+const data = require('fixture')({
+  length: length,
+  data: {
+    t: {linear: true, range: [1475760930000, 1475800930000]},
+    a: {random: true, range: [0, length * 3]},
+    b: {random: true, range: [0, -length * 3]},
+  },
+})
+const formatter = require('formatter')
 const colorScheme = d3.schemeCategory10
 
-const simpleData = [
-  { x: (new Date(2016, 11, 1)).getTime(), y: 0 },
-  { x: (new Date(2016, 11, 2)).getTime(), y: 3 },
-  { x: (new Date(2016, 11, 3)).getTime(), y: 2 },
-  { x: (new Date(2016, 11, 4)).getTime(), y: 4 },
-  { x: (new Date(2016, 11, 5)).getTime(), y: 5 },
-]
-
-const simpleChartView = new coCharts.charts.XYChartView()
-simpleChartView.setConfig({
+const chart = new coCharts.charts.XYChartView()
+chart.setConfig({
   container: '#basic-area-chart',
   components: [{
+    type: 'LegendPanel',
+    config: {
+      sourceComponent: 'compositey-id',
+      editable: {
+        colorSelector: true,
+      },
+      placement: 'horizontal',
+      filter: true,
+    },
+  }, {
+    id: 'compositey-id',
     type: 'CompositeYChart',
     config: {
       plot: {
         x: {
-          accessor: 'x',
+          accessor: 't',
           axis: 'x',
         },
         y: [
           {
             enabled: true,
-            accessor: 'y',
+            accessor: 'a',
             chart: 'AreaChart',
             axis: 'y',
-            color: colorScheme[2]
+            label: 'A',
+            color: colorScheme[2],
+          }, {
+            enabled: true,
+            accessor: 'b',
+            chart: 'AreaChart',
+            axis: 'y',
+            label: 'B',
+            color: colorScheme[3],
           }
         ]
       },
       axis: {
         x: {
-          domain: [(new Date(2016, 11, 2)).getTime(), (new Date(2016, 11, 4)).getTime()]
+          formatter: formatter.extendedISOTime,
         },
         y: {
-          domain: [0, 10],
           ticks: 10,
         }
       }
     }
   }]
 })
-simpleChartView.setData(simpleData)
+chart.setData(data)

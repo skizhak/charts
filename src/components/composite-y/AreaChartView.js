@@ -15,6 +15,39 @@ class AreaChartView extends XYChartSubView {
     }
   }
 
+  combineDomains () {
+    const domains = super.combineDomains()
+    const topY = _.reduce(this.params.activeAccessorData, (sum, accessor) => {
+      return sum + this.model.getRangeFor(accessor.accessor)[1]
+    }, 0)
+    if (domains[this.axisName]) domains[this.axisName][1] = topY
+    return domains
+  }
+
+  render () {
+    super.render()
+
+    const data = this.model.data
+    const stack = d3.stack()
+
+    const area = d3.area()
+      .x(d => this.xScale(d.data[this.params.plot.x.accessor]))
+      .y0(d => this.yScale(d[0]))
+      .y1(d => this.yScale(d[1]))
+      .curve(this.config.get('curve'))
+
+    const keys = _.map(this.params.activeAccessorData, 'accessor')
+    stack.keys(keys)
+    const areas = this.d3.selectAll('.area').data(stack(data))
+    areas.exit().remove()
+    areas.enter().append('path')
+      .attr('class', d => 'area area-' + d.key)
+      .merge(areas)
+      .transition().ease(d3.easeLinear).duration(this.params.duration)
+      .attr('fill', d => this.params.activeAccessorData[d.index].color)
+      .attr('d', area)
+  }
+
   getTooltipData (data, xPos) {
     const xAccessor = this.params.plot.x.accessor
     const xBisector = d3.bisector(d => {
@@ -24,44 +57,6 @@ class AreaChartView extends XYChartSubView {
     const index = xBisector(data, xVal, 1)
     const dataItem = xVal - data[index - 1][xAccessor] > data[index][xAccessor] - xVal ? data[index] : data[index - 1]
     return dataItem
-  }
-
-  render () {
-    super.render()
-
-    const data = this.model.data
-    const linePathData = []
-    const lines = {}
-    const zeroLine = d3.line()
-      .x(d => this.xScale(d[this.params.plot.x.accessor]))
-      .y(d => this.yScale.range()[0])
-
-    // Prepare data
-    _.each(this.params.activeAccessorData, accessor => {
-      const key = accessor.accessor
-      lines[key] = d3.line()
-        .x(d => this.xScale(d[this.params.plot.x.accessor]))
-        .y(d => this.yScale(d[key]))
-        .curve(this.config.get('curve'))
-      if (!_.isEmpty(data)) linePathData.push({ key, accessor, data })
-    })
-
-    const x0 = this.xScale.range()[0]
-    const x1 = this.xScale.range()[1]
-    const y0 = this.yScale.range()[0]
-    const y1 = y0
-    const svgLines = this.d3.selectAll('.area').data(linePathData, d => d.key)
-    svgLines.exit().remove()
-    svgLines.enter().append('path')
-      .attr('class', d => 'area area-' + d.key)
-      .attr('d', d => zeroLine(data))
-      .merge(svgLines)
-      .transition().ease(d3.easeLinear).duration(this.params.duration)
-      .attr('fill', d => this.getColor(d.accessor))
-      .attr('d', d => {
-        const line = 'L' + lines[d.key](data).substr(1)
-        return 'M' + x0 + ',' + y0 + line + 'L' + x1 + ',' + y1 + 'Z'
-      })
   }
 
   // Event handlers

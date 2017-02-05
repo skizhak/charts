@@ -76,7 +76,7 @@ const mainChartPlotYConfig = _.reduce(dataProcessed.nodeIds, (config, nodeId, id
   config.push({
     accessor: `${nodeId}.sum_bytes`,
     label: `Sum(Bytes) ${nodeId}`,
-    enabled: (nodeId.indexOf('in') !== -1),
+    enabled: nodeId.includes('a'),
     chart: 'AreaChart',
     color: colorPalette[`${nodeId}.sum_bytes`],
     axis: 'y1',
