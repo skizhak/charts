@@ -6,6 +6,7 @@
 
 require('./legend.scss')
 const ContrailChartsView = require('contrail-charts-view')
+const d3Color = require('d3-color')
 const _template = require('./legend.html')
 const _states = {
   DEFAULT: 'default',
@@ -90,9 +91,24 @@ class LegendPanelView extends ContrailChartsView {
     if(this.$el.find('.selector').hasClass('active')) {
       selectorElement.classed('active', false)
     } else if($(el).hasClass('select--color')) {
+
       selectorElement.classed('active', true).classed('select--color', true)
+      const currentColor = d3Color.color($(el).data('color'))
+      selectorElement.selectAll('.swatch--color')
+      .filter(function (d, i, n) {
+        return d3Color.color($(n[i]).data('color')).toString() === currentColor.toString()
+      })
+      .classed('selected', true)
+
     } else if ($(el).hasClass('select--chart')) {
+
       selectorElement.classed('active', true).classed('select--chart', true)
+      const currentChart = $(el).data('chart-type')
+      selectorElement.selectAll('.swatch--chart')
+      .filter(function (d, i, n) {
+        return $(n[i]).data('chart-type') === currentChart
+      })
+      .classed('selected', true)
     }
 
     const elemOffset = $(el).position()

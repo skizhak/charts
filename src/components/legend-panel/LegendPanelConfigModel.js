@@ -49,6 +49,7 @@ class LegendPanelConfigModel extends ContrailChartsConfigModel {
         axis: accessor.axis,
         label: this.getLabel(undefined, accessor),
         color: this._parent.getColor(accessor),
+        chartType: accessor.chart,
         chartIcon: chartTypeIconMap[accessor.chart],
         checked: this.attributes.filter ? accessor.enabled : true,
       }
