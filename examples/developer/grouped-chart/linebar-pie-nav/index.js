@@ -129,7 +129,7 @@ const chartConfigs = [
       },
     }]
   }, {
-    id: 'grouped-chart3',
+    id: 'donut-chart',
     type: 'RadialChart',
     container: '#donut-chart',
     dataProvider: {
@@ -202,7 +202,7 @@ const chartConfigs = [
           ]
         },
         onChangeSelection: (dataProvider, chart) => {
-          const chartToUpdate = ['grouped-chart1', 'grouped-chart2', 'grouped-chart3']
+          const chartToUpdate = ['grouped-chart1', 'grouped-chart2', 'donut-chart']
           if (_.includes(chartToUpdate, chart.el.id)) {
             chart.setData(dataProvider.data)
           }
