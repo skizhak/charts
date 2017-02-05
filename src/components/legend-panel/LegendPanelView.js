@@ -87,6 +87,7 @@ class LegendPanelView extends ContrailChartsView {
     this._accessor = $(el).parents('.attribute').data('accessor')
     const selectorElement = this.d3.select('.selector')
     selectorElement.classed('select--color', false).classed('select--chart', false)
+    selectorElement.selectAll('.swatch').classed('selected', false)
     
     if(this.$el.find('.selector').hasClass('active')) {
       selectorElement.classed('active', false)
