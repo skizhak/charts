@@ -8,7 +8,8 @@ const formatter = require('formatter')
 const dg = require('data-generator')
 const data = dg.projectVNTraffic({vnCount: 4, flowCount: 50})
 
-const radialColorScheme = _c.d3ColorScheme10
+const colorScheme = _c.d3ColorScheme10
+const bubbleShapes = _c.bubbleShapes
 
 function pieDataParser (data) {
   _.each(data, (vn) => {
@@ -44,10 +45,20 @@ function trafficStatsParser (data) {
   return tsData
 }
 
+function portStatsParser (data) {
+  let tsData = []
+
+  for (let k = 0; k < data.length; k++) {
+    tsData = tsData.concat(data[k].ports)
+  }
+  return tsData
+}
+
 const trafficPlotConfig = {
   x: {
     accessor: 'time',
     axis: 'x',
+    label: 'Time'
   },
   y: [
     {
@@ -80,7 +91,8 @@ const trafficPlotConfig = {
 
 const trafficPlotAxisConfig = {
   x: {
-    formatter: formatter.extendedISOTime
+    formatter: formatter.extendedISOTime,
+    label: 'Time'
   },
   y1: {
     position: 'left',
@@ -116,7 +128,8 @@ const chartConfigs = [
         radius: 120,
         chartWidth: 275,
         chartHeight: 275,
-        colorScale: d3.scaleOrdinal().range([radialColorScheme[0], radialColorScheme[6], radialColorScheme[2], radialColorScheme[4]]), // eslint-disable-line no-undef
+        marginBottom: 60,
+        colorScale: d3.scaleOrdinal().range([colorScheme[0], colorScheme[6], colorScheme[2], colorScheme[4]]), // eslint-disable-line no-undef
         serie: {
           getValue: serie => serie.vmiCount,
           getLabel: serie => serie.vnName,
@@ -124,7 +137,7 @@ const chartConfigs = [
         },
         tooltip: 'tooltip-id',
         onClick: (data, el, chart) => {
-          if (chart.el.id === 'vn-traffic') {
+          if (chart.el.id === 'vn-traffic' || chart.el.id === 'vn-ports') {
             chart.setData([data])
           }
         }
@@ -194,10 +207,115 @@ const chartConfigs = [
         // onChangeSelection: (dataProvider, chart) => {}
       }
     }]
+  },
+  {
+    id: 'vn-ports',
+    type: 'XYChart',
+    container: '#vn-ports',
+    dataProvider: {
+      config: {
+        formatData: portStatsParser
+      }
+    },
+    components: [
+      {
+        type: 'LegendPanel',
+        config: {
+          sourceComponent: 'scatter-plot',
+          palette: _c.bubbleColorScheme14,
+          editable: {
+            colorSelector: true,
+            chartSelector: false
+          },
+          placement: 'horizontal',
+          filter: false,
+        }
+      },
+      {
+        id: 'scatter-plot',
+        type: 'CompositeYChart',
+        config: {
+          chartHeight: 360,
+          marginLeft: 90,
+          plot: {
+            x: {
+              accessor: 'port',
+              label: 'Port',
+              axis: 'x',
+            },
+            y: [
+              {
+                enabled: true,
+                accessor: 'inTraffic',
+                label: 'Port Traffic In',
+                chart: 'ScatterPlot',
+                sizeAccessor: 'outBytes',
+                sizeAxis: 'sizeAxisBytes',
+                shape: bubbleShapes.signin,
+                color: colorScheme[1],
+                axis: 'y1',
+                tooltip: 'port-tooltip-id',
+              }, {
+                enabled: true,
+                accessor: 'outTraffic',
+                label: 'Port Traffic Out',
+                chart: 'ScatterPlot',
+                sizeAccessor: 'outBytes',
+                sizeAxis: 'sizeAxisBytes',
+                shape: bubbleShapes.signout,
+                color: colorScheme[2],
+                axis: 'y1',
+                tooltip: 'port-tooltip-id',
+              }
+            ]
+          },
+          axis: {
+            x: {
+              scale: 'scaleLinear',
+              formatter: formatter.toInteger,
+              labelMargin: 5
+            },
+            sizeAxisBytes: {
+              range: [200, 400]
+            },
+            y1: {
+              position: 'left',
+              formatter: formatter.byteFormatter,
+              labelMargin: 15,
+            },
+          }
+        }
+      }, {
+        id: 'port-tooltip-id',
+        type: 'Tooltip',
+        config: {
+          title: 'Port Traffic',
+          dataConfig: [
+            {
+              accessor: 'vnName',
+              labelFormatter: 'Virtual Network',
+            },
+            {
+              accessor: 'port',
+              labelFormatter: 'Port Number',
+            }, {
+              accessor: 'inTraffic',
+              labelFormatter: 'Traffic In',
+              valueFormatter: formatter.byteFormatter,
+            }, {
+              accessor: 'outTraffic',
+              labelFormatter: 'Traffic Out',
+              valueFormatter: formatter.byteFormatter,
+            }
+          ]
+        }
+      }
+    ]
   }
 ]
 
 const chartView = new coCharts.charts.MultiChartView()
+
 chartView.setConfig({
   id: 'grouped-parent-chart',
   type: 'MultiChart',
@@ -208,5 +326,6 @@ chartView.setConfig({
 })
 
 chartView.setData(data, {}, 'vn-pie')
+chartView.setData(data, {}, 'vn-ports')
 chartView.setData(data, {}, 'vn-traffic')
 chartView.render()

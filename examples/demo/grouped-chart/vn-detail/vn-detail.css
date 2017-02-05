@@ -10,5 +10,10 @@
 
 #vn-traffic {
     width: 100%;
+    margin-bottom: 50px;
+    display: inline-block;
+}
+#vn-ports {
+    width: 65%;
     display: inline-block;
 }

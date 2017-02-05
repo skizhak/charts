@@ -71,7 +71,7 @@ const devGroupedExamples = [
     html: 'grouped-chart/vn-detail/vn-detail.html',
     js: 'grouped-chart/vn-detail/vn-detail.js',
     css: 'grouped-chart/vn-detail/vn-detail.css',
-    title: 'Project Details',
+    title: 'Project VN Traffic',
   }
 ]
 

@@ -60,7 +60,7 @@ const chartConfig = {
       id: 'scatter-plot',
       type: 'CompositeYChart',
       config: {
-        chartHeight: 600,
+        chartHeight: 450,
         marginInner: 10,
         marginLeft: 100,
         marginRight: 80,
@@ -75,7 +75,7 @@ const chartConfig = {
             {
               enabled: true,
               accessor: 'inBytes',
-              label: 'Ports Traffic In',
+              label: 'Port Traffic In',
               chart: 'ScatterPlot',
               sizeAccessor: 'outBytes',
               sizeAxis: 'sizeAxisBytes',
@@ -86,7 +86,7 @@ const chartConfig = {
             }, {
               enabled: true,
               accessor: 'outBytes',
-              label: 'Ports Traffic Out',
+              label: 'Port Traffic Out',
               chart: 'ScatterPlot',
               sizeAccessor: 'outBytes',
               sizeAxis: 'sizeAxisBytes',
@@ -148,7 +148,7 @@ const chartConfig = {
         marginLeft: 80,
         marginRight: 80,
         marginBottom: 60,
-        chartHeight: 200,
+        chartHeight: 250,
         selection: [75, 100],
         plot: {
           x: {
