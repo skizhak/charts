@@ -38,7 +38,6 @@ $border-color: #fafafa;
     display: inline-block;
     border-right: 1px solid $border-color;
     padding-right: 8px;
-    margin-right: 4px;
     font-size: 18px;
     vertical-align: middle;
     color: #9e9e9e;
@@ -63,6 +62,10 @@ $border-color: #fafafa;
   border: 1px solid #fff;
   padding: 2px 4px;
   margin-right: 4px;
+
+  &:last-child {
+    margin-right: 0;
+  }
 
   .edit-attribute {
     display: none;
