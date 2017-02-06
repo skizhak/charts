@@ -2,7 +2,12 @@
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
 
-const data = require('fixture')({
+const commons = require('commons')
+
+const formatter = commons.formatter
+const _c = commons._c
+
+const data = commons.fixture({
   length: 40,
   data: {
     x: {linear: true, range: [1475760930000, 1475800930000]},
@@ -14,8 +19,7 @@ const data = require('fixture')({
     nav: {random: true, range: [0, 10]},
   },
 })
-const formatter = require('formatter')
-const _c = require('constants')
+
 
 const colorScheme = _c.bubbleColorScheme6
 const bubbleShapes = _c.bubbleShapes

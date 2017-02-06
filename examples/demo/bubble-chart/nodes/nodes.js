@@ -2,9 +2,11 @@
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
 
-const _ = require('lodash')
-const formatter = require('formatter')
-const _c = require('constants')
+const commons = require('commons')
+
+const _ = commons._
+const formatter = commons.formatter
+const _c = commons._c
 
 const bubbleShapes = _c.bubbleShapes
 const colorScheme = _c.bubbleColorScheme13
@@ -26,7 +28,7 @@ let data = {}
 for (var n in nodes) {
   count = nodes[n]
   for (let i = 0; i < count; i++) {
-    cpu = _.random(0, (i < .7 * count) ? 30 : ((i < .8 * count) ? 80 : 100))
+    cpu = _.random(0, (i < 0.7 * count) ? 30 : ((i < 0.8 * count) ? 80 : 100))
     data = {
       cpu: cpu,
       size: Math.random() * 10
@@ -174,7 +176,7 @@ const chartConfig = {
             let memory = '-'
 
             for (var i in nodes) {
-              if(point[nodes[i]]) {
+              if (point[nodes[i]]) {
                 memory = formatter.byteFormatter(point[nodes[i]])
                 break
               }

@@ -2,10 +2,12 @@
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
 
-const d3 = require('d3')
-const formatter = require('formatter')
-const _c = require('constants')
+const commons = require('commons')
 
+const formatter = commons.formatter
+const _c = commons._c
+
+const colorScheme = _c.d3ColorScheme10
 const bubbleShapes = _c.bubbleShapes
 
 function dataProcesser (data) {
@@ -35,7 +37,6 @@ function dataProcesser (data) {
   )
 }
 
-const colorScheme = d3.schemeCategory10
 let dataSrc = require('./port-distribution.json')
 
 dataSrc = dataProcesser(dataSrc)

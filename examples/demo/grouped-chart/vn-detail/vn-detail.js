@@ -2,25 +2,19 @@
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
 
-const _ = require('lodash')
-const _c = require('constants')
-const formatter = require('formatter')
-const dg = require('data-generator')
-const data = dg.projectVNTraffic({vnCount: 4, flowCount: 50})
+const commons = require('commons')
 
+const _ = commons._
+const formatter = commons.formatter
+const _c = commons._c
+
+const data = commons.dg.projectVNTraffic({vnCount: 4, flowCount: 50})
 const colorScheme = _c.d3ColorScheme10
 const bubbleShapes = _c.bubbleShapes
 
 function pieDataParser (data) {
   _.each(data, (vn) => {
-    //Data parser for pie
-  })
-  return data
-}
-
-function trimTime (data) {
-  _.each(data, d => {
-    //Data parser for pie
+    // Data parser for pie
   })
   return data
 }

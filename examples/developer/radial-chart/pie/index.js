@@ -2,7 +2,8 @@
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
 
-const formatter = require('formatter')
+const commons = require('commons')
+const formatter = commons.formatter
 
 const pieData = [
     { label: 'Process 1', value: 2704659 },

@@ -144,7 +144,7 @@ devGroupedExamples.forEach(
 $('#linebar').click()
 $lineBarLinks.find('#lb0').click()
 
-$("#demo-link").click(function () {
+$('#demo-link').click(function () {
   window.open('demo.html')
 })
 

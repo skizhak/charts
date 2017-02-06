@@ -2,7 +2,9 @@
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
 
-const formatter = require('formatter')
+const commons = require('commons')
+
+const formatter = commons.formatter
 
 // Complex example
 const complexData = []

@@ -2,9 +2,11 @@
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
 
-const _ = require('lodash')
-const formatter = require('formatter')
-const _c = require('constants')
+const commons = require('commons')
+
+const _ = commons._
+const formatter = commons.formatter
+const _c = commons._c
 
 const now = _.now()
 const colorScheme = _c.d3ColorScheme20
@@ -79,7 +81,7 @@ const chartConfigs = [
               accessor: 'b',
               enabled: true,
               chart: 'BarChart',
-              color: colorScheme[4],
+              color: colorScheme[1],
               axis: 'y',
             }
           ]
@@ -196,7 +198,7 @@ const chartConfigs = [
               label: 'Label D',
               enabled: true,
               chart: 'LineChart',
-              color: colorScheme[5],
+              color: colorScheme[4],
               axis: 'y',
             }
           ]

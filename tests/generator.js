@@ -1,11 +1,8 @@
 /*
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
-/*
- * data generator for examples and tests
- */
-const _ = require('lodash')
-const d3 = require('d3')
+
+// Data generator for developer's examples and tests
 module.exports = function (p = {}) {
   const data = []
   const length = p.length || 21

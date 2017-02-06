@@ -2,11 +2,13 @@
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
 
-const _ = require('lodash')
-const dataSrc = require('./inout-traffic.json')
-const formatter = require('formatter')
-const _c = require('constants')
+const commons = require('commons')
 
+const _ = commons._
+const formatter = commons.formatter
+const _c = commons._c
+
+const dataSrc = require('./inout-traffic.json')
 const lbColorScheme5 = _c.lbColorScheme7
 
 function dataProcesser (rawData) {

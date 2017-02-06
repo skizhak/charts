@@ -24,17 +24,17 @@ const demoBubbleExamples = [
   {
     html: 'bubble-chart/nodes/nodes.html',
     js: 'bubble-chart/nodes/nodes.js',
-    title: "Node CPU/Mem"
+    title: 'Node CPU/Mem'
   },
   {
     html: 'bubble-chart/port-distribution/port-distribution.html',
     js: 'bubble-chart/port-distribution/port-distribution.js',
-    title: "Port Distribution"
+    title: 'Port Distribution'
   },
   {
     html: 'bubble-chart/vrouter-vmi/vrouter-vmi.html',
     js: 'bubble-chart/vrouter-vmi/vrouter-vmi.js',
-    title: "vRouters"
+    title: 'vRouters'
   }
 ]
 
@@ -123,7 +123,7 @@ devGroupedExamples.forEach(
 $('#bubble').click()
 $bubbleLinks.find('#b0').click()
 
-$("#developer-link").click(function () {
+$('#developer-link').click(function () {
   window.open('developer.html')
 })
 

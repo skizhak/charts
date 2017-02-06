@@ -2,13 +2,15 @@
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
 
-const formatter = require('formatter')
 
-// Complex example
-const complexData = []
+const commons = require('commons')
+
+const formatter = commons.formatter
+const simpleData = []
+
 for (let i = 0; i < 100; i++) {
   const a = Math.random() * 100
-  complexData.push({
+  simpleData.push({
     x: 1475760930000 + 1000000 * i,
     a: a,
     b: a + Math.random() * 10,
@@ -17,8 +19,9 @@ for (let i = 0; i < 100; i++) {
     e: (Math.random() - 0.5) * 10
   })
 }
-const complexChartView = new coCharts.charts.XYChartView()
-complexChartView.setConfig({
+
+const simpleChartView = new coCharts.charts.XYChartView()
+simpleChartView.setConfig({
   container: '#chart-legend',
   components: [{
     type: 'LegendPanel',
@@ -216,8 +219,9 @@ complexChartView.setConfig({
     }
   }]
 })
-complexChartView.setData(complexData)
-complexChartView.renderMessage({
+
+simpleChartView.setData(simpleData)
+simpleChartView.renderMessage({
   componentId: 'XYChart',
   action: 'once',
   messages: [{

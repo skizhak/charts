@@ -2,9 +2,11 @@
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
 
-const _ = require('lodash')
-const formatter = require('formatter')
-const _c = require('constants')
+const commons = require('commons')
+
+const _ = commons._
+const formatter = commons.formatter
+const _c = commons._c
 
 const queryChart = new coCharts.charts.XYChartView()
 queryChart.setConfig({
@@ -185,7 +187,7 @@ queryChart.setConfig({
 })
 
 let simpleData = []
-let now = _.now();
+let now = _.now()
 
 for (let i = 0; i < 100; i++) {
   simpleData.push(getDataPoint(now - (i * 1000)))
@@ -194,13 +196,13 @@ for (let i = 0; i < 100; i++) {
 queryChart.setData(simpleData)
 
 setInterval(() => {
-  now += 1000;
+  now += 1000
   simpleData.splice(99, 1)
   simpleData = [getDataPoint(now)].concat(simpleData)
   queryChart.setData(simpleData)
 }, 1000)
 
-function getDataPoint(x) {
+function getDataPoint (x) {
   const a = Math.random() * 10000
   return {
     x: x,
