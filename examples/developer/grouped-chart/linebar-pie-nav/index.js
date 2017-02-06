@@ -196,7 +196,7 @@ const chartConfigs = [
               label: 'Label D',
               enabled: true,
               chart: 'LineChart',
-              color: colorScheme[8],
+              color: colorScheme[5],
               axis: 'y',
             }
           ]
