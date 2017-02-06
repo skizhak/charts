@@ -43,7 +43,7 @@ const chartConfig = {
       type: 'LegendPanel',
       config: {
         sourceComponent: 'scatter-plot',
-        palette: _c.bubbleColorScheme14,
+        palette: _c.bubbleColorScheme13,
         editable: {
           colorSelector: true,
           chartSelector: false
@@ -77,7 +77,7 @@ const chartConfig = {
               sizeAxis: 'sizeAxis',
               shape: bubbleShapes.certificate,
               axis: 'y1',
-              color: colorScheme[1],
+              color: colorScheme[3],
               tooltip: 'tooltip-id',
             }
           ]
