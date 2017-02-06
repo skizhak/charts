@@ -9,6 +9,8 @@ class SerieProvider extends ContrailModel {
   get defaults () {
     return {
       _type: 'SerieProvider',
+      // Data formatter
+      formatData: undefined,
     }
   }
 
@@ -22,8 +24,17 @@ class SerieProvider extends ContrailModel {
     this.listenTo(this, 'change:error', this.triggerError)
   }
 
+  setConfig (config) {
+    this.set(config)
+  }
+
   parse () {
-    this.set('data', this.get('parent').get('data'))
+    let data = this.get('parent').get('data')
+    const formatData = this.get('formatData')
+    if (_.isFunction(formatData)) {
+      data = formatData(data)
+    }
+    this.set('data', data)
   }
 
   getLabels (formatter) {

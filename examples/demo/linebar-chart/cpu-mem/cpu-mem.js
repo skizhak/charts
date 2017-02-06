@@ -79,7 +79,7 @@ const mainChartPlotYConfig = _.reduce(dataProcessed.nodeIds, (config, nodeId, id
   }, {
     accessor: `${nodeId}.mem_res`,
     label: `${nodeId} Memory Usage`,
-    enabled: false,
+    enabled: true,
     chart: 'LineChart',
     color: colorPalette[`${nodeId}.mem_res`],
     axis: 'y2',
@@ -96,7 +96,7 @@ const navPlotYConfig = _.reduce(dataProcessed.nodeIds, (config, nodeId, idx) => 
     color: colorPalette[`${nodeId}.cpu_share`],
     axis: 'y1',
   }, {
-    enabled: false,
+    enabled: true,
     accessor: `${nodeId}.mem_res`,
     // labelFormatter: 'Memory Usage',
     chart: 'LineChart',
@@ -241,11 +241,6 @@ cpuMemChartView.setConfig({
         }
       ]
     }
-  }, {
-    type: 'Standalone',
-    config: {
-      isSharedContainer: false,
-    },
   }, {
     id: 'cpu-mem-message',
     type: 'Message',

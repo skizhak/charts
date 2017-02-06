@@ -71,13 +71,13 @@ class XYChartSubView extends ContrailChartsView {
     if (this.model.data.length < 2) getFullRange = true
     domains[xAxisName] = this.model.getRangeFor(xAccessor, getFullRange)
 
-    const seriesByAxis = _.groupBy(this.params.plot.y, 'axis')
-    _.each(seriesByAxis, (accessors, axisName) => {
-      const enabledSeries = _.map(_.filter(accessors, a => a.enabled), 'accessor')
-      domains[axisName] = this.model.combineDomains(enabledSeries)
+    const enabledAccessors = _.filter(this.params.plot.y, a => a.enabled)
+    const accessorsByAxis = _.groupBy(enabledAccessors, 'axis')
+    _.each(accessorsByAxis, (accessors, axisName) => {
+      domains[axisName] = this.model.combineDomains(_.map(accessors, 'accessor'))
       if (domains[axisName][0] === domains[axisName][1]) {
         // TODO get maximum range of all enabled series but not of first only?
-        domains[axisName] = this.model.getRangeFor(enabledSeries[0], true)
+        domains[axisName] = this.model.getRangeFor(accessors[0].accessor, true)
       }
 
       // Override axis domain based on axis config.

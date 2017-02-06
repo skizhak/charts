@@ -40,6 +40,19 @@ const chartConfig = {
   container: '#vrouter-vmi-chart',
   components: [
     {
+      type: 'LegendPanel',
+      config: {
+        sourceComponent: 'scatter-plot',
+        palette: _c.bubbleColorScheme14,
+        editable: {
+          colorSelector: true,
+          chartSelector: false
+        },
+        placement: 'horizontal',
+        filter: false,
+      }
+    },
+    {
       id: 'scatter-plot',
       type: 'CompositeYChart',
       config: {
@@ -47,6 +60,7 @@ const chartConfig = {
         marginLeft: 80,
         marginRight: 80,
         marginBottom: 40,
+        chartHeight: 500,
         plot: {
           x: {
             accessor: 'vmi',
@@ -58,7 +72,7 @@ const chartConfig = {
               enabled: true,
               accessor: 'vn',
               chart: 'ScatterPlot',
-              label: 'Virtual Networks',
+              label: 'vRouters',
               sizeAccessor: 'size',
               sizeAxis: 'sizeAxis',
               shape: bubbleShapes.certificate,
@@ -79,7 +93,7 @@ const chartConfig = {
           y1: {
             position: 'left',
             formatter: formatter.toInteger,
-            label: 'Virtual Networks',
+            label: 'Virtual Networks3',
           }
         },
       }
@@ -101,7 +115,7 @@ const chartConfig = {
           },
           {
             accessor: 'vn',
-            labelFormatter: 'Virtual Networks',
+            labelFormatter: 'Virtual Networks2',
             valueFormatter: formatter.toInteger
           },
           {
@@ -123,7 +137,7 @@ const chartConfig = {
         marginLeft: 80,
         marginRight: 80,
         marginBottom: 40,
-        chartHeight: 200,
+        chartHeight: 250,
         selection: [80, 100],
         plot: {
           x: {

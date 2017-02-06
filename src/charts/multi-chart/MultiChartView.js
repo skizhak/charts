@@ -2,6 +2,7 @@
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
 const _ = require('lodash')
+const ContrailChartsDataModel = require('contrail-charts-data-model')
 const ContrailChartsView = require('contrail-charts-view')
 // Todo doesn't work. loop issue.
 // const charts = require('charts/index')
@@ -10,19 +11,38 @@ const charts = {
   RadialChart: require('charts/radial-chart/RadialChartView'),
 }
 const components = require('components/index')
+const handlers = require('handlers/index')
+const Actionman = require('../../plugins/Actionman')
+const _actions = []
 
 class ChartView extends ContrailChartsView {
   constructor (p) {
     super(p)
     this._charts = {}
+    this._dataModel = new ContrailChartsDataModel()
+    this._dataProvider = new handlers.DataProvider({ parentDataModel: this._dataModel })
     this._components = []
+    this._actionman = new Actionman()
+    _.each(_actions, action => this._actionman.set(action, this))
   }
   /**
   * Data can be set separately into every chart so every chart can have different data.
   */
-  setData (data, dataConfig = {}, chartId = 'default') {
+  setData (data, dataConfig = {}, id = 'default') {
     // Set data to the given chart if it exists.
-    if (this._charts[chartId]) this._charts[chartId].setData(data, dataConfig)
+    if (this._charts[id]) {
+      this._charts[id].setData(data, dataConfig)
+    } else {
+      if (dataConfig) this.setDataConfig(dataConfig)
+      if (_.isArray(data)) this._dataModel.data = data
+    }
+  }
+  /**
+   * Set ContrailChartsDataModel config
+   * @param dataConfig
+   */
+  setDataConfig (dataConfig = {}) {
+    this._dataModel.set(dataConfig, { silent: true })
   }
   /**
   * Sets the config for all charts that can be part of this parent chart.
@@ -30,10 +50,10 @@ class ChartView extends ContrailChartsView {
   */
   setConfig (config) {
     this._config = config
-    // Initialize child charts
-    this._initCharts()
     // Initialize parent components
     this._initComponents()
+    // Initialize child charts
+    this._initCharts()
   }
 
   _registerHandler (type, config) {
@@ -59,27 +79,59 @@ class ChartView extends ContrailChartsView {
   }
 
   _registerChart (chart) {
-    if (chart.chartId) {
-      if (!this._charts[chart.chartId]) {
-        this._charts[chart.chartId] = new charts[chart.type]()
+    if (chart.id) {
+      if (!this._charts[chart.id]) {
+        this._charts[chart.id] = new charts[chart.type]()
       }
-      this._charts[chart.chartId].setConfig(chart)
+      this._charts[chart.id].setConfig(chart)
     }
   }
 
+  /**
+   * Initialize configured components
+   */
   _initComponents () {
-    _.each(this._config.components, (component) => {
+    _.each(this._config.components, (component, index) => {
+      component.config.order = index
       this._registerComponent(component.type, component.config, this._dataProvider, component.id)
+    })
+
+    // Post init configuration of components dependant on others
+
+    _.each(this._components, (component, index) => {
+      const sourceComponentId = component.config.get('sourceComponent')
+      if (sourceComponentId) {
+        const sourceComponent = this.getComponent(sourceComponentId)
+        component.config.parent = sourceComponent.config
+      }
+      if (this._isEnabledComponent('Tooltip')) {
+        component.config.toggleComponent('Tooltip', true)
+      }
+      if (this._isEnabledComponent('Crosshair')) {
+        component.config.toggleComponent('Crosshair', true)
+      }
     })
   }
 
+  /**
+   * Initialize individual component by type, given config, data model and id
+   * @param {String} type
+   * @param {Object} config
+   * @param {String} id optional
+   */
   _registerComponent (type, config, model, id) {
     if (!this._isEnabledComponent(type)) return false
-    const configModel = new components[`${type}ConfigModel`](config)
-    const viewOptions = _.extend(config, {
+    let configModel
+    if (components[`${type}ConfigModel`]) {
+      configModel = new components[`${type}ConfigModel`](config)
+    }
+    const viewOptions = _.extend({}, config, {
       id: id,
       config: configModel,
       model: model,
+      container: this.el,
+      // actionman is passed as parameter to each component for it to be able to register action
+      actionman: this._actionman,
     })
     const component = new components[`${type}View`](viewOptions)
     this._components.push(component)

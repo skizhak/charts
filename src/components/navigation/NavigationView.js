@@ -42,6 +42,8 @@ class NavigationView extends ContrailChartsView {
     super.render()
     this.resetParams()
     this._compositeYChartView.container = this.el
+    // TODO this will also trigger render async, but the next one is needed by following _update immediately
+    this._compositeYChartView.config.set(this.config.attributes)
     this._compositeYChartView.render()
     this._update()
   }
@@ -86,7 +88,7 @@ class NavigationView extends ContrailChartsView {
     if (_.isDate(xMax)) xMax = xMax.getTime()
 
     this._selection.filter(xAccessor, [xMin, xMax])
-    this._actionman.fire('ChangeSelection', this._selection)
+    this._actionman.fire('ChangeSelection', this._selection, this.config.get('onChangeSelection'))
   }
   /**
    * Turn off selection for the animation period on resize

@@ -35,22 +35,22 @@ class LegendPanelView extends ContrailChartsView {
     const content = template(this.config.data)
     super.render(content)
 
-    if(!this.config.attributes.filter) {
+    if (!this.config.attributes.filter) {
       this.d3.selectAll('.legend-attribute')
              .classed('disabled', true)
              .select('input')
              .property('disabled', true)
     }
 
-    if(this.config.attributes.placement === 'vertical') {
+    if (this.config.attributes.placement === 'vertical') {
       this.$el.addClass('vertical')
     }
 
-    if(this.config.data.axesCount > 1) {
+    if (this.config.data.axesCount > 1) {
       this.d3.selectAll('.axis').classed('active', true)
     }
 
-    if(this._state === _states.EDIT) {
+    if (this._state === _states.EDIT) {
       this._setEditState()
     }
   }
@@ -65,8 +65,8 @@ class LegendPanelView extends ContrailChartsView {
     this.$el.find('.attribute').toggleClass('edit')
     this.$el.find('.selector').removeClass('active')
 
-    if(!this.config.attributes.editable.colorSelector) this.d3.selectAll('.select--color').style('display', 'none')
-    if(!this.config.attributes.editable.chartSelector) this.d3.selectAll('.select--chart').style('display', 'none')
+    if (!this.config.attributes.editable.colorSelector) this.d3.selectAll('.select--color').style('display', 'none')
+    if (!this.config.attributes.editable.chartSelector) this.d3.selectAll('.select--chart').style('display', 'none')
 
     _.each(this.$el.find('.legend-attribute > input'), (el) => {
       if (this._state === _states.DEFAULT) {
@@ -88,11 +88,10 @@ class LegendPanelView extends ContrailChartsView {
     const selectorElement = this.d3.select('.selector')
     selectorElement.classed('select--color', false).classed('select--chart', false)
     selectorElement.selectAll('.swatch').classed('selected', false)
-    
-    if(this.$el.find('.selector').hasClass('active')) {
-      selectorElement.classed('active', false)
-    } else if($(el).hasClass('select--color')) {
 
+    if (this.$el.find('.selector').hasClass('active')) {
+      selectorElement.classed('active', false)
+    } else if ($(el).hasClass('select--color')) {
       selectorElement.classed('active', true).classed('select--color', true)
       const currentColor = d3Color.color($(el).data('color'))
       selectorElement.selectAll('.swatch--color')
@@ -100,9 +99,7 @@ class LegendPanelView extends ContrailChartsView {
         return d3Color.color($(n[i]).data('color')).toString() === currentColor.toString()
       })
       .classed('selected', true)
-
     } else if ($(el).hasClass('select--chart')) {
-
       selectorElement.classed('active', true).classed('select--chart', true)
       const currentChart = $(el).data('chart-type')
       selectorElement.selectAll('.swatch--chart')

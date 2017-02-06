@@ -73,6 +73,10 @@ class DataProvider extends ContrailModel {
     return data
   }
 
+  setConfig (config) {
+    this.set(config)
+  }
+
   get queryLimit () {
     let queryLimit
     if (this.hasParentModel() && _.isFunction(this.parentModel.getQueryLimit)) {
@@ -111,13 +115,13 @@ class DataProvider extends ContrailModel {
     return this.has('parentDataModel')
   }
 
-  getRangeFor (constiableName) {
+  getRangeFor (key) {
     if (_.isEmpty(this.data)) return []
     const range = this.range
-    if (!_.has(range, constiableName)) {
-      range[constiableName] = this.calculateRangeForDataAndVariableName(this.data, constiableName)
+    if (!_.has(range, key)) {
+      range[key] = this.calculateRangeForDataAndVariableName(this.data, key)
     }
-    return range[constiableName]
+    return range[key]
   }
 
   getParentRange () {
@@ -155,24 +159,24 @@ class DataProvider extends ContrailModel {
     this.setRanges({}, {})
   }
   /**
-   * Worker function used to calculate a data range for provided constaible name.
+   * Worker function used to calculate a data range for provided key name.
    */
-  calculateRangeForDataAndVariableName (data, constiableName) {
-    let constiableRange
+  calculateRangeForDataAndVariableName (data, key) {
+    let keyRange
     const manualRange = this.get('manualRange')
-    if (_.isArray(manualRange[constiableName])) {
+    if (_.isArray(manualRange[key])) {
       // Use manually set range if available.
-      constiableRange = [manualRange[constiableName][0], manualRange[constiableName][1]]
+      keyRange = [manualRange[key][0], manualRange[key][1]]
     } else {
       // Otherwise calculate the range from data.
       if (data.length) {
-        constiableRange = d3Array.extent(data, d => _.get(d, constiableName))
+        keyRange = d3Array.extent(data, d => _.get(d, key))
       } else {
         // No data available so assume a [0..1] range.
-        constiableRange = [0, 1]
+        keyRange = [0, 1]
       }
     }
-    return constiableRange
+    return keyRange
   }
   /**
    * Utility function to filter data by inclusion of dataframe inside provided ranges
@@ -219,12 +223,14 @@ class DataProvider extends ContrailModel {
    */
   prepareData () {
     let data = this.parentData
+    // TODO handle empty dataset too
     if (_.isEmpty(data)) return
     const formatData = this.get('formatData')
     if (_.isFunction(formatData)) {
       data = formatData(data)
     }
-    this.attributes.data = data
+    this.set({data: data})
+    this.range = {}
     this.trigger('change', this)
   }
 
