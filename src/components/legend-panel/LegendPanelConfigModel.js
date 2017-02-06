@@ -29,6 +29,8 @@ class LegendPanelConfigModel extends ContrailChartsConfigModel {
 
   get data () {
     const accessors = this._parent.getAccessors()
+    const axesCount = _.chain(accessors).map('axis').uniq().value().length
+
     const data = {
       colors: this.attributes.palette,
       possibleChartTypes: _.map(this._parent.attributes.possibleChartTypes, (chartType) => {
@@ -38,8 +40,7 @@ class LegendPanelConfigModel extends ContrailChartsConfigModel {
         }
       }),
       editable: this.attributes.editable.colorSelector || this.attributes.editable.chartSelector,
-      filter: this.attributes.filter,
-      placement: this.attributes.placement
+      axesCount: axesCount
     }
 
     data.attributes = _.map(accessors, (accessor) => {
@@ -48,6 +49,7 @@ class LegendPanelConfigModel extends ContrailChartsConfigModel {
         axis: accessor.axis,
         label: this.getLabel(undefined, accessor),
         color: this._parent.getColor(accessor),
+        chartType: accessor.chart,
         chartIcon: chartTypeIconMap[accessor.chart],
         checked: this.attributes.filter ? accessor.enabled : true,
       }
