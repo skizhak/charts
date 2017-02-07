@@ -23,8 +23,10 @@ function getValue (serie) {
   return serie.value
 }
 
+const container = 'chart-container'
+
 const chartConfig = {
-  container: '#disk-donut-chart',
+  container: `#${container}`,
   components: [{
     type: 'ControlPanel',
     config: {
@@ -66,6 +68,20 @@ const chartConfig = {
   }
   ]
 }
+
+let isInitialized = false
 const chartView = new coCharts.charts.RadialChartView()
-chartView.setConfig(chartConfig)
-chartView.setData(pieData)
+
+module.exports = {
+  container: container,
+  render: (ids) => {
+    if (isInitialized) {
+      chartView.render()
+    } else {
+      isInitialized = true
+
+      chartView.setConfig(chartConfig)
+      chartView.setData(pieData)
+    }
+  }
+}

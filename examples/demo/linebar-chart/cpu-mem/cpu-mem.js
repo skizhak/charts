@@ -125,10 +125,10 @@ const tooltipDataConfig = _.reduce(dataProcessed.nodeIds, (config, nodeId) => {
   valueFormatter: formatter.extendedISOTime,
 }])
 
-// Create chart view.
-const cpuMemChartView = new coCharts.charts.XYChartView()
-cpuMemChartView.setConfig({
-  container: '#cpu-mem-chart',
+const container = 'chart-container'
+
+const chartConfig = {
+  container: `#${container}`,
   components: [{
     type: 'LegendPanel',
     config: {
@@ -254,14 +254,31 @@ cpuMemChartView.setConfig({
       tooltip: 'default-tooltip',
     }
   }]
-})
-cpuMemChartView.setData(dataProcessed.data)
-cpuMemChartView.renderMessage({
-  componentId: 'XYChart',
-  action: 'once',
-  messages: [{
-    level: 'info',
-    title: '',
-    message: 'Loading ...',
-  }]
-})
+}
+
+let isInitialized = false
+// Create chart view.
+const cpuMemChartView = new coCharts.charts.XYChartView()
+
+module.exports = {
+  container: container,
+  render: () => {
+    if (isInitialized) {
+      cpuMemChartView.render()
+    } else {
+      isInitialized = true
+      cpuMemChartView.setConfig(chartConfig)
+      cpuMemChartView.setData(dataProcessed.data)
+      cpuMemChartView.renderMessage({
+        componentId: 'XYChart',
+        action: 'once',
+        messages: [{
+          level: 'info',
+          title: '',
+          message: 'Loading ...',
+        }]
+      })
+    }
+  }
+}
+

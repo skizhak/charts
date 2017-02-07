@@ -26,7 +26,7 @@ let data = {}
 for (var n in nodes) {
   count = nodes[n]
   for (let i = 0; i < count; i++) {
-    cpu = _.random(0, (i < .7 * count) ? 30 : ((i < .8 * count) ? 80 : 100))
+    cpu = _.random(0, (i < 0.7 * count) ? 30 : ((i < 0.8 * count) ? 80 : 100))
     data = {
       cpu: cpu,
       size: Math.random() * 10
@@ -36,8 +36,10 @@ for (var n in nodes) {
   }
 }
 
+const container = 'chart-container'
+
 const chartConfig = {
-  container: '#nodes-bubble-chart',
+  container: `#${container}`,
   components: [{
     type: 'LegendPanel',
     config: {
@@ -283,6 +285,19 @@ const chartConfig = {
   }]
 }
 
+let isInitialized = false
 const chartView = new coCharts.charts.XYChartView()
-chartView.setConfig(chartConfig)
-chartView.setData(simpleData)
+
+module.exports = {
+  container: container,
+  render: () => {
+    if (isInitialized) {
+      chartView.render()
+    } else {
+      isInitialized = true
+
+      chartView.setConfig(chartConfig)
+      chartView.setData(simpleData)
+    }
+  }
+}

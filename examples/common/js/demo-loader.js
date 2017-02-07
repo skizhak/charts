@@ -7,64 +7,66 @@
 require('../sass/contrail-charts-examples.scss')
 const _ = require('lodash')
 
-const demoLBExamples = [
-  {
-    html: 'linebar-chart/query-db-rw/query-db.html',
-    js: 'linebar-chart/query-db-rw/query-db.js',
-    title: 'Queries & DB R/W',
-  },
-  {
-    html: 'linebar-chart/cpu-mem/cpu-mem.html',
-    js: 'linebar-chart/cpu-mem/cpu-mem.js',
-    title: 'Memory & CPU'
-  }
-]
+const inoutTrafficChart = require('../../demo/area-chart/inout-traffic/inout-traffic.js')
+const vrTraffic = require('../../demo/area-chart/vr-traffic/vr-traffic.js')
+const nodeCPUMemChart = require('../../demo/bubble-chart/nodes/nodes.js')
+const portDistributionChart = require('../../demo/bubble-chart/port-distribution/port-distribution.js')
+const vRoutersChart = require('../../demo/bubble-chart/vrouter-vmi/vrouter-vmi.js')
+const queryDBChart = require('../../demo/linebar-chart/query-db-rw/query-db.js')
+const cpuMemChart = require('../../demo/linebar-chart/cpu-mem/cpu-mem.js')
+const diskUsageChart = require('../../demo/radial-chart/disk-usage/disk.js')
+const poolUsageChart = require('../../demo/radial-chart/pool-usage/pools.js')
+const vnDetailChart = require('../../demo/grouped-chart/vn-detail/vn-detail.js')
 
-const demoBubbleExamples = [
-  {
-    html: 'bubble-chart/nodes/nodes.html',
-    js: 'bubble-chart/nodes/nodes.js',
-    title: "Node CPU/Mem"
-  },
-  {
-    html: 'bubble-chart/port-distribution/port-distribution.html',
-    js: 'bubble-chart/port-distribution/port-distribution.js',
-    title: "Port Distribution"
-  },
-  {
-    html: 'bubble-chart/vrouter-vmi/vrouter-vmi.html',
-    js: 'bubble-chart/vrouter-vmi/vrouter-vmi.js',
-    title: "vRouters"
-  }
-]
+const groupedChartTemplate = require('../template/multiple.tmpl')
 
-const areaExamples = [
-  {
-    html: 'area-chart/inout-traffic/inout-traffic.html',
-    js: 'area-chart/inout-traffic/inout-traffic.js',
-    title: 'VN Traffic In/Out'
-  },
-  {
-    html: 'area-chart/vr-traffic/vr-traffic.html',
-    js: 'area-chart/vr-traffic/vr-traffic.js',
-    title: 'vRouter Traffic'
-  }
-]
+const templates = {
+  grouped: groupedChartTemplate
+}
 
-const radialExamples = [
-  {
-    html: 'radial-chart/disk-usage/disk.html',
-    js: 'radial-chart/disk-usage/disk.js',
-    css: 'radial-chart/disk-usage/disk.css',
-    title: 'Disk Status'
+const allExamples = {
+  'lineBar': {
+    'Queries & DB R/W': {
+      instance: queryDBChart
+    },
+    'Memory & CPU': {
+      instance: cpuMemChart
+    }
   },
-  {
-    html: 'radial-chart/pool-usage/pools.html',
-    js: 'radial-chart/pool-usage/pools.js',
-    css: 'radial-chart/pool-usage/pools.css',
-    title: 'Storage Pools'
+  'bubble': {
+    'Node CPU/Mem': {
+      instance: nodeCPUMemChart
+    },
+    'Port Distribution': {
+      instance: portDistributionChart
+    },
+    'vRouters': {
+      instance: vRoutersChart
+    }
+  },
+  'grouped': {
+    'Project VN Traffic': {
+      template: 'grouped',
+      instance: vnDetailChart
+    }
+  },
+  'area': {
+    'VN Traffic In/Out': {
+      instance: inoutTrafficChart
+    },
+    'vRouter Traffic': {
+      instance: vrTraffic
+    }
+  },
+  'radial': {
+    'Disk Status': {
+      instance: diskUsageChart
+    },
+    'Storage Pools': {
+      instance: poolUsageChart
+    }
   }
-]
+}
 
 const devGroupedExamples = [
   {
@@ -75,127 +77,44 @@ const devGroupedExamples = [
   }
 ]
 
-const $lineBarLinks = $('#lineBarLinks')
-demoLBExamples.forEach(
-  (example, idx) => {
-    let $link = $(`<a id="lb${idx}" href="#${idx}"><span class="nav-text">${example.title}</span></a>`)
-    $link.click(onClickLineChart)
-    $lineBarLinks.append($('<li>').append($link))
-  }
-)
+const $chartBox = $('#chartBox')
 
-const $bubbleLinks = $('#bubbleLinks')
-demoBubbleExamples.forEach(
-  (example, idx) => {
-    let $link = $(`<a id="b${idx}" href="#${idx}"><span class="nav-text">${example.title}</span></a>`)
-    $link.click(onClickBubbleChart)
-    $bubbleLinks.append($('<li>').append($link))
-  }
-)
+_.forEach(allExamples, (examples, chartCategory) => {
+  let $links = $(`#${chartCategory}Links`)
 
-const $areaLinks = $('#areaLinks')
-areaExamples.forEach(
-  (example, idx) => {
-    let $link = $(`<a id="b${idx}" href="#${idx}"><span class="nav-text">${example.title}</span></a>`)
-    $link.click(onClickAreaChart)
-    $areaLinks.append($('<li>').append($link))
-  }
-)
+  _.forEach(examples, (example, title) => {
+    var $link = createLink(example.template, example.instance, title)
 
-const $radialLinks = $('#radialLinks')
-radialExamples.forEach(
-  (example, idx) => {
-    let $link = $(`<a id="b${idx}" href="#${idx}"><span class="nav-text">${example.title}</span></a>`)
-    $link.click(onClickRadialChart)
-    $radialLinks.append($('<li>').append($link))
-  }
-)
-
-const $groupedLinks = $('#groupdedLinks')
-devGroupedExamples.forEach(
-  (example, idx) => {
-    let $link = $(`<a href="#${idx}"><span class="nav-text">${example.title}</span></a>`)
-    $link.click(onClickGroupedChart)
-    $groupedLinks.append($('<li>').append($link))
-  }
-)
-
-$('#bubble').click()
-$bubbleLinks.find('#b0').click()
-
-$("#developer-link").click(function () {
-  window.open('developer.html')
+    $links.append($('<li>').append($link))
+  })
 })
 
-function onClickLineChart (e) {
-  const index = $(this).attr('href').split('#')[1]
-  onClickSidebar(index, demoLBExamples)
+function createLink (templateId = 'grouped', instance, title) {
+  let cleaned = encodeURIComponent(title.replace(/\s/g, ''))
+  let $link = $(`<a id="lb${cleaned}" href="#${cleaned}"><span class="nav-text">${title}</span></a>`)
+
+  $link.click((e) => {
+    if (e.currentTarget.id !== 'lbQueries&DBR/W') {
+      allExamples.lineBar['Queries & DB R/W'].instance.stopUpdating()
+    }
+
+    let containerIds = _.isArray(instance.container) ? instance.container : [instance.container]
+
+    $chartBox.empty()
+    $chartBox.append(templates[templateId]({
+      chartContainerIds: containerIds
+    }))
+// debugger
+    instance.render()
+  })
+
+  return $link
 }
 
-function onClickBubbleChart (e) {
-  const index = $(this).attr('href').split('#')[1]
-  onClickSidebar(index, demoBubbleExamples)
-}
+const $1stNavMenu = $('.nav .nav-header + li')
+$1stNavMenu.children('a').find('.nav-text').click()
+$1stNavMenu.children('ul').find('a[id]').first().click()
 
-function onClickAreaChart (e) {
-  const index = $(this).attr('href').split('#')[1]
-  onClickSidebar(index, areaExamples)
-}
-
-function onClickRadialChart (e) {
-  const index = $(this).attr('href').split('#')[1]
-  onClickSidebar(index, radialExamples)
-}
-
-function onClickGroupedChart (e) {
-  const index = $(this).attr('href').split('#')[1]
-  onClickSidebar(index, devGroupedExamples)
-}
-
-function createNewTab (id, title, group = 'js-files', checked, content) {
-  return `<div class="tab">
-            <input type="radio" id="${id}" name="${group}" ${checked} />
-            <label for="${id}">${title}</label>
-            <div class="content">
-              ${content}
-            </div>
-          </div>`
-}
-
-function reformatHTMLToShow (rawHTML) {
-  const newlineMarker = '%%%newline%%%'
-  const regex = {
-    recoverNewline: new RegExp(newlineMarker, 'gm'),
-    indentation: new RegExp(`(?:${newlineMarker})(\\s{2,})`, 'gm')
-  }
-
-  return _.escape(rawHTML.replace(/\n/gm, newlineMarker))
-    .replace(regex.indentation, (match) => match.replace(/\s/gm, '&nbsp;'))
-    .replace(regex.recoverNewline, '<br/>')
-}
-
-function onClickSidebar (index, exampleArray) {
-  const example = exampleArray[index]
-  const {rawHTML, rawJS, rawCSS} = exampleArray[index]
-  $('#outputView').find('.output-demo-iframe').attr('src', `./demo/${example.html}`)
-
-  /*
-   const tabCollections = Object.keys(rawJS)
-   .reduce((tabsHTML, currentJSFile, idx) => {
-   tabsHTML.push(
-   createNewTab(
-   'jsFile-' + idx,
-   currentJSFile,
-   undefined,
-   idx === 0 ? 'checked' : '',
-   reformatHTMLToShow(rawJS[currentJSFile])
-   )
-   )
-   return tabsHTML
-   }, []).join('')
-
-   $('#htmlContent').html(reformatHTMLToShow(rawHTML))
-   $('#cssContent').html(reformatHTMLToShow(rawCSS))
-   $('#jsContent').html(`<div class="tabs">${tabCollections}</div>`)
-   */
-}
+$('#developer-link').click(function () {
+  window.open('developer.html')
+})

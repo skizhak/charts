@@ -110,11 +110,13 @@ const trafficPlotAxisConfig = {
   }
 }
 
+const container = ['vn-pie', 'vn-traffic', 'vn-ports']
+
 const chartConfigs = [
   {
-    id: 'vn-pie',
+    id: container[0],
     type: 'RadialChart',
-    container: '#vn-pie',
+    container: `#${container[0]}`,
     dataProvider: {
       config: {
         formatData: pieDataParser
@@ -162,9 +164,9 @@ const chartConfigs = [
     }]
   },
   {
-    id: 'vn-traffic',
+    id: container[1],
     type: 'XYChart',
-    container: '#vn-traffic',
+    container: `#${container[1]}`,
     dataProvider: {
       config: {
         formatData: trafficStatsParser
@@ -209,9 +211,9 @@ const chartConfigs = [
     }]
   },
   {
-    id: 'vn-ports',
+    id: container[2],
     type: 'XYChart',
-    container: '#vn-ports',
+    container: `#${container[2]}`,
     dataProvider: {
       config: {
         formatData: portStatsParser
@@ -314,18 +316,28 @@ const chartConfigs = [
   }
 ]
 
+let isInitialized = false
 const chartView = new coCharts.charts.MultiChartView()
 
-chartView.setConfig({
-  id: 'grouped-parent-chart',
-  type: 'MultiChart',
-  container: '#grouped-parent-chart',
-  components: [],
-  // Child charts.
-  charts: chartConfigs,
-})
+module.exports = {
+  container: container,
+  render: () => {
+    if (!isInitialized) {
+      isInitialized = true
+      chartView.setConfig({
+        id: 'grouped-parent-chart',
+        type: 'MultiChart',
+        container: '#grouped-parent-chart',
+        components: [],
+        // Child charts.
+        charts: chartConfigs,
+      })
 
-chartView.setData(data, {}, 'vn-pie')
-chartView.setData(data, {}, 'vn-ports')
-chartView.setData(data, {}, 'vn-traffic')
-chartView.render()
+      _.forEach(container, (container) => {
+        chartView.setData(data, {}, container)
+      })
+    }
+
+    chartView.render()
+  }
+}

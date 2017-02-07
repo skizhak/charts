@@ -16,6 +16,9 @@ const loaders = [{
 }, {
   test: /\.json$/,
   loader: 'json-loader'
+}, {
+  test: /\.tmpl/,
+  loader: 'handlebars-loader',
 }]
 
 if (env === 'build') {
@@ -39,16 +42,16 @@ const config = {
   entry: {
     'demo-loader': path.join(__dirname, '/examples/common/js/demo-loader.js'),
     'dev-loader': path.join(__dirname, '/examples/common/js/dev-loader.js'),
-    'demo-bubble-port-distribution': path.join(__dirname, '/examples/demo/bubble-chart/port-distribution/port-distribution.js'),
-    'demo-bubble-nodes': path.join(__dirname, '/examples/demo/bubble-chart/nodes/nodes.js'),
-    'demo-bubble-vrouter-vmi': path.join(__dirname, '/examples/demo/bubble-chart/vrouter-vmi/vrouter-vmi.js'),
-    'demo-linebar-cpu-mem': path.join(__dirname, '/examples/demo/linebar-chart/cpu-mem/cpu-mem.js'),
-    'demo-linebar-query-db': path.join(__dirname, '/examples/demo/linebar-chart/query-db-rw/query-db.js'),
-    'demo-area-vr-traffic': path.join(__dirname, '/examples/demo/area-chart/vr-traffic/vr-traffic.js'),
-    'demo-area-inout-traffic': path.join(__dirname, '/examples/demo/area-chart/inout-traffic/inout-traffic.js'),
-    'demo-radial-disk-usage': path.join(__dirname, '/examples/demo/radial-chart/disk-usage/disk.js'),
-    'demo-radial-pool-usage': path.join(__dirname, '/examples/demo/radial-chart/pool-usage/pools.js'),
-    'demo-grouped-vn-detail': path.join(__dirname, '/examples/demo/grouped-chart/vn-detail/vn-detail.js'),
+    // 'demo-bubble-port-distribution': path.join(__dirname, '/examples/demo/bubble-chart/port-distribution/port-distribution.js'),
+    // 'demo-bubble-nodes': path.join(__dirname, '/examples/demo/bubble-chart/nodes/nodes.js'),
+    // 'demo-bubble-vrouter-vmi': path.join(__dirname, '/examples/demo/bubble-chart/vrouter-vmi/vrouter-vmi.js'),
+    // 'demo-linebar-cpu-mem': path.join(__dirname, '/examples/demo/linebar-chart/cpu-mem/cpu-mem.js'),
+    // 'demo-linebar-query-db': path.join(__dirname, '/examples/demo/linebar-chart/query-db-rw/query-db.js'),
+    // 'demo-area-vr-traffic': path.join(__dirname, '/examples/demo/area-chart/vr-traffic/vr-traffic.js'),
+    // 'demo-area-inout-traffic': path.join(__dirname, '/examples/demo/area-chart/inout-traffic/inout-traffic.js'),
+    // 'demo-radial-disk-usage': path.join(__dirname, '/examples/demo/radial-chart/disk-usage/disk.js'),
+    // 'demo-radial-pool-usage': path.join(__dirname, '/examples/demo/radial-chart/pool-usage/pools.js'),
+    // 'demo-grouped-vn-detail': path.join(__dirname, '/examples/demo/grouped-chart/vn-detail/vn-detail.js'),
 
     'developer-bubble-multi-shape': path.join(__dirname, '/examples/developer/bubble-chart/multiple-shapes/'),
     'developer-linebar-control-panel': path.join(__dirname, '/examples/developer/linebar-chart/control-panel/'),
@@ -70,6 +73,9 @@ const config = {
     filename: 'js/' + '[name].js',
   },
   module: {loaders},
+  externals: {
+    coCharts: 'coCharts'
+  },
   resolve: {
     root: './',
     alias: {

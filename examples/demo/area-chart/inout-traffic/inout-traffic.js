@@ -3,6 +3,7 @@
  */
 
 const _ = require('lodash')
+const coCharts = require('coCharts')
 const dataSrc = require('./inout-traffic.json')
 const formatter = require('formatter')
 const _c = require('constants')
@@ -111,10 +112,10 @@ const tooltipDataConfig = _.reduce(dataProcessed.nodeIds, (config, nodeId) => {
   valueFormatter: formatter.extendedISOTime,
 }])
 
-// Create chart view.
-const trafficView = new coCharts.charts.XYChartView()
-trafficView.setConfig({
-  container: '#inout-traffic',
+const container = 'chart-container'
+
+const chartConfig = {
+  container: `#${container}`,
   components: [{
     type: 'LegendPanel',
     config: {
@@ -227,14 +228,32 @@ trafficView.setConfig({
       tooltip: 'default-tooltip',
     }
   }]
-})
-trafficView.setData(dataProcessed.data)
-trafficView.renderMessage({
-  componentId: 'XYChart',
-  action: 'once',
-  messages: [{
-    level: 'info',
-    title: '',
-    message: 'Loading ...',
-  }]
-})
+}
+
+let isInitialized = false
+// Create chart view.
+const trafficView = new coCharts.charts.XYChartView()
+
+module.exports = {
+  container: container,
+  render: () => {
+    if (isInitialized) {
+      trafficView.render()
+    } else {
+      isInitialized = true
+
+      trafficView.setConfig(chartConfig)
+
+      trafficView.setData(dataProcessed.data)
+      trafficView.renderMessage({
+        componentId: 'XYChart',
+        action: 'once',
+        messages: [{
+          level: 'info',
+          title: '',
+          message: 'Loading ...',
+        }]
+      })
+    }
+  }
+}

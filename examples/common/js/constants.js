@@ -2,8 +2,7 @@
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
 
-/* global d3 */
-
+const d3 = require('d3')
 const d3ColorScheme10 = d3.schemeCategory10
 const d3ColorScheme20 = d3.schemeCategory20
 
@@ -21,7 +20,6 @@ const bubbleColorScheme14 = [
   '#9c27b0',
   '#3f51b5'
 ].concat(d3ColorScheme10)
-
 
 const lbColorScheme7 = [
   '#a88add',

@@ -2,6 +2,7 @@
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
 
+const _ = require('lodash')
 const d3 = require('d3')
 const formatter = require('formatter')
 const _c = require('constants')
@@ -40,8 +41,10 @@ let dataSrc = require('./port-distribution.json')
 
 dataSrc = dataProcesser(dataSrc)
 
+const container = 'chart-container'
+
 const chartConfig = {
-  container: '#pd-bubble-chart',
+  container: `#${container}`,
   components: [
     {
       type: 'LegendPanel',
@@ -189,6 +192,18 @@ const chartConfig = {
     }]
 }
 
+let isInitialized = false
 const chartView = new coCharts.charts.XYChartView()
-chartView.setConfig(chartConfig)
-chartView.setData(dataSrc)
+
+module.exports = {
+  container: container,
+  render: () => {
+    if (isInitialized) {
+      chartView.render()
+    } else {
+      isInitialized = true
+      chartView.setConfig(chartConfig)
+      chartView.setData(dataSrc)
+    }
+  }
+}

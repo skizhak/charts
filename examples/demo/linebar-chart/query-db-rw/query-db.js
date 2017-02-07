@@ -6,9 +6,27 @@ const _ = require('lodash')
 const formatter = require('formatter')
 const _c = require('constants')
 
-const queryChart = new coCharts.charts.XYChartView()
-queryChart.setConfig({
-  container: '#query-db-chart',
+function getDataPoint (x) {
+  const a = Math.random() * 10000
+  return {
+    x: x,
+    a: a,
+    b: _.random(a, a + 1000),
+    c: Math.ceil(Math.random() * 100),
+  }
+}
+
+let simpleData = []
+let now = _.now()
+
+for (let i = 0; i < 100; i++) {
+  simpleData.push(getDataPoint(now - (i * 1000)))
+}
+
+const container = 'chart-container'
+
+const chartConfig = {
+  container: `#${container}`,
   components: [{
     type: 'LegendPanel',
     config: {
@@ -182,30 +200,40 @@ queryChart.setConfig({
       tooltip: 'default-tooltip',
     }
   }]
-})
-
-let simpleData = []
-let now = _.now();
-
-for (let i = 0; i < 100; i++) {
-  simpleData.push(getDataPoint(now - (i * 1000)))
 }
 
-queryChart.setData(simpleData)
+let isInitialized = false
+let intervalId = -1
+const queryChart = new coCharts.charts.XYChartView()
 
-setInterval(() => {
-  now += 1000;
-  simpleData.splice(99, 1)
-  simpleData = [getDataPoint(now)].concat(simpleData)
-  queryChart.setData(simpleData)
-}, 1000)
-
-function getDataPoint(x) {
-  const a = Math.random() * 10000
-  return {
-    x: x,
-    a: a,
-    b: _.random(a, a + 1000),
-    c: Math.ceil(Math.random() * 100),
+module.exports = {
+  container: container,
+  render: () => {
+    if (isInitialized) {
+      queryChart.render()
+      if (intervalId === -1) {
+        intervalId = setInterval(() => {
+          now += 1000
+          simpleData.splice(99, 1)
+          simpleData = [getDataPoint(now)].concat(simpleData)
+          queryChart.setData(simpleData)
+        }, 1000)
+      }
+    } else {
+      isInitialized = true
+      queryChart.setConfig(chartConfig)
+      queryChart.setData(simpleData)
+      clearInterval(intervalId)
+      intervalId = setInterval(() => {
+        now += 1000
+        simpleData.splice(99, 1)
+        simpleData = [getDataPoint(now)].concat(simpleData)
+        queryChart.setData(simpleData)
+      }, 1000)
+    }
+  },
+  stopUpdating: () => {
+    clearInterval(intervalId)
+    intervalId = -1
   }
 }

@@ -21,10 +21,10 @@ let vn = 0
 let memory = 0
 
 for (let i = 0; i < count; i++) {
-    cpu = _.random(0, (i < .6 * count) ? 30 : ((i < .8 * count) ? 80 : 100))
-    memory = (_.random(0, (i < .6 * count) ? 3 : ((i < .8 * count) ? 8 : 10)))* 10240000
-    vmi = _.random(1, (i < .2 * count) ? 1000 : ((i < .8 * count) ? 700 : 300))
-    vn = _.random(1, (i < .2 * count) ? 50 : ((i < .8 * count) ? 25 : 12))
+    cpu = _.random(0, (i < 0.6 * count) ? 30 : ((i < 0.8 * count) ? 80 : 100))
+    memory = (_.random(0, (i < 0.6 * count) ? 3 : ((i < 0.8 * count) ? 8 : 10))) * 10240000
+    vmi = _.random(1, (i < 0.2 * count) ? 1000 : ((i < 0.8 * count) ? 700 : 300))
+    vn = _.random(1, (i < 0.2 * count) ? 50 : ((i < 0.8 * count) ? 25 : 12))
     data = {
       name: 'vrouter' + (i + 1),
       cpu: cpu,
@@ -36,8 +36,10 @@ for (let i = 0; i < count; i++) {
     simpleData.push(data)
 }
 
+const container = 'chart-container'
+
 const chartConfig = {
-  container: '#vrouter-vmi-chart',
+  container: `#${container}`,
   components: [
     {
       type: 'LegendPanel',
@@ -178,6 +180,19 @@ const chartConfig = {
     }]
 }
 
+let isInitialized = false
 const chartView = new coCharts.charts.XYChartView()
-chartView.setConfig(chartConfig)
-chartView.setData(simpleData)
+
+module.exports = {
+  container: container,
+  render: () => {
+    if (isInitialized) {
+      chartView.render()
+    } else {
+      isInitialized = true
+      chartView.setConfig(chartConfig)
+      chartView.setData(simpleData)
+    }
+  }
+}
+
