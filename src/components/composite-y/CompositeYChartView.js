@@ -12,6 +12,7 @@ const BarChartView = require('components/composite-y/GroupedBarChartView')
 const StackedBarChartView = require('components/composite-y/StackedBarChartView')
 const ScatterPlotView = require('components/composite-y/ScatterPlotView')
 const CompositeYChartConfigModel = require('components/composite-y/CompositeYChartConfigModel')
+const TitleView = require('plugins/title/TitleView')
 
 class CompositeYChartView extends ContrailChartsView {
   constructor (p) {
@@ -56,6 +57,7 @@ class CompositeYChartView extends ContrailChartsView {
   render () {
     if (!this.config || !this._container) return
     this.resetParams()
+    if (this.params.title) TitleView(this._container, this.params.title)
     this._updateChildDrawings()
     this._calculateActiveAccessorData()
     this._calculateDimensions()

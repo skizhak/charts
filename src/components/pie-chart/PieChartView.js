@@ -4,6 +4,7 @@
 require('./pie-chart.scss')
 const shape = require('d3-shape')
 const ContrailChartsView = require('contrail-charts-view')
+const TitleView = require('plugins/title/TitleView')
 
 class PieChartView extends ContrailChartsView {
   constructor (p = {}) {
@@ -31,6 +32,7 @@ class PieChartView extends ContrailChartsView {
 
   render () {
     this.resetParams()
+    if (this.params.title) TitleView(this._container, this.params.title)
     this._calculateDimensions()
     super.render()
     const serieConfig = this.config.get('serie')
