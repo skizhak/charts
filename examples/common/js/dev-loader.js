@@ -135,14 +135,14 @@ devRadialExamples.forEach(
 const $groupedLinks = $('#groupedLinks')
 devGroupedExamples.forEach(
   (example, idx) => {
-    let $link = $(`<a href="#${idx}"><span class="nav-text">${example.title}</span></a>`)
+    let $link = $(`<a id="g${idx}" href="#${idx}"><span class="nav-text">${example.title}</span></a>`)
     $link.click(onClickGroupedChart)
     $groupedLinks.append($('<li>').append($link))
   }
 )
 
-$('#linebar').click()
-$lineBarLinks.find('#lb0').click()
+$('#grouped').click()
+$groupedLinks.find('#g0').click()
 
 $('#demo-link').click(function () {
   window.open('demo.html')

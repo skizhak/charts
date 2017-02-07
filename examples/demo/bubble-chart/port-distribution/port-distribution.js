@@ -54,7 +54,7 @@ const chartConfig = {
           chartSelector: false
         },
         placement: 'horizontal',
-        filter: false,
+        filter: true,
       }
     },
     {
