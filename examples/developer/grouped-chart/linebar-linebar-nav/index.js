@@ -24,7 +24,6 @@ const chartConfigs = [
   {
     id: 'grouped-chart1',
     type: 'XYChart',
-    container: '#grouped-chart1',
     components: [{
       type: 'CompositeYChart',
       config: {
@@ -60,7 +59,6 @@ const chartConfigs = [
   }, {
     id: 'grouped-chart2',
     type: 'XYChart',
-    container: '#grouped-chart2',
     components: [{
       type: 'CompositeYChart',
       config: {
@@ -89,7 +87,6 @@ const chartConfigs = [
   }, {
     id: 'grouped-chart-navigation',
     type: 'XYChart',
-    container: '#grouped-chart-navigation',
     components: [{
       type: 'Navigation',
       config: {

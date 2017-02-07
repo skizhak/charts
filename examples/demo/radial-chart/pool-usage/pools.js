@@ -25,7 +25,7 @@ function getValue (serie) {
 }
 
 const chartConfig = {
-  container: '#pools-pie',
+  id: 'pools-pie',
   components: [{
     type: 'ControlPanel',
     config: {

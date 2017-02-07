@@ -24,7 +24,7 @@ function getValue (serie) {
 }
 
 const chartConfig = {
-  container: '#disk-donut-chart',
+  id: 'disk-donut-chart',
   components: [{
     type: 'ControlPanel',
     config: {

@@ -116,7 +116,7 @@ const tooltipDataConfig = _.reduce(dataProcessed.nodeIds, (config, nodeId) => {
 // Create chart view.
 const trafficView = new coCharts.charts.XYChartView()
 trafficView.setConfig({
-  container: '#inout-traffic',
+  id: 'inout-traffic',
   components: [{
     type: 'LegendPanel',
     config: {

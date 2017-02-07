@@ -23,7 +23,7 @@ function getValue (serie) {
 }
 
 const chartConfig = {
-  container: '#donut-chart',
+  id: 'donut-chart',
   components: [{
     type: 'ControlPanel',
     config: {

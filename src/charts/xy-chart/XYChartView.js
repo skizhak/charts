@@ -55,7 +55,8 @@ class XYChartView extends ContrailChartsView {
   */
   setConfig (config) {
     this._config = config
-    this.setElement(config.container)
+    this.setElement(`#${config.id}`)
+    this._actionman.id = this._config.id
     if (_.has(config, 'dataProvider.config')) this._dataProvider.setConfig(config.dataProvider.config)
     this._initComponents()
   }

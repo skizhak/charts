@@ -20,7 +20,7 @@ for (let i = 0; i < 100; i++) {
 }
 const complexChartView = new coCharts.charts.XYChartView()
 complexChartView.setConfig({
-  container: '#timeline-chart',
+  id: 'timeline-chart',
   components: [{
     id: 'timeline-compositey',
     type: 'CompositeYChart',

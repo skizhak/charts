@@ -39,7 +39,7 @@ for (let i = 0; i < count; i++) {
 }
 
 const chartConfig = {
-  container: '#vrouter-vmi-chart',
+  id: 'vrouter-vmi-chart',
   components: [
     {
       type: 'LegendPanel',
