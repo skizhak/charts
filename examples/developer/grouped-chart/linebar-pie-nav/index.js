@@ -52,8 +52,8 @@ const chartConfigs = [
         chartHeight: 350,
         sourceComponent: 'compositey-chart-id',
         editable: {
-          colorSelector: true,
-          chartSelector: true
+          colorSelector: false,
+          chartSelector: false
         },
         placement: 'horizontal',
         filter: true,
@@ -101,7 +101,7 @@ const chartConfigs = [
         chartHeight: 350,
         sourceComponent: 'compositey-chart-id2',
         editable: {
-          colorSelector: true,
+          colorSelector: false,
           chartSelector: false
         },
         placement: 'horizontal',
