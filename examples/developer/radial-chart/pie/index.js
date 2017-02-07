@@ -49,6 +49,8 @@ const chartConfig = {
     id: 'tooltip-id',
     type: 'Tooltip',
     config: {
+      color: 'yellow',
+      backgroundColor: 'red',
       dataConfig: [
         {
           accessor: 'value',
