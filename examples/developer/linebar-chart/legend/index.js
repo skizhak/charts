@@ -2,7 +2,6 @@
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
 
-
 const commons = require('commons')
 
 const formatter = commons.formatter
@@ -20,9 +19,13 @@ for (let i = 0; i < 100; i++) {
   })
 }
 
-const simpleChartView = new coCharts.charts.XYChartView()
-simpleChartView.setConfig({
-  id: 'chart-legend',
+const container = 'chart-legend'
+const layoutMeta = {
+  [container]: 'col-md-12'
+}
+
+const chartConfig = {
+  id: container,
   components: [{
     type: 'LegendPanel',
     config: {
@@ -218,23 +221,39 @@ simpleChartView.setConfig({
       tooltip: 'default-tooltip',
     }
   }]
-})
+}
 
-simpleChartView.setData(simpleData)
-simpleChartView.renderMessage({
-  componentId: 'XYChart',
-  action: 'once',
-  messages: [{
-    level: 'info',
-    title: 'Message 1',
-    message: 'This is an example message. It will disapear after 5 seconds.'
-  }, {
-    level: 'error',
-    title: 'A Fatal Error',
-    message: 'This is an error.'
-  }, {
-    level: 'info',
-    title: 'Message 2',
-    message: 'This is another example message.'
-  }]
-})
+let isInitialized = false
+const simpleChartView = new coCharts.charts.XYChartView()
+
+module.exports = {
+  container: container,
+  layoutMeta: layoutMeta,
+  render: () => {
+    if (isInitialized) {
+      simpleChartView.render()
+    } else {
+      isInitialized = true
+
+      simpleChartView.setConfig(chartConfig)
+      simpleChartView.setData(simpleData)
+      simpleChartView.renderMessage({
+        componentId: 'XYChart',
+        action: 'once',
+        messages: [{
+          level: 'info',
+          title: 'Message 1',
+          message: 'This is an example message. It will disapear after 5 seconds.'
+        }, {
+          level: 'error',
+          title: 'A Fatal Error',
+          message: 'This is an error.'
+        }, {
+          level: 'info',
+          title: 'Message 2',
+          message: 'This is another example message.'
+        }]
+      })
+    }
+  }
+}

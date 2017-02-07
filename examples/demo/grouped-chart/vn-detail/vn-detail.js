@@ -111,9 +111,9 @@ const trafficPlotAxisConfig = {
 const groupedChartsWrapper = 'grouped-parent-chart'
 const container = ['vn-pie', 'vn-traffic', 'vn-ports']
 const layoutMeta = {
-  'vn-pie': 'flex-order-2 col-md-6',
-  'vn-traffic': 'flex-order-1 col-md-12',
-  'vn-ports': 'flex-order-3 col-md-6'
+  'vn-pie': 'render-order-2 col-md-6',
+  'vn-traffic': 'render-order-1 col-md-12',
+  'vn-ports': 'render-order-3 col-md-6'
 }
 
 const chartConfigs = [

@@ -20,9 +20,17 @@ for (let i = 0; i < 100; i++) {
   })
 }
 
+const groupedChartsWrapper = 'grouped-parent-chart'
+const container = ['grouped-chart1', 'grouped-chart2', 'grouped-chart-navigation']
+const layoutMeta = {
+  'grouped-chart1': 'render-order-1 col-md-6',
+  'grouped-chart2': 'render-order-2 col-md-6',
+  'grouped-chart-navigation': 'render-order-3 col-md-12'
+}
+
 const chartConfigs = [
   {
-    id: 'grouped-chart1',
+    id: container[0],
     type: 'XYChart',
     components: [{
       type: 'CompositeYChart',
@@ -57,7 +65,7 @@ const chartConfigs = [
       }
     }]
   }, {
-    id: 'grouped-chart2',
+    id: container[1],
     type: 'XYChart',
     components: [{
       type: 'CompositeYChart',
@@ -85,7 +93,7 @@ const chartConfigs = [
       },
     }]
   }, {
-    id: 'grouped-chart-navigation',
+    id: container[2],
     type: 'XYChart',
     components: [{
       type: 'Navigation',
@@ -123,16 +131,32 @@ const chartConfigs = [
   }
 ]
 
-const chartView = new coCharts.charts.MultiChartView()
-chartView.setConfig({
-  chartId: 'grouped-parent-chart',
+const chartConfig = {
+  id: groupedChartsWrapper,
   // Parent Chart components
   components: [],
   // Child charts.
   charts: chartConfigs,
-})
-// selection on navigation will set the data on these charts.
-// chartView.setData(complexData, {}, 'grouped-chart1')
-// chartView.setData(complexData, {}, 'grouped-chart2')
-chartView.setData(simpleData, {}, 'grouped-chart-navigation')
-chartView.render()
+}
+
+let isInitialized = false
+const chartView = new coCharts.charts.MultiChartView()
+
+module.exports = {
+  groupedChartsWrapper: groupedChartsWrapper,
+  container: container,
+  layoutMeta: layoutMeta,
+  render: () => {
+    if (!isInitialized) {
+      isInitialized = true
+
+      chartView.setConfig(chartConfig)
+
+      // selection on navigation will set the data on these charts.
+      // chartView.setData(complexData, {}, container[0])
+      // chartView.setData(complexData, {}, container[1])
+      chartView.setData(simpleData, {}, container[2])
+    }
+    chartView.render()
+  }
+}

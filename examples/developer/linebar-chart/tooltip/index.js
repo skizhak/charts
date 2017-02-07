@@ -7,10 +7,13 @@ const commons = require('commons')
 const formatter = commons.formatter
 const data = commons.fixture()
 
-const simpleChartView = new coCharts.charts.XYChartView()
+const container = 'chart-tooltip'
+const layoutMeta = {
+  [container]: 'col-md-12'
+}
 
-simpleChartView.setConfig({
-  id: 'chart-tooltip',
+const chartConfig = {
+  id: container,
   components: [{
     id: 'compositey-id',
     type: 'CompositeYChart',
@@ -97,5 +100,22 @@ simpleChartView.setConfig({
       template: (data) => '<div class="tooltip-content">Custom tooltip</div>',
     }
   }]
-})
-simpleChartView.setData(data)
+}
+
+let isInitialized = false
+const simpleChartView = new coCharts.charts.XYChartView()
+
+module.exports = {
+  container: container,
+  layoutMeta: layoutMeta,
+  render: () => {
+    if (isInitialized) {
+      simpleChartView.render()
+    } else {
+      isInitialized = true
+
+      simpleChartView.setConfig(chartConfig)
+      simpleChartView.setData(data)
+    }
+  }
+}

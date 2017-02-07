@@ -16,9 +16,13 @@ data[5].a = -10
 const formatter = require('formatter')
 const colorScheme = d3.schemeCategory10
 
-const chart = new coCharts.charts.XYChartView()
-chart.setConfig({
-  id: 'area-chart',
+const container = 'area-chart'
+const layoutMeta = {
+  [container]: 'col-md-12'
+}
+
+const chartConfig = {
+  id: container,
   title: 'Area Chart',
   components: [{
     type: 'LegendPanel',
@@ -98,5 +102,22 @@ chart.setConfig({
       ]
     },
   }]
-})
-chart.setData(data)
+}
+
+let isInitialized = false
+const chart = new coCharts.charts.XYChartView()
+
+module.exports = {
+  container: container,
+  layoutMeta: layoutMeta,
+  render: () => {
+    if (isInitialized) {
+      chart.render()
+    } else {
+      isInitialized = true
+
+      chart.setConfig(chartConfig)
+      chart.setData(data)
+    }
+  }
+}

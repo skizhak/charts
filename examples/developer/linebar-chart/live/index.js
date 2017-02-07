@@ -7,26 +7,16 @@ const commons = require('commons')
 const formatter = commons.formatter
 const generator = commons.fixture
 
-const chart = new coCharts.charts.XYChartView()
-
 let counter = 0
 const length = 21
 
-setInterval(() => {
-  const dataConfig = {
-    length: length,
-    data: {
-      x: {linear: true, range: [counter, counter + length]},
-      a: {linear: true, range: [counter, counter + length * 3]},
-    },
-  }
-  const data = generator(dataConfig)
-  chart.setData(data)
-  counter++
-}, 1000)
+const container = 'chart'
+const layoutMeta = {
+  [container]: 'col-md-12'
+}
 
-chart.setConfig({
-  id: 'chart',
+const chartConfig = {
+  id: container,
   components: [{
     id: 'compositey-id',
     type: 'CompositeYChart',
@@ -79,4 +69,53 @@ chart.setConfig({
       ]
     },
   }]
-})
+}
+
+let isInitialized = false
+let intervalId = -1
+const chart = new coCharts.charts.XYChartView()
+
+module.exports = {
+  container: container,
+  layoutMeta: layoutMeta,
+  render: () => {
+    if (isInitialized) {
+      chart.render()
+      if (intervalId === -1) {
+        intervalId = setInterval(() => {
+          const dataConfig = {
+            length: length,
+            data: {
+              x: {linear: true, range: [counter, counter + length]},
+              a: {linear: true, range: [counter, counter + length * 3]},
+            },
+          }
+          const data = generator(dataConfig)
+          chart.setData(data)
+          counter++
+        }, 1000)
+      }
+    } else {
+      isInitialized = true
+
+      chart.setConfig(chartConfig)
+      clearInterval(intervalId)
+      intervalId = setInterval(() => {
+        const dataConfig = {
+          length: length,
+          data: {
+            x: {linear: true, range: [counter, counter + length]},
+            a: {linear: true, range: [counter, counter + length * 3]},
+          },
+        }
+        const data = generator(dataConfig)
+        chart.setData(data)
+        counter++
+      }, 1000)
+    }
+  },
+  stopUpdating: () => {
+    clearInterval(intervalId)
+    intervalId = -1
+  }
+}

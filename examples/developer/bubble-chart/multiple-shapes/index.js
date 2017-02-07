@@ -23,8 +23,13 @@ const data = commons.fixture({
 const colorScheme = _c.bubbleColorScheme6
 const bubbleShapes = _c.bubbleShapes
 
+const container = 'multi-shape-bubble'
+const layoutMeta = {
+  [container]: 'col-md-12'
+}
+
 const chartConfig = {
-  id: 'multi-shape-bubble',
+  id: container,
   components: [{
     type: 'LegendPanel',
     config: {
@@ -158,6 +163,20 @@ const chartConfig = {
   }]
 }
 
+let isInitialized = false
 const chartView = new coCharts.charts.XYChartView()
-chartView.setConfig(chartConfig)
-chartView.setData(data)
+
+module.exports = {
+  container: container,
+  layoutMeta: layoutMeta,
+  render: () => {
+    if (isInitialized) {
+      chartView.render()
+    } else {
+      isInitialized = true
+
+      chartView.setConfig(chartConfig)
+      chartView.setData(data)
+    }
+  }
+}

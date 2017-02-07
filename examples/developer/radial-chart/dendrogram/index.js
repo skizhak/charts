@@ -4,8 +4,13 @@
 
 const dendrogamData = require('./data.json')
 
+const container = 'radial-dendrogram-chart'
+const layoutMeta = {
+  [container]: 'col-md-12'
+}
+
 const chartConfig = {
-  id: 'radial-dendrogram-chart',
+  id: container,
   components: [{
     id: 'dendrogram-chart-id',
     type: 'RadialDendrogram',
@@ -32,6 +37,20 @@ const chartConfig = {
   ]
 }
 
+let isInitialized = false
 const chartView = new coCharts.charts.RadialChartView()
-chartView.setConfig(chartConfig)
-chartView.setData(dendrogamData.data)
+
+module.exports = {
+  container: container,
+  layoutMeta: layoutMeta,
+  render: () => {
+    if (isInitialized) {
+      chartView.render()
+    } else {
+      isInitialized = true
+
+      chartView.setConfig(chartConfig)
+      chartView.setData(dendrogamData.data)
+    }
+  }
+}

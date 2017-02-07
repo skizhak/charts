@@ -38,9 +38,18 @@ function pieDataParser (tsData) {
   })
 }
 
+const groupedChartsWrapper = 'grouped-parent-chart'
+const container = ['grouped-chart1', 'grouped-chart2', 'donut-chart', 'navigation-chart']
+const layoutMeta = {
+  'grouped-chart1': 'render-order-1 col-md-12',
+  'grouped-chart2': 'render-order-3 col-md-6',
+  'donut-chart': 'render-order-2 col-md-6',
+  'navigation-chart': 'render-order-4 col-md-12'
+}
+
 const chartConfigs = [
   {
-    id: 'grouped-chart1',
+    id: container[0],
     type: 'XYChart',
     components: [{
       type: 'LegendPanel',
@@ -88,7 +97,7 @@ const chartConfigs = [
       }
     }]
   }, {
-    id: 'grouped-chart2',
+    id: container[1],
     type: 'XYChart',
     components: [{
       type: 'LegendPanel',
@@ -129,7 +138,7 @@ const chartConfigs = [
       },
     }]
   }, {
-    id: 'donut-chart',
+    id: container[2],
     type: 'RadialChart',
     dataProvider: {
       config: {
@@ -172,7 +181,7 @@ const chartConfigs = [
       },
     }]
   }, {
-    id: 'navigation-chart',
+    id: container[3],
     type: 'XYChart',
     components: [{
       type: 'Navigation',
@@ -210,18 +219,32 @@ const chartConfigs = [
   }
 ]
 
-const chartView = new coCharts.charts.MultiChartView()
-chartView.setConfig({
-  id: 'grouped-parent-chart',
+const chartConfig = {
+  id: groupedChartsWrapper,
   type: 'MultiChart',
-  container: '#grouped-parent-chart',
   components: [],
   // Child charts.
   charts: chartConfigs,
-})
+}
 
-// chartView.setData(tsData, {}, 'grouped-chart1')
-// chartView.setData(tsData, {}, 'grouped-chart2')
-chartView.setData(simpleData, {}, 'navigation-chart')
-chartView.setData(simpleData, {}, 'grouped-chart3')
-chartView.render()
+let isInitialized = false
+const chartView = new coCharts.charts.MultiChartView()
+
+module.exports = {
+  groupedChartsWrapper: groupedChartsWrapper,
+  container: container,
+  layoutMeta: layoutMeta,
+  render: () => {
+    if (!isInitialized) {
+      isInitialized = true
+
+      chartView.setConfig(chartConfig)
+
+      // chartView.setData(tsData, {}, container[0])
+      // chartView.setData(tsData, {}, container[1])
+      chartView.setData(simpleData, {}, container[2])
+      chartView.setData(simpleData, {}, container[3])
+    }
+    chartView.render()
+  }
+}

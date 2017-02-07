@@ -22,8 +22,13 @@ function getValue (serie) {
   return serie.value
 }
 
+const container = 'donut-chart'
+const layoutMeta = {
+  [container]: 'col-md-12'
+}
+
 const chartConfig = {
-  id: 'donut-chart',
+  id: container,
   title: 'Donut Chart',
   components: [{
     type: 'ControlPanel',
@@ -68,6 +73,21 @@ const chartConfig = {
   }
   ]
 }
+
+let isInitialized = false
 const chartView = new coCharts.charts.RadialChartView()
-chartView.setConfig(chartConfig)
-chartView.setData(pieData)
+
+module.exports = {
+  container: container,
+  layoutMeta: layoutMeta,
+  render: () => {
+    if (isInitialized) {
+      chartView.render()
+    } else {
+      isInitialized = true
+
+      chartView.setConfig(chartConfig)
+      chartView.setData(pieData)
+    }
+  }
+}

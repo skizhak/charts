@@ -131,7 +131,7 @@ $border-color: #fafafa;
 .indicator {
   position: absolute;
   left: 2px;
-  top: 3px;
+  top: 2px;
   width: 10px;
   height: 10px;
   border-radius: 100px;
@@ -156,8 +156,8 @@ $border-color: #fafafa;
     }
     
     .legend-attribute & {
-      left: 1px;
-      top: 1px;
+      left: 0;
+      top: 0;
       width: 8px;
       height: 8px;
       border: solid white;

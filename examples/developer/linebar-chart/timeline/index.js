@@ -18,9 +18,14 @@ for (let i = 0; i < 100; i++) {
     e: (Math.random() - 0.5) * 10
   })
 }
-const complexChartView = new coCharts.charts.XYChartView()
-complexChartView.setConfig({
-  id: 'timeline-chart',
+
+const container = 'timeline-chart'
+const layoutMeta = {
+  [container]: 'col-md-12'
+}
+
+const chartConfig = {
+  id: container,
   components: [{
     id: 'timeline-compositey',
     type: 'CompositeYChart',
@@ -176,6 +181,22 @@ complexChartView.setConfig({
       }
     }
   }]
-})
-complexChartView.setData(complexData)
-complexChartView.render()
+}
+
+let isInitialized = false
+const complexChartView = new coCharts.charts.XYChartView()
+
+module.exports = {
+  container: container,
+  layoutMeta: layoutMeta,
+  render: () => {
+    if (isInitialized) {
+      complexChartView.render()
+    } else {
+      isInitialized = true
+
+      complexChartView.setConfig(chartConfig)
+      complexChartView.setData(complexData)
+    }
+  }
+}

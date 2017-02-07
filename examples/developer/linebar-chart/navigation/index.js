@@ -17,10 +17,14 @@ const data = commons.fixture({
   },
 })
 
-const barChart = new coCharts.charts.XYChartView()
-const areaChart = new coCharts.charts.XYChartView()
-areaChart.setConfig({
-  id: 'chart-area',
+const container = ['chart-area', 'chart-bar']
+const layoutMeta = {
+  'chart-area': 'render-order-1 col-md-12',
+  'chart-bar': 'render-order-2 col-md-12'
+}
+
+const areaChartConfig = {
+  id: container[0],
   components: [{
     type: 'Navigation',
     config: {
@@ -89,9 +93,9 @@ areaChart.setConfig({
       }
     }
   }]
-})
-barChart.setConfig({
-  id: 'chart-bar',
+}
+const barChartConfig = {
+  id: container[1],
   components: [{
     type: 'CompositeYChart',
     config: {
@@ -147,7 +151,27 @@ barChart.setConfig({
       ]
     },
   }]
-})
+}
 
-// Navigation component of areaChart will push the data to barChart
-areaChart.setData(data)
+let isInitialized = false
+const barChart = new coCharts.charts.XYChartView()
+const areaChart = new coCharts.charts.XYChartView()
+
+module.exports = {
+  container: container,
+  layoutMeta: layoutMeta,
+  render: () => {
+    if (isInitialized) {
+      areaChart.render()
+      barChart.render()
+    } else {
+      isInitialized = true
+
+      areaChart.setConfig(areaChartConfig)
+      barChart.setConfig(barChartConfig)
+
+      // Navigation component of areaChart will push the data to barChart
+      areaChart.setData(data)
+    }
+  }
+}

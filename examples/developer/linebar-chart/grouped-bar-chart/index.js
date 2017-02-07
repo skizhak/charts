@@ -16,9 +16,13 @@ const data = commons.fixture({
   },
 })
 
-const complexChartView = new coCharts.charts.XYChartView()
-complexChartView.setConfig({
-  id: 'grouped-bar-chart',
+const container = 'grouped-bar-chart'
+const layoutMeta = {
+  [container]: 'col-md-12'
+}
+
+const chartConfig = {
+  id: container,
   components: [{
     id: 'grouped-bar-compositey',
     type: 'CompositeYChart',
@@ -88,5 +92,22 @@ complexChartView.setConfig({
       ]
     },
   }]
-})
-complexChartView.setData(data)
+}
+
+let isInitialized = false
+const complexChartView = new coCharts.charts.XYChartView()
+
+module.exports = {
+  container: container,
+  layoutMeta: layoutMeta,
+  render: () => {
+    if (isInitialized) {
+      complexChartView.render()
+    } else {
+      isInitialized = true
+
+      complexChartView.setConfig(chartConfig)
+      complexChartView.setData(data)
+    }
+  }
+}
