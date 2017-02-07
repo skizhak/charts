@@ -115,7 +115,7 @@ const chartConfigs = [
     container: '#vn-pie',
     dataProvider: {
       config: {
-        formatData: pieDataParser
+        formatter: pieDataParser
       }
     },
     components: [{
@@ -165,7 +165,7 @@ const chartConfigs = [
     container: '#vn-traffic',
     dataProvider: {
       config: {
-        formatData: trafficStatsParser
+        formatter: trafficStatsParser
       }
     },
     components: [{
@@ -212,7 +212,7 @@ const chartConfigs = [
     container: '#vn-ports',
     dataProvider: {
       config: {
-        formatData: portStatsParser
+        formatter: portStatsParser
       }
     },
     components: [
