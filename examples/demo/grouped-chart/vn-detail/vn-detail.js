@@ -355,7 +355,6 @@ const chartView = new coCharts.charts.MultiChartView()
 chartView.setConfig({
   id: 'grouped-parent-chart',
   type: 'MultiChart',
-  id: 'grouped-parent-chart',
   components: [],
   // Child charts.
   charts: chartConfigs,

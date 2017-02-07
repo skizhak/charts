@@ -56,6 +56,9 @@ class RadialChartView extends ContrailView {
   setConfig (config) {
     this._config = config
     this.setElement(`#${config.id}`)
+    this._container = this.el.parentElement
+    // Todo use class from selectors. extend ContrailChartsView instead of ContrailView
+    this.el.classList.add('cc-chart')
     this._actionman.id = this._config.id
     if (_.has(config, 'dataProvider.config')) this._dataProvider.setConfig(config.dataProvider.config)
     this._initComponents()
