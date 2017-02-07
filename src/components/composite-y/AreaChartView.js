@@ -4,6 +4,7 @@
 require('./area-chart.scss')
 const _ = require('lodash')
 const d3 = require('d3')
+const d3Array = require('d3-array')
 const XYChartSubView = require('components/composite-y/XYChartSubView')
 
 class AreaChartView extends XYChartSubView {
@@ -17,35 +18,56 @@ class AreaChartView extends XYChartSubView {
 
   combineDomains () {
     const domains = super.combineDomains()
-    const topY = _.reduce(this.params.activeAccessorData, (sum, accessor) => {
-      return sum + this.model.getRangeFor(accessor.accessor)[1]
-    }, 0)
-    if (domains[this.axisName]) domains[this.axisName][1] = topY
+
+    const stackGroups = _.groupBy(this.params.activeAccessorData, 'stack')
+    const totalRangeValues = _.reduce(stackGroups, (totalRangeValues, accessors) => {
+      const stackedRange = _.reduce(accessors, (stackedRange, accessor) => {
+        const range = this.model.getRangeFor(accessor.accessor)
+        // Summarize ranges for stacked layers
+        return [stackedRange[0] + range[0], stackedRange[1] + range[1]]
+      }, [0, 0])
+      // Get min / max extent for non-stacked layers
+      return totalRangeValues.concat(stackedRange)
+    }, [0, 0])
+    const totalRange = d3Array.extent(totalRangeValues)
+    if (domains[this.axisName]) domains[this.axisName] = totalRange
     return domains
   }
-
+  /**
+   * Render all areas in a single stack unless specific stack names specified
+   */
   render () {
     super.render()
-
     const data = this.model.data
-    const stack = d3.stack()
-
     const area = d3.area()
       .x(d => this.xScale(d.data[this.params.plot.x.accessor]))
-      .y0(d => this.yScale(d[0]))
-      .y1(d => this.yScale(d[1]))
+      .y0(d => this.yScale(d[1]))
+      .y1(d => this.yScale(d[0]))
       .curve(this.config.get('curve'))
 
-    const keys = _.map(this.params.activeAccessorData, 'accessor')
-    stack.keys(keys)
-    const areas = this.d3.selectAll('.area').data(stack(data))
-    areas.exit().remove()
-    areas.enter().append('path')
-      .attr('class', d => 'area area-' + d.key)
-      .merge(areas)
-      .transition().ease(d3.easeLinear).duration(this.params.duration)
-      .attr('fill', d => this.params.activeAccessorData[d.index].color)
-      .attr('d', area)
+    const stackGroups = _.groupBy(this.params.activeAccessorData, 'stack')
+    _.each(stackGroups, (accessorsByStack, stackName) => {
+      const stack = d3.stack()
+        .offset(d3.stackOffsetNone)
+        .keys(_.map(accessorsByStack, 'accessor'))
+
+      const areas = this.d3.selectAll(`.area-${stackName}`).data(stack(data))
+      areas.exit().remove()
+      areas.enter().append('path')
+        .attr('class', d => `area area-${d.key} area-${stackName}`)
+        .merge(areas)
+        .transition().ease(d3.easeLinear).duration(this.params.duration)
+        .attr('fill', d => _.find(accessorsByStack, {accessor: d.key}).color)
+        .attr('d', area)
+    })
+
+    // Remove areas from non-updated stacks
+    const updatedAreaClasses = _.reduce(_.keys(stackGroups), (sum, key) => {
+      return sum ? `${sum}, .area-${key}` : `.area-${key}`
+    }, '')
+    const updatedAreaEls = updatedAreaClasses ? this.el.querySelectorAll(updatedAreaClasses) : []
+    const updatedAreas = _.difference(this.el.querySelectorAll('.area'), updatedAreaEls)
+    _.each(updatedAreas, area => area.remove())
   }
 
   getTooltipData (xPos) {
