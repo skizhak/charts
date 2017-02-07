@@ -1,6 +1,4 @@
-/*
- * Copyright (c) Juniper Networks, Inc. All rights reserved.
- */
+// Copyright (c) Juniper Networks, Inc. All rights reserved.
 
 require('./tooltip.scss')
 const ContrailChartsView = require('contrail-charts-view')
@@ -18,16 +16,23 @@ class TooltipView extends ContrailChartsView {
     this._loadTemplate(data)
     this.$el.show()
 
-    // Tooltip dimensions will be available after render.
     const tooltipWidth = this.$el.outerWidth()
-    const containerWidth = this.config.container.offsetWidth
-    const containerHeight = this.config.container.offsetHeight // eslint-disable-line
+    const tooltipHeight = this.$el.outerHeight()
 
-    const tooltipPositionTop = offset.top < 0 ? 0 : offset.top
-    let tooltipPositionLeft = offset.left
+    const bodyWidth = $('body').outerWidth()
+    const bodyHeight = $('body').outerHeight()
 
-    if ((offset.left + tooltipWidth) > containerWidth) {
-      tooltipPositionLeft = offset.left - tooltipWidth
+    let tooltipPositionLeft = offset.left - tooltipWidth/2
+    let tooltipPositionTop = offset.top - tooltipHeight - 10
+
+    if(tooltipPositionTop < 0) {
+      tooltipPositionTop = offset.top + 10
+    }
+
+    if(tooltipPositionLeft + tooltipWidth > bodyWidth) {
+      tooltipPositionLeft = bodyWidth - tooltipWidth
+    } else if (tooltipPositionLeft < 0) {
+      tooltipPositionLeft = 0;
     }
 
     this.$el.css({
