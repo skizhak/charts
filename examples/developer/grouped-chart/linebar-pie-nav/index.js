@@ -136,7 +136,7 @@ const chartConfigs = [
     container: '#donut-chart',
     dataProvider: {
       config: {
-        formatData: pieDataParser
+        formatter: pieDataParser
       }
     },
     components: [{

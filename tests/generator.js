@@ -12,7 +12,7 @@ module.exports = function (p = {}) {
     a: {linear: true, range: [0, length * 3]},
     b: {linear: true, range: [0, length * 5]},
     c: {linear: true, range: [0, length * 7]},
-    random: {linear: true, range: [0, length * 7]},
+    random: {random: true, range: [0, length * 7]},
   }
   _.each(dataConfig, (config, key) => {
     if (config.linear) config.scale = d3.scaleLinear().domain([0, length]).range(config.range)
