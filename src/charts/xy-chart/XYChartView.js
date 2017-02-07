@@ -139,6 +139,7 @@ class XYChartView extends ContrailChartsView {
    */
   _registerComponent (type, config, model, id) {
     if (!this._isEnabledComponent(type)) return false
+    config.title = this._config.title
     let configModel
     if (components[`${type}ConfigModel`]) {
       configModel = new components[`${type}ConfigModel`](config)

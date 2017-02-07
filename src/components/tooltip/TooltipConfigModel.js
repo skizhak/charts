@@ -21,6 +21,9 @@ class TooltipConfigModel extends ContrailChartsConfigModel {
       outData.title = _.isString(this.get('title')) ? this.get('title') : this.getFormattedValue(inData, this.get('title'))
     }
 
+    outData.color = this.get('color')
+    outData.backgroundColor = this.get('backgroundColor')
+
     outData.items = _.map(dataConfig, (datumConfig) => {
       return {
         label: this.getLabel(inData, datumConfig),

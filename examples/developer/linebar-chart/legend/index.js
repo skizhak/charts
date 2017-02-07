@@ -90,7 +90,7 @@ simpleChartView.setConfig({
             tooltip: 'default-tooltip',
           }, {
             accessor: 'e',
-            labelFormatter: 'Megabytes E',
+            labelFormatter: 'E',
             color: '#9467bd',
             enabled: true,
             chart: 'LineChart',

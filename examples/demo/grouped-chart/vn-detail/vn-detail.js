@@ -114,7 +114,7 @@ const chartConfigs = [
     type: 'RadialChart',
     dataProvider: {
       config: {
-        formatData: pieDataParser
+        formatter: pieDataParser
       }
     },
     components: [{
@@ -163,7 +163,7 @@ const chartConfigs = [
     type: 'XYChart',
     dataProvider: {
       config: {
-        formatData: trafficStatsParser
+        formatter: trafficStatsParser
       }
     },
     components: [{
@@ -209,7 +209,7 @@ const chartConfigs = [
     type: 'XYChart',
     dataProvider: {
       config: {
-        formatData: portStatsParser
+        formatter: portStatsParser
       }
     },
     components: [

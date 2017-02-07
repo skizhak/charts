@@ -20,7 +20,6 @@ const data = commons.fixture({
   },
 })
 
-
 const colorScheme = _c.bubbleColorScheme6
 const bubbleShapes = _c.bubbleShapes
 

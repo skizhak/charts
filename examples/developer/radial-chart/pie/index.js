@@ -24,6 +24,7 @@ function getValue (serie) {
 
 const chartConfig = {
   id: 'donut-chart',
+  title: 'Donut Chart',
   components: [{
     type: 'ControlPanel',
     config: {
@@ -49,6 +50,8 @@ const chartConfig = {
     id: 'tooltip-id',
     type: 'Tooltip',
     config: {
+      color: 'yellow',
+      backgroundColor: 'red',
       dataConfig: [
         {
           accessor: 'value',

@@ -19,7 +19,7 @@ class DataProvider extends ContrailModel {
       data: [],
 
       // Function to format/filter data. Always applied on parentData
-      formatData: undefined,
+      formatter: undefined,
 
       // A lazy store of data ranges for which a range was calculated or for which the range was set manually.
       // example: { x: [0, 100], y: [20, 30], r: [5, 20] }
@@ -199,12 +199,12 @@ class DataProvider extends ContrailModel {
 
   setRanges (range, manualRange) {
     let data = this.data
-    const formatData = this.get('formatData')
+    const formatter = this.get('formatter')
     if (!manualRange) {
       manualRange = this.get('manualRange')
     }
-    if (_.isFunction(formatData)) {
-      data = formatData(data, manualRange)
+    if (_.isFunction(formatter)) {
+      data = formatter(data, manualRange)
     }
     this.set({data, range, manualRange})
   }
@@ -225,9 +225,9 @@ class DataProvider extends ContrailModel {
     let data = this.parentData
     // TODO handle empty dataset too
     if (_.isEmpty(data)) return
-    const formatData = this.get('formatData')
-    if (_.isFunction(formatData)) {
-      data = formatData(data)
+    const formatter = this.get('formatter')
+    if (_.isFunction(formatter)) {
+      data = formatter(data)
     }
     this.set({data: data})
     this.range = {}
