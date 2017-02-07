@@ -1,8 +1,9 @@
-/*
- * Copyright (c) Juniper Networks, Inc. All rights reserved.
- */
+// Copyright (c) Juniper Networks, Inc. All rights reserved.
+
+
 require('./pie-chart.scss')
 const shape = require('d3-shape')
+const d3Selection = require('d3-selection')
 const ContrailChartsView = require('contrail-charts-view')
 const TitleView = require('plugins/title/TitleView')
 
@@ -18,7 +19,7 @@ class PieChartView extends ContrailChartsView {
   get tagName () { return 'g' }
   get events () {
     return {
-      'mouseover .arc': '_onMouseover',
+      'mousemove .arc': '_onMousemove',
       'mouseout .arc': '_onMouseout',
       'click .arc': '_onClick',
     }
@@ -75,24 +76,14 @@ class PieChartView extends ContrailChartsView {
     // TODO: use the 'axis' param to compute additional margins for the axis
   }
 
-  // Event handlers
+  _onMousemove (sector, el, event) {
 
-  _onMouseover (sector, el) {
-    const serieConfig = this.config.get('serie')
-    const outerRadius = this.config.get('radius')
-    const innerRadius = this.config.innerRadius
-    const arc = shape.arc(sector).innerRadius(innerRadius).outerRadius(outerRadius)
-    const labelPos = arc.centroid(sector)
-
-    el.classList.add('highlight')
-
-    const tooltipOffset = {
-      left: this.params.chartWidth / 2 + labelPos[0],
-      top: this.params.chartHeight / 2 + labelPos[1]
+    const tooltipPosition = {
+      left: event.pageX,
+      top: event.pageY
     }
-
-    sector.data.color = this.config.getColor(serieConfig.getLabel(sector.data))
-    this._actionman.fire('ShowComponent', this.config.get('tooltip'), tooltipOffset, sector.data)
+    el.classList.add('highlight')
+    this._actionman.fire('ShowComponent', this.config.get('tooltip'), tooltipPosition, sector.data)
   }
 
   _onMouseout (d, el) {

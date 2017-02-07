@@ -11,7 +11,7 @@ class BarChartView extends XYChartSubView {
   get zIndex () { return 1 }
   get events () {
     return {
-      'mouseover .bar': '_onMouseover',
+      'mousemove .bar': '_onMousemove',
       'mouseout .bar': '_onMouseout',
     }
   }
@@ -103,9 +103,9 @@ class BarChartView extends XYChartSubView {
 
   // Event handlers
 
-  _onMouseover (d, el) {
+  _onMousemove (d, el, event) {
     if (this.config.get('tooltipEnabled')) {
-      this._actionman.fire('ShowComponent', d.accessor.tooltip, {left: d.x, top: d.y}, d.data)
+      this._actionman.fire('ShowComponent', d.accessor.tooltip, {left: event.pageX, top: event.pageY}, d.data)
     }
     el.classList.add('active')
   }
