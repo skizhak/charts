@@ -39,7 +39,7 @@ for (var n in nodes) {
 }
 
 const chartConfig = {
-  container: '#nodes-bubble-chart',
+  id: 'nodes-bubble-chart',
   components: [{
     type: 'LegendPanel',
     config: {

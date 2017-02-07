@@ -10,7 +10,7 @@ const data = commons.fixture()
 const simpleChartView = new coCharts.charts.XYChartView()
 
 simpleChartView.setConfig({
-  container: '#chart-tooltip',
+  id: 'chart-tooltip',
   components: [{
     id: 'compositey-id',
     type: 'CompositeYChart',

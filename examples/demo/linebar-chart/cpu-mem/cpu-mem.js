@@ -130,7 +130,7 @@ const tooltipDataConfig = _.reduce(dataProcessed.nodeIds, (config, nodeId) => {
 // Create chart view.
 const cpuMemChartView = new coCharts.charts.XYChartView()
 cpuMemChartView.setConfig({
-  container: '#cpu-mem-chart',
+  id: 'cpu-mem-chart',
   components: [{
     type: 'LegendPanel',
     config: {

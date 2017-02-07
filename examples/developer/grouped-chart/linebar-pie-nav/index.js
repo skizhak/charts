@@ -42,7 +42,6 @@ const chartConfigs = [
   {
     id: 'grouped-chart1',
     type: 'XYChart',
-    container: '#grouped-chart1',
     components: [{
       type: 'LegendPanel',
       config: {
@@ -91,7 +90,6 @@ const chartConfigs = [
   }, {
     id: 'grouped-chart2',
     type: 'XYChart',
-    container: '#grouped-chart2',
     components: [{
       type: 'LegendPanel',
       config: {
@@ -133,7 +131,6 @@ const chartConfigs = [
   }, {
     id: 'donut-chart',
     type: 'RadialChart',
-    container: '#donut-chart',
     dataProvider: {
       config: {
         formatter: pieDataParser
@@ -176,7 +173,6 @@ const chartConfigs = [
     }]
   }, {
     id: 'navigation-chart',
-    container: '#navigation-chart',
     type: 'XYChart',
     components: [{
       type: 'Navigation',

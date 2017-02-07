@@ -18,7 +18,7 @@ const data = commons.fixture({
 
 const complexChartView = new coCharts.charts.XYChartView()
 complexChartView.setConfig({
-  container: '#grouped-bar-chart',
+  id: 'grouped-bar-chart',
   components: [{
     id: 'grouped-bar-compositey',
     type: 'CompositeYChart',

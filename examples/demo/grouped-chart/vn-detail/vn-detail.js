@@ -112,7 +112,6 @@ const chartConfigs = [
   {
     id: 'vn-pie',
     type: 'RadialChart',
-    container: '#vn-pie',
     dataProvider: {
       config: {
         formatter: pieDataParser
@@ -162,7 +161,6 @@ const chartConfigs = [
   {
     id: 'vn-traffic',
     type: 'XYChart',
-    container: '#vn-traffic',
     dataProvider: {
       config: {
         formatter: trafficStatsParser
@@ -209,7 +207,6 @@ const chartConfigs = [
   {
     id: 'vn-ports',
     type: 'XYChart',
-    container: '#vn-ports',
     dataProvider: {
       config: {
         formatter: portStatsParser
@@ -304,7 +301,7 @@ const chartView = new coCharts.charts.MultiChartView()
 chartView.setConfig({
   id: 'grouped-parent-chart',
   type: 'MultiChart',
-  container: '#grouped-parent-chart',
+  id: 'grouped-parent-chart',
   components: [],
   // Child charts.
   charts: chartConfigs,

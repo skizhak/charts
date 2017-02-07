@@ -22,7 +22,7 @@ for (let i = 0; i < 100; i++) {
 
 const simpleChartView = new coCharts.charts.XYChartView()
 simpleChartView.setConfig({
-  container: '#chart-legend',
+  id: 'chart-legend',
   components: [{
     type: 'LegendPanel',
     config: {
@@ -51,7 +51,7 @@ simpleChartView.setConfig({
       marginBottom: 40,
       chartHeight: 600,
       crosshair: 'crosshair-id',
-      possibleChartTypes: ['BarChart', 'LineChart'],
+      possibleChartTypes: ['BarChart', 'StackedBarChart', 'LineChart'],
       plot: {
         x: {
           accessor: 'x',

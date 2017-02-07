@@ -129,7 +129,7 @@ const tooltipDataConfig = _.reduce(dataProcessed.nodeIds, (config, nodeId) => {
 // Create chart view.
 const trafficView = new coCharts.charts.XYChartView()
 trafficView.setConfig({
-  container: '#vr-traffic',
+  id: 'vr-traffic',
   components: [{
     type: 'LegendPanel',
     config: {

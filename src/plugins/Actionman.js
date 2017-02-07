@@ -9,7 +9,16 @@ const Events = require('contrail-charts-events')
  */
 class Actionman {
   constructor () {
+    this._id = undefined
     this._instances = {}
+  }
+
+  set id (id) {
+    this._id = id
+  }
+
+  get id () {
+    return this._id
   }
 
   get (id) {
@@ -51,7 +60,7 @@ class Actionman {
     const action = this._instances[actionName]
 
     if (!_.isNil(action)) {
-      action.apply(...args)
+      action.apply(this.id, ...args)
     }
   }
 }

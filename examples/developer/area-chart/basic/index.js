@@ -18,7 +18,7 @@ const colorScheme = d3.schemeCategory10
 
 const chart = new coCharts.charts.XYChartView()
 chart.setConfig({
-  container: '#area-chart',
+  id: 'area-chart',
   title: 'Area Chart',
   components: [{
     type: 'LegendPanel',

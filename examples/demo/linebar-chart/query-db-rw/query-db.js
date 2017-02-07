@@ -10,7 +10,7 @@ const _c = commons._c
 
 const queryChart = new coCharts.charts.XYChartView()
 queryChart.setConfig({
-  container: '#query-db-chart',
+  id: 'query-db-chart',
   components: [{
     type: 'LegendPanel',
     config: {

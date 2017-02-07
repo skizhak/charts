@@ -20,7 +20,7 @@ const data = commons.fixture({
 const barChart = new coCharts.charts.XYChartView()
 const areaChart = new coCharts.charts.XYChartView()
 areaChart.setConfig({
-  container: '#chart-area',
+  id: 'chart-area',
   components: [{
     type: 'Navigation',
     config: {
@@ -91,7 +91,7 @@ areaChart.setConfig({
   }]
 })
 barChart.setConfig({
-  container: '#chart-bar',
+  id: 'chart-bar',
   components: [{
     type: 'CompositeYChart',
     config: {

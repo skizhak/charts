@@ -21,7 +21,7 @@ for (let i = 0; i < 100; i++) {
 }
 const complexChartView = new coCharts.charts.XYChartView()
 complexChartView.setConfig({
-  container: '#chart-control-panel',
+  id: 'chart-control-panel',
   components: [{
     id: 'control-panel-id',
     type: 'ControlPanel',
