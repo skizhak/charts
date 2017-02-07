@@ -2,9 +2,13 @@
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
 
-const _ = require('lodash')
-const formatter = require('formatter')
-const _c = require('constants')
+const commons = require('commons')
+
+const _ = commons._
+const formatter = commons.formatter
+const _c = commons._c
+
+const coCharts = require('coCharts')
 
 function getDataPoint (x) {
   const a = Math.random() * 10000

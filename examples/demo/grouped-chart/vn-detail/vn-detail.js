@@ -2,25 +2,19 @@
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
 
-const _ = require('lodash')
-const _c = require('constants')
-const formatter = require('formatter')
-const dg = require('data-generator')
-const data = dg.projectVNTraffic({vnCount: 4, flowCount: 50})
+const commons = require('commons')
 
-const colorScheme = _c.d3ColorScheme10
+const _ = commons._
+const formatter = commons.formatter
+const _c = commons._c
+
+const data = commons.dg.projectVNTraffic({vnCount: 4, flowCount: 50})
+const colorScheme = _c.d3ColorScheme20
 const bubbleShapes = _c.bubbleShapes
 
 function pieDataParser (data) {
   _.each(data, (vn) => {
-    //Data parser for pie
-  })
-  return data
-}
-
-function trimTime (data) {
-  _.each(data, d => {
-    //Data parser for pie
+    // Data parser for pie
   })
   return data
 }
@@ -66,24 +60,28 @@ const trafficPlotConfig = {
       label: 'Traffic In',
       enabled: true,
       chart: 'BarChart',
+      color: colorScheme[0],
       axis: 'y1',
     }, {
       accessor: 'outTraffic',
       label: 'Traffic Out',
       enabled: true,
       chart: 'BarChart',
+      color: colorScheme[2],
       axis: 'y1',
     }, {
       accessor: 'inPacket',
       label: 'Packets In',
       enabled: true,
       chart: 'LineChart',
+      color: colorScheme[1],
       axis: 'y2',
     }, {
       accessor: 'outPacket',
       label: 'Packets Out',
       enabled: true,
       chart: 'LineChart',
+      color: colorScheme[3],
       axis: 'y2',
     }
   ]
@@ -131,7 +129,7 @@ const chartConfigs = [
         chartWidth: 275,
         chartHeight: 275,
         marginBottom: 60,
-        colorScale: d3.scaleOrdinal().range([colorScheme[0], colorScheme[6], colorScheme[2], colorScheme[4]]), // eslint-disable-line no-undef
+        colorScale: d3.scaleOrdinal().range([colorScheme[4], colorScheme[6], colorScheme[7], colorScheme[8]]), // eslint-disable-line no-undef
         serie: {
           getValue: serie => serie.vmiCount,
           getLabel: serie => serie.vnName,
@@ -221,23 +219,10 @@ const chartConfigs = [
     },
     components: [
       {
-        type: 'LegendPanel',
-        config: {
-          sourceComponent: 'scatter-plot',
-          palette: _c.bubbleColorScheme14,
-          editable: {
-            colorSelector: true,
-            chartSelector: false
-          },
-          placement: 'horizontal',
-          filter: false,
-        }
-      },
-      {
         id: 'scatter-plot',
         type: 'CompositeYChart',
         config: {
-          chartHeight: 360,
+          chartHeight: 400,
           marginLeft: 90,
           plot: {
             x: {
@@ -254,7 +239,7 @@ const chartConfigs = [
                 sizeAccessor: 'outBytes',
                 sizeAxis: 'sizeAxisBytes',
                 shape: bubbleShapes.signin,
-                color: colorScheme[1],
+                color: colorScheme[0],
                 axis: 'y1',
                 tooltip: 'port-tooltip-id',
               }, {

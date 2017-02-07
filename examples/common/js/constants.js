@@ -15,7 +15,7 @@ const bubbleColorScheme6 = [
   '#9c27b0'
 ]
 
-const bubbleColorScheme14 = [
+const bubbleColorScheme13 = [
   '#424242',
   '#9c27b0',
   '#3f51b5'
@@ -84,7 +84,7 @@ const bubbleShapes = {
 module.exports = {
   bubbleShapes: bubbleShapes,
   bubbleColorScheme6: bubbleColorScheme6,
-  bubbleColorScheme14: bubbleColorScheme14,
+  bubbleColorScheme13: bubbleColorScheme13,
   lbColorScheme7: lbColorScheme7,
   lbColorScheme17: lbColorScheme17,
   radialColorScheme6: radialColorScheme6,

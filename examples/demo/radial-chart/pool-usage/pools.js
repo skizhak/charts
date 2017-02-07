@@ -2,6 +2,13 @@
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
 
+const commons = require('commons')
+
+const formatter = commons.formatter
+const _c = commons._c
+
+const radialColorScheme6 = _c.radialColorScheme6
+
 const pieData = [
   {label: 'Volumes', value: 112704659},
   {label: 'Images', value: 96853788},
@@ -9,12 +16,6 @@ const pieData = [
   {label: 'Volumes HDD A', value: 130792673},
   {label: 'Volumns HDD B', value: 1127576593},
 ]
-
-const d3 = require('d3')
-const formatter = require('formatter')
-const _c = require('constants')
-
-const radialColorScheme6 = _c.radialColorScheme6
 
 function getLabel (serie) {
   return serie.label

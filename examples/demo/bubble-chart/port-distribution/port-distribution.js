@@ -2,11 +2,13 @@
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
 
-const _ = require('lodash')
-const d3 = require('d3')
-const formatter = require('formatter')
+const commons = require('commons')
 const _c = require('constants')
 
+const formatter = commons.formatter
+const _c = commons._c
+
+const colorScheme = _c.d3ColorScheme10
 const bubbleShapes = _c.bubbleShapes
 
 function dataProcesser (data) {
@@ -36,7 +38,6 @@ function dataProcesser (data) {
   )
 }
 
-const colorScheme = d3.schemeCategory10
 let dataSrc = require('./port-distribution.json')
 
 dataSrc = dataProcesser(dataSrc)
@@ -50,13 +51,13 @@ const chartConfig = {
       type: 'LegendPanel',
       config: {
         sourceComponent: 'scatter-plot',
-        palette: _c.bubbleColorScheme14,
+        palette: _c.bubbleColorScheme13,
         editable: {
           colorSelector: true,
           chartSelector: false
         },
         placement: 'horizontal',
-        filter: false,
+        filter: true,
       }
     },
     {
@@ -169,7 +170,7 @@ const chartConfig = {
               sizeAccessor: 'outBytes',
               sizeAxis: 'sizeAxisBytes',
               shape: bubbleShapes.circleFill,
-              color: colorScheme[0],
+              color: colorScheme[4],
             }
           ]
         },

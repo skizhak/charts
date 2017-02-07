@@ -2,8 +2,6 @@
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
 
-/* global d3 */
-
 const pieData = [
   {label: 'Disks In', value: 55},
   {label: 'Disks Out', value: 6},
@@ -11,8 +9,10 @@ const pieData = [
   {label: 'Disks Down', value: 4}
 ]
 
-const formatter = require('formatter')
-const _c = require('constants')
+const commons = require('commons')
+
+const formatter = commons.formatter
+const _c = commons._c
 
 const radialColorScheme6 = _c.radialColorScheme6
 

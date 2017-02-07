@@ -2,10 +2,14 @@
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
 
-const data = require('fixture')()
-const formatter = require('formatter')
-const complexChartView = new coCharts.charts.XYChartView()
-complexChartView.setConfig({
+const commons = require('commons')
+
+const formatter = commons.formatter
+const data = commons.fixture()
+
+const simpleChartView = new coCharts.charts.XYChartView()
+
+simpleChartView.setConfig({
   container: '#chart-tooltip',
   components: [{
     id: 'compositey-id',
@@ -94,4 +98,4 @@ complexChartView.setConfig({
     }
   }]
 })
-complexChartView.setData(data)
+simpleChartView.setData(data)

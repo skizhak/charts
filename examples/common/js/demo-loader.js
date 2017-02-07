@@ -83,15 +83,15 @@ _.forEach(allExamples, (examples, chartCategory) => {
   let $links = $(`#${chartCategory}Links`)
 
   _.forEach(examples, (example, title) => {
-    var $link = createLink(example.template, example.instance, title)
+    var $link = createLink(chartCategory, example.template, example.instance, title)
 
     $links.append($('<li>').append($link))
   })
 })
 
-function createLink (templateId = 'grouped', instance, title) {
+function createLink (chartType = '', templateId = 'grouped', instance, title) {
   let cleaned = encodeURIComponent(title.replace(/\s/g, ''))
-  let $link = $(`<a id="lb${cleaned}" href="#${cleaned}"><span class="nav-text">${title}</span></a>`)
+  let $link = $(`<a id="${chartType}${cleaned}" href="#${cleaned}"><span class="nav-text">${title}</span></a>`)
 
   $link.click((e) => {
     if (e.currentTarget.id !== 'lbQueries&DBR/W') {
