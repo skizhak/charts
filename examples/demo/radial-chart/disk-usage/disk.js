@@ -23,10 +23,10 @@ function getValue (serie) {
   return serie.value
 }
 
-const container = 'chart-container'
+const container = 'disk-donut-chart'
 
 const chartConfig = {
-  container: `#${container}`,
+  id: container,
   components: [{
     type: 'ControlPanel',
     config: {

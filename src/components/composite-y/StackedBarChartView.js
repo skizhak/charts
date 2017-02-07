@@ -10,7 +10,7 @@ class StackedBarChartView extends XYChartSubView {
   get zIndex () { return 1 }
   get events () {
     return {
-      'mouseover .bar': '_onMouseover',
+      'mousemove .bar': '_onMousemove',
       'mouseout .bar': '_onMouseout',
     }
   }
@@ -105,12 +105,12 @@ class StackedBarChartView extends XYChartSubView {
 
   // Event handlers
 
-  _onMouseover (d, el) {
+  _onMousemove (d, el, event) {
     if (this.config.get('tooltipEnabled')) {
       const offset = this.$el.offset()
       const tooltipOffset = {
-        top: d.y + offset.top,
-        left: d.x + offset.left,
+        top: event.pageY,
+        left: event.pageX,
       }
       this._actionman.fire('ShowComponent', d.accessor.tooltip, tooltipOffset, d.data)
     }

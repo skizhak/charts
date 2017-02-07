@@ -128,9 +128,10 @@ const tooltipDataConfig = _.reduce(dataProcessed.nodeIds, (config, nodeId) => {
   valueFormatter: formatter.extendedISOTime,
 }])
 
-const container = 'chart-container'
+const container = 'vr-traffic'
+
 const chartConfig = {
-  container: `#${container}`,
+  id: container,
   components: [{
     type: 'LegendPanel',
     config: {

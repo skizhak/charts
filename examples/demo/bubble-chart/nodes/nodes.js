@@ -38,10 +38,10 @@ for (var n in nodes) {
   }
 }
 
-const container = 'chart-container'
+const container = 'nodes-bubble-chart'
 
 const chartConfig = {
-  container: `#${container}`,
+  id: container,
   components: [{
     type: 'LegendPanel',
     config: {

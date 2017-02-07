@@ -10,7 +10,7 @@ class SerieProvider extends ContrailModel {
     return {
       _type: 'SerieProvider',
       // Data formatter
-      formatData: undefined,
+      formatter: undefined,
     }
   }
 
@@ -30,9 +30,9 @@ class SerieProvider extends ContrailModel {
 
   parse () {
     let data = this.get('parent').get('data')
-    const formatData = this.get('formatData')
-    if (_.isFunction(formatData)) {
-      data = formatData(data)
+    const formatter = this.get('formatter')
+    if (_.isFunction(formatter)) {
+      data = formatter(data)
     }
     this.set('data', data)
   }

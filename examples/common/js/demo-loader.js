@@ -92,7 +92,7 @@ function createLink (chartType = '', templateId = 'grouped', instance, title) {
   let $link = $(`<a id="${chartType}${cleaned}" href="#${cleaned}"><span class="nav-text">${title}</span></a>`)
 
   $link.click((e) => {
-    if (e.currentTarget.id !== 'lbQueries&DBR/W') {
+    if (e.currentTarget.id !== 'lineBarQueries%26DBR%2FW') {
       allExamples.lineBar['Queries & DB R/W'].instance.stopUpdating()
     }
 

@@ -41,10 +41,10 @@ let dataSrc = require('./port-distribution.json')
 
 dataSrc = dataProcesser(dataSrc)
 
-const container = 'chart-container'
+const container = 'pd-bubble-chart'
 
 const chartConfig = {
-  container: `#${container}`,
+  id: container,
   components: [
     {
       type: 'LegendPanel',

@@ -24,10 +24,10 @@ function getValue (serie) {
   return serie.value
 }
 
-const container = 'chart-container'
+const container = 'pools-pie'
 
 const chartConfig = {
-  container: `#${container}`,
+  id: container,
   components: [{
     type: 'ControlPanel',
     config: {

@@ -20,12 +20,11 @@ const data = commons.fixture({
   },
 })
 
-
 const colorScheme = _c.bubbleColorScheme6
 const bubbleShapes = _c.bubbleShapes
 
 const chartConfig = {
-  container: '#multi-shape-bubble',
+  id: 'multi-shape-bubble',
   components: [{
     type: 'LegendPanel',
     config: {

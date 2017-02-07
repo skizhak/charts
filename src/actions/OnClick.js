@@ -8,6 +8,7 @@ class OnClick extends Action {
   constructor (p) {
     super(p)
     this._deny = false
+    this._triggerAll = true
   }
 
   _execute (data, el, clickHandler) {

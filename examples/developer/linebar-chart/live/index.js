@@ -26,7 +26,7 @@ setInterval(() => {
 }, 1000)
 
 chart.setConfig({
-  container: '#chart',
+  id: 'chart',
   components: [{
     id: 'compositey-id',
     type: 'CompositeYChart',

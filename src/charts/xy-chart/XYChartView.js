@@ -55,7 +55,8 @@ class XYChartView extends ContrailChartsView {
   */
   setConfig (config) {
     this._config = config
-    this.setElement(config.container)
+    this.setElement(`#${config.id}`)
+    this._actionman.id = this._config.id
     if (_.has(config, 'dataProvider.config')) this._dataProvider.setConfig(config.dataProvider.config)
     this._initComponents()
   }
@@ -138,6 +139,7 @@ class XYChartView extends ContrailChartsView {
    */
   _registerComponent (type, config, model, id) {
     if (!this._isEnabledComponent(type)) return false
+    config.title = this._config.title
     let configModel
     if (components[`${type}ConfigModel`]) {
       configModel = new components[`${type}ConfigModel`](config)

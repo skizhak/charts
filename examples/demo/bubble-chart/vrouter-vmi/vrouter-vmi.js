@@ -40,10 +40,10 @@ for (let i = 0; i < count; i++) {
   simpleData.push(data)
 }
 
-const container = 'chart-container'
+const container = 'vrouter-vmi-chart'
 
 const chartConfig = {
-  container: `#${container}`,
+  id: container,
   components: [
     {
       type: 'LegendPanel',

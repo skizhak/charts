@@ -30,7 +30,7 @@ for (let i = 0; i < 100; i++) {
 const container = 'chart-container'
 
 const chartConfig = {
-  container: `#${container}`,
+  id: container,
   components: [{
     type: 'LegendPanel',
     config: {

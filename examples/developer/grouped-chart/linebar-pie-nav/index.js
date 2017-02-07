@@ -42,7 +42,6 @@ const chartConfigs = [
   {
     id: 'grouped-chart1',
     type: 'XYChart',
-    container: '#grouped-chart1',
     components: [{
       type: 'LegendPanel',
       config: {
@@ -52,8 +51,8 @@ const chartConfigs = [
         chartHeight: 350,
         sourceComponent: 'compositey-chart-id',
         editable: {
-          colorSelector: true,
-          chartSelector: true
+          colorSelector: false,
+          chartSelector: false
         },
         placement: 'horizontal',
         filter: true,
@@ -91,7 +90,6 @@ const chartConfigs = [
   }, {
     id: 'grouped-chart2',
     type: 'XYChart',
-    container: '#grouped-chart2',
     components: [{
       type: 'LegendPanel',
       config: {
@@ -101,7 +99,7 @@ const chartConfigs = [
         chartHeight: 350,
         sourceComponent: 'compositey-chart-id2',
         editable: {
-          colorSelector: true,
+          colorSelector: false,
           chartSelector: false
         },
         placement: 'horizontal',
@@ -133,10 +131,9 @@ const chartConfigs = [
   }, {
     id: 'donut-chart',
     type: 'RadialChart',
-    container: '#donut-chart',
     dataProvider: {
       config: {
-        formatData: pieDataParser
+        formatter: pieDataParser
       }
     },
     components: [{
@@ -176,7 +173,6 @@ const chartConfigs = [
     }]
   }, {
     id: 'navigation-chart',
-    container: '#navigation-chart',
     type: 'XYChart',
     components: [{
       type: 'Navigation',

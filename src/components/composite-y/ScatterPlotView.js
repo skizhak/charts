@@ -41,6 +41,7 @@ class ScatterPlotView extends XYChartSubView {
       .append('text')
       .classed('point', true)
       .attr('transform', d => `translate(${d.x},${d.y})`)
+      .merge(points)
       .html(d => d.shape)
       .attr('fill', d => d.color)
       .style('font-size', d => Math.sqrt(d.area))

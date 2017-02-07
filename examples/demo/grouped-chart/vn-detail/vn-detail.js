@@ -115,10 +115,9 @@ const chartConfigs = [
   {
     id: container[0],
     type: 'RadialChart',
-    container: `#${container[0]}`,
     dataProvider: {
       config: {
-        formatData: pieDataParser
+        formatter: pieDataParser
       }
     },
     components: [{
@@ -165,10 +164,9 @@ const chartConfigs = [
   {
     id: container[1],
     type: 'XYChart',
-    container: `#${container[1]}`,
     dataProvider: {
       config: {
-        formatData: trafficStatsParser
+        formatter: trafficStatsParser
       }
     },
     components: [{
@@ -212,10 +210,9 @@ const chartConfigs = [
   {
     id: container[2],
     type: 'XYChart',
-    container: `#${container[2]}`,
     dataProvider: {
       config: {
-        formatData: portStatsParser
+        formatter: portStatsParser
       }
     },
     components: [
@@ -305,7 +302,6 @@ const chartConfigs = [
 const chartConfig = {
   id: groupedChartsWrapper,
   type: 'MultiChart',
-  container: `#{{groupedChartsWrapper}}`,
   components: [],
   // Child charts.
   charts: chartConfigs,

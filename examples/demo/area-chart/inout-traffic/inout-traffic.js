@@ -80,8 +80,9 @@ const mainChartPlotYConfig = _.reduce(dataProcessed.nodeIds, (config, nodeId, id
   config.push({
     accessor: `${nodeId}.sum_bytes`,
     label: `Sum(Bytes) ${nodeId}`,
-    enabled: (nodeId.indexOf('in') !== -1),
+    enabled: nodeId.includes('a'),
     chart: 'AreaChart',
+    stack: nodeId.split('-').pop(),
     color: colorPalette[`${nodeId}.sum_bytes`],
     axis: 'y1',
   })
@@ -94,6 +95,7 @@ const navPlotYConfig = _.reduce(dataProcessed.nodeIds, (config, nodeId, idx) => 
     accessor: `${nodeId}.sum_bytes`,
     // labelFormatter: 'Sum(Bytes)',
     chart: 'AreaChart',
+    stack: nodeId.split('-').pop(),
     color: colorPalette[`${nodeId}.sum_bytes`],
     axis: 'y1',
   })
@@ -115,10 +117,10 @@ const tooltipDataConfig = _.reduce(dataProcessed.nodeIds, (config, nodeId) => {
   valueFormatter: formatter.extendedISOTime,
 }])
 
-const container = 'chart-container'
+const container = 'inout-traffic'
 
 const chartConfig = {
-  container: `#${container}`,
+  id: container,
   components: [{
     type: 'LegendPanel',
     config: {

@@ -110,7 +110,7 @@ class LegendPanelView extends ContrailChartsView {
     }
 
     const elemOffset = $(el).position()
-    elemOffset.top += $(el).outerHeight(true) + 1
+    elemOffset.top += $(el).outerHeight() + 1
     selectorElement
     .style('top', elemOffset.top + 'px')
     .style('left', elemOffset.left + 'px')
