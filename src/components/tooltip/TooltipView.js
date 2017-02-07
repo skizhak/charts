@@ -25,8 +25,6 @@ class TooltipView extends ContrailChartsView {
     let tooltipPositionLeft = offset.left - tooltipWidth/2
     let tooltipPositionTop = offset.top - tooltipHeight - 10
 
-    console.log(`${tooltipPositionLeft}, ${tooltipPositionTop}`)
-
     if(tooltipPositionTop < 0) {
       tooltipPositionTop = offset.top + 10
     }
