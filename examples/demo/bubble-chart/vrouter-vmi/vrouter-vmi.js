@@ -2,14 +2,16 @@
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
 
-const _ = require('lodash')
-const formatter = require('formatter')
-const _c = require('constants')
+const commons = require('commons')
+
+const _ = commons._
+const formatter = commons.formatter
+const _c = commons._c
 
 const bubbleShapes = _c.bubbleShapes
 const colorScheme = _c.bubbleColorScheme6
 
-//const simpleData = require('./vrouter-vmi.json')
+// const simpleData = require('./vrouter-vmi.json')
 
 const simpleData = []
 
@@ -21,19 +23,19 @@ let vn = 0
 let memory = 0
 
 for (let i = 0; i < count; i++) {
-    cpu = _.random(0, (i < .6 * count) ? 30 : ((i < .8 * count) ? 80 : 100))
-    memory = (_.random(0, (i < .6 * count) ? 3 : ((i < .8 * count) ? 8 : 10)))* 10240000
-    vmi = _.random(1, (i < .2 * count) ? 1000 : ((i < .8 * count) ? 700 : 300))
-    vn = _.random(1, (i < .2 * count) ? 50 : ((i < .8 * count) ? 25 : 12))
-    data = {
-      name: 'vrouter' + (i + 1),
-      cpu: cpu,
-      size: _.random(0, 1000),
-      vmi: vmi,
-      vn: vn,
-      memory: memory
-    }
-    simpleData.push(data)
+  cpu = _.random(0, (i < 0.6 * count) ? 30 : ((i < 0.8 * count) ? 80 : 100))
+  memory = (_.random(0, (i < 0.6 * count) ? 3 : ((i < 0.8 * count) ? 8 : 10))) * 10240000
+  vmi = _.random(1, (i < 0.2 * count) ? 1000 : ((i < 0.8 * count) ? 700 : 300))
+  vn = _.random(1, (i < 0.2 * count) ? 50 : ((i < 0.8 * count) ? 25 : 12))
+  data = {
+    name: 'vrouter' + (i + 1),
+    cpu: cpu,
+    size: _.random(0, 1000),
+    vmi: vmi,
+    vn: vn,
+    memory: memory
+  }
+  simpleData.push(data)
 }
 
 const chartConfig = {
@@ -43,7 +45,7 @@ const chartConfig = {
       type: 'LegendPanel',
       config: {
         sourceComponent: 'scatter-plot',
-        palette: _c.bubbleColorScheme14,
+        palette: _c.bubbleColorScheme13,
         editable: {
           colorSelector: true,
           chartSelector: false
@@ -60,6 +62,7 @@ const chartConfig = {
         marginLeft: 80,
         marginRight: 80,
         marginBottom: 40,
+        chartHeight: 500,
         plot: {
           x: {
             accessor: 'vmi',
@@ -76,7 +79,7 @@ const chartConfig = {
               sizeAxis: 'sizeAxis',
               shape: bubbleShapes.certificate,
               axis: 'y1',
-              color: colorScheme[1],
+              color: colorScheme[3],
               tooltip: 'tooltip-id',
             }
           ]
@@ -136,7 +139,7 @@ const chartConfig = {
         marginLeft: 80,
         marginRight: 80,
         marginBottom: 40,
-        chartHeight: 200,
+        chartHeight: 250,
         selection: [80, 100],
         plot: {
           x: {

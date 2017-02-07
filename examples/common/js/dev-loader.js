@@ -81,12 +81,18 @@ const devAreaExamples = [
   }
 ]
 
-const devAdvanceExamples = [
+const devGroupedExamples = [
   {
     html: 'grouped-chart/linebar-linebar-nav/index.html',
     js: 'grouped-chart/linebar-linebar-nav/index.js',
     css: 'grouped-chart/linebar-linebar-nav/index.css',
-    title: 'Grouped',
+    title: '2 Bar Nav',
+  },
+  {
+    html: 'grouped-chart/linebar-pie-nav/index.html',
+    js: 'grouped-chart/linebar-pe-nav/index.js',
+    css: 'grouped-chart/linebar-pie-nav/index.css',
+    title: '2 LineBar 1 Pie Nav',
   }
 ]
 
@@ -126,19 +132,19 @@ devRadialExamples.forEach(
   }
 )
 
-const $advanceLinks = $('#advanceLinks')
-devAdvanceExamples.forEach(
+const $groupedLinks = $('#groupedLinks')
+devGroupedExamples.forEach(
   (example, idx) => {
-    let $link = $(`<a href="#${idx}"><span class="nav-text">${example.title}</span></a>`)
-    $link.click(onClickAdvanceChart)
-    $advanceLinks.append($('<li>').append($link))
+    let $link = $(`<a id="g${idx}" href="#${idx}"><span class="nav-text">${example.title}</span></a>`)
+    $link.click(onClickGroupedChart)
+    $groupedLinks.append($('<li>').append($link))
   }
 )
 
-$('#linebar').click()
-$lineBarLinks.find('#lb0').click()
+$('#grouped').click()
+$groupedLinks.find('#g0').click()
 
-$("#demo-link").click(function () {
+$('#demo-link').click(function () {
   window.open('demo.html')
 })
 
@@ -162,9 +168,9 @@ function onClickRadialChart (e) {
   onClickSidebar(index, devRadialExamples)
 }
 
-function onClickAdvanceChart (e) {
+function onClickGroupedChart (e) {
   const index = $(this).attr('href').split('#')[1]
-  onClickSidebar(index, devAdvanceExamples)
+  onClickSidebar(index, devGroupedExamples)
 }
 
 function createNewTab (id, title, group = 'js-files', checked, content) {

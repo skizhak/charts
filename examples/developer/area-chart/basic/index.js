@@ -1,7 +1,6 @@
 /*
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
-/* global d3 */
 
 const length = 10
 const data = require('fixture')({

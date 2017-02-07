@@ -13,7 +13,7 @@ const chartConfig = {
       radius: 400,
       colorScale: d3.scaleOrdinal().range(d3.schemeCategory20), // eslint-disable-line no-undef
       hierarchyConfig: {
-        parse: function(d) {
+        parse: function (d) {
           const src = {
             names: [d.sourcevn, d.sourceip, d.sport, d.UuidKey],
             key: d.UuidKey,
