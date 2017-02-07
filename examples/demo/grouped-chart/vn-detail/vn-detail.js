@@ -217,6 +217,7 @@ const chartConfigs = [
           marginLeft: 80,
           marginRight: 80,
           chartHeight: 275,
+          crosshair: 'crosshair-id',
           xTicks: 6,
           possibleChartTypes: ['BarChart', 'LineChart'],
           plot: trafficPlotConfig,
@@ -234,6 +235,13 @@ const chartConfigs = [
           selection: [50, 100],
           // We will use default onChangeSelection handler.
           // onChangeSelection: (dataProvider, chart) => {}
+        }
+      },
+      {
+        id: 'crosshair-id',
+        type: 'Crosshair',
+        config: {
+          tooltip: 'xy-tooltip-id',
         }
       }]
   },
