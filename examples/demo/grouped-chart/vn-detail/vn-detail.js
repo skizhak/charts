@@ -108,6 +108,7 @@ const trafficPlotAxisConfig = {
   }
 }
 
+const groupedChartsWrapper = 'grouped-parent-chart'
 const container = ['vn-pie', 'vn-traffic', 'vn-ports']
 
 const chartConfigs = [
@@ -301,22 +302,26 @@ const chartConfigs = [
   }
 ]
 
+const chartConfig = {
+  id: groupedChartsWrapper,
+  type: 'MultiChart',
+  container: `#{{groupedChartsWrapper}}`,
+  components: [],
+  // Child charts.
+  charts: chartConfigs,
+}
+
 let isInitialized = false
 const chartView = new coCharts.charts.MultiChartView()
 
 module.exports = {
+  groupedChartsWrapper: groupedChartsWrapper,
   container: container,
   render: () => {
     if (!isInitialized) {
       isInitialized = true
-      chartView.setConfig({
-        id: 'grouped-parent-chart',
-        type: 'MultiChart',
-        container: '#grouped-parent-chart',
-        components: [],
-        // Child charts.
-        charts: chartConfigs,
-      })
+
+      chartView.setConfig(chartConfig)
 
       _.forEach(container, (container) => {
         chartView.setData(data, {}, container)

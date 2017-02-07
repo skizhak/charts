@@ -24,6 +24,13 @@ const templates = {
   grouped: groupedChartTemplate
 }
 
+/**
+ * structure of an example:
+ * 'example title': {
+ *   template: 'template id', <= optional
+ *   instance: chartObject <= required
+ * }
+ */
 const allExamples = {
   'lineBar': {
     'Queries & DB R/W': {
@@ -68,15 +75,6 @@ const allExamples = {
   }
 }
 
-const devGroupedExamples = [
-  {
-    html: 'grouped-chart/vn-detail/vn-detail.html',
-    js: 'grouped-chart/vn-detail/vn-detail.js',
-    css: 'grouped-chart/vn-detail/vn-detail.css',
-    title: 'Project VN Traffic',
-  }
-]
-
 const $chartBox = $('#chartBox')
 
 _.forEach(allExamples, (examples, chartCategory) => {
@@ -102,6 +100,7 @@ function createLink (chartType = '', templateId = 'grouped', instance, title) {
 
     $chartBox.empty()
     $chartBox.append(templates[templateId]({
+      groupedChartsWrapperId: instance.groupedChartsWrapper,
       chartContainerIds: containerIds
     }))
 // debugger

@@ -3,7 +3,6 @@
  */
 
 const commons = require('commons')
-const _c = require('constants')
 
 const formatter = commons.formatter
 const _c = commons._c
@@ -203,6 +202,7 @@ module.exports = {
       chartView.render()
     } else {
       isInitialized = true
+
       chartView.setConfig(chartConfig)
       chartView.setData(dataSrc)
     }

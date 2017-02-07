@@ -1,5 +1,5 @@
-<div class="chart-container">
+<div {{#if groupedChartsWrapperId }} id = "{{groupedChartsWrapperId}}" {{/if}} class="chart-container">
   {{#each chartContainerIds}}
-    <div id="{{this}}"></div>
+    <div id="{{this}}" class="single-chart-wrapper"></div>
   {{/each}}
 </div>

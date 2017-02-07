@@ -2,7 +2,6 @@
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
 
-const _ = require('lodash')
 const coCharts = require('coCharts')
 
 const commons = require('commons')
@@ -247,7 +246,6 @@ module.exports = {
       isInitialized = true
 
       trafficView.setConfig(chartConfig)
-
       trafficView.setData(dataProcessed.data)
       trafficView.renderMessage({
         componentId: 'XYChart',

@@ -194,6 +194,7 @@ module.exports = {
       chartView.render()
     } else {
       isInitialized = true
+
       chartView.setConfig(chartConfig)
       chartView.setData(simpleData)
     }

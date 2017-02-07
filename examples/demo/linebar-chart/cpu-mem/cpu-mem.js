@@ -269,6 +269,7 @@ module.exports = {
       cpuMemChartView.render()
     } else {
       isInitialized = true
+
       cpuMemChartView.setConfig(chartConfig)
       cpuMemChartView.setData(dataProcessed.data)
       cpuMemChartView.renderMessage({

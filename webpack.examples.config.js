@@ -77,7 +77,7 @@ const config = {
   externals: {
     jquery: { amd: 'jquery', root: 'jQuery' },
     d3: { amd: 'd3v4', root: 'd3' },
-    lodash: { amd: 'lodash', root: '_' },
+    // lodash: { amd: 'lodash', root: '_' },
     backbone: { amd: 'backbone', root: 'Backbone' },
     coCharts: 'coCharts'
   },

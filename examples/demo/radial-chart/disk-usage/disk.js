@@ -74,7 +74,7 @@ const chartView = new coCharts.charts.RadialChartView()
 
 module.exports = {
   container: container,
-  render: (ids) => {
+  render: () => {
     if (isInitialized) {
       chartView.render()
     } else {
