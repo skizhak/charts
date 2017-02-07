@@ -23,6 +23,7 @@ function getValue (serie) {
 }
 
 const chartConfig = {
+  title: 'Donut Chart',
   container: '#donut-chart',
   components: [{
     type: 'ControlPanel',

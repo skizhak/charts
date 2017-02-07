@@ -15,6 +15,7 @@ const simpleData = [
 const simpleChartView = new coCharts.charts.XYChartView()
 simpleChartView.setConfig({
   container: '#basic-area-chart',
+  title: 'Area Chart',
   components: [{
     type: 'CompositeYChart',
     config: {
