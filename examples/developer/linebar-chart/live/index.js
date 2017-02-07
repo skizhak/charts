@@ -1,8 +1,12 @@
 /*
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
-const generator = require('fixture')
-const formatter = require('formatter')
+
+const commons = require('commons')
+
+const formatter = commons.formatter
+const generator = commons.fixture
+
 const chart = new coCharts.charts.XYChartView()
 
 let counter = 0

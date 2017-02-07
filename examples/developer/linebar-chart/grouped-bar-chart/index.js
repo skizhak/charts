@@ -2,8 +2,11 @@
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
 
+const commons = require('commons')
+const _ = commons._
+
 const length = 20
-const data = require('fixture')({
+const data = commons.fixture({
   length: 20,
   data: {
     x: {linear: true, range: [0, length]},

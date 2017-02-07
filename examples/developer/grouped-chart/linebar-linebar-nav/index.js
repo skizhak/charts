@@ -2,12 +2,10 @@
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
 
+const commons = require('commons')
+const _c = commons._c
 
-const _ = require('lodash')
-const formatter = require('formatter')
-const constants = require('constants')
-
-const colorScheme = constants.lbColorScheme7
+const colorScheme = _c.lbColorScheme7
 const simpleData = []
 
 let now = _.now()

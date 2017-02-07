@@ -24,17 +24,17 @@ const demoBubbleExamples = [
   {
     html: 'bubble-chart/nodes/nodes.html',
     js: 'bubble-chart/nodes/nodes.js',
-    title: "Node CPU/Mem"
+    title: 'Node CPU/Mem'
   },
   {
     html: 'bubble-chart/port-distribution/port-distribution.html',
     js: 'bubble-chart/port-distribution/port-distribution.js',
-    title: "Port Distribution"
+    title: 'Port Distribution'
   },
   {
     html: 'bubble-chart/vrouter-vmi/vrouter-vmi.html',
     js: 'bubble-chart/vrouter-vmi/vrouter-vmi.js',
-    title: "vRouters"
+    title: 'vRouters'
   }
 ]
 
@@ -96,7 +96,7 @@ demoBubbleExamples.forEach(
 const $areaLinks = $('#areaLinks')
 areaExamples.forEach(
   (example, idx) => {
-    let $link = $(`<a id="b${idx}" href="#${idx}"><span class="nav-text">${example.title}</span></a>`)
+    let $link = $(`<a id="a${idx}" href="#${idx}"><span class="nav-text">${example.title}</span></a>`)
     $link.click(onClickAreaChart)
     $areaLinks.append($('<li>').append($link))
   }
@@ -105,25 +105,25 @@ areaExamples.forEach(
 const $radialLinks = $('#radialLinks')
 radialExamples.forEach(
   (example, idx) => {
-    let $link = $(`<a id="b${idx}" href="#${idx}"><span class="nav-text">${example.title}</span></a>`)
+    let $link = $(`<a id="r${idx}" href="#${idx}"><span class="nav-text">${example.title}</span></a>`)
     $link.click(onClickRadialChart)
     $radialLinks.append($('<li>').append($link))
   }
 )
 
-const $groupedLinks = $('#groupdedLinks')
+const $groupedLinks = $('#groupedLinks')
 devGroupedExamples.forEach(
   (example, idx) => {
-    let $link = $(`<a href="#${idx}"><span class="nav-text">${example.title}</span></a>`)
+    let $link = $(`<a id="g${idx}" href="#${idx}"><span class="nav-text">${example.title}</span></a>`)
     $link.click(onClickGroupedChart)
     $groupedLinks.append($('<li>').append($link))
   }
 )
 
-$('#bubble').click()
-$bubbleLinks.find('#b0').click()
+$('#grouped').click()
+$groupedLinks.find('#g0').click()
 
-$("#developer-link").click(function () {
+$('#developer-link').click(function () {
   window.open('developer.html')
 })
 

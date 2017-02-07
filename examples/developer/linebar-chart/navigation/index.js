@@ -3,8 +3,11 @@
  */
 /* global d3 */
 
+const commons = require('commons')
+const colorScheme = commons._c.d3ColorScheme10
+
 const length = 20
-const data = require('fixture')({
+const data = commons.fixture({
   length: 20,
   data: {
     x: {linear: true, range: [0, length]},
@@ -13,7 +16,6 @@ const data = require('fixture')({
     c: {linear: true, range: [0, length * 7]},
   },
 })
-const colorScheme = d3.schemeCategory10
 
 const barChart = new coCharts.charts.XYChartView()
 const areaChart = new coCharts.charts.XYChartView()
