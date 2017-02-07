@@ -28,6 +28,9 @@ for (let i = 0; i < 100; i++) {
 }
 
 const container = 'chart-container'
+const layoutMeta = {
+  [container]: 'col-md-12'
+}
 
 const chartConfig = {
   id: container,
@@ -212,6 +215,7 @@ const queryChart = new coCharts.charts.XYChartView()
 
 module.exports = {
   container: container,
+  layoutMeta: layoutMeta,
   render: () => {
     if (isInitialized) {
       queryChart.render()

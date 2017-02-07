@@ -128,6 +128,9 @@ const tooltipDataConfig = _.reduce(dataProcessed.nodeIds, (config, nodeId) => {
 }])
 
 const container = 'cpu-mem-chart'
+const layoutMeta = {
+  [container]: 'col-md-12'
+}
 
 const chartConfig = {
   id: container,
@@ -264,6 +267,7 @@ const cpuMemChartView = new coCharts.charts.XYChartView()
 
 module.exports = {
   container: container,
+  layoutMeta: layoutMeta,
   render: () => {
     if (isInitialized) {
       cpuMemChartView.render()

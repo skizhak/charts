@@ -41,6 +41,9 @@ for (let i = 0; i < count; i++) {
 }
 
 const container = 'vrouter-vmi-chart'
+const layoutMeta = {
+  [container]: 'col-md-12'
+}
 
 const chartConfig = {
   id: container,
@@ -189,6 +192,7 @@ const chartView = new coCharts.charts.XYChartView()
 
 module.exports = {
   container: container,
+  layoutMeta: layoutMeta,
   render: () => {
     if (isInitialized) {
       chartView.render()

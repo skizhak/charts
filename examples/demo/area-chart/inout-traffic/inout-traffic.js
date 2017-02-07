@@ -118,6 +118,9 @@ const tooltipDataConfig = _.reduce(dataProcessed.nodeIds, (config, nodeId) => {
 }])
 
 const container = 'inout-traffic'
+const layoutMeta = {
+  [container]: 'col-md-12'
+}
 
 const chartConfig = {
   id: container,
@@ -241,6 +244,7 @@ const trafficView = new coCharts.charts.XYChartView()
 
 module.exports = {
   container: container,
+  layoutMeta: layoutMeta,
   render: () => {
     if (isInitialized) {
       trafficView.render()

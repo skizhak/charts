@@ -101,9 +101,10 @@ function createLink (chartType = '', templateId = 'grouped', instance, title) {
     $chartBox.empty()
     $chartBox.append(templates[templateId]({
       groupedChartsWrapperId: instance.groupedChartsWrapper,
-      chartContainerIds: containerIds
+      containerIds: containerIds,
+      layoutMeta: instance.layoutMeta
     }))
-// debugger
+
     instance.render()
   })
 

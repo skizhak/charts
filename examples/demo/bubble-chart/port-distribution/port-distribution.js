@@ -42,6 +42,9 @@ let dataSrc = require('./port-distribution.json')
 dataSrc = dataProcesser(dataSrc)
 
 const container = 'pd-bubble-chart'
+const layoutMeta = {
+  [container]: 'col-md-12'
+}
 
 const chartConfig = {
   id: container,
@@ -197,6 +200,7 @@ const chartView = new coCharts.charts.XYChartView()
 
 module.exports = {
   container: container,
+  layoutMeta: layoutMeta,
   render: () => {
     if (isInitialized) {
       chartView.render()

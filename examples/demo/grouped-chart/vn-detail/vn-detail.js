@@ -110,6 +110,11 @@ const trafficPlotAxisConfig = {
 
 const groupedChartsWrapper = 'grouped-parent-chart'
 const container = ['vn-pie', 'vn-traffic', 'vn-ports']
+const layoutMeta = {
+  'vn-pie': 'flex-order-2 col-md-6',
+  'vn-traffic': 'flex-order-1 col-md-12',
+  'vn-ports': 'flex-order-3 col-md-6'
+}
 
 const chartConfigs = [
   {
@@ -313,6 +318,7 @@ const chartView = new coCharts.charts.MultiChartView()
 module.exports = {
   groupedChartsWrapper: groupedChartsWrapper,
   container: container,
+  layoutMeta: layoutMeta,
   render: () => {
     if (!isInitialized) {
       isInitialized = true

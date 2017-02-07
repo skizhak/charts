@@ -25,6 +25,9 @@ function getValue (serie) {
 }
 
 const container = 'pools-pie'
+const layoutMeta = {
+  [container]: 'col-md-12'
+}
 
 const chartConfig = {
   id: container,
@@ -75,6 +78,7 @@ const chartView = new coCharts.charts.RadialChartView()
 
 module.exports = {
   container: container,
+  layoutMeta: layoutMeta,
   render: () => {
     if (isInitialized) {
       chartView.render()

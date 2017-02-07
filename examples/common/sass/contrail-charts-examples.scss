@@ -35,6 +35,20 @@ h1 {
   text-align: center;
 }
 
+.disp-flex {
+  display: flex;
+}
+
+.flex-wrap {
+  flex-wrap: wrap;
+}
+
+@for $i from 1 through 20 {
+  .flex-order-#{$i} {
+    order: $i;
+  }
+}
+
 .flex-row {
   display: flex;
   height: 100%;
