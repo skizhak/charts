@@ -216,6 +216,7 @@ class RadialDendrogramView extends ContrailChartsView {
     console.log('groupedLinks: ', groupedLinks)
     */
     // For every leaf create a series of connections to the root.
+    /*
     const valuePerLevel = 1.1 * hierarchyRootNode.value
     const angleScale = d3.scaleLinear().domain( [0, valuePerLevel] ).range( [0, 360] )
     _.each(hierarchyRootNode.leaves(), (leaf) => {
@@ -261,6 +262,54 @@ class RadialDendrogramView extends ContrailChartsView {
         }
         ancestor.offsetAlpha += leafAngleValue
       })
+    })
+    this.groupedLinks = groupedLinks
+    console.log('groupedLinks: ', groupedLinks)
+    */
+    const depthValueOffset = [0]
+    hierarchyRootNode.angleRange = [0, 360]
+    hierarchyRootNode.valueRange = [0, hierarchyRootNode.value]
+    hierarchyRootNode.angleScale = d3.scaleLinear().domain(hierarchyRootNode.valueRange).range(hierarchyRootNode.angleRange)
+    hierarchyRootNode.each((n) => {
+      if (!n.parent) {
+        return
+      }
+      if (depthValueOffset.length <= n.depth) {
+        depthValueOffset.push(0)
+      }
+      const minValue = depthValueOffset[n.depth]
+      const maxValue = minValue + n.value
+      depthValueOffset[n.depth] = maxValue
+      n.valueRange = [minValue, maxValue]
+      //const parentAngleScale = d3.scaleLinear().domain(n.parent.valueRange).range(n.parent.angleRange)
+      let minAngle = n.parent.angleScale(minValue)
+      let maxAngle = n.parent.angleScale(maxValue)
+      // Shrink the angle range in order to create padding between nodes.
+      const shrinkValue = 0.05 * (maxAngle - minAngle)
+      minAngle += shrinkValue
+      maxAngle -= shrinkValue
+      n.angleRange = [minAngle, maxAngle]
+      n.angleScale = d3.scaleLinear().domain(n.valueRange).range(n.angleRange)
+    })
+    const groupedLinks = []
+    let valueOffset = 0
+    _.each(hierarchyRootNode.leaves(), (leaf) => {
+      const key = leaf.data.key
+      _.each(leaf.ancestors(), (n) => {
+        if (n.depth > 1) {
+          const groupedLink = {
+            polarPoints: [[n.angleScale(valueOffset), n.y], [n.angleScale(valueOffset + leaf.value), n.y]],
+            depth: n.depth,
+            r: n.y,
+            key: key
+          }
+          groupedLink.polarPoints.push([n.parent.angleScale(valueOffset + leaf.value), n.parent.y])
+          groupedLink.polarPoints.push([n.parent.angleScale(valueOffset), n.parent.y])
+          groupedLinks.push(groupedLink)
+        }
+      })
+      //console.log('Leaf: ', leaf.valueRange[0], valueOffset)
+      valueOffset += leaf.value
     })
     this.groupedLinks = groupedLinks
     console.log('groupedLinks: ', groupedLinks)
