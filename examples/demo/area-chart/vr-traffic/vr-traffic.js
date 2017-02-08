@@ -85,8 +85,6 @@ const mainChartPlotYConfig = _.reduce(dataProcessed.nodeIds, (config, nodeId, id
     axis: 'y2',
   })
 
-  console.log(config)
-
   return config
 }, [])
 
@@ -104,8 +102,6 @@ const navPlotYConfig = _.reduce(dataProcessed.nodeIds, (config, nodeId, idx) => 
     color: colorPalette[`${nodeId}.sum_packets`],
     axis: 'y2',
   })
-
-  console.log(config)
 
   return config
 }, [])

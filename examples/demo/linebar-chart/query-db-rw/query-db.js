@@ -175,15 +175,15 @@ let simpleData = []
 let now = _.now()
 
 for (let i = 0; i < 100; i++) {
-  simpleData.push(getDataPoint(now - (i * 1000)))
+  simpleData.push(getDataPoint(now - ((100 - i) * 1000)))
 }
 
 queryChart.setData(simpleData)
 
 setInterval(() => {
   now += 1000
-  simpleData.splice(99, 1)
-  simpleData = [getDataPoint(now)].concat(simpleData)
+  simpleData.splice(0, 1)
+  simpleData = simpleData.concat([getDataPoint(now)])
   queryChart.setData(simpleData)
 }, 1000)
 
