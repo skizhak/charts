@@ -41,7 +41,7 @@ function generateFlows4VN (flowCount, now) {
     inTraffic = _.random(256000, 1024000)
     outTraffic = _.random(256000, 1024000)
     flow = {
-      time: now - (j * 60000),
+      time: now - ((flowCount - j) * 60000),
       inTraffic: inTraffic,
       inPacket: Math.floor(inTraffic / 340),
       outTraffic: outTraffic,

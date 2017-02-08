@@ -56,6 +56,9 @@ class XYChartView extends ContrailChartsView {
   setConfig (config) {
     this._config = config
     this.setElement(`#${config.id}`)
+    // Todo Fix chart init similar to that of component. use the render via ContrailChartsView instead
+    this._container = this.el.parentElement
+    this.el.classList.add(this.selectors.chart.substr(1))
     this._actionman.id = this._config.id
     if (_.has(config, 'dataProvider.config')) this._dataProvider.setConfig(config.dataProvider.config)
     this._initComponents()

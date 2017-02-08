@@ -62,6 +62,7 @@ const trafficPlotConfig = {
       chart: 'BarChart',
       color: colorScheme[0],
       axis: 'y1',
+      tooltip: 'xy-tooltip-id'
     }, {
       accessor: 'outTraffic',
       label: 'Traffic Out',
@@ -69,6 +70,7 @@ const trafficPlotConfig = {
       chart: 'BarChart',
       color: colorScheme[2],
       axis: 'y1',
+      tooltip: 'xy-tooltip-id'
     }, {
       accessor: 'inPacket',
       label: 'Packets In',
@@ -76,6 +78,7 @@ const trafficPlotConfig = {
       chart: 'LineChart',
       color: colorScheme[1],
       axis: 'y2',
+      tooltip: 'xy-tooltip-id'
     }, {
       accessor: 'outPacket',
       label: 'Packets Out',
@@ -83,6 +86,7 @@ const trafficPlotConfig = {
       chart: 'LineChart',
       color: colorScheme[3],
       axis: 'y2',
+      tooltip: 'xy-tooltip-id'
     }
   ]
 }
@@ -130,10 +134,11 @@ const chartConfigs = [
       type: 'PieChart',
       config: {
         type: 'donut',
-        radius: 120,
+        radius: 130,
         chartWidth: 275,
         chartHeight: 275,
-        marginBottom: 60,
+        marginBottom: 20,
+        marginTop: 20,
         colorScale: d3.scaleOrdinal().range([colorScheme[4], colorScheme[6], colorScheme[7], colorScheme[8]]), // eslint-disable-line no-undef
         serie: {
           getValue: serie => serie.vmiCount,
@@ -154,7 +159,7 @@ const chartConfigs = [
         dataConfig: [
           {
             accessor: 'vmiCount',
-            labelFormatter: serie => serie.name,
+            labelFormatter: 'VMI Count for VN',
             valueFormatter: formatter.commaGroupedInteger,
           },
         ],
@@ -174,43 +179,79 @@ const chartConfigs = [
         formatter: trafficStatsParser
       }
     },
-    components: [{
-      type: 'LegendPanel',
-      config: {
-        sourceComponent: 'compositey-chart-id',
-        editable: {
-          colorSelector: true,
-          chartSelector: true
+    components: [
+      {
+        type: 'LegendPanel',
+        config: {
+          sourceComponent: 'compositey-chart-id',
+          editable: {
+            colorSelector: true,
+            chartSelector: true
+          },
+          placement: 'horizontal',
+          filter: true,
         },
-        placement: 'horizontal',
-        filter: true,
       },
-    }, {
-      id: 'compositey-chart-id',
-      type: 'CompositeYChart',
-      config: {
-        marginLeft: 80,
-        marginRight: 80,
-        chartHeight: 275,
-        xTicks: 6,
-        possibleChartTypes: ['BarChart', 'LineChart'],
-        plot: trafficPlotConfig,
-        axis: trafficPlotAxisConfig
-      }
-    }, {
-      type: 'Navigation',
-      config: {
-        marginInner: 10,
-        marginLeft: 80,
-        marginRight: 80,
-        chartHeight: 175,
-        plot: trafficPlotConfig,
-        axis: _.merge({}, trafficPlotAxisConfig, {y1: {ticks: 1, label: ''}, y2: {ticks: 1, label: ''}}),
-        selection: [50, 100],
-        // We will use default onChangeSelection handler.
-        // onChangeSelection: (dataProvider, chart) => {}
-      }
-    }]
+      {
+        id: 'xy-tooltip-id',
+        type: 'Tooltip',
+        config: {
+          title: 'Traffic of selected VN',
+          dataConfig: [
+            {
+              accessor: 'inTraffic',
+              labelFormatter: 'Traffic In',
+              valueFormatter: formatter.byteFormatter
+            }, {
+              accessor: 'outTraffic',
+              labelFormatter: 'Traffic Out',
+              valueFormatter: formatter.byteFormatter
+            }, {
+              accessor: 'inPacket',
+              labelFormatter: 'Packets In',
+              valueFormatter: formatter.toNumber
+            }, {
+              accessor: 'outPacket',
+              labelFormatter: 'Packets Out',
+              valueFormatter: formatter.toNumber
+            }
+          ],
+        },
+      },
+      {
+        id: 'compositey-chart-id',
+        type: 'CompositeYChart',
+        config: {
+          marginLeft: 80,
+          marginRight: 80,
+          chartHeight: 275,
+          crosshair: 'crosshair-id',
+          xTicks: 6,
+          possibleChartTypes: ['BarChart', 'LineChart'],
+          plot: trafficPlotConfig,
+          axis: trafficPlotAxisConfig
+        }
+      }, {
+        type: 'Navigation',
+        config: {
+          marginInner: 10,
+          marginLeft: 80,
+          marginRight: 80,
+          chartHeight: 175,
+          plot: trafficPlotConfig,
+          axis: _.merge({}, trafficPlotAxisConfig, {y1: {ticks: 1, label: ''}, y2: {ticks: 1, label: ''}}),
+          selection: [50, 100],
+          // We will use default onChangeSelection handler.
+          // onChangeSelection: (dataProvider, chart) => {}
+        }
+      },
+      {
+        id: 'crosshair-id',
+        type: 'Crosshair',
+        config: {
+          tooltip: 'xy-tooltip-id',
+        }
+      }]
   },
   {
     id: container[2],
@@ -222,11 +263,24 @@ const chartConfigs = [
     },
     components: [
       {
+        type: 'LegendPanel',
+        config: {
+          sourceComponent: 'scatter-plot',
+          palette: _c.bubbleColorScheme13,
+          editable: {
+            colorSelector: true,
+            chartSelector: false
+          },
+          placement: 'horizontal',
+          filter: true,
+        }
+      },
+      {
         id: 'scatter-plot',
         type: 'CompositeYChart',
         config: {
-          chartHeight: 400,
-          marginLeft: 90,
+          chartHeight: 350,
+          marginLeft: 100,
           plot: {
             x: {
               accessor: 'port',

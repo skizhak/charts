@@ -10,7 +10,41 @@ const _ = commons._
 const formatter = commons.formatter
 const _c = commons._c
 
-const dataSrc = require('./inout-traffic.json')
+const now = _.now()
+
+let simpleData = []
+let vNetworksCount = 2
+
+for (let j = 0 ; j < vNetworksCount; j++) {
+  let vnName = 'vnetwork' + (j + 1)
+  let trafficType = vnName + '_in'
+
+  for (let k = 0; k < 100; k++) {
+    simpleData.push(getDataPoint(now - ((100-k) * 60000), vnName, trafficType, [(j + 1)*256000, (j + 1)*512000]))
+  }
+
+  trafficType = vnName + '_out'
+  for (let l = 0; l < 100; l++) {
+    simpleData.push(getDataPoint(now - ((100-l) * 60000), vnName, trafficType, [(j + 1)*256000, (j + 1)*512000]))
+  }
+}
+
+function getDataPoint (time, vnName, trafficType, range) {
+  let inTraffic = _.random(range[0], range[1])
+  return {
+    "T": time,
+    "direction_ing" : 1,
+    "traffic_type": trafficType,
+    "vn_name": vnName,
+    "sum(bytes)": inTraffic,
+    "sum(packets)": Math.floor(inTraffic / 340)
+  }
+}
+
+const dataSrc = {
+   data: simpleData
+}
+
 const lbColorScheme5 = _c.lbColorScheme7
 
 function dataProcesser (rawData) {
@@ -80,7 +114,7 @@ const mainChartPlotYConfig = _.reduce(dataProcessed.nodeIds, (config, nodeId, id
   config.push({
     accessor: `${nodeId}.sum_bytes`,
     label: `Sum(Bytes) ${nodeId}`,
-    enabled: nodeId.includes('a'),
+    enabled: nodeId.includes('1'),
     chart: 'AreaChart',
     stack: nodeId.split('-').pop(),
     color: colorPalette[`${nodeId}.sum_bytes`],
@@ -175,7 +209,7 @@ const chartConfig = {
       marginRight: 80,
       marginBottom: 40,
       chartHeight: 200,
-      selection: [75, 100],
+      selection: [60, 100],
       plot: {
         x: {
           accessor: 'T',

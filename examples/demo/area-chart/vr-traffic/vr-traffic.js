@@ -10,7 +10,7 @@ const _c = commons._c
 
 const coCharts = require('coCharts')
 
-const lbColorScheme7 = _c.lbColorScheme7
+const lbColorScheme7 = _c.d3ColorScheme20
 
 function dataProcesser (rawData) {
   const keyMapper = {
@@ -67,8 +67,7 @@ const colorPalette = generateColorPalette(
   ['sum_bytes', 'sum_packets'],
   lbColorScheme7,
   1,
-  2,
-  1
+  2
 )
 
 const mainChartPlotYConfig = _.reduce(dataProcessed.nodeIds, (config, nodeId, idx) => {
