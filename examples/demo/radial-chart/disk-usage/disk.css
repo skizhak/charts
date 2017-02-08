@@ -1,8 +1,14 @@
-#disk-donut-chart {
-  position: relative;
-  width: 600px;
+#disk-status-chart {
+  width: 45%;
+  display: inline-block;
   border: 1px solid #eee;
-  margin: 0 auto;
+  padding: 2px;
+}
+
+#disk-cluster-chart {
+  width: 45%;
+  display: inline-block;
+  border: 1px solid #eee;
   padding: 2px;
 }
 

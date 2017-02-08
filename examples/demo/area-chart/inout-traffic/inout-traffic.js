@@ -8,22 +8,22 @@ const _ = commons._
 const formatter = commons.formatter
 const _c = commons._c
 
-const now = _.now()
+let now = _.now()
 
 let simpleData = []
 let vNetworksCount = 2
 
-for (let j = 0 ; j < vNetworksCount; j++) {
+for (let j = 0; j < vNetworksCount; j++) {
   let vnName = 'vnetwork' + (j + 1)
   let trafficType = vnName + '_in'
 
   for (let k = 0; k < 100; k++) {
-    simpleData.push(getDataPoint(now - ((100-k) * 60000), vnName, trafficType, [(j + 1)*256000, (j + 1)*512000]))
+    simpleData.push(getDataPoint(now - ((100 - k) * 2000), vnName, trafficType, [(j + 1) * 256000, (j + 1) * 512000]))
   }
 
   trafficType = vnName + '_out'
   for (let l = 0; l < 100; l++) {
-    simpleData.push(getDataPoint(now - ((100-l) * 60000), vnName, trafficType, [(j + 1)*256000, (j + 1)*512000]))
+    simpleData.push(getDataPoint(now - ((100 - l) * 2000), vnName, trafficType, [(j + 1) * 256000, (j + 1) * 512000]))
   }
 }
 
@@ -31,7 +31,7 @@ function getDataPoint (time, vnName, trafficType, range) {
   let inTraffic = _.random(range[0], range[1])
   return {
     "T": time,
-    "direction_ing" : 1,
+    "direction_ing": 1,
     "traffic_type": trafficType,
     "vn_name": vnName,
     "sum(bytes)": inTraffic,
@@ -40,7 +40,7 @@ function getDataPoint (time, vnName, trafficType, range) {
 }
 
 const dataSrc = {
-   data: simpleData
+  data: simpleData
 }
 
 const lbColorScheme5 = _c.lbColorScheme7
@@ -123,7 +123,7 @@ const mainChartPlotYConfig = _.reduce(dataProcessed.nodeIds, (config, nodeId, id
 
 const navPlotYConfig = _.reduce(dataProcessed.nodeIds, (config, nodeId, idx) => {
   config.push({
-    enabled: true,
+    enabled: nodeId.includes('1'),
     accessor: `${nodeId}.sum_bytes`,
     // labelFormatter: 'Sum(Bytes)',
     chart: 'AreaChart',
@@ -172,7 +172,7 @@ trafficView.setConfig({
       marginLeft: 80,
       marginRight: 80,
       marginBottom: 40,
-      chartHeight: 600,
+      chartHeight: 400,
       crosshair: 'crosshair-id',
       possibleChartTypes: ['AreaChart', 'LineChart'],
       plot: {
@@ -276,3 +276,24 @@ trafficView.renderMessage({
     message: 'Loading ...',
   }]
 })
+
+setInterval(() => {
+  let currentData = dataProcessed.data
+
+  currentData.splice(0, 1)
+
+  let length = currentData.length
+  let random = _.random(0, (length - 1))
+
+
+  dataProcessed.data = currentData.concat([getNewDataPoint(now, currentData[random])])
+  trafficView.setData(dataProcessed.data)
+  now += 2000
+}, 2000)
+
+function getNewDataPoint (now, rPoint) {
+  var newPoint  = _.clone(rPoint)
+  newPoint.T = now
+
+  return newPoint
+}

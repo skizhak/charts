@@ -79,11 +79,12 @@ const mainChartPlotYConfig = _.reduce(dataProcessed.nodeIds, (config, nodeId, id
   }, {
     accessor: `${nodeId}.sum_packets`,
     label: `Sum(Packets) ${nodeId}`,
-    enabled: false,
+    enabled: true,
     chart: 'LineChart',
     color: colorPalette[`${nodeId}.sum_packets`],
     axis: 'y2',
   })
+
   return config
 }, [])
 
@@ -91,15 +92,13 @@ const navPlotYConfig = _.reduce(dataProcessed.nodeIds, (config, nodeId, idx) => 
   config.push({
     enabled: true,
     accessor: `${nodeId}.sum_bytes`,
-    // labelFormatter: 'Sum(Bytes)',
     chart: 'AreaChart',
     color: colorPalette[`${nodeId}.sum_bytes`],
     axis: 'y1',
   }, {
-    enabled: false,
-    accessor: `${nodeId}.sum_packet`,
-    // labelFormatter: 'Sum(Packets)',
-    chart: 'StackedBarChart',
+    enabled: true,
+    accessor: `${nodeId}.sum_packets`,
+    chart: 'LineChart',
     color: colorPalette[`${nodeId}.sum_packets`],
     axis: 'y2',
   })
@@ -149,7 +148,7 @@ trafficView.setConfig({
       marginLeft: 80,
       marginRight: 80,
       marginBottom: 40,
-      chartHeight: 600,
+      chartHeight: 400,
       crosshair: 'crosshair-id',
       possibleChartTypes: ['AreaChart', 'LineChart'],
       plot: {
