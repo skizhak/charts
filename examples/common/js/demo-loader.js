@@ -12,12 +12,15 @@ const demoLBExamples = [
     html: 'linebar-chart/query-db-rw/query-db.html',
     js: 'linebar-chart/query-db-rw/query-db.js',
     title: 'Queries & DB R/W',
-    chartTitle: 'QE Queries vs DB R/W for Analytics Node'
+    chartTitle: 'QE Queries on Analytics Node',
+    chartDesc: 'Real-time Line vs Stacked Bar chart is used to compare queries and r/w requests to cassandra.'
   },
   {
     html: 'linebar-chart/cpu-mem/cpu-mem.html',
     js: 'linebar-chart/cpu-mem/cpu-mem.js',
-    title: 'Memory & CPU'
+    title: 'Memory & CPU',
+    chartTitle: 'vRouter CPU vs Memory',
+    chartDesc: 'Line vs Grouped Bar chart is used to compare CPU and Memory of vRouters.'
   }
 ]
 
@@ -25,17 +28,23 @@ const demoBubbleExamples = [
   {
     html: 'bubble-chart/nodes/nodes.html',
     js: 'bubble-chart/nodes/nodes.js',
-    title: 'Node CPU/Mem'
+    title: 'Node CPU/Mem',
+    chartTitle: 'CPU & Memory of Contrail Nodes',
+    chartDesc: 'Bubble chart with navigation is used to analyze CPU and Memory of different nodes. Each node is identified by it\'s temporary icon. Users can filter the nodes by CPU Share through navigation chart at bottom.'
   },
   {
     html: 'bubble-chart/port-distribution/port-distribution.html',
     js: 'bubble-chart/port-distribution/port-distribution.js',
-    title: 'Port Distribution'
+    title: 'Port Distribution',
+    chartTitle: 'VN Traffic In/Out across Ports',
+    chartDesc: 'Top bubble charts displays the traffic in/out over a port range of a virtual network. Different, temporary icons are used to identify traffic in and traffic out. Users can filter the ports by traffic through navigation chart at bottom.'
   },
   {
     html: 'bubble-chart/vrouter-vmi/vrouter-vmi.html',
     js: 'bubble-chart/vrouter-vmi/vrouter-vmi.js',
-    title: 'vRouters'
+    title: 'vRouters',
+    chartTitle: 'VN, VMI, CPU, Memory of vRouters',
+    chartDesc: 'Top bubble charts displays virtual networks and interfaces of a vRouter. Users can filter the vRouters by CPU share through navigation chart at bottom.'
   }
 ]
 
@@ -43,12 +52,16 @@ const areaExamples = [
   {
     html: 'area-chart/inout-traffic/inout-traffic.html',
     js: 'area-chart/inout-traffic/inout-traffic.js',
-    title: 'VN Traffic In/Out'
+    title: 'VN Traffic In/Out',
+    chartTitle: 'Traffic In/Out of two VNs',
+    chartDesc: 'Area chart is used to compare the in/out traffic of multiple VNs. Quadrant I displays traffic in and quadrant IV displays traffic out.'
   },
   {
     html: 'area-chart/vr-traffic/vr-traffic.html',
     js: 'area-chart/vr-traffic/vr-traffic.js',
-    title: 'vRouter Traffic'
+    title: 'vRouter Traffic',
+    chartTitle: 'Traffic of two VRs',
+    chartDesc: 'Area chart is used to compare the total traffic of multiple vRouters.'
   }
 ]
 

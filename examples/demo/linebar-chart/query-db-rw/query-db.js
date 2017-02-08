@@ -24,21 +24,12 @@ queryChart.setConfig({
       filter: true,
     },
   }, {
-    type: 'ControlPanel',
-    config: {
-      menu: [
-        {id: 'Refresh'},
-      ],
-    },
-  }, {
     id: 'query-db-compositey',
     type: 'CompositeYChart',
     config: {
-      marginInner: 10,
       marginLeft: 80,
       marginRight: 80,
-      marginBottom: 40,
-      chartHeight: 600,
+      chartHeight: 400,
       crosshair: 'crosshair-id',
       possibleChartTypes: ['StackedBarChart', 'LineChart'],
       plot: {
@@ -90,10 +81,8 @@ queryChart.setConfig({
   }, {
     type: 'Navigation',
     config: {
-      marginInner: 10,
       marginLeft: 80,
       marginRight: 80,
-      marginBottom: 40,
       chartHeight: 200,
       selection: [75, 100],
       plot: {

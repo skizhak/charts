@@ -61,11 +61,11 @@ const chartConfig = {
       id: 'scatter-plot',
       type: 'CompositeYChart',
       config: {
-        chartHeight: 450,
+        chartHeight: 400,
         marginInner: 10,
         marginLeft: 100,
         marginRight: 80,
-        marginBottom: 60,
+        marginBottom: 40,
         plot: {
           x: {
             accessor: 'port',

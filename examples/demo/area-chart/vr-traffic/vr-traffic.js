@@ -149,7 +149,7 @@ trafficView.setConfig({
       marginLeft: 80,
       marginRight: 80,
       marginBottom: 40,
-      chartHeight: 600,
+      chartHeight: 400,
       crosshair: 'crosshair-id',
       possibleChartTypes: ['AreaChart', 'LineChart'],
       plot: {
