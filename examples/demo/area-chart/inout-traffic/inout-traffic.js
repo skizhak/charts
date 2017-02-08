@@ -278,11 +278,14 @@ trafficView.renderMessage({
 })
 
 setInterval(() => {
-  let length = dataProcessed.data.length
-  let random = _.random(0, (length - 1))
   let currentData = dataProcessed.data
 
   currentData.splice(0, 1)
+
+  let length = currentData.length
+  let random = _.random(0, (length - 1))
+
+
   dataProcessed.data = currentData.concat([getNewDataPoint(now, currentData[random])])
   trafficView.setData(dataProcessed.data)
   now += 2000

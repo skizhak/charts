@@ -54,7 +54,7 @@ const areaExamples = [
     js: 'area-chart/inout-traffic/inout-traffic.js',
     title: 'VN Traffic In/Out',
     chartTitle: 'Traffic In/Out of two VNs',
-    chartDesc: 'Area chart is used to compare the in/out traffic of multiple VNs. Quadrant I displays traffic in and quadrant IV displays traffic out.'
+    chartDesc: 'Real-time area chart is used to compare the in/out traffic of multiple VNs. Quadrant I displays traffic in and quadrant IV displays traffic out.'
   },
   {
     html: 'area-chart/vr-traffic/vr-traffic.html',
