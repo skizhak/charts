@@ -10,7 +10,7 @@ const generator = commons.fixture
 let counter = 0
 const length = 21
 
-const container = 'chart'
+const container = 'live-data-chart'
 const layoutMeta = {
   [container]: 'col-md-12'
 }

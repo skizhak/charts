@@ -7,6 +7,13 @@ define([ // eslint-disable-line no-undef
   'lodash',
   'contrail-charts',
 ], function (d3, _, coCharts) {
+  let isInitialized = false
+  const container = ['requirejs-linebar-chart', 'requirejs-line-chart']
+  const layoutMeta = {
+    'requirejs-linebar-chart': '',
+    'requirejs-line-chart': ''
+  }
+
   // Complex example
   const complexData = []
   _.each(d3.range(100), (i) => {
@@ -22,9 +29,9 @@ define([ // eslint-disable-line no-undef
   })
 
   const complexChartView = new coCharts.charts.XYChartView()
-  complexChartView.setData(complexData)
+
   complexChartView.setConfig({
-    id: 'requirejs-linebar-chart',
+    id: container[0],
     components: [{
       type: 'CompositeYChart',
       config: {
@@ -116,7 +123,6 @@ define([ // eslint-disable-line no-undef
       }
     }]
   })
-  complexChartView.render()
 
   // Most basic chart.
   const simpleData = [
@@ -127,9 +133,9 @@ define([ // eslint-disable-line no-undef
     { x: 1475764930000, y: 5 }
   ]
   const simpleChartView = new coCharts.charts.XYChartView()
-  simpleChartView.setData(simpleData)
+
   simpleChartView.setConfig({
-    id: 'requirejs-line-chart',
+    id: container[1],
     components: [{
       type: 'CompositeYChart',
       config: {
@@ -155,5 +161,20 @@ define([ // eslint-disable-line no-undef
       }
     }]
   })
-  simpleChartView.render()
+
+  return {
+    container: container,
+    layoutMeta: layoutMeta,
+    render: function () {
+      if (!isInitialized) {
+        isInitialized = true
+        complexChartView.setData(complexData)
+        simpleChartView.setData(simpleData)
+      }
+      console.log(complexChartView, simpleChartView)
+      debugger
+      complexChartView.render()
+      simpleChartView.render()
+    }
+  }
 })

@@ -2,6 +2,7 @@
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
 
+/* global requirejs */
 requirejs.config({ // eslint-disable-line
   paths: {
     app: 'app',
@@ -17,4 +18,6 @@ requirejs.config({ // eslint-disable-line
 })
 
 // Start the main app logic.
-requirejs(['app/example']) // eslint-disable-line
+requirejs(['app/example'], function (example) {
+  window.AMDChartInstance[['lineBar', 'RequireJS'].join('')] = example
+})

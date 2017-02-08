@@ -58,6 +58,27 @@ const allExamples = {
     },
     'Live Data': {
       instance: liveData
+    },
+    'RequireJS': {
+      instance: function RJS (callback) {
+        if (!window.AMDChartInstance) {
+          window.AMDChartInstance = {}
+        }
+
+        let entryPoint = document.createElement('script')
+
+        entryPoint.setAttribute('data-main', './developer/linebar-chart/requirejs/requirejs-config.js')
+        entryPoint.src = 'https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.2/require.min.js'
+
+        entryPoint.onreadystatechange = function () {
+          if (this.readyState === 'complete') {
+            callback()
+          }
+        }
+        entryPoint.onload = callback
+
+        document.body.append(entryPoint)
+      }
     }
   },
   'bubble': {
@@ -106,22 +127,47 @@ function createLink (chartType = '', templateId = 'grouped', instance, title) {
   let cleaned = encodeURIComponent(title.replace(/\s/g, ''))
   let $link = $(`<a id="${chartType}${cleaned}" href="#${cleaned}"><span class="nav-text">${title}</span></a>`)
 
-  $link.click((e) => {
-    if (e.currentTarget.id !== 'lineBarLiveData') {
-      allExamples.lineBar['Live Data'].instance.stopUpdating()
-    }
+  if (_.isFunction(instance) && instance.name === 'RJS') {
+    instance(() => {
+      $link.click((e) => {
+        const RJSInstance = window.AMDChartInstance[`${chartType}${cleaned}`]
 
-    let containerIds = _.isArray(instance.container) ? instance.container : [instance.container]
+        if (e.currentTarget.id !== 'lineBarLiveData') {
+          allExamples.lineBar['Live Data'].instance.stopUpdating()
+        }
 
-    $chartBox.empty()
-    $chartBox.append(templates[templateId]({
-      groupedChartsWrapperId: instance.groupedChartsWrapper,
-      containerIds: containerIds,
-      layoutMeta: instance.layoutMeta
-    }))
+        let containerIds = _.isArray(RJSInstance.container) ? RJSInstance.container : [RJSInstance.container]
 
-    instance.render()
-  })
+        $chartBox.empty()
+        $chartBox.append(templates[templateId]({
+          groupedChartsWrapperId: RJSInstance.groupedChartsWrapper,
+          containerIds: containerIds,
+          layoutMeta: RJSInstance.layoutMeta
+        }))
+
+        RJSInstance.render()
+      })
+
+      instance = 'RJSInstantiated'
+    })
+  } else if (_.isObject(instance)) {
+    $link.click((e) => {
+      if (e.currentTarget.id !== 'lineBarLiveData') {
+        allExamples.lineBar['Live Data'].instance.stopUpdating()
+      }
+
+      let containerIds = _.isArray(instance.container) ? instance.container : [instance.container]
+
+      $chartBox.empty()
+      $chartBox.append(templates[templateId]({
+        groupedChartsWrapperId: instance.groupedChartsWrapper,
+        containerIds: containerIds,
+        layoutMeta: instance.layoutMeta
+      }))
+
+      instance.render()
+    })
+  }
 
   return $link
 }
@@ -157,11 +203,11 @@ const devLBExamples = [
   //   js: 'linebar-chart/navigation/index.js',
   //   title: 'Navigation',
   // },
-  {
-    html: 'linebar-chart/requirejs/requirejs.html',
-    js: ['linebar-chart/requirejs/requirejs-config.js', 'linebar-chart/requirejs/app/example.js'],
-    title: 'RequireJS',
-  },
+  // {
+  //   html: 'linebar-chart/requirejs/requirejs.html',
+  //   js: ['linebar-chart/requirejs/requirejs-config.js', 'linebar-chart/requirejs/app/example.js'],
+  //   title: 'RequireJS',
+  // },
   // {
   //   html: 'linebar-chart/live/index.html',
   //   js: 'linebar-chart/live/index.js',
@@ -215,14 +261,14 @@ const devLBExamples = [
 //   }
 // ]
 
-const $lineBarLinks = $('#lineBarLinks')
-devLBExamples.forEach(
-  (example, idx) => {
-    let $link = $(`<a id="lb${idx}" href="#${idx}"><span class="nav-text">${example.title}</span></a>`)
-    $link.click(onClickLBChart)
-    $lineBarLinks.append($('<li>').append($link))
-  }
-)
+// const $lineBarLinks = $('#lineBarLinks')
+// devLBExamples.forEach(
+//   (example, idx) => {
+//     let $link = $(`<a id="lb${idx}" href="#${idx}"><span class="nav-text">${example.title}</span></a>`)
+//     $link.click(onClickLBChart)
+//     $lineBarLinks.append($('<li>').append($link))
+//   }
+// )
 
 // const $bubbleLinks = $('#bubbleLinks')
 // devBubbleExamples.forEach(
@@ -271,10 +317,10 @@ $('#demo-link').click(function () {
   window.open('demo.html')
 })
 
-function onClickLBChart (e) {
-  const index = $(this).attr('href').split('#')[1]
-  onClickSidebar(index, devLBExamples)
-}
+// function onClickLBChart (e) {
+//   const index = $(this).attr('href').split('#')[1]
+//   onClickSidebar(index, devLBExamples)
+// }
 
 // function onClickBubbleChart (e) {
 //   const index = $(this).attr('href').split('#')[1]
@@ -296,28 +342,28 @@ function onClickLBChart (e) {
 //   onClickSidebar(index, devGroupedExamples)
 // }
 
-function onClickSidebar (index, exampleArray) {
-  const example = exampleArray[index]
-  // const {rawHTML, rawJS, rawCSS} = exampleArray[index]
-  $('#outputView').find('.output-demo-iframe').attr('src', `./developer/${example.html}`)
+// function onClickSidebar (index, exampleArray) {
+//   const example = exampleArray[index]
+//   // const {rawHTML, rawJS, rawCSS} = exampleArray[index]
+//   $('#outputView').find('.output-demo-iframe').attr('src', `./developer/${example.html}`)
 
-  /*
-   const tabCollections = Object.keys(rawJS)
-   .reduce((tabsHTML, currentJSFile, idx) => {
-   tabsHTML.push(
-   createNewTab(
-   'jsFile-' + idx,
-   currentJSFile,
-   undefined,
-   idx === 0 ? 'checked' : '',
-   reformatHTMLToShow(rawJS[currentJSFile])
-   )
-   )
-   return tabsHTML
-   }, []).join('')
+  
+//    const tabCollections = Object.keys(rawJS)
+//    .reduce((tabsHTML, currentJSFile, idx) => {
+//    tabsHTML.push(
+//    createNewTab(
+//    'jsFile-' + idx,
+//    currentJSFile,
+//    undefined,
+//    idx === 0 ? 'checked' : '',
+//    reformatHTMLToShow(rawJS[currentJSFile])
+//    )
+//    )
+//    return tabsHTML
+//    }, []).join('')
 
-   $('#htmlContent').html(reformatHTMLToShow(rawHTML))
-   $('#cssContent').html(reformatHTMLToShow(rawCSS))
-   $('#jsContent').html(`<div class="tabs">${tabCollections}</div>`)
-   */
-}
+//    $('#htmlContent').html(reformatHTMLToShow(rawHTML))
+//    $('#cssContent').html(reformatHTMLToShow(rawCSS))
+//    $('#jsContent').html(`<div class="tabs">${tabCollections}</div>`)
+   
+// }
