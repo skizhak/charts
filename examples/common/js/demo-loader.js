@@ -70,13 +70,17 @@ const radialExamples = [
     html: 'radial-chart/disk-usage/disk.html',
     js: 'radial-chart/disk-usage/disk.js',
     css: 'radial-chart/disk-usage/disk.css',
-    title: 'Disk Status'
+    title: 'Ceph OSD/Disk Status',
+    chartTitle: 'Ceph cluster OSD status',
+    chartDesc: 'Donut chart showing different OSD states under a Ceph cluster.'
   },
   {
     html: 'radial-chart/pool-usage/pools.html',
     js: 'radial-chart/pool-usage/pools.js',
     css: 'radial-chart/pool-usage/pools.css',
-    title: 'Storage Pools'
+    title: 'Storage Pools',
+    chartTitle: 'Ceph cluster storage pool allocation',
+    chartDesc: 'Visualizing different storage pool allocation under a Ceph cluster using a Pie chart'
   }
 ]
 
