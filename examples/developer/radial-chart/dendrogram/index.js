@@ -14,6 +14,8 @@ const chartConfig = {
       parentSeparation: 1,
       parentSeparationThreshold: 2,
       colorScale: d3.scaleOrdinal().range(d3.schemeCategory20), // eslint-disable-line no-undef
+      drawLinks: false,
+      drawRibbons: true,
       hierarchyConfig: {
         parse: function(d) {
           const src = {
