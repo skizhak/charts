@@ -30,7 +30,6 @@ queryChart.setConfig({
       marginLeft: 80,
       marginRight: 80,
       chartHeight: 400,
-      crosshair: 'crosshair-id',
       possibleChartTypes: ['StackedBarChart', 'LineChart'],
       plot: {
         x: {
@@ -44,22 +43,19 @@ queryChart.setConfig({
             labelFormatter: 'DB Read',
             enabled: true,
             chart: 'StackedBarChart',
-            axis: 'y1',
-            tooltip: 'default-tooltip',
+            axis: 'y1'
           }, {
             accessor: 'b',
             labelFormatter: 'DB Write',
             enabled: true,
             chart: 'StackedBarChart',
             axis: 'y1',
-            tooltip: 'custom-tooltip',
           }, {
             accessor: 'c',
             labelFormatter: 'QE Queries',
             enabled: true,
             chart: 'LineChart',
-            axis: 'y2',
-            tooltip: 'default-tooltip',
+            axis: 'y2'
           }
         ]
       },
