@@ -21,6 +21,7 @@ class ContrailChartsView extends ContrailView {
 
   get selectors () {
     return {
+      chart: '.cc-chart',
       component: '.cc-component',
       svgWrapper: '.svg-wrapper',
       svg: '.cc-svg',
