@@ -53,7 +53,7 @@ const areaExamples = [
     html: 'area-chart/inout-traffic/inout-traffic.html',
     js: 'area-chart/inout-traffic/inout-traffic.js',
     title: 'VN Traffic In/Out',
-    chartTitle: 'Traffic In/Out of two VNs',
+    chartTitle: 'Traffic in/out of two VNs',
     chartDesc: 'Real-time area chart is used to compare the in/out traffic of multiple VNs. Quadrant I displays traffic in and quadrant IV displays traffic out.'
   },
   {
@@ -70,17 +70,17 @@ const radialExamples = [
     html: 'radial-chart/disk-usage/disk.html',
     js: 'radial-chart/disk-usage/disk.js',
     css: 'radial-chart/disk-usage/disk.css',
-    title: 'Ceph OSD/Disk Status',
-    chartTitle: 'Ceph cluster OSD status',
-    chartDesc: 'Donut chart showing different OSD states under a Ceph cluster.'
+    title: 'OSD/Disk Status',
+    chartTitle: 'OSD status of Ceph cluster',
+    chartDesc: 'Donut chart is used to show OSD states under a Ceph cluster.'
   },
   {
     html: 'radial-chart/pool-usage/pools.html',
     js: 'radial-chart/pool-usage/pools.js',
     css: 'radial-chart/pool-usage/pools.css',
     title: 'Storage Pools',
-    chartTitle: 'Ceph cluster storage pool allocation',
-    chartDesc: 'Visualizing different storage pool allocation under a Ceph cluster using a Pie chart'
+    chartTitle: 'Pool allocation of Ceph cluster',
+    chartDesc: 'Pie chart is used to show storage pool allocation under a Ceph cluster.'
   }
 ]
 

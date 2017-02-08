@@ -1,12 +1,12 @@
 #disk-status-chart {
-  width: 45%;
+  width: 48%;
   display: inline-block;
   border: 1px solid #eee;
   padding: 2px;
 }
 
 #disk-cluster-chart {
-  width: 45%;
+  width: 48%;
   display: inline-block;
   border: 1px solid #eee;
   padding: 2px;
