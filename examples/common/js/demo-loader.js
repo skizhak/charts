@@ -12,6 +12,7 @@ const demoLBExamples = [
     html: 'linebar-chart/query-db-rw/query-db.html',
     js: 'linebar-chart/query-db-rw/query-db.js',
     title: 'Queries & DB R/W',
+    chartTitle: 'QE Queries vs DB R/W for Analytics Node'
   },
   {
     html: 'linebar-chart/cpu-mem/cpu-mem.html',
@@ -72,6 +73,8 @@ const devGroupedExamples = [
     js: 'grouped-chart/vn-detail/vn-detail.js',
     css: 'grouped-chart/vn-detail/vn-detail.css',
     title: 'Project VN Traffic',
+    chartTitle: 'Traffic Analysis for a Project',
+    chartDesc: 'A combination of three charts used to analyze traffic across VNs under a project. LineBar chart shows either total traffic of this project or traffic of VN selected by clicking on Pie chart. Bubble chart shows traffic across ports with two icons: one for in-traffic and other one for out-traffic.'
   }
 ]
 
@@ -178,6 +181,12 @@ function onClickSidebar (index, exampleArray) {
   const example = exampleArray[index]
   const {rawHTML, rawJS, rawCSS} = exampleArray[index]
   $('#outputView').find('.output-demo-iframe').attr('src', `./demo/${example.html}`)
+
+  const chartTitle = exampleArray[index].chartTitle
+  const chartDesc = exampleArray[index].chartDesc
+
+  $('#chartTitle').text(chartTitle ? chartTitle : '')
+  $('#chartDesc').text(chartDesc ? chartDesc : '')
 
   /*
    const tabCollections = Object.keys(rawJS)
