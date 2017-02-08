@@ -25,12 +25,14 @@ const bubbleShapes = _c.bubbleShapes
 
 const chartConfig = {
   id: 'multi-shape-bubble',
-  components: [{
+  components: [
+  {
     type: 'LegendPanel',
     config: {
       sourceComponent: 'multishape-bubble-chart',
     },
-  }, {
+  },
+  {
     id: 'multishape-bubble-chart',
     type: 'CompositeYChart',
     config: {
