@@ -17,10 +17,6 @@ class TooltipConfigModel extends ContrailChartsConfigModel {
     var outData = {}
     const dataConfig = this.get('dataConfig')
 
-    if (this.get('title')) {
-      outData.title = _.isString(this.get('title')) ? this.get('title') : this.getFormattedValue(inData, this.get('title'))
-    }
-
     outData.color = this.get('color')
     outData.backgroundColor = this.get('backgroundColor')
 

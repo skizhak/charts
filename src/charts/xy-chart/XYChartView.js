@@ -142,7 +142,8 @@ class XYChartView extends ContrailChartsView {
    */
   _registerComponent (type, config, model, id) {
     if (!this._isEnabledComponent(type)) return false
-    config.title = this._config.title
+    // Set title to parent title only if it doesn't exist. Each component may be handling title in different way.
+    if (!config.title) config.title = this._config.title
     let configModel
     if (components[`${type}ConfigModel`]) {
       configModel = new components[`${type}ConfigModel`](config)
