@@ -91,10 +91,10 @@ class LegendPanelView extends ContrailChartsView {
       selectorElement
         .classed('active', true)
         .classed('select--chart', true)
-      const currentChart = el.dataset['chart-type']
+      const currentChart = el.dataset.chartType
       selectorElement.selectAll('.swatch--chart')
         .filter(function (d, i, n) {
-          return n[i].dataset['chart-type'] === currentChart
+          return n[i].dataset.chartType === currentChart
         })
         .classed('selected', true)
     }
@@ -112,7 +112,7 @@ class LegendPanelView extends ContrailChartsView {
   }
 
   _selectChartType (d, el) {
-    const chartType = el.dataset['chart-type']
+    const chartType = el.dataset.chartType
     this._actionman.fire('SelectChartType', this._accessor, chartType)
   }
 }
