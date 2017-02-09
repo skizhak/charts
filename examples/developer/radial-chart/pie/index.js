@@ -50,6 +50,7 @@ const chartConfig = {
     id: 'tooltip-id',
     type: 'Tooltip',
     config: {
+      title: 'Process Info',
       color: 'yellow',
       backgroundColor: 'red',
       dataConfig: [
