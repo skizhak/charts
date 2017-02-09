@@ -70,10 +70,8 @@ class LegendPanelView extends ContrailChartsView {
   }
 
   _toggleSelector (d, el) {
-    console.log(el)
     this._accessor = $(el).parents('.attribute').data('accessor')
     const selectorElement = this.d3.select('.selector')
-    console.log(selectorElement)
     selectorElement
       .classed('select--color', false)
       .classed('select--chart', false)
@@ -114,7 +112,7 @@ class LegendPanelView extends ContrailChartsView {
   }
 
   _selectChartType (d, el) {
-    const chartType = el.dataset['chart-type']
+    const chartType = el.dataset.chartType
     this._actionman.fire('SelectChartType', this._accessor, chartType)
   }
 }
