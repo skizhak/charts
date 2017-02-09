@@ -30,12 +30,12 @@ for (let j = 0; j < vNetworksCount; j++) {
 function getDataPoint (time, vnName, trafficType, range) {
   let inTraffic = _.random(range[0], range[1])
   return {
-    "T": time,
-    "direction_ing": 1,
-    "traffic_type": trafficType,
-    "vn_name": vnName,
-    "sum(bytes)": inTraffic,
-    "sum(packets)": Math.floor(inTraffic / 340)
+    'T': time,
+    'direction_ing': 1,
+    'traffic_type': trafficType,
+    'vn_name': vnName,
+    'sum(bytes)': inTraffic,
+    'sum(packets)': Math.floor(inTraffic / 340)
   }
 }
 
@@ -114,7 +114,7 @@ const mainChartPlotYConfig = _.reduce(dataProcessed.nodeIds, (config, nodeId, id
     label: `Sum(Bytes) ${nodeId}`,
     enabled: nodeId.includes('1'),
     chart: 'AreaChart',
-    stack: nodeId.split('-').pop(),
+    stack: nodeId.split('_').pop(),
     color: colorPalette[`${nodeId}.sum_bytes`],
     axis: 'y1',
   })
@@ -127,7 +127,7 @@ const navPlotYConfig = _.reduce(dataProcessed.nodeIds, (config, nodeId, idx) => 
     accessor: `${nodeId}.sum_bytes`,
     // labelFormatter: 'Sum(Bytes)',
     chart: 'AreaChart',
-    stack: nodeId.split('-').pop(),
+    stack: nodeId.split('_').pop(),
     color: colorPalette[`${nodeId}.sum_bytes`],
     axis: 'y1',
   })
@@ -285,15 +285,13 @@ setInterval(() => {
   let length = currentData.length
   let random = _.random(0, (length - 1))
 
-
   dataProcessed.data = currentData.concat([getNewDataPoint(now, currentData[random])])
   trafficView.setData(dataProcessed.data)
   now += 2000
 }, 2000)
 
 function getNewDataPoint (now, rPoint) {
-  var newPoint  = _.clone(rPoint)
+  var newPoint = _.clone(rPoint)
   newPoint.T = now
-
   return newPoint
 }

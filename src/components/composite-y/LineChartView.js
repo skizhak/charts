@@ -5,9 +5,11 @@
 require('./line-chart.scss')
 const _ = require('lodash')
 const d3 = require('d3')
+const d3InterpolatePath = require('d3-interpolate-path').interpolatePath
 require('d3-transition')
 const d3Shape = require('d3-shape')
 const d3Ease = require('d3-ease')
+const d3Scale = require('d3-scale')
 const XYChartSubView = require('components/composite-y/XYChartSubView')
 
 class LineChartView extends XYChartSubView {
@@ -36,14 +38,11 @@ class LineChartView extends XYChartSubView {
 
     // Collect linePathData - one line per Y accessor.
     const linePathData = []
-    const lines = {}
+    this._lines = {}
 
-    const zeroLine = d3Shape.line()
-      .x(d => this.xScale(d[this.params.plot.x.accessor]))
-      .y(d => this.yScale.range()[0])
     _.each(this.params.activeAccessorData, accessor => {
       const key = accessor.accessor
-      lines[key] = d3Shape.line()
+      this._lines[key] = d3Shape.line()
         .x(d => this.xScale(d[this.params.plot.x.accessor]))
         .y(d => this.yScale(d[key]))
         .curve(this.config.get('curve'))
@@ -51,14 +50,36 @@ class LineChartView extends XYChartSubView {
     })
     const svgLines = this.d3.selectAll('.line')
       .data(linePathData, d => d.key)
+
     svgLines.enter().append('path')
       .attr('class', d => 'line line-' + d.key)
-      .attr('d', d => zeroLine(data))
-      .merge(svgLines)
+      .attr('d', d => this._lines[d.key](d.data[0]))
       .transition().ease(d3Ease.easeLinear).duration(this.params.duration)
+      .attrTween('d', this._interpolate.bind(this))
       .attr('stroke', d => this.getColor(d.accessor))
-      .attr('d', d => lines[d.key](data))
+
+    svgLines
+      .transition().ease(d3Ease.easeLinear).duration(this.params.duration)
+      .attrTween('d', (d, i, els) => {
+        const previous = els[i].getAttribute('d')
+        const current = this._lines[d.key](d.data)
+        return d3InterpolatePath(previous, current)
+      })
+      .attr('stroke', d => this.getColor(d.accessor))
     svgLines.exit().remove()
+  }
+  /**
+   * Draw line along the path
+   */
+  _interpolate (d) {
+    const interpolate = d3Scale.scaleQuantile()
+      .domain([0, 1])
+      .range(d3.range(1, d.data.length + 1))
+
+    return (t) => {
+      const interpolatedLine = d.data.slice(0, interpolate(t))
+      return this._lines[d.key](interpolatedLine)
+    }
   }
 
   // Event handlers

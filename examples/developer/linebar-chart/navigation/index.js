@@ -11,7 +11,7 @@ const data = commons.fixture({
   length: 20,
   data: {
     x: {linear: true, range: [0, length]},
-    a: {linear: true, range: [0, length * 3], repeat: true, gap: true},
+    a: {linear: true, range: [0, length * 3], repeat: true},
     b: {linear: true, range: [0, length * 5], repeat: true},
     c: {linear: true, range: [0, length * 7]},
   },
