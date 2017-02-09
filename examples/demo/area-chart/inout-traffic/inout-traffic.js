@@ -30,12 +30,12 @@ for (let j = 0; j < vNetworksCount; j++) {
 function getDataPoint (time, vnName, trafficType, range) {
   let inTraffic = _.random(range[0], range[1])
   return {
-    "T": time,
-    "direction_ing": 1,
-    "traffic_type": trafficType,
-    "vn_name": vnName,
-    "sum(bytes)": inTraffic,
-    "sum(packets)": Math.floor(inTraffic / 340)
+    'T': time,
+    'direction_ing': 1,
+    'traffic_type': trafficType,
+    'vn_name': vnName,
+    'sum(bytes)': inTraffic,
+    'sum(packets)': Math.floor(inTraffic / 340)
   }
 }
 
@@ -285,15 +285,13 @@ setInterval(() => {
   let length = currentData.length
   let random = _.random(0, (length - 1))
 
-
   dataProcessed.data = currentData.concat([getNewDataPoint(now, currentData[random])])
   trafficView.setData(dataProcessed.data)
   now += 2000
 }, 2000)
 
 function getNewDataPoint (now, rPoint) {
-  var newPoint  = _.clone(rPoint)
+  var newPoint = _.clone(rPoint)
   newPoint.T = now
-
   return newPoint
 }
