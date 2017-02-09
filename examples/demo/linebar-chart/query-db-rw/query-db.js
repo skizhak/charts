@@ -24,22 +24,12 @@ queryChart.setConfig({
       filter: true,
     },
   }, {
-    type: 'ControlPanel',
-    config: {
-      menu: [
-        {id: 'Refresh'},
-      ],
-    },
-  }, {
     id: 'query-db-compositey',
     type: 'CompositeYChart',
     config: {
-      marginInner: 10,
       marginLeft: 80,
       marginRight: 80,
-      marginBottom: 40,
-      chartHeight: 600,
-      crosshair: 'crosshair-id',
+      chartHeight: 400,
       possibleChartTypes: ['StackedBarChart', 'LineChart'],
       plot: {
         x: {
@@ -53,22 +43,19 @@ queryChart.setConfig({
             labelFormatter: 'DB Read',
             enabled: true,
             chart: 'StackedBarChart',
-            axis: 'y1',
-            tooltip: 'default-tooltip',
+            axis: 'y1'
           }, {
             accessor: 'b',
             labelFormatter: 'DB Write',
             enabled: true,
             chart: 'StackedBarChart',
             axis: 'y1',
-            tooltip: 'custom-tooltip',
           }, {
             accessor: 'c',
             labelFormatter: 'QE Queries',
             enabled: true,
             chart: 'LineChart',
-            axis: 'y2',
-            tooltip: 'default-tooltip',
+            axis: 'y2'
           }
         ]
       },
@@ -90,10 +77,8 @@ queryChart.setConfig({
   }, {
     type: 'Navigation',
     config: {
-      marginInner: 10,
       marginLeft: 80,
       marginRight: 80,
-      marginBottom: 40,
       chartHeight: 200,
       selection: [75, 100],
       plot: {
@@ -190,15 +175,15 @@ let simpleData = []
 let now = _.now()
 
 for (let i = 0; i < 100; i++) {
-  simpleData.push(getDataPoint(now - (i * 1000)))
+  simpleData.push(getDataPoint(now - ((100 - i) * 1000)))
 }
 
 queryChart.setData(simpleData)
 
 setInterval(() => {
   now += 1000
-  simpleData.splice(99, 1)
-  simpleData = [getDataPoint(now)].concat(simpleData)
+  simpleData.splice(0, 1)
+  simpleData = simpleData.concat([getDataPoint(now)])
   queryChart.setData(simpleData)
 }, 1000)
 

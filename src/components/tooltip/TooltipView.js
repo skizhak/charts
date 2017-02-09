@@ -2,6 +2,7 @@
 
 require('./tooltip.scss')
 const ContrailChartsView = require('contrail-charts-view')
+const TitleView = require('plugins/title/TitleView')
 const _template = require('./tooltip.html')
 
 class TooltipView extends ContrailChartsView {
@@ -15,6 +16,11 @@ class TooltipView extends ContrailChartsView {
   show (offset, data) {
     this._loadTemplate(data)
     this.$el.show()
+
+    if (this.config.get('title')) {
+      this.params.title = _.isString(this.config.get('title')) ? this.config.get('title') : this.config.getFormattedValue(data, this.config.get('title'))
+      TitleView(this.d3.select('.tooltip-content').node(), this.params.title)
+    }
 
     const tooltipWidth = this.$el.outerWidth()
     const tooltipHeight = this.$el.outerHeight()
