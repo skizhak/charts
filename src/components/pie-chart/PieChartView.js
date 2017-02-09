@@ -82,12 +82,20 @@ class PieChartView extends ContrailChartsView {
       left: event.pageX,
       top: event.pageY
     }
+
+    const onClickCursor = this.config.get('onClickCursor')
+    if (onClickCursor) {
+      d3.select(el)
+        .classed('click-me', true)
+        .style('cursor', () => (typeof (onClickCursor) === 'boolean') ? 'pointer' : onClickCursor)
+    }
     el.classList.add('highlight')
     this._actionman.fire('ShowComponent', this.config.get('tooltip'), tooltipPosition, sector.data)
   }
 
   _onMouseout (d, el) {
     el.classList.remove('highlight')
+    if (this.config.get('onClickCursor')) el.classList.remove('click-me')
     this._actionman.fire('HideComponent', this.config.get('tooltip'))
   }
 

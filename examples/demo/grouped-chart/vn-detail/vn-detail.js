@@ -142,7 +142,8 @@ const chartConfigs = [
           if (chart.el.id === 'vn-traffic' || chart.el.id === 'vn-ports') {
             chart.setData([data])
           }
-        }
+        },
+        onClickCursor: true
       },
     }, {
       id: 'tooltip-id',
