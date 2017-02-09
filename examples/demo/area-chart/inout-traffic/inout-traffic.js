@@ -114,7 +114,7 @@ const mainChartPlotYConfig = _.reduce(dataProcessed.nodeIds, (config, nodeId, id
     label: `Sum(Bytes) ${nodeId}`,
     enabled: nodeId.includes('1'),
     chart: 'AreaChart',
-    stack: nodeId.split('-').pop(),
+    stack: nodeId.split('_').pop(),
     color: colorPalette[`${nodeId}.sum_bytes`],
     axis: 'y1',
   })
@@ -127,7 +127,7 @@ const navPlotYConfig = _.reduce(dataProcessed.nodeIds, (config, nodeId, idx) => 
     accessor: `${nodeId}.sum_bytes`,
     // labelFormatter: 'Sum(Bytes)',
     chart: 'AreaChart',
-    stack: nodeId.split('-').pop(),
+    stack: nodeId.split('_').pop(),
     color: colorPalette[`${nodeId}.sum_bytes`],
     axis: 'y1',
   })
