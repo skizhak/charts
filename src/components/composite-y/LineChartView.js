@@ -54,7 +54,7 @@ class LineChartView extends XYChartSubView {
     svgLines.enter().append('path')
       .attr('class', d => 'line line-' + d.key)
       .attr('d', d => this._lines[d.key](d.data[0]))
-      .transition().ease(d3Ease.linear).duration(this.params.duration)
+      .transition().ease(d3Ease.easeLinear).duration(this.params.duration)
       .attrTween('d', this._interpolate.bind(this))
       .attr('stroke', d => this.getColor(d.accessor))
 

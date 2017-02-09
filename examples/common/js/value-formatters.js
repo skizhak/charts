@@ -4,39 +4,20 @@
 
 const d3Format = require('d3-format')
 const d3TimeFormat = require('d3-time-format')
-
-function extendedISOTime (value) {
-  return d3TimeFormat.timeFormat('%H:%M:%S')(value)
-}
-
-function toInteger (number) {
-  return number.toFixed(0)
-}
-
-function toFixed1 (number) {
-  return number.toFixed(1)
-}
+const extendedISOTime = d3TimeFormat.timeFormat('%H:%M:%S')
+const toInteger = d3Format.format('.0f')
+const toFixed1 = d3Format.format('.1f')
+const commaGroupedInteger = d3Format.format(',.0f')
 
 function toFixedNumberFactory (digits) {
-  return function (number) {
-    return number.toFixed(digits)
-  }
-}
-
-function commaGroupedInteger (number) {
-  return d3Format.format(',.0f')(number)
+  return d3Format.format(`.${digits}f`)
 }
 
 function byteFormatter (bytes) {
   const unit = 1024
 
-  if (bytes < 0) {
-    bytes *= -1
-  }
-
-  if (bytes < unit) {
-    return bytes + ' B'
-  }
+  if (bytes < 0) bytes *= -1
+  if (bytes < unit) return bytes + ' B'
 
   const scale = Math.floor(Math.log(bytes) / Math.log(unit))
   const unitPre = 'KMGTPE'.substr(scale - 1, 1)
