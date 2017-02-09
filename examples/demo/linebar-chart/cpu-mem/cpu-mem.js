@@ -248,6 +248,7 @@ cpuMemChartView.setConfig({
     type: 'Message',
     config: {
       enabled: true,
+
     }
   }, {
     id: 'crosshair-id',
@@ -258,11 +259,12 @@ cpuMemChartView.setConfig({
   }]
 })
 cpuMemChartView.setData(dataProcessed.data)
+
 cpuMemChartView.renderMessage({
-  componentId: 'XYChart',
+  componentId: 'cpu-mem-compositey',
   action: 'once',
   messages: [{
-    level: 'info',
+    level: '',
     title: '',
     message: 'Loading ...',
   }]
