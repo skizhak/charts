@@ -77,7 +77,6 @@ class PieChartView extends ContrailChartsView {
   }
 
   _onMousemove (d, el, event) {
-
     const parentChart = $(el).parents('.cc-chart')
     const tooltipPosition = {
       left: event.clientX - $(parentChart).offset().left + $(window).scrollLeft(),
