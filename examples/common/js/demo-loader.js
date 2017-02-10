@@ -144,7 +144,7 @@ $('#grouped').click()
 $groupedLinks.find('#g0').click()
 
 $('#developer-link').click(function () {
-  window.open('developer.html')
+  window.open('developer.html', '_self', false)
 })
 
 function onClickLineChart (e) {

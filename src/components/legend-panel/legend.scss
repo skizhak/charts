@@ -1,6 +1,10 @@
+@import "../../styles/variables";
+
 $border-color: #fafafa;
 
 .legend-panel.cc-component {
+  z-index: $control;
+
   * {
     box-sizing: content-box;
   }
