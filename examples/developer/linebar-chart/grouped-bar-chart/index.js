@@ -3,7 +3,6 @@
  */
 
 const commons = require('commons')
-const _ = commons._
 
 const length = 20
 const data = commons.fixture({

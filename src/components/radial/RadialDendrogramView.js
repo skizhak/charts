@@ -96,7 +96,7 @@ class RadialDendrogramView extends ContrailChartsView {
     })
     console.log('rootNode: ', rootNode)
 
-    const hierarchyRootNode = d3.hierarchy(rootNode).sum((d) => d.value ).sort( (a, b) => b.value - a.value)
+    const hierarchyRootNode = d3.hierarchy(rootNode).sum((d) => d.value).sort((a, b) => b.value - a.value)
     console.log('hierarchyRootNode: ', hierarchyRootNode)
     // Creat a map of destination nodes
     const destinations = {}
@@ -145,9 +145,9 @@ class RadialDendrogramView extends ContrailChartsView {
     const svgLinks = this.d3.selectAll('.link').data(this.links)
     svgLinks.enter().append('path')
       .attr('class', (d) => 'link ' + d[0].data.key)
-      .attr('d',(d) => radialLine(d[0]))
+      .attr('d', (d) => radialLine(d[0]))
     .merge(svgLinks)
-      .attr('d',radialLine)
+      .attr('d', radialLine)
     // Circles
     const svgCircles = this.d3.selectAll('.circle').data(this.circles)
     svgCircles.enter().append('circle')
