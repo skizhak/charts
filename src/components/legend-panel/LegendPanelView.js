@@ -2,8 +2,6 @@
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
 
-/* global $ _ */
-
 require('./legend.scss')
 const ContrailChartsView = require('contrail-charts-view')
 const d3Color = require('d3-color')
@@ -26,7 +24,7 @@ class LegendPanelView extends ContrailChartsView {
       'click .edit-legend': '_toggleEditMode',
       'click .select': '_toggleSelector',
       'click .swatch--color': '_selectColor',
-      'click .swatch--chart': '_selectChartType'
+      'click .swatch--chart': '_selectChartType',
     }
   }
 
@@ -37,22 +35,14 @@ class LegendPanelView extends ContrailChartsView {
 
     if (!this.config.attributes.filter) {
       this.d3.selectAll('.legend-attribute')
-             .classed('disabled', true)
-             .select('input')
-             .property('disabled', true)
+        .classed('disabled', true)
+        .select('input')
+        .property('disabled', true)
     }
 
-    if (this.config.attributes.placement === 'vertical') {
-      this.$el.addClass('vertical')
-    }
-
-    if (this.config.data.axesCount > 1) {
-      this.d3.selectAll('.axis').classed('active', true)
-    }
-
-    if (this._state === _states.EDIT) {
-      this._setEditState()
-    }
+    this.d3.classed('vertical', this.config.attributes.placement === 'vertical')
+    this.d3.selectAll('.axis').classed('active', this.config.data.axesCount > 1)
+    if (this._state === _states.EDIT) this._setEditState()
   }
 
   _toggleAttribute (d, el) {
@@ -62,67 +52,67 @@ class LegendPanelView extends ContrailChartsView {
   }
 
   _setEditState () {
-    this.$el.find('.attribute').toggleClass('edit')
-    this.$el.find('.selector').removeClass('active')
+    this.$('.attribute').toggleClass('edit')
+    this.d3.selectAll('.selector').classed('active', false)
 
-    if (!this.config.attributes.editable.colorSelector) this.d3.selectAll('.select--color').style('display', 'none')
-    if (!this.config.attributes.editable.chartSelector) this.d3.selectAll('.select--chart').style('display', 'none')
+    this.d3.selectAll('.select--color').classed('hide', !this.config.attributes.editable.colorSelector)
+    this.d3.selectAll('.select--chart').classed('hide', !this.config.attributes.editable.chartSelector)
 
-    _.each(this.$el.find('.legend-attribute > input'), (el) => {
-      if (this._state === _states.DEFAULT) {
-        $(el).prop('disabled', false)
-      } else {
-        $(el).prop('disabled', true)
-      }
+    _.each(this.el.querySelectorAll('.legend-attribute > input'), el => {
+      el.disabled = this._state !== _states.DEFAULT
     })
   }
 
   _toggleEditMode (d, el) {
     this._state = this._state === _states.DEFAULT ? _states.EDIT : _states.DEFAULT
-    this.$el.toggleClass('edit-mode')
+    this.el.classList.toggle('edit-mode')
     this._setEditState()
   }
 
   _toggleSelector (d, el) {
     this._accessor = $(el).parents('.attribute').data('accessor')
     const selectorElement = this.d3.select('.selector')
-    selectorElement.classed('select--color', false).classed('select--chart', false)
+    selectorElement
+      .classed('select--color', false)
+      .classed('select--chart', false)
     selectorElement.selectAll('.swatch').classed('selected', false)
 
-    if (this.$el.find('.selector').hasClass('active')) {
+    if (this.el.querySelector('.selector').classList.contains('active')) {
       selectorElement.classed('active', false)
-    } else if ($(el).hasClass('select--color')) {
+    } else if (el.classList.contains('select--color')) {
       selectorElement.classed('active', true).classed('select--color', true)
-      const currentColor = d3Color.color($(el).data('color'))
+      const currentColor = d3Color.color(el.dataset.color)
       selectorElement.selectAll('.swatch--color')
-      .filter(function (d, i, n) {
-        return d3Color.color($(n[i]).data('color')).toString() === currentColor.toString()
-      })
-      .classed('selected', true)
-    } else if ($(el).hasClass('select--chart')) {
-      selectorElement.classed('active', true).classed('select--chart', true)
-      const currentChart = $(el).data('chart-type')
+        .filter(function (d, i, n) {
+          return d3Color.color(n[i].dataset.color).toString() === currentColor.toString()
+        })
+        .classed('selected', true)
+    } else if (el.classList.contains('select--chart')) {
+      selectorElement
+        .classed('active', true)
+        .classed('select--chart', true)
+      const currentChart = el.dataset.chartType
       selectorElement.selectAll('.swatch--chart')
-      .filter(function (d, i, n) {
-        return $(n[i]).data('chart-type') === currentChart
-      })
-      .classed('selected', true)
+        .filter(function (d, i, n) {
+          return n[i].dataset.chartType === currentChart
+        })
+        .classed('selected', true)
     }
 
     const elemOffset = $(el).position()
     elemOffset.top += $(el).outerHeight() + 1
     selectorElement
-    .style('top', elemOffset.top + 'px')
-    .style('left', elemOffset.left + 'px')
+      .style('top', elemOffset.top + 'px')
+      .style('left', elemOffset.left + 'px')
   }
 
   _selectColor (d, el) {
-    const color = $(el).css('background-color')
+    const color = window.getComputedStyle(el).backgroundColor
     this._actionman.fire('SelectColor', this._accessor, color)
   }
 
   _selectChartType (d, el) {
-    const chartType = $(el).data('chart-type')
+    const chartType = el.dataset.chartType
     this._actionman.fire('SelectChartType', this._accessor, chartType)
   }
 }

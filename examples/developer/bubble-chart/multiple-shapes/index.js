@@ -30,6 +30,9 @@ const chartConfig = {
     type: 'LegendPanel',
     config: {
       sourceComponent: 'multishape-bubble-chart',
+      editable: {
+        colorSelector: true,
+      },
     },
   },
   {

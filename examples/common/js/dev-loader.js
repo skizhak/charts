@@ -145,7 +145,7 @@ $('#grouped').click()
 $groupedLinks.find('#g0').click()
 
 $('#demo-link').click(function () {
-  window.open('demo.html')
+  window.open('demo.html', '_self', false)
 })
 
 function onClickLBChart (e) {

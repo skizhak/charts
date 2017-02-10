@@ -222,7 +222,7 @@ simpleChartView.setConfig({
 
 simpleChartView.setData(simpleData)
 simpleChartView.renderMessage({
-  componentId: 'XYChart',
+  componentId: 'compositey-chart-id',
   action: 'once',
   messages: [{
     level: 'info',
@@ -233,8 +233,8 @@ simpleChartView.renderMessage({
     title: 'A Fatal Error',
     message: 'This is an error.'
   }, {
-    level: 'info',
-    title: 'Message 2',
+    level: 'warn',
+    title: 'A waring message',
     message: 'This is another example message.'
   }]
 })
