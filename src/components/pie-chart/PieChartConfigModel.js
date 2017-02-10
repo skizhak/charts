@@ -19,7 +19,10 @@ class PieChartConfigModel extends ContrailChartsConfigModel {
 
       colorScale: d3.scaleOrdinal(d3.schemeCategory20),
 
-      onClick: (data, el, chart) => {}
+      onClick: (data, el, chart) => {},
+
+      // Boolean to enable/disable default pointer cursor. You may pass in custom cursor.
+      onClickCursor: false
     }
   }
 

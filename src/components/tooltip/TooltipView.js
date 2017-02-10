@@ -17,11 +17,6 @@ class TooltipView extends ContrailChartsView {
     this._loadTemplate(data)
     this.$el.show()
 
-    if (this.config.get('title')) {
-      this.params.title = _.isString(this.config.get('title')) ? this.config.get('title') : this.config.getFormattedValue(data, this.config.get('title'))
-      TitleView(this.d3.select('.tooltip-content').node(), this.params.title)
-    }
-
     const tooltipWidth = this.$el.outerWidth()
     const tooltipHeight = this.$el.outerHeight()
 
@@ -54,7 +49,12 @@ class TooltipView extends ContrailChartsView {
 
   _loadTemplate (data) {
     const template = this.config.get('template') || _template
-    super.render(template(this.config.getFormattedData(data)))
+    const tooltipContent = this.config.getFormattedData(data)
+    super.render(template(tooltipContent))
+    // Todo Discuss if title needs to be handled via TitleView or using the tooltip template itself.
+    if (tooltipContent.title) {
+      TitleView(this.d3.select('.tooltip-content').node(), tooltipContent.title)
+    }
   }
 }
 

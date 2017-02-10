@@ -1,6 +1,9 @@
+@import "../../styles/variables";
+
 .tooltip.cc-component {
   position: absolute;
   pointer-events: none;
+  z-index: $alwaysTop;
 
 	.tooltip-content {
     padding: 10px 10px 5px;
