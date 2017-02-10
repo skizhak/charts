@@ -36,6 +36,7 @@ chart.setConfig({
       marginRight: 80,
       marginBottom: 40,
       chartHeight: 600,
+      crosshair: 'crosshair-id',
       plot: {
         x: {
           accessor: 'x',
@@ -63,6 +64,12 @@ chart.setConfig({
         }
       },
     },
+  }, {
+    id: 'crosshair-id',
+    type: 'Crosshair',
+    config: {
+      tooltip: 'default-tooltip',
+    }
   }, {
     id: 'default-tooltip',
     type: 'Tooltip',

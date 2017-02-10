@@ -71,7 +71,19 @@ class CompositeYChartView extends ContrailChartsView {
     _.each(this._drawings, drawing => {
       drawing.render()
     })
+    const crosshairId = this.config.get('crosshair')
+    if (crosshairId) this._actionman.fire('HideComponent', crosshairId)
 
+    this._ticking = false
+  }
+
+  showCrosshair (point) {
+    const crosshairId = this.config.get('crosshair')
+    const data = this.getCrosshairData(point)
+    const config = this.getCrosshairConfig()
+    this._actionman.fire('ShowComponent', crosshairId, data, point, config)
+
+    // reset the tick so we can capture the next handler
     this._ticking = false
   }
 
@@ -444,7 +456,7 @@ class CompositeYChartView extends ContrailChartsView {
         const circleObject = {}
         circleObject.id = accessor.accessor
         circleObject.x = datum => {
-          return plotTypeComponent.getScreenX(datum, this.params.plot.x.accessor, accessor.accessor)
+          return plotTypeComponent.getScreenX(datum, this.params.plot.x.accessor)
         }
         circleObject.y = datum => {
           return plotTypeComponent.getScreenY(datum, accessor.accessor)
@@ -516,16 +528,6 @@ class CompositeYChartView extends ContrailChartsView {
       window.requestAnimationFrame(this.showCrosshair.bind(this, point))
       this._ticking = true
     }
-  }
-
-  showCrosshair (point) {
-    const crosshairId = this.config.get('crosshair')
-    const data = this.getCrosshairData(point)
-    const config = this.getCrosshairConfig()
-    this._actionman.fire('ShowComponent', crosshairId, data, point, config)
-
-    // reset the tick so we can capture the next handler
-    this._ticking = false
   }
 }
 
