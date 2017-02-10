@@ -78,25 +78,26 @@ class StackedBarChartView extends XYChartSubView {
 
   _prepareData () {
     const data = this.model.data
+    const start = this.yScale.domain()[0]
     const flatData = []
     const bandWidthHalf = (this.bandWidth / 2)
     _.each(data, d => {
       const x = d[this.params.plot.x.accessor]
+      let stackedY = start
       // y coordinate to stack next bar to
-      let stackedY = 0
       _.each(this.params.activeAccessorData, accessor => {
         const key = accessor.accessor
         const obj = {
           id: x + '-' + key,
           x: this.xScale(x) - bandWidthHalf,
-          y: this.yScale(stackedY + d[key]),
-          h: this.yScale(stackedY) - this.yScale(stackedY + d[key]),
+          y: this.yScale(d[key] - start + stackedY),
+          h: this.yScale(start) - this.yScale(d[key]),
           w: this.bandWidth,
           color: this.getColor(accessor),
           accessor: accessor,
           data: d,
         }
-        stackedY += d[key]
+        stackedY += (d[key] - start)
         flatData.push(obj)
       })
     })

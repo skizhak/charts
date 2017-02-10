@@ -78,7 +78,7 @@ class BarChartView extends XYChartSubView {
 
   _prepareData () {
     const flatData = []
-    const zeroValue = this.yScale.domain()[0]
+    const start = this.yScale.domain()[0]
     const innerBandScale = this.params.axis[this.params.plot.x.axis].innerBandScale
     const innerBandWidth = innerBandScale.bandwidth()
     _.each(this.model.data, d => {
@@ -89,7 +89,7 @@ class BarChartView extends XYChartSubView {
           id: x + '-' + key,
           x: this.xScale(x) + innerBandScale(j),
           y: this.yScale(d[key]),
-          h: this.yScale(zeroValue) - this.yScale(d[key]),
+          h: this.yScale(start) - this.yScale(d[key]),
           w: innerBandWidth,
           color: this.getColor(accessor),
           accessor: accessor,
