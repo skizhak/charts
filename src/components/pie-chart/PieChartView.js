@@ -76,11 +76,11 @@ class PieChartView extends ContrailChartsView {
     // TODO: use the 'axis' param to compute additional margins for the axis
   }
 
-  _onMousemove (sector, el, event) {
-
+  _onMousemove (d, el, event) {
+    const parentChart = $(el).parents('.cc-chart')
     const tooltipPosition = {
-      left: event.pageX,
-      top: event.pageY
+      left: event.clientX - $(parentChart).offset().left + $(window).scrollLeft(),
+      top: event.clientY - $(parentChart).offset().top + $(window).scrollTop()
     }
 
     const onClickCursor = this.config.get('onClickCursor')
@@ -89,8 +89,9 @@ class PieChartView extends ContrailChartsView {
         .classed('click-me', true)
         .style('cursor', () => (typeof (onClickCursor) === 'boolean') ? 'pointer' : onClickCursor)
     }
+
     el.classList.add('highlight')
-    this._actionman.fire('ShowComponent', this.config.get('tooltip'), tooltipPosition, sector.data)
+    this._actionman.fire('ShowComponent', this.config.get('tooltip'), tooltipPosition, d.data)
   }
 
   _onMouseout (d, el) {
