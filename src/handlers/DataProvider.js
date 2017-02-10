@@ -229,8 +229,9 @@ class DataProvider extends ContrailModel {
     if (_.isFunction(formatter)) {
       data = formatter(data)
     }
-    this.set({data: data})
-    this.range = {}
+    // Trigger change only at the end to avoid multiple trigger
+    this.set({data: data}, {silent: true})
+    this.set({range: {}}, {silent: true})
     this.trigger('change', this)
   }
 
