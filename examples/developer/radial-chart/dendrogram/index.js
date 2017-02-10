@@ -11,20 +11,23 @@ const chartConfig = {
     type: 'RadialDendrogram',
     config: {
       //radius: 100,
-      parentSeparation: 1,
-      parentSeparationThreshold: 2,
+      parentSeparation: 1.0,
+      parentSeparationShrinkFactor: 0.06,
+      parentSeparationDepthThreshold: 4,
       colorScale: d3.scaleOrdinal().range(d3.schemeCategory20), // eslint-disable-line no-undef
-      drawLinks: true,
-      drawRibbons: false,
+      drawLinks: false,
+      drawRibbons: true,
       hierarchyConfig: {
         parse: function(d) {
           const src = {
             names: [d.sourcevn, d.sourceip, d.sport, d.UuidKey],
+            //names: [d.sourcevn, d.sourceip, d.sport],
             key: d.UuidKey,
             value: d['agg-bytes']
           }
           const dst = {
             names: [d.destvn, d.destip, d.dport, d.UuidKey],
+            //names: [d.destvn, d.destip, d.dport],
             key: d.UuidKey,
             value: d['agg-bytes']
           }

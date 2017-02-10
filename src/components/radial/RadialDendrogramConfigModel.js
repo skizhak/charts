@@ -21,9 +21,9 @@ class RadialDendrogramConfigModel extends ContrailChartsConfigModel {
       parentSeparationThreshold: 0,
 
       //curve: d3.curveBundle.beta(0.85)
-      curve: d3.curveBundle.beta(0.95)
+      //curve: d3.curveBundle.beta(0.95)
       //curve: d3.curveBundle.beta(1)
-      //curve: d3.curveCatmullRom.alpha(0.5)
+      curve: d3.curveCatmullRom.alpha(0.5)
       //curve: d3.curveCatmullRom.alpha(1)
       //curve: d3.curveLinear
     }
