@@ -226,7 +226,7 @@ simpleChartView.renderMessage({
   messages: [{
     level: 'info',
     title: 'Message 1',
-    message: 'This is an example message. It will disapear after 5 seconds.'
+    message: 'This is an example message. It will disappear after 5 seconds.'
   }, {
     level: 'error',
     title: 'A Fatal Error',
