@@ -28,8 +28,8 @@ class ContrailChartsDataModel extends ContrailModel {
   }
 
   set data (data) {
-    if (_.isFunction(this.get('dataParser'))) {
-      data = this.get('dataParser')(data)
+    if (_.isFunction(this.get('formatter'))) {
+      data = this.get('formatter')(data)
     }
     this.set({data: data})
   }
