@@ -8,7 +8,7 @@
 		</div>
 		<label class="legend-attribute checkbox"><span class="axis">{{ axis }}</span>{{ label }}
 			<input type="checkbox" {{#if checked}} checked {{/if}} />
-			<div class="indicator" style="border-color: {{ color }}; {{#if checked}} background-color: {{ color }} {{/if}}"></div>
+      <div class="indicator fa" style="{{#if checked}} color: {{ color }} {{/if}}">{{{ shape }}}</div>
 		</label>
 	</div>
 	{{/each}}

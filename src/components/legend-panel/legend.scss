@@ -136,39 +136,7 @@ $border-color: #fafafa;
   position: absolute;
   left: 2px;
   top: 3px;
-  width: 10px;
-  height: 10px;
-  border-radius: 100px;
-  background-color: white;
-  border: 1px solid black;
-  
-  .legend-attribute input:checked ~ & {
-    background-color: black;
-  }
-  
-  &:after {
-    position: absolute;
-    display: none;
-    content: '';
-    
-    .legend-attribute input:checked ~ & {
-      display: block;
-    }
-
-    .legend-attribute.disabled input:checked ~ & {
-      display: none;
-    }
-    
-    .legend-attribute & {
-      left: 0px;
-      top: 0px;
-      width: 8px;
-      height: 8px;
-      border: solid white;
-      border-width: 1px 1px 1px 1px;
-      border-radius: 100px;
-    }
-  }
+  font-size: 14px;
 }
 
 .select {

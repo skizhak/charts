@@ -52,6 +52,7 @@ class LegendPanelConfigModel extends ContrailChartsConfigModel {
         chartType: accessor.chart,
         chartIcon: chartTypeIconMap[accessor.chart],
         checked: this.attributes.filter ? accessor.enabled : true,
+        shape: accessor.shape,
       }
     })
 
