@@ -444,7 +444,7 @@ class CompositeYChartView extends ContrailChartsView {
         const circleObject = {}
         circleObject.id = accessor.accessor
         circleObject.x = datum => {
-          return plotTypeComponent.getScreenX(datum, this.params.plot.x.accessor, accessor.accessor)
+          return plotTypeComponent.getScreenX(datum, this.params.plot.x.accessor)
         }
         circleObject.y = datum => {
           return plotTypeComponent.getScreenY(datum, accessor.accessor)

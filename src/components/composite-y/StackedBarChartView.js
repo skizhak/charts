@@ -42,7 +42,7 @@ class StackedBarChartView extends XYChartSubView {
   * Used by CrosshairView render data preparation.
   */
   getScreenY (dataElem, yAccessor) {
-    let stackedY = this.yScale.domain()[0]
+    let stackedY = 0
     let found = false
     _.each(this.params.activeAccessorData, accessor => {
       if (accessor.accessor === yAccessor) {
@@ -107,7 +107,6 @@ class StackedBarChartView extends XYChartSubView {
 
   _onMousemove (d, el, event) {
     if (this.config.get('tooltipEnabled')) {
-      const offset = this.$el.offset()
       const tooltipOffset = {
         top: event.pageY,
         left: event.pageX,
