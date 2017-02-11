@@ -24,30 +24,33 @@ class ContrailChartsConfigModel extends ContrailModel {
     this._parent = model
     this.trigger('change')
   }
-
-  getValue (data, datumConfig) {
-    const getValue = datumConfig.accessor
+  /**
+   * @param {Object} data to extract value from
+   * @param {Object} config on how to extract
+   */
+  getValue (data, config = {}) {
+    const getValue = config.accessor
     if (_.isNil(data)) return undefined
     if (_.isFunction(getValue)) return getValue(data)
     if (_.isString(getValue)) return _.get(data, getValue)
     return data
   }
   /**
-   * @param {Array} data extract label from data source
-   * @param {Object} datumConfig config on how to extract label from data data
+   * @param {Object} data to extract formatted value from
+   * @param {Object} config on how to extract
    */
-  getFormattedValue (data, datumConfig) {
-    const formatter = datumConfig.valueFormatter
-    const value = this.getValue(data, datumConfig)
+  getFormattedValue (data, config = {}) {
+    const formatter = config.valueFormatter
+    const value = this.getValue(data, config)
     if (_.isFunction(formatter)) return formatter(value)
     return value
   }
   /**
-   * @param {Array} data extract label from data source
-   * @param {Object} datumConfig config on how to extract label from data data
+   * @param {Object} data to extract label from
+   * @param {Object} config on how to extract label from data
    */
-  getLabel (data, datumConfig) {
-    const getLabel = datumConfig.labelFormatter || datumConfig.label || datumConfig.accessor
+  getLabel (data, config = {}) {
+    const getLabel = config.labelFormatter || config.label || config.accessor
     if (_.isString(getLabel)) return getLabel
     if (_.isNil(data)) return undefined
     if (_.isFunction(getLabel)) return getLabel(data)
