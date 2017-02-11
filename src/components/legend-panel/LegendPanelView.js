@@ -2,7 +2,7 @@
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
 
-require('./legend.scss')
+require('./legendPanel.scss')
 const ContrailChartsView = require('contrail-charts-view')
 const d3Color = require('d3-color')
 const _template = require('./legend.html')
@@ -33,7 +33,7 @@ class LegendPanelView extends ContrailChartsView {
     const content = template(this.config.data)
     super.render(content)
 
-    if (!this.config.attributes.filter) {
+    if (!this.config.attributes.filter || this.config.data.attributes.length === 1) {
       this.d3.selectAll('.legend-attribute')
         .classed('disabled', true)
         .select('input')
@@ -69,8 +69,17 @@ class LegendPanelView extends ContrailChartsView {
     this._setEditState()
   }
 
+  _addChartTypes (attributeAxis) {
+    this.d3.selectAll('.swatch--chart')
+    .classed('show', false)
+    .filter(function (d, i, n) {
+      return n[i].dataset.axis === attributeAxis
+    }).classed('show', true)
+  }
+
   _toggleSelector (d, el) {
     this._accessor = $(el).parents('.attribute').data('accessor')
+
     const selectorElement = this.d3.select('.selector')
     selectorElement
       .classed('select--color', false)
@@ -88,6 +97,8 @@ class LegendPanelView extends ContrailChartsView {
         })
         .classed('selected', true)
     } else if (el.classList.contains('select--chart')) {
+      const currentAttribute = _.find(this.config.data.attributes, { 'accessor': this._accessor })
+      this._addChartTypes(currentAttribute.axis)
       selectorElement
         .classed('active', true)
         .classed('select--chart', true)

@@ -50,7 +50,10 @@ simpleChartView.setConfig({
       marginBottom: 40,
       chartHeight: 600,
       crosshair: 'crosshair-id',
-      possibleChartTypes: ['BarChart', 'StackedBarChart', 'LineChart'],
+      possibleChartTypes: {
+        y1: ['BarChart', 'StackedBarChart'],
+        y2: ['LineChart']
+      },
       plot: {
         x: {
           accessor: 'x',

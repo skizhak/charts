@@ -31,14 +31,20 @@ class LegendPanelConfigModel extends ContrailChartsConfigModel {
     const accessors = this._parent.getAccessors()
     const axesCount = _.chain(accessors).map('axis').uniq().value().length
 
-    const data = {
-      colors: this.attributes.palette,
-      possibleChartTypes: _.map(this._parent.attributes.possibleChartTypes, (chartType) => {
+    let possibleChartTypes = []
+    _.each(this._parent.attributes.possibleChartTypes, function (chartTypes, axisLabel) {
+      possibleChartTypes = _.concat(possibleChartTypes, _.map(chartTypes, function (chartType) {
         return {
+          axisLabel: axisLabel,
           chartType: chartType,
           chartIcon: chartTypeIconMap[chartType]
         }
-      }),
+      }))
+    })
+
+    const data = {
+      colors: this.attributes.palette,
+      possibleChartTypes: possibleChartTypes,
       editable: this.attributes.editable.colorSelector || this.attributes.editable.chartSelector,
       axesCount: axesCount
     }
