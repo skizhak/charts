@@ -207,11 +207,11 @@ setInterval(() => {
 }, 1000)
 
 function getDataPoint (x) {
-  const a = _.random(1, 100) * 100
+  const a = _.random(3, 100) * 100
   return {
     x: x,
     a: a,
     b: _.random(a, a + 1000),
-    c: Math.ceil(_.random(1, 100)),
+    c: Math.ceil(_.random(3, 100)),
   }
 }
