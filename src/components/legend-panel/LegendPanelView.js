@@ -2,7 +2,7 @@
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
 
-require('./legend.scss')
+require('./legendPanel.scss')
 const ContrailChartsView = require('contrail-charts-view')
 const d3Color = require('d3-color')
 const _template = require('./legend.html')
@@ -33,7 +33,7 @@ class LegendPanelView extends ContrailChartsView {
     const content = template(this.config.data)
     super.render(content)
 
-    if (!this.config.attributes.filter) {
+    if (!this.config.attributes.filter || this.config.data.attributes.length === 1) {
       this.d3.selectAll('.legend-attribute')
         .classed('disabled', true)
         .select('input')
