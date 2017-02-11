@@ -59,7 +59,7 @@ class RadialChartView extends ContrailView {
     this._container = this.el.parentElement
     // Todo use class from selectors. extend ContrailChartsView instead of ContrailView
     // streamline chart class. xy uses cc-chart. position relative mess with tooltip position
-    this.el.classList.add('cc-radial')
+    this.el.classList.add('cc-chart')
     this._actionman.id = this._config.id
     if (_.has(config, 'dataProvider.config')) this._dataProvider.setConfig(config.dataProvider.config)
     this._initComponents()
