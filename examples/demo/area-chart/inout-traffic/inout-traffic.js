@@ -277,7 +277,9 @@ trafficView.renderMessage({
   }]
 })
 
-setInterval(() => {
+let runner = null
+onVisibilityChange()
+function run () {
   let currentData = dataProcessed.data
 
   currentData.splice(0, 1)
@@ -285,13 +287,23 @@ setInterval(() => {
   let length = currentData.length
   let random = _.random(0, (length - 1))
 
+  now += 2000
   dataProcessed.data = currentData.concat([getNewDataPoint(now, currentData[random])])
   trafficView.setData(dataProcessed.data)
-  now += 2000
-}, 2000)
+}
 
-function getNewDataPoint (now, rPoint) {
+function getNewDataPoint (x, rPoint) {
   var newPoint = _.clone(rPoint)
-  newPoint.T = now
+  newPoint.T = x
   return newPoint
 }
+
+function onVisibilityChange () {
+  if (document.hidden) {
+    clearInterval(runner)
+  } else {
+    runner = setInterval(run, 2000)
+  }
+}
+
+document.addEventListener('visibilitychange', onVisibilityChange, false)

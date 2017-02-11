@@ -11,13 +11,13 @@ const bubbleColorScheme6 = [
   d3ColorScheme10[0],
   d3ColorScheme10[2],
   '#424242',
-  '#9c27b0'
+  '#9c27b0',
 ]
 
 const bubbleColorScheme13 = [
   '#424242',
   '#9c27b0',
-  '#3f51b5'
+  '#3f51b5',
 ].concat(d3ColorScheme10)
 
 const lbColorScheme7 = [
@@ -27,7 +27,7 @@ const lbColorScheme7 = [
   '#4caf50',
   '#0cc2aa',
   '#6cc788',
-  '#6887ff'
+  '#6887ff',
 ]
 
 const radialColorScheme6 = [
@@ -36,7 +36,7 @@ const radialColorScheme6 = [
   '#a88add',
   '#fcc100',
   '#2196f3',
-  '#c62828'
+  '#c62828',
 ]
 
 const lbColorScheme17 = [
@@ -46,7 +46,7 @@ const lbColorScheme17 = [
   '#4caf50',
   '#0cc2aa',
   '#6cc788',
-  '#6887ff'
+  '#6887ff',
 ].concat(d3ColorScheme10)
 
 const bubbleShapes = {
@@ -77,16 +77,16 @@ const bubbleShapes = {
   warning: '&#xf071;',
   alarmFill: '&#xf0f3;',
   deleted: '&#xf05e;',
-  asterisk: '&#xf069;'
+  asterisk: '&#xf069;',
 }
 
 module.exports = {
-  bubbleShapes: bubbleShapes,
-  bubbleColorScheme6: bubbleColorScheme6,
-  bubbleColorScheme13: bubbleColorScheme13,
-  lbColorScheme7: lbColorScheme7,
-  lbColorScheme17: lbColorScheme17,
-  radialColorScheme6: radialColorScheme6,
-  d3ColorScheme10: d3ColorScheme10,
-  d3ColorScheme20: d3ColorScheme20
+  bubbleShapes,
+  bubbleColorScheme6,
+  bubbleColorScheme13,
+  lbColorScheme7,
+  lbColorScheme17,
+  radialColorScheme6,
+  d3ColorScheme10,
+  d3ColorScheme20,
 }
