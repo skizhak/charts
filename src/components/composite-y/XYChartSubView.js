@@ -28,7 +28,7 @@ class XYChartSubView extends ContrailChartsView {
   }
 
   get yScale () {
-    return this.params.axis[this.axisName].scale || d3.scaleLinear()
+    return _.has(this.params.axis[this.axisName], 'scale') ? this.params.axis[this.axisName].scale : d3.scaleLinear()
   }
 
   get axisName () {

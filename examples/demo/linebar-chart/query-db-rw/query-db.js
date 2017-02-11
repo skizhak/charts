@@ -180,19 +180,49 @@ for (let i = 0; i < 100; i++) {
 
 queryChart.setData(simpleData)
 
-setInterval(() => {
+queryChart.renderMessage({
+  componentId: 'query-db-compositey',
+  action: 'once',
+  messages: [{
+    level: 'info',
+    title: 'Information',
+    message: 'Chart has been loaded successfully.'
+  }, {
+    level: 'warn',
+    title: 'Warning',
+    message: 'This is an example of warning message. '
+  }, {
+    level: 'error',
+    title: 'Error',
+    message: 'This is an example of error message.'
+  }]
+})
+
+let runner = null
+onVisibilityChange()
+function run () {
   now += 1000
   simpleData.splice(0, 1)
   simpleData = simpleData.concat([getDataPoint(now)])
   queryChart.setData(simpleData)
-}, 1000)
+}
+
+function onVisibilityChange () {
+  if (document.hidden) {
+    clearInterval(runner)
+  } else {
+    runner = setInterval(run, 1000)
+  }
+}
+
+document.addEventListener('visibilitychange', onVisibilityChange, false)
 
 function getDataPoint (x) {
-  const a = Math.random() * 10000
+  const a = _.random(3, 100) * 100
   return {
     x: x,
     a: a,
     b: _.random(a, a + 1000),
-    c: Math.ceil(Math.random() * 100),
+    c: Math.ceil(_.random(3, 100)),
   }
 }
