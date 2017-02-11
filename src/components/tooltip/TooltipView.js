@@ -21,19 +21,18 @@ class TooltipView extends ContrailChartsView {
     const tooltipHeight = this.$el.outerHeight()
 
     const bodyWidth = $('body').outerWidth()
-    const bodyHeight = $('body').outerHeight()
 
-    let tooltipPositionLeft = offset.left - tooltipWidth/2
+    let tooltipPositionLeft = offset.left - tooltipWidth / 2
     let tooltipPositionTop = offset.top - tooltipHeight - 10
 
-    if(tooltipPositionTop < 0) {
+    if (tooltipPositionTop < 0) {
       tooltipPositionTop = offset.top + 10
     }
 
-    if(tooltipPositionLeft + tooltipWidth > bodyWidth) {
+    if (tooltipPositionLeft + tooltipWidth > bodyWidth) {
       tooltipPositionLeft = bodyWidth - tooltipWidth
     } else if (tooltipPositionLeft < 0) {
-      tooltipPositionLeft = 0;
+      tooltipPositionLeft = 0
     }
 
     this.$el.css({

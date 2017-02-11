@@ -1,9 +1,7 @@
 // Copyright (c) Juniper Networks, Inc. All rights reserved.
 
-
 require('./pie-chart.scss')
 const shape = require('d3-shape')
-const d3Selection = require('d3-selection')
 const ContrailChartsView = require('contrail-charts-view')
 const TitleView = require('plugins/title/TitleView')
 
