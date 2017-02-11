@@ -267,9 +267,14 @@ $border-color: #fafafa;
   }
 
   .swatch--chart {
+    display: none;
     padding: 4px;
     text-align: center;
     font-size: 12px;
     line-height: 16px;
+
+    &.show {
+      display: inline-block;
+    }
   }
 }

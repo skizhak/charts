@@ -69,8 +69,17 @@ class LegendPanelView extends ContrailChartsView {
     this._setEditState()
   }
 
+  _addChartTypes (attributeAxis) {
+    this.d3.selectAll('.swatch--chart')
+    .classed('show', false)
+    .filter(function (d, i, n) {
+      return n[i].dataset.axis === attributeAxis
+    }).classed('show', true)
+  }
+
   _toggleSelector (d, el) {
     this._accessor = $(el).parents('.attribute').data('accessor')
+
     const selectorElement = this.d3.select('.selector')
     selectorElement
       .classed('select--color', false)
@@ -88,6 +97,8 @@ class LegendPanelView extends ContrailChartsView {
         })
         .classed('selected', true)
     } else if (el.classList.contains('select--chart')) {
+      const currentAttribute = _.find(this.config.data.attributes, { 'accessor': this._accessor })
+      this._addChartTypes(currentAttribute.axis)
       selectorElement
         .classed('active', true)
         .classed('select--chart', true)
