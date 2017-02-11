@@ -62,7 +62,6 @@ class CompositeYChartView extends ContrailChartsView {
     this._calculateActiveAccessorData()
     this._calculateDimensions()
     this.calculateScales()
-    this.calculateColorScale()
 
     super.render()
     this.renderSVG()
@@ -106,7 +105,7 @@ class CompositeYChartView extends ContrailChartsView {
       drawing.params.enabled = false
     })
     // Fill the activeAccessorData structure.
-    _.each(this.params.plot.y, accessor => {
+    _.each(this.config.get('plot').y, accessor => {
       const drawing = this.getDrawing(accessor)
       if (drawing) {
         if (accessor.enabled) {
@@ -147,12 +146,6 @@ class CompositeYChartView extends ContrailChartsView {
     p.xRange = [p.marginLeft + p.marginInner + p.xMarginInner, p.chartWidth - p.marginRight - p.marginInner - p.xMarginInner]
     p.yRange = [p.chartHeight - p.marginInner - p.marginBottom, p.marginInner + p.marginTop]
     this.saveScales()
-  }
-
-  calculateColorScale () {
-    _.each(this.params.plot.y, accessor => {
-      accessor.color = this.config.getColor(accessor)
-    })
   }
 
   getDrawing (accessor) {
@@ -461,7 +454,7 @@ class CompositeYChartView extends ContrailChartsView {
         circleObject.y = datum => {
           return plotTypeComponent.getScreenY(datum, accessor.accessor)
         }
-        circleObject.color = accessor.color
+        circleObject.color = this.config.getColor([], accessor)
         data.circles.push(circleObject)
       })
     })
@@ -491,7 +484,7 @@ class CompositeYChartView extends ContrailChartsView {
           // The child drawing with this name does not exist yet. Instantiate the child drawing.
           _.each(this.possibleChildViews, (ChildView, chartType) => {
             if (chartType === accessor.chart) {
-              const params = _.extend({}, this.params, {
+              const params = _.extend({}, this.config.attributes, {
                 isPrimary: false,
                 axisName: accessor.axis,
               })

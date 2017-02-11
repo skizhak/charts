@@ -43,12 +43,12 @@ class LegendPanelConfigModel extends ContrailChartsConfigModel {
       axesCount: axesCount
     }
 
-    data.attributes = _.map(accessors, (accessor) => {
+    data.attributes = _.map(accessors, accessor => {
       return {
         accessor: accessor.accessor,
         axis: accessor.axis,
-        label: this.getLabel(undefined, accessor),
-        color: this._parent.getColor(accessor),
+        label: this.getLabel([], accessor),
+        color: this._parent.getColor([], accessor),
         chartType: accessor.chart,
         chartIcon: chartTypeIconMap[accessor.chart],
         checked: this.attributes.filter ? accessor.enabled : true,

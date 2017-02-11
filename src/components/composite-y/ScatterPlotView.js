@@ -71,7 +71,7 @@ class ScatterPlotView extends XYChartSubView {
             y: this.yScale(y),
             shape: accessor.shape,
             area: sizeScale(d[accessor.sizeAccessor]),
-            color: this.getColor(accessor),
+            color: this.config.getColor(d, accessor),
             accessor: accessor,
             data: d,
           }

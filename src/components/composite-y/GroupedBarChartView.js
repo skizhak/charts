@@ -91,7 +91,7 @@ class BarChartView extends XYChartSubView {
           y: this.yScale(d[key]),
           h: this.yScale(start) - this.yScale(d[key]),
           w: innerBandWidth,
-          color: this.getColor(accessor),
+          color: this.config.getColor(d, accessor),
           accessor: accessor,
           data: d,
         }

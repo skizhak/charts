@@ -22,7 +22,7 @@ class PieChartConfigModel extends ContrailChartsConfigModel {
       onClick: (data, el, chart) => {},
 
       // Boolean to enable/disable default pointer cursor. You may pass in custom cursor.
-      onClickCursor: false
+      onClickCursor: false,
     }
   }
 
@@ -32,12 +32,9 @@ class PieChartConfigModel extends ContrailChartsConfigModel {
     return this.get('radius') * innerRadiusCoefficient
   }
 
-  getColor (accessor) {
-    if (_.has(accessor, 'color')) {
-      return accessor.color
-    } else {
-      return this.attributes.colorScale(accessor)
-    }
+  getColor (data, accessor) {
+    const configuredColor = super.getColor(data, accessor)
+    return configuredColor || this.attributes.colorScale(accessor)
   }
 
   getLabels (dataProvider) {

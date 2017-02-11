@@ -53,6 +53,18 @@ class ContrailChartsConfigModel extends ContrailModel {
     if (_.isFunction(getLabel)) return getLabel(data)
   }
   /**
+   * @param {Object} data to extract label from
+   * @param {Object} config on how to extract label from data
+   * TODO should the getColor function if provided be evaluated on empty data?
+   * Legend Panel needs to display a color not for particular data point but for the whole serie
+   */
+  getColor (data, config = {}) {
+    const getColor = config.color
+    if (_.isString(getColor)) return getColor
+    if (_.isNil(data)) return undefined
+    if (_.isFunction(getColor)) return getColor(data)
+  }
+  /**
    * Enable / disable event triggering with data preperation for specified component
    * @param {String} type Component type
    * @param {Boolean} enable Change state of this component

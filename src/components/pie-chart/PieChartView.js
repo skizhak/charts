@@ -57,7 +57,7 @@ class PieChartView extends ContrailChartsView {
       .enter().append('path')
       .classed('arc', true)
       .attr('d', arc)
-      .style('fill', (d) => this.config.getColor(serieConfig.getLabel(d.data)))
+      .style('fill', d => this.config.getColor([], serieConfig.getLabel(d.data)))
     sectors.exit().remove()
 
     this._ticking = false

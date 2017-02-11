@@ -44,10 +44,6 @@ class XYChartSubView extends ContrailChartsView {
     return 0
   }
 
-  getColor (accessor) {
-    return accessor.color
-  }
-
   getScreenX (datum, xAccessor) {
     return this.xScale(datum[xAccessor])
   }

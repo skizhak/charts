@@ -93,7 +93,7 @@ class StackedBarChartView extends XYChartSubView {
           y: this.yScale(d[key] - start + stackedY),
           h: this.yScale(start) - this.yScale(d[key]),
           w: this.bandWidth,
-          color: this.getColor(accessor),
+          color: this.config.getColor(d, accessor),
           accessor: accessor,
           data: d,
         }
