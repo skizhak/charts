@@ -76,5 +76,5 @@ function generatePorts4VN (portCount, vnName) {
 }
 
 module.exports = {
-  projectVNTraffic: projectVNTraffic
+  projectVNTraffic,
 }
