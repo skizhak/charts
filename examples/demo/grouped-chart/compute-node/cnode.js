@@ -304,7 +304,10 @@ const lbChartConfig1 = {
         chartHeight: 300,
         crosshair: 'cpu-crosshair-id',
         xTicks: 5,
-        possibleChartTypes: ['BarChart', 'LineChart'],
+        possibleChartTypes: {
+          y1: ['BarChart', 'LineChart'],
+          y2: ['BarChart', 'LineChart']
+        },
         plot: cpuPlotConfig,
         axis: cpuAxisConfig
       }
@@ -382,7 +385,10 @@ const areaChartConfig = {
         chartHeight: 300,
         crosshair: 'mem-crosshair-id',
         xTicks: 5,
-        possibleChartTypes: ['BarChart', 'AreaChart'],
+        possibleChartTypes: {
+          y1: ['BarChart', 'LineChart'],
+          y2: ['BarChart', 'LineChart']
+        },
         plot: memPlotConfig,
         axis: memAxisConfig
       }
@@ -438,7 +444,6 @@ var lbChartConfig2 = {
         chartHeight: 275,
         crosshair: 'flow-crosshair-id',
         xTicks: 5,
-        possibleChartTypes: ['BarChart', 'LineChart'],
         plot: flowPlotConfig,
         axis: flowAxisConfig
       }

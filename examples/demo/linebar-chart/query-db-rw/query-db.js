@@ -30,7 +30,10 @@ queryChart.setConfig({
       marginLeft: 80,
       marginRight: 80,
       chartHeight: 400,
-      possibleChartTypes: ['StackedBarChart', 'LineChart'],
+      possibleChartTypes: {
+        y1: ['StackedBarChart', 'LineChart'],
+        y2: ['LineChart']
+      },
       plot: {
         x: {
           accessor: 'x',

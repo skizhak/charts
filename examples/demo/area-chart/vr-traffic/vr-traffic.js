@@ -150,7 +150,10 @@ trafficView.setConfig({
       marginBottom: 40,
       chartHeight: 400,
       crosshair: 'crosshair-id',
-      possibleChartTypes: ['AreaChart', 'LineChart'],
+      possibleChartTypes: {
+        y1: ['AreaChart', 'LineChart'],
+        y2: ['AreaChart', 'LineChart']
+      },
       plot: {
         x: {
           accessor: 'T',
