@@ -30,7 +30,8 @@ function computeNodeData (p = {}) {
   const vrCount = dataConfig['vrCount'] || 1
   const count = dataConfig['count'] || 25
   const flowCount = dataConfig['flowCount'] || 100
-  const now = _.now()
+  const timeInterval = dataConfig['timeInterval'] || 60000
+  const now = dataConfig['now'] || _.now()
 
   let nodeName = ''
   let vRouter = {}
@@ -39,11 +40,11 @@ function computeNodeData (p = {}) {
     nodeName = 'vRouter' + (j + 1)
     vRouter = {
       vrName: nodeName,
-      systemCPU: generateCPU4Node(now, count),
-      systemMemory: generateMemory4Node(now, count),
+      systemCPU: generateCPU4Node(now, count, timeInterval),
+      systemMemory: generateMemory4Node(now, count, timeInterval),
       processCPUMem: generateProcessCPUMem4Node(),
       diskUsage: generateDiskUsage4VR(),
-      flowRate: generateFlows4Node(now, flowCount)
+      flowRate: generateFlows4Node(now, flowCount, timeInterval)
     }
     data.push(vRouter)
   }
@@ -51,13 +52,13 @@ function computeNodeData (p = {}) {
   return data
 }
 
-function generateFlows4Node (now, count) {
+function generateFlows4Node (now, count, timeInterval) {
   let flows = []
   let flow = {}
 
   for (let j = 0; j < count; j++) {
     flow = {
-      "time": now - ((count - j) * 60000),
+      "time": now - ((count - j) * timeInterval),
       "AVG(active_flows)": _.random(180, 230),
       "AVG(added_flows)": _.random(4, 12),
       "AVG(deleted_flows)": _.random(2, 7)
@@ -68,7 +69,7 @@ function generateFlows4Node (now, count) {
   return flows
 }
 
-function generateCPU4Node (now, count) {
+function generateCPU4Node (now, count, timeInterval) {
   let cpuUsage = []
   let cpu = {}
   let cpu_share = 0
@@ -79,7 +80,7 @@ function generateCPU4Node (now, count) {
     min15 = (cpu_share/3)
 
     cpu = {
-      "time": now - ((count - j) * 60000),
+      "time": now - ((count - j) * timeInterval),
       "AVG(cpu_share)": _.round(cpu_share, 2),
       "AVG(fifteen_min_avg)": _.round(min15, 2),
       "AVG(five_min_avg)": _.round(min15 + _.random(-1.01, 1.3), 2),
@@ -91,7 +92,7 @@ function generateCPU4Node (now, count) {
   return cpuUsage
 }
 
-function generateMemory4Node (now, count) {
+function generateMemory4Node (now, count, timeInterval) {
   let memUsage = []
   let mem = {}
   let total = 32659700
@@ -101,7 +102,7 @@ function generateMemory4Node (now, count) {
     used = _.random(10327400, 25497400)
 
     mem = {
-      "time": now - ((count - j) * 60000),
+      "time": now - ((count - j) * timeInterval),
       "AVG(buffers)": _.random(315422, 446422),
       "AVG(cached)": _.random(11118300, 19518300),
       "AVG(free)": total - used,

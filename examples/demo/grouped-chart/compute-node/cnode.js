@@ -7,8 +7,11 @@ const commons = require('commons')
 const _ = commons._
 const formatter = commons.formatter
 const _c = commons._c
+const timeInterval = 2000
 
-const data = commons.dg.computeNodeData({vrCount: 1, count: 25, flowCount: 50})
+let now = _.now()
+let data = commons.dg.computeNodeData({vrCount: 1, count: 25, flowCount: 50, timeInterval: timeInterval, now: now})
+
 const colorScheme = _c.lbColorScheme17
 const bubbleColorScheme = _c.bubbleColorScheme6
 const bubbleShapes = _c.bubbleShapes
@@ -73,7 +76,8 @@ const cpuPlotConfig = {
 const cpuAxisConfig = {
   x: {
     formatter: formatter.extendedISOTime,
-    label: 'Time'
+    label: 'Time',
+    ticks: 5,
   },
   y1: {
     position: 'left',
@@ -94,7 +98,8 @@ const cpuAxisConfig = {
 const memAxisConfig = {
   x: {
     formatter: formatter.extendedISOTime,
-    label: 'Time'
+    label: 'Time',
+    ticks: 5,
   },
   y1: {
     position: 'left',
@@ -564,4 +569,38 @@ chartView.setData(data, {}, 'process-cpu-mem')
 chartView.setData(data, {}, 'node-cpu')
 chartView.setData(data, {}, 'node-mem')
 chartView.setData(data, {}, 'node-flow')
+
 chartView.render()
+
+
+let runner = null
+onVisibilityChange()
+function run () {
+  now += timeInterval
+  let newDataPoint = commons.dg.computeNodeData({vrCount: 1, count: 1, flowCount: 1, timeInterval: timeInterval, now: now})
+
+  newDataPoint[0].systemCPU = data[0].systemCPU.slice(1).concat(newDataPoint[0].systemCPU)
+  newDataPoint[0].systemMemory = data[0].systemMemory.slice(1).concat(newDataPoint[0].systemMemory)
+  newDataPoint[0].flowRate = data[0].flowRate.slice(1).concat(newDataPoint[0].flowRate)
+
+  data = newDataPoint
+
+  chartView.setData(newDataPoint, {}, 'disk-usage')
+  chartView.setData(newDataPoint, {}, 'process-cpu-mem')
+  chartView.setData(newDataPoint, {}, 'node-cpu')
+  chartView.setData(newDataPoint, {}, 'node-mem')
+  chartView.setData(newDataPoint, {}, 'node-flow')
+
+  chartView.render()
+}
+
+function onVisibilityChange () {
+  if (document.hidden) {
+    clearInterval(runner)
+  } else {
+    runner = setInterval(run, timeInterval)
+  }
+}
+
+document.addEventListener('visibilitychange', onVisibilityChange, false)
+

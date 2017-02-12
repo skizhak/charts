@@ -4,12 +4,12 @@
 
 #disk-usage {
     width: 30%;
-    margin-left: 80px;
+    margin-left: 60px;
     display: inline-block;
 }
 
 #process-cpu-mem {
-    width: 65%;
+    width: 60%;
     display: inline-block;
 }
 
