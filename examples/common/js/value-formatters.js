@@ -13,6 +13,20 @@ function toFixedNumberFactory (digits) {
   return d3Format.format(`.${digits}f`)
 }
 
+function byteFormatter1K (bytes) {
+  const unit = 1024
+
+  bytes *= 1024
+
+  if (bytes < 0) bytes *= -1
+  if (bytes < unit) return bytes + ' B'
+
+  const scale = Math.floor(Math.log(bytes) / Math.log(unit))
+  const unitPre = 'KMGTPE'.substr(scale - 1, 1)
+
+  return `${(bytes / Math.pow(unit, scale)).toFixed(1)} ${unitPre}B`
+}
+
 function byteFormatter (bytes) {
   const unit = 1024
 
@@ -37,4 +51,5 @@ module.exports = {
   commaGroupedInteger,
   byteFormatter,
   toFixedPercentage1,
+  byteFormatter1K
 }

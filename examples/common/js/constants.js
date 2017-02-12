@@ -46,7 +46,8 @@ const lbColorScheme17 = [
   '#4caf50',
   '#0cc2aa',
   '#6cc788',
-  '#6887ff'
+  '#6887ff',
+  '#f06292'
 ].concat(d3ColorScheme10)
 
 const bubbleShapes = {
