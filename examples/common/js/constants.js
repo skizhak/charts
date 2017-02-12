@@ -82,12 +82,12 @@ const bubbleShapes = {
 }
 
 module.exports = {
-  bubbleShapes: bubbleShapes,
-  bubbleColorScheme6: bubbleColorScheme6,
-  bubbleColorScheme13: bubbleColorScheme13,
-  lbColorScheme7: lbColorScheme7,
-  lbColorScheme17: lbColorScheme17,
-  radialColorScheme6: radialColorScheme6,
-  d3ColorScheme10: d3ColorScheme10,
-  d3ColorScheme20: d3ColorScheme20
+  bubbleShapes,
+  bubbleColorScheme6,
+  bubbleColorScheme13,
+  lbColorScheme7,
+  lbColorScheme17,
+  radialColorScheme6,
+  d3ColorScheme10,
+  d3ColorScheme20
 }

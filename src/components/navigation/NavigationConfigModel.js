@@ -68,12 +68,9 @@ class NavigationConfigModel extends ContrailChartsConfigModel {
     ]
   }
 
-  getColor (accessor) {
-    if (_.has(accessor, 'color')) {
-      return accessor.color
-    } else {
-      return this.attributes.colorScale(accessor.accessor)
-    }
+  getColor (data, accessor) {
+    const configuredColor = super.getColor(data, accessor)
+    return configuredColor || this.attributes.colorScale(accessor.accessor)
   }
 }
 

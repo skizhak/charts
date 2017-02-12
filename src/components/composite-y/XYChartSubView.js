@@ -28,7 +28,7 @@ class XYChartSubView extends ContrailChartsView {
   }
 
   get yScale () {
-    return this.params.axis[this.axisName].scale || d3.scaleLinear()
+    return _.has(this.params.axis[this.axisName], 'scale') ? this.params.axis[this.axisName].scale : d3.scaleLinear()
   }
 
   get axisName () {
@@ -42,10 +42,6 @@ class XYChartSubView extends ContrailChartsView {
 
   get xMarginInner () {
     return 0
-  }
-
-  getColor (accessor) {
-    return accessor.color
   }
 
   getScreenX (datum, xAccessor) {

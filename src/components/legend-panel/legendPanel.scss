@@ -100,7 +100,6 @@ $border-color: #fafafa;
 .legend-attribute {  
   display: inline-block;
   padding: 3px 0;
-  padding-left: 18px;
   position: relative;
   vertical-align: middle;
 
@@ -133,40 +132,41 @@ $border-color: #fafafa;
 }
 
 .indicator {
-  position: absolute;
-  left: 2px;
-  top: 3px;
-  width: 10px;
-  height: 10px;
-  border-radius: 100px;
-  background-color: white;
-  border: 1px solid black;
-  
-  .legend-attribute input:checked ~ & {
-    background-color: black;
-  }
-  
-  &:after {
-    position: absolute;
-    display: none;
-    content: '';
+  font-size: 14px;
+
+  &.radio {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    vertical-align: middle;
+    border-radius: 100px;
+    background-color: white;
+    border: 1px solid black;
     
     .legend-attribute input:checked ~ & {
-      display: block;
-    }
-
-    .legend-attribute.disabled input:checked ~ & {
-      display: none;
+      background-color: black;
     }
     
-    .legend-attribute & {
-      left: 0px;
-      top: 0px;
-      width: 8px;
-      height: 8px;
-      border: solid white;
-      border-width: 1px 1px 1px 1px;
-      border-radius: 100px;
+    &:after {
+      position: absolute;
+      display: none;
+      content: '';
+      
+      .legend-attribute input:checked ~ & {
+        display: block;
+      }
+
+      .legend-attribute.disabled input:checked ~ & {
+        display: none;
+      }
+      
+      .legend-attribute & {
+        width: 8px;
+        height: 8px;
+        border: solid white;
+        border-width: 1px 1px 1px 1px;
+        border-radius: 100px;
+      }
     }
   }
 }
@@ -267,9 +267,14 @@ $border-color: #fafafa;
   }
 
   .swatch--chart {
+    display: none;
     padding: 4px;
     text-align: center;
     font-size: 12px;
     line-height: 16px;
+
+    &.show {
+      display: inline-block;
+    }
   }
 }
