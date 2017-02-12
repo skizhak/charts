@@ -238,7 +238,10 @@ const pieChartConfig = {
       dataConfig: [
         {
           accessor: 'value',
-          valueFormatter: formatter.byteFormatter1K,
+          labelFormatter: (dPoint) => {
+            return dPoint.fieldName
+          },
+          valueFormatter: formatter.byteFormatter1K
         },
       ],
     },
