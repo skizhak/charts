@@ -1,0 +1,28 @@
+#grouped-parent-chart {
+    width: 100%;
+}
+
+#disk-usage {
+    width: 30%;
+    margin-left: 80px;
+    display: inline-block;
+}
+
+#process-cpu-mem {
+    width: 65%;
+    display: inline-block;
+}
+
+#node-cpu {
+    width: 47%;
+    display: inline-block;
+}
+
+#node-mem {
+    width: 47%;
+    display: inline-block;
+}
+
+#node-flow {
+    width: 96%;
+}
