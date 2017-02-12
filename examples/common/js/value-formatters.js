@@ -13,6 +13,11 @@ function toFixedNumberFactory (digits) {
   return d3Format.format(`.${digits}f`)
 }
 
+function byteFormatter1K (bytes) {
+  bytes *= 1024
+  return byteFormatter(bytes)
+}
+
 function byteFormatter (bytes) {
   const unit = 1024
 
@@ -37,4 +42,5 @@ module.exports = {
   commaGroupedInteger,
   byteFormatter,
   toFixedPercentage1,
+  byteFormatter1K
 }

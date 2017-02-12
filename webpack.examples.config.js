@@ -50,6 +50,7 @@ const config = {
     'demo/disk-usage': path.join(__dirname, '/examples/demo/radial-chart/disk-usage/disk.js'),
     'demo/pool-usage': path.join(__dirname, '/examples/demo/radial-chart/pool-usage/pools.js'),
     'demo/vn-detail': path.join(__dirname, '/examples/demo/grouped-chart/vn-detail/vn-detail.js'),
+    'demo/cnode': path.join(__dirname, '/examples/demo/grouped-chart/compute-node/cnode.js'),
 
     'developer/multi-shape': path.join(__dirname, '/examples/developer/bubble-chart/multiple-shapes/'),
     'developer/control-panel': path.join(__dirname, '/examples/developer/linebar-chart/control-panel/'),

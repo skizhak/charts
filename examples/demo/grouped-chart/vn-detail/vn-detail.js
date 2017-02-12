@@ -318,6 +318,7 @@ const chartConfigs = [
             y1: {
               position: 'left',
               formatter: formatter.byteFormatter,
+              ticks: 5,
               labelMargin: 15,
             },
           }
