@@ -45,7 +45,7 @@ const cpuPlotConfig = {
   y: [
     {
       accessor: 'AVG(cpu_share)',
-      label: 'Avg. CPU Share',
+      label: 'Avg CPU Share',
       enabled: true,
       chart: 'LineChart',
       color: colorScheme[7],
@@ -53,7 +53,7 @@ const cpuPlotConfig = {
     },
     {
       accessor: 'AVG(five_min_avg)',
-      label: 'CPU (5 mins avg.)',
+      label: 'Avg CPU (5 mins)',
       enabled: true,
       chart: 'BarChart',
       color: colorScheme[4],
@@ -61,7 +61,7 @@ const cpuPlotConfig = {
     },
     {
       accessor: 'AVG(one_min_avg)',
-      label: 'CPU (1 mins avg.)',
+      label: 'Avg CPU (1 min)',
       enabled: true,
       chart: 'BarChart',
       color: colorScheme[1],
@@ -74,7 +74,7 @@ const cpuAxisConfig = {
   x: {
     formatter: formatter.extendedISOTime,
     label: 'Time',
-    ticks: 5,
+    ticks: 3,
   },
   y1: {
     position: 'left',
@@ -96,7 +96,7 @@ const memAxisConfig = {
   x: {
     formatter: formatter.extendedISOTime,
     label: 'Time',
-    ticks: 5,
+    ticks: 3,
   },
   y1: {
     position: 'left',
@@ -134,14 +134,6 @@ const memPlotConfig = {
       chart: 'AreaChart',
       color: colorScheme[7],
       axis: 'y1'
-    },
-    {
-      accessor: 'AVG(buffers)',
-      label: 'Buffers Memory',
-      enabled: false,
-      chart: 'LineChart',
-      color: colorScheme[4],
-      axis: 'y2'
     },
     {
       accessor: 'AVG(cached)',
@@ -282,12 +274,22 @@ const lbChartConfig1 = {
         dataConfig: [
           {
             accessor: 'AVG(cpu_share)',
-            labelFormatter: 'AVG CPU Share',
+            labelFormatter: 'Avg CPU Share',
             valueFormatter: formatter.toNumber
           },
           {
             accessor: 'AVG(fifteen_min_avg)',
-            labelFormatter: 'CPU (15 mins avg.)',
+            labelFormatter: 'Avg CPU (15 mins)',
+            valueFormatter: formatter.toNumber
+          },
+          {
+            accessor: 'AVG(five_min_avg)',
+            labelFormatter: 'Avg CPU (5 mins)',
+            valueFormatter: formatter.toNumber
+          },
+          {
+            accessor: 'AVG(one_min_avg)',
+            labelFormatter: 'Avg CPU (1 min)',
             valueFormatter: formatter.toNumber
           }
         ],
@@ -301,7 +303,7 @@ const lbChartConfig1 = {
         marginRight: 60,
         chartHeight: 300,
         crosshair: 'cpu-crosshair-id',
-        xTicks: 6,
+        xTicks: 5,
         possibleChartTypes: ['BarChart', 'LineChart'],
         plot: cpuPlotConfig,
         axis: cpuAxisConfig
@@ -379,7 +381,7 @@ const areaChartConfig = {
         marginRight: 80,
         chartHeight: 300,
         crosshair: 'mem-crosshair-id',
-        xTicks: 4,
+        xTicks: 5,
         possibleChartTypes: ['BarChart', 'AreaChart'],
         plot: memPlotConfig,
         axis: memAxisConfig
@@ -435,7 +437,7 @@ var lbChartConfig2 = {
         marginRight: 60,
         chartHeight: 275,
         crosshair: 'flow-crosshair-id',
-        xTicks: 6,
+        xTicks: 5,
         possibleChartTypes: ['BarChart', 'LineChart'],
         plot: flowPlotConfig,
         axis: flowAxisConfig

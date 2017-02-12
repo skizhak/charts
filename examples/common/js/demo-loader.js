@@ -86,6 +86,14 @@ const radialExamples = [
 
 const devGroupedExamples = [
   {
+    html: 'grouped-chart/vn-detail/vn-detail.html',
+    js: 'grouped-chart/vn-detail/vn-detail.js',
+    css: 'grouped-chart/vn-detail/vn-detail.css',
+    title: 'Project VN Traffic',
+    chartTitle: 'Traffic Analysis for a Project',
+    chartDesc: 'A combination of three charts used to analyze traffic across VNs under a project. LineBar chart shows either total traffic of this project or traffic of VN selected by clicking on Pie chart. Bubble chart shows traffic across ports with two icons: one for in-traffic and other one for out-traffic.'
+  },
+  {
     html: 'grouped-chart/compute-node/cnode.html',
     js: 'grouped-chart/compute-node/cnode.js',
     css: 'grouped-chart/compute-node/cnode.css',
@@ -94,14 +102,6 @@ const devGroupedExamples = [
     chartDesc: 'A combination of five charts used to analyze these stats of a vRouter node: System/Node CPU/Memory, Flows, Process CPU/Memory, Disk Usages. Area chart shows System/Node memory usage. ' +
     'Grouped Bar chart shows System/Node CPU usage. Stacked Bar chart with navigation show active, added, and deleted flows. Bubble chart shows CPU/Memory of different proceses on that node. ' +
     'Finally, pie chart shows the disk usage of node.'
-  },
-  {
-    html: 'grouped-chart/vn-detail/vn-detail.html',
-    js: 'grouped-chart/vn-detail/vn-detail.js',
-    css: 'grouped-chart/vn-detail/vn-detail.css',
-    title: 'Project VN Traffic',
-    chartTitle: 'Traffic Analysis for a Project',
-    chartDesc: 'A combination of three charts used to analyze traffic across VNs under a project. LineBar chart shows either total traffic of this project or traffic of VN selected by clicking on Pie chart. Bubble chart shows traffic across ports with two icons: one for in-traffic and other one for out-traffic.'
   }
 ]
 
