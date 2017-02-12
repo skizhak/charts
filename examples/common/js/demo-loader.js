@@ -90,7 +90,7 @@ const devGroupedExamples = [
     js: 'grouped-chart/compute-node/cnode.js',
     css: 'grouped-chart/compute-node/cnode.css',
     title: 'Compute Node ',
-    chartTitle: 'Dashboard of Control Node',
+    chartTitle: 'Compute Node',
     chartDesc: 'A combination of five charts used to analyze these stats of a vRouter node: System/Node CPU/Memory, Flows, Process CPU/Memory, Disk Usages. Area chart shows System/Node memory usage. ' +
     'Grouped Bar chart shows System/Node CPU usage. Stacked Bar chart with navigation show active, added, and deleted flows. Bubble chart shows CPU/Memory of different proceses on that node. ' +
     'Finally, pie chart shows the disk usage of node.'

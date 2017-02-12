@@ -137,8 +137,8 @@ function generateDiskUsage4VR (partitionCount) {
   partitionCount = partitionCount || 2
   let diskUsage = []
 
-  diskUsage.push({"fieldName": 'total_space_available_1k', "value": _.random(150000, 160000)})
-  diskUsage.push({"fieldName": 'total_space_used_1k', "value": _.random(68796, 68996)})
+  diskUsage.push({"fieldName": 'Disk Available', "value": _.random(150000, 160000)})
+  diskUsage.push({"fieldName": 'Disk Used', "value": _.random(68796, 68996)})
 
   return diskUsage
 }

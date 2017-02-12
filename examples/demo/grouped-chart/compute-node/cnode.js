@@ -10,7 +10,7 @@ const _c = commons._c
 const timeInterval = 2000
 
 let now = _.now()
-let data = commons.dg.computeNodeData({vrCount: 1, count: 25, flowCount: 50, timeInterval: timeInterval, now: now})
+let data = commons.dg.computeNodeData({vrCount: 1, count: 20, flowCount: 60, timeInterval: timeInterval, now: now})
 
 const colorScheme = _c.lbColorScheme17
 const bubbleColorScheme = _c.bubbleColorScheme6
@@ -49,8 +49,7 @@ const cpuPlotConfig = {
       enabled: true,
       chart: 'LineChart',
       color: colorScheme[7],
-      axis: 'y1',
-      tooltip: 'cpu-tooltip-id'
+      axis: 'y1'
     },
     {
       accessor: 'AVG(five_min_avg)',
@@ -58,8 +57,7 @@ const cpuPlotConfig = {
       enabled: true,
       chart: 'BarChart',
       color: colorScheme[4],
-      axis: 'y2',
-      tooltip: 'cpu-tooltip-id'
+      axis: 'y2'
     },
     {
       accessor: 'AVG(one_min_avg)',
@@ -67,8 +65,7 @@ const cpuPlotConfig = {
       enabled: true,
       chart: 'BarChart',
       color: colorScheme[1],
-      axis: 'y2',
-      tooltip: 'cpu-tooltip-id'
+      axis: 'y2'
     }
   ]
 }
@@ -103,13 +100,13 @@ const memAxisConfig = {
   },
   y1: {
     position: 'left',
-    ticks: 4,
+    ticks: 5,
     formatter: formatter.byteFormatter1K,
     labelMargin: 15,
   },
   y2: {
     position: 'right',
-    ticks: 4,
+    ticks: 5,
     formatter: formatter.byteFormatter1K,
     labelMargin: 15,
   }
@@ -126,10 +123,9 @@ const memPlotConfig = {
       accessor: 'AVG(free)',
       label: 'Free Memory',
       enabled: true,
-      chart: 'AreaChart',
+      chart: 'LineChart',
       color: colorScheme[2],
-      axis: 'y1',
-      tooltip: 'mem-tooltip-id'
+      axis: 'y2'
     },
     {
       accessor: 'AVG(used)',
@@ -137,8 +133,7 @@ const memPlotConfig = {
       enabled: true,
       chart: 'AreaChart',
       color: colorScheme[7],
-      axis: 'y1',
-      tooltip: 'mem-tooltip-id'
+      axis: 'y1'
     },
     {
       accessor: 'AVG(buffers)',
@@ -146,8 +141,7 @@ const memPlotConfig = {
       enabled: false,
       chart: 'LineChart',
       color: colorScheme[4],
-      axis: 'y2',
-      tooltip: 'mem-tooltip-id'
+      axis: 'y2'
     },
     {
       accessor: 'AVG(cached)',
@@ -155,8 +149,7 @@ const memPlotConfig = {
       enabled: true,
       chart: 'AreaChart',
       color: colorScheme[1],
-      axis: 'y1',
-      tooltip: 'mem-tooltip-id'
+      axis: 'y1'
     }
   ]
 }
@@ -174,8 +167,7 @@ const flowPlotConfig = {
       enabled: true,
       chart: 'StackedBarChart',
       color: colorScheme[9],
-      axis: 'y1',
-      tooltip: 'flow-tooltip-id'
+      axis: 'y1'
     },
     {
       accessor: 'AVG(deleted_flows)',
@@ -183,8 +175,7 @@ const flowPlotConfig = {
       enabled: true,
       chart: 'StackedBarChart',
       color: colorScheme[7],
-      axis: 'y1',
-      tooltip: 'flow-tooltip-id'
+      axis: 'y1'
     },
     {
       accessor: 'AVG(active_flows)',
@@ -192,10 +183,8 @@ const flowPlotConfig = {
       enabled: true,
       chart: 'LineChart',
       color: colorScheme[8],
-      axis: 'y2',
-      tooltip: 'flow-tooltip-id'
+      axis: 'y2'
     }
-
   ]
 }
 
@@ -240,10 +229,10 @@ const pieChartConfig = {
         getLabel: serie => serie.fieldName,
         valueFormatter: formatter.byteFormatter1K,
       },
-      tooltip: 'tooltip-id'
+      tooltip: 'pie-tooltip-id'
     },
   }, {
-    id: 'tooltip-id',
+    id: 'pie-tooltip-id',
     type: 'Tooltip',
     config: {
       dataConfig: [
@@ -308,7 +297,7 @@ const lbChartConfig1 = {
         marginLeft: 60,
         marginRight: 60,
         chartHeight: 300,
-        crosshair: 'crosshair-id',
+        crosshair: 'cpu-crosshair-id',
         xTicks: 6,
         possibleChartTypes: ['BarChart', 'LineChart'],
         plot: cpuPlotConfig,
@@ -316,7 +305,7 @@ const lbChartConfig1 = {
       }
     },
     {
-      id: 'crosshair-id',
+      id: 'cpu-crosshair-id',
       type: 'Crosshair',
       config: {
         tooltip: 'cpu-tooltip-id',
@@ -336,7 +325,7 @@ const areaChartConfig = {
     {
       type: 'LegendPanel',
       config: {
-        sourceComponent: 'compositey-chart-id',
+        sourceComponent: 'mem-chart-id',
         editable: {
           colorSelector: true,
           chartSelector: true
@@ -354,47 +343,47 @@ const areaChartConfig = {
           {
             accessor: 'AVG(total)',
             labelFormatter: 'Total',
-            valueFormatter: formatter.byteFormatter1K()
+            valueFormatter: formatter.byteFormatter1K
           },
           {
             accessor: 'AVG(used)',
             labelFormatter: 'Used',
-            valueFormatter: formatter.byteFormatter1K()
+            valueFormatter: formatter.byteFormatter1K
           },
           {
             accessor: 'AVG(free)',
             labelFormatter: 'Free',
-            valueFormatter: formatter.byteFormatter1K()
+            valueFormatter: formatter.byteFormatter1K
           },
           {
             accessor: 'AVG(cached)',
             labelFormatter: 'Cached',
-            valueFormatter: formatter.byteFormatter1K()
+            valueFormatter: formatter.byteFormatter1K
           },
           {
-            accessor: 'AVG(buffer)',
+            accessor: 'AVG(buffers)',
             labelFormatter: 'Buffers',
-            valueFormatter: formatter.byteFormatter1K()
+            valueFormatter: formatter.byteFormatter1K
           },
         ],
       },
     },
     {
-      id: 'compositey-chart-id',
+      id: 'mem-chart-id',
       type: 'CompositeYChart',
       config: {
         marginLeft: 110,
         marginRight: 80,
         chartHeight: 300,
-        crosshair: 'crosshair-id',
-        xTicks: 6,
+        crosshair: 'mem-crosshair-id',
+        xTicks: 4,
         possibleChartTypes: ['BarChart', 'AreaChart'],
         plot: memPlotConfig,
         axis: memAxisConfig
       }
     },
     {
-      id: 'crosshair-id',
+      id: 'mem-crosshair-id',
       type: 'Crosshair',
       config: {
         tooltip: 'mem-tooltip-id',
@@ -442,7 +431,7 @@ var lbChartConfig2 = {
         marginLeft: 80,
         marginRight: 60,
         chartHeight: 275,
-        crosshair: 'crosshair-id',
+        crosshair: 'flow-crosshair-id',
         xTicks: 6,
         possibleChartTypes: ['BarChart', 'LineChart'],
         plot: flowPlotConfig,
@@ -462,7 +451,7 @@ var lbChartConfig2 = {
       }
     },
     {
-      id: 'crosshair-id',
+      id: 'flow-crosshair-id',
       type: 'Crosshair',
       config: {
         tooltip: 'flow-tooltip-id',
