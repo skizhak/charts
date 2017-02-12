@@ -63,7 +63,10 @@ const chartConfigs = [
       config: {
         chartHeight: 300,
         xTicks: 6,
-        possibleChartTypes: ['BarChart', 'LineChart'],
+        possibleChartTypes: {
+          y1: ['BarChart', 'LineChart'],
+          y2: ['BarChart', 'LineChart']
+        },
         plot: {
           x: {
             accessor: 'x',

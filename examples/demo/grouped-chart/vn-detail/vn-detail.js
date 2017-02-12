@@ -220,7 +220,10 @@ const chartConfigs = [
           chartHeight: 275,
           crosshair: 'crosshair-id',
           xTicks: 6,
-          possibleChartTypes: ['BarChart', 'LineChart'],
+          possibleChartTypes: {
+            y1: ['BarChart', 'LineChart'],
+            y2: ['BarChart', 'LineChart']
+          },
           plot: trafficPlotConfig,
           axis: trafficPlotAxisConfig
         }
