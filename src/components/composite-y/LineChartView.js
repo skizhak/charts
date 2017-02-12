@@ -56,7 +56,7 @@ class LineChartView extends XYChartSubView {
       .attr('d', d => this._lines[d.key](d.data[0]))
       .transition().ease(d3Ease.easeLinear).duration(this.params.duration)
       .attrTween('d', this._interpolate.bind(this))
-      .attr('stroke', d => this.getColor(d.accessor))
+      .attr('stroke', d => this.config.getColor(d.data, d.accessor))
 
     svgLines
       .transition().ease(d3Ease.easeLinear).duration(this.params.duration)
@@ -65,7 +65,7 @@ class LineChartView extends XYChartSubView {
         const current = this._lines[d.key](d.data)
         return d3InterpolatePath(previous, current)
       })
-      .attr('stroke', d => this.getColor(d.accessor))
+      .attr('stroke', d => this.config.getColor(d.data, d.accessor))
     svgLines.exit().remove()
   }
   /**

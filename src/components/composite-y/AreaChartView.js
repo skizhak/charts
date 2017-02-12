@@ -57,7 +57,7 @@ class AreaChartView extends XYChartSubView {
         .attr('class', d => `area area-${d.key} area-${stackName}`)
         .merge(areas)
         .transition().ease(d3.easeLinear).duration(this.params.duration)
-        .attr('fill', d => _.find(accessorsByStack, {accessor: d.key}).color)
+        .attr('fill', d => this.config.getColor([], _.find(accessorsByStack, {accessor: d.key})))
         .attr('d', area)
     })
 
