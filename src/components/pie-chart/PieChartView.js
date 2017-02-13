@@ -22,6 +22,7 @@ class PieChartView extends ContrailChartsView {
     return _.extend(super.selectors, {
       node: '.arc',
       active: '.active',
+      click: '.click'
     })
   }
   get events () {
@@ -89,7 +90,7 @@ class PieChartView extends ContrailChartsView {
     const onClickCursor = this.config.get('onClickCursor')
     if (onClickCursor) {
       d3.select(el)
-        .classed('click-me', true)
+        .classed(this.selectorClass('click'), true)
         .style('cursor', () => (typeof (onClickCursor) === 'boolean') ? 'pointer' : onClickCursor)
     }
 
@@ -98,7 +99,7 @@ class PieChartView extends ContrailChartsView {
   }
 
   _onMouseout (d, el) {
-    if (this.config.get('onClickCursor') && el) el.classList.remove('click-me')
+    if (this.config.get('onClickCursor') && el) el.classList.remove(this.selectorClass('click'))
 
     this._actionman.fire('HideComponent', this.config.get('tooltip'))
     const els = el ? [el] : document.querySelectorAll(this.selectors.node)
