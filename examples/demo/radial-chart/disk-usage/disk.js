@@ -41,7 +41,7 @@ const diskStatusConfig = {
     type: 'PieChart',
     config: {
       type: 'donut',
-      radius: 100,
+      radius: 130,
       colorScale: d3.scaleOrdinal().range(radialColorScheme6.slice(0, 2)), // eslint-disable-line no-undef
       serie: {
         getValue: getValue,
@@ -85,7 +85,7 @@ const diskClusterConfig = {
     type: 'PieChart',
     config: {
       type: 'donut',
-      radius: 100,
+      radius: 130,
       colorScale: d3.scaleOrdinal().range(radialColorScheme6.slice(2)), // eslint-disable-line no-undef
       serie: {
         getValue: getValue,
