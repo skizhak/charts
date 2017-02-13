@@ -183,7 +183,8 @@ const flowPlotConfig = {
 const flowAxisConfig = {
   x: {
     formatter: formatter.extendedISOTime,
-    label: 'Time'
+    label: 'Time',
+    ticks: 5
   },
   y1: {
     position: 'left',
@@ -299,7 +300,6 @@ const lbChartConfig1 = {
         marginRight: 60,
         chartHeight: 300,
         crosshair: 'cpu-crosshair-id',
-        xTicks: 5,
         possibleChartTypes: {
           y1: ['BarChart', 'LineChart'],
           y2: ['BarChart', 'LineChart']
@@ -375,7 +375,6 @@ const areaChartConfig = {
         marginRight: 80,
         chartHeight: 300,
         crosshair: 'mem-crosshair-id',
-        xTicks: 5,
         possibleChartTypes: {
           y1: ['BarChart', 'LineChart'],
           y2: ['BarChart', 'LineChart']
@@ -432,7 +431,6 @@ var lbChartConfig2 = {
         marginRight: 60,
         chartHeight: 275,
         crosshair: 'flow-crosshair-id',
-        xTicks: 5,
         plot: flowPlotConfig,
         axis: flowAxisConfig
       }
