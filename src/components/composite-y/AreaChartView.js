@@ -20,7 +20,7 @@ class AreaChartView extends XYChartSubView {
 
   get events () {
     return {
-      [`mouseover ${this.selectors.node}`]: '_onMouseover',
+      [`mousemove ${this.selectors.node}`]: '_onMousemove',
       [`mouseout ${this.selectors.node}`]: '_onMouseout',
     }
   }
@@ -93,7 +93,7 @@ class AreaChartView extends XYChartSubView {
 
   // Event handlers
 
-  _onMouseover (d, el) {
+  _onMousemove (d, el) {
     if (this.config.get('tooltipEnabled')) {
       const tooltipId = this.params.activeAccessorData[d.index].tooltip
       const [left, top] = d3.mouse(this._container)
