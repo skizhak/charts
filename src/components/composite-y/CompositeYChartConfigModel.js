@@ -32,11 +32,11 @@ class CompositeYChartConfigModel extends ContrailChartsConfigModel {
       labelMargin: 16,
 
       // Side margins.
-      marginTop: 40,
-      marginBottom: 40,
-      marginLeft: 40,
-      marginRight: 40,
-      marginInner: 10,
+      marginTop: 25,
+      marginBottom: 25,
+      marginLeft: 50,
+      marginRight: 50,
+      marginInner: 5,
 
       curve: d3.curveCatmullRom.alpha(0.5),
       axisPositions: ['left', 'right', 'top', 'bottom'],
