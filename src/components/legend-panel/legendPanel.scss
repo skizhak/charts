@@ -14,7 +14,7 @@ $border-color: #fafafa;
   border: 1px solid $border-color;
   border-radius: 4px;
   padding: 4px 10px;
-  display: inline-block;
+  overflow: hidden;
 
   &.vertical {
     .edit-legend {
@@ -29,6 +29,11 @@ $border-color: #fafafa;
         margin-bottom: 4px;
       }
     }
+  }
+
+  .legend-inner-container {
+    white-space: nowrap;
+    overflow-x: auto;
   }
 
   .attributes {
