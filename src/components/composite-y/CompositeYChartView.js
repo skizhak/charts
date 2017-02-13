@@ -174,8 +174,8 @@ class CompositeYChartView extends ContrailChartsView {
     _.each(domains, (domain, axisName) => {
       if (!_.has(this.params.axis, axisName)) this.params.axis[axisName] = {}
       const axis = this.params.axis[axisName]
-
       axis.position = this.config.getPosition(axisName)
+      axis.domain = domain
       if (!this.hasAxisParam(axisName, 'range')) {
         if (['bottom', 'top'].includes(axis.position)) {
           axis.range = this.params.xRange
@@ -183,20 +183,18 @@ class CompositeYChartView extends ContrailChartsView {
           axis.range = this.params.yRange
         }
       }
-      axis.domain = domain
       if (!_.isFunction(axis.scale) && axis.range) {
-        const scale = this.config.getScale(axisName)
-        scale
-          .domain(axis.domain)
-          .range(axis.range)
-        axis.scale = scale
+        let scale = this.config.getScale(axisName)
         if (this.hasAxisParam(axisName, 'nice') && axis.nice) {
           if (this.hasAxisParam(axisName, 'ticks')) {
-            axis.scale = axis.scale.nice(axis.ticks)
+            scale = axis.scale.nice(axis.ticks)
           } else {
-            axis.scale = axis.scale.nice()
+            scale = axis.scale.nice()
           }
         }
+        scale.domain(axis.domain)
+          .range(axis.range)
+        axis.scale = scale
       }
     })
     this.adjustAxisMargin()
@@ -294,6 +292,8 @@ class CompositeYChartView extends ContrailChartsView {
       .tickPadding(10)
     if (this.hasAxisParam('x', 'ticks')) {
       d3Axis = d3Axis.ticks(axis.ticks)
+    } else {
+      d3Axis = d3Axis.ticks(this.params._xTicks)
     }
     if (this.hasAxisConfig('x', 'formatter')) {
       d3Axis = d3Axis.tickFormat(this.config.get('axis').x.formatter)
@@ -349,10 +349,10 @@ class CompositeYChartView extends ContrailChartsView {
         axisInfo.yAxis = axisInfo.yAxis.ticks(this.params.axis[axisInfo.name].ticks)
       }
       if (!referenceYScale) {
-        referenceYScale = this.params.axis[axisInfo.name].scale
+        referenceYScale = axisInfo.yAxis.scale()
       } else {
         // This is not the first Y axis so adjust the tick values to the first axis tick values.
-        let ticks = referenceYScale.ticks(this.params.yTicks)
+        let ticks = referenceYScale.ticks(this.params._yTicks)
         if (this.hasAxisParam(axisInfo.name, 'ticks')) {
           ticks = referenceYScale.ticks(this.params.axis[axisInfo.name].ticks)
         }

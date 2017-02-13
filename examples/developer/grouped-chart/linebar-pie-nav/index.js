@@ -62,7 +62,6 @@ const chartConfigs = [
       type: 'CompositeYChart',
       config: {
         chartHeight: 300,
-        xTicks: 6,
         possibleChartTypes: {
           y1: ['BarChart', 'LineChart'],
           y2: ['BarChart', 'LineChart']
@@ -71,6 +70,7 @@ const chartConfigs = [
           x: {
             accessor: 'x',
             axis: 'x',
+            ticks: 6
           },
           y: [
             {
