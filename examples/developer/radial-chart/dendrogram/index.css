@@ -1,6 +1,8 @@
 #radial-dendrogram-chart {
   position: relative;
-  width: 720px;
+  width: 100%;
+  border: 1px solid #eee;
+  border-radius: 4px;
   margin: 0 auto;
   padding: 2px;
 }

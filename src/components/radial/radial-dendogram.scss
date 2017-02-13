@@ -1,15 +1,42 @@
+$ribbonColor: #888888;
+$ribbonActiveColor: #4682b4;
+$ribbonHoverColor: #ff0000;
+
 .cc-svg .radial-dendrogram {
   .link {
 	stroke: #2196f3;
 	stroke-opacity: .4;
-	stroke-width: 1;
 	fill: none;
 	pointer-events: none;
+  }
+  .ribbon {
+	fill: $ribbonColor;
+	fill-opacity: 0.2;
+	stroke-width: 0px;
+  }
+  .ribbon:hover {
+  	fill: $ribbonHoverColor;
+  	cursor: pointer;
+  }
+  .ribbon.active {
+  	fill: $ribbonActiveColor;
+  	fill-opacity: 0.8;
+  }
+  .arc {
+  	fill: $ribbonColor;
+  	fill-opacity: 0.5;
+	stroke-width: 1px;
+	stroke: darken( $ribbonColor, 20% );
+	stroke-opacity: 0.5;
+  }
+  .arc:hover {
+  	fill-opacity: 1;
+  	cursor:pointer;
   }
   .circle {
   	stroke: #424242;
 	stroke-opacity: .4;
-	stroke-width: 1;
+	stroke-width: 1px;
 	fill: none;
 	pointer-events: none;
   }
