@@ -153,7 +153,10 @@ cpuMemChartView.setConfig({
       marginBottom: 40,
       chartHeight: 400,
       crosshair: 'crosshair-id',
-      possibleChartTypes: ['BarChart', 'LineChart'],
+      possibleChartTypes: {
+        y1: ['BarChart', 'LineChart'],
+        y2: ['LineChart']
+      },
       plot: {
         x: {
           accessor: 'T',
