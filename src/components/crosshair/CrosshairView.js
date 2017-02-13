@@ -14,7 +14,11 @@ class CrosshairView extends ContrailChartsView {
 
   get tagName () { return 'g' }
   get zIndex () { return 9 }
-
+  /**
+   * @param data
+   * @param {Array [x, y]} point mouse offset relative to svg container
+   * @param config
+   */
   show (data, point, config) {
     if (!data) return this.hide()
 
@@ -67,10 +71,9 @@ class CrosshairView extends ContrailChartsView {
     svgCrosshair.exit().remove()
 
     // Show tooltip
-    const pos = this.svg.node().getBoundingClientRect()
     const tooltipOffset = {
-      left: point[0] + pos.left,
-      top: point[1] + pos.top,
+      left: this.svgOffset.left + point[0],
+      top: this.svgOffset.top + point[1],
     }
     this._actionman.fire('ShowComponent', this.config.get('tooltip'), tooltipOffset, data)
   }

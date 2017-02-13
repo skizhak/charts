@@ -8,10 +8,19 @@ const XYChartSubView = require('components/composite-y/XYChartSubView')
 
 class StackedBarChartView extends XYChartSubView {
   get zIndex () { return 1 }
+  /**
+   * follow same naming convention for all XY chart sub views
+   */
+  get selectors () {
+    return _.extend(super.selectors, {
+      node: '.bar',
+    })
+  }
+
   get events () {
     return {
-      'mousemove .bar': '_onMousemove',
-      'mouseout .bar': '_onMouseout',
+      [`mousemove ${this.selectors.node}`]: '_onMousemove',
+      [`mouseout ${this.selectors.node}`]: '_onMouseout',
     }
   }
   /**
@@ -59,7 +68,7 @@ class StackedBarChartView extends XYChartSubView {
     super.render()
 
     const svgBarGroups = this.d3
-      .selectAll('.bar')
+      .selectAll(this.selectors.node)
       .data(this._prepareData(), d => d.id)
     svgBarGroups.enter().append('rect')
       .attr('class', d => 'bar')
@@ -108,20 +117,10 @@ class StackedBarChartView extends XYChartSubView {
 
   _onMousemove (d, el, event) {
     if (this.config.get('tooltipEnabled')) {
-      const tooltipOffset = {
-        top: event.pageY,
-        left: event.pageX,
-      }
-      this._actionman.fire('ShowComponent', d.accessor.tooltip, tooltipOffset, d.data)
+      const [left, top] = d3.mouse(this._container)
+      this._actionman.fire('ShowComponent', d.accessor.tooltip, {left, top}, d.data)
     }
-    el.classList.add('active')
-  }
-
-  _onMouseout (d, el) {
-    if (this.config.get('tooltipEnabled')) {
-      this._actionman.fire('HideComponent', d.accessor.tooltip)
-    }
-    el.classList.remove('active')
+    el.classList.add(this.selectorClass('active'))
   }
 }
 

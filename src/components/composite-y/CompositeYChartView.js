@@ -48,9 +48,8 @@ class CompositeYChartView extends ContrailChartsView {
     this.stopListening(this.model)
     this.model = model
     this.listenTo(this.model, 'change', this.render)
-    _.each(this._drawings, drawing => {
-      drawing.model = model
-    })
+    _.each(this._drawings, drawing => (drawing.model = model))
+
     this.render()
   }
 
@@ -67,9 +66,8 @@ class CompositeYChartView extends ContrailChartsView {
     this.renderSVG()
     this.renderXAxis()
     this.renderYAxes()
-    _.each(this._drawings, drawing => {
-      drawing.render()
-    })
+    _.each(this._drawings, drawing => drawing.render())
+
     const crosshairId = this.config.get('crosshair')
     if (crosshairId) this._actionman.fire('HideComponent', crosshairId)
 

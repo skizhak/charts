@@ -26,7 +26,7 @@ if (env === 'build') {
     minimize: true,
     compress: {
       warnings: false
-    }  
+    }
   }))
   loaders.push({
     loader: 'babel-loader',

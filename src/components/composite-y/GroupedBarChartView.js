@@ -9,10 +9,19 @@ const XYChartSubView = require('components/composite-y/XYChartSubView')
 
 class BarChartView extends XYChartSubView {
   get zIndex () { return 1 }
+  /**
+   * follow same naming convention for all XY chart sub views
+   */
+  get selectors () {
+    return _.extend(super.selectors, {
+      node: '.bar',
+    })
+  }
+
   get events () {
     return {
-      'mousemove .bar': '_onMousemove',
-      'mouseout .bar': '_onMouseout',
+      [`mousemove ${this.selectors.node}`]: '_onMousemove',
+      [`mouseout ${this.selectors.node}`]: '_onMouseout',
     }
   }
   /**
@@ -59,7 +68,7 @@ class BarChartView extends XYChartSubView {
     this.params.axis[this.params.plot.x.axis].innerBandScale = innerBandScale
     // Render the flat data structure
     const svgBarGroups = this.d3
-      .selectAll('.bar')
+      .selectAll(this.selectors.node)
       .data(this._prepareData(), d => d.id)
     svgBarGroups.enter().append('rect')
       .attr('class', d => 'bar')
@@ -105,21 +114,10 @@ class BarChartView extends XYChartSubView {
 
   _onMousemove (d, el, event) {
     if (this.config.get('tooltipEnabled')) {
-      const parentChart = $(el).parents('.cc-chart')
-      const tooltipPosition = {
-        left: event.clientX - $(parentChart).offset().left + $(window).scrollLeft(),
-        top: event.clientY - $(parentChart).offset().top + $(window).scrollTop()
-      }
-      this._actionman.fire('ShowComponent', d.accessor.tooltip, tooltipPosition, d.data)
+      const [left, top] = d3.mouse(this._container)
+      this._actionman.fire('ShowComponent', d.accessor.tooltip, {left, top}, d.data)
     }
-    el.classList.add('active')
-  }
-
-  _onMouseout (d, el) {
-    if (this.config.get('tooltipEnabled')) {
-      this._actionman.fire('HideComponent', d.accessor.tooltip)
-    }
-    el.classList.remove('active')
+    el.classList.add(this.selectorClass('active'))
   }
 }
 

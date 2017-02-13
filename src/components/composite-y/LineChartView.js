@@ -13,11 +13,20 @@ const d3Scale = require('d3-scale')
 const XYChartSubView = require('components/composite-y/XYChartSubView')
 
 class LineChartView extends XYChartSubView {
-  get zIndex () { return 2 }
+  get zIndex () { return 3 }
+  /**
+   * follow same naming convention for all XY chart sub views
+   */
+  get selectors () {
+    return _.extend(super.selectors, {
+      node: '.line',
+    })
+  }
+
   get events () {
     return {
-      'mouseover .line': '_onMouseover',
-      'mouseout .line': '_onMouseout',
+      [`mouseover ${this.selectors.node}`]: '_onMouseover',
+      [`mouseout ${this.selectors.node}`]: '_onMouseout',
     }
   }
 
@@ -48,7 +57,7 @@ class LineChartView extends XYChartSubView {
         .curve(this.config.get('curve'))
       linePathData.push({ key: key, accessor: accessor, data: data })
     })
-    const svgLines = this.d3.selectAll('.line')
+    const svgLines = this.d3.selectAll(this.selectors.node)
       .data(linePathData, d => d.key)
 
     svgLines.enter().append('path')
@@ -86,24 +95,11 @@ class LineChartView extends XYChartSubView {
 
   _onMouseover (d, el) {
     if (this.config.get('tooltipEnabled')) {
-      const pos = d3.mouse(el)
-      const offset = el.getBoundingClientRect()
-      const dataItem = this.getTooltipData(d.data, pos[0])
-      const tooltipOffset = {
-        left: offset.left + pos[0] - this.xScale.range()[0],
-        top: offset.top + pos[1],
-      }
-
-      this._actionman.fire('ShowComponent', d.accessor.tooltip, tooltipOffset, dataItem)
+      const [left, top] = d3.mouse(this._container)
+      const dataItem = this.getTooltipData(d.data, left)
+      this._actionman.fire('ShowComponent', d.accessor.tooltip, {left, top}, dataItem)
     }
-    el.classList.add('active')
-  }
-
-  _onMouseout (d, el) {
-    if (this.config.get('tooltipEnabled')) {
-      this._actionman.fire('HideComponent', d.accessor.tooltip)
-    }
-    el.classList.remove('active')
+    el.classList.add(this.selectorClass('active'))
   }
 }
 

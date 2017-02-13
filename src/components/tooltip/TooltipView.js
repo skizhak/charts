@@ -12,38 +12,33 @@ class TooltipView extends ContrailChartsView {
     this.config.container = p.container
     this.listenTo(this.config, 'change', this.resetParams)
   }
-
-  show (offset, data) {
+  /**
+   * @param {Object} position relative to container: top, left in pixels
+   * @param {Object} data to display
+   */
+  show (position, data) {
     this._loadTemplate(data)
-    this.$el.show()
+    this.d3.classed('active', true)
 
-    const tooltipWidth = this.$el.outerWidth()
-    const tooltipHeight = this.$el.outerHeight()
+    const width = this.el.offsetWidth
+    const height = this.el.offsetHeight
+    const containerWidth = this._container.offsetWidth
 
-    const bodyWidth = $('body').outerWidth()
+    let left = position.left - width / 2
+    let top = position.top - height - 10
 
-    let tooltipPositionLeft = offset.left - tooltipWidth / 2
-    let tooltipPositionTop = offset.top - tooltipHeight - 10
+    if (top < 0) top = position.top + 10
+    if (left + width > containerWidth) {
+      left = containerWidth - width
+    } else if (left < 0) left = 0
 
-    if (tooltipPositionTop < 0) {
-      tooltipPositionTop = offset.top + 10
-    }
-
-    if (tooltipPositionLeft + tooltipWidth > bodyWidth) {
-      tooltipPositionLeft = bodyWidth - tooltipWidth
-    } else if (tooltipPositionLeft < 0) {
-      tooltipPositionLeft = 0
-    }
-
-    this.$el.css({
-      top: tooltipPositionTop,
-      left: tooltipPositionLeft,
-      height: offset.height
-    })
+    this.el.style.top = `${top}px`
+    this.el.style.left = `${left}px`
+    this.el.style.height = `${position.height}px`
   }
 
   hide () {
-    this.$el.hide()
+    this.d3.classed('active', false)
   }
 
   _loadTemplate (data) {
