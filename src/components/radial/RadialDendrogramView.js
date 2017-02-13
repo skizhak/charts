@@ -125,13 +125,13 @@ class RadialDendrogramView extends ContrailChartsView {
         })
       }
     })
-    console.log('rootNode: ', this.rootNode, this.valueSum)
+    //console.log('rootNode: ', this.rootNode, this.valueSum)
   }
 
   _prepareHierarchyRootNode () {
     const valueScale = this.config.get('valueScale').domain([0.01,this.valueSum]).range([0,360])
     this.hierarchyRootNode = d3.hierarchy(this.rootNode).sum((d) => valueScale(d.value)).sort((a, b) => b.value - a.value)
-    console.log('hierarchyRootNode: ', this.hierarchyRootNode)
+    //console.log('hierarchyRootNode: ', this.hierarchyRootNode)
   }
 
   _prepareLinks () {
@@ -147,8 +147,8 @@ class RadialDendrogramView extends ContrailChartsView {
         }
       }
     })
-    console.log('maxDepth: ', this.maxDepth)
-    console.log('Links: ', this.links)
+    //console.log('maxDepth: ', this.maxDepth)
+    //console.log('Links: ', this.links)
   }
 
   _prepareCluster () {
@@ -185,7 +185,7 @@ class RadialDendrogramView extends ContrailChartsView {
         this.circles[n.depth] = { r: n.y }
       }
     })
-    console.log('circles: ', this.circles)
+    //console.log('circles: ', this.circles)
   }
 
   _prepareAngleRanges () {
@@ -254,7 +254,7 @@ class RadialDendrogramView extends ContrailChartsView {
               }
             })
             if (!found) {
-              console.log('Never found')
+              //console.log('Never found')
             }
           }
           outerPoints.push([n.angleScale(valueStart), n.y])
@@ -279,7 +279,7 @@ class RadialDendrogramView extends ContrailChartsView {
               }
             }
             if (!found) {
-              console.log('Never found')
+              //console.log('Never found')
             }
           }
           outerPoints.push([n.angleScale(valueStart), n.y])
@@ -301,7 +301,7 @@ class RadialDendrogramView extends ContrailChartsView {
               }
             })
             if (!found) {
-              console.log('Never found')
+              //console.log('Never found')
             }
           }
           innerPoints.push([n.angleScale(valueStart), n.y])
@@ -334,7 +334,7 @@ class RadialDendrogramView extends ContrailChartsView {
         id: src.data.linkId
       })
     })
-    console.log('ribbons: ', this.ribbons)
+    //console.log('ribbons: ', this.ribbons)
   }
 
   _prepareArcs () {

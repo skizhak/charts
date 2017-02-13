@@ -1,0 +1,16 @@
+#radial-dendrogram-chart {
+  position: relative;
+  width: 80%;
+  margin: 0 auto;
+  padding: 2px;
+}
+
+.title {
+  border: 1px solid #eee;
+  padding: 8px;
+  color: #888;
+  border-radius: 4px;
+  font-size: 16px;
+  font-weight: 900;
+  margin-bottom: 2px;
+}

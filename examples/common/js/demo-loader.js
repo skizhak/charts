@@ -67,6 +67,14 @@ const areaExamples = [
 
 const radialExamples = [
   {
+    html: 'radial-chart/vr-vn-traffic/vr-vn-traffic.html',
+    js: 'radial-chart/vr-vn-traffic/vr-vn-traffic.js',
+    css: 'radial-chart/vr-vn-traffic/vr-vn-traffic.css',
+    title: 'vRouter Traffic',
+    chartTitle: 'vRouter Traffic',
+    chartDesc: 'A radial dendrogram used to show vRouter traffic between source and destination virtual-network, IP, port.'
+  },
+  {
     html: 'radial-chart/disk-usage/disk.html',
     js: 'radial-chart/disk-usage/disk.js',
     css: 'radial-chart/disk-usage/disk.css',
