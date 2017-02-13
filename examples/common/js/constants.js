@@ -2,8 +2,6 @@
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
 
-/* global d3 */
-
 const d3ColorScheme10 = d3.schemeCategory10
 const d3ColorScheme20 = d3.schemeCategory20
 
@@ -16,12 +14,11 @@ const bubbleColorScheme6 = [
   '#9c27b0'
 ]
 
-const bubbleColorScheme14 = [
+const bubbleColorScheme13 = [
   '#424242',
   '#9c27b0',
   '#3f51b5'
 ].concat(d3ColorScheme10)
-
 
 const lbColorScheme7 = [
   '#a88add',
@@ -49,7 +46,8 @@ const lbColorScheme17 = [
   '#4caf50',
   '#0cc2aa',
   '#6cc788',
-  '#6887ff'
+  '#6887ff',
+  '#f06292'
 ].concat(d3ColorScheme10)
 
 const bubbleShapes = {
@@ -84,12 +82,12 @@ const bubbleShapes = {
 }
 
 module.exports = {
-  bubbleShapes: bubbleShapes,
-  bubbleColorScheme6: bubbleColorScheme6,
-  bubbleColorScheme14: bubbleColorScheme14,
-  lbColorScheme7: lbColorScheme7,
-  lbColorScheme17: lbColorScheme17,
-  radialColorScheme6: radialColorScheme6,
-  d3ColorScheme10: d3ColorScheme10,
-  d3ColorScheme20: d3ColorScheme20
+  bubbleShapes,
+  bubbleColorScheme6,
+  bubbleColorScheme13,
+  lbColorScheme7,
+  lbColorScheme17,
+  radialColorScheme6,
+  d3ColorScheme10,
+  d3ColorScheme20
 }

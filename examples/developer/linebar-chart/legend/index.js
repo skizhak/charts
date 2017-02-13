@@ -2,13 +2,14 @@
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
 
-const formatter = require('formatter')
+const commons = require('commons')
 
-// Complex example
-const complexData = []
+const formatter = commons.formatter
+const simpleData = []
+
 for (let i = 0; i < 100; i++) {
   const a = Math.random() * 100
-  complexData.push({
+  simpleData.push({
     x: 1475760930000 + 1000000 * i,
     a: a,
     b: a + Math.random() * 10,
@@ -17,9 +18,10 @@ for (let i = 0; i < 100; i++) {
     e: (Math.random() - 0.5) * 10
   })
 }
-const complexChartView = new coCharts.charts.XYChartView()
-complexChartView.setConfig({
-  container: '#chart-legend',
+
+const simpleChartView = new coCharts.charts.XYChartView()
+simpleChartView.setConfig({
+  id: 'chart-legend',
   components: [{
     type: 'LegendPanel',
     config: {
@@ -48,7 +50,10 @@ complexChartView.setConfig({
       marginBottom: 40,
       chartHeight: 600,
       crosshair: 'crosshair-id',
-      possibleChartTypes: ['BarChart', 'LineChart'],
+      possibleChartTypes: {
+        y1: ['BarChart', 'StackedBarChart'],
+        y2: ['LineChart']
+      },
       plot: {
         x: {
           accessor: 'x',
@@ -87,7 +92,7 @@ complexChartView.setConfig({
             tooltip: 'default-tooltip',
           }, {
             accessor: 'e',
-            labelFormatter: 'Megabytes E',
+            labelFormatter: 'E',
             color: '#9467bd',
             enabled: true,
             chart: 'LineChart',
@@ -216,21 +221,22 @@ complexChartView.setConfig({
     }
   }]
 })
-complexChartView.setData(complexData)
-complexChartView.renderMessage({
-  componentId: 'XYChart',
+
+simpleChartView.setData(simpleData)
+simpleChartView.renderMessage({
+  componentId: 'compositey-chart-id',
   action: 'once',
   messages: [{
     level: 'info',
     title: 'Message 1',
-    message: 'This is an example message. It will disapear after 5 seconds.'
+    message: 'This is an example message. It will disappear after 5 seconds.'
   }, {
     level: 'error',
     title: 'A Fatal Error',
     message: 'This is an error.'
   }, {
-    level: 'info',
-    title: 'Message 2',
+    level: 'warn',
+    title: 'A waring message',
     message: 'This is another example message.'
   }]
 })

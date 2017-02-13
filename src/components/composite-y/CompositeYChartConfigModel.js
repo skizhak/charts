@@ -42,6 +42,7 @@ class CompositeYChartConfigModel extends ContrailChartsConfigModel {
       axisPositions: ['left', 'right', 'top', 'bottom'],
       plot: {},
       axis: {},
+      onClick: (data, el, chart) => {},
       // TODO move to the BarChartConfigModel
       // Padding between series in percents of bar width
       barPadding: 15,
@@ -64,16 +65,17 @@ class CompositeYChartConfigModel extends ContrailChartsConfigModel {
     if (name.startsWith('y')) return 'left'
   }
 
-  getColor (accessor) {
-    if (_.has(accessor, 'color')) {
-      return accessor.color
-    } else {
-      return this.attributes.colorScale(accessor.accessor)
-    }
+  getColor (data, accessor) {
+    const configuredColor = super.getColor(data, accessor)
+    return configuredColor || this.attributes.colorScale(accessor.accessor)
   }
 
   getAccessors () {
     return this.get('plot').y
+  }
+
+  getDomain () {
+    return _.get(this, 'attributes.axis.domain')
   }
   /**
    * Override parent

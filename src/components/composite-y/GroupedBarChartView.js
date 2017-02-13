@@ -4,14 +4,24 @@
 require('./bar-chart.scss')
 const _ = require('lodash')
 const d3 = require('d3')
+const d3Ease = require('d3-ease')
 const XYChartSubView = require('components/composite-y/XYChartSubView')
 
 class BarChartView extends XYChartSubView {
   get zIndex () { return 1 }
+  /**
+   * follow same naming convention for all XY chart sub views
+   */
+  get selectors () {
+    return _.extend(super.selectors, {
+      node: '.bar',
+    })
+  }
+
   get events () {
     return {
-      'mouseover .bar': '_onMouseover',
-      'mouseout .bar': '_onMouseout',
+      [`mousemove ${this.selectors.node}`]: '_onMousemove',
+      [`mouseout ${this.selectors.node}`]: '_onMouseout',
     }
   }
   /**
@@ -27,27 +37,6 @@ class BarChartView extends XYChartSubView {
     const paddedPart = 1 - (this.config.get('barPadding') / 2 / 100)
     // TODO do not use model.data.length as there can be gaps
     return this.innerWidth / this.model.data.length * paddedPart
-  }
-  /**
-  * Called by the parent in order to calculate maximum data extents for all of this child's axis.
-  * Assumes the params.activeAccessorData for this child view is filled by the parent with the relevent yAccessors for this child only.
-  * Returns an object with following structure: { y1: [0,10], x: [-10,10] }
-  */
-  calculateAxisDomains () {
-    const domains = {}
-    let isFull = false
-    if (this.model.data.length < 2) isFull = true
-    domains[this.params.plot.x.axis] = this.model.getRangeFor(this.params.plot.x.accessor, isFull)
-    domains[this.axisName] = []
-    // The domains calculated here can be overriden in the axis configuration.
-    // The overrides are handled by the parent.
-    _.each(this.params.activeAccessorData, accessor => {
-      const domain = this.model.getRangeFor(accessor.accessor, isFull)
-      domains[this.axisName] = domains[this.axisName].concat(domain)
-    })
-    domains[this.axisName] = d3.extent(domains[this.axisName])
-    this.params.handledAxisNames = _.keys(domains)
-    return domains
   }
 
   getScreenX (datum, xAccessor, yAccessor) {
@@ -79,7 +68,7 @@ class BarChartView extends XYChartSubView {
     this.params.axis[this.params.plot.x.axis].innerBandScale = innerBandScale
     // Render the flat data structure
     const svgBarGroups = this.d3
-      .selectAll('.bar')
+      .selectAll(this.selectors.node)
       .data(this._prepareData(), d => d.id)
     svgBarGroups.enter().append('rect')
       .attr('class', d => 'bar')
@@ -87,7 +76,7 @@ class BarChartView extends XYChartSubView {
       .attr('y', this.yScale.range()[0])
       .attr('height', 0)
       .attr('width', d => d.w)
-      .merge(svgBarGroups).transition().ease(d3.easeLinear).duration(this.params.duration)
+      .merge(svgBarGroups).transition().ease(d3Ease.easeLinear).duration(this.params.duration)
       .attr('fill', d => d.color)
       .attr('x', d => d.x)
       .attr('y', d => d.y)
@@ -98,7 +87,7 @@ class BarChartView extends XYChartSubView {
 
   _prepareData () {
     const flatData = []
-    const zeroValue = this.yScale.domain()[0]
+    const start = this.yScale.domain()[0]
     const innerBandScale = this.params.axis[this.params.plot.x.axis].innerBandScale
     const innerBandWidth = innerBandScale.bandwidth()
     _.each(this.model.data, d => {
@@ -109,9 +98,9 @@ class BarChartView extends XYChartSubView {
           id: x + '-' + key,
           x: this.xScale(x) + innerBandScale(j),
           y: this.yScale(d[key]),
-          h: this.yScale(zeroValue) - this.yScale(d[key]),
+          h: this.yScale(start) - this.yScale(d[key]),
           w: innerBandWidth,
-          color: this.getColor(accessor),
+          color: this.config.getColor(d, accessor),
           accessor: accessor,
           data: d,
         }
@@ -123,18 +112,12 @@ class BarChartView extends XYChartSubView {
 
   // Event handlers
 
-  _onMouseover (d, el) {
+  _onMousemove (d, el, event) {
     if (this.config.get('tooltipEnabled')) {
-      this._actionman.fire('ShowComponent', d.accessor.tooltip, {left: d.x, top: d.y}, d.data)
+      const [left, top] = d3.mouse(this._container)
+      this._actionman.fire('ShowComponent', d.accessor.tooltip, {left, top}, d.data)
     }
-    el.classList.add('active')
-  }
-
-  _onMouseout (d, el) {
-    if (this.config.get('tooltipEnabled')) {
-      this._actionman.fire('HideComponent', d.accessor.tooltip)
-    }
-    el.classList.remove('active')
+    el.classList.add(this.selectorClass('active'))
   }
 }
 

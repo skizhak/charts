@@ -2,11 +2,22 @@
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
 
-let data = require('fixture').simpleStatic
+const commons = require('commons')
+
+const length = 20
+const data = commons.fixture({
+  length: 20,
+  data: {
+    x: {linear: true, range: [0, length]},
+    a: {linear: true, range: [0, length * 3], gap: true},
+    b: {linear: true, range: [0, length * 5], repeat: true},
+    c: {linear: true, range: [0, length * 7]},
+  },
+})
 
 const complexChartView = new coCharts.charts.XYChartView()
 complexChartView.setConfig({
-  container: '#grouped-bar-chart',
+  id: 'grouped-bar-chart',
   components: [{
     id: 'grouped-bar-compositey',
     type: 'CompositeYChart',

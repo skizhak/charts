@@ -2,17 +2,20 @@
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
 
-/* global d3 */
-
-const pieData = [
-  {label: 'Disks In', value: 55},
-  {label: 'Disks Out', value: 6},
+const osdStatusData = [
   {label: 'Disks Up', value: 59},
   {label: 'Disks Down', value: 4}
 ]
 
-const formatter = require('formatter')
-const _c = require('constants')
+const osdClusterData = [
+  {label: 'Disks In', value: 55},
+  {label: 'Disks Out', value: 6}
+]
+
+const commons = require('commons')
+
+const formatter = commons.formatter
+const _c = commons._c
 
 const radialColorScheme6 = _c.radialColorScheme6
 
@@ -23,8 +26,9 @@ function getValue (serie) {
   return serie.value
 }
 
-const chartConfig = {
-  container: '#disk-donut-chart',
+const diskStatusConfig = {
+  id: 'disk-status-chart',
+  type: 'RadialChart',
   components: [{
     type: 'ControlPanel',
     config: {
@@ -33,12 +37,12 @@ const chartConfig = {
       }],
     }
   }, {
-    id: 'donut-chart',
+    id: 'donut-chart-1',
     type: 'PieChart',
     config: {
       type: 'donut',
-      radius: 150,
-      colorScale: d3.scaleOrdinal().range(radialColorScheme6), // eslint-disable-line no-undef
+      radius: 100,
+      colorScale: d3.scaleOrdinal().range(radialColorScheme6.slice(0, 2)), // eslint-disable-line no-undef
       serie: {
         getValue: getValue,
         getLabel: getLabel,
@@ -61,11 +65,59 @@ const chartConfig = {
   }, {
     type: 'LegendUniversal',
     config: {
-      sourceComponent: 'donut-chart',
+      sourceComponent: 'donut-chart-1',
     },
-  }
-  ]
+  }]
 }
-const chartView = new coCharts.charts.RadialChartView()
-chartView.setConfig(chartConfig)
-chartView.setData(pieData)
+
+const diskClusterConfig = {
+  id: 'disk-cluster-chart',
+  type: 'RadialChart',
+  components: [{
+    type: 'ControlPanel',
+    config: {
+      menu: [{
+        id: 'Refresh',
+      }],
+    }
+  }, {
+    id: 'donut-chart-2',
+    type: 'PieChart',
+    config: {
+      type: 'donut',
+      radius: 100,
+      colorScale: d3.scaleOrdinal().range(radialColorScheme6.slice(2)), // eslint-disable-line no-undef
+      serie: {
+        getValue: getValue,
+        getLabel: getLabel,
+        valueFormatter: formatter.commaGroupedInteger,
+      },
+      tooltip: 'tooltip-id',
+    }
+  }, {
+    id: 'tooltip-id',
+    type: 'Tooltip',
+    config: {
+      dataConfig: [
+        {
+          accessor: 'value',
+          labelFormatter: getLabel,
+          valueFormatter: formatter.commaGroupedInteger,
+        },
+      ],
+    },
+  }, {
+    type: 'LegendUniversal',
+    config: {
+      sourceComponent: 'donut-chart-2',
+    },
+  }]
+}
+
+const diskStatusChart = new coCharts.charts.RadialChartView()
+diskStatusChart.setConfig(diskStatusConfig)
+diskStatusChart.setData(osdStatusData)
+
+const diskClusterChart = new coCharts.charts.RadialChartView()
+diskClusterChart.setConfig(diskClusterConfig)
+diskClusterChart.setData(osdClusterData)

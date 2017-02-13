@@ -21,7 +21,7 @@ class ColorPickerConfigModel extends ContrailChartsConfigModel {
       return {
         accessor: accessor.accessor,
         label: this.getLabel(undefined, accessor),
-        color: this._parent.getColor(accessor),
+        color: this._parent.getColor([], accessor),
       }
     })
     return data

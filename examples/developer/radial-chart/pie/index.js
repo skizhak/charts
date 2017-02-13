@@ -2,7 +2,8 @@
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
 
-const formatter = require('formatter')
+const commons = require('commons')
+const formatter = commons.formatter
 
 const pieData = [
     { label: 'Process 1', value: 2704659 },
@@ -22,7 +23,8 @@ function getValue (serie) {
 }
 
 const chartConfig = {
-  container: '#donut-chart',
+  id: 'donut-chart',
+  title: 'Donut Chart',
   components: [{
     type: 'ControlPanel',
     config: {
@@ -48,6 +50,9 @@ const chartConfig = {
     id: 'tooltip-id',
     type: 'Tooltip',
     config: {
+      title: 'Process Info',
+      color: '#333',
+      backgroundColor: '#fafafa',
       dataConfig: [
         {
           accessor: 'value',

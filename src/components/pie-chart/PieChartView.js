@@ -1,9 +1,9 @@
-/*
- * Copyright (c) Juniper Networks, Inc. All rights reserved.
- */
+// Copyright (c) Juniper Networks, Inc. All rights reserved.
+
 require('./pie-chart.scss')
 const shape = require('d3-shape')
 const ContrailChartsView = require('contrail-charts-view')
+const TitleView = require('plugins/title/TitleView')
 
 class PieChartView extends ContrailChartsView {
   constructor (p = {}) {
@@ -15,10 +15,21 @@ class PieChartView extends ContrailChartsView {
   }
 
   get tagName () { return 'g' }
+  /**
+   * follow same naming convention for all charts
+   */
+  get selectors () {
+    return _.extend(super.selectors, {
+      node: '.arc',
+      active: '.active',
+      click: '.click'
+    })
+  }
   get events () {
     return {
-      'mouseover .arc': '_onMouseover',
-      'mouseout .arc': '_onMouseout',
+      [`mousemove ${this.selectors.node}`]: '_onMousemove',
+      [`mouseout ${this.selectors.node}`]: '_onMouseout',
+      [`click ${this.selectors.node}`]: '_onClick',
     }
   }
 
@@ -30,8 +41,10 @@ class PieChartView extends ContrailChartsView {
 
   render () {
     this.resetParams()
+    if (this.params.title) TitleView(this._container, this.params.title)
     this._calculateDimensions()
     super.render()
+    this._onMouseout()
     const serieConfig = this.config.get('serie')
     const radius = this.config.get('radius')
     const data = this.model.get('data')
@@ -42,18 +55,18 @@ class PieChartView extends ContrailChartsView {
 
     const stakes = shape.pie()
       .sort(null)
-      .value((d) => serieConfig.getValue(d))(data)
+      .value(d => serieConfig.getValue(d))(data)
 
     this.d3.attr('transform', `translate(${this.params.chartWidth / 2}, ${this.params.chartHeight / 2})`)
 
-    const sectors = this.d3.selectAll('.arc')
+    const sectors = this.d3.selectAll(this.selectors.node)
       .data(stakes, d => d.value)
 
     sectors
       .enter().append('path')
       .classed('arc', true)
       .attr('d', arc)
-      .style('fill', (d) => this.config.getColor(serieConfig.getLabel(d.data)))
+      .style('fill', d => this.config.getColor([], serieConfig.getLabel(d.data)))
     sectors.exit().remove()
 
     this._ticking = false
@@ -72,29 +85,30 @@ class PieChartView extends ContrailChartsView {
     // TODO: use the 'axis' param to compute additional margins for the axis
   }
 
-  // Event handlers
-
-  _onMouseover (sector, el) {
-    const serieConfig = this.config.get('serie')
-    const outerRadius = this.config.get('radius')
-    const innerRadius = this.config.innerRadius
-    const arc = shape.arc(sector).innerRadius(innerRadius).outerRadius(outerRadius)
-    const labelPos = arc.centroid(sector)
-
-    el.classList.add('highlight')
-
-    const tooltipOffset = {
-      left: this.params.chartWidth / 2 + labelPos[0],
-      top: this.params.chartHeight / 2 + labelPos[1]
+  _onMousemove (d, el, event) {
+    const [left, top] = d3.mouse(this._container)
+    const onClickCursor = this.config.get('onClickCursor')
+    if (onClickCursor) {
+      d3.select(el)
+        .classed(this.selectorClass('click'), true)
+        .style('cursor', () => (typeof (onClickCursor) === 'boolean') ? 'pointer' : onClickCursor)
     }
 
-    sector.data.color = this.config.getColor(serieConfig.getLabel(sector.data))
-    this._actionman.fire('ShowComponent', this.config.get('tooltip'), tooltipOffset, sector.data)
+    el.classList.add(this.selectorClass('active'))
+    this._actionman.fire('ShowComponent', this.config.get('tooltip'), {left, top}, d.data)
   }
 
   _onMouseout (d, el) {
-    el.classList.remove('highlight')
+    if (this.config.get('onClickCursor') && el) el.classList.remove(this.selectorClass('click'))
+
     this._actionman.fire('HideComponent', this.config.get('tooltip'))
+    const els = el ? [el] : document.querySelectorAll(this.selectors.node)
+    _.each(els, el => el.classList.remove(this.selectorClass('active')))
+  }
+
+  _onClick (d, el) {
+    el.classList.remove(this.selectorClass('active'))
+    this._actionman.fire('OnClick', d.data, el, this.config.get('onClick'))
   }
 }
 

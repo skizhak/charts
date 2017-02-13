@@ -1,20 +1,18 @@
 /*
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
-const _ = require('lodash')
 const Action = require('../plugins/Action')
 
 class ChangeSelection extends Action {
   constructor (p) {
     super(p)
     this._deny = false
+    this._triggerAll = true
   }
 
-  _execute (dataProvider) {
+  _execute (dataProvider, changeSelectionHandler) {
     const chart = this._registrar
-    _.each(chart.getComponentsByType('CompositeYChart'), (compositeY) => {
-      compositeY.changeModel(dataProvider)
-    })
+    changeSelectionHandler(dataProvider, chart)
   }
 }
 

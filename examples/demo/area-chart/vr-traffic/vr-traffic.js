@@ -2,10 +2,13 @@
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
 
-const _ = require('lodash')
-const formatter = require('formatter')
-const _c = require('constants')
-const lbColorScheme7 = _c.lbColorScheme7
+const commons = require('commons')
+
+const _ = commons._
+const formatter = commons.formatter
+const _c = commons._c
+
+const lbColorScheme7 = _c.d3ColorScheme20
 
 function dataProcesser (rawData) {
   const keyMapper = {
@@ -62,8 +65,7 @@ const colorPalette = generateColorPalette(
   ['sum_bytes', 'sum_packets'],
   lbColorScheme7,
   1,
-  2,
-  1
+  2
 )
 
 const mainChartPlotYConfig = _.reduce(dataProcessed.nodeIds, (config, nodeId, idx) => {
@@ -77,11 +79,12 @@ const mainChartPlotYConfig = _.reduce(dataProcessed.nodeIds, (config, nodeId, id
   }, {
     accessor: `${nodeId}.sum_packets`,
     label: `Sum(Packets) ${nodeId}`,
-    enabled: false,
+    enabled: true,
     chart: 'LineChart',
     color: colorPalette[`${nodeId}.sum_packets`],
     axis: 'y2',
   })
+
   return config
 }, [])
 
@@ -89,15 +92,13 @@ const navPlotYConfig = _.reduce(dataProcessed.nodeIds, (config, nodeId, idx) => 
   config.push({
     enabled: true,
     accessor: `${nodeId}.sum_bytes`,
-    // labelFormatter: 'Sum(Bytes)',
     chart: 'AreaChart',
     color: colorPalette[`${nodeId}.sum_bytes`],
     axis: 'y1',
   }, {
-    enabled: false,
-    accessor: `${nodeId}.sum_packet`,
-    // labelFormatter: 'Sum(Packets)',
-    chart: 'StackedBarChart',
+    enabled: true,
+    accessor: `${nodeId}.sum_packets`,
+    chart: 'LineChart',
     color: colorPalette[`${nodeId}.sum_packets`],
     axis: 'y2',
   })
@@ -126,7 +127,7 @@ const tooltipDataConfig = _.reduce(dataProcessed.nodeIds, (config, nodeId) => {
 // Create chart view.
 const trafficView = new coCharts.charts.XYChartView()
 trafficView.setConfig({
-  container: '#vr-traffic',
+  id: 'vr-traffic',
   components: [{
     type: 'LegendPanel',
     config: {
@@ -147,9 +148,12 @@ trafficView.setConfig({
       marginLeft: 80,
       marginRight: 80,
       marginBottom: 40,
-      chartHeight: 600,
+      chartHeight: 400,
       crosshair: 'crosshair-id',
-      possibleChartTypes: ['AreaChart', 'LineChart'],
+      possibleChartTypes: {
+        y1: ['AreaChart', 'LineChart'],
+        y2: ['AreaChart', 'LineChart']
+      },
       plot: {
         x: {
           accessor: 'T',
@@ -240,11 +244,6 @@ trafficView.setConfig({
       ]
     }
   }, {
-    type: 'Standalone',
-    config: {
-      isSharedContainer: false,
-    },
-  }, {
     id: 'vrTrafficMessage',
     type: 'Message',
     config: {
@@ -260,10 +259,10 @@ trafficView.setConfig({
 })
 trafficView.setData(dataProcessed.data)
 trafficView.renderMessage({
-  componentId: 'XYChart',
+  componentId: 'vr-traffic-compositey',
   action: 'once',
   messages: [{
-    level: 'info',
+    level: '',
     title: '',
     message: 'Loading ...',
   }]

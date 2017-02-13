@@ -42,6 +42,11 @@ const devLBExamples = [
     html: 'linebar-chart/requirejs/requirejs.html',
     js: ['linebar-chart/requirejs/requirejs-config.js', 'linebar-chart/requirejs/app/example.js'],
     title: 'RequireJS',
+  },
+  {
+    html: 'linebar-chart/live/index.html',
+    js: 'linebar-chart/live/index.js',
+    title: 'Live Data',
   }
 ]
 
@@ -76,62 +81,72 @@ const devAreaExamples = [
   }
 ]
 
-const devAdvanceExamples = [
+const devGroupedExamples = [
   {
     html: 'grouped-chart/linebar-linebar-nav/index.html',
     js: 'grouped-chart/linebar-linebar-nav/index.js',
     css: 'grouped-chart/linebar-linebar-nav/index.css',
-    title: 'Grouped',
+    title: '2 Bar Nav',
+  },
+  {
+    html: 'grouped-chart/linebar-pie-nav/index.html',
+    js: 'grouped-chart/linebar-pe-nav/index.js',
+    css: 'grouped-chart/linebar-pie-nav/index.css',
+    title: '2 LineBar 1 Pie Nav',
   }
 ]
 
 const $lineBarLinks = $('#lineBarLinks')
 devLBExamples.forEach(
-    (example, idx) => {
-      let $link = $(`<a id="lb${idx}" href="#${idx}"><span class="nav-text">${example.title}</span></a>`)
-      $link.click(onClickLBChart)
-      $lineBarLinks.append($('<li>').append($link))
-    }
+  (example, idx) => {
+    let $link = $(`<a id="lb${idx}" href="#${idx}"><span class="nav-text">${example.title}</span></a>`)
+    $link.click(onClickLBChart)
+    $lineBarLinks.append($('<li>').append($link))
+  }
 )
 
 const $bubbleLinks = $('#bubbleLinks')
 devBubbleExamples.forEach(
-    (example, idx) => {
-      let $link = $(`<a href="#${idx}"><span class="nav-text">${example.title}</span></a>`)
-      $link.click(onClickBubbleChart)
-      $bubbleLinks.append($('<li>').append($link))
-    }
+  (example, idx) => {
+    let $link = $(`<a href="#${idx}"><span class="nav-text">${example.title}</span></a>`)
+    $link.click(onClickBubbleChart)
+    $bubbleLinks.append($('<li>').append($link))
+  }
 )
 
 const $areaLinks = $('#areaLinks')
 devAreaExamples.forEach(
-    (example, idx) => {
-      let $link = $(`<a href="#${idx}"><span class="nav-text">${example.title}</span></a>`)
-      $link.click(onClickAreaChart)
-      $areaLinks.append($('<li>').append($link))
-    }
+  (example, idx) => {
+    let $link = $(`<a href="#${idx}"><span class="nav-text">${example.title}</span></a>`)
+    $link.click(onClickAreaChart)
+    $areaLinks.append($('<li>').append($link))
+  }
 )
 
 const $radialLinks = $('#radialLinks')
 devRadialExamples.forEach(
-    (example, idx) => {
-      let $link = $(`<a href="#${idx}"><span class="nav-text">${example.title}</span></a>`)
-      $link.click(onClickRadialChart)
-      $radialLinks.append($('<li>').append($link))
-    }
+  (example, idx) => {
+    let $link = $(`<a href="#${idx}"><span class="nav-text">${example.title}</span></a>`)
+    $link.click(onClickRadialChart)
+    $radialLinks.append($('<li>').append($link))
+  }
 )
 
-const $advanceLinks = $('#advanceLinks')
-devAdvanceExamples.forEach(
-    (example, idx) => {
-      let $link = $(`<a href="#${idx}"><span class="nav-text">${example.title}</span></a>`)
-      $link.click(onClickAdvanceChart)
-      $advanceLinks.append($('<li>').append($link))
-    }
+const $groupedLinks = $('#groupedLinks')
+devGroupedExamples.forEach(
+  (example, idx) => {
+    let $link = $(`<a id="g${idx}" href="#${idx}"><span class="nav-text">${example.title}</span></a>`)
+    $link.click(onClickGroupedChart)
+    $groupedLinks.append($('<li>').append($link))
+  }
 )
 
-$('#linebar').click()
-$lineBarLinks.find('#lb0').click()
+$('#grouped').click()
+$groupedLinks.find('#g0').click()
+
+$('#demo-link').click(function () {
+  window.open('demo.html', '_self', false)
+})
 
 function onClickLBChart (e) {
   const index = $(this).attr('href').split('#')[1]
@@ -153,9 +168,9 @@ function onClickRadialChart (e) {
   onClickSidebar(index, devRadialExamples)
 }
 
-function onClickAdvanceChart (e) {
+function onClickGroupedChart (e) {
   const index = $(this).attr('href').split('#')[1]
-  onClickSidebar(index, devAdvanceExamples)
+  onClickSidebar(index, devGroupedExamples)
 }
 
 function createNewTab (id, title, group = 'js-files', checked, content) {
@@ -176,8 +191,8 @@ function reformatHTMLToShow (rawHTML) {
   }
 
   return _.escape(rawHTML.replace(/\n/gm, newlineMarker))
-        .replace(regex.indentation, (match) => match.replace(/\s/gm, '&nbsp;'))
-        .replace(regex.recoverNewline, '<br/>')
+    .replace(regex.indentation, (match) => match.replace(/\s/gm, '&nbsp;'))
+    .replace(regex.recoverNewline, '<br/>')
 }
 
 function onClickSidebar (index, exampleArray) {
@@ -185,23 +200,23 @@ function onClickSidebar (index, exampleArray) {
   const {rawHTML, rawJS, rawCSS} = exampleArray[index]
   $('#outputView').find('.output-demo-iframe').attr('src', `./developer/${example.html}`)
 
-    /*
-     const tabCollections = Object.keys(rawJS)
-     .reduce((tabsHTML, currentJSFile, idx) => {
-     tabsHTML.push(
-     createNewTab(
-     'jsFile-' + idx,
-     currentJSFile,
-     undefined,
-     idx === 0 ? 'checked' : '',
-     reformatHTMLToShow(rawJS[currentJSFile])
-     )
-     )
-     return tabsHTML
-     }, []).join('')
+  /*
+   const tabCollections = Object.keys(rawJS)
+   .reduce((tabsHTML, currentJSFile, idx) => {
+   tabsHTML.push(
+   createNewTab(
+   'jsFile-' + idx,
+   currentJSFile,
+   undefined,
+   idx === 0 ? 'checked' : '',
+   reformatHTMLToShow(rawJS[currentJSFile])
+   )
+   )
+   return tabsHTML
+   }, []).join('')
 
-     $('#htmlContent').html(reformatHTMLToShow(rawHTML))
-     $('#cssContent').html(reformatHTMLToShow(rawCSS))
-     $('#jsContent').html(`<div class="tabs">${tabCollections}</div>`)
-     */
+   $('#htmlContent').html(reformatHTMLToShow(rawHTML))
+   $('#cssContent').html(reformatHTMLToShow(rawCSS))
+   $('#jsContent').html(`<div class="tabs">${tabCollections}</div>`)
+   */
 }

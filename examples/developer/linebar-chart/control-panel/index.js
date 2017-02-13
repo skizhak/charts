@@ -2,7 +2,9 @@
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
 
-const formatter = require('formatter')
+const commons = require('commons')
+
+const formatter = commons.formatter
 
 // Complex example
 const complexData = []
@@ -19,7 +21,7 @@ for (let i = 0; i < 100; i++) {
 }
 const complexChartView = new coCharts.charts.XYChartView()
 complexChartView.setConfig({
-  container: '#chart-control-panel',
+  id: 'chart-control-panel',
   components: [{
     id: 'control-panel-id',
     type: 'ControlPanel',

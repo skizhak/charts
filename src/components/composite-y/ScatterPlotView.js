@@ -9,39 +9,32 @@ const XYChartSubView = require('components/composite-y/XYChartSubView')
 
 class ScatterPlotView extends XYChartSubView {
   get zIndex () { return 1 }
+  /**
+   * follow same naming convention for all XY chart sub views
+   */
+  get selectors () {
+    return _.extend(super.selectors, {
+      node: '.point',
+    })
+  }
 
   get events () {
     return {
-      'mouseover .point': '_onMouseover',
-      'mouseout .point': '_onMouseout',
+      [`mouseover ${this.selectors.node}`]: '_onMouseover',
+      [`mouseout ${this.selectors.node}`]: '_onMouseout',
     }
   }
   /**
-  * Called by the parent in order to calculate maximum data extents for all of this child's axis.
-  * Assumes the params.activeAccessorData for this child view is filled by the parent with the relevant yAccessors for this child only.
-  * Returns an object with following structure: { y1: [0,10], x: [-10,10] }
-  */
-  calculateAxisDomains () {
-    const domains = {}
-    let isFull = false
-    if (this.model.data.length < 2) isFull = true
-    domains[this.params.plot.x.axis] = this.model.getRangeFor(this.params.plot.x.accessor, isFull)
-    domains[this.axisName] = []
-    // The domains calculated here can be overriden in the axis configuration.
-    // The overrides are handled by the parent.
-    _.each(this.params.activeAccessorData, accessor => {
-      let domain = this.model.getRangeFor(accessor.accessor, isFull)
-      if (domain[0] === domain[1]) {
-        isFull = true
-        domain = this.model.getRangeFor(accessor.accessor, isFull)
-      }
-      domains[this.axisName] = domains[this.axisName].concat(domain)
-      if (accessor.sizeAccessor && accessor.shape && accessor.sizeAxis) {
-        if (!domains[accessor.sizeAxis]) {
-          domains[accessor.sizeAxis] = []
-        }
-        domains[accessor.sizeAxis] = domains[accessor.sizeAxis].concat(this.model.getRangeFor(accessor.sizeAccessor, isFull))
-      }
+   * @return {Object} like:  y1: [0,10], x: [-10,10]
+   */
+  combineDomains () {
+    const domains = super.combineDomains()
+    const accessorsBySizeAxis = _.groupBy(this.params.activeAccessorData, 'sizeAxis')
+    _.each(accessorsBySizeAxis, (accessors, axis) => {
+      const validAccessors = _.filter(accessors, a => a.sizeAccessor && a.shape)
+      const validAccessorNames = _.map(validAccessors, 'sizeAccessor')
+
+      domains[axis] = this.model.combineDomains(validAccessorNames)
     })
     return domains
   }
@@ -49,13 +42,14 @@ class ScatterPlotView extends XYChartSubView {
   render () {
     super.render()
 
-    let points = this.d3.selectAll('.point')
+    let points = this.d3.selectAll(this.selectors.node)
       .data(this._prepareData(), d => d.id)
 
     points.enter()
       .append('text')
       .classed('point', true)
       .attr('transform', d => `translate(${d.x},${d.y})`)
+      .merge(points)
       .html(d => d.shape)
       .attr('fill', d => d.color)
       .style('font-size', d => Math.sqrt(d.area))
@@ -85,7 +79,7 @@ class ScatterPlotView extends XYChartSubView {
             y: this.yScale(y),
             shape: accessor.shape,
             area: sizeScale(d[accessor.sizeAccessor]),
-            color: this.getColor(accessor),
+            color: this.config.getColor(d, accessor),
             accessor: accessor,
             data: d,
           }
@@ -98,23 +92,12 @@ class ScatterPlotView extends XYChartSubView {
 
   // Event handlers
 
-  _onMouseover (d, el) {
+  _onMouseover (d, el, event) {
     if (this.config.get('tooltipEnabled')) {
-      this.d3.select(() => el).classed('active', true)
-      const offset = {
-        left: d.x,
-        top: d.y,
-      }
-      this._actionman.fire('ShowComponent', d.accessor.tooltip, offset, d.data)
+      const [left, top] = d3.mouse(this._container)
+      this._actionman.fire('ShowComponent', d.accessor.tooltip, {left, top}, d.data)
     }
-  }
-
-  _onMouseout (d, el) {
-    if (this.config.get('tooltipEnabled')) {
-      this.d3.select(() => el)
-        .classed('active', false)
-      this._actionman.fire('HideComponent', d.accessor.tooltip)
-    }
+    el.classList.add(this.selectorClass('active'))
   }
 }
 

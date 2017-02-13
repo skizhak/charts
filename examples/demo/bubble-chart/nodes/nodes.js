@@ -2,12 +2,14 @@
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
 
-const _ = require('lodash')
-const formatter = require('formatter')
-const _c = require('constants')
+const commons = require('commons')
+
+const _ = commons._
+const formatter = commons.formatter
+const _c = commons._c
 
 const bubbleShapes = _c.bubbleShapes
-const colorScheme = _c.bubbleColorScheme6
+const colorScheme = _c.bubbleColorScheme13
 
 const simpleData = []
 const nodes = {
@@ -26,7 +28,7 @@ let data = {}
 for (var n in nodes) {
   count = nodes[n]
   for (let i = 0; i < count; i++) {
-    cpu = _.random(0, (i < .7 * count) ? 30 : ((i < .8 * count) ? 80 : 100))
+    cpu = _.random(0, (i < 0.7 * count) ? 30 : ((i < 0.8 * count) ? 80 : 100))
     data = {
       cpu: cpu,
       size: Math.random() * 10
@@ -37,12 +39,12 @@ for (var n in nodes) {
 }
 
 const chartConfig = {
-  container: '#nodes-bubble-chart',
+  id: 'nodes-bubble-chart',
   components: [{
     type: 'LegendPanel',
     config: {
       sourceComponent: 'scatter-plot',
-      palette: _c.bubbleColorScheme14,
+      palette: colorScheme,
       editable: {
         colorSelector: true,
         chartSelector: false
@@ -58,6 +60,7 @@ const chartConfig = {
       marginLeft: 80,
       marginRight: 80,
       marginBottom: 40,
+      chartHeight: 400,
       plot: {
         x: {
           accessor: 'cpu',
@@ -74,7 +77,7 @@ const chartConfig = {
             sizeAxis: 'sizeAxis',
             shape: bubbleShapes.certificate,
             axis: 'y1',
-            color: colorScheme[0],
+            color: colorScheme[7],
             tooltip: 'tooltip-id',
           },
           {
@@ -86,7 +89,7 @@ const chartConfig = {
             sizeAxis: 'sizeAxis',
             shape: bubbleShapes.dotCircle,
             axis: 'y1',
-            color: colorScheme[1],
+            color: colorScheme[6],
             tooltip: 'tooltip-id',
           },
           {
@@ -110,7 +113,7 @@ const chartConfig = {
             sizeAxis: 'sizeAxis',
             shape: bubbleShapes.dashboard,
             axis: 'y1',
-            color: colorScheme[3],
+            color: colorScheme[1],
             tooltip: 'tooltip-id',
           },
           {
@@ -122,7 +125,7 @@ const chartConfig = {
             sizeAxis: 'sizeAxis',
             shape: bubbleShapes.db,
             axis: 'y1',
-            color: colorScheme[4],
+            color: colorScheme[0],
             tooltip: 'tooltip-id',
           },
           {
@@ -134,7 +137,7 @@ const chartConfig = {
             sizeAxis: 'sizeAxis',
             shape: bubbleShapes.desktop,
             axis: 'y1',
-            color: colorScheme[5],
+            color: colorScheme[4],
             tooltip: 'tooltip-id',
           }
         ]
@@ -173,7 +176,7 @@ const chartConfig = {
             let memory = '-'
 
             for (var i in nodes) {
-              if(point[nodes[i]]) {
+              if (point[nodes[i]]) {
                 memory = formatter.byteFormatter(point[nodes[i]])
                 break
               }
@@ -190,8 +193,7 @@ const chartConfig = {
       marginInner: 10,
       marginLeft: 80,
       marginRight: 80,
-      marginBottom: 40,
-      chartHeight: 200,
+      chartHeight: 250,
       selection: [0, 100],
       plot: {
         x: {
@@ -208,7 +210,7 @@ const chartConfig = {
             sizeAccessor: 'size',
             sizeAxis: 'sizeAxis',
             shape: bubbleShapes.certificate,
-            color: colorScheme[0]
+            color: colorScheme[7]
           },
           {
             enabled: true,
@@ -218,7 +220,7 @@ const chartConfig = {
             sizeAccessor: 'size',
             sizeAxis: 'sizeAxis',
             shape: bubbleShapes.dotCircle,
-            color: colorScheme[1]
+            color: colorScheme[6]
           },
           {
             enabled: true,
@@ -238,7 +240,7 @@ const chartConfig = {
             sizeAccessor: 'size',
             sizeAxis: 'sizeAxis',
             shape: bubbleShapes.dashboard,
-            color: colorScheme[3]
+            color: colorScheme[1]
           },
           {
             enabled: true,
@@ -248,7 +250,7 @@ const chartConfig = {
             sizeAccessor: 'size',
             sizeAxis: 'sizeAxis',
             shape: bubbleShapes.db,
-            color: colorScheme[4]
+            color: colorScheme[0]
           },
           {
             enabled: true,
@@ -258,7 +260,7 @@ const chartConfig = {
             sizeAccessor: 'size',
             sizeAxis: 'sizeAxis',
             shape: bubbleShapes.desktop,
-            color: colorScheme[5]
+            color: colorScheme[4]
           }
         ]
       },

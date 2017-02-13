@@ -2,7 +2,8 @@
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
 
-const formatter = require('formatter')
+const commons = require('commons')
+const formatter = commons.formatter
 
 // Complex example
 const complexData = []
@@ -19,7 +20,7 @@ for (let i = 0; i < 100; i++) {
 }
 const complexChartView = new coCharts.charts.XYChartView()
 complexChartView.setConfig({
-  container: '#timeline-chart',
+  id: 'timeline-chart',
   components: [{
     id: 'timeline-compositey',
     type: 'CompositeYChart',
@@ -29,6 +30,32 @@ complexChartView.setConfig({
       marginRight: 80,
       marginBottom: 40,
       chartHeight: 600,
+      possibleChartTypes: {
+        y1: [
+          {
+            label: 'Stacked Bar',
+            chart: 'StackedBar'
+          }, {
+            label: 'Bar',
+            chart: 'BarChart'
+          }, {
+            label: 'Line',
+            chart: 'LineChart'
+          }
+        ],
+        y2: [
+          {
+            label: 'Stacked Bar',
+            chart: 'StackedBar'
+          }, {
+            label: 'Bar',
+            chart: 'BarChart'
+          }, {
+            label: 'Line',
+            chart: 'LineChart'
+          }
+        ]
+      },
       plot: {
         x: {
           accessor: 'x',
@@ -41,18 +68,6 @@ complexChartView.setConfig({
             labelFormatter: 'Label A',
             enabled: true,
             chart: 'stackedBar',
-            possibleChartTypes: [
-              {
-                label: 'Stacked Bar',
-                chart: 'StackedBar'
-              }, {
-                label: 'Bar',
-                chart: 'BarChart'
-              }, {
-                label: 'Line',
-                chart: 'LineChart'
-              }
-            ],
             axis: 'y1',
           },
           {
@@ -60,18 +75,6 @@ complexChartView.setConfig({
             labelFormatter: 'Label B',
             enabled: true,
             chart: 'stackedBarChart',
-            possibleChartTypes: [
-              {
-                label: 'Stacked Bar',
-                chart: 'StackedBarChart'
-              }, {
-                label: 'Bar',
-                chart: 'BarChart'
-              }, {
-                label: 'Line',
-                chart: 'LineChart'
-              }
-            ],
             axis: 'y1',
           },
           {
@@ -79,18 +82,6 @@ complexChartView.setConfig({
             labelFormatter: 'Label C',
             enabled: false,
             chart: 'StackedBar',
-            possibleChartTypes: [
-              {
-                label: 'Stacked Bar',
-                chart: 'StackedBarChart'
-              }, {
-                label: 'Bar',
-                chart: 'BarChart'
-              }, {
-                label: 'Line',
-                chart: 'LineChart'
-              }
-            ],
             axis: 'y1',
           },
           {
@@ -99,18 +90,6 @@ complexChartView.setConfig({
             color: '#d62728',
             enabled: true,
             chart: 'LineChart',
-            possibleChartTypes: [
-              {
-                label: 'Stacked Bar',
-                chart: 'StackedBarChart',
-              }, {
-                label: 'Bar',
-                chart: 'BarChart'
-              }, {
-                label: 'Line',
-                chart: 'LineChart'
-              }
-            ],
             axis: 'y2',
           },
           {
@@ -119,18 +98,6 @@ complexChartView.setConfig({
             color: '#9467bd',
             enabled: true,
             chart: 'LineChart',
-            possibleChartTypes: [
-              {
-                label: 'Stacked Bar',
-                chart: 'StackedBarChart'
-              }, {
-                label: 'Bar',
-                chart: 'BarChart'
-              }, {
-                label: 'Line',
-                chart: 'LineChart'
-              }
-            ],
             axis: 'y2',
           }
         ]

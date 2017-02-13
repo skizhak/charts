@@ -1,9 +1,8 @@
-/*
- * Copyright (c) Juniper Networks, Inc. All rights reserved.
- */
+// Copyright (c) Juniper Networks, Inc. All rights reserved.
 
 require('./tooltip.scss')
 const ContrailChartsView = require('contrail-charts-view')
+const TitleView = require('plugins/title/TitleView')
 const _template = require('./tooltip.html')
 
 class TooltipView extends ContrailChartsView {
@@ -13,37 +12,43 @@ class TooltipView extends ContrailChartsView {
     this.config.container = p.container
     this.listenTo(this.config, 'change', this.resetParams)
   }
-
-  show (offset, data) {
+  /**
+   * @param {Object} position relative to container: top, left in pixels
+   * @param {Object} data to display
+   */
+  show (position, data) {
     this._loadTemplate(data)
-    this.$el.show()
+    this.d3.classed('active', true)
 
-    // Tooltip dimensions will be available after render.
-    const tooltipWidth = this.$el.outerWidth()
-    const containerWidth = this.config.container.offsetWidth
-    const containerHeight = this.config.container.offsetHeight // eslint-disable-line
+    const width = this.el.offsetWidth
+    const height = this.el.offsetHeight
+    const containerWidth = this._container.offsetWidth
 
-    const tooltipPositionTop = offset.top < 0 ? 0 : offset.top
-    let tooltipPositionLeft = offset.left
+    let left = position.left - width / 2
+    let top = position.top - height - 10
 
-    if ((offset.left + tooltipWidth) > containerWidth) {
-      tooltipPositionLeft = offset.left - tooltipWidth
-    }
+    if (top < 0) top = position.top + 10
+    if (left + width > containerWidth) {
+      left = containerWidth - width
+    } else if (left < 0) left = 0
 
-    this.$el.css({
-      top: tooltipPositionTop,
-      left: tooltipPositionLeft,
-      height: offset.height
-    })
+    this.el.style.top = `${top}px`
+    this.el.style.left = `${left}px`
+    this.el.style.height = `${position.height}px`
   }
 
   hide () {
-    this.$el.hide()
+    this.d3.classed('active', false)
   }
 
   _loadTemplate (data) {
     const template = this.config.get('template') || _template
-    super.render(template(this.config.getFormattedData(data)))
+    const tooltipContent = this.config.getFormattedData(data)
+    super.render(template(tooltipContent))
+    // Todo Discuss if title needs to be handled via TitleView or using the tooltip template itself.
+    if (tooltipContent.title) {
+      TitleView(this.d3.select('.tooltip-content').node(), tooltipContent.title)
+    }
   }
 }
 

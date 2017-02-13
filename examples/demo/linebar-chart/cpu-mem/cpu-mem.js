@@ -2,9 +2,11 @@
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
 
-const _ = require('lodash')
-const formatter = require('formatter')
-const _c = require('constants')
+const commons = require('commons')
+
+const _ = commons._
+const formatter = commons.formatter
+const _c = commons._c
 
 const lbColorScheme7 = _c.lbColorScheme7
 
@@ -79,7 +81,7 @@ const mainChartPlotYConfig = _.reduce(dataProcessed.nodeIds, (config, nodeId, id
   }, {
     accessor: `${nodeId}.mem_res`,
     label: `${nodeId} Memory Usage`,
-    enabled: false,
+    enabled: true,
     chart: 'LineChart',
     color: colorPalette[`${nodeId}.mem_res`],
     axis: 'y2',
@@ -96,7 +98,7 @@ const navPlotYConfig = _.reduce(dataProcessed.nodeIds, (config, nodeId, idx) => 
     color: colorPalette[`${nodeId}.cpu_share`],
     axis: 'y1',
   }, {
-    enabled: false,
+    enabled: true,
     accessor: `${nodeId}.mem_res`,
     // labelFormatter: 'Memory Usage',
     chart: 'LineChart',
@@ -128,7 +130,7 @@ const tooltipDataConfig = _.reduce(dataProcessed.nodeIds, (config, nodeId) => {
 // Create chart view.
 const cpuMemChartView = new coCharts.charts.XYChartView()
 cpuMemChartView.setConfig({
-  container: '#cpu-mem-chart',
+  id: 'cpu-mem-chart',
   components: [{
     type: 'LegendPanel',
     config: {
@@ -149,9 +151,12 @@ cpuMemChartView.setConfig({
       marginLeft: 80,
       marginRight: 80,
       marginBottom: 40,
-      chartHeight: 600,
+      chartHeight: 400,
       crosshair: 'crosshair-id',
-      possibleChartTypes: ['BarChart', 'LineChart'],
+      possibleChartTypes: {
+        y1: ['BarChart', 'LineChart'],
+        y2: ['LineChart']
+      },
       plot: {
         x: {
           accessor: 'T',
@@ -242,15 +247,11 @@ cpuMemChartView.setConfig({
       ]
     }
   }, {
-    type: 'Standalone',
-    config: {
-      isSharedContainer: false,
-    },
-  }, {
     id: 'cpu-mem-message',
     type: 'Message',
     config: {
       enabled: true,
+
     }
   }, {
     id: 'crosshair-id',
@@ -261,11 +262,12 @@ cpuMemChartView.setConfig({
   }]
 })
 cpuMemChartView.setData(dataProcessed.data)
+
 cpuMemChartView.renderMessage({
-  componentId: 'XYChart',
+  componentId: 'cpu-mem-compositey',
   action: 'once',
   messages: [{
-    level: 'info',
+    level: '',
     title: '',
     message: 'Loading ...',
   }]

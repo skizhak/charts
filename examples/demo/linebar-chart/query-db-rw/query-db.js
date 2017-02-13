@@ -2,25 +2,15 @@
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
 
-const _ = require('lodash')
-const formatter = require('formatter')
-const _c = require('constants')
+const commons = require('commons')
 
-// Complex example
-const simpleData = []
+const _ = commons._
+const formatter = commons.formatter
+const _c = commons._c
 
-for (let i = 0; i < 100; i++) {
-  const a = Math.random() * 10000
-  simpleData.push({
-    x: 1475760930000 + 1000000 * i,
-    a: a,
-    b: _.random(a, a + 1000),
-    c: Math.ceil(Math.random() * 100),
-  })
-}
-const complexChartView = new coCharts.charts.XYChartView()
-complexChartView.setConfig({
-  container: '#query-db-chart',
+const queryChart = new coCharts.charts.XYChartView()
+queryChart.setConfig({
+  id: 'query-db-chart',
   components: [{
     type: 'LegendPanel',
     config: {
@@ -34,23 +24,16 @@ complexChartView.setConfig({
       filter: true,
     },
   }, {
-    type: 'ControlPanel',
-    config: {
-      menu: [
-        {id: 'Refresh'},
-      ],
-    },
-  }, {
     id: 'query-db-compositey',
     type: 'CompositeYChart',
     config: {
-      marginInner: 10,
       marginLeft: 80,
       marginRight: 80,
-      marginBottom: 40,
-      chartHeight: 600,
-      crosshair: 'crosshair-id',
-      possibleChartTypes: ['BarChart', 'StackedBarChart', 'LineChart'],
+      chartHeight: 400,
+      possibleChartTypes: {
+        y1: ['StackedBarChart', 'LineChart'],
+        y2: ['LineChart']
+      },
       plot: {
         x: {
           accessor: 'x',
@@ -63,22 +46,19 @@ complexChartView.setConfig({
             labelFormatter: 'DB Read',
             enabled: true,
             chart: 'StackedBarChart',
-            axis: 'y1',
-            tooltip: 'default-tooltip',
+            axis: 'y1'
           }, {
             accessor: 'b',
             labelFormatter: 'DB Write',
             enabled: true,
             chart: 'StackedBarChart',
             axis: 'y1',
-            tooltip: 'custom-tooltip',
           }, {
             accessor: 'c',
             labelFormatter: 'QE Queries',
             enabled: true,
             chart: 'LineChart',
-            axis: 'y2',
-            tooltip: 'default-tooltip',
+            axis: 'y2'
           }
         ]
       },
@@ -100,10 +80,8 @@ complexChartView.setConfig({
   }, {
     type: 'Navigation',
     config: {
-      marginInner: 10,
       marginLeft: 80,
       marginRight: 80,
-      marginBottom: 40,
       chartHeight: 200,
       selection: [75, 100],
       plot: {
@@ -195,21 +173,59 @@ complexChartView.setConfig({
     }
   }]
 })
-complexChartView.setData(simpleData)
-complexChartView.renderMessage({
-  componentId: 'XYChart',
+
+let simpleData = []
+let now = _.now()
+
+for (let i = 0; i < 100; i++) {
+  simpleData.push(getDataPoint(now - ((100 - i) * 1000)))
+}
+
+queryChart.setData(simpleData)
+
+queryChart.renderMessage({
+  componentId: 'query-db-compositey',
   action: 'once',
   messages: [{
     level: 'info',
-    title: 'Message 1',
-    message: 'This is an example message. It will disapear after 5 seconds.'
+    title: 'Information',
+    message: 'Chart has been loaded successfully.'
+  }, {
+    level: 'warn',
+    title: 'Warning',
+    message: 'This is an example of warning message. '
   }, {
     level: 'error',
-    title: 'A Fatal Error',
-    message: 'This is an error.'
-  }, {
-    level: 'info',
-    title: 'Message 2',
-    message: 'This is another example message.'
+    title: 'Error',
+    message: 'This is an example of error message.'
   }]
 })
+
+let runner = null
+onVisibilityChange()
+function run () {
+  now += 1000
+  simpleData.splice(0, 1)
+  simpleData = simpleData.concat([getDataPoint(now)])
+  queryChart.setData(simpleData)
+}
+
+function onVisibilityChange () {
+  if (document.hidden) {
+    clearInterval(runner)
+  } else {
+    runner = setInterval(run, 1000)
+  }
+}
+
+document.addEventListener('visibilitychange', onVisibilityChange, false)
+
+function getDataPoint (x) {
+  const a = _.random(3, 100) * 100
+  return {
+    x: x,
+    a: a,
+    b: _.random(a, a + 1000),
+    c: Math.ceil(_.random(3, 100)),
+  }
+}

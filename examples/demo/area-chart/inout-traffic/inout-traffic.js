@@ -2,10 +2,46 @@
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
 
-const _ = require('lodash')
-const dataSrc = require('./inout-traffic.json')
-const formatter = require('formatter')
-const _c = require('constants')
+const commons = require('commons')
+
+const _ = commons._
+const formatter = commons.formatter
+const _c = commons._c
+
+let now = _.now()
+
+let simpleData = []
+let vNetworksCount = 2
+
+for (let j = 0; j < vNetworksCount; j++) {
+  let vnName = 'vnetwork' + (j + 1)
+  let trafficType = vnName + '_in'
+
+  for (let k = 0; k < 100; k++) {
+    simpleData.push(getDataPoint(now - ((100 - k) * 2000), vnName, trafficType, [(j + 1) * 256000, (j + 1) * 512000]))
+  }
+
+  trafficType = vnName + '_out'
+  for (let l = 0; l < 100; l++) {
+    simpleData.push(getDataPoint(now - ((100 - l) * 2000), vnName, trafficType, [(j + 1) * 256000, (j + 1) * 512000]))
+  }
+}
+
+function getDataPoint (time, vnName, trafficType, range) {
+  let inTraffic = _.random(range[0], range[1])
+  return {
+    'T': time,
+    'direction_ing': 1,
+    'traffic_type': trafficType,
+    'vn_name': vnName,
+    'sum(bytes)': inTraffic,
+    'sum(packets)': Math.floor(inTraffic / 340)
+  }
+}
+
+const dataSrc = {
+  data: simpleData
+}
 
 const lbColorScheme5 = _c.lbColorScheme7
 
@@ -76,8 +112,9 @@ const mainChartPlotYConfig = _.reduce(dataProcessed.nodeIds, (config, nodeId, id
   config.push({
     accessor: `${nodeId}.sum_bytes`,
     label: `Sum(Bytes) ${nodeId}`,
-    enabled: (nodeId.indexOf('in') !== -1),
+    enabled: nodeId.includes('1'),
     chart: 'AreaChart',
+    stack: nodeId.split('_').pop(),
     color: colorPalette[`${nodeId}.sum_bytes`],
     axis: 'y1',
   })
@@ -86,10 +123,11 @@ const mainChartPlotYConfig = _.reduce(dataProcessed.nodeIds, (config, nodeId, id
 
 const navPlotYConfig = _.reduce(dataProcessed.nodeIds, (config, nodeId, idx) => {
   config.push({
-    enabled: true,
+    enabled: nodeId.includes('1'),
     accessor: `${nodeId}.sum_bytes`,
     // labelFormatter: 'Sum(Bytes)',
     chart: 'AreaChart',
+    stack: nodeId.split('_').pop(),
     color: colorPalette[`${nodeId}.sum_bytes`],
     axis: 'y1',
   })
@@ -114,7 +152,7 @@ const tooltipDataConfig = _.reduce(dataProcessed.nodeIds, (config, nodeId) => {
 // Create chart view.
 const trafficView = new coCharts.charts.XYChartView()
 trafficView.setConfig({
-  container: '#inout-traffic',
+  id: 'inout-traffic',
   components: [{
     type: 'LegendPanel',
     config: {
@@ -134,9 +172,12 @@ trafficView.setConfig({
       marginLeft: 80,
       marginRight: 80,
       marginBottom: 40,
-      chartHeight: 600,
+      chartHeight: 400,
       crosshair: 'crosshair-id',
-      possibleChartTypes: ['AreaChart', 'LineChart'],
+      possibleChartTypes: {
+        y1: ['AreaChart', 'LineChart'],
+        y2: ['AreaChart', 'LineChart']
+      },
       plot: {
         x: {
           accessor: 'T',
@@ -166,7 +207,7 @@ trafficView.setConfig({
       marginRight: 80,
       marginBottom: 40,
       chartHeight: 200,
-      selection: [75, 100],
+      selection: [60, 100],
       plot: {
         x: {
           accessor: 'T',
@@ -215,11 +256,6 @@ trafficView.setConfig({
       ]
     }
   }, {
-    type: 'Standalone',
-    config: {
-      isSharedContainer: false,
-    },
-  }, {
     id: 'inout-traffic-message',
     type: 'Message',
     config: {
@@ -235,11 +271,42 @@ trafficView.setConfig({
 })
 trafficView.setData(dataProcessed.data)
 trafficView.renderMessage({
-  componentId: 'XYChart',
+  componentId: 'inout-traffic-compositey',
   action: 'once',
   messages: [{
-    level: 'info',
+    level: '',
     title: '',
     message: 'Loading ...',
   }]
 })
+
+let runner = null
+onVisibilityChange()
+function run () {
+  let currentData = dataProcessed.data
+
+  currentData.splice(0, 1)
+
+  let length = currentData.length
+  let random = _.random(0, (length - 1))
+
+  now += 2000
+  dataProcessed.data = currentData.concat([getNewDataPoint(now, currentData[random])])
+  trafficView.setData(dataProcessed.data)
+}
+
+function getNewDataPoint (x, rPoint) {
+  var newPoint = _.clone(rPoint)
+  newPoint.T = x
+  return newPoint
+}
+
+function onVisibilityChange () {
+  if (document.hidden) {
+    clearInterval(runner)
+  } else {
+    runner = setInterval(run, 2000)
+  }
+}
+
+document.addEventListener('visibilitychange', onVisibilityChange, false)

@@ -2,25 +2,35 @@
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
 
-const complexData = []
+const commons = require('commons')
+const _c = commons._c
+
+const colorScheme = _c.lbColorScheme7
+const simpleData = []
+
+let now = _.now()
+
 for (let i = 0; i < 100; i++) {
-  const a = Math.random() * 100
-  complexData.push({
-    x: 1475760930000 + 1000000 * i,
-    a: a,
-    b: a + Math.random() * 10,
-    c: Math.random() * 10
+  simpleData.push({
+    x: now - (i * 60000),
+    a: _.random(10, 100),
+    b: _.random(10, 100),
+    c: _.random(400, 450),
+    d: _.random(200, 300),
   })
 }
 
 const chartConfigs = [
   {
-    chartId: 'grouped-chart1',
+    id: 'grouped-chart1',
     type: 'XYChart',
-    container: '#grouped-chart1',
     components: [{
       type: 'CompositeYChart',
       config: {
+        marginLeft: 60,
+        marginRight: 60,
+        marginBottom: 40,
+        chartHeight: 350,
         plot: {
           x: {
             accessor: 'x',
@@ -29,13 +39,17 @@ const chartConfigs = [
           y: [
             {
               accessor: 'a',
+              label: 'Label A',
               enabled: true,
-              chart: 'BarChart',
+              chart: 'StackedBarChart',
+              color: colorScheme[1],
               axis: 'y',
             }, {
               accessor: 'b',
+              label: 'Label B',
               enabled: true,
-              chart: 'BarChart',
+              chart: 'StackedBarChart',
+              color: colorScheme[3],
               axis: 'y',
             }
           ]
@@ -43,44 +57,66 @@ const chartConfigs = [
       }
     }]
   }, {
-    chartId: 'grouped-chart2',
+    id: 'grouped-chart2',
     type: 'XYChart',
-    container: '#grouped-chart2',
     components: [{
       type: 'CompositeYChart',
       config: {
+        marginLeft: 60,
+        marginRight: 60,
+        marginBottom: 40,
+        chartHeight: 350,
         plot: {
           x: {
             accessor: 'x',
-            axis: 'x',
+            axis: 'x'
           },
           y: [
             {
               accessor: 'c',
+              label: 'Label C',
               enabled: true,
-              chart: 'LineChart',
+              chart: 'BarChart',
+              color: colorScheme[4],
               axis: 'y',
             }
           ]
         }
       },
-    }, {
+    }]
+  }, {
+    id: 'grouped-chart-navigation',
+    type: 'XYChart',
+    components: [{
       type: 'Navigation',
       config: {
-        chartHeight: 200,
+        marginLeft: 60,
+        marginRight: 60,
+        marginBottom: 40,
+        chartHeight: 250,
+        selection: [75, 100],
         plot: {
           x: {
             accessor: 'x',
             axis: 'x',
+            label: 'Time'
           },
           y: [
             {
-              accessor: 'c',
+              accessor: 'd',
+              label: 'Label D',
               enabled: true,
+              color: colorScheme[2],
               chart: 'LineChart',
               axis: 'y',
             }
           ]
+        },
+        onChangeSelection: (dataProvider, chart) => {
+          const chartToUpdate = ['grouped-chart1', 'grouped-chart2']
+          if (_.includes(chartToUpdate, chart.el.id)) {
+            chart.setData(dataProvider.data)
+          }
         }
       }
     }]
@@ -95,6 +131,8 @@ chartView.setConfig({
   // Child charts.
   charts: chartConfigs,
 })
-chartView.setData(complexData, {}, 'grouped-chart1')
-chartView.setData(complexData, {}, 'grouped-chart2')
+// selection on navigation will set the data on these charts.
+// chartView.setData(complexData, {}, 'grouped-chart1')
+// chartView.setData(complexData, {}, 'grouped-chart2')
+chartView.setData(simpleData, {}, 'grouped-chart-navigation')
 chartView.render()

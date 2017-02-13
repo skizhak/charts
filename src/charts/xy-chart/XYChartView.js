@@ -15,6 +15,7 @@ const _actions = [
   require('actions/SelectChartType'),
   require('actions/ChangeSelection'),
   require('actions/Refresh'),
+  require('actions/OnClick'),
 ]
 /**
 * Chart with a common X axis and many possible child components rendering data on the Y axis (for example: line, bar, stackedBar).
@@ -54,9 +55,12 @@ class XYChartView extends ContrailChartsView {
   */
   setConfig (config) {
     this._config = config
-    this.setElement(config.container)
-    // Todo make dataConfig part of handlers? as dataProvider
-    if (this._config.dataConfig) this.setDataConfig(this._config.dataConfig)
+    this.setElement(`#${config.id}`)
+    // Todo Fix chart init similar to that of component. use the render via ContrailChartsView instead
+    this._container = this.el.parentElement
+    this.el.classList.add(this.selectors.chart.substr(1))
+    this._actionman.id = this._config.id
+    if (_.has(config, 'dataProvider.config')) this._dataProvider.setConfig(config.dataProvider.config)
     this._initComponents()
   }
   /**
@@ -138,6 +142,8 @@ class XYChartView extends ContrailChartsView {
    */
   _registerComponent (type, config, model, id) {
     if (!this._isEnabledComponent(type)) return false
+    // Set title to parent title only if it doesn't exist. Each component may be handling title in different way.
+    if (!config.title) config.title = this._config.title
     let configModel
     if (components[`${type}ConfigModel`]) {
       configModel = new components[`${type}ConfigModel`](config)

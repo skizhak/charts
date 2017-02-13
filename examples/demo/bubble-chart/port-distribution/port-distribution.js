@@ -2,10 +2,12 @@
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
 
-const d3 = require('d3')
-const formatter = require('formatter')
-const _c = require('constants')
+const commons = require('commons')
 
+const formatter = commons.formatter
+const _c = commons._c
+
+const colorScheme = _c.d3ColorScheme10
 const bubbleShapes = _c.bubbleShapes
 
 function dataProcesser (data) {
@@ -35,143 +37,157 @@ function dataProcesser (data) {
   )
 }
 
-const colorScheme = d3.schemeCategory10
 let dataSrc = require('./port-distribution.json')
 
 dataSrc = dataProcesser(dataSrc)
 
 const chartConfig = {
-  container: '#pd-bubble-chart',
-  components: [{
-    type: 'CompositeYChart',
-    config: {
-      chartHeight: 600,
-      marginInner: 10,
-      marginLeft: 100,
-      marginRight: 80,
-      marginBottom: 60,
-      plot: {
-        x: {
-          accessor: 'port',
-          label: 'Port',
-          axis: 'x',
+  id: 'pd-bubble-chart',
+  components: [
+    {
+      type: 'LegendPanel',
+      config: {
+        sourceComponent: 'scatter-plot',
+        palette: _c.bubbleColorScheme13,
+        editable: {
+          colorSelector: true,
+          chartSelector: false
         },
-        y: [
+        placement: 'horizontal',
+        filter: true,
+      }
+    },
+    {
+      id: 'scatter-plot',
+      type: 'CompositeYChart',
+      config: {
+        chartHeight: 400,
+        marginInner: 10,
+        marginLeft: 100,
+        marginRight: 80,
+        marginBottom: 40,
+        plot: {
+          x: {
+            accessor: 'port',
+            label: 'Port',
+            axis: 'x',
+          },
+          y: [
+            {
+              enabled: true,
+              accessor: 'inBytes',
+              label: 'Port Traffic In',
+              chart: 'ScatterPlot',
+              sizeAccessor: 'outBytes',
+              sizeAxis: 'sizeAxisBytes',
+              shape: bubbleShapes.signin,
+              color: colorScheme[1],
+              axis: 'y1',
+              tooltip: 'tooltip-id',
+            }, {
+              enabled: true,
+              accessor: 'outBytes',
+              label: 'Port Traffic Out',
+              chart: 'ScatterPlot',
+              sizeAccessor: 'outBytes',
+              sizeAxis: 'sizeAxisBytes',
+              shape: bubbleShapes.signout,
+              color: colorScheme[2],
+              axis: 'y1',
+              tooltip: 'tooltip-id',
+            }
+          ]
+        },
+        axis: {
+          x: {
+            scale: 'scaleLinear',
+            formatter: formatter.toInteger,
+            labelMargin: 5
+          },
+          sizeAxisBytes: {
+            range: [200, 400]
+          },
+          y1: {
+            position: 'left',
+            formatter: formatter.byteFormatter,
+            labelMargin: 15,
+          },
+        }
+      }
+    }, {
+      id: 'tooltip-id',
+      type: 'Tooltip',
+      config: {
+        title: 'Port Traffic',
+        dataConfig: [
           {
-            enabled: true,
-            accessor: 'inBytes',
-            label: 'Traffic In',
-            chart: 'ScatterPlot',
-            sizeAccessor: 'outBytes',
-            sizeAxis: 'sizeAxisBytes',
-            shape: bubbleShapes.signin,
-            color: colorScheme[1],
-            axis: 'y1',
-            tooltip: 'tooltip-id',
+            accessor: 'port',
+            labelFormatter: 'Port Number',
           }, {
-            enabled: true,
+            accessor: 'inBytes',
+            labelFormatter: 'Traffic In',
+            valueFormatter: formatter.byteFormatter,
+          }, {
             accessor: 'outBytes',
-            label: 'Traffic Out',
-            chart: 'ScatterPlot',
-            sizeAccessor: 'outBytes',
-            sizeAxis: 'sizeAxisBytes',
-            shape: bubbleShapes.signout,
-            color: colorScheme[2],
-            axis: 'y1',
-            tooltip: 'tooltip-id',
+            labelFormatter: 'Traffic Out',
+            valueFormatter: formatter.byteFormatter,
+          }, {
+            accessor: 'inFlowCount',
+            labelFormatter: 'Incoming Flow Count',
+            valueFormatter: formatter.toInteger,
+          }, {
+            accessor: 'outFlowCount',
+            labelFormatter: 'Outgoing Flow Count',
+            valueFormatter: formatter.toInteger,
           }
         ]
-      },
-      axis: {
-        x: {
-          scale: 'scaleLinear',
-          formatter: formatter.toInteger,
-          labelMargin: 5
-        },
-        sizeAxisBytes: {
-          range: [200, 400]
-        },
-        y1: {
-          position: 'left',
-          formatter: formatter.byteFormatter,
-          labelMargin: 15,
-        },
       }
-    }
-  }, {
-    id: 'tooltip-id',
-    type: 'Tooltip',
-    config: {
-      title: 'Port Traffic',
-      dataConfig: [
-        {
-          accessor: 'port',
-          labelFormatter: 'Port Number',
-        }, {
-          accessor: 'inBytes',
-          labelFormatter: 'Traffic In',
-          valueFormatter: formatter.byteFormatter,
-        }, {
-          accessor: 'outBytes',
-          labelFormatter: 'Traffic Out',
-          valueFormatter: formatter.byteFormatter,
-        }, {
-          accessor: 'inFlowCount',
-          labelFormatter: 'Incoming Flow Count',
-          valueFormatter: formatter.toInteger,
-        }, {
-          accessor: 'outFlowCount',
-          labelFormatter: 'Outgoing Flow Count',
-          valueFormatter: formatter.toInteger,
-        }
-      ]
-    }
-  }, {
-    type: 'Navigation',
-    config: {
-      marginInner: 10,
-      marginLeft: 80,
-      marginRight: 80,
-      marginBottom: 60,
-      chartHeight: 200,
-      selection: [75, 100],
-      plot: {
-        x: {
-          accessor: 'inBytes',
-          label: 'Port Traffic In',
-          axis: 'x',
+    }, {
+      type: 'Navigation',
+      config: {
+        marginInner: 10,
+        marginLeft: 80,
+        marginRight: 80,
+        marginBottom: 60,
+        chartHeight: 250,
+        selection: [75, 100],
+        plot: {
+          x: {
+            accessor: 'inBytes',
+            label: 'Port Traffic In',
+            axis: 'x',
+          },
+          y: [
+            {
+              enabled: true,
+              accessor: 'outBytes',
+              label: 'Port Traffic Out',
+              chart: 'ScatterPlot',
+              axis: 'y1',
+              sizeAccessor: 'outBytes',
+              sizeAxis: 'sizeAxisBytes',
+              shape: bubbleShapes.circleFill,
+              color: colorScheme[4],
+            }
+          ]
         },
-        y: [
-          {
-            enabled: true,
-            accessor: 'outBytes',
-            label: 'Port Traffic Out',
-            chart: 'ScatterPlot',
-            axis: 'y1',
-            sizeAccessor: 'outBytes',
-            sizeAxis: 'sizeAxisBytes',
-            shape: bubbleShapes.circleFill,
-            color: colorScheme[0],
+        axis: {
+          x: {
+            scale: 'scaleLinear',
+            formatter: formatter.byteFormatter,
+          },
+          sizeAxisBytes: {
+            range: [100, 200],
+          },
+          y1: {
+            position: 'left',
+            formatter: formatter.byteFormatter,
+            labelMargin: 15,
+            ticks: 4,
           }
-        ]
-      },
-      axis: {
-        x: {
-          scale: 'scaleLinear',
-          formatter: formatter.byteFormatter,
-        },
-        sizeAxisBytes: {
-          range: [100, 200],
-        },
-        y1: {
-          position: 'left',
-          formatter: formatter.byteFormatter,
-          labelMargin: 15,
-          ticks: 4,
         }
       }
-    }
-  }]
+    }]
 }
 
 const chartView = new coCharts.charts.XYChartView()

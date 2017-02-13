@@ -13,7 +13,7 @@ class LegendConfigModel extends ContrailChartsConfigModel {
     return _.map(labels, (label) => {
       return {
         label: label,
-        color: this._parent.getColor(label),
+        color: this._parent.getColor([], label),
       }
     })
   }

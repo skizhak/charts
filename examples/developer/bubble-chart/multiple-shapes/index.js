@@ -2,31 +2,36 @@
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
 
-const formatter = require('formatter')
-const _c = require('constants')
+const commons = require('commons')
+
+const formatter = commons.formatter
+const _c = commons._c
+
+const data = commons.fixture({
+  length: 40,
+  data: {
+    x: {linear: true, range: [1475760930000, 1475800930000]},
+    data1: {random: true, range: [0, 50], gap: true},
+    data2: {random: true, range: [0, 100], repeat: true},
+    data3: {random: true, range: [0, 100]},
+    size1: {random: true, range: [0, 10]},
+    size2: {random: true, range: [0, 20]},
+    nav: {random: true, range: [0, 10]},
+  },
+})
 
 const colorScheme = _c.bubbleColorScheme6
 const bubbleShapes = _c.bubbleShapes
-const simpleData = []
-
-for (let i = 0; i < 40; i++) {
-  simpleData.push({
-    x: 1475760930000 + 1000000 * i,
-    data1: Math.random() * 50,
-    data2: Math.random() * 100,
-    data3: Math.random() * 100,
-    size1: Math.random() * 10,
-    size2: Math.random() * 20,
-    nav: Math.random() * 10,
-  })
-}
 
 const chartConfig = {
-  container: '#multi-shape-bubble',
+  id: 'multi-shape-bubble',
   components: [{
     type: 'LegendPanel',
     config: {
       sourceComponent: 'multishape-bubble-chart',
+      editable: {
+        colorSelector: true,
+      },
     },
   }, {
     id: 'multishape-bubble-chart',
@@ -71,7 +76,7 @@ const chartConfig = {
             sizeAccessor: 'size2',
             sizeAxis: 'sizeAxis',
             shape: bubbleShapes.star,
-            color: colorScheme[5],
+            color: d => d.data3 > 80 ? 'red' : colorScheme[5],
             axis: 'y2',
             tooltip: 'tooltip-id',
           }
@@ -84,12 +89,12 @@ const chartConfig = {
         y1: {
           position: 'left',
           formatter: formatter.toInteger,
-          label: 'Size of circles',
+          label: 'Y value of circles',
         },
         y2: {
           position: 'right',
           formatter: formatter.toInteger,
-          label: 'Size of squares and triangles',
+          label: 'Y value of Square and Star',
         }
       },
     }
@@ -105,23 +110,23 @@ const chartConfig = {
       dataConfig: [
         {
           accessor: 'data1',
-          labelFormatter: 'Label 1',
+          labelFormatter: 'Circle',
           valueFormatter: formatter.toInteger,
         }, {
           accessor: 'data2',
-          labelFormatter: 'Label 2',
+          labelFormatter: 'Square',
           valueFormatter: formatter.toInteger,
         }, {
           accessor: 'data3',
-          labelFormatter: 'Label 3',
+          labelFormatter: 'Star',
           valueFormatter: formatter.toInteger,
         }, {
           accessor: 'size1',
-          labelFormatter: 'Size 1',
+          labelFormatter: 'Size of Circle',
           valueFormatter: formatter.toInteger,
         }, {
           accessor: 'size2',
-          labelFormatter: 'Size 2',
+          labelFormatter: 'Size of Square and Star',
           valueFormatter: formatter.toInteger,
         }
       ]
@@ -158,4 +163,4 @@ const chartConfig = {
 
 const chartView = new coCharts.charts.XYChartView()
 chartView.setConfig(chartConfig)
-chartView.setData(simpleData)
+chartView.setData(data)

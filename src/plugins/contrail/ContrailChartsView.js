@@ -21,6 +21,7 @@ class ContrailChartsView extends ContrailView {
 
   get selectors () {
     return {
+      chart: '.cc-chart',
       component: '.cc-component',
       svgWrapper: '.svg-wrapper',
       svg: '.cc-svg',
@@ -71,6 +72,14 @@ class ContrailChartsView extends ContrailView {
    */
   set container (el) {
     if (!this._container) this._container = el
+  }
+  /**
+   * Calculate offset of svg relative to the container
+   */
+  get svgOffset () {
+    const left = this.svg.node().getBoundingClientRect().left - this._container.getBoundingClientRect().left
+    const top = this.svg.node().getBoundingClientRect().top - this._container.getBoundingClientRect().top
+    return {left, top}
   }
   /**
    * Save the config '_computed' parameters in the view's 'params' local object for easier reference (this.params instead of this.config._computed).

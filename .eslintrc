@@ -1,7 +1,10 @@
 {
   "extends": "standard",
   "globals": {
-    'coCharts': true
+    'coCharts': true,
+    '_': true,
+    'd3': true,
+    '$': true
   },
   rules: {
     'comma-dangle': 0,

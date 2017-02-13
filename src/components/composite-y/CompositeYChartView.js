@@ -4,6 +4,7 @@
 require('./composite-y.scss')
 const _ = require('lodash')
 const d3 = require('d3')
+const d3Array = require('d3-array')
 const ContrailChartsView = require('contrail-charts-view')
 const LineChartView = require('components/composite-y/LineChartView')
 const AreaChartView = require('components/composite-y/AreaChartView')
@@ -11,6 +12,7 @@ const BarChartView = require('components/composite-y/GroupedBarChartView')
 const StackedBarChartView = require('components/composite-y/StackedBarChartView')
 const ScatterPlotView = require('components/composite-y/ScatterPlotView')
 const CompositeYChartConfigModel = require('components/composite-y/CompositeYChartConfigModel')
+const TitleView = require('plugins/title/TitleView')
 
 class CompositeYChartView extends ContrailChartsView {
   constructor (p) {
@@ -18,7 +20,7 @@ class CompositeYChartView extends ContrailChartsView {
     this._drawings = []
 
     this.listenTo(this.model, 'change', this.render)
-    this.listenTo(this.config, 'change', this.render)
+    this.listenTo(this.config, 'change', this._onConfigModelChange)
     window.addEventListener('resize', this._onResize.bind(this))
   }
 
@@ -46,29 +48,39 @@ class CompositeYChartView extends ContrailChartsView {
     this.stopListening(this.model)
     this.model = model
     this.listenTo(this.model, 'change', this.render)
-    _.each(this._drawings, drawing => {
-      drawing.model = model
-    })
+    _.each(this._drawings, drawing => (drawing.model = model))
+
     this.render()
   }
 
   render () {
     if (!this.config || !this._container) return
     this.resetParams()
+    if (this.params.title) TitleView(this._container, this.params.title)
     this._updateChildDrawings()
     this._calculateActiveAccessorData()
     this._calculateDimensions()
     this.calculateScales()
-    this.calculateColorScale()
 
     super.render()
     this.renderSVG()
     this.renderXAxis()
     this.renderYAxes()
-    _.each(this._drawings, drawing => {
-      drawing.render()
-    })
+    _.each(this._drawings, drawing => drawing.render())
 
+    const crosshairId = this.config.get('crosshair')
+    if (crosshairId) this._actionman.fire('HideComponent', crosshairId)
+
+    this._ticking = false
+  }
+
+  showCrosshair (point) {
+    const crosshairId = this.config.get('crosshair')
+    const data = this.getCrosshairData(point)
+    const config = this.getCrosshairConfig()
+    this._actionman.fire('ShowComponent', crosshairId, data, point, config)
+
+    // reset the tick so we can capture the next handler
     this._ticking = false
   }
 
@@ -91,7 +103,7 @@ class CompositeYChartView extends ContrailChartsView {
       drawing.params.enabled = false
     })
     // Fill the activeAccessorData structure.
-    _.each(this.params.plot.y, accessor => {
+    _.each(this.config.get('plot').y, accessor => {
       const drawing = this.getDrawing(accessor)
       if (drawing) {
         if (accessor.enabled) {
@@ -134,48 +146,20 @@ class CompositeYChartView extends ContrailChartsView {
     this.saveScales()
   }
 
-  calculateColorScale () {
-    _.each(this.params.plot.y, accessor => {
-      accessor.color = this.config.getColor(accessor)
-    })
-  }
-
   getDrawing (accessor) {
     return _.find(this._drawings, drawing => {
       return drawing.axisName === accessor.axis && drawing.type === accessor.chart
     })
   }
   /**
-  * Combine the axis domains (extents) from all enabled drawings.
-  */
-  combineAxesDomains () {
+   * Combine series domains (extents) by axis
+   */
+  combineDomains () {
     const domains = {}
     _.each(this._drawings, drawing => {
-      if (drawing.params.enabled) {
-        const drawingDomains = drawing.calculateAxisDomains()
-        _.each(drawingDomains, (domain, axisName) => {
-          if (!_.has(domains, axisName)) {
-            domains[axisName] = [domain[0], domain[1]]
-          } else {
-            // check if the new domains extent extends the current one
-            if (domain[0] < domains[axisName][0]) {
-              domains[axisName][0] = domain[0]
-            }
-            if (domain[1] > domains[axisName][1]) {
-              domains[axisName][1] = domain[1]
-            }
-          }
-          // Override axis domain based on axis config.
-          if (this.hasAxisParam(axisName, 'domain')) {
-            if (!_.isUndefined(this.config.get('axis')[axisName].domain[0])) {
-              domains[axisName][0] = this.config.get('axis')[axisName].domain[0]
-            }
-            if (!_.isUndefined(this.config.get('axis')[axisName].domain[1])) {
-              domains[axisName][1] = this.config.get('axis')[axisName].domain[1]
-            }
-          }
-        })
-      }
+      _.each(drawing.combineDomains(), (drawingDomain, axisName) => {
+        domains[axisName] = d3Array.extent(_.concat(domains[axisName] || [], drawingDomain))
+      })
     })
     return domains
   }
@@ -183,7 +167,7 @@ class CompositeYChartView extends ContrailChartsView {
   * Save all scales in the params and drawing.params structures.
   */
   saveScales () {
-    const domains = this.combineAxesDomains()
+    const domains = this.combineDomains()
     if (!_.has(this.params, 'axis')) {
       this.params.axis = {}
     }
@@ -463,12 +447,12 @@ class CompositeYChartView extends ContrailChartsView {
         const circleObject = {}
         circleObject.id = accessor.accessor
         circleObject.x = datum => {
-          return plotTypeComponent.getScreenX(datum, this.params.plot.x.accessor, accessor.accessor)
+          return plotTypeComponent.getScreenX(datum, this.params.plot.x.accessor)
         }
         circleObject.y = datum => {
           return plotTypeComponent.getScreenY(datum, accessor.accessor)
         }
-        circleObject.color = accessor.color
+        circleObject.color = this.config.getColor([], accessor)
         data.circles.push(circleObject)
       })
     })
@@ -488,6 +472,7 @@ class CompositeYChartView extends ContrailChartsView {
         // Default y axis name.
         accessor.axis = 'y'
       }
+      // if accessor is not set to disabled treat it as enabled
       if (!_.has(accessor, 'enabled')) {
         accessor.enabled = true
       }
@@ -497,14 +482,15 @@ class CompositeYChartView extends ContrailChartsView {
           // The child drawing with this name does not exist yet. Instantiate the child drawing.
           _.each(this.possibleChildViews, (ChildView, chartType) => {
             if (chartType === accessor.chart) {
-              const params = _.extend({}, this.params)
-              params.isPrimary = false
+              const params = _.extend({}, this.config.attributes, {
+                isPrimary: false,
+                axisName: accessor.axis,
+              })
               const compositeYConfig = new CompositeYChartConfigModel(params)
               foundDrawing = new ChildView({
                 model: this.model,
                 config: compositeYConfig,
                 container: this._container,
-                axisName: accessor.axis,
                 parent: this,
                 actionman: this._actionman,
               })
@@ -520,6 +506,12 @@ class CompositeYChartView extends ContrailChartsView {
   }
 
   // Event handlers
+  _onConfigModelChange () {
+    _.each(this._drawings, drawing => {
+      drawing.config.set(this.config.attributes)
+    })
+    this.render()
+  }
 
   _onMousemove (d, el, e) {
     const point = [e.offsetX, e.offsetY]
@@ -527,16 +519,6 @@ class CompositeYChartView extends ContrailChartsView {
       window.requestAnimationFrame(this.showCrosshair.bind(this, point))
       this._ticking = true
     }
-  }
-
-  showCrosshair (point) {
-    const crosshairId = this.config.get('crosshair')
-    const data = this.getCrosshairData(point)
-    const config = this.getCrosshairConfig()
-    this._actionman.fire('ShowComponent', crosshairId, data, point, config)
-
-    // reset the tick so we can capture the next handler
-    this._ticking = false
   }
 }
 

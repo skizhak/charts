@@ -3,7 +3,7 @@
  */
 
 const _ = require('lodash')
-const d3 = require('d3')
+const d3Array = require('d3-array')
 const ContrailModel = require('contrail-model')
 const ContrailEvents = require('contrail-events')
 /**
@@ -19,7 +19,7 @@ class DataProvider extends ContrailModel {
       data: [],
 
       // Function to format/filter data. Always applied on parentData
-      formatData: undefined,
+      formatter: undefined,
 
       // A lazy store of data ranges for which a range was calculated or for which the range was set manually.
       // example: { x: [0, 100], y: [20, 30], r: [5, 20] }
@@ -73,6 +73,10 @@ class DataProvider extends ContrailModel {
     return data
   }
 
+  setConfig (config) {
+    this.set(config)
+  }
+
   get queryLimit () {
     let queryLimit
     if (this.hasParentModel() && _.isFunction(this.parentModel.getQueryLimit)) {
@@ -111,13 +115,13 @@ class DataProvider extends ContrailModel {
     return this.has('parentDataModel')
   }
 
-  getRangeFor (constiableName) {
+  getRangeFor (key) {
     if (_.isEmpty(this.data)) return []
     const range = this.range
-    if (!_.has(range, constiableName)) {
-      range[constiableName] = this.calculateRangeForDataAndVariableName(this.data, constiableName)
+    if (!_.has(range, key)) {
+      range[key] = this.calculateRangeForDataAndVariableName(this.data, key)
     }
-    return range[constiableName]
+    return range[key]
   }
 
   getParentRange () {
@@ -155,24 +159,24 @@ class DataProvider extends ContrailModel {
     this.setRanges({}, {})
   }
   /**
-   * Worker function used to calculate a data range for provided constaible name.
+   * Worker function used to calculate a data range for provided key name.
    */
-  calculateRangeForDataAndVariableName (data, constiableName) {
-    let constiableRange
+  calculateRangeForDataAndVariableName (data, key) {
+    let keyRange
     const manualRange = this.get('manualRange')
-    if (_.isArray(manualRange[constiableName])) {
+    if (_.isArray(manualRange[key])) {
       // Use manually set range if available.
-      constiableRange = [manualRange[constiableName][0], manualRange[constiableName][1]]
+      keyRange = [manualRange[key][0], manualRange[key][1]]
     } else {
       // Otherwise calculate the range from data.
       if (data.length) {
-        constiableRange = d3.extent(data, (d) => d[constiableName])
+        keyRange = d3Array.extent(data, d => _.get(d, key))
       } else {
         // No data available so assume a [0..1] range.
-        constiableRange = [0, 1]
+        keyRange = [0, 1]
       }
     }
-    return constiableRange
+    return keyRange
   }
   /**
    * Utility function to filter data by inclusion of dataframe inside provided ranges
@@ -195,14 +199,23 @@ class DataProvider extends ContrailModel {
 
   setRanges (range, manualRange) {
     let data = this.data
-    const formatData = this.get('formatData')
+    const formatter = this.get('formatter')
     if (!manualRange) {
       manualRange = this.get('manualRange')
     }
-    if (_.isFunction(formatData)) {
-      data = formatData(data, manualRange)
+    if (_.isFunction(formatter)) {
+      data = formatter(data, manualRange)
     }
     this.set({data, range, manualRange})
+  }
+  /**
+   * @return {Array} [min, max] values of provided series values combined
+   */
+  combineDomains (accessors) {
+    const domains = _.map(accessors, accessor => {
+      return this.getRangeFor(accessor)
+    })
+    return d3Array.extent(_.concat(...domains))
   }
   /**
    * Take the parent's data and filter / format it.
@@ -210,12 +223,15 @@ class DataProvider extends ContrailModel {
    */
   prepareData () {
     let data = this.parentData
+    // TODO handle empty dataset too
     if (_.isEmpty(data)) return
-    const formatData = this.get('formatData')
-    if (_.isFunction(formatData)) {
-      data = formatData(data)
+    const formatter = this.get('formatter')
+    if (_.isFunction(formatter)) {
+      data = formatter(data)
     }
-    this.attributes.data = data
+    // Trigger change only at the end to avoid multiple trigger
+    this.set({data: data}, {silent: true})
+    this.set({range: {}}, {silent: true})
     this.trigger('change', this)
   }
 

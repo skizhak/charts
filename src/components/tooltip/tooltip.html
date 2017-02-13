@@ -1,5 +1,4 @@
-<div class="tooltip-content">
-  {{#if title}} <div class="tooltip-title">{{title}}</div>{{/if}}
+<div class="tooltip-content" style="color: {{ color }}; background-color: {{ backgroundColor }}">
   {{#each items}}
   <div class="tooltip-item">
     {{#if color}}<span class="tooltip-item-color" style="background-color: {{color}}" ></span>{{/if}}

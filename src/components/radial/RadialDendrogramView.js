@@ -152,7 +152,7 @@ class RadialDendrogramView extends ContrailChartsView {
   }
 
   _prepareCluster () {
-    
+
     const extraPaddingPerDepth = _.fill(_.range(this.maxDepth+1), 0)
     // Create the cluster layout.
     const cluster = d3.cluster().size([360, this.params.innerRadius])

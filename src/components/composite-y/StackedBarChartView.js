@@ -8,10 +8,19 @@ const XYChartSubView = require('components/composite-y/XYChartSubView')
 
 class StackedBarChartView extends XYChartSubView {
   get zIndex () { return 1 }
+  /**
+   * follow same naming convention for all XY chart sub views
+   */
+  get selectors () {
+    return _.extend(super.selectors, {
+      node: '.bar',
+    })
+  }
+
   get events () {
     return {
-      'mouseover .bar': '_onMouseover',
-      'mouseout .bar': '_onMouseout',
+      [`mousemove ${this.selectors.node}`]: '_onMousemove',
+      [`mouseout ${this.selectors.node}`]: '_onMouseout',
     }
   }
   /**
@@ -28,29 +37,13 @@ class StackedBarChartView extends XYChartSubView {
     // TODO do not use model.data.length as there can be gaps
     return this.innerWidth / this.model.data.length * paddedPart
   }
-  /**
-  * Called by the parent in order to calculate maximum data extents for all of this child's axis.
-  * Assumes the params.activeAccessorData for this child view is filled by the parent with the relevent yAccessors for this child only.
-  * Returns an object with following structure: { y1: [0,10], x: [-10,10] } - axisName: axisDomain
-  */
-  calculateAxisDomains () {
-    const domains = {}
-    const xAxisName = this.params.plot.x.axis
-    const xAccessor = this._parent.params.plot.x.accessor
-    let isFull = false
-    if (this.model.data.length < 2) isFull = true
-    domains[xAxisName] = this.model.getRangeFor(xAccessor, isFull)
-    // The domains calculated here can be overriden in the axis configuration.
-    // The overrides are handled by the parent.
-    _.each(this.params.activeAccessorData, accessor => {
-      const domain = this.model.getRangeFor(accessor.accessor, isFull)
-      if (_.has(domains, this.axisName)) {
-        domains[this.axisName][1] += domain[1]
-      } else {
-        domains[this.axisName] = [0, domain[1]]
-      }
-    })
-    this.params.handledAxisNames = _.keys(domains)
+
+  combineDomains () {
+    const domains = super.combineDomains()
+    const topY = _.reduce(this.params.activeAccessorData, (sum, accessor) => {
+      return sum + this.model.getRangeFor(accessor.accessor)[1]
+    }, 0)
+    if (domains[this.axisName]) domains[this.axisName][1] = topY
     return domains
   }
   /**
@@ -58,7 +51,7 @@ class StackedBarChartView extends XYChartSubView {
   * Used by CrosshairView render data preparation.
   */
   getScreenY (dataElem, yAccessor) {
-    let stackedY = this.yScale.domain()[0]
+    let stackedY = 0
     let found = false
     _.each(this.params.activeAccessorData, accessor => {
       if (accessor.accessor === yAccessor) {
@@ -75,7 +68,7 @@ class StackedBarChartView extends XYChartSubView {
     super.render()
 
     const svgBarGroups = this.d3
-      .selectAll('.bar')
+      .selectAll(this.selectors.node)
       .data(this._prepareData(), d => d.id)
     svgBarGroups.enter().append('rect')
       .attr('class', d => 'bar')
@@ -94,24 +87,26 @@ class StackedBarChartView extends XYChartSubView {
 
   _prepareData () {
     const data = this.model.data
+    const start = this.yScale.domain()[0]
     const flatData = []
     const bandWidthHalf = (this.bandWidth / 2)
     _.each(data, d => {
       const x = d[this.params.plot.x.accessor]
-      let stackedY = this.yScale.domain()[0]
+      let stackedY = start
+      // y coordinate to stack next bar to
       _.each(this.params.activeAccessorData, accessor => {
         const key = accessor.accessor
         const obj = {
           id: x + '-' + key,
           x: this.xScale(x) - bandWidthHalf,
-          y: this.yScale(stackedY + d[key]),
-          h: this.yScale(stackedY) - this.yScale(stackedY + d[key]),
+          y: this.yScale(d[key] - start + stackedY),
+          h: this.yScale(start) - this.yScale(d[key]),
           w: this.bandWidth,
-          color: this.getColor(accessor),
+          color: this.config.getColor(d, accessor),
           accessor: accessor,
           data: d,
         }
-        stackedY += d[key]
+        stackedY += (d[key] - start)
         flatData.push(obj)
       })
     })
@@ -120,23 +115,12 @@ class StackedBarChartView extends XYChartSubView {
 
   // Event handlers
 
-  _onMouseover (d, el) {
+  _onMousemove (d, el, event) {
     if (this.config.get('tooltipEnabled')) {
-      const offset = this.$el.offset()
-      const tooltipOffset = {
-        top: d.y + offset.top,
-        left: d.x + offset.left,
-      }
-      this._actionman.fire('ShowComponent', d.accessor.tooltip, tooltipOffset, d.data)
+      const [left, top] = d3.mouse(this._container)
+      this._actionman.fire('ShowComponent', d.accessor.tooltip, {left, top}, d.data)
     }
-    el.classList.add('active')
-  }
-
-  _onMouseout (d, el) {
-    if (this.config.get('tooltipEnabled')) {
-      this._actionman.fire('HideComponent', d.accessor.tooltip)
-    }
-    el.classList.remove('active')
+    el.classList.add(this.selectorClass('active'))
   }
 }
 

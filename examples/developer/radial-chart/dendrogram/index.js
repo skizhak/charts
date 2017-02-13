@@ -5,7 +5,7 @@
 const dendrogamData = require('./data.json')
 
 const chartConfig = {
-  container: '#radial-dendrogram-chart',
+  id: 'radial-dendrogram-chart',
   components: [{
     id: 'dendrogram-chart-id',
     type: 'RadialDendrogram',
