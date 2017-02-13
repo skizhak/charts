@@ -13,7 +13,7 @@ const d3Scale = require('d3-scale')
 const XYChartSubView = require('components/composite-y/XYChartSubView')
 
 class LineChartView extends XYChartSubView {
-  get zIndex () { return 2 }
+  get zIndex () { return 3 }
   /**
    * follow same naming convention for all XY chart sub views
    */

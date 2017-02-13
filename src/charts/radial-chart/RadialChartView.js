@@ -17,7 +17,7 @@ const _actions = [
 ]
 /**
 * Group of charts rendered in polar coordinates system
-* TODO merge with ChartView as long as XYChart too
+* TODO merge with XYChart
 */
 class RadialChartView extends ContrailView {
 
