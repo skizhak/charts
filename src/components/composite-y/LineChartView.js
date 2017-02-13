@@ -14,10 +14,19 @@ const XYChartSubView = require('components/composite-y/XYChartSubView')
 
 class LineChartView extends XYChartSubView {
   get zIndex () { return 2 }
+  /**
+   * follow same naming convention for all XY chart sub views
+   */
+  get selectors () {
+    return _.extend(super.selectors, {
+      node: '.line',
+    })
+  }
+
   get events () {
     return {
-      'mouseover .line': '_onMouseover',
-      'mouseout .line': '_onMouseout',
+      [`mouseover ${this.selectors.node}`]: '_onMouseover',
+      [`mouseout ${this.selectors.node}`]: '_onMouseout',
     }
   }
 
@@ -48,7 +57,7 @@ class LineChartView extends XYChartSubView {
         .curve(this.config.get('curve'))
       linePathData.push({ key: key, accessor: accessor, data: data })
     })
-    const svgLines = this.d3.selectAll('.line')
+    const svgLines = this.d3.selectAll(this.selectors.node)
       .data(linePathData, d => d.key)
 
     svgLines.enter().append('path')
@@ -97,13 +106,6 @@ class LineChartView extends XYChartSubView {
       this._actionman.fire('ShowComponent', d.accessor.tooltip, tooltipOffset, dataItem)
     }
     el.classList.add('active')
-  }
-
-  _onMouseout (d, el) {
-    if (this.config.get('tooltipEnabled')) {
-      this._actionman.fire('HideComponent', d.accessor.tooltip)
-    }
-    el.classList.remove('active')
   }
 }
 

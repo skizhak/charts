@@ -15,11 +15,19 @@ class PieChartView extends ContrailChartsView {
   }
 
   get tagName () { return 'g' }
+  /**
+   * follow same naming convention for all charts
+   */
+  get selectors () {
+    return _.extend(super.selectors, {
+      node: '.arc',
+    })
+  }
   get events () {
     return {
-      'mousemove .arc': '_onMousemove',
-      'mouseout .arc': '_onMouseout',
-      'click .arc': '_onClick',
+      [`mousemove ${this.selectors.node}`]: '_onMousemove',
+      [`mouseout ${this.selectors.node}`]: '_onMouseout',
+      [`click ${this.selectors.node}`]: '_onClick',
     }
   }
 
@@ -34,6 +42,7 @@ class PieChartView extends ContrailChartsView {
     if (this.params.title) TitleView(this._container, this.params.title)
     this._calculateDimensions()
     super.render()
+    this._onMouseout()
     const serieConfig = this.config.get('serie')
     const radius = this.config.get('radius')
     const data = this.model.get('data')
@@ -44,11 +53,11 @@ class PieChartView extends ContrailChartsView {
 
     const stakes = shape.pie()
       .sort(null)
-      .value((d) => serieConfig.getValue(d))(data)
+      .value(d => serieConfig.getValue(d))(data)
 
     this.d3.attr('transform', `translate(${this.params.chartWidth / 2}, ${this.params.chartHeight / 2})`)
 
-    const sectors = this.d3.selectAll('.arc')
+    const sectors = this.d3.selectAll(this.selectors.node)
       .data(stakes, d => d.value)
 
     sectors
@@ -88,18 +97,18 @@ class PieChartView extends ContrailChartsView {
         .style('cursor', () => (typeof (onClickCursor) === 'boolean') ? 'pointer' : onClickCursor)
     }
 
-    el.classList.add('highlight')
+    el.classList.add('active')
     this._actionman.fire('ShowComponent', this.config.get('tooltip'), tooltipPosition, d.data)
   }
 
   _onMouseout (d, el) {
-    el.classList.remove('highlight')
     if (this.config.get('onClickCursor')) el.classList.remove('click-me')
     this._actionman.fire('HideComponent', this.config.get('tooltip'))
+    _.each(el ? [el] : document.querySelectorAll(this.selectors.node), el => el.classList.remove('active'))
   }
 
   _onClick (d, el) {
-    el.classList.remove('highlight')
+    el.classList.remove('active')
     this._actionman.fire('OnClick', d.data, el, this.config.get('onClick'))
   }
 }

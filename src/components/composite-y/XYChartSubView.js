@@ -54,6 +54,7 @@ class XYChartSubView extends ContrailChartsView {
 
   render () {
     super.render()
+    this._onMouseout()
     this.d3.attr('clip-path', `url(#${this._parent.params.rectClipPathId})`)
   }
   /**
@@ -83,6 +84,14 @@ class XYChartSubView extends ContrailChartsView {
       if (!_.isNil(configDomain[1])) domains[axisName][1] = configDomain[1]
     })
     return domains
+  }
+
+  _onMouseout (d, el) {
+    if (this.config.get('tooltipEnabled')) {
+      const tooltipId = d ? d.accessor.tooltip : _.map(this.params.activeAccessorData, a => a.tooltip)
+      this._actionman.fire('HideComponent', tooltipId)
+    }
+    _.each(el ? [el] : document.querySelectorAll(this.selectors.node), el => el.classList.remove('active'))
   }
 }
 
