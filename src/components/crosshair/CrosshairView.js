@@ -67,10 +67,10 @@ class CrosshairView extends ContrailChartsView {
     svgCrosshair.exit().remove()
 
     // Show tooltip
-    const pos = this.svg.node().getBoundingClientRect()
+    // point holds offset x and y. config x1 and y1 has the min range for x and y axis.
     const tooltipOffset = {
-      left: point[0] + pos.left,
-      top: point[1] + pos.top,
+      left: point[0] - config.x1,
+      top: point[1] - config.y1
     }
     this._actionman.fire('ShowComponent', this.config.get('tooltip'), tooltipOffset, data)
   }

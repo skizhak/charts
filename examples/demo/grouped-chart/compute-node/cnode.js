@@ -548,7 +548,7 @@ const bubbleChartConfig = {
   ]
 }
 
-const chartConfigs = [ pieChartConfig, lbChartConfig1, bubbleChartConfig , areaChartConfig, lbChartConfig2]
+const chartConfigs = [pieChartConfig, lbChartConfig1, bubbleChartConfig, areaChartConfig, lbChartConfig2]
 const chartView = new coCharts.charts.MultiChartView()
 
 chartView.setConfig({
