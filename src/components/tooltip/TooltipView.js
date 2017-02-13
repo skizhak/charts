@@ -18,7 +18,7 @@ class TooltipView extends ContrailChartsView {
    */
   show (offset, data) {
     this._loadTemplate(data)
-    this.$el.show()
+    this.d3.classed('active', true)
 
     const width = this.el.offsetWidth
     const height = this.el.offsetHeight
@@ -38,7 +38,7 @@ class TooltipView extends ContrailChartsView {
   }
 
   hide () {
-    this.$el.hide()
+    this.d3.classed('active', false)
   }
 
   _loadTemplate (data) {

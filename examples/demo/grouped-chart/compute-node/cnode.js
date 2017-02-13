@@ -204,7 +204,7 @@ const pieChartConfig = {
   type: 'RadialChart',
   dataProvider: {
     config: {
-      formatter: pieDataParser
+      formatter: pieDataParser,
     }
   },
   components: [{
@@ -221,7 +221,7 @@ const pieChartConfig = {
         getLabel: serie => serie.fieldName,
         valueFormatter: formatter.byteFormatter1K,
       },
-      tooltip: 'pie-tooltip-id'
+      tooltip: 'pie-tooltip-id',
     },
   }, {
     id: 'pie-tooltip-id',
@@ -233,7 +233,7 @@ const pieChartConfig = {
           labelFormatter: (dPoint) => {
             return dPoint.fieldName
           },
-          valueFormatter: formatter.byteFormatter1K
+          valueFormatter: formatter.byteFormatter1K,
         },
       ],
     },
@@ -250,7 +250,7 @@ const lbChartConfig1 = {
   type: 'XYChart',
   dataProvider: {
     config: {
-      formatter: cpuStatsParser
+      formatter: cpuStatsParser,
     }
   },
   components: [
@@ -275,27 +275,23 @@ const lbChartConfig1 = {
           {
             accessor: 'AVG(cpu_share)',
             labelFormatter: 'Avg CPU Share',
-            valueFormatter: formatter.toNumber
-          },
-          {
+            valueFormatter: formatter.toNumber,
+          }, {
             accessor: 'AVG(fifteen_min_avg)',
             labelFormatter: 'Avg CPU (15 mins)',
-            valueFormatter: formatter.toNumber
-          },
-          {
+            valueFormatter: formatter.toNumber,
+          }, {
             accessor: 'AVG(five_min_avg)',
             labelFormatter: 'Avg CPU (5 mins)',
-            valueFormatter: formatter.toNumber
-          },
-          {
+            valueFormatter: formatter.toNumber,
+          }, {
             accessor: 'AVG(one_min_avg)',
             labelFormatter: 'Avg CPU (1 min)',
-            valueFormatter: formatter.toNumber
+            valueFormatter: formatter.toNumber,
           }
         ],
       },
-    },
-    {
+    }, {
       id: 'compositey-chart-id',
       type: 'CompositeYChart',
       config: {
@@ -309,10 +305,9 @@ const lbChartConfig1 = {
           y2: ['BarChart', 'LineChart']
         },
         plot: cpuPlotConfig,
-        axis: cpuAxisConfig
+        axis: cpuAxisConfig,
       }
-    },
-    {
+    }, {
       id: 'cpu-crosshair-id',
       type: 'Crosshair',
       config: {
@@ -326,7 +321,7 @@ const areaChartConfig = {
   type: 'XYChart',
   dataProvider: {
     config: {
-      formatter: memStatsParser
+      formatter: memStatsParser,
     }
   },
   components: [
@@ -351,27 +346,23 @@ const areaChartConfig = {
           {
             accessor: 'AVG(total)',
             labelFormatter: 'Total',
-            valueFormatter: formatter.byteFormatter1K
-          },
-          {
+            valueFormatter: formatter.byteFormatter1K,
+          }, {
             accessor: 'AVG(used)',
             labelFormatter: 'Used',
-            valueFormatter: formatter.byteFormatter1K
-          },
-          {
+            valueFormatter: formatter.byteFormatter1K,
+          }, {
             accessor: 'AVG(free)',
             labelFormatter: 'Free',
-            valueFormatter: formatter.byteFormatter1K
-          },
-          {
+            valueFormatter: formatter.byteFormatter1K,
+          }, {
             accessor: 'AVG(cached)',
             labelFormatter: 'Cached',
-            valueFormatter: formatter.byteFormatter1K
-          },
-          {
+            valueFormatter: formatter.byteFormatter1K,
+          }, {
             accessor: 'AVG(buffers)',
             labelFormatter: 'Buffers',
-            valueFormatter: formatter.byteFormatter1K
+            valueFormatter: formatter.byteFormatter1K,
           },
         ],
       },
@@ -390,7 +381,7 @@ const areaChartConfig = {
           y2: ['BarChart', 'LineChart']
         },
         plot: memPlotConfig,
-        axis: memAxisConfig
+        axis: memAxisConfig,
       }
     },
     {
@@ -407,7 +398,7 @@ var lbChartConfig2 = {
   type: 'XYChart',
   dataProvider: {
     config: {
-      formatter: processFlowParser
+      formatter: processFlowParser,
     }
   },
   components: [
@@ -420,17 +411,15 @@ var lbChartConfig2 = {
           {
             accessor: 'AVG(active_flows)',
             labelFormatter: 'Active Flows',
-            valueFormatter: formatter.toNumber
-          },
-          {
+            valueFormatter: formatter.toNumber,
+          }, {
             accessor: 'AVG(added_flows)',
             labelFormatter: 'Added Flows',
-            valueFormatter: formatter.toNumber
-          },
-          {
+            valueFormatter: formatter.toNumber,
+          }, {
             accessor: 'AVG(deleted_flows)',
             labelFormatter: 'Deleted Flows',
-            valueFormatter: formatter.toNumber
+            valueFormatter: formatter.toNumber,
           }
         ],
       },
@@ -459,8 +448,7 @@ var lbChartConfig2 = {
         // We will use default onChangeSelection handler.
         // onChangeSelection: (dataProvider, chart) => {}
       }
-    },
-    {
+    }, {
       id: 'flow-crosshair-id',
       type: 'Crosshair',
       config: {
@@ -510,10 +498,10 @@ const bubbleChartConfig = {
           x: {
             scale: 'scaleLinear',
             formatter: formatter.toFixed1,
-            labelMargin: 5
+            labelMargin: 5,
           },
           sizeAxisBytes: {
-            range: [200, 400]
+            range: [200, 400],
           },
           y1: {
             position: 'left',
@@ -532,17 +520,14 @@ const bubbleChartConfig = {
           {
             accessor: 'process_name',
             labelFormatter: 'Process',
-          },
-          {
+          }, {
             accessor: 'AVG(process_cpu_share)',
             labelFormatter: 'AVG CPU Share',
-          },
-          {
+          }, {
             accessor: 'AVG(process_mem_res)',
             labelFormatter: 'Avg Memory Res',
             valueFormatter: formatter.byteFormatter1K,
-          },
-          {
+          }, {
             accessor: 'AVG(process_mem_virt)',
             labelFormatter: 'Avg Memory Virt',
             valueFormatter: formatter.byteFormatter1K,
@@ -570,7 +555,6 @@ chartView.setData(data, {}, 'node-mem')
 chartView.setData(data, {}, 'node-flow')
 
 chartView.render()
-
 
 let runner = null
 onVisibilityChange()
@@ -602,4 +586,3 @@ function onVisibilityChange () {
 }
 
 document.addEventListener('visibilitychange', onVisibilityChange, false)
-
