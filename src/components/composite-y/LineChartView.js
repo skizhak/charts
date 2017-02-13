@@ -95,17 +95,11 @@ class LineChartView extends XYChartSubView {
 
   _onMouseover (d, el) {
     if (this.config.get('tooltipEnabled')) {
-      const pos = d3.mouse(el)
-      const offset = el.getBoundingClientRect()
-      const dataItem = this.getTooltipData(d.data, pos[0])
-      const tooltipOffset = {
-        left: offset.left + pos[0] - this.xScale.range()[0],
-        top: offset.top + pos[1],
-      }
-
-      this._actionman.fire('ShowComponent', d.accessor.tooltip, tooltipOffset, dataItem)
+      const [left, top] = d3.mouse(this._container)
+      const dataItem = this.getTooltipData(d.data, left)
+      this._actionman.fire('ShowComponent', d.accessor.tooltip, {left, top}, dataItem)
     }
-    el.classList.add('active')
+    el.classList.add(this.selectorClass('active'))
   }
 }
 

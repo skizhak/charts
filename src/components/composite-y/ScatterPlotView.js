@@ -94,15 +94,10 @@ class ScatterPlotView extends XYChartSubView {
 
   _onMouseover (d, el, event) {
     if (this.config.get('tooltipEnabled')) {
-      const parentChart = $(el).parents('.cc-chart')
-      const tooltipPosition = {
-        left: event.clientX - $(parentChart).offset().left + $(window).scrollLeft(),
-        top: event.clientY - $(parentChart).offset().top + $(window).scrollTop()
-      }
-
-      this.d3.select(() => el).classed('active', true)
-      this._actionman.fire('ShowComponent', d.accessor.tooltip, tooltipPosition, d.data)
+      const [left, top] = d3.mouse(this._container)
+      this._actionman.fire('ShowComponent', d.accessor.tooltip, {left, top}, d.data)
     }
+    el.classList.add(this.selectorClass('active'))
   }
 }
 

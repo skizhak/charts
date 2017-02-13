@@ -21,6 +21,7 @@ class PieChartView extends ContrailChartsView {
   get selectors () {
     return _.extend(super.selectors, {
       node: '.arc',
+      active: '.active',
     })
   }
   get events () {
@@ -84,12 +85,7 @@ class PieChartView extends ContrailChartsView {
   }
 
   _onMousemove (d, el, event) {
-    const parentChart = $(el).parents('.cc-chart')
-    const tooltipPosition = {
-      left: event.clientX - $(parentChart).offset().left + $(window).scrollLeft(),
-      top: event.clientY - $(parentChart).offset().top + $(window).scrollTop()
-    }
-
+    const [left, top] = d3.mouse(this._container)
     const onClickCursor = this.config.get('onClickCursor')
     if (onClickCursor) {
       d3.select(el)
@@ -97,18 +93,20 @@ class PieChartView extends ContrailChartsView {
         .style('cursor', () => (typeof (onClickCursor) === 'boolean') ? 'pointer' : onClickCursor)
     }
 
-    el.classList.add('active')
-    this._actionman.fire('ShowComponent', this.config.get('tooltip'), tooltipPosition, d.data)
+    el.classList.add(this.selectorClass('active'))
+    this._actionman.fire('ShowComponent', this.config.get('tooltip'), {left, top}, d.data)
   }
 
   _onMouseout (d, el) {
-    if (this.config.get('onClickCursor')) el.classList.remove('click-me')
+    if (this.config.get('onClickCursor') && el) el.classList.remove('click-me')
+
     this._actionman.fire('HideComponent', this.config.get('tooltip'))
-    _.each(el ? [el] : document.querySelectorAll(this.selectors.node), el => el.classList.remove('active'))
+    const els = el ? [el] : document.querySelectorAll(this.selectors.node)
+    _.each(els, el => el.classList.remove(this.selectorClass('active')))
   }
 
   _onClick (d, el) {
-    el.classList.remove('active')
+    el.classList.remove(this.selectorClass('active'))
     this._actionman.fire('OnClick', d.data, el, this.config.get('onClick'))
   }
 }

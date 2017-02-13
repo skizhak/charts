@@ -11,6 +11,14 @@ class XYChartSubView extends ContrailChartsView {
     // TODO use ConfigModel as a parent
     this._parent = p.parent
   }
+  /**
+   * follow same naming convention for all charts
+   */
+  get selectors () {
+    return _.extend(super.selectors, {
+      active: '.active',
+    })
+  }
 
   get tagName () { return 'g' }
 
@@ -88,7 +96,7 @@ class XYChartSubView extends ContrailChartsView {
 
   _onMouseout (d, el) {
     if (this.config.get('tooltipEnabled')) {
-      const tooltipId = d ? d.accessor.tooltip : _.map(this.params.activeAccessorData, a => a.tooltip)
+      const tooltipId = d && d.accessor ? d.accessor.tooltip : _.map(this.params.activeAccessorData, a => a.tooltip)
       this._actionman.fire('HideComponent', tooltipId)
     }
     _.each(el ? [el] : document.querySelectorAll(this.selectors.node), el => el.classList.remove('active'))

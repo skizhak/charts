@@ -95,16 +95,12 @@ class AreaChartView extends XYChartSubView {
 
   _onMouseover (d, el) {
     if (this.config.get('tooltipEnabled')) {
-      const pos = d3.mouse(el)
-      const offset = el.getBoundingClientRect()
-      const dataItem = this.getTooltipData(pos[0])
-      const tooltipOffset = {
-        top: offset.top + pos[1],
-        left: offset.left + pos[0] - this.xScale.range()[0],
-      }
-      this._actionman.fire('ShowComponent', this.params.activeAccessorData[d.index].tooltip, tooltipOffset, dataItem)
+      const tooltipId = this.params.activeAccessorData[d.index].tooltip
+      const [left, top] = d3.mouse(this._container)
+      const dataItem = this.getTooltipData(left)
+      this._actionman.fire('ShowComponent', tooltipId, {left, top}, dataItem)
     }
-    el.classList.add('active')
+    el.classList.add(this.selectorClass('active'))
   }
 }
 

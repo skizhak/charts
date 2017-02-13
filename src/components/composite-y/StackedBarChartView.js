@@ -117,13 +117,10 @@ class StackedBarChartView extends XYChartSubView {
 
   _onMousemove (d, el, event) {
     if (this.config.get('tooltipEnabled')) {
-      const tooltipOffset = {
-        top: event.pageY,
-        left: event.pageX,
-      }
-      this._actionman.fire('ShowComponent', d.accessor.tooltip, tooltipOffset, d.data)
+      const [left, top] = d3.mouse(this._container)
+      this._actionman.fire('ShowComponent', d.accessor.tooltip, {left, top}, d.data)
     }
-    el.classList.add('active')
+    el.classList.add(this.selectorClass('active'))
   }
 }
 
