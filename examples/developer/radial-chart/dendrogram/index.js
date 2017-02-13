@@ -17,18 +17,21 @@ const chartConfig = {
       colorScale: d3.scaleOrdinal().range(d3.schemeCategory20), // eslint-disable-line no-undef
       drawLinks: false,
       drawRibbons: true,
+      biDirectional: true,
       hierarchyConfig: {
         parse: function(d) {
+          const srcHierarchy = [d.sourcevn, d.sourceip, d.sport]
           const src = {
-            names: [d.sourcevn, d.sourceip, d.sport, d.UuidKey],
-            //names: [d.sourcevn, d.sourceip, d.sport],
-            key: d.UuidKey,
+            //names: [d.sourcevn, d.sourceip, d.sport, d.UuidKey],
+            names: srcHierarchy,
+            id: srcHierarchy.join('-'),
             value: d['agg-bytes']
           }
+          const dstHierarchy = [d.destvn, d.destip, d.dport]
           const dst = {
-            names: [d.destvn, d.destip, d.dport, d.UuidKey],
-            //names: [d.destvn, d.destip, d.dport],
-            key: d.UuidKey,
+            //names: [d.destvn, d.destip, d.dport, d.UuidKey],
+            names: dstHierarchy,
+            id: dstHierarchy.join('-'),
             value: d['agg-bytes']
           }
           return [src, dst]

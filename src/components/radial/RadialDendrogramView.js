@@ -60,69 +60,88 @@ class RadialDendrogramView extends ContrailChartsView {
     const data = this.model.get('data')
     const hierarchyConfig = this.config.get('hierarchyConfig')
     const innerRadius = this.params.radius - this.params.labelMargin
+    // The root node of the hierarchy (tree) we are building.
     const rootNode = {
       name: 'root',
       children: []
     }
+    const leafNodes = []
     let valueSum = 0
     _.each(data, (d, index) => {
-      const leafs = hierarchyConfig.parse(d)
       // Parsing a data element should return a 2 element array: [source, destination]
-      _.each(leafs, (leaf, i) => {
-        // leaf node contains an array of 'names' (ie. the path from root to leaf) and a 'value'
-        if (leaf.value <= 0) {
-          return
-        }
-        let children = rootNode.children
-        let node = null
-        _.each(leaf.names, (name) => {
-          node = _.find(children, (child) => child.name === name)
-          if (!node) {
-            node = {
-              name: name,
-              children: []
-            }
-            children.push(node)
+      const leafs = hierarchyConfig.parse(d)
+      if (leafs[0].value <= 0 || leafs[1].value <= 0) {
+        return
+      }
+      // Check if we havent already created a node pair (link) with the same id.
+      const foundLeafNode = _.find(leafNodes, (leafNode) => {
+        let found = false
+        if (leafNode.id === leafs[0].id) {
+          if (leafNode.otherNode.id === leafs[1].id) {
+            found = true
           }
-          children = node.children
-        })
-        // Now 'node' is the leaf
-        delete node.children
-        if (_.has(node, 'value')) {
-          console.log('Leaf has value: ', node.key, leaf.key)
         }
-        node.value = leaf.value
-        node.type = (i === 0) ? 'src' : 'dst'
-        node.index = index
-        node.id = 'i' + index
-        node.key = leaf.key
-        valueSum += node.value
+        if (leafNode.id === leafs[1].id) {
+          if (leafNode.otherNode.id === leafs[0].id) {
+            found = true
+          }
+        }
+        return found
       })
+      if (foundLeafNode) {
+        foundLeafNode.value += (foundLeafNode.id === leafs[0].id) ? leafs[0].value : leafs[1].value
+        foundLeafNode.otherNode.value += (foundLeafNode.otherNode.id === leafs[0].id) ? leafs[0].value : leafs[1].value
+        valueSum += leafs[0].value + leafs[1].value
+      }
+      else {
+        _.each(leafs, (leaf, i) => {
+          // leaf node contains an array of 'names' (ie. the path from root to leaf) and a 'value'
+          let children = rootNode.children
+          let node = null
+          _.each(leaf.names, (name) => {
+            node = _.find(children, (child) => child.name === name)
+            if (!node) {
+              node = {
+                name: name,
+                children: []
+              }
+              children.push(node)
+            }
+            children = node.children
+          })
+          // Now 'node' is one before leaf
+          const leafNode = {
+            id: leaf.id,
+            otherNode: (i === 0) ? leafs[1] : leafs[0],
+            value: leaf.value,
+            type: (i === 0) ? 'src' : 'dst',
+            linkId: leafs[0].id + '-' + leafs[1].id,
+          }
+          node.children.push(leafNode)
+          valueSum += leafNode.value
+          leafNodes.push(leafNode)
+        })
+      }
     })
     console.log('rootNode: ', rootNode, valueSum)
-    const valueScale = this.config.get('valueScale').domain([1,valueSum]).range([0,360])
-    console.log('valueScale: ', valueScale, valueScale(valueSum/2))
+    const valueScale = this.config.get('valueScale').domain([0.01,valueSum]).range([0,360])
     const hierarchyRootNode = d3.hierarchy(rootNode).sum((d) => valueScale(d.value)).sort((a, b) => b.value - a.value)
     console.log('hierarchyRootNode: ', hierarchyRootNode)
-    // Creat a map of destination nodes
-    const destinations = {}
+    // Creat the links
+    this.links = []
     let maxDepth = 0
-    _.each(hierarchyRootNode.leaves(), (leaf) => {
+    let i = 0
+    let leaves = hierarchyRootNode.leaves()
+    _.each(leaves, (leaf, leafIndex) => {
       maxDepth = Math.max(maxDepth, leaf.depth)
-      if (leaf.data.type === 'dst') {
-        destinations[leaf.data.id] = leaf
+      for(i = leafIndex + 1; i < leaves.length; i++) {
+        if (leaf.data.linkId === leaves[i].data.linkId) {
+          this.links.push(leaf.path(leaves[i]))
+        }
       }
     })
-    // For every source node create a link to its destination.
-    const links = []
-    _.each(hierarchyRootNode.leaves(), (leaf) => {
-      if (leaf.data.type === 'src') {
-        links.push(leaf.path(destinations[leaf.data.id]))
-      }
-    })
-    this.links = links
     console.log('maxDepth: ', maxDepth)
-    console.log('Links: ', links)
+    console.log('Links: ', this.links)
     const extraPaddingPerDepth = _.fill(_.range(maxDepth+1), 0)
     // Create the cluster layout.
     const cluster = d3.cluster().size([360, innerRadius])
@@ -440,19 +459,18 @@ class RadialDendrogramView extends ContrailChartsView {
       this.ribbons.push({
         outerPoints: outerPoints,
         innerPoints: innerPoints,
-        key: src.data.key
+        id: src.data.linkId
       })
     })
     console.log('ribbons: ', this.ribbons)
 
-    const arcs = []
+    this.arcs = []
     hierarchyRootNode.each((n) => {
-      if (!n.parent || !n.children) {
+      if (!n.parent) {
         return
       }
-      arcs.push(n)
+      this.arcs.push(n)
     })
-    this.arcs = arcs
   }
 
   _render () {
@@ -482,7 +500,7 @@ class RadialDendrogramView extends ContrailChartsView {
       const radialLine = d3.radialLine().angle((d) => d[0] / 180 * Math.PI).radius((d) => d[1]).curve(this.config.get('curve'))
       const svgLinks = this.d3.selectAll('.ribbon').data(this.ribbons)
       svgLinks.enter().append('path')
-        .attr('class', (d) => 'ribbon ' + d.key)
+        .attr('class', (d) => 'ribbon ' + d.id)
         .merge(svgLinks)
         .attr('d', (d) => {
           /*
