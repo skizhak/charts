@@ -12,24 +12,24 @@ const chartConfig = {
     config: {
       //radius: 100,
       parentSeparation: 1.0,
-      parentSeparationShrinkFactor: 0.06,
+      parentSeparationShrinkFactor: 0.05,
       parentSeparationDepthThreshold: 4,
-      colorScale: d3.scaleOrdinal().range(d3.schemeCategory20), // eslint-disable-line no-undef
+      colorScale: d3.scaleOrdinal().range(d3.schemeCategory10), // eslint-disable-line no-undef
       drawLinks: false,
       drawRibbons: true,
       biDirectional: true,
       hierarchyConfig: {
         parse: function(d) {
           const srcHierarchy = [d.sourcevn, d.sourceip, d.sport]
+          //const srcHierarchy = [d.sourcevn, d.sourceip]
           const src = {
-            //names: [d.sourcevn, d.sourceip, d.sport, d.UuidKey],
             names: srcHierarchy,
             id: srcHierarchy.join('-'),
             value: d['agg-bytes']
           }
           const dstHierarchy = [d.destvn, d.destip, d.dport]
+          //const dstHierarchy = [d.destvn, d.destip]
           const dst = {
-            //names: [d.destvn, d.destip, d.dport, d.UuidKey],
             names: dstHierarchy,
             id: dstHierarchy.join('-'),
             value: d['agg-bytes']
