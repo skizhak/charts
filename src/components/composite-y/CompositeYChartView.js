@@ -418,42 +418,38 @@ class CompositeYChartView extends ContrailChartsView {
   }
   // TODO move to CrosshairConfig
   getCrosshairConfig () {
-    const data = { circles: [] }
-    const globalXScale = this.params.axis[this.params.plot.x.axis].scale
-    // Prepare crosshair bounding box
-    data.x1 = this.params.xRange[0]
-    data.x2 = this.params.xRange[1]
-    data.y1 = this.params.yRange[1]
-    data.y2 = this.params.yRange[0]
+    const x = this.config.get('plot').x
+    const data = {
+      bubbles: [],
+      // Prepare crosshair bounding box
+      x1: this.params.xRange[0],
+      x2: this.params.xRange[1],
+      y1: this.params.yRange[1],
+      y2: this.params.yRange[0],
+    }
+    const globalXScale = this.params.axis[x.axis].scale
+
     // Prepare x label formatter
-    data.xFormat = this.config.get('axis')[this.params.plot.x.axis].formatter
-    if (!_.isFunction(data.xFormat)) {
-      data.xFormat = d3.timeFormat('%H:%M')
-    }
+    data.xFormat = this.config.get('axis')[x.axis].formatter
+    if (!_.isFunction(data.xFormat)) data.xFormat = d3.timeFormat('%H:%M')
+
     // Prepare line coordinates
-    data.line = {}
-    data.line.x = datum => {
-      return globalXScale(datum[this.params.plot.x.accessor])
-    }
-    data.line.y1 = this.params.yRange[0]
-    data.line.y2 = this.params.yRange[1]
-    // Prepare x label text
-    data.line.text = datum => {
-      return data.xFormat(datum[this.params.plot.x.accessor])
+    data.line = {
+      x: d => globalXScale(d[x.accessor]),
+      y1: this.params.yRange[0],
+      y2: this.params.yRange[1],
+      // Prepare x label text
+      text: d => data.xFormat(d[x.accessor]),
     }
     // Prepare circle data
-    _.each(this._drawings, plotTypeComponent => {
-      _.each(plotTypeComponent.params.activeAccessorData, accessor => {
-        const circleObject = {}
-        circleObject.id = accessor.accessor
-        circleObject.x = datum => {
-          return plotTypeComponent.getScreenX(datum, this.params.plot.x.accessor)
-        }
-        circleObject.y = datum => {
-          return plotTypeComponent.getScreenY(datum, accessor.accessor)
-        }
-        circleObject.color = this.config.getColor([], accessor)
-        data.circles.push(circleObject)
+    _.each(this._drawings, drawing => {
+      _.each(drawing.params.activeAccessorData, accessor => {
+        data.bubbles.push({
+          id: accessor.accessor,
+          x: d => drawing.getScreenX(d, x.accessor),
+          y: d => drawing.getScreenY(d, accessor.accessor),
+          color: this.config.getColor([], accessor),
+        })
       })
     })
     return data
