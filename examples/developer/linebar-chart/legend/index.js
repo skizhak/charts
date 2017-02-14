@@ -5,19 +5,18 @@
 const commons = require('commons')
 
 const formatter = commons.formatter
-const simpleData = []
-
-for (let i = 0; i < 100; i++) {
-  const a = Math.random() * 100
-  simpleData.push({
-    x: 1475760930000 + 1000000 * i,
-    a: a,
-    b: a + Math.random() * 10,
-    c: Math.random() * 100,
-    d: i + (Math.random() - 0.5) * 10,
-    e: (Math.random() - 0.5) * 10
-  })
-}
+const length = 100
+const data = commons.fixture({
+  length: length,
+  data: {
+    x: {linear: true, range: [0, length]},
+    a: {random: true, range: [3, (length - 1) * 3]},
+    b: {random: true, range: [5, (length - 1) * 5], repeat: true},
+    c: {random: true, range: [7, (length - 1) * 7]},
+    d: {linear: true, range: [7, (length - 1) * 7]},
+    e: {random: true, range: [2, (length - 1) * 2]},
+  },
+})
 
 const simpleChartView = new coCharts.charts.XYChartView()
 simpleChartView.setConfig({
@@ -74,7 +73,7 @@ simpleChartView.setConfig({
             enabled: true,
             chart: 'BarChart',
             axis: 'y1',
-            tooltip: 'custom-tooltip',
+            tooltip: 'default-tooltip',
           }, {
             accessor: 'c',
             labelFormatter: 'Label C',
@@ -84,7 +83,7 @@ simpleChartView.setConfig({
             tooltip: 'default-tooltip',
           }, {
             accessor: 'd',
-            labelFormatter: 'Megabytes D',
+            labelFormatter: 'Label D',
             color: '#d62728',
             enabled: true,
             chart: 'LineChart',
@@ -147,7 +146,7 @@ simpleChartView.setConfig({
           }, {
             enabled: true,
             accessor: 'd',
-            labelFormatter: 'Megabytes D',
+            labelFormatter: 'Label D',
             chart: 'LineChart',
             axis: 'y2',
           }
@@ -202,12 +201,6 @@ simpleChartView.setConfig({
       ]
     },
   }, {
-    id: 'custom-tooltip',
-    type: 'Tooltip',
-    config: {
-      template: (data) => '<div class="tooltip-content">Custom tooltip</div>',
-    }
-  }, {
     id: 'message-id',
     type: 'Message',
     config: {
@@ -222,7 +215,7 @@ simpleChartView.setConfig({
   }]
 })
 
-simpleChartView.setData(simpleData)
+simpleChartView.setData(data)
 simpleChartView.renderMessage({
   componentId: 'compositey-chart-id',
   action: 'once',

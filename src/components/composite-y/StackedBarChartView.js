@@ -63,22 +63,23 @@ class StackedBarChartView extends XYChartSubView {
   render () {
     super.render()
 
-    const svgBarGroups = this.d3
+    const start = this.yScale.range()[0]
+    const barGroups = this.d3
       .selectAll(this.selectors.node)
       .data(this._prepareData(), d => d.id)
-    svgBarGroups.enter().append('rect')
+    barGroups.enter().append('rect')
       .attr('class', d => 'bar')
       .attr('x', d => d.x)
-      .attr('y', this.yScale.range()[0])
+      .attr('y', start)
       .attr('height', 0)
       .attr('width', d => d.w)
-      .merge(svgBarGroups).transition().ease(d3.easeLinear).duration(this.params.duration)
+      .merge(barGroups).transition().ease(d3.easeLinear).duration(this.params.duration)
       .attr('fill', d => d.color)
       .attr('x', d => d.x)
       .attr('y', d => d.y)
       .attr('height', d => d.h)
       .attr('width', d => d.w)
-    svgBarGroups.exit().remove()
+    barGroups.exit().remove()
   }
 
   _prepareData () {

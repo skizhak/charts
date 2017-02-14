@@ -6,12 +6,12 @@ const commons = require('commons')
 
 const length = 20
 const data = commons.fixture({
-  length: 20,
+  length: length,
   data: {
     x: {linear: true, range: [0, length]},
-    a: {linear: true, range: [0, length * 3], gap: true},
-    b: {linear: true, range: [0, length * 5], repeat: true},
-    c: {linear: true, range: [0, length * 7]},
+    a: {linear: true, range: [3, (length - 1) * 3], gap: true},
+    b: {linear: true, range: [5, (length - 1) * 5], repeat: true},
+    c: {linear: true, range: [7, (length - 1) * 7]},
   },
 })
 
