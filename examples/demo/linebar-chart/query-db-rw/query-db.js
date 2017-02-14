@@ -44,6 +44,7 @@ queryChart.setConfig({
           y1: ['StackedBarChart', 'LineChart'],
           y2: ['LineChart']
         },
+        crosshair: 'crosshair-id',
         plot: {
           x: {
             accessor: 'x',
