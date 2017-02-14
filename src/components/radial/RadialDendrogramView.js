@@ -100,11 +100,14 @@ class RadialDendrogramView extends ContrailChartsView {
           // leaf node contains an array of 'names' (ie. the path from root to leaf) and a 'value'
           let children = this.rootNode.children
           let node = null
+          const namePath = []
           _.each(leaf.names, (name) => {
+            namePath.push(name)
             node = _.find(children, (child) => child.name === name)
             if (!node) {
               node = {
                 name: name,
+                namePath: namePath.slice(0),
                 children: []
               }
               children.push(node)
@@ -402,10 +405,23 @@ class RadialDendrogramView extends ContrailChartsView {
         .endAngle((n) => Math.PI * n.angleRange[1] / 180)
       const svgArcs = this.d3.selectAll('.arc').data(this.arcs)
       svgArcs.enter().append('path')
+        .attr('id', (d) => d.data.namePath.join('-'))
         .attr('class', (d) => 'arc arc-' + d.depth)
         .style('fill', (d) => this.config.get('colorScale')(d.depth))
         .merge(svgArcs)
         .attr('d', arc)
+
+      // Arc labels
+      const svgArcLabels = this.d3.selectAll('.arc-label').data(this.arcs)
+      svgArcLabels.enter().append('text')
+        .attr('x', 5)
+        .attr('dy', 8)
+        .append('textPath')
+        .attr('class', 'arc-label')
+        .attr('xlink:href', (d) => '#' + d.data.namePath.join('-'))
+        //.attr('startOffset', '50%')
+        .merge(svgArcLabels)
+        .text((d) => d.data.namePath[d.data.namePath.length-1])
     }
   }
 
