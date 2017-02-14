@@ -61,6 +61,7 @@ const config = {
     'developer/lb-tooltip': path.join(__dirname, '/examples/developer/linebar-chart/tooltip/'),
     'developer/live': path.join(__dirname, '/examples/developer/linebar-chart/live/'),
     'developer/grouped-bar': path.join(__dirname, '/examples/developer/linebar-chart/grouped-bar-chart/'),
+    'developer/stacked-bar': path.join(__dirname, '/examples/developer/linebar-chart/stacked-bar-chart/'),
     'developer/navigation': path.join(__dirname, '/examples/developer/linebar-chart/navigation/'),
     'developer/pie': path.join(__dirname, '/examples/developer/radial-chart/pie/'),
     'developer/dendrogram': path.join(__dirname, '/examples/developer/radial-chart/dendrogram/'),
