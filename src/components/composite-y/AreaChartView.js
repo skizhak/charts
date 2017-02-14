@@ -43,6 +43,20 @@ class AreaChartView extends XYChartSubView {
     return domains
   }
   /**
+  * @override
+  * Y coordinate calculation considers position is being stacked
+  */
+  getScreenY (dataElem, yAccessor) {
+    const stackGroups = _.groupBy(this.params.activeAccessorData, 'stack')
+    const stackName = _.find(this.params.activeAccessorData, config => config.accessor === yAccessor).stack
+    let stackedValue = 0
+    _.takeWhile(stackGroups[stackName], accessorConfig => {
+      stackedValue += (dataElem[accessorConfig.accessor] || 0)
+      return accessorConfig.accessor !== yAccessor
+    })
+    return this.yScale(stackedValue)
+  }
+  /**
    * Render all areas in a single stack unless specific stack names specified
    */
   render () {
@@ -82,9 +96,7 @@ class AreaChartView extends XYChartSubView {
   getTooltipData (xPos) {
     const data = this.model.data
     const xAccessor = this.params.plot.x.accessor
-    const xBisector = d3.bisector(d => {
-      return d[xAccessor]
-    }).left
+    const xBisector = d3.bisector(d => d[xAccessor]).left
     const xVal = this.xScale.invert(xPos)
     const index = xBisector(data, xVal, 1)
     const dataItem = xVal - data[index - 1][xAccessor] > data[index][xAccessor] - xVal ? data[index] : data[index - 1]

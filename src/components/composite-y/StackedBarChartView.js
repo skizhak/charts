@@ -47,21 +47,17 @@ class StackedBarChartView extends XYChartSubView {
     return domains
   }
   /**
-  * Override for calculating the Y coordinate of a stacked elem.
-  * Used by CrosshairView render data preparation.
+  * @override
+  * Y coordinate calculation considers position is being stacked
   */
   getScreenY (dataElem, yAccessor) {
-    let stackedY = 0
-    let found = false
-    _.each(this.params.activeAccessorData, accessor => {
-      if (accessor.accessor === yAccessor) {
-        found = true
-      }
-      if (!found) {
-        stackedY += dataElem[accessor.accessor]
-      }
+    if (_.isNil(dataElem[yAccessor])) return undefined
+    let stackedValue = 0
+    _.takeWhile(this.params.activeAccessorData, accessorConfig => {
+      stackedValue += (dataElem[accessorConfig.accessor] || 0)
+      return accessorConfig.accessor !== yAccessor
     })
-    return this.yScale(stackedY + dataElem[yAccessor])
+    return this.yScale(stackedValue)
   }
 
   render () {
@@ -92,21 +88,22 @@ class StackedBarChartView extends XYChartSubView {
     const bandWidthHalf = (this.bandWidth / 2)
     _.each(data, d => {
       const x = d[this.params.plot.x.accessor]
-      let stackedY = start
+      let stackedValue = start
       // y coordinate to stack next bar to
       _.each(this.params.activeAccessorData, accessor => {
         const key = accessor.accessor
+        const value = d[key] || 0
         const obj = {
           id: x + '-' + key,
           x: this.xScale(x) - bandWidthHalf,
-          y: this.yScale(d[key] - start + stackedY),
-          h: this.yScale(start) - this.yScale(d[key]),
+          y: this.yScale(value - start + stackedValue),
+          h: this.yScale(start) - this.yScale(value + (stackedValue === start ? 0 : start)),
           w: this.bandWidth,
           color: this.config.getColor(d, accessor),
           accessor: accessor,
           data: d,
         }
-        stackedY += (d[key] - start)
+        stackedValue += value
         flatData.push(obj)
       })
     })
