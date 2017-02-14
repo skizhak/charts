@@ -14,6 +14,14 @@ const _menuItems = {
     title: 'Refresh chart',
     icon: 'fa fa-refresh',
   },
+  Freeze: {
+    title: 'Stop Live Update',
+    icon: 'fa fa-stop',
+  },
+  Unfreeze: {
+    title: 'Start Live Update',
+    icon: 'fa fa-play',
+  },
   ColorPicker: {
     title: 'Select color for serie',
     icon: 'fa fa-eyedropper',
@@ -33,11 +41,6 @@ class ControlPanelView extends ContrailChartsView {
     this.listenTo(this.config, 'change', this.render)
   }
 
-  get events () {
-    return {
-      'click .control-panel-item': '_onMenuItemClick',
-    }
-  }
   get selectors () {
     return _.extend({}, super.selectors, {
       panel: '.panel',
@@ -47,8 +50,16 @@ class ControlPanelView extends ContrailChartsView {
     })
   }
 
+  get events () {
+    return {
+      [`click ${this.selectors.menuItem}`]: '_onMenuItemClick',
+    }
+  }
+
   render () {
-    const configs = _.map(this.config.get('menu'), config => _.extend({}, config, _menuItems[config.id]))
+    const configs = _.map(this.config.get('menu'), config => {
+      return _.extend({}, config, _menuItems[config.id])
+    })
     const menuItems = this.d3.select(this.selectors.menuItems).selectAll(this.selectors.menuItem)
       .data(configs, config => config.id)
       .classed('disabled', d => d.disabled)

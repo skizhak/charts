@@ -28,6 +28,14 @@ setInterval(() => {
 chart.setConfig({
   id: 'chart',
   components: [{
+    id: 'control-panel-id',
+    type: 'ControlPanel',
+    config: {
+      menu: [{
+        id: 'Freeze',
+      }],
+    }
+  }, {
     id: 'compositey-id',
     type: 'CompositeYChart',
     config: {
