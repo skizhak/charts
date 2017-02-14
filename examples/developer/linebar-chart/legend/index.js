@@ -18,8 +18,8 @@ const data = commons.fixture({
   },
 })
 
-const simpleChartView = new coCharts.charts.XYChartView()
-simpleChartView.setConfig({
+const chart = new coCharts.charts.XYChartView()
+chart.setConfig({
   id: 'chart-legend',
   components: [{
     type: 'LegendPanel',
@@ -175,7 +175,6 @@ simpleChartView.setConfig({
         accessor: 'x',
         valueFormatter: formatter.extendedISOTime,
       },
-
       dataConfig: [
         {
           accessor: 'a',
@@ -215,8 +214,8 @@ simpleChartView.setConfig({
   }]
 })
 
-simpleChartView.setData(data)
-simpleChartView.renderMessage({
+chart.setData(data)
+chart.renderMessage({
   componentId: 'compositey-chart-id',
   action: 'once',
   messages: [{

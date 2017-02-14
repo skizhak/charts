@@ -1,16 +1,24 @@
 /*
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
-
 const _ = require('lodash')
 const ContrailChartsConfigModel = require('contrail-charts-config-model')
 
-class TooltipConfigModel extends ContrailChartsConfigModel {
+module.exports = class TooltipConfigModel extends ContrailChartsConfigModel {
   get defaults () {
     return {
       // Which tooltip ids to accept. If empty accept all.
       acceptFilters: [],
+      sticky: false,
     }
+  }
+
+  get sourceId () {
+    return this._parent.id
+  }
+  // TODO
+  get stickyMargin () {
+    return {left: 0, right: 0}
   }
 
   getFormattedData (inData) {
@@ -35,5 +43,3 @@ class TooltipConfigModel extends ContrailChartsConfigModel {
     return outData
   }
 }
-
-module.exports = TooltipConfigModel

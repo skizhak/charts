@@ -125,6 +125,7 @@ class XYChartView extends ContrailChartsView {
   _initComponents () {
     _.each(this._config.components, (component, index) => {
       component.config.order = index
+      component.config.id = component.id
       this._registerComponent(component.type, component.config, this._dataProvider, component.id)
     })
 

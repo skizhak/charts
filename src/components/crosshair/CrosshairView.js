@@ -83,11 +83,11 @@ class CrosshairView extends ContrailChartsView {
     lines.exit().remove()
 
     // Show tooltip
-    const tooltipOffset = {
+    const tooltipPosition = {
       left: this.svgOffset.left + point[0],
       top: this.svgOffset.top + point[1],
     }
-    this._actionman.fire('ShowComponent', this.config.get('tooltip'), tooltipOffset, data)
+    this._actionman.fire('ShowComponent', this.config.get('tooltip'), tooltipPosition, data)
   }
 
   hide () {
