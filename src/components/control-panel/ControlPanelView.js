@@ -3,36 +3,13 @@
  */
 require('./control-panel.scss')
 const _ = require('lodash')
-const $ = require('jquery')
 const d3 = require('d3')
 const ContrailChartsView = require('contrail-charts-view')
 const _template = require('./control-panel.html')
 const _panelTemplate = require('./panel.html')
 const _actionTemplate = require('./action.html')
-const _menuItems = {
-  Refresh: {
-    title: 'Refresh chart',
-    icon: 'fa fa-refresh',
-  },
-  Freeze: {
-    title: 'Stop Live Update',
-    icon: 'fa fa-stop',
-  },
-  Unfreeze: {
-    title: 'Start Live Update',
-    icon: 'fa fa-play',
-  },
-  ColorPicker: {
-    title: 'Select color for serie',
-    icon: 'fa fa-eyedropper',
-  },
-  Filter: {
-    title: 'Select serie to show',
-    icon: 'fa fa-filter',
-  }
-}
 
-class ControlPanelView extends ContrailChartsView {
+module.exports = class ControlPanelView extends ContrailChartsView {
   constructor (p = {}) {
     super(p)
     super.render(_template())
@@ -58,7 +35,7 @@ class ControlPanelView extends ContrailChartsView {
 
   render () {
     const configs = _.map(this.config.get('menu'), config => {
-      return _.extend({}, config, _menuItems[config.id])
+      return _.extend({}, config, this.config.menuItems[config.id])
     })
     const menuItems = this.d3.select(this.selectors.menuItems).selectAll(this.selectors.menuItem)
       .data(configs, config => config.id)
@@ -91,11 +68,13 @@ class ControlPanelView extends ContrailChartsView {
     const panel = this.el.querySelector(this.selectors.panel)
     panel.innerHTML = _panelTemplate(config)
     const container = panel.querySelector(this.selectors.container)
-    $(panel).toggle()
+    panel.classList.toggle('hide')
     const actionId = this._opened ? 'HideComponent' : 'ShowComponent'
     this._opened = !this._opened
     this._actionman.fire(actionId, config.component, container)
   }
+
+  // Event handlers
 
   _onMenuItemClick (d, el) {
     d3.event.stopPropagation()
@@ -103,5 +82,3 @@ class ControlPanelView extends ContrailChartsView {
     else this._actionman.fire(d.id, d)
   }
 }
-
-module.exports = ControlPanelView
