@@ -18,6 +18,9 @@ const _actions = []
 class ChartView extends ContrailChartsView {
   constructor (p) {
     super(p)
+    this.initialize()
+  }
+  initialize () {
     this._charts = {}
     this._dataModel = new ContrailChartsDataModel()
     this._dataProvider = new handlers.DataProvider({ parentDataModel: this._dataModel })
@@ -49,11 +52,36 @@ class ChartView extends ContrailChartsView {
   * This config needs to be set before setData because when setting data we need the sub chart to be already defined in order to set data into it.
   */
   setConfig (config) {
+    if (this._config) this.reset()
     this._config = config
     // Initialize parent components
     this._initComponents()
     // Initialize child charts
     this._initCharts()
+  }
+
+  render () {
+    _.each(this._charts, (chart) => {
+      chart.render()
+    })
+    _.each(this._components, (component) => {
+      component.render()
+    })
+  }
+
+  reset () {
+    this.remove()
+    this.initialize()
+  }
+
+  remove () {
+    _.each(_actions, action => this._actionman.unset(action, this))
+    _.each(this._charts, (chart) => {
+      chart.remove()
+    })
+    this._charts = {}
+    this._dataModel = undefined
+    this._dataProvider = undefined
   }
 
   _registerHandler (type, config) {
@@ -154,15 +182,6 @@ class ChartView extends ContrailChartsView {
 
   _isEnabledHandler (type) {
     return this._isEnabled(this._config.handlers, type)
-  }
-
-  render () {
-    _.each(this._charts, (chart) => {
-      chart.render()
-    })
-    _.each(this._components, (component) => {
-      component.render()
-    })
   }
 }
 

@@ -135,4 +135,4 @@ chartView.setConfig({
 // chartView.setData(complexData, {}, 'grouped-chart1')
 // chartView.setData(complexData, {}, 'grouped-chart2')
 chartView.setData(simpleData, {}, 'grouped-chart-navigation')
-chartView.render()
+// chartView.render()

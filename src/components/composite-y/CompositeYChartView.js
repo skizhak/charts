@@ -74,6 +74,13 @@ class CompositeYChartView extends ContrailChartsView {
     this._ticking = false
   }
 
+  remove () {
+    super.remove()
+    window.removeEventListener('resize', this._onResize)
+    _.each(this._drawings, drawing => drawing.remove())
+    this._drawings = []
+  }
+
   showCrosshair (point) {
     const crosshairId = this.config.get('crosshair')
     const data = this.getCrosshairData(point)

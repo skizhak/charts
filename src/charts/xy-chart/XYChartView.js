@@ -23,8 +23,12 @@ const _actions = [
 */
 class XYChartView extends ContrailChartsView {
 
-  constructor (p) {
-    super(p)
+  constructor (...args) {
+    super(...args)
+    this.initialize.apply(this, ...args)
+  }
+
+  initialize () {
     this._dataModel = new ContrailChartsDataModel()
     this._dataProvider = new handlers.DataProvider({ parentDataModel: this._dataModel })
     this._components = []
@@ -49,11 +53,13 @@ class XYChartView extends ContrailChartsView {
     this._dataModel.set(dataConfig, { silent: true })
   }
   /**
-  * Sets the configuration for this chart as a simple object.
-  * Instantiate the required views if they do not exist yet, set their configurations otherwise.
-  * Setting configuration to a rendered chart will trigger a ConfigModel change event that will cause the chart to be re-rendered.
-  */
+   * Sets the configuration for this chart as a simple object.
+   * Instantiate the required views if they do not exist yet, set their configurations otherwise.
+   * Updating configuration to a rendered chart will trigger a ConfigModel change event that will cause the chart to be re-rendered.
+   * calling setConfig on already rendered chart will reset the chart.
+   */
   setConfig (config) {
+    if (this._config) this.reset()
     this._config = config
     this.setElement(`#${config.id}`)
     // Todo Fix chart init similar to that of component. use the render via ContrailChartsView instead
@@ -82,6 +88,27 @@ class XYChartView extends ContrailChartsView {
     _.each(this._components, (component) => {
       component.render()
     })
+  }
+  /**
+   * Remove and re-initialize ChartView.
+   */
+  reset () {
+    this.remove()
+    this.initialize({})
+  }
+  /**
+   * Removes chart view and its components.
+   * All actions will be unregistered, individual components will be removed except the parent container.
+   */
+  remove () {
+    _.each(_actions, action => this._actionman.unset(action, this))
+    _.each(this._components, component => {
+      component.remove()
+    })
+    this._dataModel = undefined
+    this._dataProvider = undefined
+    this._components = []
+    this._actionman = undefined
   }
 
   renderMessage (msgObj) {

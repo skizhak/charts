@@ -23,6 +23,10 @@ class RadialChartView extends ContrailView {
 
   constructor (p = {}) {
     super(p)
+    this.initialize()
+  }
+
+  initialize () {
     this._dataModel = new ContrailChartsDataModel()
     this._dataProvider = new SerieProvider({ parent: this._dataModel })
     this._components = []
@@ -34,6 +38,22 @@ class RadialChartView extends ContrailView {
     _.each(this._components, (component) => {
       component.render()
     })
+  }
+
+  reset () {
+    this.remove()
+    this.initialize()
+  }
+
+  remove () {
+    _.each(_actions, action => this._actionman.unset(action, this))
+    _.each(this._components, (component) => {
+      component.remove()
+    })
+    this._dataModel = undefined
+    this._dataProvider = undefined
+    this._components = []
+    this._actionman = undefined
   }
   /**
   * Provide data for this chart as a simple array of objects.
@@ -54,6 +74,7 @@ class RadialChartView extends ContrailView {
   * Setting configuration to a rendered chart will trigger a ConfigModel change event that will cause the chart to be re-rendered.
   */
   setConfig (config) {
+    if (this._config) this.reset()
     this._config = config
     this.setElement(`#${config.id}`)
     this._container = this.el.parentElement

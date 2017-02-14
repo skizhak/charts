@@ -227,4 +227,4 @@ chartView.setConfig({
 // chartView.setData(tsData, {}, 'grouped-chart2')
 chartView.setData(simpleData, {}, 'navigation-chart')
 chartView.setData(simpleData, {}, 'grouped-chart3')
-chartView.render()
+// chartView.render()

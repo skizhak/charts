@@ -368,4 +368,4 @@ chartView.setConfig({
 chartView.setData(data, {}, 'vn-pie')
 chartView.setData(data, {}, 'vn-ports')
 chartView.setData(data, {}, 'vn-traffic')
-chartView.render()
+// chartView.render()

@@ -137,6 +137,17 @@ class ContrailChartsView extends ContrailView {
   hide () {
     this.$el.hide()
   }
+
+  /**
+   * Stop listening to config and model. Remove the view from the dom.
+   */
+  remove () {
+    if (this.config) this.stopListening(this.config)
+    if (this.model) this.stopListening(this.model)
+    this.params = {}
+    super.remove()
+  }
+
   /**
    * First component which uses shared svg container appends svg element to container
    * There is a div wrapper over svg to workaround FF bug, when svg data-order attribute is not set

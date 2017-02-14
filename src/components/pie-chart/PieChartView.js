@@ -72,6 +72,11 @@ class PieChartView extends ContrailChartsView {
     this._ticking = false
   }
 
+  remove () {
+    super.remove()
+    window.removeEventListener('resize', this._onResize)
+  }
+
   _calculateDimensions () {
     if (!this.params.chartWidth) {
       this.params.chartWidth = this._container.getBoundingClientRect().width

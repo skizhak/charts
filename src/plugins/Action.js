@@ -67,6 +67,7 @@ class Action {
   /**
    * Changes enable/disable state
    * Notifies "enable" Event
+   * Notifies "enable" Event
    */
   enable () {
     if (!this._deny) return
@@ -88,6 +89,16 @@ class Action {
    * @param selection Array
    */
   evaluate (selection) {
+  }
+  /**
+   * Remove registrar from action's registrars list
+   * @param registrar
+   */
+  unRegister (registrar) {
+    const instance = instances[this.id]
+    if (_.includes(instance.registrars, registrar)) {
+      _.remove(instance.registrars, r => r.el.id === registrar.el.id)
+    }
   }
   /**
    * Override in Concrete Command

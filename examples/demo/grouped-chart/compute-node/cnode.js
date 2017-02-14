@@ -572,7 +572,7 @@ function run () {
   chartView.setData(newDataPoint, {}, 'node-mem')
   chartView.setData(newDataPoint, {}, 'node-flow')
 
-  chartView.render()
+  // chartView.render()
 }
 
 function onVisibilityChange () {
