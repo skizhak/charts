@@ -79,15 +79,15 @@ const cpuAxisConfig = {
   y1: {
     position: 'left',
     label: '',
-    ticks: 5,
-    formatter: formatter.toFixed1,
+    ticks: 4,
+    formatter: formatter.toInteger,
     labelMargin: 15,
   },
   y2: {
     position: 'right',
     label: '',
-    ticks: 5,
-    formatter: formatter.toFixed1,
+    ticks: 4,
+    formatter: formatter.toInteger,
     labelMargin: 15,
   }
 }
@@ -100,13 +100,13 @@ const memAxisConfig = {
   },
   y1: {
     position: 'left',
-    ticks: 5,
+    ticks: 4,
     formatter: formatter.byteFormatter1K,
     labelMargin: 15,
   },
   y2: {
     position: 'right',
-    ticks: 5,
+    ticks: 4,
     formatter: formatter.byteFormatter1K,
     labelMargin: 15,
   }
@@ -371,8 +371,8 @@ const areaChartConfig = {
       id: 'mem-chart-id',
       type: 'CompositeYChart',
       config: {
-        marginLeft: 110,
-        marginRight: 80,
+        marginLeft: 90,
+        marginRight: 70,
         chartHeight: 300,
         crosshair: 'mem-crosshair-id',
         possibleChartTypes: {

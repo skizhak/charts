@@ -11,167 +11,178 @@ const _c = commons._c
 const queryChart = new coCharts.charts.XYChartView()
 queryChart.setConfig({
   id: 'query-db-chart',
-  components: [{
-    type: 'LegendPanel',
-    config: {
-      sourceComponent: 'query-db-compositey',
-      palette: _c.lbColorScheme17,
-      editable: {
-        colorSelector: true,
-        chartSelector: true
-      },
-      placement: 'horizontal',
-      filter: true,
-    },
-  }, {
-    id: 'query-db-compositey',
-    type: 'CompositeYChart',
-    config: {
-      marginLeft: 80,
-      marginRight: 80,
-      chartHeight: 400,
-      possibleChartTypes: {
-        y1: ['StackedBarChart', 'LineChart'],
-        y2: ['LineChart']
-      },
-      plot: {
-        x: {
-          accessor: 'x',
-          labelFormatter: 'Time',
-          axis: 'x'
-        },
-        y: [
-          {
-            accessor: 'a',
-            labelFormatter: 'DB Read',
-            enabled: true,
-            chart: 'StackedBarChart',
-            axis: 'y1'
-          }, {
-            accessor: 'b',
-            labelFormatter: 'DB Write',
-            enabled: true,
-            chart: 'StackedBarChart',
-            axis: 'y1',
-          }, {
-            accessor: 'c',
-            labelFormatter: 'QE Queries',
-            enabled: true,
-            chart: 'LineChart',
-            axis: 'y2'
-          }
-        ]
-      },
-      axis: {
-        x: {
-          formatter: formatter.extendedISOTime,
-        },
-        y1: {
-          position: 'left',
-          formatter: formatter.byteFormatter,
-          domain: [0, undefined],
-        },
-        y2: {
-          position: 'right',
-          formatter: formatter.toInteger,
-        }
+  components: [
+    {
+      id: 'control-panel-id',
+      type: 'ControlPanel',
+      config: {
+        menu: [{
+          id: 'Freeze',
+        }],
       }
     },
-  }, {
-    type: 'Navigation',
-    config: {
-      marginLeft: 80,
-      marginRight: 80,
-      chartHeight: 200,
-      selection: [75, 100],
-      plot: {
-        x: {
-          accessor: 'x',
-          labelFormatter: 'Time',
-          axis: 'x',
+    {
+      type: 'LegendPanel',
+      config: {
+        sourceComponent: 'query-db-compositey',
+        palette: _c.lbColorScheme17,
+        editable: {
+          colorSelector: true,
+          chartSelector: true
         },
-        y: [
+        placement: 'horizontal',
+        filter: true,
+      },
+    }, {
+      id: 'query-db-compositey',
+      type: 'CompositeYChart',
+      config: {
+        marginLeft: 80,
+        marginRight: 80,
+        chartHeight: 400,
+        possibleChartTypes: {
+          y1: ['StackedBarChart', 'LineChart'],
+          y2: ['LineChart']
+        },
+        crosshair: 'crosshair-id',
+        plot: {
+          x: {
+            accessor: 'x',
+            labelFormatter: 'Time',
+            axis: 'x'
+          },
+          y: [
+            {
+              accessor: 'a',
+              labelFormatter: 'DB Read',
+              enabled: true,
+              chart: 'StackedBarChart',
+              axis: 'y1'
+            }, {
+              accessor: 'b',
+              labelFormatter: 'DB Write',
+              enabled: true,
+              chart: 'StackedBarChart',
+              axis: 'y1',
+            }, {
+              accessor: 'c',
+              labelFormatter: 'QE Queries',
+              enabled: true,
+              chart: 'LineChart',
+              axis: 'y2'
+            }
+          ]
+        },
+        axis: {
+          x: {
+            formatter: formatter.extendedISOTime,
+          },
+          y1: {
+            position: 'left',
+            formatter: formatter.byteFormatter,
+            domain: [0, undefined],
+          },
+          y2: {
+            position: 'right',
+            formatter: formatter.toInteger,
+          }
+        }
+      },
+    }, {
+      type: 'Navigation',
+      config: {
+        marginLeft: 80,
+        marginRight: 80,
+        chartHeight: 200,
+        selection: [75, 100],
+        plot: {
+          x: {
+            accessor: 'x',
+            labelFormatter: 'Time',
+            axis: 'x',
+          },
+          y: [
+            {
+              enabled: true,
+              accessor: 'a',
+              labelFormatter: 'DB Read',
+              chart: 'StackedBarChart',
+              axis: 'y1',
+            }, {
+              enabled: true,
+              accessor: 'b',
+              labelFormatter: 'DB Write',
+              chart: 'StackedBarChart',
+              axis: 'y1',
+            }, {
+              enabled: true,
+              accessor: 'c',
+              labelFormatter: 'Queries',
+              chart: 'LineChart',
+              axis: 'y2',
+            }
+          ]
+        },
+        axis: {
+          x: {
+            formatter: formatter.extendedISOTime
+          },
+          y1: {
+            position: 'left',
+            formatter: formatter.byteFormatter,
+            ticks: 5,
+          },
+          y2: {
+            position: 'right',
+            formatter: formatter.toInteger,
+            ticks: 5
+          }
+        }
+      },
+    }, {
+      id: 'default-tooltip',
+      type: 'Tooltip',
+      config: {
+        title: {
+          accessor: 'x',
+          valueFormatter: formatter.extendedISOTime,
+        },
+
+        dataConfig: [
           {
-            enabled: true,
             accessor: 'a',
             labelFormatter: 'DB Read',
-            chart: 'StackedBarChart',
-            axis: 'y1',
+            valueFormatter: formatter.toInteger,
           }, {
-            enabled: true,
             accessor: 'b',
             labelFormatter: 'DB Write',
-            chart: 'StackedBarChart',
-            axis: 'y1',
+            valueFormatter: formatter.toInteger,
           }, {
-            enabled: true,
             accessor: 'c',
             labelFormatter: 'Queries',
-            chart: 'LineChart',
-            axis: 'y2',
+            valueFormatter: formatter.toInteger,
           }
         ]
       },
-      axis: {
-        x: {
-          formatter: formatter.extendedISOTime
-        },
-        y1: {
-          position: 'left',
-          formatter: formatter.byteFormatter,
-          ticks: 5,
-        },
-        y2: {
-          position: 'right',
-          formatter: formatter.toInteger,
-          ticks: 5
-        }
+    }, {
+      id: 'custom-tooltip',
+      type: 'Tooltip',
+      config: {
+        template: (data) => '<div class="tooltip-content">Custom tooltip</div>',
       }
-    },
-  }, {
-    id: 'default-tooltip',
-    type: 'Tooltip',
-    config: {
-      title: {
-        accessor: 'x',
-        valueFormatter: formatter.extendedISOTime,
-      },
-
-      dataConfig: [
-        {
-          accessor: 'a',
-          labelFormatter: 'DB Read',
-          valueFormatter: formatter.toInteger,
-        }, {
-          accessor: 'b',
-          labelFormatter: 'DB Write',
-          valueFormatter: formatter.toInteger,
-        }, {
-          accessor: 'c',
-          labelFormatter: 'Queries',
-          valueFormatter: formatter.toInteger,
-        }
-      ]
-    },
-  }, {
-    id: 'custom-tooltip',
-    type: 'Tooltip',
-    config: {
-      template: (data) => '<div class="tooltip-content">Custom tooltip</div>',
-    }
-  }, {
-    id: 'message-id',
-    type: 'Message',
-    config: {
-      enabled: true,
-    }
-  }, {
-    id: 'crosshair-id',
-    type: 'Crosshair',
-    config: {
-      tooltip: 'default-tooltip',
-    }
-  }]
+    }, {
+      id: 'message-id',
+      type: 'Message',
+      config: {
+        enabled: true,
+      }
+    }, {
+      id: 'crosshair-id',
+      type: 'Crosshair',
+      config: {
+        tooltip: 'default-tooltip',
+      }
+    }]
 })
 
 let simpleData = []

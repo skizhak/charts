@@ -153,121 +153,132 @@ const tooltipDataConfig = _.reduce(dataProcessed.nodeIds, (config, nodeId) => {
 const trafficView = new coCharts.charts.XYChartView()
 trafficView.setConfig({
   id: 'inout-traffic',
-  components: [{
-    type: 'LegendPanel',
-    config: {
-      sourceComponent: 'inout-traffic-compositey',
-      editable: {
-        colorSelector: true,
-        chartSelector: true
-      },
-      placement: 'horizontal',
-      filter: true,
-    }
-  }, {
-    id: 'inout-traffic-compositey',
-    type: 'CompositeYChart',
-    config: {
-      marginInner: 10,
-      marginLeft: 80,
-      marginRight: 80,
-      marginBottom: 40,
-      chartHeight: 400,
-      crosshair: 'crosshair-id',
-      possibleChartTypes: {
-        y1: ['AreaChart', 'LineChart'],
-        y2: ['AreaChart', 'LineChart']
-      },
-      plot: {
-        x: {
-          accessor: 'T',
-          label: 'Time',
-          axis: 'x',
-        },
-        y: mainChartPlotYConfig
-      },
-      axis: {
-        x: {
-          formatter: formatter.extendedISOTime
-        },
-        y1: {
-          position: 'left',
-          label: 'Sum(Bytes)',
-          formatter: formatter.byteFormatter,
-          labelMargin: 15,
-        }
+  components: [
+    {
+      id: 'control-panel-id',
+      type: 'ControlPanel',
+      config: {
+        menu: [{
+          id: 'Freeze',
+        }],
       }
-    }
-  }, {
-    id: 'inout-traffic-navigation',
-    type: 'Navigation',
-    config: {
-      marginInner: 10,
-      marginLeft: 80,
-      marginRight: 80,
-      marginBottom: 40,
-      chartHeight: 200,
-      selection: [60, 100],
-      plot: {
-        x: {
-          accessor: 'T',
-          labelFormatter: 'Time',
-          axis: 'x',
+    },
+    {
+      type: 'LegendPanel',
+      config: {
+        sourceComponent: 'inout-traffic-compositey',
+        editable: {
+          colorSelector: true,
+          chartSelector: true
         },
-        y: navPlotYConfig
-      },
-      axis: {
-        x: {
-          formatter: formatter.extendedISOTime
-        },
-        y1: {
-          position: 'left',
-          formatter: () => '',
-          labelMargin: 15,
-          ticks: 4,
-        }
+        placement: 'horizontal',
+        filter: true,
       }
-    }
-  }, {
-    id: 'default-tooltip',
-    type: 'Tooltip',
-    config: {
-      title: 'Usage Details',
-      dataConfig: tooltipDataConfig
-    }
-  }, {
-    id: 'inout-traffic-controlPanel',
-    type: 'ControlPanel',
-    config: {
-      enabled: true,
-      buttons: [
-        {
-          name: 'filter',
-          title: 'Filter',
-          iconClass: 'fa fa-filter',
-          events: {
-            click: 'filterVariables',
+    },
+    {
+      id: 'inout-traffic-compositey',
+      type: 'CompositeYChart',
+      config: {
+        marginInner: 10,
+        marginLeft: 80,
+        marginRight: 80,
+        marginBottom: 40,
+        chartHeight: 400,
+        crosshair: 'crosshair-id',
+        possibleChartTypes: {
+          y1: ['AreaChart', 'LineChart'],
+          y2: ['AreaChart', 'LineChart']
+        },
+        plot: {
+          x: {
+            accessor: 'T',
+            label: 'Time',
+            axis: 'x',
           },
-          panel: {
-            name: 'accessorData',
-            width: '350px',
+          y: mainChartPlotYConfig
+        },
+        axis: {
+          x: {
+            formatter: formatter.extendedISOTime
+          },
+          y1: {
+            position: 'left',
+            label: 'Sum(Bytes)',
+            formatter: formatter.byteFormatter,
+            labelMargin: 15,
           }
         }
-      ]
-    }
-  }, {
-    id: 'inout-traffic-message',
-    type: 'Message',
-    config: {
-      enabled: true,
-    }
-  }, {
-    id: 'crosshair-id',
-    type: 'Crosshair',
-    config: {
-      tooltip: 'default-tooltip',
-    }
-  }]
+      }
+    }, {
+      id: 'inout-traffic-navigation',
+      type: 'Navigation',
+      config: {
+        marginInner: 10,
+        marginLeft: 80,
+        marginRight: 80,
+        marginBottom: 40,
+        chartHeight: 200,
+        selection: [60, 100],
+        plot: {
+          x: {
+            accessor: 'T',
+            labelFormatter: 'Time',
+            axis: 'x',
+          },
+          y: navPlotYConfig
+        },
+        axis: {
+          x: {
+            formatter: formatter.extendedISOTime
+          },
+          y1: {
+            position: 'left',
+            formatter: () => '',
+            labelMargin: 15,
+            ticks: 4,
+          }
+        }
+      }
+    }, {
+      id: 'default-tooltip',
+      type: 'Tooltip',
+      config: {
+        title: 'Usage Details',
+        dataConfig: tooltipDataConfig
+      }
+    }, {
+      id: 'inout-traffic-controlPanel',
+      type: 'ControlPanel',
+      config: {
+        enabled: true,
+        buttons: [
+          {
+            name: 'filter',
+            title: 'Filter',
+            iconClass: 'fa fa-filter',
+            events: {
+              click: 'filterVariables',
+            },
+            panel: {
+              name: 'accessorData',
+              width: '350px',
+            }
+          }
+        ]
+      }
+    }, {
+      id: 'inout-traffic-message',
+      type: 'Message',
+      config: {
+        enabled: true,
+      }
+    }, {
+      id: 'crosshair-id',
+      type: 'Crosshair',
+      config: {
+        tooltip: 'default-tooltip',
+      }
+    }]
 })
 trafficView.setData(dataProcessed.data)
 trafficView.renderMessage({
