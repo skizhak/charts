@@ -15,6 +15,17 @@ class CrosshairView extends ContrailChartsView {
   get tagName () { return 'g' }
   get zIndex () { return 9 }
   /**
+   * follow same naming convention for all XY chart sub views
+   */
+  get selectors () {
+    return _.extend(super.selectors, {
+      node: '.crosshair-line',
+      line: '.x-line',
+      text: '.x-text',
+      bubble: '.bubble',
+    })
+  }
+  /**
    * @param data
    * @param {Array [x, y]} point mouse offset relative to svg container
    * @param config
@@ -26,49 +37,50 @@ class CrosshairView extends ContrailChartsView {
       return this.hide()
     }
     // Draw crosshair line
-    const svgCrosshair = this.d3.selectAll('.crosshair').data([config.line])
-    const svgCrosshairEnter = svgCrosshair.enter().append('g')
-      .attr('class', 'crosshair')
-    svgCrosshairEnter.append('line')
-      .attr('class', 'x-line')
-      .attr('x1', (d) => d.x(data))
-      .attr('x2', (d) => d.x(data))
-      .attr('y1', (d) => d.y1)
-      .attr('y2', (d) => d.y2)
-    svgCrosshairEnter.append('text')
-      .attr('class', 'x-text')
-      .attr('x', (d) => d.x(data))
-      .attr('y', (d) => d.y1 + 15)
-      .text((d) => d.text(data))
-    svgCrosshairEnter.append('g')
-      .attr('class', 'bubbles')
-    const svgCrosshairEdit = svgCrosshairEnter.merge(svgCrosshair)
+    const lines = this.d3.selectAll(this.selectors.node).data([config.line])
+    const linesEnter = lines.enter().append('g')
+      .attr('class', this.selectorClass('node'))
+    linesEnter
+      .attr('transform', d => `translate(${d.x(data)}, 0)`)
+      .merge(lines)
       .transition().ease(d3.easeLinear).duration(this.config.get('duration'))
-    svgCrosshairEdit.select('.x-line')
-      .attr('x1', (d) => d.x(data))
-      .attr('x2', (d) => d.x(data))
-      .attr('y1', (d) => d.y1)
-      .attr('y2', (d) => d.y2)
-    svgCrosshairEdit.select('.x-text')
-      .attr('x', (d) => d.x(data))
-      .attr('y', (d) => d.y1 + 15)
-      .text((d) => d.text(data))
+      .attr('transform', d => `translate(${d.x(data)}, 0)`)
+    linesEnter.append('line')
+      .attr('class', this.selectorClass('line'))
+      .attr('x1', 0)
+      .attr('x2', 0)
+      .attr('y1', d => d.y1)
+      .attr('y2', d => d.y2)
+    linesEnter.append('text')
+      .attr('class', this.selectorClass('text'))
+      .attr('y', d => d.y1 + 15)
+      .text(d => d.text(data))
+    const update = linesEnter.merge(lines)
+    update.selectAll(this.selectors.line)
+      .attr('y1', d => d.y1)
+      .attr('y2', d => d.y2)
+    update.selectAll(this.selectors.text)
+      .attr('y', d => d.y1 + 15)
+      .text(d => d.text(data))
+
     // Draw bubbles for all enabled y accessors.
-    const svgBubbles = this.d3.select('.crosshair')
-      .select('.bubbles')
-      .selectAll('circle')
-      .data(config.circles, (d) => d.id)
-    svgBubbles.enter().append('circle')
-      .attr('cx', (d) => d.x(data))
-      .attr('cy', (d) => d.y(data))
-      .attr('fill', (d) => d.color)
-      .attr('r', 0)
-      .merge(svgBubbles)
-      .transition().ease(d3.easeLinear).duration(this.config.get('duration'))
-      .attr('cx', (d) => d.x(data))
-      .attr('cy', (d) => d.y(data))
-      .attr('r', this.config.get('bubbleR'))
-    svgCrosshair.exit().remove()
+    update.each((d, i, els) => {
+      const bubbleData = _.filter(config.bubbles, bubble => !!data[bubble.id])
+      const bubbles = d3.select(els[i]).selectAll(this.selectors.bubble)
+        .data(bubbleData, d => d.id)
+      bubbles.enter().append('circle')
+        .classed(this.selectorClass('bubble'), true)
+        .attr('cx', 0)
+        .attr('cy', d => d.y(data))
+        .attr('fill', d => d.color)
+        .attr('r', 0)
+        .merge(bubbles)
+        .transition().ease(d3.easeLinear).duration(this.config.get('duration'))
+        .attr('cy', d => d.y(data))
+        .attr('r', this.config.get('bubbleR'))
+      bubbles.exit().remove()
+    })
+    lines.exit().remove()
 
     // Show tooltip
     const tooltipOffset = {
@@ -79,8 +91,8 @@ class CrosshairView extends ContrailChartsView {
   }
 
   hide () {
-    const svgCrosshair = this.d3.selectAll('.crosshair').data([])
-    svgCrosshair.exit().remove()
+    const lines = this.d3.selectAll(this.selectors.node).data([])
+    lines.exit().remove()
 
     this._actionman.fire('HideComponent', this.config.get('tooltip'))
   }
