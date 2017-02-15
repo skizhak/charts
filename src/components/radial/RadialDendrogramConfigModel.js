@@ -13,12 +13,22 @@ class RadialDendrogramConfigModel extends ContrailChartsConfigModel {
       // The chart height. If not provided will be caculated by View.
       chartHeight: undefined,
 
+      // The duration of transitions.
+      ease: d3.easeCubic,
+      duration: 500,
+
       valueScale: d3.scaleLog(),
       //valueScale: d3.scaleLinear(),
 
       // The separation in degrees between nodes with different parents
       parentSeparation: 1,
       parentSeparationThreshold: 0,
+
+      // Arc width
+      arcWidth: 10,
+
+      // Initial drill down level
+      drillDownLevel: 1,
 
       //curve: d3.curveBundle.beta(0.85)
       //curve: d3.curveBundle.beta(0.95)

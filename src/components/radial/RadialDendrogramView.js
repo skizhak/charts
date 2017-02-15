@@ -14,6 +14,7 @@ class RadialDendrogramView extends ContrailChartsView {
     return {
       'mouseover .arc': '_onMouseover',
       'mouseout .arc': '_onMouseout',
+      'dblclick .arc': '_arcDoubleClick'
     }
   }
 
@@ -59,10 +60,15 @@ class RadialDendrogramView extends ContrailChartsView {
     }
   }
 
+  /**
+  * Build the root node tree structure that will be the input for the d3.hierarchy() layout.
+  * We build one more level than configured in order to allow branching of the last configured level.
+  */
   _prepareRootNode () {
     const data = this.model.get('data')
     const hierarchyConfig = this.config.get('hierarchyConfig')
     const leafNodes = []
+    this.maxDepth = 0
     // The root node of the hierarchy (tree) we are building.
     this.rootNode = {
       name: 'root',
@@ -101,7 +107,11 @@ class RadialDendrogramView extends ContrailChartsView {
           let children = this.rootNode.children
           let node = null
           const namePath = []
-          _.each(leaf.names, (name) => {
+          _.each(leaf.names, (name, depth) => {
+            this.maxDepth = Math.max(this.maxDepth, depth + 1)
+            if (depth >= this.params.drillDownLevel) {
+              return
+            }
             namePath.push(name)
             node = _.find(children, (child) => child.name === name)
             if (!node) {
@@ -128,6 +138,7 @@ class RadialDendrogramView extends ContrailChartsView {
         })
       }
     })
+    console.log('maxDepth: ', this.maxDepth)
     console.log('rootNode: ', this.rootNode, this.valueSum)
   }
 
@@ -139,24 +150,20 @@ class RadialDendrogramView extends ContrailChartsView {
 
   _prepareLinks () {
     this.links = []
-    this.maxDepth = 0
     let i = 0
     const leaves = this.hierarchyRootNode.leaves()
     _.each(leaves, (leaf, leafIndex) => {
-      this.maxDepth = Math.max(this.maxDepth, leaf.depth)
       for(i = leafIndex + 1; i < leaves.length; i++) {
         if (leaf.data.linkId === leaves[i].data.linkId) {
           this.links.push(leaf.path(leaves[i]))
         }
       }
     })
-    console.log('maxDepth: ', this.maxDepth)
     console.log('Links: ', this.links)
   }
 
   _prepareCluster () {
-
-    const extraPaddingPerDepth = _.fill(_.range(this.maxDepth+1), 0)
+    const extraPaddingPerDepth = _.fill(_.range(this.params.drillDownLevel+1), 0)
     // Create the cluster layout.
     const cluster = d3.cluster().size([360, this.params.innerRadius])
     //const cluster = d3.tree().size([360, this.params.innerRadius])
@@ -178,7 +185,7 @@ class RadialDendrogramView extends ContrailChartsView {
 
   _prepareCircles () {
     this.circles = []
-    const radiusScale = d3.scaleLinear().domain([0, this.maxDepth-1]).range([0, this.params.innerRadius]).clamp(true)
+    const radiusScale = d3.scaleLinear().domain([0, this.params.drillDownLevel]).range([0, this.params.innerRadius]).clamp(true)
     this.hierarchyRootNode.each((n) => {
       if (!n.parent || !n.children) {
         return
@@ -243,7 +250,7 @@ class RadialDendrogramView extends ContrailChartsView {
       const dstAncestors = dst.ancestors()
       const outerPoints = []
       _.each(srcAncestors, (n, i) => {
-        if (n.parent) {
+        if (n.parent && n.children) {
           let valueStart = n.valueRange[0]
           if (n.children) {
             let found = false
@@ -266,7 +273,7 @@ class RadialDendrogramView extends ContrailChartsView {
       let i = 0
       for(i = dstAncestors.length-1; i >= 0; i--) {
         let n = dstAncestors[i]
-        if (n.parent) {
+        if (n.parent && n.children) {
           let valueStart = n.valueRange[1]
           if (n.children) {
             let found = false
@@ -290,7 +297,7 @@ class RadialDendrogramView extends ContrailChartsView {
       }
       const innerPoints = []
       _.each(dstAncestors, (n, i) => {
-        if (n.parent) {
+        if (n.parent && n.children) {
           let valueStart = n.valueRange[0]
           if (n.children) {
             let found = false
@@ -312,7 +319,7 @@ class RadialDendrogramView extends ContrailChartsView {
       })
       for(i = srcAncestors.length-1; i >=0; i-- ) {
         let n = srcAncestors[i]
-        if (n.parent) {
+        if (n.parent && n.children) {
           let valueStart = n.valueRange[1]
           if (n.children) {
             let found = false
@@ -368,8 +375,9 @@ class RadialDendrogramView extends ContrailChartsView {
     svgCircles.enter().append('circle')
       .attr('class', 'circle')
       .attr('r', 0)
-    .merge(svgCircles)
+      .merge(svgCircles)
       .attr('r', (d) => d.r + 1)
+    svgCircles.exit().remove()
 
     if (this.params.drawLinks) {
       // Links
@@ -386,42 +394,55 @@ class RadialDendrogramView extends ContrailChartsView {
     if (this.params.drawRibbons) {
       // Ribbons
       const radialLine = d3.radialLine().angle((d) => d[0] / 180 * Math.PI).radius((d) => d[1]).curve(this.config.get('curve'))
-      const svgLinks = this.d3.selectAll('.ribbon').data(this.ribbons)
+      const svgLinks = this.d3.selectAll('.ribbon').data(this.ribbons, (d) => d.id)
       svgLinks.enter().append('path')
-        .attr('class', 'ribbon')
-        .merge(svgLinks)
+        .attr('class', (d) => 'ribbon' + ((d.active) ? ' active' : '') )
+        .merge(svgLinks)//.transition().ease(this.config.get('ease')).duration(this.params.duration)
         .attr('class', (d) => 'ribbon' + ((d.active) ? ' active' : '') )
         .attr('d', (d) => {
           const outerPath = radialLine(d.outerPoints)
           const innerPath = radialLine(d.innerPoints)
-          return outerPath + 'L' + innerPath.substr(1) + 'Z'
+          const innerStitch = 'A' + d.outerPoints[0][1] + ' ' + d.outerPoints[0][1] + ' 0 0 0 '
+          const endingStitch = 'A' + d.outerPoints[0][1] + ' ' + d.outerPoints[0][1] + ' 0 0 0 ' + radialLine([d.outerPoints[0]]).substr(1)
+          return outerPath + innerStitch + innerPath.substr(1) + endingStitch
         })
-
-      // Arcs for parent nodes.
-      const arc = d3.arc()
-        .innerRadius((n) => n.y)
-        .outerRadius((n => n.y + 10))
-        .startAngle((n) => Math.PI * n.angleRange[0] / 180)
-        .endAngle((n) => Math.PI * n.angleRange[1] / 180)
-      const svgArcs = this.d3.selectAll('.arc').data(this.arcs)
-      svgArcs.enter().append('path')
-        .attr('id', (d) => d.data.namePath.join('-'))
-        .attr('class', (d) => 'arc arc-' + d.depth)
-        .style('fill', (d) => this.config.get('colorScale')(d.depth))
-        .merge(svgArcs)
-        .attr('d', arc)
+      svgLinks.exit().remove()
 
       // Arc labels
       const svgArcLabels = this.d3.selectAll('.arc-label').data(this.arcs)
       svgArcLabels.enter().append('text')
         .attr('x', 5)
-        .attr('dy', 8)
+        .attr('dy', this.params.arcWidth / 2)
         .append('textPath')
         .attr('class', 'arc-label')
         .attr('xlink:href', (d) => '#' + d.data.namePath.join('-'))
         //.attr('startOffset', '50%')
-        .merge(svgArcLabels)
+        .merge(svgArcLabels).transition().ease(this.config.get('ease')).duration(this.params.duration)
         .text((d) => d.data.namePath[d.data.namePath.length-1])
+      svgArcLabels.exit().remove()
+
+      // Arcs for parent nodes.
+      const arcEnter = d3.arc()
+        .innerRadius((n) => n.y)
+        .outerRadius((n) => n.y + 1)
+        .startAngle((n) => Math.PI * n.angleRange[0] / 180)
+        .endAngle((n) => Math.PI * n.angleRange[1] / 180)
+      const arc = d3.arc()
+        .innerRadius((n) => n.y)
+        .outerRadius((n) => n.y + this.params.arcWidth)
+        .startAngle((n) => Math.PI * n.angleRange[0] / 180)
+        .endAngle((n) => Math.PI * n.angleRange[1] / 180)
+      const svgArcs = this.d3.selectAll('.arc').data(this.arcs, (d) => d.data.namePath.join('-'))
+      svgArcs.enter().append('path')
+        .attr('id', (d) => d.data.namePath.join('-'))
+        .attr('class', (d) => 'arc arc-' + d.depth)
+        .attr('d', arcEnter)
+        .merge(svgArcs).transition().ease(this.config.get('ease')).duration(this.params.duration)
+        .style('fill', (d) => this.config.get('colorScale')(d.depth))
+        .attr('d', arc)
+      svgArcs.exit().transition().ease(this.config.get('ease')).duration(this.params.duration)
+        .attr('d', arcEnter)
+        .remove()
     }
   }
 
@@ -449,6 +470,17 @@ class RadialDendrogramView extends ContrailChartsView {
       ribbon.active = false
     })
     this._render()
+  }
+
+  _arcDoubleClick (d, el) {
+    if (d.depth < this.maxDepth && d.depth === this.params.drillDownLevel) {
+      // Expand
+      this.config.set('drillDownLevel', this.params.drillDownLevel + 1)
+    }
+    else if (d.depth < this.params.drillDownLevel) {
+      // Collapse
+      this.config.set('drillDownLevel', this.params.drillDownLevel - 1)
+    }
   }
 }
 

@@ -18,10 +18,12 @@ const chartConfig = {
       drawLinks: false,
       drawRibbons: true,
       biDirectional: true,
+      arcWidth: 15,
       hierarchyConfig: {
         parse: function(d) {
           const srcHierarchy = [d.sourcevn, d.sourceip, d.sport]
           //const srcHierarchy = [d.sourcevn, d.sourceip]
+          //const srcHierarchy = [d.sourcevn]
           const src = {
             names: srcHierarchy,
             id: srcHierarchy.join('-'),
@@ -29,6 +31,7 @@ const chartConfig = {
           }
           const dstHierarchy = [d.destvn, d.destip, d.dport]
           //const dstHierarchy = [d.destvn, d.destip]
+          //const dstHierarchy = [d.destvn]
           const dst = {
             names: dstHierarchy,
             id: dstHierarchy.join('-'),
