@@ -1,5 +1,5 @@
 .cc-svg .crosshair {
-	.crosshair {
+	.crosshair-line {
 		.x-line {
 			stroke-width: 1;
 			stroke: #888;
@@ -11,11 +11,9 @@
 			font-weight: bold;
 			fill: #888;
 		}
-		.bubbles {
-			circle {
-				stroke-width: 1;
-				stroke: #fff;
-			}
+		.bubble {
+      stroke-width: 1;
+      stroke: #fff;
 		}
 	}
 }

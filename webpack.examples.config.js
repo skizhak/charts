@@ -51,6 +51,7 @@ const config = {
     'demo/pool-usage': path.join(__dirname, '/examples/demo/radial-chart/pool-usage/pools.js'),
     'demo/vn-detail': path.join(__dirname, '/examples/demo/grouped-chart/vn-detail/vn-detail.js'),
     'demo/cnode': path.join(__dirname, '/examples/demo/grouped-chart/compute-node/cnode.js'),
+    'demo/vr-vn-traffic': path.join(__dirname, '/examples/demo/radial-chart/vr-vn-traffic/vr-vn-traffic.js'),
 
     'developer/multi-shape': path.join(__dirname, '/examples/developer/bubble-chart/multiple-shapes/'),
     'developer/control-panel': path.join(__dirname, '/examples/developer/linebar-chart/control-panel/'),
@@ -60,6 +61,7 @@ const config = {
     'developer/lb-tooltip': path.join(__dirname, '/examples/developer/linebar-chart/tooltip/'),
     'developer/live': path.join(__dirname, '/examples/developer/linebar-chart/live/'),
     'developer/grouped-bar': path.join(__dirname, '/examples/developer/linebar-chart/grouped-bar-chart/'),
+    'developer/stacked-bar': path.join(__dirname, '/examples/developer/linebar-chart/stacked-bar-chart/'),
     'developer/navigation': path.join(__dirname, '/examples/developer/linebar-chart/navigation/'),
     'developer/pie': path.join(__dirname, '/examples/developer/radial-chart/pie/'),
     'developer/dendrogram': path.join(__dirname, '/examples/developer/radial-chart/dendrogram/'),

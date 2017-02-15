@@ -94,7 +94,8 @@ const trafficPlotConfig = {
 const trafficPlotAxisConfig = {
   x: {
     formatter: formatter.extendedISOTime,
-    label: 'Time'
+    label: 'Time',
+    ticks: 6
   },
   y1: {
     position: 'left',
@@ -219,7 +220,6 @@ const chartConfigs = [
           marginRight: 80,
           chartHeight: 275,
           crosshair: 'crosshair-id',
-          xTicks: 6,
           possibleChartTypes: {
             y1: ['BarChart', 'LineChart'],
             y2: ['BarChart', 'LineChart']

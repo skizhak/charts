@@ -34,6 +34,7 @@ chart.setConfig({
     id: 'compositey-id',
     type: 'CompositeYChart',
     config: {
+      crosshair: 'crosshair-id',
       plot: {
         x: {
           accessor: 't',
@@ -75,6 +76,12 @@ chart.setConfig({
           ticks: 10,
         }
       }
+    }
+  }, {
+    id: 'crosshair-id',
+    type: 'Crosshair',
+    config: {
+      tooltip: 'default-tooltip',
     }
   }, {
     id: 'default-tooltip',

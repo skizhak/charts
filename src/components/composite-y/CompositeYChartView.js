@@ -174,8 +174,8 @@ class CompositeYChartView extends ContrailChartsView {
     _.each(domains, (domain, axisName) => {
       if (!_.has(this.params.axis, axisName)) this.params.axis[axisName] = {}
       const axis = this.params.axis[axisName]
-
       axis.position = this.config.getPosition(axisName)
+      axis.domain = domain
       if (!this.hasAxisParam(axisName, 'range')) {
         if (['bottom', 'top'].includes(axis.position)) {
           axis.range = this.params.xRange
@@ -183,20 +183,18 @@ class CompositeYChartView extends ContrailChartsView {
           axis.range = this.params.yRange
         }
       }
-      axis.domain = domain
       if (!_.isFunction(axis.scale) && axis.range) {
-        const scale = this.config.getScale(axisName)
-        scale
-          .domain(axis.domain)
-          .range(axis.range)
-        axis.scale = scale
+        let scale = this.config.getScale(axisName)
         if (this.hasAxisParam(axisName, 'nice') && axis.nice) {
           if (this.hasAxisParam(axisName, 'ticks')) {
-            axis.scale = axis.scale.nice(axis.ticks)
+            scale = axis.scale.nice(axis.ticks)
           } else {
-            axis.scale = axis.scale.nice()
+            scale = axis.scale.nice()
           }
         }
+        scale.domain(axis.domain)
+          .range(axis.range)
+        axis.scale = scale
       }
     })
     this.adjustAxisMargin()
@@ -294,6 +292,8 @@ class CompositeYChartView extends ContrailChartsView {
       .tickPadding(10)
     if (this.hasAxisParam('x', 'ticks')) {
       d3Axis = d3Axis.ticks(axis.ticks)
+    } else {
+      d3Axis = d3Axis.ticks(this.params._xTicks)
     }
     if (this.hasAxisConfig('x', 'formatter')) {
       d3Axis = d3Axis.tickFormat(this.config.get('axis').x.formatter)
@@ -349,10 +349,10 @@ class CompositeYChartView extends ContrailChartsView {
         axisInfo.yAxis = axisInfo.yAxis.ticks(this.params.axis[axisInfo.name].ticks)
       }
       if (!referenceYScale) {
-        referenceYScale = this.params.axis[axisInfo.name].scale
+        referenceYScale = axisInfo.yAxis.scale()
       } else {
         // This is not the first Y axis so adjust the tick values to the first axis tick values.
-        let ticks = referenceYScale.ticks(this.params.yTicks)
+        let ticks = referenceYScale.ticks(this.params._yTicks)
         if (this.hasAxisParam(axisInfo.name, 'ticks')) {
           ticks = referenceYScale.ticks(this.params.axis[axisInfo.name].ticks)
         }
@@ -418,42 +418,38 @@ class CompositeYChartView extends ContrailChartsView {
   }
   // TODO move to CrosshairConfig
   getCrosshairConfig () {
-    const data = { circles: [] }
-    const globalXScale = this.params.axis[this.params.plot.x.axis].scale
-    // Prepare crosshair bounding box
-    data.x1 = this.params.xRange[0]
-    data.x2 = this.params.xRange[1]
-    data.y1 = this.params.yRange[1]
-    data.y2 = this.params.yRange[0]
+    const x = this.config.get('plot').x
+    const data = {
+      bubbles: [],
+      // Prepare crosshair bounding box
+      x1: this.params.xRange[0],
+      x2: this.params.xRange[1],
+      y1: this.params.yRange[1],
+      y2: this.params.yRange[0],
+    }
+    const globalXScale = this.params.axis[x.axis].scale
+
     // Prepare x label formatter
-    data.xFormat = this.config.get('axis')[this.params.plot.x.axis].formatter
-    if (!_.isFunction(data.xFormat)) {
-      data.xFormat = d3.timeFormat('%H:%M')
-    }
+    data.xFormat = this.config.get('axis')[x.axis].formatter
+    if (!_.isFunction(data.xFormat)) data.xFormat = d3.timeFormat('%H:%M')
+
     // Prepare line coordinates
-    data.line = {}
-    data.line.x = datum => {
-      return globalXScale(datum[this.params.plot.x.accessor])
-    }
-    data.line.y1 = this.params.yRange[0]
-    data.line.y2 = this.params.yRange[1]
-    // Prepare x label text
-    data.line.text = datum => {
-      return data.xFormat(datum[this.params.plot.x.accessor])
+    data.line = {
+      x: d => globalXScale(d[x.accessor]),
+      y1: this.params.yRange[0],
+      y2: this.params.yRange[1],
+      // Prepare x label text
+      text: d => data.xFormat(d[x.accessor]),
     }
     // Prepare circle data
-    _.each(this._drawings, plotTypeComponent => {
-      _.each(plotTypeComponent.params.activeAccessorData, accessor => {
-        const circleObject = {}
-        circleObject.id = accessor.accessor
-        circleObject.x = datum => {
-          return plotTypeComponent.getScreenX(datum, this.params.plot.x.accessor)
-        }
-        circleObject.y = datum => {
-          return plotTypeComponent.getScreenY(datum, accessor.accessor)
-        }
-        circleObject.color = this.config.getColor([], accessor)
-        data.circles.push(circleObject)
+    _.each(this._drawings, drawing => {
+      _.each(drawing.params.activeAccessorData, accessor => {
+        data.bubbles.push({
+          id: accessor.accessor,
+          x: d => drawing.getScreenX(d, x.accessor),
+          y: d => drawing.getScreenY(d, accessor.accessor),
+          color: this.config.getColor([], accessor),
+        })
       })
     })
     return data
