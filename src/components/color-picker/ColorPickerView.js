@@ -1,7 +1,7 @@
 /*
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
-require('./color-picker.scss')
+import './color-picker.scss'
 import ContrailChartsView from 'contrail-charts-view'
 import _template from './color-picker.html'
 

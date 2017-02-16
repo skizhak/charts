@@ -4,7 +4,7 @@
 /*
  * Simple title rendering
  */
-require('./title.scss')
+import './title.scss'
 
 module.exports = function TitleView (container, text) {
   const selector = '.cc-title'

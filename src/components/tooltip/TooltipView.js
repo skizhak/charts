@@ -1,6 +1,6 @@
 // Copyright (c) Juniper Networks, Inc. All rights reserved.
 
-require('./tooltip.scss')
+import './tooltip.scss'
 import ContrailChartsView from 'contrail-charts-view'
 import TitleView from 'plugins/title/TitleView'
 import _template from './tooltip.html'

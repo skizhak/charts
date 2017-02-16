@@ -1,9 +1,9 @@
 /*
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
-require('./scatter-plot.scss')
+import './scatter-plot.scss'
 import _ from 'lodash'
-require('d3-transition')
+import 'd3-transition'
 import * as d3Ease from 'd3-ease'
 import XYChartSubView from 'components/composite-y/XYChartSubView'
 

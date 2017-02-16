@@ -1,8 +1,7 @@
 /*
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
-
-require('./legendPanel.scss')
+import './legendPanel.scss'
 import ContrailChartsView from 'contrail-charts-view'
 import * as d3Color from 'd3-color'
 import _template from './legend.html'

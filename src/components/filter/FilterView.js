@@ -1,7 +1,7 @@
 /*
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
-require('./filter.scss')
+import './filter.scss'
 import 'd3'
 import ContrailChartsView from 'contrail-charts-view'
 import _template from './filter.html'

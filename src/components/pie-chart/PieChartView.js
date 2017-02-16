@@ -1,6 +1,6 @@
 // Copyright (c) Juniper Networks, Inc. All rights reserved.
 
-require('./pie-chart.scss')
+import './pie-chart.scss'
 import * as d3Shape from 'd3-shape'
 import ContrailChartsView from 'contrail-charts-view'
 import TitleView from 'plugins/title/TitleView'

@@ -1,7 +1,7 @@
 /*
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
-require('./brush.scss')
+import './brush.scss'
 import 'd3'
 import * as d3Ease from 'd3-ease'
 import ContrailChartsView from 'contrail-charts-view'

@@ -1,7 +1,7 @@
 /*
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
-require('./timeline.scss')
+import './timeline.scss'
 import _ from 'lodash'
 import 'd3'
 import * as d3Ease from 'd3-ease'

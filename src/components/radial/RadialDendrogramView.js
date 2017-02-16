@@ -1,7 +1,7 @@
 /*
  * Copyright (c) 2016 Juniper Networks, Inc. All rights reserved.
  */
-require('./radial-dendogram.scss')
+import './radial-dendogram.scss'
 import _ from 'lodash'
 import 'd3'
 import ContrailChartsView from 'contrail-charts-view'

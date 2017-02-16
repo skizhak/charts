@@ -1,7 +1,7 @@
 /*
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
-require('./composite-y.scss')
+import './composite-y.scss'
 import _ from 'lodash'
 import 'd3'
 import * as d3Array from 'd3-array'

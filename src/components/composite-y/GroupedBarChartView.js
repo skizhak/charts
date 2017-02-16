@@ -1,7 +1,7 @@
 /*
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
-require('./bar-chart.scss')
+import './bar-chart.scss'
 import _ from 'lodash'
 import 'd3'
 import * as d3Ease from 'd3-ease'

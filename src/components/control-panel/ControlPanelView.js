@@ -1,7 +1,7 @@
 /*
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
-require('./control-panel.scss')
+import './control-panel.scss'
 import _ from 'lodash'
 import 'd3'
 import ContrailChartsView from 'contrail-charts-view'

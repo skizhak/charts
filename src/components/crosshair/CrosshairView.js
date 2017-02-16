@@ -1,7 +1,7 @@
 /*
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
-require('./crosshair.scss')
+import './crosshair.scss'
 import 'd3'
 import ContrailChartsView from 'contrail-charts-view'
 

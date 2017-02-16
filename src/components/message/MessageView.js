@@ -1,7 +1,7 @@
 /*
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
-require('./message.scss')
+import './message.scss'
 import _ from 'lodash'
 import ContrailChartsView from 'contrail-charts-view'
 import _template from './message.html'

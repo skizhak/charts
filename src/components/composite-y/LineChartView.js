@@ -1,8 +1,7 @@
 /*
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
-
-require('./line-chart.scss')
+import './line-chart.scss'
 import _ from 'lodash'
 import 'd3'
 import {interpolatePath as d3InterpolatePath} from 'd3-interpolate-path'
