@@ -118,7 +118,8 @@ class RadialDendrogramView extends ContrailChartsView {
               node = {
                 name: name,
                 namePath: namePath.slice(0),
-                children: []
+                children: [],
+                level: depth + 1
               }
               children.push(node)
             }
@@ -462,6 +463,8 @@ class RadialDendrogramView extends ContrailChartsView {
       ribbon.active = Boolean(_.find(leaves, (leaf) => leaf.data.linkId === ribbon.id))
     })
     this._render()
+    const [left, top] = d3.mouse(this._container)
+    this._actionman.fire('ShowComponent', this.config.get('tooltip'), {left, top}, d.data)
   }
 
   _onMouseout (d, el) {
@@ -469,6 +472,7 @@ class RadialDendrogramView extends ContrailChartsView {
       ribbon.active = false
     })
     this._render()
+    this._actionman.fire('HideComponent', this.config.get('tooltip'))
   }
 
   _arcClick (d, el) {

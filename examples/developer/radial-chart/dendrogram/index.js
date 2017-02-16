@@ -36,8 +36,26 @@ const chartConfig = {
           }
           return [src, dst]
         }
-      }
+      },
+      tooltip: 'tooltip-id'
     }
+  }, {
+    id: 'tooltip-id',
+    type: 'Tooltip',
+    config: {
+      getFormattedData: (data) => {
+        const type = ['Virtual Network', 'IP', 'Port']
+        let content = {title: data.name, items: []}
+        content.items.push({
+          label: 'Type',
+          value: type[data.level - 1]
+        }, {
+          label: 'Flow Count',
+          value: data.children.length
+        })
+        return content
+      }
+    },
   }
   ]
 }
