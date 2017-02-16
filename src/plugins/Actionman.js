@@ -44,6 +44,16 @@ export default class Actionman {
     return action
   }
   /**
+   * unset Action from a registrar
+   * @param Action
+   * @param registrar
+   */
+  unset (Action, registrar) {
+    if (this._instances[Action.name]) {
+      this._instances[Action.name].unRegister(registrar)
+    }
+  }
+  /**
    * Updates all actions state
    */
   update (selection) {

@@ -248,6 +248,6 @@ module.exports = {
       chartView.setData(simpleData, {}, container[2])
       chartView.setData(simpleData, {}, container[3])
     }
-    chartView.render()
+    // chartView.render()
   }
 }

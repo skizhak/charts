@@ -157,6 +157,6 @@ module.exports = {
       // chartView.setData(complexData, {}, container[1])
       chartView.setData(simpleData, {}, container[2])
     }
-    chartView.render()
+    // chartView.render()
   }
 }

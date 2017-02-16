@@ -48,6 +48,16 @@ export default class NavigationView extends ContrailChartsView {
     this._update()
   }
 
+  remove () {
+    super.remove()
+    _.each(this._components, (component) => {
+      component.remove()
+    })
+    this._components = []
+    this.stopListening(this._brush, 'selection')
+    window.removeEventListener('resize', this._onResize)
+  }
+
   prevChunkSelected () {
     const range = this.model.getRange()
     const x = this.params.xAccessor

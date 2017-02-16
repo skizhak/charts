@@ -591,7 +591,7 @@ module.exports = {
       })
     }, timeInterval)
 
-    chartView.render()
+    // chartView.render()
   },
   stopUpdating: () => {
     clearInterval(intervalId)

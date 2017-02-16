@@ -91,4 +91,9 @@ export default class MessageView extends ContrailChartsView {
       this.$(messageSelector).remove()
     })
   }
+
+  remove () {
+    super.remove()
+    _.each(_actions, action => this._actionman.unset(action, this))
+  }
 }

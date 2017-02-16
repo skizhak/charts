@@ -389,6 +389,6 @@ module.exports = {
       })
     }
 
-    chartView.render()
+    // chartView.render()
   }
 }
