@@ -1,4 +1,4 @@
-$ribbonColor: #888888;
+$ribbonColor: #1f77b4;
 $ribbonActiveColor: #ff6f00;
 $ribbonHoverColor: #ff6f00;
 
@@ -33,6 +33,12 @@ $ribbonHoverColor: #ff6f00;
   .arc:hover {
   	fill-opacity: 1;
   	cursor:pointer;
+  }
+  .arc-label {
+    text-anchor: start;
+    alignment-baseline: middle;
+    font-size: 8px;
+    fill: #000000;
   }
   .circle {
   	stroke: #424242;
