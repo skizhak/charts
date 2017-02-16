@@ -39,7 +39,7 @@ const chartConfig = {
           return [src, dst]
         }
       },
-      drillDownLevel: 1,
+      drillDownLevel: 3,
       tooltip: 'tooltip-id'
     }
   }, {
@@ -48,10 +48,10 @@ const chartConfig = {
     config: {
       formatter: (data) => {
         const type = ['Virtual Network', 'IP', 'Port']
-        let content = {title: data.name, items: []}
+        let content = {title: type[data.level - 1], items: []}
         content.items.push({
-          label: 'Type',
-          value: type[data.level - 1]
+          label: 'Value',
+          value: data.name
         }, {
           label: 'Flow Count',
           value: data.children.length
