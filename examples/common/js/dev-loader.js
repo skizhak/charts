@@ -64,6 +64,14 @@ const allExamples = {
       instance: function RJS (callback) {
         if (!window.AMDChartInstance) {
           window.AMDChartInstance = {}
+
+          // NOTE: this delay wrapper is unnecessary if the jquery custom event is working
+          // Something breaks jQuery.trigger function
+          var _callback = function () {
+            setTimeout(function () {
+              callback()
+            }, 500)
+          }
         }
 
         let entryPoint = document.createElement('script')
@@ -73,10 +81,14 @@ const allExamples = {
 
         entryPoint.onreadystatechange = function () {
           if (this.readyState === 'complete') {
-            callback()
+            if (_callback) {
+              _callback()
+            } else {
+              callback()
+            }
           }
         }
-        entryPoint.onload = callback
+        entryPoint.onload = _callback || callback
 
         document.body.append(entryPoint)
       }
@@ -127,42 +139,62 @@ _.forEach(allExamples, (examples, chartCategory) => {
   })
 })
 
-function createLink (chartType = '', templateId = 'grouped', instance, title) {
-  let cleaned = encodeURIComponent(title.replace(/\s/g, ''))
-  let $link = $(`<a id="${chartType}${cleaned}" href="#${cleaned}"><span class="nav-text">${title}</span></a>`)
+function _RJSRender (templateId, chartType, linkText) {
+  const RJSInstance = window.AMDChartInstance[`${chartType}${linkText}`]
+
+  let containerIds = _.isArray(RJSInstance.container) ? RJSInstance.container : [RJSInstance.container]
+
+  let currentInstance = $chartBox.data('currentInstance') || {}
+
+  if (currentInstance.stopUpdating) {
+    currentInstance.stopUpdating()
+  }
+
+  $chartBox.empty()
+
+  $chartBox.data('currentInstance', RJSInstance)
+
+  $chartBox.append(templates[templateId]({
+    groupedChartsWrapperId: RJSInstance.groupedChartsWrapper,
+    containerIds: containerIds,
+    layoutMeta: RJSInstance.layoutMeta
+  }))
+
+  RJSInstance.render()
+}
+
+const RJSInitFlag = 'RJSInstantiated'
+
+function createLink (chartType = '', templateId = 'grouped', instance, linkText) {
+  let cleaned = encodeURIComponent(linkText.replace(/\s/g, ''))
+  let $link = $(`<a id="${chartType}${cleaned}" href="#${cleaned}"><span class="nav-text">${linkText}</span></a>`)
 
   if (_.isFunction(instance) && instance.name === 'RJS') {
-    instance(() => {
-      $link.click((e) => {
-        const RJSInstance = window.AMDChartInstance[`${chartType}${cleaned}`]
+    $link.click((e) => {
+      if (instance === RJSInitFlag) {
+        _RJSRender(templateId, chartType, cleaned)
+      } else if (_.isFunction(instance) && instance.name === 'RJS') {
+        instance(() => {
+          instance = RJSInitFlag
 
-        if (e.currentTarget.id !== 'lineBarLiveData') {
-          allExamples.lineBar['Live Data'].instance.stopUpdating()
-        }
-
-        let containerIds = _.isArray(RJSInstance.container) ? RJSInstance.container : [RJSInstance.container]
-
-        $chartBox.empty()
-        $chartBox.append(templates[templateId]({
-          groupedChartsWrapperId: RJSInstance.groupedChartsWrapper,
-          containerIds: containerIds,
-          layoutMeta: RJSInstance.layoutMeta
-        }))
-
-        RJSInstance.render()
-      })
-
-      instance = 'RJSInstantiated'
+          _RJSRender(templateId, chartType, cleaned)
+        })
+      }
     })
   } else if (_.isObject(instance)) {
     $link.click((e) => {
-      if (e.currentTarget.id !== 'lineBarLiveData') {
-        allExamples.lineBar['Live Data'].instance.stopUpdating()
-      }
-
       let containerIds = _.isArray(instance.container) ? instance.container : [instance.container]
 
+      let currentInstance = $chartBox.data('currentInstance') || {}
+
+      if (currentInstance.stopUpdating) {
+        currentInstance.stopUpdating()
+      }
+
       $chartBox.empty()
+
+      $chartBox.data('currentInstance', instance)
+
       $chartBox.append(templates[templateId]({
         groupedChartsWrapperId: instance.groupedChartsWrapper,
         containerIds: containerIds,
@@ -176,7 +208,7 @@ function createLink (chartType = '', templateId = 'grouped', instance, title) {
   return $link
 }
 
-const $1stNavMenu = $('.nav .nav-header + li')
+const $1stNavMenu = $('.nav .nav-header + li').first()
 $1stNavMenu.children('a').find('.nav-text').click()
 $1stNavMenu.children('ul').find('a[id]').first().click()
 

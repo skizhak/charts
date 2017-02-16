@@ -55,8 +55,9 @@ const chartConfig = {
     id: 'tooltip-id',
     type: 'Tooltip',
     config: {
-      color: 'yellow',
-      backgroundColor: 'red',
+      title: 'Process Info',
+      color: '#333',
+      backgroundColor: '#fafafa',
       dataConfig: [
         {
           accessor: 'value',

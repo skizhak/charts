@@ -2,7 +2,6 @@
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
 const d3 = require('d3')
-const _ = require('lodash')
 const ContrailChartsConfigModel = require('contrail-charts-config-model')
 
 class PieChartConfigModel extends ContrailChartsConfigModel {
@@ -19,7 +18,10 @@ class PieChartConfigModel extends ContrailChartsConfigModel {
 
       colorScale: d3.scaleOrdinal(d3.schemeCategory20),
 
-      onClick: (data, el, chart) => {}
+      onClick: (data, el, chart) => {},
+
+      // Boolean to enable/disable default pointer cursor. You may pass in custom cursor.
+      onClickCursor: false,
     }
   }
 
@@ -29,12 +31,9 @@ class PieChartConfigModel extends ContrailChartsConfigModel {
     return this.get('radius') * innerRadiusCoefficient
   }
 
-  getColor (accessor) {
-    if (_.has(accessor, 'color')) {
-      return accessor.color
-    } else {
-      return this.attributes.colorScale(accessor)
-    }
+  getColor (data, accessor) {
+    const configuredColor = super.getColor(data, accessor)
+    return configuredColor || this.attributes.colorScale(accessor)
   }
 
   getLabels (dataProvider) {

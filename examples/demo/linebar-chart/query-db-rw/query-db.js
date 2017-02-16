@@ -35,6 +35,14 @@ const layoutMeta = {
 const chartConfig = {
   id: container,
   components: [{
+    id: 'control-panel-id',
+    type: 'ControlPanel',
+    config: {
+      menu: [{
+        id: 'Freeze',
+      }],
+    }
+  }, {
     type: 'LegendPanel',
     config: {
       sourceComponent: 'query-db-compositey',
@@ -47,23 +55,17 @@ const chartConfig = {
       filter: true,
     },
   }, {
-    type: 'ControlPanel',
-    config: {
-      menu: [
-        {id: 'Refresh'},
-      ],
-    },
-  }, {
     id: 'query-db-compositey',
     type: 'CompositeYChart',
     config: {
-      marginInner: 10,
       marginLeft: 80,
       marginRight: 80,
-      marginBottom: 40,
-      chartHeight: 600,
+      chartHeight: 400,
+      possibleChartTypes: {
+        y1: ['StackedBarChart', 'LineChart'],
+        y2: ['LineChart']
+      },
       crosshair: 'crosshair-id',
-      possibleChartTypes: ['StackedBarChart', 'LineChart'],
       plot: {
         x: {
           accessor: 'x',
@@ -76,22 +78,19 @@ const chartConfig = {
             labelFormatter: 'DB Read',
             enabled: true,
             chart: 'StackedBarChart',
-            axis: 'y1',
-            tooltip: 'default-tooltip',
+            axis: 'y1'
           }, {
             accessor: 'b',
             labelFormatter: 'DB Write',
             enabled: true,
             chart: 'StackedBarChart',
-            axis: 'y1',
-            tooltip: 'custom-tooltip',
+            axis: 'y1'
           }, {
             accessor: 'c',
             labelFormatter: 'QE Queries',
             enabled: true,
             chart: 'LineChart',
-            axis: 'y2',
-            tooltip: 'default-tooltip',
+            axis: 'y2'
           }
         ]
       },
@@ -113,10 +112,8 @@ const chartConfig = {
   }, {
     type: 'Navigation',
     config: {
-      marginInner: 10,
       marginLeft: 80,
       marginRight: 80,
-      marginBottom: 40,
       chartHeight: 200,
       selection: [75, 100],
       plot: {
@@ -258,6 +255,7 @@ module.exports = {
     }
   },
   stopUpdating: () => {
+    console.debug('stop query-db')
     clearInterval(intervalId)
     intervalId = -1
   }

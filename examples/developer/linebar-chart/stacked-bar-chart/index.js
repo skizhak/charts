@@ -2,6 +2,7 @@
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
 
+const coCharts = require('coCharts')
 const commons = require('commons')
 
 const length = 20
@@ -30,6 +31,7 @@ const chartConfig = {
       marginLeft: 80,
       marginRight: 80,
       marginBottom: 40,
+      crosshair: 'crosshair-id',
       plot: {
         x: {
           accessor: 'x',
@@ -41,21 +43,21 @@ const chartConfig = {
             accessor: 'a',
             labelFormatter: 'Label A',
             enabled: true,
-            chart: 'BarChart',
+            chart: 'StackedBarChart',
             axis: 'y1',
             tooltip: 'default-tooltip',
           }, {
             accessor: 'b',
             labelFormatter: 'Label B',
             enabled: true,
-            chart: 'BarChart',
+            chart: 'StackedBarChart',
             axis: 'y1',
             tooltip: 'default-tooltip',
           }, {
             accessor: 'c',
             labelFormatter: 'Label C',
             enabled: true,
-            chart: 'BarChart',
+            chart: 'StackedBarChart',
             axis: 'y1',
             tooltip: 'default-tooltip',
           }
@@ -70,6 +72,12 @@ const chartConfig = {
         },
       },
     },
+  }, {
+    id: 'crosshair-id',
+    type: 'Crosshair',
+    config: {
+      tooltip: 'default-tooltip',
+    }
   }, {
     id: 'default-tooltip',
     type: 'Tooltip',

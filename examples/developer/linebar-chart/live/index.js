@@ -18,6 +18,14 @@ const layoutMeta = {
 const chartConfig = {
   id: container,
   components: [{
+    id: 'control-panel-id',
+    type: 'ControlPanel',
+    config: {
+      menu: [{
+        id: 'Freeze',
+      }],
+    }
+  }, {
     id: 'compositey-id',
     type: 'CompositeYChart',
     config: {
@@ -26,6 +34,7 @@ const chartConfig = {
       marginRight: 80,
       marginBottom: 40,
       chartHeight: 600,
+      crosshair: 'crosshair-id',
       plot: {
         x: {
           accessor: 'x',
@@ -53,6 +62,12 @@ const chartConfig = {
         }
       },
     },
+  }, {
+    id: 'crosshair-id',
+    type: 'Crosshair',
+    config: {
+      tooltip: 'default-tooltip',
+    }
   }, {
     id: 'default-tooltip',
     type: 'Tooltip',

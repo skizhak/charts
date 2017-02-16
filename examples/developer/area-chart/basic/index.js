@@ -38,6 +38,7 @@ const chartConfig = {
     id: 'compositey-id',
     type: 'CompositeYChart',
     config: {
+      crosshair: 'crosshair-id',
       plot: {
         x: {
           accessor: 't',
@@ -79,6 +80,12 @@ const chartConfig = {
           ticks: 10,
         }
       }
+    }
+  }, {
+    id: 'crosshair-id',
+    type: 'Crosshair',
+    config: {
+      tooltip: 'default-tooltip',
     }
   }, {
     id: 'default-tooltip',

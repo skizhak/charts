@@ -25,17 +25,18 @@ class CompositeYChartConfigModel extends ContrailChartsConfigModel {
       // Duration of chart transitions.
       duration: 300,
 
-      xTicks: 10,
-      yTicks: 10,
+      // Default axis ticks if not specified per axis.
+      _xTicks: 10,
+      _yTicks: 10,
 
       // Margin between label and chart
       labelMargin: 16,
 
       // Side margins.
-      marginTop: 40,
+      marginTop: 25,
       marginBottom: 40,
-      marginLeft: 40,
-      marginRight: 40,
+      marginLeft: 50,
+      marginRight: 50,
       marginInner: 10,
 
       curve: d3.curveCatmullRom.alpha(0.5),
@@ -65,12 +66,9 @@ class CompositeYChartConfigModel extends ContrailChartsConfigModel {
     if (name.startsWith('y')) return 'left'
   }
 
-  getColor (accessor) {
-    if (_.has(accessor, 'color')) {
-      return accessor.color
-    } else {
-      return this.attributes.colorScale(accessor.accessor)
-    }
+  getColor (data, accessor) {
+    const configuredColor = super.getColor(data, accessor)
+    return configuredColor || this.attributes.colorScale(accessor.accessor)
   }
 
   getAccessors () {

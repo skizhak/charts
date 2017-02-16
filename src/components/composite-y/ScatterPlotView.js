@@ -9,11 +9,19 @@ const XYChartSubView = require('components/composite-y/XYChartSubView')
 
 class ScatterPlotView extends XYChartSubView {
   get zIndex () { return 1 }
+  /**
+   * follow same naming convention for all XY chart sub views
+   */
+  get selectors () {
+    return _.extend(super.selectors, {
+      node: '.point',
+    })
+  }
 
   get events () {
     return {
-      'mouseover .point': '_onMouseover',
-      'mouseout .point': '_onMouseout',
+      [`mouseover ${this.selectors.node}`]: '_onMouseover',
+      [`mouseout ${this.selectors.node}`]: '_onMouseout',
     }
   }
   /**
@@ -34,7 +42,7 @@ class ScatterPlotView extends XYChartSubView {
   render () {
     super.render()
 
-    let points = this.d3.selectAll('.point')
+    let points = this.d3.selectAll(this.selectors.node)
       .data(this._prepareData(), d => d.id)
 
     points.enter()
@@ -71,7 +79,7 @@ class ScatterPlotView extends XYChartSubView {
             y: this.yScale(y),
             shape: accessor.shape,
             area: sizeScale(d[accessor.sizeAccessor]),
-            color: this.getColor(accessor),
+            color: this.config.getColor(d, accessor),
             accessor: accessor,
             data: d,
           }
@@ -84,23 +92,12 @@ class ScatterPlotView extends XYChartSubView {
 
   // Event handlers
 
-  _onMouseover (d, el) {
+  _onMouseover (d, el, event) {
     if (this.config.get('tooltipEnabled')) {
-      this.d3.select(() => el).classed('active', true)
-      const offset = {
-        left: d.x,
-        top: d.y,
-      }
-      this._actionman.fire('ShowComponent', d.accessor.tooltip, offset, d.data)
+      const [left, top] = d3.mouse(this._container)
+      this._actionman.fire('ShowComponent', d.accessor.tooltip, {left, top}, d.data)
     }
-  }
-
-  _onMouseout (d, el) {
-    if (this.config.get('tooltipEnabled')) {
-      this.d3.select(() => el)
-        .classed('active', false)
-      this._actionman.fire('HideComponent', d.accessor.tooltip)
-    }
+    el.classList.add(this.selectorClass('active'))
   }
 }
 

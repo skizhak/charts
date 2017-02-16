@@ -54,7 +54,10 @@ const chartConfig = {
       marginBottom: 40,
       chartHeight: 600,
       crosshair: 'crosshair-id',
-      possibleChartTypes: ['BarChart', 'StackedBarChart', 'LineChart'],
+      possibleChartTypes: {
+        y1: ['BarChart', 'StackedBarChart'],
+        y2: ['LineChart']
+      },
       plot: {
         x: {
           accessor: 'x',
@@ -75,7 +78,7 @@ const chartConfig = {
             enabled: true,
             chart: 'BarChart',
             axis: 'y1',
-            tooltip: 'custom-tooltip',
+            tooltip: 'default-tooltip',
           }, {
             accessor: 'c',
             labelFormatter: 'Label C',
@@ -85,7 +88,7 @@ const chartConfig = {
             tooltip: 'default-tooltip',
           }, {
             accessor: 'd',
-            labelFormatter: 'Megabytes D',
+            labelFormatter: 'Label D',
             color: '#d62728',
             enabled: true,
             chart: 'LineChart',
@@ -148,7 +151,7 @@ const chartConfig = {
           }, {
             enabled: true,
             accessor: 'd',
-            labelFormatter: 'Megabytes D',
+            labelFormatter: 'Label D',
             chart: 'LineChart',
             axis: 'y2',
           }
@@ -202,12 +205,6 @@ const chartConfig = {
         }
       ]
     },
-  }, {
-    id: 'custom-tooltip',
-    type: 'Tooltip',
-    config: {
-      template: (data) => '<div class="tooltip-content">Custom tooltip</div>',
-    }
   }, {
     id: 'message-id',
     type: 'Message',

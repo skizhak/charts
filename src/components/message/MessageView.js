@@ -13,6 +13,7 @@ const _actions = [
 class MessageView extends ContrailChartsView {
   constructor (p) {
     super(p)
+    this.params.containerList = {}
     this.render()
     _.each(_actions, action => this._actionman.set(action, this))
   }
@@ -23,11 +24,13 @@ class MessageView extends ContrailChartsView {
         default: 'msg-default',
         info: 'msg-info',
         error: 'msg-error',
+        warn: 'msg-warn'
       },
       icon: {
         default: 'fa-comment-o',
         info: 'fa-info-circle',
-        error: 'fa-exclamation-triangle',
+        error: 'fa-times-circle',
+        warn: 'fa-exclamation-triangle'
       }
     })
   }
@@ -39,6 +42,27 @@ class MessageView extends ContrailChartsView {
       messages: [],
     }, data)
     let template = this.config.get('template') || _template
+
+    if (!this.params.containerList[msgObj.componentId]) {
+      let componentElemD3 = d3.select(`#${msgObj.componentId}`)
+
+      if (componentElemD3.node() && componentElemD3.node().closest(this.selectors.chart)) {
+        this.params.containerList[msgObj.componentId] = componentElemD3
+      }
+    }
+
+    let associatedComponent = this.params.containerList[msgObj.componentId]
+
+    if (associatedComponent) {
+      if (!associatedComponent.classed(this.selectors.component.substring(1))) {
+        associatedComponent = d3.select(associatedComponent.node().closest(this.selectors.component))
+      }
+
+      this.d3.remove()
+      associatedComponent.append(() => this.d3.node())
+    } else {
+      console.warn(`MessageView.show: invalid componentId (${msgObj.componentId})`)
+    }
 
     if (msgObj.action === 'update') {
       // update message so remove any previous messages from this component

@@ -17,7 +17,7 @@ const _actions = [
 ]
 /**
 * Group of charts rendered in polar coordinates system
-* TODO merge with ChartView as long as XYChart too
+* TODO merge with XYChart
 */
 class RadialChartView extends ContrailView {
 
@@ -58,6 +58,7 @@ class RadialChartView extends ContrailView {
     this.setElement(`#${config.id}`)
     this._container = this.el.parentElement
     // Todo use class from selectors. extend ContrailChartsView instead of ContrailView
+    // streamline chart class. xy uses cc-chart. position relative mess with tooltip position
     this.el.classList.add('cc-chart')
     this._actionman.id = this._config.id
     if (_.has(config, 'dataProvider.config')) this._dataProvider.setConfig(config.dataProvider.config)
@@ -95,7 +96,8 @@ class RadialChartView extends ContrailView {
 
   _registerComponent (type, config, model, id) {
     if (!this._isEnabledComponent(type)) return false
-    config.title = this._config.title
+    // Set title to parent title only if it doesn't exist. Each component may be handling title in different way.
+    if (!config.title) config.title = this._config.title
     const configModel = new components[`${type}ConfigModel`](config)
     const viewOptions = _.extend(config, {
       id: id,

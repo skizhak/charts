@@ -9,10 +9,19 @@ const XYChartSubView = require('components/composite-y/XYChartSubView')
 
 class AreaChartView extends XYChartSubView {
   get zIndex () { return 2 }
+  /**
+   * follow same naming convention for all XY chart sub views
+   */
+  get selectors () {
+    return _.extend(super.selectors, {
+      node: '.area',
+    })
+  }
+
   get events () {
     return {
-      'mouseover .area': '_onMouseover',
-      'mouseout .area': '_onMouseout',
+      [`mousemove ${this.selectors.node}`]: '_onMousemove',
+      [`mouseout ${this.selectors.node}`]: '_onMouseout',
     }
   }
 
@@ -34,6 +43,20 @@ class AreaChartView extends XYChartSubView {
     return domains
   }
   /**
+  * @override
+  * Y coordinate calculation considers position is being stacked
+  */
+  getScreenY (dataElem, yAccessor) {
+    const stackGroups = _.groupBy(this.params.activeAccessorData, 'stack')
+    const stackName = _.find(this.params.activeAccessorData, config => config.accessor === yAccessor).stack
+    let stackedValue = 0
+    _.takeWhile(stackGroups[stackName], accessorConfig => {
+      stackedValue += (dataElem[accessorConfig.accessor] || 0)
+      return accessorConfig.accessor !== yAccessor
+    })
+    return this.yScale(stackedValue)
+  }
+  /**
    * Render all areas in a single stack unless specific stack names specified
    */
   render () {
@@ -51,31 +74,29 @@ class AreaChartView extends XYChartSubView {
         .offset(d3.stackOffsetNone)
         .keys(_.map(accessorsByStack, 'accessor'))
 
-      const areas = this.d3.selectAll(`.area-${stackName}`).data(stack(data))
+      const areas = this.d3.selectAll(`${this.selectors.node}-${stackName}`).data(stack(data))
       areas.exit().remove()
       areas.enter().append('path')
-        .attr('class', d => `area area-${d.key} area-${stackName}`)
+        .attr('class', d => `${this.selectorClass('node')} ${this.selectorClass('node')}-${d.key} ${this.selectorClass('node')}-${stackName}`)
         .merge(areas)
         .transition().ease(d3.easeLinear).duration(this.params.duration)
-        .attr('fill', d => _.find(accessorsByStack, {accessor: d.key}).color)
+        .attr('fill', d => this.config.getColor([], _.find(accessorsByStack, {accessor: d.key})))
         .attr('d', area)
     })
 
     // Remove areas from non-updated stacks
     const updatedAreaClasses = _.reduce(_.keys(stackGroups), (sum, key) => {
-      return sum ? `${sum}, .area-${key}` : `.area-${key}`
+      return sum ? `${sum}, ${this.selectors.node}-${key}` : `${this.selectors.node}-${key}`
     }, '')
     const updatedAreaEls = updatedAreaClasses ? this.el.querySelectorAll(updatedAreaClasses) : []
-    const updatedAreas = _.difference(this.el.querySelectorAll('.area'), updatedAreaEls)
+    const updatedAreas = _.difference(this.el.querySelectorAll(this.selectors.node), updatedAreaEls)
     _.each(updatedAreas, area => area.remove())
   }
 
   getTooltipData (xPos) {
     const data = this.model.data
     const xAccessor = this.params.plot.x.accessor
-    const xBisector = d3.bisector(d => {
-      return d[xAccessor]
-    }).left
+    const xBisector = d3.bisector(d => d[xAccessor]).left
     const xVal = this.xScale.invert(xPos)
     const index = xBisector(data, xVal, 1)
     const dataItem = xVal - data[index - 1][xAccessor] > data[index][xAccessor] - xVal ? data[index] : data[index - 1]
@@ -84,25 +105,14 @@ class AreaChartView extends XYChartSubView {
 
   // Event handlers
 
-  _onMouseover (d, el) {
+  _onMousemove (d, el) {
     if (this.config.get('tooltipEnabled')) {
-      const pos = d3.mouse(el)
-      const offset = el.getBoundingClientRect()
-      const dataItem = this.getTooltipData(pos[0])
-      const tooltipOffset = {
-        top: offset.top + pos[1],
-        left: offset.left + pos[0] - this.xScale.range()[0],
-      }
-      this._actionman.fire('ShowComponent', this.params.activeAccessorData[d.index].tooltip, tooltipOffset, dataItem)
+      const tooltipId = this.params.activeAccessorData[d.index].tooltip
+      const [left, top] = d3.mouse(this._container)
+      const dataItem = this.getTooltipData(left)
+      this._actionman.fire('ShowComponent', tooltipId, {left, top}, dataItem)
     }
-    el.classList.add('active')
-  }
-
-  _onMouseout (d, el) {
-    if (this.config.get('tooltipEnabled')) {
-      this._actionman.fire('HideComponent', this.params.activeAccessorData[d.index].tooltip)
-    }
-    el.classList.remove('active')
+    el.classList.add(this.selectorClass('active'))
   }
 }
 

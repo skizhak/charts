@@ -11,6 +11,14 @@ class XYChartSubView extends ContrailChartsView {
     // TODO use ConfigModel as a parent
     this._parent = p.parent
   }
+  /**
+   * follow same naming convention for all charts
+   */
+  get selectors () {
+    return _.extend(super.selectors, {
+      active: '.active',
+    })
+  }
 
   get tagName () { return 'g' }
 
@@ -28,7 +36,7 @@ class XYChartSubView extends ContrailChartsView {
   }
 
   get yScale () {
-    return this.params.axis[this.axisName].scale || d3.scaleLinear()
+    return _.has(this.params.axis[this.axisName], 'scale') ? this.params.axis[this.axisName].scale : d3.scaleLinear()
   }
 
   get axisName () {
@@ -44,10 +52,6 @@ class XYChartSubView extends ContrailChartsView {
     return 0
   }
 
-  getColor (accessor) {
-    return accessor.color
-  }
-
   getScreenX (datum, xAccessor) {
     return this.xScale(datum[xAccessor])
   }
@@ -58,6 +62,7 @@ class XYChartSubView extends ContrailChartsView {
 
   render () {
     super.render()
+    this._onMouseout()
     this.d3.attr('clip-path', `url(#${this._parent.params.rectClipPathId})`)
   }
   /**
@@ -87,6 +92,14 @@ class XYChartSubView extends ContrailChartsView {
       if (!_.isNil(configDomain[1])) domains[axisName][1] = configDomain[1]
     })
     return domains
+  }
+
+  _onMouseout (d, el) {
+    if (this.config.get('tooltipEnabled')) {
+      const tooltipId = d && d.accessor ? d.accessor.tooltip : _.map(this.params.activeAccessorData, a => a.tooltip)
+      this._actionman.fire('HideComponent', tooltipId)
+    }
+    _.each(el ? [el] : document.querySelectorAll(this.selectors.node), el => el.classList.remove('active'))
   }
 }
 

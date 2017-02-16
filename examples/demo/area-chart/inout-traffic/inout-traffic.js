@@ -9,6 +9,7 @@ const commons = require('commons')
 const _ = commons._
 const formatter = commons.formatter
 const _c = commons._c
+const timeInterval = 2000
 
 let now = _.now()
 
@@ -20,12 +21,12 @@ for (let j = 0; j < vNetworksCount; j++) {
   let trafficType = vnName + '_in'
 
   for (let k = 0; k < 100; k++) {
-    simpleData.push(getDataPoint(now - ((100 - k) * 60000), vnName, trafficType, [(j + 1) * 256000, (j + 1) * 512000]))
+    simpleData.push(getDataPoint(now - ((100 - k) * 2000), vnName, trafficType, [(j + 1) * 256000, (j + 1) * 512000]))
   }
 
   trafficType = vnName + '_out'
   for (let l = 0; l < 100; l++) {
-    simpleData.push(getDataPoint(now - ((100 - l) * 60000), vnName, trafficType, [(j + 1) * 256000, (j + 1) * 512000]))
+    simpleData.push(getDataPoint(now - ((100 - l) * 2000), vnName, trafficType, [(j + 1) * 256000, (j + 1) * 512000]))
   }
 }
 
@@ -48,7 +49,7 @@ function getNewDataPoint (x, rPoint) {
 }
 
 const dataSrc = {
-   data: simpleData
+  data: simpleData
 }
 
 const lbColorScheme5 = _c.lbColorScheme7
@@ -122,7 +123,7 @@ const mainChartPlotYConfig = _.reduce(dataProcessed.nodeIds, (config, nodeId, id
     label: `Sum(Bytes) ${nodeId}`,
     enabled: nodeId.includes('1'),
     chart: 'AreaChart',
-    stack: nodeId.split('-').pop(),
+    stack: nodeId.split('_').pop(),
     color: colorPalette[`${nodeId}.sum_bytes`],
     axis: 'y1',
   })
@@ -131,11 +132,11 @@ const mainChartPlotYConfig = _.reduce(dataProcessed.nodeIds, (config, nodeId, id
 
 const navPlotYConfig = _.reduce(dataProcessed.nodeIds, (config, nodeId, idx) => {
   config.push({
-    enabled: true,
+    enabled: nodeId.includes('1'),
     accessor: `${nodeId}.sum_bytes`,
     // labelFormatter: 'Sum(Bytes)',
     chart: 'AreaChart',
-    stack: nodeId.split('-').pop(),
+    stack: nodeId.split('_').pop(),
     color: colorPalette[`${nodeId}.sum_bytes`],
     axis: 'y1',
   })
@@ -165,6 +166,14 @@ const layoutMeta = {
 const chartConfig = {
   id: container,
   components: [{
+    id: 'control-panel-id',
+    type: 'ControlPanel',
+    config: {
+      menu: [{
+        id: 'Freeze',
+      }],
+    }
+  }, {
     type: 'LegendPanel',
     config: {
       sourceComponent: 'inout-traffic-compositey',
@@ -183,9 +192,12 @@ const chartConfig = {
       marginLeft: 80,
       marginRight: 80,
       marginBottom: 40,
-      chartHeight: 600,
+      chartHeight: 400,
       crosshair: 'crosshair-id',
-      possibleChartTypes: ['AreaChart', 'LineChart'],
+      possibleChartTypes: {
+        y1: ['AreaChart', 'LineChart'],
+        y2: ['AreaChart', 'LineChart']
+      },
       plot: {
         x: {
           accessor: 'T',
@@ -298,11 +310,11 @@ module.exports = {
           let length = currentData.length
           let random = _.random(0, (length - 1))
 
-          now += 2000
+          now += timeInterval
 
           dataProcessed.data = currentData.concat([getNewDataPoint(now, currentData[random])])
           trafficView.setData(dataProcessed.data)
-        }, 2000)
+        }, timeInterval)
       }
     } else {
       isInitialized = true
@@ -319,6 +331,7 @@ module.exports = {
         }]
       })
       intervalId = setInterval(() => {
+        console.debug('update inout-traffic')
         let currentData = dataProcessed.data
 
         currentData.splice(0, 1)
@@ -326,14 +339,15 @@ module.exports = {
         let length = currentData.length
         let random = _.random(0, (length - 1))
 
-        now += 2000
+        now += timeInterval
 
         dataProcessed.data = currentData.concat([getNewDataPoint(now, currentData[random])])
         trafficView.setData(dataProcessed.data)
-      }, 2000)
+      }, timeInterval)
     }
   },
   stopUpdating: () => {
+    console.debug('stop inout-traffic')
     clearInterval(intervalId)
     intervalId = -1
   }

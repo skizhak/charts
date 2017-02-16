@@ -1,6 +1,10 @@
+@import "../../styles/variables";
+
 $border-color: #fafafa;
 
 .legend-panel.cc-component {
+  z-index: $control;
+
   * {
     box-sizing: content-box;
   }
@@ -10,7 +14,7 @@ $border-color: #fafafa;
   border: 1px solid $border-color;
   border-radius: 4px;
   padding: 4px 10px;
-  display: inline-block;
+  overflow: hidden;
 
   &.vertical {
     .edit-legend {
@@ -25,6 +29,11 @@ $border-color: #fafafa;
         margin-bottom: 4px;
       }
     }
+  }
+
+  .legend-inner-container {
+    white-space: nowrap;
+    overflow-x: auto;
   }
 
   .attributes {
@@ -96,7 +105,6 @@ $border-color: #fafafa;
 .legend-attribute {  
   display: inline-block;
   padding: 3px 0;
-  padding-left: 18px;
   position: relative;
   vertical-align: middle;
 
@@ -129,40 +137,41 @@ $border-color: #fafafa;
 }
 
 .indicator {
-  position: absolute;
-  left: 2px;
-  top: 2px;
-  width: 10px;
-  height: 10px;
-  border-radius: 100px;
-  background-color: white;
-  border: 1px solid black;
-  
-  .legend-attribute input:checked ~ & {
-    background-color: black;
-  }
-  
-  &:after {
-    position: absolute;
-    display: none;
-    content: '';
+  font-size: 14px;
+
+  &.radio {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    vertical-align: middle;
+    border-radius: 100px;
+    background-color: white;
+    border: 1px solid black;
     
     .legend-attribute input:checked ~ & {
-      display: block;
-    }
-
-    .legend-attribute.disabled input:checked ~ & {
-      display: none;
+      background-color: black;
     }
     
-    .legend-attribute & {
-      left: 0;
-      top: 0;
-      width: 8px;
-      height: 8px;
-      border: solid white;
-      border-width: 1px 1px 1px 1px;
-      border-radius: 100px;
+    &:after {
+      position: absolute;
+      display: none;
+      content: '';
+      
+      .legend-attribute input:checked ~ & {
+        display: block;
+      }
+
+      .legend-attribute.disabled input:checked ~ & {
+        display: none;
+      }
+      
+      .legend-attribute & {
+        width: 8px;
+        height: 8px;
+        border: solid white;
+        border-width: 1px 1px 1px 1px;
+        border-radius: 100px;
+      }
     }
   }
 }
@@ -263,9 +272,14 @@ $border-color: #fafafa;
   }
 
   .swatch--chart {
+    display: none;
     padding: 4px;
     text-align: center;
     font-size: 12px;
     line-height: 16px;
+
+    &.show {
+      display: inline-block;
+    }
   }
 }

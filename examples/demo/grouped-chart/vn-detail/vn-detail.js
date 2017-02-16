@@ -94,7 +94,8 @@ const trafficPlotConfig = {
 const trafficPlotAxisConfig = {
   x: {
     formatter: formatter.extendedISOTime,
-    label: 'Time'
+    label: 'Time',
+    ticks: 6
   },
   y1: {
     position: 'left',
@@ -115,9 +116,9 @@ const trafficPlotAxisConfig = {
 const groupedChartsWrapper = 'grouped-parent-chart'
 const container = ['vn-pie', 'vn-traffic', 'vn-ports']
 const layoutMeta = {
-  'vn-pie': 'render-order-2 col-md-6',
-  'vn-traffic': 'render-order-1 col-md-12',
-  'vn-ports': 'render-order-3 col-md-6'
+  [container[0]]: 'render-order-2 col-xs-12 col-md-6',
+  [container[1]]: 'render-order-1 col-xs-12',
+  [container[2]]: 'render-order-3 col-xs-12 col-md-6'
 }
 
 const chartConfigs = [
@@ -150,7 +151,8 @@ const chartConfigs = [
           if (chart.el.id === 'vn-traffic' || chart.el.id === 'vn-ports') {
             chart.setData([data])
           }
-        }
+        },
+        onClickCursor: true
       },
     }, {
       id: 'tooltip-id',
@@ -226,8 +228,10 @@ const chartConfigs = [
           marginRight: 80,
           chartHeight: 275,
           crosshair: 'crosshair-id',
-          xTicks: 6,
-          possibleChartTypes: ['BarChart', 'LineChart'],
+          possibleChartTypes: {
+            y1: ['BarChart', 'LineChart'],
+            y2: ['BarChart', 'LineChart']
+          },
           plot: trafficPlotConfig,
           axis: trafficPlotAxisConfig
         }
@@ -325,6 +329,7 @@ const chartConfigs = [
             y1: {
               position: 'left',
               formatter: formatter.byteFormatter,
+              ticks: 5,
               labelMargin: 15,
             },
           }

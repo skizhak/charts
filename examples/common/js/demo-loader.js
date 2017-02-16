@@ -157,14 +157,18 @@ function createLink (chartType = '', templateId = 'grouped', instance = {}, link
   let $link = $(`<a id="${chartType}${cleaned}" href="#${cleaned}"><span class="nav-text">${linkText}</span></a>`)
 
   $link.click((e) => {
-    if (e.currentTarget.id !== 'lineBarQueries%26DBR%2FW') {
-      allExamples.lineBar['Queries & DB R/W'].instance.stopUpdating()
-    }
-
     let containerIds = _.isArray(instance.container) ? instance.container : [instance.container]
+
+    let currentInstance = $chartBox.data('currentInstance') || {}
+
+    if (currentInstance.stopUpdating) {
+      currentInstance.stopUpdating()
+    }
 
     $exampleDesc.empty()
     $chartBox.empty()
+
+    $chartBox.data('currentInstance', instance)
 
     if (!_.isNil(exampleDesc)) {
       $exampleDesc.append(exampleDescTemplate({
@@ -185,7 +189,7 @@ function createLink (chartType = '', templateId = 'grouped', instance = {}, link
   return $link
 }
 
-const $1stNavMenu = $('.nav .nav-header + li')
+const $1stNavMenu = $('.nav .nav-header + li').first()
 $1stNavMenu.children('a').find('.nav-text').click()
 $1stNavMenu.children('ul').find('a[id]').first().click()
 

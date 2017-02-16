@@ -9,10 +9,19 @@ const XYChartSubView = require('components/composite-y/XYChartSubView')
 
 class BarChartView extends XYChartSubView {
   get zIndex () { return 1 }
+  /**
+   * follow same naming convention for all XY chart sub views
+   */
+  get selectors () {
+    return _.extend(super.selectors, {
+      node: '.bar',
+    })
+  }
+
   get events () {
     return {
-      'mousemove .bar': '_onMousemove',
-      'mouseout .bar': '_onMouseout',
+      [`mousemove ${this.selectors.node}`]: '_onMousemove',
+      [`mouseout ${this.selectors.node}`]: '_onMouseout',
     }
   }
   /**
@@ -59,7 +68,7 @@ class BarChartView extends XYChartSubView {
     this.params.axis[this.params.plot.x.axis].innerBandScale = innerBandScale
     // Render the flat data structure
     const svgBarGroups = this.d3
-      .selectAll('.bar')
+      .selectAll(this.selectors.node)
       .data(this._prepareData(), d => d.id)
     svgBarGroups.enter().append('rect')
       .attr('class', d => 'bar')
@@ -78,7 +87,7 @@ class BarChartView extends XYChartSubView {
 
   _prepareData () {
     const flatData = []
-    const zeroValue = this.yScale.domain()[0]
+    const start = this.yScale.domain()[0]
     const innerBandScale = this.params.axis[this.params.plot.x.axis].innerBandScale
     const innerBandWidth = innerBandScale.bandwidth()
     _.each(this.model.data, d => {
@@ -89,9 +98,9 @@ class BarChartView extends XYChartSubView {
           id: x + '-' + key,
           x: this.xScale(x) + innerBandScale(j),
           y: this.yScale(d[key]),
-          h: this.yScale(zeroValue) - this.yScale(d[key]),
+          h: this.yScale(start) - this.yScale(d[key]),
           w: innerBandWidth,
-          color: this.getColor(accessor),
+          color: this.config.getColor(d, accessor),
           accessor: accessor,
           data: d,
         }
@@ -105,16 +114,10 @@ class BarChartView extends XYChartSubView {
 
   _onMousemove (d, el, event) {
     if (this.config.get('tooltipEnabled')) {
-      this._actionman.fire('ShowComponent', d.accessor.tooltip, {left: event.pageX, top: event.pageY}, d.data)
+      const [left, top] = d3.mouse(this._container)
+      this._actionman.fire('ShowComponent', d.accessor.tooltip, {left, top}, d.data)
     }
-    el.classList.add('active')
-  }
-
-  _onMouseout (d, el) {
-    if (this.config.get('tooltipEnabled')) {
-      this._actionman.fire('HideComponent', d.accessor.tooltip)
-    }
-    el.classList.remove('active')
+    el.classList.add(this.selectorClass('active'))
   }
 }
 

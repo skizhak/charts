@@ -10,8 +10,8 @@ define([ // eslint-disable-line no-undef
   let isInitialized = false
   const container = ['requirejs-linebar-chart', 'requirejs-line-chart']
   const layoutMeta = {
-    'requirejs-linebar-chart': '',
-    'requirejs-line-chart': ''
+    'requirejs-linebar-chart': 'col-xs-12 col-md-6',
+    'requirejs-line-chart': 'col-xs-12 col-md-6'
   }
 
   // Complex example
@@ -28,9 +28,16 @@ define([ // eslint-disable-line no-undef
     })
   })
 
-  const complexChartView = new coCharts.charts.XYChartView()
+  // Most basic chart.
+  const simpleData = [
+    { x: 1475760930000, y: 0 },
+    { x: 1475761930000, y: 3 },
+    { x: 1475762930000, y: 2 },
+    { x: 1475763930000, y: 4 },
+    { x: 1475764930000, y: 5 }
+  ]
 
-  complexChartView.setConfig({
+  const complexChartConfig = {
     id: container[0],
     components: [{
       type: 'CompositeYChart',
@@ -122,19 +129,9 @@ define([ // eslint-disable-line no-undef
         ]
       }
     }]
-  })
+  }
 
-  // Most basic chart.
-  const simpleData = [
-    { x: 1475760930000, y: 0 },
-    { x: 1475761930000, y: 3 },
-    { x: 1475762930000, y: 2 },
-    { x: 1475763930000, y: 4 },
-    { x: 1475764930000, y: 5 }
-  ]
-  const simpleChartView = new coCharts.charts.XYChartView()
-
-  simpleChartView.setConfig({
+  const simpleChartConfig = {
     id: container[1],
     components: [{
       type: 'CompositeYChart',
@@ -160,7 +157,11 @@ define([ // eslint-disable-line no-undef
         }
       }
     }]
-  })
+  }
+
+  const complexChartView = new coCharts.charts.XYChartView()
+
+  const simpleChartView = new coCharts.charts.XYChartView()
 
   return {
     container: container,
@@ -168,11 +169,12 @@ define([ // eslint-disable-line no-undef
     render: function () {
       if (!isInitialized) {
         isInitialized = true
+        complexChartView.setConfig(complexChartConfig)
+        simpleChartView.setConfig(simpleChartConfig)
         complexChartView.setData(complexData)
         simpleChartView.setData(simpleData)
       }
-      console.log(complexChartView, simpleChartView)
-      debugger
+
       complexChartView.render()
       simpleChartView.render()
     }

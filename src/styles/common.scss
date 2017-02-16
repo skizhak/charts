@@ -1,11 +1,18 @@
 * {
-	box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 .hide {
-	display: none;
+  display: none;
 }
 
 .cc-chart {
-	position: relative;
+  position: relative;
+}
+
+.cc-svg {
+  user-select: none;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
 }

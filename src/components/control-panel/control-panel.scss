@@ -1,9 +1,13 @@
-.control-panel.cc-component {
-	.control-panel-items {
-		width: 32px;
-		float: right;
+@import "../../styles/variables";
 
-		.control-panel-item {
+.control-panel.cc-component {
+  z-index: $control;
+
+  .control-panel-items {
+    width: 32px;
+    float: right;
+
+    .control-panel-item {
       position: relative;
       margin: 0 0 5px 0;
 
@@ -29,33 +33,32 @@
         border-bottom: 5px solid #aaa;
         border-right: 5px solid transparent;
       }
-		}
-	}
-	.panel {
-    display: none;
+    }
+  }
+  .panel {
     width: 350px;
-		margin: 0 33px 0 0;
-		border: 1px solid #ddd;
-		background-color: #fff;
+    margin: 0 33px 0 0;
+    border: 1px solid #ddd;
+    background-color: #fff;
 
-		.head {
-			padding: 5px 10px 5px 10px;
-			background-color: #ddd;
-			color: #444;
-			font-size: 14px;
+    .head {
+      padding: 5px 10px 5px 10px;
+      background-color: #ddd;
+      color: #444;
+      font-size: 14px;
 
-			.head-icon {
-				margin-right: 10px;
-			}
-			.close {
-				float: right;
-				cursor: pointer;
-			}
-		}
-		.body {
-			padding: 10px;
-			color: #444;
-			font-size: 14px;
-		}
-	}
+      .head-icon {
+        margin-right: 10px;
+      }
+      .close {
+        float: right;
+        cursor: pointer;
+      }
+    }
+    .body {
+      padding: 10px;
+      color: #444;
+      font-size: 14px;
+    }
+  }
 }

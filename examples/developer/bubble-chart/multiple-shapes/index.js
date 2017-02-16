@@ -34,6 +34,9 @@ const chartConfig = {
     type: 'LegendPanel',
     config: {
       sourceComponent: 'multishape-bubble-chart',
+      editable: {
+        colorSelector: true,
+      },
     },
   }, {
     id: 'multishape-bubble-chart',
@@ -78,7 +81,7 @@ const chartConfig = {
             sizeAccessor: 'size2',
             sizeAxis: 'sizeAxis',
             shape: bubbleShapes.star,
-            color: colorScheme[5],
+            color: d => d.data3 > 80 ? 'red' : colorScheme[5],
             axis: 'y2',
             tooltip: 'tooltip-id',
           }

@@ -15,6 +15,8 @@ const _actions = [
   require('actions/SelectChartType'),
   require('actions/ChangeSelection'),
   require('actions/Refresh'),
+  require('actions/Freeze'),
+  require('actions/Unfreeze'),
   require('actions/OnClick'),
 ]
 /**
@@ -32,12 +34,20 @@ class XYChartView extends ContrailChartsView {
     _.each(_actions, action => this._actionman.set(action, this))
   }
   /**
+   * In frozen state chart ignores Model Data change
+   * @param {Boolean} isFrozen change state to
+   */
+  set frozen (isFrozen) {
+    this._frozen = !!isFrozen
+  }
+  /**
   * Provide data for this chart as a simple array of objects.
   * Additional ContrailChartsDataModel configuration may be provided.
   * Setting data to a rendered chart will trigger a DataModel change event that will cause the chart to be re-rendered.
   */
   setData (data, dataConfig) {
     if (dataConfig) this.setDataConfig(dataConfig)
+    if (this._frozen) return
     if (_.isArray(data)) this._dataModel.data = data
   }
   // Todo deprecate setDataConfig. DataModel parser will be set as input parser in dataProvider config.
@@ -142,7 +152,8 @@ class XYChartView extends ContrailChartsView {
    */
   _registerComponent (type, config, model, id) {
     if (!this._isEnabledComponent(type)) return false
-    config.title = this._config.title
+    // Set title to parent title only if it doesn't exist. Each component may be handling title in different way.
+    if (!config.title) config.title = this._config.title
     let configModel
     if (components[`${type}ConfigModel`]) {
       configModel = new components[`${type}ConfigModel`](config)

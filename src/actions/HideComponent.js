@@ -10,8 +10,11 @@ class HideComponent extends Action {
   }
 
   _execute (id, ...args) {
-    const component = this._registrar.getComponent(id)
-    if (component) component.hide(...args)
+    const ids = _.isArray(id) ? id : [id]
+    _.each(ids, id => {
+      const component = this._registrar.getComponent(id)
+      if (component) component.hide(...args)
+    })
   }
 }
 

@@ -1,37 +1,49 @@
 @import "../../styles/colors.scss";
 
 .message.cc-component {
-	.message-row {
-		overflow: hidden;
-		font-size: 0.75rem;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 
-		&.msg-info {
-			background-color: $infoBlue;
-		}
+  .message-row {
+    overflow: hidden;
+    font-size: 0.75rem;
 
-		&.msg-error {
-			background-color: $errorRed;
-		}
+    &.msg-info {
+      color: map-get($infoBlue, "foreground");
+      background-color: map-get($infoBlue, "background");
+    }
 
-		& .message-heading,
-		& .message-body {
-			width: 100%;
-			padding: 0 5px;
-			margin: 5px 0;
-		}
+    &.msg-error {
+      color: map-get($errorRed, "foreground");
+      background-color: map-get($errorRed, "background");
+    }
 
-		.message-heading {
-			display: flex;
-			position: relative;
+    &.msg-warn {
+      color: map-get($warnYellow, "foreground");
+      background-color: map-get($warnYellow, "background");
+    }
 
-			.fa {
-				margin-right: 2px;
-			}
+    & .message-heading,
+    & .message-body {
+      width: 100%;
+      padding: 0 5px;
+      margin: 5px 0;
+    }
 
-			.message-title {
-				flex-grow: 1;
-				font-weight: bold;
-			}
-		}
-	}
+    .message-heading {
+      display: flex;
+      position: relative;
+
+      .fa {
+        margin-right: 2px;
+      }
+
+      .message-title {
+        flex-grow: 1;
+        font-weight: bold;
+      }
+    }
+  }
 }

@@ -69,7 +69,7 @@ const chartConfig = {
         marginLeft: 80,
         marginRight: 80,
         marginBottom: 40,
-        chartHeight: 500,
+        chartHeight: 400,
         plot: {
           x: {
             accessor: 'vmi',
@@ -102,7 +102,7 @@ const chartConfig = {
           y1: {
             position: 'left',
             formatter: formatter.toInteger,
-            label: 'Virtual Networks3',
+            label: 'Virtual Networks',
           }
         },
       }
@@ -124,7 +124,7 @@ const chartConfig = {
           },
           {
             accessor: 'vn',
-            labelFormatter: 'Virtual Networks2',
+            labelFormatter: 'Virtual Networks',
             valueFormatter: formatter.toInteger
           },
           {
@@ -147,7 +147,7 @@ const chartConfig = {
         marginRight: 80,
         marginBottom: 40,
         chartHeight: 250,
-        selection: [80, 100],
+        selection: [50, 100],
         plot: {
           x: {
             accessor: 'cpu',

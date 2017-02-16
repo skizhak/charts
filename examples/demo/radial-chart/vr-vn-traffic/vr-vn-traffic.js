@@ -2,7 +2,15 @@
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
 
-const dendrogamData = require('./data.json')
+const coCharts = require('coCharts')
+
+const commons = require('commons')
+const _c = commons._c
+
+const colorScheme = _c.bubbleColorScheme6
+const dendrogamData = {
+  data: commons.dg.vRouterTraffic()
+}
 
 const container = 'radial-dendrogram-chart'
 const layoutMeta = {
@@ -19,7 +27,7 @@ const chartConfig = {
       parentSeparation: 1.0,
       parentSeparationShrinkFactor: 0.05,
       parentSeparationDepthThreshold: 4,
-      colorScale: d3.scaleOrdinal().range(d3.schemeCategory10), // eslint-disable-line no-undef
+      colorScale: d3.scaleOrdinal().range([colorScheme[0], colorScheme[2], colorScheme[3]]), // eslint-disable-line no-undef
       drawLinks: false,
       drawRibbons: true,
       biDirectional: true,
@@ -48,6 +56,7 @@ const chartConfig = {
 }
 
 let isInitialized = false
+// Create chart view.
 const chartView = new coCharts.charts.RadialChartView()
 
 module.exports = {
