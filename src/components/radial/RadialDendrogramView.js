@@ -1,13 +1,12 @@
 /*
  * Copyright (c) 2016 Juniper Networks, Inc. All rights reserved.
  */
-require('./radial-dendogram.scss')
-const _ = require('lodash')
-const d3 = require('d3')
-const shape = require('d3-shape')
-const ContrailChartsView = require('contrail-charts-view')
+import './radial-dendogram.scss'
+import _ from 'lodash'
+import 'd3'
+import ContrailChartsView from 'contrail-charts-view'
 
-class RadialDendrogramView extends ContrailChartsView {
+export default class RadialDendrogramView extends ContrailChartsView {
   get tagName () { return 'g' }
   get className () { return 'radial-dendrogram' }
   get events () {
@@ -485,5 +484,3 @@ class RadialDendrogramView extends ContrailChartsView {
     }
   }
 }
-
-module.exports = RadialDendrogramView

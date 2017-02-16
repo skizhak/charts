@@ -1,7 +1,6 @@
 /*
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
-const Backbone = require('backbone')
+import Backbone from 'backbone'
 
-class ContrailModel extends Backbone.Model {}
-module.exports = ContrailModel
+export default class ContrailModel extends Backbone.Model {}

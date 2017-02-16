@@ -1,14 +1,14 @@
 /*
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
-require('./timeline.scss')
-const _ = require('lodash')
-const d3 = require('d3')
-const d3Ease = require('d3-ease')
-const ContrailChartsView = require('contrail-charts-view')
-const DataProvider = require('handlers/DataProvider')
+import './timeline.scss'
+import _ from 'lodash'
+import 'd3'
+import * as d3Ease from 'd3-ease'
+import ContrailChartsView from 'contrail-charts-view'
+import DataProvider from 'handlers/DataProvider'
 
-class TimelineView extends ContrailChartsView {
+export default class TimelineView extends ContrailChartsView {
   constructor (p) {
     super(p)
     this._focusDataProvider = new DataProvider({parentDataModel: this.model})
@@ -265,5 +265,3 @@ class TimelineView extends ContrailChartsView {
     }
   }
 }
-
-module.exports = TimelineView

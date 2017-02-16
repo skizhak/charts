@@ -1,11 +1,11 @@
 /*
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
-require('./crosshair.scss')
-const d3 = require('d3')
-const ContrailChartsView = require('contrail-charts-view')
+import './crosshair.scss'
+import 'd3'
+import ContrailChartsView from 'contrail-charts-view'
 
-class CrosshairView extends ContrailChartsView {
+export default class CrosshairView extends ContrailChartsView {
   constructor (p) {
     super(p)
     this.render()
@@ -83,11 +83,11 @@ class CrosshairView extends ContrailChartsView {
     lines.exit().remove()
 
     // Show tooltip
-    const tooltipOffset = {
+    const tooltipPosition = {
       left: this.svgOffset.left + point[0],
       top: this.svgOffset.top + point[1],
     }
-    this._actionman.fire('ShowComponent', this.config.get('tooltip'), tooltipOffset, data)
+    this._actionman.fire('ShowComponent', this.config.get('tooltip'), tooltipPosition, data)
   }
 
   hide () {
@@ -97,5 +97,3 @@ class CrosshairView extends ContrailChartsView {
     this._actionman.fire('HideComponent', this.config.get('tooltip'))
   }
 }
-
-module.exports = CrosshairView

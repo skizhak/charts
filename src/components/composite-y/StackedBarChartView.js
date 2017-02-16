@@ -1,12 +1,12 @@
 /*
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
-require('./bar-chart.scss')
-const _ = require('lodash')
-const d3 = require('d3')
-const XYChartSubView = require('components/composite-y/XYChartSubView')
+import './bar-chart.scss'
+import _ from 'lodash'
+import 'd3'
+import XYChartSubView from 'components/composite-y/XYChartSubView'
 
-class StackedBarChartView extends XYChartSubView {
+export default class StackedBarChartView extends XYChartSubView {
   get zIndex () { return 1 }
   /**
    * follow same naming convention for all XY chart sub views
@@ -121,5 +121,3 @@ class StackedBarChartView extends XYChartSubView {
     el.classList.add(this.selectorClass('active'))
   }
 }
-
-module.exports = StackedBarChartView

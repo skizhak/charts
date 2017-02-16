@@ -1,10 +1,9 @@
 /*
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
-const ContrailChartsConfigModel = require('contrail-charts-config-model')
+import ContrailChartsConfigModel from 'contrail-charts-config-model'
 
-class BrushConfigModel extends ContrailChartsConfigModel {
-
+export default class BrushConfigModel extends ContrailChartsConfigModel {
   /**
    * Brush selection in percentage [xMin%, xMax%]
    */
@@ -31,5 +30,3 @@ class BrushConfigModel extends ContrailChartsConfigModel {
     ]
   }
 }
-
-module.exports = BrushConfigModel

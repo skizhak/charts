@@ -1,17 +1,16 @@
 /*
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
-
-require('./legendPanel.scss')
-const ContrailChartsView = require('contrail-charts-view')
-const d3Color = require('d3-color')
-const _template = require('./legend.html')
+import './legendPanel.scss'
+import ContrailChartsView from 'contrail-charts-view'
+import * as d3Color from 'd3-color'
+import _template from './legend.html'
 const _states = {
   DEFAULT: 'default',
   EDIT: 'edit'
 }
 
-class LegendPanelView extends ContrailChartsView {
+export default class LegendPanelView extends ContrailChartsView {
   constructor (p) {
     super(p)
     this.listenTo(this.config, 'change', this.render)
@@ -127,5 +126,3 @@ class LegendPanelView extends ContrailChartsView {
     this._actionman.fire('SelectChartType', this._accessor, chartType)
   }
 }
-
-module.exports = LegendPanelView

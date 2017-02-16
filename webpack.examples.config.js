@@ -23,6 +23,7 @@ if (env === 'build') {
     include: /\.min\.js$/,
     minimize: false,
   }))
+}
   loaders.push({
     loader: 'babel-loader',
     test: /\.js$/,
@@ -31,7 +32,6 @@ if (env === 'build') {
       presets: ['es2015']
     }
   })
-}
 
 plugins.push(new ExtractTextPlugin('css/' + fileName + '.css'))
 

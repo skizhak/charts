@@ -1,13 +1,12 @@
 /*
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
-
-const d3 = require('d3')
-const ContrailView = require('contrail-view')
+import 'd3'
+import ContrailView from 'contrail-view'
 /**
  * View base class.
  */
-class ContrailChartsView extends ContrailView {
+export default class ContrailChartsView extends ContrailView {
   constructor (p = {}) {
     super(p)
     this._id = p.id
@@ -195,5 +194,3 @@ class ContrailChartsView extends ContrailView {
     }
   }
 }
-
-module.exports = ContrailChartsView

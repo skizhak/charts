@@ -1,9 +1,9 @@
 /*
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
-const Action = require('../plugins/Action')
+import Action from '../plugins/Action'
 
-class HideComponent extends Action {
+export default class HideComponent extends Action {
   constructor (p) {
     super(p)
     this._deny = false
@@ -17,5 +17,3 @@ class HideComponent extends Action {
     })
   }
 }
-
-module.exports = HideComponent

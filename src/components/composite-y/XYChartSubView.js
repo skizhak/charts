@@ -1,11 +1,11 @@
 /*
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
-const _ = require('lodash')
-const d3 = require('d3')
-const ContrailChartsView = require('contrail-charts-view')
+import _ from 'lodash'
+import 'd3'
+import ContrailChartsView from 'contrail-charts-view'
 
-class XYChartSubView extends ContrailChartsView {
+export default class XYChartSubView extends ContrailChartsView {
   constructor (p) {
     super(p)
     // TODO use ConfigModel as a parent
@@ -102,5 +102,3 @@ class XYChartSubView extends ContrailChartsView {
     _.each(el ? [el] : document.querySelectorAll(this.selectors.node), el => el.classList.remove('active'))
   }
 }
-
-module.exports = XYChartSubView

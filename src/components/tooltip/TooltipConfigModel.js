@@ -1,17 +1,17 @@
 /*
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
+import _ from 'lodash'
+import ContrailChartsConfigModel from 'contrail-charts-config-model'
 
-const _ = require('lodash')
-const ContrailChartsConfigModel = require('contrail-charts-config-model')
-
-class TooltipConfigModel extends ContrailChartsConfigModel {
+export default class TooltipConfigModel extends ContrailChartsConfigModel {
   get defaults () {
     return {
       // Which tooltip ids to accept. If empty accept all.
       acceptFilters: [],
-
-      formatter (data) {
+      sticky: false,
+      // Default formatter to build tooltip content.
+      formatter: (data) => {
         let tooltipContent = {}
         const dataConfig = this.get('dataConfig')
         const titleConfig = this.get('title')
@@ -30,11 +30,16 @@ class TooltipConfigModel extends ContrailChartsConfigModel {
             value: this.getFormattedValue(data, datumConfig),
           }
         })
-
         return tooltipContent
       }
     }
   }
-}
 
-module.exports = TooltipConfigModel
+  get sourceId () {
+    return this._parent.id
+  }
+  // TODO
+  get stickyMargin () {
+    return {left: 0, right: 0}
+  }
+}

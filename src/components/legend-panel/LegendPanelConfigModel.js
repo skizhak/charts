@@ -1,11 +1,8 @@
 /*
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
-
-/* global d3 */
-
-const _ = require('lodash')
-const ContrailChartsConfigModel = require('contrail-charts-config-model')
+import _ from 'lodash'
+import ContrailChartsConfigModel from 'contrail-charts-config-model'
 const chartTypeIconMap = {
   'BarChart': 'fa-bar-chart',
   'StackedBarChart': 'fa-signal', // Todo find something better
@@ -14,7 +11,7 @@ const chartTypeIconMap = {
   'PieChart': 'fa-pie-chart'
 }
 
-class LegendPanelConfigModel extends ContrailChartsConfigModel {
+export default class LegendPanelConfigModel extends ContrailChartsConfigModel {
   get defaults () {
     return {
       palette: d3.schemeCategory20,
@@ -65,5 +62,3 @@ class LegendPanelConfigModel extends ContrailChartsConfigModel {
     return data
   }
 }
-
-module.exports = LegendPanelConfigModel

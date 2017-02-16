@@ -1,37 +1,37 @@
 /*
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
-const _ = require('lodash')
-const ContrailChartsDataModel = require('contrail-charts-data-model')
-const ContrailChartsView = require('contrail-charts-view')
-const components = require('components/index')
-const handlers = require('handlers/index')
-const Actionman = require('../../plugins/Actionman')
-const _actions = [
-  require('actions/ShowComponent'),
-  require('actions/HideComponent'),
-  require('actions/SelectSerie'),
-  require('actions/SelectColor'),
-  require('actions/SelectChartType'),
-  require('actions/ChangeSelection'),
-  require('actions/Refresh'),
-  require('actions/Freeze'),
-  require('actions/Unfreeze'),
-  require('actions/OnClick'),
-]
+import _ from 'lodash'
+import ContrailChartsDataModel from 'contrail-charts-data-model'
+import ContrailChartsView from 'contrail-charts-view'
+import * as Components from 'components/index'
+import * as Handlers from 'handlers/index'
+import Actionman from '../../plugins/Actionman'
+
+import ShowComponent from 'actions/ShowComponent'
+import HideComponent from 'actions/HideComponent'
+import SelectSerie from 'actions/SelectSerie'
+import SelectColor from 'actions/SelectColor'
+import SelectChartType from 'actions/SelectChartType'
+import ChangeSelection from 'actions/ChangeSelection'
+import Refresh from 'actions/Refresh'
+import Freeze from 'actions/Freeze'
+import Unfreeze from 'actions/Unfreeze'
+import OnClick from 'actions/OnClick'
+const Actions = {ShowComponent, HideComponent, SelectSerie, SelectColor, SelectChartType, ChangeSelection, Refresh, Freeze, Unfreeze, OnClick}
 /**
 * Chart with a common X axis and many possible child components rendering data on the Y axis (for example: line, bar, stackedBar).
 * Many different Y axis may be configured.
 */
-class XYChartView extends ContrailChartsView {
+export default class XYChartView extends ContrailChartsView {
 
   constructor (p) {
     super(p)
     this._dataModel = new ContrailChartsDataModel()
-    this._dataProvider = new handlers.DataProvider({ parentDataModel: this._dataModel })
+    this._dataProvider = new Handlers.DataProvider({ parentDataModel: this._dataModel })
     this._components = []
     this._actionman = new Actionman()
-    _.each(_actions, action => this._actionman.set(action, this))
+    _.each(Actions, action => this._actionman.set(action, this))
   }
   /**
    * In frozen state chart ignores Model Data change
@@ -125,6 +125,7 @@ class XYChartView extends ContrailChartsView {
   _initComponents () {
     _.each(this._config.components, (component, index) => {
       component.config.order = index
+      component.config.id = component.id
       this._registerComponent(component.type, component.config, this._dataProvider, component.id)
     })
 
@@ -155,8 +156,8 @@ class XYChartView extends ContrailChartsView {
     // Set title to parent title only if it doesn't exist. Each component may be handling title in different way.
     if (!config.title) config.title = this._config.title
     let configModel
-    if (components[`${type}ConfigModel`]) {
-      configModel = new components[`${type}ConfigModel`](config)
+    if (Components[`${type}ConfigModel`]) {
+      configModel = new Components[`${type}ConfigModel`](config)
     }
     const viewOptions = _.extend({}, config, {
       id: id,
@@ -166,7 +167,7 @@ class XYChartView extends ContrailChartsView {
       // actionman is passed as parameter to each component for it to be able to register action
       actionman: this._actionman,
     })
-    const component = new components[`${type}View`](viewOptions)
+    const component = new Components[`${type}View`](viewOptions)
     this._components.push(component)
 
     return component
@@ -189,5 +190,3 @@ class XYChartView extends ContrailChartsView {
     return this._isEnabled(this._config.handlers, type)
   }
 }
-
-module.exports = XYChartView

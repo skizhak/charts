@@ -1,11 +1,10 @@
 /*
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
+import _ from 'lodash'
+import ContrailModel from 'contrail-model'
 
-var _ = require('lodash')
-var ContrailModel = require('contrail-model')
-
-class BindingHandler extends ContrailModel {
+export default class BindingHandler extends ContrailModel {
   get defaults () {
     return {
       charts: {},
@@ -81,5 +80,3 @@ class BindingHandler extends ContrailModel {
     })
   }
 }
-
-module.exports = BindingHandler

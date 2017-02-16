@@ -1,11 +1,11 @@
 /*
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
-const _ = require('lodash')
-const d3 = require('d3')
-const ContrailChartsConfigModel = require('contrail-charts-config-model')
+import _ from 'lodash'
+import 'd3'
+import ContrailChartsConfigModel from 'contrail-charts-config-model'
 
-class NavigationConfigModel extends ContrailChartsConfigModel {
+export default class NavigationConfigModel extends ContrailChartsConfigModel {
   get defaults () {
     return {
       // The chart width. If not provided will be caculated by View.
@@ -74,5 +74,3 @@ class NavigationConfigModel extends ContrailChartsConfigModel {
     return configuredColor || this.attributes.colorScale(accessor.accessor)
   }
 }
-
-module.exports = NavigationConfigModel

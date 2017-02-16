@@ -1,13 +1,13 @@
 /*
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
-require('./area-chart.scss')
-const _ = require('lodash')
-const d3 = require('d3')
-const d3Array = require('d3-array')
-const XYChartSubView = require('components/composite-y/XYChartSubView')
+import './area-chart.scss'
+import _ from 'lodash'
+import 'd3'
+import * as d3Array from 'd3-array'
+import XYChartSubView from 'components/composite-y/XYChartSubView'
 
-class AreaChartView extends XYChartSubView {
+export default class AreaChartView extends XYChartSubView {
   get zIndex () { return 2 }
   /**
    * follow same naming convention for all XY chart sub views
@@ -115,5 +115,3 @@ class AreaChartView extends XYChartSubView {
     el.classList.add(this.selectorClass('active'))
   }
 }
-
-module.exports = AreaChartView

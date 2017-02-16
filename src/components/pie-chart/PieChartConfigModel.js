@@ -1,10 +1,10 @@
 /*
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
-const d3 = require('d3')
-const ContrailChartsConfigModel = require('contrail-charts-config-model')
+import 'd3'
+import ContrailChartsConfigModel from 'contrail-charts-config-model'
 
-class PieChartConfigModel extends ContrailChartsConfigModel {
+export default class PieChartConfigModel extends ContrailChartsConfigModel {
   get defaults () {
     return {
       // sets the position for shared svg container
@@ -41,5 +41,3 @@ class PieChartConfigModel extends ContrailChartsConfigModel {
     return dataProvider.getLabels(labelFormatter)
   }
 }
-
-module.exports = PieChartConfigModel

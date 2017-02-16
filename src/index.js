@@ -1,15 +1,9 @@
 /*
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
+import * as handlers from 'handlers/index'
+import * as components from 'components/index'
+import * as charts from 'charts/index'
+export {charts, components, handlers}
 
-const handlers = require('handlers/index')
-const components = require('components/index')
-const charts = require('charts/index')
-
-require('./styles/index.scss')
-
-module.exports = {
-  handlers: handlers,
-  components: components,
-  charts: charts,
-}
+import './styles/index.scss'

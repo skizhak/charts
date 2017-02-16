@@ -1,10 +1,10 @@
 /*
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
-const _ = require('lodash')
-const ContrailModel = require('contrail-model')
+import _ from 'lodash'
+import ContrailModel from 'contrail-model'
 
-class ContrailChartsConfigModel extends ContrailModel {
+export default class ContrailChartsConfigModel extends ContrailModel {
   /**
    * @return {String} this class name without 'ConfigModel'
    */
@@ -74,5 +74,3 @@ class ContrailChartsConfigModel extends ContrailModel {
    */
   toggleComponent (type, enable) {}
 }
-
-module.exports = ContrailChartsConfigModel

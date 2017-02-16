@@ -1,13 +1,12 @@
 /*
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
-
-const _ = require('lodash')
-const Events = require('contrail-charts-events')
+import _ from 'lodash'
+import Events from 'contrail-charts-events'
 /**
  * Action Manager
  */
-class Actionman {
+export default class Actionman {
   constructor () {
     this._id = undefined
     this._instances = {}
@@ -66,5 +65,3 @@ class Actionman {
 }
 // TODO replace with class extends syntax
 _.extend(Actionman.prototype, Events)
-
-module.exports = Actionman

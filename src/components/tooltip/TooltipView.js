@@ -1,11 +1,11 @@
 // Copyright (c) Juniper Networks, Inc. All rights reserved.
 
-require('./tooltip.scss')
-const ContrailChartsView = require('contrail-charts-view')
-const TitleView = require('plugins/title/TitleView')
-const _template = require('./tooltip.html')
+import './tooltip.scss'
+import ContrailChartsView from 'contrail-charts-view'
+import TitleView from 'plugins/title/TitleView'
+import _template from './tooltip.html'
 
-class TooltipView extends ContrailChartsView {
+export default class TooltipView extends ContrailChartsView {
   constructor (p) {
     super(p)
     this.resetParams()
@@ -17,6 +17,7 @@ class TooltipView extends ContrailChartsView {
    * @param {Object} data to display
    */
   show (position, data) {
+    let left, top
     this._loadTemplate(data)
     this.d3.classed('active', true)
 
@@ -24,13 +25,28 @@ class TooltipView extends ContrailChartsView {
     const height = this.el.offsetHeight
     const containerWidth = this._container.offsetWidth
 
-    let left = position.left - width / 2
-    let top = position.top - height - 10
+    if (this.config.get('sticky')) {
+      // TODO do not make assumptions on source component internal structure, just get it by ID only
+      // and get margin from its config model
+      const sourceRect = this._container.querySelector('#' + this.config.sourceId + ' clipPath rect').getBoundingClientRect()
+      const containerRect = this._container.getBoundingClientRect()
+      left = sourceRect.left - containerRect.left
+      if (position.left > containerRect.width / 2) {
+        left += this.config.stickyMargin.left
+      } else {
+        left += (sourceRect.width - this.config.stickyMargin.right - width)
+      }
+      top = sourceRect.top - containerRect.top + (sourceRect.height / 2 - height / 2)
+      position = {left, top}
+    } else {
+      left = position.left - width / 2
+      top = position.top - height - 10
 
-    if (top < 0) top = position.top + 10
-    if (left + width > containerWidth) {
-      left = containerWidth - width
-    } else if (left < 0) left = 0
+      if (top < 0) top = position.top + 10
+      if (left + width > containerWidth) {
+        left = containerWidth - width
+      } else if (left < 0) left = 0
+    }
 
     this.el.style.top = `${top}px`
     this.el.style.left = `${left}px`
@@ -45,11 +61,9 @@ class TooltipView extends ContrailChartsView {
     const template = this.config.get('template') || _template
     const tooltipContent = this.config.get('formatter').bind(this.config)(data)
     super.render(template(tooltipContent))
-    // Todo Discuss if title needs to be handled via TitleView or using the tooltip template itself.
+    // TODO Discuss if title needs to be handled via TitleView or using the tooltip template itself.
     if (tooltipContent.title) {
       TitleView(this.d3.select('.tooltip-content').node(), tooltipContent.title)
     }
   }
 }
-
-module.exports = TooltipView
