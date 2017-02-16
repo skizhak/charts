@@ -1,25 +1,27 @@
 /*
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
-const _ = require('lodash')
-const ContrailChartsDataModel = require('contrail-charts-data-model')
-const ContrailView = require('contrail-view') // Todo use contrail-charts-view instead?
-const components = require('components/index')
-const SerieProvider = require('handlers/SerieProvider')
-const Actionman = require('../../plugins/Actionman')
-const _actions = [
-  require('actions/ShowComponent'),
-  require('actions/HideComponent'),
-  require('actions/SelectColor'),
-  require('actions/Refresh'),
-  require('actions/ChangeSelection'),
-  require('actions/OnClick'),
-]
+import _ from 'lodash'
+import ContrailChartsDataModel from 'contrail-charts-data-model'
+import ContrailView from 'contrail-view' // Todo use contrail-charts-view instead
+import * as Components from 'components/index'
+import SerieProvider from 'handlers/SerieProvider'
+import Actionman from '../../plugins/Actionman'
+
+import ShowComponent from 'actions/ShowComponent'
+import HideComponent from 'actions/HideComponent'
+import SelectColor from 'actions/SelectColor'
+import Refresh from 'actions/Refresh'
+import Freeze from 'actions/Freeze'
+import Unfreeze from 'actions/Unfreeze'
+import ChangeSelection from 'actions/ChangeSelection'
+import OnClick from 'actions/OnClick'
+const Actions = {ShowComponent, HideComponent, SelectColor, ChangeSelection, Refresh, Freeze, Unfreeze, OnClick}
 /**
 * Group of charts rendered in polar coordinates system
 * TODO merge with XYChart
 */
-class RadialChartView extends ContrailView {
+export default class RadialChartView extends ContrailView {
 
   constructor (p = {}) {
     super(p)
@@ -27,7 +29,7 @@ class RadialChartView extends ContrailView {
     this._dataProvider = new SerieProvider({ parent: this._dataModel })
     this._components = []
     this._actionman = new Actionman()
-    _.each(_actions, action => this._actionman.set(action, this))
+    _.each(Actions, action => this._actionman.set(action, this))
   }
 
   render () {
@@ -98,7 +100,7 @@ class RadialChartView extends ContrailView {
     if (!this._isEnabledComponent(type)) return false
     // Set title to parent title only if it doesn't exist. Each component may be handling title in different way.
     if (!config.title) config.title = this._config.title
-    const configModel = new components[`${type}ConfigModel`](config)
+    const configModel = new Components[`${type}ConfigModel`](config)
     const viewOptions = _.extend(config, {
       id: id,
       config: configModel,
@@ -106,7 +108,7 @@ class RadialChartView extends ContrailView {
       actionman: this._actionman,
       container: this.el,
     })
-    const component = new components[`${type}View`](viewOptions)
+    const component = new Components[`${type}View`](viewOptions)
     this._components.push(component)
 
     return component
@@ -121,5 +123,3 @@ class RadialChartView extends ContrailView {
     return false
   }
 }
-
-module.exports = RadialChartView

@@ -1,8 +1,8 @@
 /*
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
-const ContrailChartsConfigModel = require('contrail-charts-config-model')
-module.exports = class ControlPanelConfigModel extends ContrailChartsConfigModel {
+import ContrailChartsConfigModel from 'contrail-charts-config-model'
+export default class ControlPanelConfigModel extends ContrailChartsConfigModel {
   get menuItems () {
     return {
       Refresh: {

@@ -2,11 +2,11 @@
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
 require('./brush.scss')
-const d3 = require('d3')
-const d3Ease = require('d3-ease')
-const ContrailChartsView = require('contrail-charts-view')
+import 'd3'
+import * as d3Ease from 'd3-ease'
+import ContrailChartsView from 'contrail-charts-view'
 
-class BrushView extends ContrailChartsView {
+export default class BrushView extends ContrailChartsView {
   constructor (p) {
     super(p)
     this._brush = d3.brushX()
@@ -63,5 +63,3 @@ class BrushView extends ContrailChartsView {
     this.trigger('selection', selection)
   }
 }
-
-module.exports = BrushView

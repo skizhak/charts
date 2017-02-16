@@ -1,11 +1,11 @@
 /*
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
 */
-const _ = require('lodash')
-const d3 = require('d3')
-const ContrailChartsConfigModel = require('contrail-charts-config-model')
+import _ from 'lodash'
+import 'd3'
+import ContrailChartsConfigModel from 'contrail-charts-config-model'
 
-module.exports = class CompositeYChartConfigModel extends ContrailChartsConfigModel {
+export default class CompositeYChartConfigModel extends ContrailChartsConfigModel {
   get defaults () {
     return {
       isPrimary: true,

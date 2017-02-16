@@ -1,16 +1,15 @@
 /*
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
-
-const _ = require('lodash')
-const Events = require('contrail-charts-events')
+import _ from 'lodash'
+import Events from 'contrail-charts-events'
 /**
  * A "Command" object
  * @event enable
  * @event disable
  */
 let instances = {}
-class Action {
+export default class Action {
   constructor (p = {}) {
     if (!instances[this.id]) instances[this.id] = this
     const instance = instances[this.id]
@@ -103,5 +102,3 @@ class Action {
 }
 // TODO replace with class extends syntax
 _.extend(Action.prototype, Events)
-
-module.exports = Action

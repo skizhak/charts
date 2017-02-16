@@ -1,10 +1,10 @@
 /*
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
-const _ = require('lodash')
-const ContrailChartsConfigModel = require('contrail-charts-config-model')
+import _ from 'lodash'
+import ContrailChartsConfigModel from 'contrail-charts-config-model'
 
-class FilterConfigModel extends ContrailChartsConfigModel {
+export default class FilterConfigModel extends ContrailChartsConfigModel {
   get data () {
     const accessors = this._parent.getAccessors()
     const data = _.map(accessors, (accessor) => {
@@ -14,9 +14,6 @@ class FilterConfigModel extends ContrailChartsConfigModel {
         enabled: accessor.enabled,
       }
     })
-
     return data
   }
 }
-
-module.exports = FilterConfigModel

@@ -2,12 +2,12 @@
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
 require('./scatter-plot.scss')
-const _ = require('lodash')
+import _ from 'lodash'
 require('d3-transition')
-const d3Ease = require('d3-ease')
-const XYChartSubView = require('components/composite-y/XYChartSubView')
+import * as d3Ease from 'd3-ease'
+import XYChartSubView from 'components/composite-y/XYChartSubView'
 
-class ScatterPlotView extends XYChartSubView {
+export default class ScatterPlotView extends XYChartSubView {
   get zIndex () { return 1 }
   /**
    * follow same naming convention for all XY chart sub views
@@ -100,5 +100,3 @@ class ScatterPlotView extends XYChartSubView {
     el.classList.add(this.selectorClass('active'))
   }
 }
-
-module.exports = ScatterPlotView

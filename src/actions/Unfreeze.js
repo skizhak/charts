@@ -1,9 +1,9 @@
 /*
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
-const Action = require('../plugins/Action')
+import Action from '../plugins/Action'
 
-module.exports = class Unfreeze extends Action {
+export default class Unfreeze extends Action {
   constructor (p) {
     super(p)
     this._deny = false

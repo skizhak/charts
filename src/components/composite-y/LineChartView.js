@@ -3,16 +3,16 @@
  */
 
 require('./line-chart.scss')
-const _ = require('lodash')
-const d3 = require('d3')
-const d3InterpolatePath = require('d3-interpolate-path').interpolatePath
-require('d3-transition')
-const d3Shape = require('d3-shape')
-const d3Ease = require('d3-ease')
-const d3Scale = require('d3-scale')
-const XYChartSubView = require('components/composite-y/XYChartSubView')
+import _ from 'lodash'
+import 'd3'
+import {interpolatePath as d3InterpolatePath} from 'd3-interpolate-path'
+import 'd3-transition'
+import * as d3Shape from 'd3-shape'
+import * as d3Ease from 'd3-ease'
+import * as d3Scale from 'd3-scale'
+import XYChartSubView from 'components/composite-y/XYChartSubView'
 
-class LineChartView extends XYChartSubView {
+export default class LineChartView extends XYChartSubView {
   get zIndex () { return 3 }
   /**
    * follow same naming convention for all XY chart sub views
@@ -102,5 +102,3 @@ class LineChartView extends XYChartSubView {
     el.classList.add(this.selectorClass('active'))
   }
 }
-
-module.exports = LineChartView

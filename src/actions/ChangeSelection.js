@@ -1,9 +1,9 @@
 /*
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
-const Action = require('../plugins/Action')
+import Action from '../plugins/Action'
 
-class ChangeSelection extends Action {
+export default class ChangeSelection extends Action {
   constructor (p) {
     super(p)
     this._deny = false
@@ -15,5 +15,3 @@ class ChangeSelection extends Action {
     changeSelectionHandler(dataProvider, chart)
   }
 }
-
-module.exports = ChangeSelection

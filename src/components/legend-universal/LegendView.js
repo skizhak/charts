@@ -2,10 +2,10 @@
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
 require('../legend/legend.scss')
-const ContrailChartsView = require('contrail-charts-view')
-const _template = require('./legend.html')
+import ContrailChartsView from 'contrail-charts-view'
+import _template from './legend.html'
 
-class LegendView extends ContrailChartsView {
+export default class LegendView extends ContrailChartsView {
   constructor (p) {
     super(p)
     this.listenTo(this.config, 'change', this.render)
@@ -19,5 +19,3 @@ class LegendView extends ContrailChartsView {
     super.render(content)
   }
 }
-
-module.exports = LegendView

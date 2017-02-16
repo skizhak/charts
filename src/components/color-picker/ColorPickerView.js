@@ -2,10 +2,10 @@
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
 require('./color-picker.scss')
-const ContrailChartsView = require('contrail-charts-view')
-const _template = require('./color-picker.html')
+import ContrailChartsView from 'contrail-charts-view'
+import _template from './color-picker.html'
 
-class ColorPickerView extends ContrailChartsView {
+export default class ColorPickerView extends ContrailChartsView {
   constructor (p) {
     super(p)
     this.listenTo(this.config, 'change', this.render)
@@ -50,5 +50,3 @@ class ColorPickerView extends ContrailChartsView {
     this._actionman.fire('SelectColor', this._accessor, color)
   }
 }
-
-module.exports = ColorPickerView

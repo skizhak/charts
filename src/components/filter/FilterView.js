@@ -2,11 +2,11 @@
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
 require('./filter.scss')
-const d3 = require('d3')
-const ContrailChartsView = require('contrail-charts-view')
-const _template = require('./filter.html')
+import 'd3'
+import ContrailChartsView from 'contrail-charts-view'
+import _template from './filter.html'
 
-class FilterView extends ContrailChartsView {
+export default class FilterView extends ContrailChartsView {
   constructor (p) {
     super(p)
     this.listenTo(this.model, 'change', this.render)
@@ -34,5 +34,3 @@ class FilterView extends ContrailChartsView {
     this._actionman.fire('SelectSerie', accessorName, isChecked)
   }
 }
-
-module.exports = FilterView

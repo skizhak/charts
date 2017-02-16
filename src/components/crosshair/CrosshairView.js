@@ -2,10 +2,10 @@
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
 require('./crosshair.scss')
-const d3 = require('d3')
-const ContrailChartsView = require('contrail-charts-view')
+import 'd3'
+import ContrailChartsView from 'contrail-charts-view'
 
-class CrosshairView extends ContrailChartsView {
+export default class CrosshairView extends ContrailChartsView {
   constructor (p) {
     super(p)
     this.render()
@@ -97,5 +97,3 @@ class CrosshairView extends ContrailChartsView {
     this._actionman.fire('HideComponent', this.config.get('tooltip'))
   }
 }
-
-module.exports = CrosshairView

@@ -1,5 +1,5 @@
 /*
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
-const ContrailEvents = require('contrail-events')
+import ContrailEvents from 'contrail-events'
 module.exports = ContrailEvents

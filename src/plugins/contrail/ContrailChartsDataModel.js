@@ -1,13 +1,12 @@
 /*
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
-const _ = require('lodash')
-const ContrailModel = require('contrail-model')
-
+import _ from 'lodash'
+import ContrailModel from 'contrail-model'
 /**
  * Base data model.
  */
-class ContrailChartsDataModel extends ContrailModel {
+export default class ContrailChartsDataModel extends ContrailModel {
   get defaults () {
     return {
       // The formatted data
@@ -61,5 +60,3 @@ class ContrailChartsDataModel extends ContrailModel {
     this.set({limit})
   }
 }
-
-module.exports = ContrailChartsDataModel

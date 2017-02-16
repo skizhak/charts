@@ -1,6 +1,6 @@
-const Action = require('../../../plugins/Action')
+import Action from '../../../plugins/Action'
 
-class SendMessage extends Action {
+export default class SendMessage extends Action {
   constructor (p) {
     super(p)
     this._deny = false
@@ -10,5 +10,3 @@ class SendMessage extends Action {
     this._registrar.show(msgObj)
   }
 }
-
-module.exports = SendMessage

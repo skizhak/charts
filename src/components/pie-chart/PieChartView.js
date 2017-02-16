@@ -1,11 +1,11 @@
 // Copyright (c) Juniper Networks, Inc. All rights reserved.
 
 require('./pie-chart.scss')
-const shape = require('d3-shape')
-const ContrailChartsView = require('contrail-charts-view')
-const TitleView = require('plugins/title/TitleView')
+import * as d3Shape from 'd3-shape'
+import ContrailChartsView from 'contrail-charts-view'
+import TitleView from 'plugins/title/TitleView'
 
-class PieChartView extends ContrailChartsView {
+export default class PieChartView extends ContrailChartsView {
   constructor (p = {}) {
     super(p)
     this._highlightRadius = 10
@@ -49,11 +49,11 @@ class PieChartView extends ContrailChartsView {
     const radius = this.config.get('radius')
     const data = this.model.get('data')
 
-    const arc = shape.arc()
+    const arc = d3Shape.arc()
       .outerRadius(radius)
       .innerRadius(this.config.innerRadius)
 
-    const stakes = shape.pie()
+    const stakes = d3Shape.pie()
       .sort(null)
       .value(d => serieConfig.getValue(d))(data)
 
@@ -111,5 +111,3 @@ class PieChartView extends ContrailChartsView {
     this._actionman.fire('OnClick', d.data, el, this.config.get('onClick'))
   }
 }
-
-module.exports = PieChartView

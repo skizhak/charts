@@ -1,9 +1,7 @@
 /*
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
-const ContrailChartsConfigModel = require('contrail-charts-config-model')
+import ContrailChartsConfigModel from 'contrail-charts-config-model'
 
-class MessageConfigModel extends ContrailChartsConfigModel {
+export default class MessageConfigModel extends ContrailChartsConfigModel {
 }
-
-module.exports = MessageConfigModel

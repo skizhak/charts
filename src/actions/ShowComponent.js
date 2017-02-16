@@ -1,9 +1,9 @@
 /*
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
-const Action = require('../plugins/Action')
+import Action from '../plugins/Action'
 
-class ShowComponent extends Action {
+export default class ShowComponent extends Action {
   constructor (p) {
     super(p)
     this._deny = false
@@ -14,5 +14,3 @@ class ShowComponent extends Action {
     if (component) component.show(...args)
   }
 }
-
-module.exports = ShowComponent

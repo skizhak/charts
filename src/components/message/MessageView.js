@@ -2,15 +2,14 @@
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
 require('./message.scss')
-const _ = require('lodash')
-const ContrailChartsView = require('contrail-charts-view')
-const _template = require('./message.html')
-const _actions = [
-  require('./actions/SendMessage'),
-  require('./actions/ClearMessage'),
-]
+import _ from 'lodash'
+import ContrailChartsView from 'contrail-charts-view'
+import _template from './message.html'
+import SendMessage from './actions/SendMessage'
+import ClearMessage from './actions/ClearMessage'
+const _actions = [SendMessage, ClearMessage]
 
-class MessageView extends ContrailChartsView {
+export default class MessageView extends ContrailChartsView {
   constructor (p) {
     super(p)
     this.params.containerList = {}
@@ -93,5 +92,3 @@ class MessageView extends ContrailChartsView {
     })
   }
 }
-
-module.exports = MessageView

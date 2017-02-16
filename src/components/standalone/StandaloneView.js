@@ -1,9 +1,9 @@
 /*
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
-const ContrailChartsView = require('contrail-charts-view')
+import ContrailChartsView from 'contrail-charts-view'
 
-class StandaloneView extends ContrailChartsView {
+export default class StandaloneView extends ContrailChartsView {
   constructor (p) {
     super(p)
     this.render()
@@ -18,5 +18,3 @@ class StandaloneView extends ContrailChartsView {
     this.svg.classed('standalone-is-here', true)
   }
 }
-
-module.exports = StandaloneView

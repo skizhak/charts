@@ -1,11 +1,11 @@
 // Copyright (c) Juniper Networks, Inc. All rights reserved.
 
 require('./tooltip.scss')
-const ContrailChartsView = require('contrail-charts-view')
-const TitleView = require('plugins/title/TitleView')
-const _template = require('./tooltip.html')
+import ContrailChartsView from 'contrail-charts-view'
+import TitleView from 'plugins/title/TitleView'
+import _template from './tooltip.html'
 
-class TooltipView extends ContrailChartsView {
+export default class TooltipView extends ContrailChartsView {
   constructor (p) {
     super(p)
     this.resetParams()
@@ -67,5 +67,3 @@ class TooltipView extends ContrailChartsView {
     }
   }
 }
-
-module.exports = TooltipView

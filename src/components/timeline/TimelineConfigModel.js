@@ -1,9 +1,9 @@
 /*
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
-const ContrailChartsConfigModel = require('contrail-charts-config-model')
+import ContrailChartsConfigModel from 'contrail-charts-config-model'
 
-class NavigationConfigModel extends ContrailChartsConfigModel {
+export default class NavigationConfigModel extends ContrailChartsConfigModel {
   get defaults () {
     return {
       // The chart width. If not provided will be caculated by View.
@@ -37,5 +37,3 @@ class NavigationConfigModel extends ContrailChartsConfigModel {
     }
   }
 }
-
-module.exports = NavigationConfigModel

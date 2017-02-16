@@ -2,10 +2,5 @@
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
 
-const SerieProvider = require('./SerieProvider')
-const DataProvider = require('./DataProvider')
-
-module.exports = {
-  SerieProvider: SerieProvider,
-  DataProvider: DataProvider,
-}
+export {default as SerieProvider} from './SerieProvider'
+export {default as DataProvider} from './DataProvider'

@@ -1,10 +1,10 @@
 /*
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
-const _ = require('lodash')
-const ContrailChartsConfigModel = require('contrail-charts-config-model')
+import _ from 'lodash'
+import ContrailChartsConfigModel from 'contrail-charts-config-model'
 
-module.exports = class TooltipConfigModel extends ContrailChartsConfigModel {
+export default class TooltipConfigModel extends ContrailChartsConfigModel {
   get defaults () {
     return {
       // Which tooltip ids to accept. If empty accept all.
