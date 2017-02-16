@@ -1,6 +1,6 @@
-const Action = require('../../../plugins/Action')
+import Action from '../../../plugins/Action'
 
-class ClearMessage extends Action {
+export default class ClearMessage extends Action {
   constructor (p) {
     super(p)
     this._deny = false
@@ -10,5 +10,3 @@ class ClearMessage extends Action {
     this._registrar.clear(msgObj)
   }
 }
-
-module.exports = ClearMessage

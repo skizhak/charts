@@ -1,10 +1,10 @@
 /*
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
-const _ = require('lodash')
-const Action = require('../plugins/Action')
+import _ from 'lodash'
+import Action from '../plugins/Action'
 
-class SelectChartType extends Action {
+export default class SelectChartType extends Action {
   constructor (p) {
     super(p)
     this._deny = false
@@ -58,5 +58,3 @@ class SelectChartType extends Action {
     })
   }
 }
-
-module.exports = SelectChartType

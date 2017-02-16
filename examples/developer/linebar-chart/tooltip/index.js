@@ -7,22 +7,23 @@ const commons = require('commons')
 const formatter = commons.formatter
 const data = commons.fixture()
 
-const container = 'chart-tooltip'
+const container = ['chart-tooltip-1', 'chart-tooltip-2']
 const layoutMeta = {
-  [container]: 'col-md-12'
+  'chart-tooltip-1': 'col-md-12',
+  'chart-tooltip-2': 'col-md-12'
 }
 
-const chartConfig = {
-  id: container,
+const chartConfig1 = {
+  id: container[0],
   components: [{
-    id: 'compositey-id',
+    id: 'compositey-id-1',
     type: 'CompositeYChart',
     config: {
       marginInner: 10,
       marginLeft: 80,
       marginRight: 80,
       marginBottom: 40,
-      chartHeight: 600,
+      chartHeight: 200,
       plot: {
         x: {
           accessor: 't',
@@ -62,10 +63,12 @@ const chartConfig = {
         y1: {
           position: 'left',
           formatter: formatter.toInteger,
+          ticks: 5,
         },
         y2: {
           position: 'right',
           formatter: formatter.toFixed1,
+          ticks: 5,
         },
       },
     },
@@ -102,20 +105,86 @@ const chartConfig = {
   }]
 }
 
+const chartConfig2 = {
+  id: container[1],
+  components: [{
+    id: 'compositey-id-2',
+    type: 'CompositeYChart',
+    config: {
+      marginInner: 10,
+      marginLeft: 80,
+      marginRight: 80,
+      marginBottom: 40,
+      chartHeight: 200,
+      plot: {
+        x: {
+          accessor: 't',
+          labelFormatter: 'Time',
+          axis: 'x'
+        },
+        y: [
+          {
+            accessor: 'a',
+            labelFormatter: 'Label A',
+            enabled: true,
+            chart: 'BarChart',
+            axis: 'y1',
+            tooltip: 'sticky-tooltip',
+          }
+        ]
+      },
+      axis: {
+        x: {
+          formatter: formatter.extendedISOTime,
+        },
+        y1: {
+          position: 'left',
+          formatter: formatter.toInteger,
+          ticks: 5,
+        },
+      },
+    },
+  }, {
+    id: 'sticky-tooltip',
+    type: 'Tooltip',
+    config: {
+      sourceComponent: 'compositey-id-2',
+      sticky: true,
+      dataConfig: [
+        {
+          accessor: 't',
+          labelFormatter: 'Time',
+          valueFormatter: formatter.extendedISOTime,
+        }, {
+          accessor: 'a',
+          labelFormatter: 'Tooltip A',
+          valueFormatter: formatter.toInteger,
+        }
+      ]
+    },
+  }]
+}
+
 let isInitialized = false
-const simpleChartView = new coCharts.charts.XYChartView()
+const chart1 = new coCharts.charts.XYChartView()
+const chart2 = new coCharts.charts.XYChartView()
+
 
 module.exports = {
   container: container,
   layoutMeta: layoutMeta,
   render: () => {
     if (isInitialized) {
-      simpleChartView.render()
+      chart1.render()
+      chart2.render()
     } else {
       isInitialized = true
 
-      simpleChartView.setConfig(chartConfig)
-      simpleChartView.setData(data)
+      chart1.setConfig(chartConfig1)
+      chart1.setData(data)
+
+      chart2.setConfig(chartConfig2)
+      chart2.setData(data)
     }
   }
 }

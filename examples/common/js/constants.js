@@ -6,6 +6,27 @@
 const d3ColorScheme10 = d3.schemeCategory10
 const d3ColorScheme20 = d3.schemeCategory20
 
+const lbColorScheme7 = [
+  '#a88add',
+  '#fcc100',
+  '#2196f3',
+  '#4caf50',
+  '#0cc2aa',
+  '#6cc788',
+  '#6887ff'
+]
+
+const lbColorScheme17 = [
+  '#a88add',
+  '#fcc100',
+  '#2196f3',
+  '#4caf50',
+  '#0cc2aa',
+  '#6cc788',
+  '#6887ff',
+  '#f06292'
+].concat(d3ColorScheme10)
+
 const bubbleColorScheme6 = [
   '#3f51b5',
   d3ColorScheme10[1],
@@ -19,36 +40,6 @@ const bubbleColorScheme13 = [
   '#424242',
   '#9c27b0',
   '#3f51b5'
-].concat(d3ColorScheme10)
-
-const lbColorScheme7 = [
-  '#a88add',
-  '#fcc100',
-  '#2196f3',
-  '#4caf50',
-  '#0cc2aa',
-  '#6cc788',
-  '#6887ff'
-]
-
-const radialColorScheme6 = [
-  '#00bcd4',
-  '#4caf50',
-  '#a88add',
-  '#fcc100',
-  '#2196f3',
-  '#c62828'
-]
-
-const lbColorScheme17 = [
-  '#a88add',
-  '#fcc100',
-  '#2196f3',
-  '#4caf50',
-  '#0cc2aa',
-  '#6cc788',
-  '#6887ff',
-  '#f06292'
 ].concat(d3ColorScheme10)
 
 const bubbleShapes = {
@@ -82,6 +73,28 @@ const bubbleShapes = {
   asterisk: '&#xf069;'
 }
 
+const radialColorScheme6 = [
+  '#00bcd4',
+  '#4caf50',
+  '#a88add',
+  '#fcc100',
+  '#2196f3',
+  '#c62828',
+]
+
+const radialColorScheme10 = [
+  '#3f51b5',
+  d3ColorScheme10[0],
+  d3ColorScheme10[2],
+  '#9c27b0',
+  '#00bcd4',
+  '#4caf50',
+  '#a88add',
+  '#fcc100',
+  '#2196f3',
+  '#c62828',
+]
+
 module.exports = {
   bubbleShapes,
   bubbleColorScheme6,
@@ -89,6 +102,7 @@ module.exports = {
   lbColorScheme7,
   lbColorScheme17,
   radialColorScheme6,
+  radialColorScheme10,
   d3ColorScheme10,
   d3ColorScheme20
 }

@@ -1,9 +1,9 @@
 /*
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
-const Action = require('../plugins/Action')
+import Action from '../plugins/Action'
 
-class OnClick extends Action {
+export default class OnClick extends Action {
   constructor (p) {
     super(p)
     this._deny = false
@@ -15,5 +15,3 @@ class OnClick extends Action {
     clickHandler(data, el, chart)
   }
 }
-
-module.exports = OnClick

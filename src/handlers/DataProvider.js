@@ -1,18 +1,17 @@
 /*
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
-
-const _ = require('lodash')
-const d3Array = require('d3-array')
-const ContrailModel = require('contrail-model')
-const ContrailEvents = require('contrail-events')
+import _ from 'lodash'
+import * as d3Array from 'd3-array'
+import ContrailModel from 'contrail-model'
+import ContrailEvents from 'contrail-events'
 /**
  * A DataModel wrapper for view components.
  * Handles:
  * - data range calculation for view components
  * - data filtering and chaining between components
  */
-class DataProvider extends ContrailModel {
+export default class DataProvider extends ContrailModel {
   get defaults () {
     return {
       // The formatted/filtered data
@@ -243,5 +242,3 @@ class DataProvider extends ContrailModel {
     }
   }
 }
-
-module.exports = DataProvider

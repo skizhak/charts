@@ -1,11 +1,10 @@
 /*
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
+import _ from 'lodash'
+import ContrailModel from 'contrail-model'
 
-const _ = require('lodash')
-const ContrailModel = require('contrail-model')
-
-class SerieProvider extends ContrailModel {
+export default class SerieProvider extends ContrailModel {
   get defaults () {
     return {
       _type: 'SerieProvider',
@@ -41,5 +40,3 @@ class SerieProvider extends ContrailModel {
     return _.map(this.get('data'), (serie) => formatter(serie))
   }
 }
-
-module.exports = SerieProvider

@@ -1,10 +1,10 @@
 /*
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
-const _ = require('lodash')
-const ContrailChartsConfigModel = require('contrail-charts-config-model')
+import _ from 'lodash'
+import ContrailChartsConfigModel from 'contrail-charts-config-model'
 
-class LegendConfigModel extends ContrailChartsConfigModel {
+export default class LegendConfigModel extends ContrailChartsConfigModel {
   /**
    * Ask parent component for serie accessors
    */
@@ -18,5 +18,3 @@ class LegendConfigModel extends ContrailChartsConfigModel {
     })
   }
 }
-
-module.exports = LegendConfigModel

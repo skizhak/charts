@@ -1,20 +1,20 @@
 /*
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
-require('./composite-y.scss')
-const _ = require('lodash')
-const d3 = require('d3')
-const d3Array = require('d3-array')
-const ContrailChartsView = require('contrail-charts-view')
-const LineChartView = require('components/composite-y/LineChartView')
-const AreaChartView = require('components/composite-y/AreaChartView')
-const BarChartView = require('components/composite-y/GroupedBarChartView')
-const StackedBarChartView = require('components/composite-y/StackedBarChartView')
-const ScatterPlotView = require('components/composite-y/ScatterPlotView')
-const CompositeYChartConfigModel = require('components/composite-y/CompositeYChartConfigModel')
-const TitleView = require('plugins/title/TitleView')
+import './composite-y.scss'
+import _ from 'lodash'
+import 'd3'
+import * as d3Array from 'd3-array'
+import ContrailChartsView from 'contrail-charts-view'
+import LineChartView from 'components/composite-y/LineChartView'
+import AreaChartView from 'components/composite-y/AreaChartView'
+import BarChartView from 'components/composite-y/GroupedBarChartView'
+import StackedBarChartView from 'components/composite-y/StackedBarChartView'
+import ScatterPlotView from 'components/composite-y/ScatterPlotView'
+import CompositeYChartConfigModel from 'components/composite-y/CompositeYChartConfigModel'
+import TitleView from 'plugins/title/TitleView'
 
-class CompositeYChartView extends ContrailChartsView {
+export default class CompositeYChartView extends ContrailChartsView {
   constructor (p) {
     super(p)
     this._drawings = []
@@ -517,5 +517,3 @@ class CompositeYChartView extends ContrailChartsView {
     }
   }
 }
-
-module.exports = CompositeYChartView

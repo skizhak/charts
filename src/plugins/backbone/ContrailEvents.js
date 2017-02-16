@@ -2,5 +2,5 @@
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
 
-const Backbone = require('backbone')
+import Backbone from 'backbone'
 module.exports = Backbone.Events

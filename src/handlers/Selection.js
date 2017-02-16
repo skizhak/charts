@@ -1,14 +1,12 @@
 /*
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
+import _ from 'lodash'
+import * as d3Array from 'd3-array'
+import Events from 'contrail-charts-events'
 
 // Selection object for dataframes
-
-const _ = require('lodash')
-const d3Array = require('d3-array')
-const Events = require('contrail-charts-events')
-
-class Selection {
+export default class Selection {
   constructor (data = []) {
     this._data = data
     this._ranges = {}
@@ -59,5 +57,3 @@ class Selection {
   }
 }
 _.extend(Selection.prototype, Events)
-
-module.exports = Selection

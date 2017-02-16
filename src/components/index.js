@@ -2,35 +2,33 @@
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
 
-module.exports = {
-  ColorPickerConfigModel: require('components/color-picker/ColorPickerConfigModel'),
-  ColorPickerView: require('components/color-picker/ColorPickerView'),
-  CompositeYChartConfigModel: require('components/composite-y/CompositeYChartConfigModel'),
-  CompositeYChartView: require('components/composite-y/CompositeYChartView'),
-  ControlPanelConfigModel: require('components/control-panel/ControlPanelConfigModel'),
-  ControlPanelView: require('components/control-panel/ControlPanelView'),
-  CrosshairConfigModel: require('components/crosshair/CrosshairConfigModel'),
-  CrosshairView: require('components/crosshair/CrosshairView'),
-  FilterView: require('components/filter/FilterView'),
-  FilterConfigModel: require('components/filter/FilterConfigModel'),
-  LegendConfigModel: require('components/legend/LegendConfigModel'),
-  LegendView: require('components/legend/LegendView'),
-  LegendUniversalConfigModel: require('components/legend-universal/LegendConfigModel'),
-  LegendUniversalView: require('components/legend-universal/LegendView'),
-  LegendPanelConfigModel: require('components/legend-panel/LegendPanelConfigModel'),
-  LegendPanelView: require('components/legend-panel/LegendPanelView'),
-  MessageConfigModel: require('components/message/MessageConfigModel'),
-  MessageView: require('components/message/MessageView'),
-  NavigationConfigModel: require('components/navigation/NavigationConfigModel'),
-  NavigationView: require('components/navigation/NavigationView'),
-  PieChartConfigModel: require('components/pie-chart/PieChartConfigModel'),
-  PieChartView: require('components/pie-chart/PieChartView'),
-  RadialDendrogramConfigModel: require('components/radial/RadialDendrogramConfigModel'),
-  RadialDendrogramView: require('components/radial/RadialDendrogramView'),
-  StandaloneConfigModel: require('components/standalone/StandaloneConfigModel'),
-  StandaloneView: require('components/standalone/StandaloneView'),
-  TimelineConfigModel: require('components/timeline/TimelineConfigModel'),
-  TimelineView: require('components/timeline/TimelineView'),
-  TooltipConfigModel: require('components/tooltip/TooltipConfigModel'),
-  TooltipView: require('components/tooltip/TooltipView'),
-}
+export {default as ColorPickerConfigModel} from './color-picker/ColorPickerConfigModel'
+export {default as ColorPickerView} from './color-picker/ColorPickerView'
+export {default as CompositeYChartConfigModel} from './composite-y/CompositeYChartConfigModel'
+export {default as CompositeYChartView} from './composite-y/CompositeYChartView'
+export {default as ControlPanelConfigModel} from './control-panel/ControlPanelConfigModel'
+export {default as ControlPanelView} from './control-panel/ControlPanelView'
+export {default as CrosshairConfigModel} from './crosshair/CrosshairConfigModel'
+export {default as CrosshairView} from './crosshair/CrosshairView'
+export {default as FilterView} from './filter/FilterView'
+export {default as FilterConfigModel} from './filter/FilterConfigModel'
+export {default as LegendConfigModel} from './legend/LegendConfigModel'
+export {default as LegendView} from './legend/LegendView'
+export {default as LegendUniversalConfigModel} from './legend-universal/LegendConfigModel'
+export {default as LegendUniversalView} from './legend-universal/LegendView'
+export {default as LegendPanelConfigModel} from './legend-panel/LegendPanelConfigModel'
+export {default as LegendPanelView} from './legend-panel/LegendPanelView'
+export {default as MessageConfigModel} from './message/MessageConfigModel'
+export {default as MessageView} from './message/MessageView'
+export {default as NavigationConfigModel} from './navigation/NavigationConfigModel'
+export {default as NavigationView} from './navigation/NavigationView'
+export {default as PieChartConfigModel} from './pie-chart/PieChartConfigModel'
+export {default as PieChartView} from './pie-chart/PieChartView'
+export {default as RadialDendrogramConfigModel} from './radial/RadialDendrogramConfigModel'
+export {default as RadialDendrogramView} from './radial/RadialDendrogramView'
+export {default as StandaloneConfigModel} from './standalone/StandaloneConfigModel'
+export {default as StandaloneView} from './standalone/StandaloneView'
+export {default as TimelineConfigModel} from './timeline/TimelineConfigModel'
+export {default as TimelineView} from './timeline/TimelineView'
+export {default as TooltipConfigModel} from './tooltip/TooltipConfigModel'
+export {default as TooltipView} from './tooltip/TooltipView'

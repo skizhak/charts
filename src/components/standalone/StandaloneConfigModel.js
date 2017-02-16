@@ -1,12 +1,12 @@
 /*
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
-const ContrailChartsConfigModel = require('contrail-charts-config-model')
+import ContrailChartsConfigModel from 'contrail-charts-config-model'
 
 /**
 * Component to test rendering of vector contents as standalone
 */
-class StandaloneModel extends ContrailChartsConfigModel {
+export default class StandaloneModel extends ContrailChartsConfigModel {
   get defaults () {
     return {
       // by default will use shared container under the parent
@@ -16,5 +16,3 @@ class StandaloneModel extends ContrailChartsConfigModel {
     }
   }
 }
-
-module.exports = StandaloneModel

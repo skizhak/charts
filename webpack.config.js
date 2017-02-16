@@ -28,6 +28,7 @@ if (env === 'build') {
       warnings: false
     }
   }))
+}
   loaders.push({
     loader: 'babel-loader',
     test: /\.js$/,
@@ -36,7 +37,6 @@ if (env === 'build') {
       presets: ['es2015']
     }
   })
-}
 
 // Let's put css under css directory.
 plugins.push(new ExtractTextPlugin('css/' + fileName + '.css'))

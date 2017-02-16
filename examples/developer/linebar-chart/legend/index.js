@@ -180,7 +180,6 @@ const chartConfig = {
         accessor: 'x',
         valueFormatter: formatter.extendedISOTime,
       },
-
       dataConfig: [
         {
           accessor: 'a',
@@ -221,20 +220,20 @@ const chartConfig = {
 }
 
 let isInitialized = false
-const simpleChartView = new coCharts.charts.XYChartView()
+const chartView = new coCharts.charts.XYChartView()
 
 module.exports = {
   container: container,
   layoutMeta: layoutMeta,
   render: () => {
     if (isInitialized) {
-      simpleChartView.render()
+      chartView.render()
     } else {
       isInitialized = true
 
-      simpleChartView.setConfig(chartConfig)
-      simpleChartView.setData(data)
-      simpleChartView.renderMessage({
+      chartView.setConfig(chartConfig)
+      chartView.setData(data)
+      chartView.renderMessage({
         componentId: 'compositey-chart-id',
         action: 'once',
         messages: [{

@@ -1,11 +1,11 @@
 /*
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
-const _ = require('lodash')
-const d3 = require('d3')
-const ContrailChartsConfigModel = require('contrail-charts-config-model')
+import _ from 'lodash'
+import 'd3'
+import ContrailChartsConfigModel from 'contrail-charts-config-model'
 
-class ColorPickerConfigModel extends ContrailChartsConfigModel {
+export default class ColorPickerConfigModel extends ContrailChartsConfigModel {
   get defaults () {
     return {
       palette: d3.schemeCategory20,
@@ -27,5 +27,3 @@ class ColorPickerConfigModel extends ContrailChartsConfigModel {
     return data
   }
 }
-
-module.exports = ColorPickerConfigModel

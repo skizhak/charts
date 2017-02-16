@@ -1,10 +1,10 @@
 /*
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
-const _ = require('lodash')
-const Action = require('../plugins/Action')
+import _ from 'lodash'
+import Action from '../plugins/Action'
 
-class Refresh extends Action {
+export default class Refresh extends Action {
   constructor (p) {
     super(p)
     this._deny = false
@@ -26,5 +26,3 @@ class Refresh extends Action {
     })
   }
 }
-
-module.exports = Refresh

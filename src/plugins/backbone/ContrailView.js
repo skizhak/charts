@@ -1,13 +1,10 @@
 /*
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
-/**
- * Extending Backbone View
- */
-const _ = require('lodash')
-const Backbone = require('backbone')
-const $ = require('jquery')
-const d3 = require('d3')
+import _ from 'lodash'
+import Backbone from 'backbone'
+import $ from 'jquery'
+import 'd3'
 
 d3.selection.prototype.delegate = function (eventName, targetSelector, handler) {
   function delegated () {
@@ -18,8 +15,10 @@ d3.selection.prototype.delegate = function (eventName, targetSelector, handler) 
   }
   return this.on(eventName, delegated)
 }
-
-class ContrailView extends Backbone.View {
+/**
+ * Extending Backbone View
+ */
+export default class ContrailView extends Backbone.View {
   /**
    * @return {String} this class name without 'View'
    */
@@ -92,5 +91,3 @@ class ContrailView extends Backbone.View {
     this.d3 = d3.select(el)
   }
 }
-
-module.exports = ContrailView

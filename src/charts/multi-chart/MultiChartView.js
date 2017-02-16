@@ -1,26 +1,21 @@
 /*
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
-const _ = require('lodash')
-const ContrailChartsDataModel = require('contrail-charts-data-model')
-const ContrailChartsView = require('contrail-charts-view')
-// Todo doesn't work. loop issue.
-// const charts = require('charts/index')
-const charts = {
-  XYChart: require('charts/xy-chart/XYChartView'),
-  RadialChart: require('charts/radial-chart/RadialChartView'),
-}
-const components = require('components/index')
-const handlers = require('handlers/index')
-const Actionman = require('../../plugins/Actionman')
+import _ from 'lodash'
+import ContrailChartsDataModel from 'contrail-charts-data-model'
+import ContrailChartsView from 'contrail-charts-view'
+import * as Charts from 'charts/index'
+import * as Components from 'components/index'
+import * as Handlers from 'handlers/index'
+import Actionman from '../../plugins/Actionman'
 const _actions = []
 
-class ChartView extends ContrailChartsView {
+export default class ChartView extends ContrailChartsView {
   constructor (p) {
     super(p)
     this._charts = {}
     this._dataModel = new ContrailChartsDataModel()
-    this._dataProvider = new handlers.DataProvider({ parentDataModel: this._dataModel })
+    this._dataProvider = new Handlers.DataProvider({ parentDataModel: this._dataModel })
     this._components = []
     this._actionman = new Actionman()
     _.each(_actions, action => this._actionman.set(action, this))
@@ -81,7 +76,7 @@ class ChartView extends ContrailChartsView {
   _registerChart (chart) {
     if (chart.id) {
       if (!this._charts[chart.id]) {
-        this._charts[chart.id] = new charts[chart.type]()
+        this._charts[chart.id] = new Charts[chart.type + 'View']()
       }
       this._charts[chart.id].setConfig(chart)
     }
@@ -122,8 +117,8 @@ class ChartView extends ContrailChartsView {
   _registerComponent (type, config, model, id) {
     if (!this._isEnabledComponent(type)) return false
     let configModel
-    if (components[`${type}ConfigModel`]) {
-      configModel = new components[`${type}ConfigModel`](config)
+    if (Components[`${type}ConfigModel`]) {
+      configModel = new Components[`${type}ConfigModel`](config)
     }
     const viewOptions = _.extend({}, config, {
       id: id,
@@ -133,7 +128,7 @@ class ChartView extends ContrailChartsView {
       // actionman is passed as parameter to each component for it to be able to register action
       actionman: this._actionman,
     })
-    const component = new components[`${type}View`](viewOptions)
+    const component = new Components[`${type}View`](viewOptions)
     this._components.push(component)
 
     return component
@@ -165,5 +160,3 @@ class ChartView extends ContrailChartsView {
     })
   }
 }
-
-module.exports = ChartView

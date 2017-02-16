@@ -1,11 +1,11 @@
 /*
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
 */
-const _ = require('lodash')
-const d3 = require('d3')
-const ContrailChartsConfigModel = require('contrail-charts-config-model')
+import _ from 'lodash'
+import 'd3'
+import ContrailChartsConfigModel from 'contrail-charts-config-model'
 
-class CompositeYChartConfigModel extends ContrailChartsConfigModel {
+export default class CompositeYChartConfigModel extends ContrailChartsConfigModel {
   get defaults () {
     return {
       isPrimary: true,
@@ -50,7 +50,7 @@ class CompositeYChartConfigModel extends ContrailChartsConfigModel {
     }
   }
   /**
-   * @param {String} name of axis
+   * @param {String} name of the axis
    */
   getScale (name) {
     const axis = this.attributes.axis[name] || {}
@@ -58,7 +58,10 @@ class CompositeYChartConfigModel extends ContrailChartsConfigModel {
     if (['bottom', 'top'].includes(this.getPosition(name))) return d3.scaleTime()
     return d3.scaleLinear()
   }
-
+  /**
+   * @param {String} name of the axis
+   * @return {String} Axis position bottom / left
+   */
   getPosition (name) {
     const axis = this.attributes.axis[name] || {}
     if (this.attributes.axisPositions.includes(axis.position)) return axis.position
@@ -95,5 +98,3 @@ class CompositeYChartConfigModel extends ContrailChartsConfigModel {
     }
   }
 }
-
-module.exports = CompositeYChartConfigModel

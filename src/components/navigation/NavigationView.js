@@ -1,15 +1,15 @@
 /*
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
-const _ = require('lodash')
-const ContrailChartsView = require('contrail-charts-view')
-const CompositeYChartView = require('components/composite-y/CompositeYChartView')
-const BrushView = require('components/brush/BrushView')
-const BrushConfigModel = require('components/brush/BrushConfigModel')
-const CompositeYChartConfigModel = require('components/composite-y/CompositeYChartConfigModel')
-const Selection = require('handlers/Selection')
+import _ from 'lodash'
+import ContrailChartsView from 'contrail-charts-view'
+import CompositeYChartView from 'components/composite-y/CompositeYChartView'
+import BrushView from 'components/brush/BrushView'
+import BrushConfigModel from 'components/brush/BrushConfigModel'
+import CompositeYChartConfigModel from 'components/composite-y/CompositeYChartConfigModel'
+import Selection from 'handlers/Selection'
 
-class NavigationView extends ContrailChartsView {
+export default class NavigationView extends ContrailChartsView {
   constructor (p) {
     super(p)
     this._selection = new Selection(this.model.data)
@@ -119,5 +119,3 @@ class NavigationView extends ContrailChartsView {
     this._ticking = false
   }
 }
-
-module.exports = NavigationView

@@ -1,15 +1,15 @@
 /*
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
-require('./control-panel.scss')
-const _ = require('lodash')
-const d3 = require('d3')
-const ContrailChartsView = require('contrail-charts-view')
-const _template = require('./control-panel.html')
-const _panelTemplate = require('./panel.html')
-const _actionTemplate = require('./action.html')
+import './control-panel.scss'
+import _ from 'lodash'
+import 'd3'
+import ContrailChartsView from 'contrail-charts-view'
+import _template from './control-panel.html'
+import _panelTemplate from './panel.html'
+import _actionTemplate from './action.html'
 
-module.exports = class ControlPanelView extends ContrailChartsView {
+export default class ControlPanelView extends ContrailChartsView {
   constructor (p = {}) {
     super(p)
     super.render(_template())
