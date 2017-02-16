@@ -412,14 +412,14 @@ class RadialDendrogramView extends ContrailChartsView {
       // Arc labels
       const svgArcLabels = this.d3.selectAll('.arc-label').data(this.arcs)
       svgArcLabels.enter().append('text')
-        .attr('x', 5)
-        .attr('dy', this.params.arcWidth / 2)
+        .attr('x', 2)
+        .attr('dy', 1.75 * this.params.arcWidth)
         .append('textPath')
         .attr('class', 'arc-label')
         .attr('xlink:href', (d) => '#' + d.data.namePath.join('-'))
         // .attr('startOffset', '50%')
         .merge(svgArcLabels).transition().ease(this.config.get('ease')).duration(this.params.duration)
-        .text((d) => d.data.namePath[d.data.namePath.length - 1])
+        .text((d) => d.depth == 1 ? (d.data.namePath[d.data.namePath.length - 1]) : '')
       svgArcLabels.exit().remove()
 
       // Arcs for parent nodes.
