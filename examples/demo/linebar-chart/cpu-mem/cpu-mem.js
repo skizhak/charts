@@ -277,10 +277,10 @@ module.exports = {
       cpuMemChartView.setConfig(chartConfig)
       cpuMemChartView.setData(dataProcessed.data)
       cpuMemChartView.renderMessage({
-        componentId: 'XYChart',
+        componentId: 'cpu-mem-compositey',
         action: 'once',
         messages: [{
-          level: 'info',
+          level: '',
           title: '',
           message: 'Loading ...',
         }]

@@ -19,8 +19,8 @@ const data = commons.fixture({
 
 const container = ['chart-area', 'chart-bar']
 const layoutMeta = {
-  'chart-area': 'render-order-1 col-md-12',
-  'chart-bar': 'render-order-2 col-md-12'
+  [container[0]]: 'render-order-1 col-md-12',
+  [container[1]]: 'render-order-2 col-md-12'
 }
 
 const areaChartConfig = {

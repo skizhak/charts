@@ -5,19 +5,19 @@
 const commons = require('commons')
 
 const formatter = commons.formatter
-const simpleData = []
 
-for (let i = 0; i < 100; i++) {
-  const a = Math.random() * 100
-  simpleData.push({
-    x: 1475760930000 + 1000000 * i,
-    a: a,
-    b: a + Math.random() * 10,
-    c: Math.random() * 100,
-    d: i + (Math.random() - 0.5) * 10,
-    e: (Math.random() - 0.5) * 10
-  })
-}
+const length = 100
+const data = commons.fixture({
+  length: length,
+  data: {
+    x: {linear: true, range: [0, length]},
+    a: {random: true, range: [3, (length - 1) * 3]},
+    b: {random: true, range: [5, (length - 1) * 5], repeat: true},
+    c: {random: true, range: [7, (length - 1) * 7]},
+    d: {linear: true, range: [7, (length - 1) * 7]},
+    e: {random: true, range: [2, (length - 1) * 2]},
+  },
+})
 
 const container = 'chart-legend'
 const layoutMeta = {
@@ -236,21 +236,21 @@ module.exports = {
       isInitialized = true
 
       simpleChartView.setConfig(chartConfig)
-      simpleChartView.setData(simpleData)
+      simpleChartView.setData(data)
       simpleChartView.renderMessage({
-        componentId: 'XYChart',
+        componentId: 'compositey-chart-id',
         action: 'once',
         messages: [{
           level: 'info',
           title: 'Message 1',
-          message: 'This is an example message. It will disapear after 5 seconds.'
+          message: 'This is an example message. It will disappear after 5 seconds.'
         }, {
           level: 'error',
           title: 'A Fatal Error',
           message: 'This is an error.'
         }, {
-          level: 'info',
-          title: 'Message 2',
+          level: 'warn',
+          title: 'A waring message',
           message: 'This is another example message.'
         }]
       })

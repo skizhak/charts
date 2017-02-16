@@ -11,12 +11,12 @@ const _c = commons._c
 const coCharts = require('coCharts')
 
 function getDataPoint (x) {
-  const a = Math.random() * 10000
+  const a = _.random(3, 100) * 100
   return {
     x: x,
     a: a,
     b: _.random(a, a + 1000),
-    c: Math.ceil(Math.random() * 100),
+    c: Math.ceil(_.random(3, 100)),
   }
 }
 
@@ -24,10 +24,10 @@ let simpleData = []
 let now = _.now()
 
 for (let i = 0; i < 100; i++) {
-  simpleData.push(getDataPoint(now - (i * 1000)))
+  simpleData.push(getDataPoint(now - ((100 - i) * 1000)))
 }
 
-const container = 'chart-container'
+const container = 'query-db-chart'
 const layoutMeta = {
   [container]: 'col-md-12'
 }
@@ -222,8 +222,8 @@ module.exports = {
       if (intervalId === -1) {
         intervalId = setInterval(() => {
           now += 1000
-          simpleData.splice(99, 1)
-          simpleData = [getDataPoint(now)].concat(simpleData)
+          simpleData.splice(0, 1)
+          simpleData = simpleData.concat([getDataPoint(now)])
           queryChart.setData(simpleData)
         }, 1000)
       }
@@ -231,11 +231,28 @@ module.exports = {
       isInitialized = true
       queryChart.setConfig(chartConfig)
       queryChart.setData(simpleData)
+      queryChart.renderMessage({
+        componentId: 'query-db-compositey',
+        action: 'once',
+        messages: [{
+          level: 'info',
+          title: 'Information',
+          message: 'Chart has been loaded successfully.'
+        }, {
+          level: 'warn',
+          title: 'Warning',
+          message: 'This is an example of warning message. '
+        }, {
+          level: 'error',
+          title: 'Error',
+          message: 'This is an example of error message.'
+        }]
+      })
       clearInterval(intervalId)
       intervalId = setInterval(() => {
         now += 1000
-        simpleData.splice(99, 1)
-        simpleData = [getDataPoint(now)].concat(simpleData)
+        simpleData.splice(0, 1)
+        simpleData = simpleData.concat([getDataPoint(now)])
         queryChart.setData(simpleData)
       }, 1000)
     }

@@ -10,35 +10,41 @@ const _ = commons._
 const formatter = commons.formatter
 const _c = commons._c
 
-const now = _.now()
+let now = _.now()
 
 let simpleData = []
 let vNetworksCount = 2
 
-for (let j = 0 ; j < vNetworksCount; j++) {
+for (let j = 0; j < vNetworksCount; j++) {
   let vnName = 'vnetwork' + (j + 1)
   let trafficType = vnName + '_in'
 
   for (let k = 0; k < 100; k++) {
-    simpleData.push(getDataPoint(now - ((100-k) * 60000), vnName, trafficType, [(j + 1)*256000, (j + 1)*512000]))
+    simpleData.push(getDataPoint(now - ((100 - k) * 60000), vnName, trafficType, [(j + 1) * 256000, (j + 1) * 512000]))
   }
 
   trafficType = vnName + '_out'
   for (let l = 0; l < 100; l++) {
-    simpleData.push(getDataPoint(now - ((100-l) * 60000), vnName, trafficType, [(j + 1)*256000, (j + 1)*512000]))
+    simpleData.push(getDataPoint(now - ((100 - l) * 60000), vnName, trafficType, [(j + 1) * 256000, (j + 1) * 512000]))
   }
 }
 
 function getDataPoint (time, vnName, trafficType, range) {
   let inTraffic = _.random(range[0], range[1])
   return {
-    "T": time,
-    "direction_ing" : 1,
-    "traffic_type": trafficType,
-    "vn_name": vnName,
-    "sum(bytes)": inTraffic,
-    "sum(packets)": Math.floor(inTraffic / 340)
+    'T': time,
+    'direction_ing': 1,
+    'traffic_type': trafficType,
+    'vn_name': vnName,
+    'sum(bytes)': inTraffic,
+    'sum(packets)': Math.floor(inTraffic / 340)
   }
+}
+
+function getNewDataPoint (x, rPoint) {
+  var newPoint = _.clone(rPoint)
+  newPoint.T = x
+  return newPoint
 }
 
 const dataSrc = {
@@ -273,6 +279,7 @@ const chartConfig = {
 }
 
 let isInitialized = false
+let intervalId = -1
 // Create chart view.
 const trafficView = new coCharts.charts.XYChartView()
 
@@ -282,20 +289,52 @@ module.exports = {
   render: () => {
     if (isInitialized) {
       trafficView.render()
+      if (intervalId === -1) {
+        intervalId = setInterval(() => {
+          let currentData = dataProcessed.data
+
+          currentData.splice(0, 1)
+
+          let length = currentData.length
+          let random = _.random(0, (length - 1))
+
+          now += 2000
+
+          dataProcessed.data = currentData.concat([getNewDataPoint(now, currentData[random])])
+          trafficView.setData(dataProcessed.data)
+        }, 2000)
+      }
     } else {
       isInitialized = true
 
       trafficView.setConfig(chartConfig)
       trafficView.setData(dataProcessed.data)
       trafficView.renderMessage({
-        componentId: 'XYChart',
+        componentId: 'inout-traffic-compositey',
         action: 'once',
         messages: [{
-          level: 'info',
+          level: '',
           title: '',
           message: 'Loading ...',
         }]
       })
+      intervalId = setInterval(() => {
+        let currentData = dataProcessed.data
+
+        currentData.splice(0, 1)
+
+        let length = currentData.length
+        let random = _.random(0, (length - 1))
+
+        now += 2000
+
+        dataProcessed.data = currentData.concat([getNewDataPoint(now, currentData[random])])
+        trafficView.setData(dataProcessed.data)
+      }, 2000)
     }
+  },
+  stopUpdating: () => {
+    clearInterval(intervalId)
+    intervalId = -1
   }
 }

@@ -277,10 +277,10 @@ module.exports = {
       trafficView.setConfig(chartConfig)
       trafficView.setData(dataProcessed.data)
       trafficView.renderMessage({
-        componentId: 'XYChart',
+        componentId: 'vr-traffic-compositey',
         action: 'once',
         messages: [{
-          level: 'info',
+          level: '',
           title: '',
           message: 'Loading ...',
         }]

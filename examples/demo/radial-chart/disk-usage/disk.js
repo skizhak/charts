@@ -2,11 +2,14 @@
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
 
-const pieData = [
-  {label: 'Disks In', value: 55},
-  {label: 'Disks Out', value: 6},
+const osdStatusData = [
   {label: 'Disks Up', value: 59},
   {label: 'Disks Down', value: 4}
+]
+
+const osdClusterData = [
+  {label: 'Disks In', value: 55},
+  {label: 'Disks Out', value: 6}
 ]
 
 const commons = require('commons')
@@ -23,13 +26,15 @@ function getValue (serie) {
   return serie.value
 }
 
-const container = 'disk-donut-chart'
+const container = ['disk-status-chart', 'disk-cluster-chart']
 const layoutMeta = {
-  [container]: 'col-md-12'
+  [container[0]]: 'render-order-1 col-md-12',
+  [container[1]]: 'render-order-2 col-md-12'
 }
 
-const chartConfig = {
-  id: container,
+const diskStatusConfig = {
+  id: container[0],
+  type: 'RadialChart',
   components: [{
     type: 'ControlPanel',
     config: {
@@ -38,12 +43,12 @@ const chartConfig = {
       }],
     }
   }, {
-    id: 'donut-chart',
+    id: 'donut-chart-1',
     type: 'PieChart',
     config: {
       type: 'donut',
-      radius: 150,
-      colorScale: d3.scaleOrdinal().range(radialColorScheme6), // eslint-disable-line no-undef
+      radius: 130,
+      colorScale: d3.scaleOrdinal().range(radialColorScheme6.slice(0, 2)), // eslint-disable-line no-undef
       serie: {
         getValue: getValue,
         getLabel: getLabel,
@@ -66,26 +71,75 @@ const chartConfig = {
   }, {
     type: 'LegendUniversal',
     config: {
-      sourceComponent: 'donut-chart',
+      sourceComponent: 'donut-chart-1',
     },
-  }
-  ]
+  }]
+}
+
+const diskClusterConfig = {
+  id: container[1],
+  type: 'RadialChart',
+  components: [{
+    type: 'ControlPanel',
+    config: {
+      menu: [{
+        id: 'Refresh',
+      }],
+    }
+  }, {
+    id: 'donut-chart-2',
+    type: 'PieChart',
+    config: {
+      type: 'donut',
+      radius: 130,
+      colorScale: d3.scaleOrdinal().range(radialColorScheme6.slice(2)), // eslint-disable-line no-undef
+      serie: {
+        getValue: getValue,
+        getLabel: getLabel,
+        valueFormatter: formatter.commaGroupedInteger,
+      },
+      tooltip: 'tooltip-id',
+    }
+  }, {
+    id: 'tooltip-id',
+    type: 'Tooltip',
+    config: {
+      dataConfig: [
+        {
+          accessor: 'value',
+          labelFormatter: getLabel,
+          valueFormatter: formatter.commaGroupedInteger,
+        },
+      ],
+    },
+  }, {
+    type: 'LegendUniversal',
+    config: {
+      sourceComponent: 'donut-chart-2',
+    },
+  }]
 }
 
 let isInitialized = false
-const chartView = new coCharts.charts.RadialChartView()
+const diskStatusChart = new coCharts.charts.RadialChartView()
+
+const diskClusterChart = new coCharts.charts.RadialChartView()
 
 module.exports = {
   container: container,
   layoutMeta: layoutMeta,
   render: () => {
     if (isInitialized) {
-      chartView.render()
+      diskStatusChart.render()
+      diskClusterChart.render()
     } else {
       isInitialized = true
 
-      chartView.setConfig(chartConfig)
-      chartView.setData(pieData)
+      diskStatusChart.setConfig(diskStatusConfig)
+      diskClusterChart.setConfig(diskClusterConfig)
+
+      diskStatusChart.setData(osdStatusData)
+      diskClusterChart.setData(osdClusterData)
     }
   }
 }
