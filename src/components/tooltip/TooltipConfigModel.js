@@ -10,6 +10,28 @@ export default class TooltipConfigModel extends ContrailChartsConfigModel {
       // Which tooltip ids to accept. If empty accept all.
       acceptFilters: [],
       sticky: false,
+      // Default formatter to build tooltip content.
+      formatter: (data) => {
+        let tooltipContent = {}
+        const dataConfig = this.get('dataConfig')
+        const titleConfig = this.get('title')
+
+        if (titleConfig) {
+          tooltipContent.title = _.isString(titleConfig) ? titleConfig : this.getFormattedValue(data, titleConfig)
+        }
+
+        // Todo move out color to be class based.
+        tooltipContent.color = this.get('color')
+        tooltipContent.backgroundColor = this.get('backgroundColor')
+
+        tooltipContent.items = _.map(dataConfig, datumConfig => {
+          return {
+            label: this.getLabel(data, datumConfig),
+            value: this.getFormattedValue(data, datumConfig),
+          }
+        })
+        return tooltipContent
+      }
     }
   }
 
@@ -19,27 +41,5 @@ export default class TooltipConfigModel extends ContrailChartsConfigModel {
   // TODO
   get stickyMargin () {
     return {left: 0, right: 0}
-  }
-
-  getFormattedData (inData) {
-    var outData = {}
-    const dataConfig = this.get('dataConfig')
-    const titleConfig = this.get('title')
-
-    if (titleConfig) {
-      outData.title = _.isString(titleConfig) ? titleConfig : this.getFormattedValue(inData, titleConfig)
-    }
-
-    outData.color = this.get('color')
-    outData.backgroundColor = this.get('backgroundColor')
-
-    outData.items = _.map(dataConfig, datumConfig => {
-      return {
-        label: this.getLabel(inData, datumConfig),
-        value: this.getFormattedValue(inData, datumConfig),
-      }
-    })
-
-    return outData
   }
 }

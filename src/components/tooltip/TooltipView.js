@@ -59,7 +59,7 @@ export default class TooltipView extends ContrailChartsView {
 
   _loadTemplate (data) {
     const template = this.config.get('template') || _template
-    const tooltipContent = this.config.getFormattedData(data)
+    const tooltipContent = this.config.get('formatter').bind(this.config)(data)
     super.render(template(tooltipContent))
     // TODO Discuss if title needs to be handled via TitleView or using the tooltip template itself.
     if (tooltipContent.title) {
