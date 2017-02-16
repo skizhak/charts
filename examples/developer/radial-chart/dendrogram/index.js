@@ -43,7 +43,7 @@ const chartConfig = {
     id: 'tooltip-id',
     type: 'Tooltip',
     config: {
-      getFormattedData: (data) => {
+      formatter: (data) => {
         const type = ['Virtual Network', 'IP', 'Port']
         let content = {title: data.name, items: []}
         content.items.push({

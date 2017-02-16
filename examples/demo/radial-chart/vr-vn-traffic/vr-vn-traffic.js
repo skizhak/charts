@@ -40,7 +40,25 @@ const chartConfig = {
         }
       },
       drillDownLevel: 1,
+      tooltip: 'tooltip-id'
     }
+  }, {
+    id: 'tooltip-id',
+    type: 'Tooltip',
+    config: {
+      formatter: (data) => {
+        const type = ['Virtual Network', 'IP', 'Port']
+        let content = {title: data.name, items: []}
+        content.items.push({
+          label: 'Type',
+          value: type[data.level - 1]
+        }, {
+          label: 'Flow Count',
+          value: data.children.length
+        })
+        return content
+      }
+    },
   }
   ]
 }

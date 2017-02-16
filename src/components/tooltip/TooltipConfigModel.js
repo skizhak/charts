@@ -11,26 +11,27 @@ class TooltipConfigModel extends ContrailChartsConfigModel {
       // Which tooltip ids to accept. If empty accept all.
       acceptFilters: [],
 
-      getFormattedData (inData) {
-        let outData = {}
+      formatter (data) {
+        let tooltipContent = {}
         const dataConfig = this.get('dataConfig')
         const titleConfig = this.get('title')
 
         if (titleConfig) {
-          outData.title = _.isString(titleConfig) ? titleConfig : this.getFormattedValue(inData, titleConfig)
+          tooltipContent.title = _.isString(titleConfig) ? titleConfig : this.getFormattedValue(data, titleConfig)
         }
 
-        outData.color = this.get('color')
-        outData.backgroundColor = this.get('backgroundColor')
+        // Todo move out color to be class based.
+        tooltipContent.color = this.get('color')
+        tooltipContent.backgroundColor = this.get('backgroundColor')
 
-        outData.items = _.map(dataConfig, datumConfig => {
+        tooltipContent.items = _.map(dataConfig, datumConfig => {
           return {
-            label: this.getLabel(inData, datumConfig),
-            value: this.getFormattedValue(inData, datumConfig),
+            label: this.getLabel(data, datumConfig),
+            value: this.getFormattedValue(data, datumConfig),
           }
         })
 
-        return outData
+        return tooltipContent
       }
     }
   }
