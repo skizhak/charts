@@ -14,7 +14,7 @@ class RadialDendrogramView extends ContrailChartsView {
     return {
       'mouseover .arc': '_onMouseover',
       'mouseout .arc': '_onMouseout',
-      'dblclick .arc': '_arcDoubleClick'
+      'click .arc': '_arcClick'
     }
   }
 
@@ -22,7 +22,7 @@ class RadialDendrogramView extends ContrailChartsView {
     super(p)
     this.listenTo(this.model, 'change', this._onDataModelChange)
     this.listenTo(this.config, 'change', this._onConfigModelChange)
-    window.addEventListener('resize', _.throttle(() => { this.render() }, 100))
+    window.addEventListener('resize', this._onResize.bind(this))
   }
 
   changeModel (model) {
@@ -37,6 +37,7 @@ class RadialDendrogramView extends ContrailChartsView {
     this._prepareHierarchy()
     super.render()
     this._render()
+    this._ticking = false
   }
 
   _calculateDimensions () {
@@ -55,7 +56,7 @@ class RadialDendrogramView extends ContrailChartsView {
     if (!this.params.labelMargin) {
       this.params.labelMargin = 50
     }
-    if (!this.params.innerRadius ) {
+    if (!this.params.innerRadius) {
       this.params.innerRadius = this.params.radius - this.params.labelMargin
     }
   }
@@ -100,8 +101,7 @@ class RadialDendrogramView extends ContrailChartsView {
         foundLeafNode.value += (foundLeafNode.id === leafs[0].id) ? leafs[0].value : leafs[1].value
         foundLeafNode.otherNode.value += (foundLeafNode.otherNode.id === leafs[0].id) ? leafs[0].value : leafs[1].value
         this.valueSum += leafs[0].value + leafs[1].value
-      }
-      else {
+      } else {
         _.each(leafs, (leaf, i) => {
           // leaf node contains an array of 'names' (ie. the path from root to leaf) and a 'value'
           let children = this.rootNode.children
@@ -143,7 +143,7 @@ class RadialDendrogramView extends ContrailChartsView {
   }
 
   _prepareHierarchyRootNode () {
-    const valueScale = this.config.get('valueScale').domain([0.01,this.valueSum]).range([0,360])
+    const valueScale = this.config.get('valueScale').domain([0.01, this.valueSum]).range([0, 360])
     this.hierarchyRootNode = d3.hierarchy(this.rootNode).sum((d) => valueScale(d.value)).sort((a, b) => b.value - a.value)
     // console.log('hierarchyRootNode: ', this.hierarchyRootNode)
   }
@@ -153,7 +153,7 @@ class RadialDendrogramView extends ContrailChartsView {
     let i = 0
     const leaves = this.hierarchyRootNode.leaves()
     _.each(leaves, (leaf, leafIndex) => {
-      for(i = leafIndex + 1; i < leaves.length; i++) {
+      for (i = leafIndex + 1; i < leaves.length; i++) {
         if (leaf.data.linkId === leaves[i].data.linkId) {
           this.links.push(leaf.path(leaves[i]))
         }
@@ -163,7 +163,7 @@ class RadialDendrogramView extends ContrailChartsView {
   }
 
   _prepareCluster () {
-    const extraPaddingPerDepth = _.fill(_.range(this.params.drillDownLevel+1), 0)
+    const extraPaddingPerDepth = _.fill(_.range(this.params.drillDownLevel + 1), 0)
     // Create the cluster layout.
     const cluster = d3.cluster().size([360, this.params.innerRadius])
     // const cluster = d3.tree().size([360, this.params.innerRadius])
@@ -245,7 +245,7 @@ class RadialDendrogramView extends ContrailChartsView {
     this.ribbons = []
     _.each(this.links, (link) => {
       const src = link[0]
-      const dst = link[link.length-1]
+      const dst = link[link.length - 1]
       const srcAncestors = src.ancestors()
       const dstAncestors = dst.ancestors()
       const outerPoints = []
@@ -256,7 +256,7 @@ class RadialDendrogramView extends ContrailChartsView {
             let found = false
             const leaves = n.leaves()
             _.each(leaves, (child) => {
-              if (child == src) {
+              if (child === src) {
                 found = true
               }
               if (!found) {
@@ -271,7 +271,7 @@ class RadialDendrogramView extends ContrailChartsView {
         }
       })
       let i = 0
-      for(i = dstAncestors.length-1; i >= 0; i--) {
+      for (i = dstAncestors.length - 1; i >= 0; i--) {
         let n = dstAncestors[i]
         if (n.parent && n.children) {
           let valueStart = n.valueRange[1]
@@ -279,9 +279,9 @@ class RadialDendrogramView extends ContrailChartsView {
             let found = false
             let ci = 0
             const leaves = n.leaves()
-            for(ci = leaves.length-1; ci >= 0; ci--) {
+            for (ci = leaves.length - 1; ci >= 0; ci--) {
               let child = leaves[ci]
-              if (child == dst) {
+              if (child === dst) {
                 found = true
               }
               if (!found) {
@@ -303,7 +303,7 @@ class RadialDendrogramView extends ContrailChartsView {
             let found = false
             const leaves = n.leaves()
             _.each(leaves, (child) => {
-              if (child == dst) {
+              if (child === dst) {
                 found = true
               }
               if (!found) {
@@ -317,7 +317,7 @@ class RadialDendrogramView extends ContrailChartsView {
           innerPoints.push([n.angleScale(valueStart), n.y])
         }
       })
-      for(i = srcAncestors.length-1; i >=0; i-- ) {
+      for (i = srcAncestors.length - 1; i >= 0; i--) {
         let n = srcAncestors[i]
         if (n.parent && n.children) {
           let valueStart = n.valueRange[1]
@@ -325,9 +325,9 @@ class RadialDendrogramView extends ContrailChartsView {
             let found = false
             let ci = 0
             const leaves = n.leaves()
-            for(ci = leaves.length-1; ci >= 0; ci--) {
+            for (ci = leaves.length - 1; ci >= 0; ci--) {
               let child = leaves[ci]
-              if (child == src) {
+              if (child === src) {
                 found = true
               }
               if (!found) {
@@ -386,9 +386,9 @@ class RadialDendrogramView extends ContrailChartsView {
       svgLinks.enter().append('path')
         .attr('class', (d) => 'link ' + d[0].data.id)
         .style('stroke-width', 0)
-        .attr('d',(d) => radialLine(d[0]))
+        .attr('d', (d) => radialLine(d[0]))
       .merge(svgLinks)
-        .style('stroke-width', (d) => ( d[0].y * Math.sin((d[0].angleRange[1] - d[0].angleRange[0]) * Math.PI / 180)) + 'px')
+        .style('stroke-width', (d) => (d[0].y * Math.sin((d[0].angleRange[1] - d[0].angleRange[0]) * Math.PI / 180)) + 'px')
         .attr('d', radialLine)
     }
     if (this.params.drawRibbons) {
@@ -396,9 +396,9 @@ class RadialDendrogramView extends ContrailChartsView {
       const radialLine = d3.radialLine().angle((d) => d[0] / 180 * Math.PI).radius((d) => d[1]).curve(this.config.get('curve'))
       const svgLinks = this.d3.selectAll('.ribbon').data(this.ribbons, (d) => d.id)
       svgLinks.enter().append('path')
-        .attr('class', (d) => 'ribbon' + ((d.active) ? ' active' : '') )
-        .merge(svgLinks)//.transition().ease(this.config.get('ease')).duration(this.params.duration)
-        .attr('class', (d) => 'ribbon' + ((d.active) ? ' active' : '') )
+        .attr('class', (d) => 'ribbon' + ((d.active) ? ' active' : ''))
+        .merge(svgLinks)// .transition().ease(this.config.get('ease')).duration(this.params.duration)
+        .attr('class', (d) => 'ribbon' + ((d.active) ? ' active' : ''))
         .attr('d', (d) => {
           const outerPath = radialLine(d.outerPoints)
           const innerPath = radialLine(d.innerPoints)
@@ -418,7 +418,7 @@ class RadialDendrogramView extends ContrailChartsView {
         .attr('xlink:href', (d) => '#' + d.data.namePath.join('-'))
         // .attr('startOffset', '50%')
         .merge(svgArcLabels).transition().ease(this.config.get('ease')).duration(this.params.duration)
-        .text((d) => d.data.namePath[d.data.namePath.length-1])
+        .text((d) => d.data.namePath[d.data.namePath.length - 1])
       svgArcLabels.exit().remove()
 
       // Arcs for parent nodes.
@@ -459,8 +459,7 @@ class RadialDendrogramView extends ContrailChartsView {
   _onMouseover (d, el) {
     const leaves = d.leaves()
     _.each(this.ribbons, (ribbon) => {
-      const found = _.find(leaves, (leaf) => leaf.data.linkId === ribbon.id)
-      ribbon.active = (found) ? true : false
+      ribbon.active = Boolean(_.find(leaves, (leaf) => leaf.data.linkId === ribbon.id))
     })
     this._render()
   }
@@ -472,12 +471,11 @@ class RadialDendrogramView extends ContrailChartsView {
     this._render()
   }
 
-  _arcDoubleClick (d, el) {
+  _arcClick (d, el) {
     if (d.depth < this.maxDepth && d.depth === this.params.drillDownLevel) {
       // Expand
       this.config.set('drillDownLevel', this.params.drillDownLevel + 1)
-    }
-    else if (d.depth < this.params.drillDownLevel) {
+    } else if (d.depth < this.params.drillDownLevel) {
       // Collapse
       this.config.set('drillDownLevel', this.params.drillDownLevel - 1)
     }

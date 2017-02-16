@@ -18,7 +18,7 @@ class RadialDendrogramConfigModel extends ContrailChartsConfigModel {
       duration: 500,
 
       valueScale: d3.scaleLog(),
-      //valueScale: d3.scaleLinear(),
+      // valueScale: d3.scaleLinear(),
 
       // The separation in degrees between nodes with different parents
       parentSeparation: 1,
@@ -30,13 +30,13 @@ class RadialDendrogramConfigModel extends ContrailChartsConfigModel {
       // Initial drill down level
       drillDownLevel: 1,
 
-      //curve: d3.curveBundle.beta(0.85)
-      //curve: d3.curveBundle.beta(0.95)
-      //curve: d3.curveBundle.beta(1)
+      // curve: d3.curveBundle.beta(0.85)
+      // curve: d3.curveBundle.beta(0.95)
+      // curve: d3.curveBundle.beta(1)
       curve: d3.curveCatmullRom.alpha(0.5)
-      //curve: d3.curveCatmullRom.alpha(0.75)
-      //curve: d3.curveCatmullRom.alpha(1)
-      //curve: d3.curveLinear
+      // curve: d3.curveCatmullRom.alpha(0.75)
+      // curve: d3.curveCatmullRom.alpha(1)
+      // curve: d3.curveLinear
     }
   }
 }
