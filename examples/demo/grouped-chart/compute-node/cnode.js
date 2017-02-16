@@ -40,11 +40,11 @@ function processFlowParser (data) {
 const groupedChartsWrapper = 'grouped-parent-chart'
 const container = ['disk-usage', 'node-cpu', 'process-cpu-mem', 'node-mem', 'node-flow']
 const layoutMeta = {
-  [container[0]]: 'render-order-1 col-xs-12 col-md-6',
+  [container[0]]: 'render-order-5 col-xs-12 col-md-6',
   [container[1]]: 'render-order-2 col-xs-12 col-md-6',
-  [container[2]]: 'render-order-3 col-xs-12 col-md-6',
-  [container[3]]: 'render-order-4 col-xs-12 col-md-6',
-  [container[4]]: 'render-order-5 col-xs-12'
+  [container[2]]: 'render-order-4 col-xs-12 col-md-6',
+  [container[3]]: 'render-order-1 col-xs-12 col-md-6',
+  [container[4]]: 'render-order-3 col-xs-12'
 }
 
 const cpuPlotConfig = {
@@ -575,26 +575,25 @@ module.exports = {
       })
     }
 
-    // clearInterval(intervalId)
-    // intervalId = setInterval(() => {
-    //   now += timeInterval
-    //   let newDataPoint = commons.dg.computeNodeData({vrCount: 1, count: 1, flowCount: 1, timeInterval: timeInterval, now: now})
+    clearInterval(intervalId)
+    intervalId = setInterval(() => {
+      now += timeInterval
+      let newDataPoint = commons.dg.computeNodeData({vrCount: 1, count: 1, flowCount: 1, timeInterval: timeInterval, now: now})
 
-    //   newDataPoint[0].systemCPU = data[0].systemCPU.slice(1).concat(newDataPoint[0].systemCPU)
-    //   newDataPoint[0].systemMemory = data[0].systemMemory.slice(1).concat(newDataPoint[0].systemMemory)
-    //   newDataPoint[0].flowRate = data[0].flowRate.slice(1).concat(newDataPoint[0].flowRate)
+      newDataPoint[0].systemCPU = data[0].systemCPU.slice(1).concat(newDataPoint[0].systemCPU)
+      newDataPoint[0].systemMemory = data[0].systemMemory.slice(1).concat(newDataPoint[0].systemMemory)
+      newDataPoint[0].flowRate = data[0].flowRate.slice(1).concat(newDataPoint[0].flowRate)
 
-    //   data = newDataPoint
+      data = newDataPoint
 
-    //   _.forEach(container, (container) => {
-    //     chartView.setData(data, {}, container)
-    //   })
-    // }, timeInterval)
+      _.forEach(container, (container) => {
+        chartView.setData(data, {}, container)
+      })
+    }, timeInterval)
 
     chartView.render()
   },
   stopUpdating: () => {
-    console.debug('stop cnode')
     clearInterval(intervalId)
     intervalId = -1
   }

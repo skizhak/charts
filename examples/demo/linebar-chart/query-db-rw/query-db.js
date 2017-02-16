@@ -255,7 +255,6 @@ module.exports = {
     }
   },
   stopUpdating: () => {
-    console.debug('stop query-db')
     clearInterval(intervalId)
     intervalId = -1
   }

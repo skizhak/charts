@@ -331,7 +331,6 @@ module.exports = {
         }]
       })
       intervalId = setInterval(() => {
-        console.debug('update inout-traffic')
         let currentData = dataProcessed.data
 
         currentData.splice(0, 1)
@@ -347,7 +346,6 @@ module.exports = {
     }
   },
   stopUpdating: () => {
-    console.debug('stop inout-traffic')
     clearInterval(intervalId)
     intervalId = -1
   }
