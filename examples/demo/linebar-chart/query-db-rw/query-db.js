@@ -20,11 +20,11 @@ function getDataPoint (x) {
   }
 }
 
-let simpleData = []
+let data = []
 let now = _.now()
 
 for (let i = 0; i < 100; i++) {
-  simpleData.push(getDataPoint(now - ((100 - i) * 1000)))
+  data.push(getDataPoint(now - ((100 - i) * 1000)))
 }
 
 const container = 'query-db-chart'
@@ -206,7 +206,6 @@ const chartConfig = {
   }]
 }
 
-let isInitialized = false
 let intervalId = -1
 const queryChart = new coCharts.charts.XYChartView()
 
@@ -214,45 +213,35 @@ module.exports = {
   container: container,
   layoutMeta: layoutMeta,
   render: () => {
-    if (isInitialized) {
-      queryChart.render()
-      if (intervalId === -1) {
-        intervalId = setInterval(() => {
-          now += 1000
-          simpleData.splice(0, 1)
-          simpleData = simpleData.concat([getDataPoint(now)])
-          queryChart.setData(simpleData)
-        }, 1000)
-      }
-    } else {
-      isInitialized = true
-      queryChart.setConfig(chartConfig)
-      queryChart.setData(simpleData)
-      queryChart.renderMessage({
-        componentId: 'query-db-compositey',
-        action: 'once',
-        messages: [{
-          level: 'info',
-          title: 'Information',
-          message: 'Chart has been loaded successfully.'
-        }, {
-          level: 'warn',
-          title: 'Warning',
-          message: 'This is an example of warning message. '
-        }, {
-          level: 'error',
-          title: 'Error',
-          message: 'This is an example of error message.'
-        }]
-      })
-      clearInterval(intervalId)
-      intervalId = setInterval(() => {
-        now += 1000
-        simpleData.splice(0, 1)
-        simpleData = simpleData.concat([getDataPoint(now)])
-        queryChart.setData(simpleData)
-      }, 1000)
-    }
+    queryChart.setConfig(chartConfig)
+    queryChart.setData(data)
+    queryChart.renderMessage({
+      componentId: 'query-db-compositey',
+      action: 'once',
+      messages: [{
+        level: 'info',
+        title: 'Information',
+        message: 'Chart has been loaded successfully.'
+      }, {
+        level: 'warn',
+        title: 'Warning',
+        message: 'This is an example of warning message. '
+      }, {
+        level: 'error',
+        title: 'Error',
+        message: 'This is an example of error message.'
+      }]
+    })
+    clearInterval(intervalId)
+    intervalId = setInterval(() => {
+      now += 1000
+      data.splice(0, 1)
+      data = data.concat([getDataPoint(now)])
+      queryChart.setData(data)
+    }, 1000)
+  },
+  remove: () => {
+    queryChart.remove()
   },
   stopUpdating: () => {
     clearInterval(intervalId)

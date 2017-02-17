@@ -120,7 +120,6 @@ const diskClusterConfig = {
   }]
 }
 
-let isInitialized = false
 const diskStatusChart = new coCharts.charts.RadialChartView()
 
 const diskClusterChart = new coCharts.charts.RadialChartView()
@@ -129,17 +128,14 @@ module.exports = {
   container: container,
   layoutMeta: layoutMeta,
   render: () => {
-    if (isInitialized) {
-      diskStatusChart.render()
-      diskClusterChart.render()
-    } else {
-      isInitialized = true
+    diskStatusChart.setConfig(diskStatusConfig)
+    diskClusterChart.setConfig(diskClusterConfig)
 
-      diskStatusChart.setConfig(diskStatusConfig)
-      diskClusterChart.setConfig(diskClusterConfig)
-
-      diskStatusChart.setData(osdStatusData)
-      diskClusterChart.setData(osdClusterData)
-    }
+    diskStatusChart.setData(osdStatusData)
+    diskClusterChart.setData(osdClusterData)
+  },
+  remove: () => {
+    diskStatusChart.remove()
+    diskClusterChart.remove()
   }
 }

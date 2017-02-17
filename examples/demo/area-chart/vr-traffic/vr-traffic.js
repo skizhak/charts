@@ -263,7 +263,6 @@ const chartConfig = {
   }]
 }
 
-let isInitialized = false
 // Create chart view.
 const trafficView = new coCharts.charts.XYChartView()
 
@@ -271,22 +270,19 @@ module.exports = {
   container: container,
   layoutMeta: layoutMeta,
   render: () => {
-    if (isInitialized) {
-      trafficView.render()
-    } else {
-      isInitialized = true
-
-      trafficView.setConfig(chartConfig)
-      trafficView.setData(dataProcessed.data)
-      trafficView.renderMessage({
-        componentId: 'vr-traffic-compositey',
-        action: 'once',
-        messages: [{
-          level: '',
-          title: '',
-          message: 'Loading ...',
-        }]
-      })
-    }
+    trafficView.setConfig(chartConfig)
+    trafficView.setData(dataProcessed.data)
+    trafficView.renderMessage({
+      componentId: 'vr-traffic-compositey',
+      action: 'once',
+      messages: [{
+        level: '',
+        title: '',
+        message: 'Loading ...',
+      }]
+    })
+  },
+  remove: () => {
+    trafficView.remove()
   }
 }

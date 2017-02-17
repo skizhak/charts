@@ -265,7 +265,6 @@ const chartConfig = {
   }]
 }
 
-let isInitialized = false
 // Create chart view.
 const cpuMemChartView = new coCharts.charts.XYChartView()
 
@@ -273,23 +272,20 @@ module.exports = {
   container: container,
   layoutMeta: layoutMeta,
   render: () => {
-    if (isInitialized) {
-      cpuMemChartView.render()
-    } else {
-      isInitialized = true
-
-      cpuMemChartView.setConfig(chartConfig)
-      cpuMemChartView.setData(dataProcessed.data)
-      cpuMemChartView.renderMessage({
-        componentId: 'cpu-mem-compositey',
-        action: 'once',
-        messages: [{
-          level: '',
-          title: '',
-          message: 'Loading ...',
-        }]
-      })
-    }
+    cpuMemChartView.setConfig(chartConfig)
+    cpuMemChartView.setData(dataProcessed.data)
+    cpuMemChartView.renderMessage({
+      componentId: 'cpu-mem-compositey',
+      action: 'once',
+      messages: [{
+        level: '',
+        title: '',
+        message: 'Loading ...',
+      }]
+    })
+  },
+  remove: () => {
+    cpuMemChartView.remove()
   }
 }
 

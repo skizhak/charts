@@ -290,7 +290,6 @@ const chartConfig = {
   }]
 }
 
-let isInitialized = false
 let intervalId = -1
 // Create chart view.
 const trafficView = new coCharts.charts.XYChartView()
@@ -299,51 +298,29 @@ module.exports = {
   container: container,
   layoutMeta: layoutMeta,
   render: () => {
-    if (isInitialized) {
-      trafficView.render()
-      if (intervalId === -1) {
-        intervalId = setInterval(() => {
-          let currentData = dataProcessed.data
-
-          currentData.splice(0, 1)
-
-          let length = currentData.length
-          let random = _.random(0, (length - 1))
-
-          now += timeInterval
-
-          dataProcessed.data = currentData.concat([getNewDataPoint(now, currentData[random])])
-          trafficView.setData(dataProcessed.data)
-        }, timeInterval)
-      }
-    } else {
-      isInitialized = true
-
-      trafficView.setConfig(chartConfig)
+    trafficView.setConfig(chartConfig)
+    trafficView.setData(dataProcessed.data)
+    trafficView.renderMessage({
+      componentId: 'inout-traffic-compositey',
+      action: 'once',
+      messages: [{
+        level: '',
+        title: '',
+        message: 'Loading ...',
+      }]
+    })
+    intervalId = setInterval(() => {
+      let currentData = dataProcessed.data
+      currentData.splice(0, 1)
+      let length = currentData.length
+      let random = _.random(0, (length - 1))
+      now += timeInterval
+      dataProcessed.data = currentData.concat([getNewDataPoint(now, currentData[random])])
       trafficView.setData(dataProcessed.data)
-      trafficView.renderMessage({
-        componentId: 'inout-traffic-compositey',
-        action: 'once',
-        messages: [{
-          level: '',
-          title: '',
-          message: 'Loading ...',
-        }]
-      })
-      intervalId = setInterval(() => {
-        let currentData = dataProcessed.data
-
-        currentData.splice(0, 1)
-
-        let length = currentData.length
-        let random = _.random(0, (length - 1))
-
-        now += timeInterval
-
-        dataProcessed.data = currentData.concat([getNewDataPoint(now, currentData[random])])
-        trafficView.setData(dataProcessed.data)
-      }, timeInterval)
-    }
+    }, timeInterval)
+  },
+  remove: () => {
+    trafficView.remove()
   },
   stopUpdating: () => {
     clearInterval(intervalId)

@@ -70,7 +70,6 @@ const chartConfig = {
   ]
 }
 
-let isInitialized = false
 // Create chart view.
 const chartView = new coCharts.charts.RadialChartView()
 
@@ -78,13 +77,10 @@ module.exports = {
   container: container,
   layoutMeta: layoutMeta,
   render: () => {
-    if (isInitialized) {
-      chartView.render()
-    } else {
-      isInitialized = true
-
-      chartView.setConfig(chartConfig)
-      chartView.setData(dendrogamData.data)
-    }
+    chartView.setConfig(chartConfig)
+    chartView.setData(dendrogamData.data)
+  },
+  remove: () => {
+    chartView.remove()
   }
 }

@@ -556,7 +556,6 @@ const chartConfig = {
   charts: chartConfigs,
 }
 
-let isInitialized = false
 let intervalId = -1
 const chartView = new coCharts.charts.MultiChartView()
 
@@ -565,18 +564,8 @@ module.exports = {
   container: container,
   layoutMeta: layoutMeta,
   render: () => {
-    if (!isInitialized) {
-      isInitialized = true
-
-      chartView.setConfig(chartConfig)
-
-      _.forEach(container, (container) => {
-        chartView.setData(data, {}, container)
-      })
-    }
-
     clearInterval(intervalId)
-    intervalId = setInterval(() => {
+    const dataUpdate = () => {
       now += timeInterval
       let newDataPoint = commons.dg.computeNodeData({vrCount: 1, count: 1, flowCount: 1, timeInterval: timeInterval, now: now})
 
@@ -589,9 +578,15 @@ module.exports = {
       _.forEach(container, (container) => {
         chartView.setData(data, {}, container)
       })
-    }, timeInterval)
+    }
+    chartView.setConfig(chartConfig)
+    dataUpdate()
+    intervalId = setInterval(dataUpdate, timeInterval)
 
     // chartView.render()
+  },
+  remove: () => {
+    chartView.remove()
   },
   stopUpdating: () => {
     clearInterval(intervalId)

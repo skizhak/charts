@@ -13,9 +13,7 @@ const coCharts = require('coCharts')
 const bubbleShapes = _c.bubbleShapes
 const colorScheme = _c.bubbleColorScheme6
 
-// const simpleData = require('./vrouter-vmi.json')
-
-const simpleData = []
+const vmiData = []
 
 let cpu = 0
 let data = {}
@@ -37,7 +35,7 @@ for (let i = 0; i < count; i++) {
     vn: vn,
     memory: memory
   }
-  simpleData.push(data)
+  vmiData.push(data)
 }
 
 const container = 'vrouter-vmi-chart'
@@ -187,21 +185,17 @@ const chartConfig = {
     }]
 }
 
-let isInitialized = false
 const chartView = new coCharts.charts.XYChartView()
 
 module.exports = {
   container: container,
   layoutMeta: layoutMeta,
   render: () => {
-    if (isInitialized) {
-      chartView.render()
-    } else {
-      isInitialized = true
-
-      chartView.setConfig(chartConfig)
-      chartView.setData(simpleData)
-    }
+    chartView.setConfig(chartConfig)
+    chartView.setData(vmiData)
+  },
+  remove: () => {
+    chartView.remove()
   }
 }
 
