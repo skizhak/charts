@@ -33,7 +33,6 @@ export default class RadialChartView extends ContrailView {
     this._dataProvider = new SerieProvider({ parent: this._dataModel })
     this._components = []
     this._actionman = new Actionman()
-    _.each(Actions, action => this._actionman.set(action, this))
   }
 
   render () {
@@ -82,6 +81,13 @@ export default class RadialChartView extends ContrailView {
     // streamline chart class. xy uses cc-chart. position relative mess with tooltip position
     this.el.classList.add('cc-chart')
     this._actionman.id = this._config.id
+    /**
+     * Let's register actions here.
+     * Doing this in the constructor causes actions to be registered for views which may not have setConfig invoked,
+     * causing multiple chart instance scenarios having actions bound to registars not active in the dom.
+     * Since action is singleton and some actions trigger on all registrar, we need to avoid above mentioned scenario.
+     */
+    _.each(Actions, action => this._actionman.set(action, this))
     if (_.has(config, 'dataProvider.config')) this._dataProvider.setConfig(config.dataProvider.config)
     this._initComponents()
   }
@@ -120,7 +126,7 @@ export default class RadialChartView extends ContrailView {
     // Set title to parent title only if it doesn't exist. Each component may be handling title in different way.
     if (!config.title) config.title = this._config.title
     const configModel = new Components[`${type}ConfigModel`](config)
-    const viewOptions = _.extend(config, {
+    const viewOptions = _.extend({}, config, {
       id: id,
       config: configModel,
       model: model,

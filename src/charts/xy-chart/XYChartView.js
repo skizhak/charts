@@ -35,7 +35,6 @@ export default class XYChartView extends ContrailChartsView {
     this._dataProvider = new Handlers.DataProvider({ parentDataModel: this._dataModel })
     this._components = []
     this._actionman = new Actionman()
-    _.each(Actions, action => this._actionman.set(action, this))
   }
   /**
    * In frozen state chart ignores Model Data change
@@ -76,6 +75,13 @@ export default class XYChartView extends ContrailChartsView {
     this._container = this.el.parentElement
     this.el.classList.add(this.selectors.chart.substr(1))
     this._actionman.id = this._config.id
+    /**
+     * Let's register actions here.
+     * Doing this in the constructor causes actions to be registered for views which may not have setConfig invoked,
+     * causing multiple chart instance scenarios having actions bound to registars not active in the dom.
+     * Since action is singleton and some actions trigger on all registrar, we need to avoid above mentioned scenario.
+     */
+    _.each(Actions, action => this._actionman.set(action, this))
     if (_.has(config, 'dataProvider.config')) this._dataProvider.setConfig(config.dataProvider.config)
     this._initComponents()
   }

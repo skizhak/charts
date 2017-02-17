@@ -9,7 +9,8 @@ export default class TooltipView extends ContrailChartsView {
   constructor (p) {
     super(p)
     this.resetParams()
-    this.config.container = p.container
+    // TODO we don't probably need this. container is accessed from view._container
+    // this.config.container = p.container
     this.listenTo(this.config, 'change', this.resetParams)
   }
   /**
