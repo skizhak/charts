@@ -18,6 +18,13 @@ const loaders = [{
 }, {
   test: /\.html/,
   loader: 'handlebars-loader',
+}, {
+  test: /\.js$/,
+  loader: 'babel-loader',
+  exclude: /(node_modules)/,
+  query: {
+    presets: ['es2015']
+  }
 }]
 
 if (env === 'build') {
@@ -29,14 +36,6 @@ if (env === 'build') {
     }
   }))
 }
-  loaders.push({
-    loader: 'babel-loader',
-    test: /\.js$/,
-    exclude: /(node_modules)/,
-    query: {
-      presets: ['es2015']
-    }
-  })
 
 // Let's put css under css directory.
 plugins.push(new ExtractTextPlugin('css/' + fileName + '.css'))

@@ -158,16 +158,17 @@ function createLink (chartType = '', templateId = 'grouped', instance = {}, link
 
   $link.click((e) => {
     let containerIds = _.isArray(instance.container) ? instance.container : [instance.container]
+    let currentInstance = $chartBox.data('currentInstance')
 
-    let currentInstance = $chartBox.data('currentInstance') || {}
-
-    if (currentInstance.stopUpdating) {
-      currentInstance.stopUpdating()
+    if (currentInstance) {
+      currentInstance.remove()
+      if (currentInstance.stopUpdating) {
+        currentInstance.stopUpdating()
+      }
     }
 
     $exampleDesc.empty()
     $chartBox.empty()
-
     $chartBox.data('currentInstance', instance)
 
     if (!_.isNil(exampleDesc)) {

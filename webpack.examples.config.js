@@ -19,6 +19,13 @@ const loaders = [{
 }, {
   test: /\.tmpl/,
   loader: 'handlebars-loader',
+}, {
+  test: /\.js$/,
+  loader: 'babel-loader',
+  exclude: /(node_modules)/,
+  query: {
+    presets: ['es2015']
+  }
 }]
 
 if (env === 'build') {
@@ -27,14 +34,6 @@ if (env === 'build') {
     minimize: false,
   }))
 }
-  loaders.push({
-    loader: 'babel-loader',
-    test: /\.js$/,
-    exclude: /(node_modules)/,
-    query: {
-      presets: ['es2015']
-    }
-  })
 
 plugins.push(new ExtractTextPlugin('css/' + fileName + '.css'))
 

@@ -141,19 +141,18 @@ _.forEach(allExamples, (examples, chartCategory) => {
 
 function _RJSRender (templateId, chartType, linkText) {
   const RJSInstance = window.AMDChartInstance[`${chartType}${linkText}`]
-
   let containerIds = _.isArray(RJSInstance.container) ? RJSInstance.container : [RJSInstance.container]
+  let currentInstance = $chartBox.data('currentInstance')
 
-  let currentInstance = $chartBox.data('currentInstance') || {}
-
-  if (currentInstance.stopUpdating) {
-    currentInstance.stopUpdating()
+  if (currentInstance) {
+    currentInstance.remove()
+    if (currentInstance.stopUpdating) {
+      currentInstance.stopUpdating()
+    }
   }
 
   $chartBox.empty()
-
   $chartBox.data('currentInstance', RJSInstance)
-
   $chartBox.append(templates[templateId]({
     groupedChartsWrapperId: RJSInstance.groupedChartsWrapper,
     containerIds: containerIds,
@@ -176,7 +175,6 @@ function createLink (chartType = '', templateId = 'grouped', instance, linkText)
       } else if (_.isFunction(instance) && instance.name === 'RJS') {
         instance(() => {
           instance = RJSInitFlag
-
           _RJSRender(templateId, chartType, cleaned)
         })
       }
@@ -184,17 +182,17 @@ function createLink (chartType = '', templateId = 'grouped', instance, linkText)
   } else if (_.isObject(instance)) {
     $link.click((e) => {
       let containerIds = _.isArray(instance.container) ? instance.container : [instance.container]
+      let currentInstance = $chartBox.data('currentInstance')
 
-      let currentInstance = $chartBox.data('currentInstance') || {}
-
-      if (currentInstance.stopUpdating) {
-        currentInstance.stopUpdating()
+      if (currentInstance) {
+        currentInstance.remove()
+        if (currentInstance.stopUpdating) {
+          currentInstance.stopUpdating()
+        }
       }
 
       $chartBox.empty()
-
       $chartBox.data('currentInstance', instance)
-
       $chartBox.append(templates[templateId]({
         groupedChartsWrapperId: instance.groupedChartsWrapper,
         containerIds: containerIds,
