@@ -111,10 +111,8 @@ export default class XYChartView extends ContrailChartsView {
    * All actions will be unregistered, individual components will be removed except the parent container.
    */
   remove () {
-    _.each(_actions, action => this._actionman.unset(action, this))
-    _.each(this._components, component => {
-      component.remove()
-    })
+    if (this._actionman) _.each(Actions, action => this._actionman.unset(action, this))
+    _.each(this._components, component => component.remove())
     this._dataModel = undefined
     this._dataProvider = undefined
     this._components = []

@@ -8,7 +8,7 @@ import * as Charts from 'charts/index'
 import * as Components from 'components/index'
 import * as Handlers from 'handlers/index'
 import Actionman from '../../plugins/Actionman'
-const _actions = []
+const Actions = {}
 
 export default class ChartView extends ContrailChartsView {
   constructor (p) {
@@ -21,7 +21,7 @@ export default class ChartView extends ContrailChartsView {
     this._dataProvider = new Handlers.DataProvider({ parentDataModel: this._dataModel })
     this._components = []
     this._actionman = new Actionman()
-    _.each(_actions, action => this._actionman.set(action, this))
+    _.each(Actions, action => this._actionman.set(action, this))
   }
   /**
   * Data can be set separately into every chart so every chart can have different data.
@@ -70,10 +70,8 @@ export default class ChartView extends ContrailChartsView {
   }
 
   remove () {
-    _.each(_actions, action => this._actionman.unset(action, this))
-    _.each(this._charts, (chart) => {
-      chart.remove()
-    })
+    if (this._actionman) _.each(Actions, action => this._actionman.unset(action, this))
+    _.each(this._charts, chart => chart.remove())
     this._charts = {}
     this._dataModel = undefined
     this._dataProvider = undefined
