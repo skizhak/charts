@@ -2,7 +2,7 @@
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
 
-const commons = require('commons')
+import commons from 'commons'
 
 const formatter = commons.formatter
 
@@ -219,37 +219,33 @@ const chartConfig = {
   }]
 }
 
-let isInitialized = false
 const chartView = new coCharts.charts.XYChartView()
 
 module.exports = {
   container: container,
   layoutMeta: layoutMeta,
   render: () => {
-    if (isInitialized) {
-      chartView.render()
-    } else {
-      isInitialized = true
-
-      chartView.setConfig(chartConfig)
-      chartView.setData(data)
-      chartView.renderMessage({
-        componentId: 'compositey-chart-id',
-        action: 'once',
-        messages: [{
-          level: 'info',
-          title: 'Message 1',
-          message: 'This is an example message. It will disappear after 5 seconds.'
-        }, {
-          level: 'error',
-          title: 'A Fatal Error',
-          message: 'This is an error.'
-        }, {
-          level: 'warn',
-          title: 'A waring message',
-          message: 'This is another example message.'
-        }]
-      })
-    }
+    chartView.setConfig(chartConfig)
+    chartView.setData(data)
+    chartView.renderMessage({
+      componentId: 'compositey-chart-id',
+      action: 'once',
+      messages: [{
+        level: 'info',
+        title: 'Message 1',
+        message: 'This is an example message. It will disappear after 5 seconds.'
+      }, {
+        level: 'error',
+        title: 'A Fatal Error',
+        message: 'This is an error.'
+      }, {
+        level: 'warn',
+        title: 'A waring message',
+        message: 'This is another example message.'
+      }]
+    })
+  },
+  remove: () => {
+    chartView.remove()
   }
 }

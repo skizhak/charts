@@ -165,26 +165,20 @@ const chartConfig2 = {
   }]
 }
 
-let isInitialized = false
 const chart1 = new coCharts.charts.XYChartView()
 const chart2 = new coCharts.charts.XYChartView()
-
 
 module.exports = {
   container: container,
   layoutMeta: layoutMeta,
   render: () => {
-    if (isInitialized) {
-      chart1.render()
-      chart2.render()
-    } else {
-      isInitialized = true
-
-      chart1.setConfig(chartConfig1)
-      chart1.setData(data)
-
-      chart2.setConfig(chartConfig2)
-      chart2.setData(data)
-    }
+    chart1.setConfig(chartConfig1)
+    chart1.setData(data)
+    chart2.setConfig(chartConfig2)
+    chart2.setData(data)
+  },
+  remove: () => {
+    chart1.remove()
+    chart2.remove()
   }
 }

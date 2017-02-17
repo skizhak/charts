@@ -153,7 +153,6 @@ const barChartConfig = {
   }]
 }
 
-let isInitialized = false
 const barChart = new coCharts.charts.XYChartView()
 const areaChart = new coCharts.charts.XYChartView()
 
@@ -161,17 +160,14 @@ module.exports = {
   container: container,
   layoutMeta: layoutMeta,
   render: () => {
-    if (isInitialized) {
-      areaChart.render()
-      barChart.render()
-    } else {
-      isInitialized = true
+    areaChart.setConfig(areaChartConfig)
+    barChart.setConfig(barChartConfig)
 
-      areaChart.setConfig(areaChartConfig)
-      barChart.setConfig(barChartConfig)
-
-      // Navigation component of areaChart will push the data to barChart
-      areaChart.setData(data)
-    }
+    // Navigation component of areaChart will push the data to barChart
+    areaChart.setData(data)
+  },
+  remove: () => {
+    areaChart.remove()
+    barChart.remove()
   }
 }

@@ -75,20 +75,16 @@ const chartConfig = {
   ]
 }
 
-let isInitialized = false
 const chartView = new coCharts.charts.RadialChartView()
 
 module.exports = {
   container: container,
   layoutMeta: layoutMeta,
   render: () => {
-    if (isInitialized) {
-      chartView.render()
-    } else {
-      isInitialized = true
-
-      chartView.setConfig(chartConfig)
-      chartView.setData(pieData)
-    }
+    chartView.setConfig(chartConfig)
+    chartView.setData(pieData)
+  },
+  remove: () => {
+    chartView.remove()
   }
 }

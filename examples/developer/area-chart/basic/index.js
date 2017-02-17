@@ -111,20 +111,16 @@ const chartConfig = {
   }]
 }
 
-let isInitialized = false
-const chart = new coCharts.charts.XYChartView()
+const chartView = new coCharts.charts.XYChartView()
 
 module.exports = {
   container: container,
   layoutMeta: layoutMeta,
   render: () => {
-    if (isInitialized) {
-      chart.render()
-    } else {
-      isInitialized = true
-
-      chart.setConfig(chartConfig)
-      chart.setData(data)
-    }
+    chartView.setConfig(chartConfig)
+    chartView.setData(data)
+  },
+  remove: () => {
+    chartView.remove()
   }
 }

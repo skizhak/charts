@@ -7,18 +7,16 @@ define([ // eslint-disable-line no-undef
   'lodash',
   'contrail-charts',
 ], function (d3, _, coCharts) {
-  let isInitialized = false
   const container = ['requirejs-linebar-chart', 'requirejs-line-chart']
   const layoutMeta = {
     'requirejs-linebar-chart': 'col-xs-12 col-md-6',
     'requirejs-line-chart': 'col-xs-12 col-md-6'
   }
 
-  // Complex example
-  const complexData = []
+  const data = []
   _.each(d3.range(100), (i) => {
     const a = Math.random() * 100
-    complexData.push({
+    data.push({
       x: 1475760930000 + 1000000 * i,
       a: a,
       b: a + Math.random() * 10,
@@ -29,7 +27,7 @@ define([ // eslint-disable-line no-undef
   })
 
   // Most basic chart.
-  const simpleData = [
+  const lineData = [
     { x: 1475760930000, y: 0 },
     { x: 1475761930000, y: 3 },
     { x: 1475762930000, y: 2 },
@@ -37,7 +35,7 @@ define([ // eslint-disable-line no-undef
     { x: 1475764930000, y: 5 }
   ]
 
-  const complexChartConfig = {
+  const chartConfig = {
     id: container[0],
     components: [{
       type: 'CompositeYChart',
@@ -131,7 +129,7 @@ define([ // eslint-disable-line no-undef
     }]
   }
 
-  const simpleChartConfig = {
+  const lineChartConfig = {
     id: container[1],
     components: [{
       type: 'CompositeYChart',
@@ -159,24 +157,21 @@ define([ // eslint-disable-line no-undef
     }]
   }
 
-  const complexChartView = new coCharts.charts.XYChartView()
-
-  const simpleChartView = new coCharts.charts.XYChartView()
+  const chartView = new coCharts.charts.XYChartView()
+  const lineChartView = new coCharts.charts.XYChartView()
 
   return {
     container: container,
     layoutMeta: layoutMeta,
     render: function () {
-      if (!isInitialized) {
-        isInitialized = true
-        complexChartView.setConfig(complexChartConfig)
-        simpleChartView.setConfig(simpleChartConfig)
-        complexChartView.setData(complexData)
-        simpleChartView.setData(simpleData)
-      }
-
-      complexChartView.render()
-      simpleChartView.render()
+      chartView.setConfig(chartConfig)
+      lineChartView.setConfig(lineChartConfig)
+      chartView.setData(data)
+      lineChartView.setData(lineData)
+    },
+    remove: () => {
+      chartView.remove()
+      lineChartView.remove()
     }
   }
 })

@@ -230,7 +230,6 @@ const chartConfig = {
   charts: chartConfigs,
 }
 
-let isInitialized = false
 const chartView = new coCharts.charts.MultiChartView()
 
 module.exports = {
@@ -238,16 +237,14 @@ module.exports = {
   container: container,
   layoutMeta: layoutMeta,
   render: () => {
-    if (!isInitialized) {
-      isInitialized = true
-
-      chartView.setConfig(chartConfig)
-
-      // chartView.setData(tsData, {}, container[0])
-      // chartView.setData(tsData, {}, container[1])
-      chartView.setData(simpleData, {}, container[2])
-      chartView.setData(simpleData, {}, container[3])
-    }
+    chartView.setConfig(chartConfig)
+    // chartView.setData(tsData, {}, container[0])
+    // chartView.setData(tsData, {}, container[1])
+    chartView.setData(simpleData, {}, container[2])
+    chartView.setData(simpleData, {}, container[3])
     // chartView.render()
+  },
+  remove: () => {
+    chartView.remove()
   }
 }

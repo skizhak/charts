@@ -86,48 +86,30 @@ const chartConfig = {
   }]
 }
 
-let isInitialized = false
 let intervalId = -1
-const chart = new coCharts.charts.XYChartView()
+const chartView = new coCharts.charts.XYChartView()
 
 module.exports = {
   container: container,
   layoutMeta: layoutMeta,
   render: () => {
-    if (isInitialized) {
-      chart.render()
-      if (intervalId === -1) {
-        intervalId = setInterval(() => {
-          const dataConfig = {
-            length: length,
-            data: {
-              x: {linear: true, range: [counter, counter + length]},
-              a: {linear: true, range: [counter, counter + length * 3]},
-            },
-          }
-          const data = generator(dataConfig)
-          chart.setData(data)
-          counter++
-        }, 1000)
+    chartView.setConfig(chartConfig)
+    clearInterval(intervalId)
+    intervalId = setInterval(() => {
+      const dataConfig = {
+        length: length,
+        data: {
+          x: {linear: true, range: [counter, counter + length]},
+          a: {linear: true, range: [counter, counter + length * 3]},
+        },
       }
-    } else {
-      isInitialized = true
-
-      chart.setConfig(chartConfig)
-      clearInterval(intervalId)
-      intervalId = setInterval(() => {
-        const dataConfig = {
-          length: length,
-          data: {
-            x: {linear: true, range: [counter, counter + length]},
-            a: {linear: true, range: [counter, counter + length * 3]},
-          },
-        }
-        const data = generator(dataConfig)
-        chart.setData(data)
-        counter++
-      }, 1000)
-    }
+      const data = generator(dataConfig)
+      chartView.setData(data)
+      counter++
+    }, 1000)
+  },
+  remove: () => {
+    chartView.remove()
   },
   stopUpdating: () => {
     clearInterval(intervalId)
