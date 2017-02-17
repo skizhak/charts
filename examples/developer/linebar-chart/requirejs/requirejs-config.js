@@ -7,6 +7,8 @@ requirejs.config({ // eslint-disable-line
   paths: {
     app: 'app',
     'underscore': '../../../../node_modules/underscore/underscore',
+    'babel': '../../../../node_modules/requirejs-babel/babel-5.8.34.min',
+    'es6': '../../../../node_modules/requirejs-babel/es6',
     'contrail-charts': '../../../../build/src/js/contrail-charts',
     'jquery': '../../../../node_modules/jquery/dist/jquery',
     'backbone': '../../../../node_modules/backbone/backbone',
