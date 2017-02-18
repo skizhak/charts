@@ -29,14 +29,6 @@ export default class LineChartView extends XYChartSubView {
     }
   }
 
-  getTooltipData (data, xPos) {
-    const xAccessor = this.params.plot.x.accessor
-    const xBisector = d3.bisector((d) => d[xAccessor]).left
-    const xVal = this.xScale.invert(xPos)
-    const index = xBisector(data, xVal, 1)
-    const dataItem = xVal - data[index - 1][xAccessor] > data[index][xAccessor] - xVal ? data[index] : data[index - 1]
-    return dataItem
-  }
   /**
    * Draw one line (path) per each Y accessor.
    */
@@ -95,7 +87,9 @@ export default class LineChartView extends XYChartSubView {
   _onMouseover (d, el) {
     if (this.config.get('tooltipEnabled')) {
       const [left, top] = d3.mouse(this._container)
-      const dataItem = this.getTooltipData(d.data, left)
+      const xAccessor = this.params.plot.x.accessor
+      const xVal = this.xScale.invert(left)
+      const dataItem = this.model.getNearest(xAccessor, xVal)
       this._actionman.fire('ShowComponent', d.accessor.tooltip, {left, top}, dataItem)
     }
     el.classList.add(this.selectorClass('active'))
