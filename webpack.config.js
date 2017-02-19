@@ -31,6 +31,10 @@ if (env === 'build') {
   plugins.push(new UglifyJsPlugin({
     include: /\.min\.js$/,
     minimize: true,
+    beautify: false,
+    sourceMap: false,
+    mangle: false,
+    comments: false,
     compress: {
       warnings: false
     }
