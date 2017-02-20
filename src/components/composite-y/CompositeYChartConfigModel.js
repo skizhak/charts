@@ -78,8 +78,8 @@ export default class CompositeYChartConfigModel extends ContrailChartsConfigMode
     return this.get('plot').y
   }
 
-  getDomain () {
-    return _.get(this, 'attributes.axis.domain')
+  getDomain (axisName) {
+    return _.get(this, `attributes.axis.${axisName}.domain`)
   }
   /**
    * Override parent
