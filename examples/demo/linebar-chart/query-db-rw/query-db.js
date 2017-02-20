@@ -188,7 +188,7 @@ queryChart.setConfig({
 let simpleData = []
 let now = _.now()
 
-for (let i = 0; i < 100; i++) {
+for (let i = 1; i <= 100; i++) {
   simpleData.push(getDataPoint(now - ((100 - i) * 1000)))
 }
 
