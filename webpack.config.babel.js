@@ -38,7 +38,9 @@ export default (env = defaultEnv) => {
 
   if (env === 'build') {
     plugins.push(new UglifyJSPlugin({
-      compress: true,
+      compress: {
+        warnings: false
+      },
       mangle: {
         keep_fnames: true,
       },
