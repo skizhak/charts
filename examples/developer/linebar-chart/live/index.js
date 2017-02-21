@@ -2,31 +2,22 @@
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
 
-const commons = require('commons')
+import 'coCharts'
+import commons from 'commons'
 
 const formatter = commons.formatter
 const generator = commons.fixture
 
-const chart = new coCharts.charts.XYChartView()
-
 let counter = 0
 const length = 21
 
-setInterval(() => {
-  const dataConfig = {
-    length: length,
-    data: {
-      x: {linear: true, range: [counter, counter + length]},
-      a: {linear: true, range: [counter, counter + length * 3]},
-    },
-  }
-  const data = generator(dataConfig)
-  chart.setData(data)
-  counter++
-}, 1000)
+const container = 'live-data-chart'
+const layoutMeta = {
+  [container]: 'col-md-12'
+}
 
-chart.setConfig({
-  id: 'chart',
+const chartConfig = {
+  id: container,
   components: [{
     id: 'control-panel-id',
     type: 'ControlPanel',
@@ -94,4 +85,35 @@ chart.setConfig({
       ]
     },
   }]
-})
+}
+
+let intervalId = -1
+const chartView = new coCharts.charts.XYChartView()
+
+export default {
+  container: container,
+  layoutMeta: layoutMeta,
+  render: () => {
+    chartView.setConfig(chartConfig)
+    clearInterval(intervalId)
+    intervalId = setInterval(() => {
+      const dataConfig = {
+        length: length,
+        data: {
+          x: {linear: true, range: [counter, counter + length]},
+          a: {linear: true, range: [counter, counter + length * 3]},
+        },
+      }
+      const data = generator(dataConfig)
+      chartView.setData(data)
+      counter++
+    }, 1000)
+  },
+  remove: () => {
+    chartView.remove()
+  },
+  stopUpdating: () => {
+    clearInterval(intervalId)
+    intervalId = -1
+  }
+}

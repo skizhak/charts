@@ -2,11 +2,11 @@
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
 
-const commons = require('commons')
+import 'coCharts'
+import commons from 'commons'
 
 const formatter = commons.formatter
 const _c = commons._c
-
 const data = commons.fixture({
   length: 40,
   data: {
@@ -23,8 +23,13 @@ const data = commons.fixture({
 const colorScheme = _c.bubbleColorScheme6
 const bubbleShapes = _c.bubbleShapes
 
+const container = 'multi-shape-bubble'
+const layoutMeta = {
+  [container]: 'col-md-12'
+}
+
 const chartConfig = {
-  id: 'multi-shape-bubble',
+  id: container,
   components: [{
     type: 'LegendPanel',
     config: {
@@ -162,5 +167,15 @@ const chartConfig = {
 }
 
 const chartView = new coCharts.charts.XYChartView()
-chartView.setConfig(chartConfig)
-chartView.setData(data)
+
+export default {
+  container: container,
+  layoutMeta: layoutMeta,
+  render: () => {
+    chartView.setConfig(chartConfig)
+    chartView.setData(data)
+  },
+  remove: () => {
+    chartView.remove()
+  }
+}

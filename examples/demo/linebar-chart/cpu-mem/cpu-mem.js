@@ -2,15 +2,14 @@
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
 
-const commons = require('commons')
+import 'coCharts'
+import commons from 'commons'
+import dataSrc from './cpu-mem.json'
 
 const _ = commons._
 const formatter = commons.formatter
 const _c = commons._c
-
 const lbColorScheme7 = _c.lbColorScheme7
-
-const dataSrc = require('./cpu-mem.json')
 const dataProcessed = dataProcesser(dataSrc.data)
 
 function dataProcesser (rawData) {
@@ -127,10 +126,13 @@ const tooltipDataConfig = _.reduce(dataProcessed.nodeIds, (config, nodeId) => {
   valueFormatter: formatter.extendedISOTime,
 }])
 
-// Create chart view.
-const cpuMemChartView = new coCharts.charts.XYChartView()
-cpuMemChartView.setConfig({
-  id: 'cpu-mem-chart',
+const container = 'cpu-mem-chart'
+const layoutMeta = {
+  [container]: 'col-md-12'
+}
+
+const chartConfig = {
+  id: container,
   components: [{
     type: 'LegendPanel',
     config: {
@@ -260,15 +262,29 @@ cpuMemChartView.setConfig({
       tooltip: 'default-tooltip',
     }
   }]
-})
-cpuMemChartView.setData(dataProcessed.data)
+}
 
-cpuMemChartView.renderMessage({
-  componentId: 'cpu-mem-compositey',
-  action: 'once',
-  messages: [{
-    level: '',
-    title: '',
-    message: 'Loading ...',
-  }]
-})
+// Create chart view.
+const cpuMemChartView = new coCharts.charts.XYChartView()
+
+export default {
+  container: container,
+  layoutMeta: layoutMeta,
+  render: () => {
+    cpuMemChartView.setConfig(chartConfig)
+    cpuMemChartView.setData(dataProcessed.data)
+    cpuMemChartView.renderMessage({
+      componentId: 'cpu-mem-compositey',
+      action: 'once',
+      messages: [{
+        level: '',
+        title: '',
+        message: 'Loading ...',
+      }]
+    })
+  },
+  remove: () => {
+    cpuMemChartView.remove()
+  }
+}
+

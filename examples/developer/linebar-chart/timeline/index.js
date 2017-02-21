@@ -2,14 +2,15 @@
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
 
-const commons = require('commons')
-const formatter = commons.formatter
+import 'coCharts'
+import commons from 'commons'
 
+const formatter = commons.formatter
 // Complex example
-const complexData = []
+const dataSrc = []
 for (let i = 0; i < 100; i++) {
   const a = Math.random() * 100
-  complexData.push({
+  dataSrc.push({
     x: 1475760930000 + 1000000 * i,
     a: a,
     b: a + Math.random() * 10,
@@ -18,9 +19,14 @@ for (let i = 0; i < 100; i++) {
     e: (Math.random() - 0.5) * 10
   })
 }
-const complexChartView = new coCharts.charts.XYChartView()
-complexChartView.setConfig({
-  id: 'timeline-chart',
+
+const container = 'timeline-chart'
+const layoutMeta = {
+  [container]: 'col-md-12'
+}
+
+const chartConfig = {
+  id: container,
   components: [{
     id: 'timeline-compositey',
     type: 'CompositeYChart',
@@ -142,6 +148,18 @@ complexChartView.setConfig({
       }
     }
   }]
-})
-complexChartView.setData(complexData)
-complexChartView.render()
+}
+
+const chartView = new coCharts.charts.XYChartView()
+
+export default {
+  container: container,
+  layoutMeta: layoutMeta,
+  render: () => {
+    chartView.setConfig(chartConfig)
+    chartView.setData(dataSrc)
+  },
+  remove: () => {
+    chartView.remove()
+  }
+}

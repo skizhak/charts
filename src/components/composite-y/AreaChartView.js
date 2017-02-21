@@ -93,23 +93,15 @@ export default class AreaChartView extends XYChartSubView {
     _.each(updatedAreas, area => area.remove())
   }
 
-  getTooltipData (xPos) {
-    const data = this.model.data
-    const xAccessor = this.params.plot.x.accessor
-    const xBisector = d3.bisector(d => d[xAccessor]).left
-    const xVal = this.xScale.invert(xPos)
-    const index = xBisector(data, xVal, 1)
-    const dataItem = xVal - data[index - 1][xAccessor] > data[index][xAccessor] - xVal ? data[index] : data[index - 1]
-    return dataItem
-  }
-
   // Event handlers
 
   _onMousemove (d, el) {
     if (this.config.get('tooltipEnabled')) {
       const tooltipId = this.params.activeAccessorData[d.index].tooltip
       const [left, top] = d3.mouse(this._container)
-      const dataItem = this.getTooltipData(left)
+      const xAccessor = this.params.plot.x.accessor
+      const xVal = this.xScale.invert(left)
+      const dataItem = this.model.getNearest(xAccessor, xVal)
       this._actionman.fire('ShowComponent', tooltipId, {left, top}, dataItem)
     }
     el.classList.add(this.selectorClass('active'))

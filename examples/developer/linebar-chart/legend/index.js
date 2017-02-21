@@ -2,7 +2,8 @@
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
 
-const commons = require('commons')
+import 'coCharts'
+import commons from 'commons'
 
 const formatter = commons.formatter
 const length = 100
@@ -18,9 +19,13 @@ const data = commons.fixture({
   },
 })
 
-const chart = new coCharts.charts.XYChartView()
-chart.setConfig({
-  id: 'chart-legend',
+const container = 'chart-legend'
+const layoutMeta = {
+  [container]: 'col-md-12'
+}
+
+const chartConfig = {
+  id: container,
   components: [{
     type: 'LegendPanel',
     config: {
@@ -212,23 +217,35 @@ chart.setConfig({
       tooltip: 'default-tooltip',
     }
   }]
-})
+}
 
-chart.setData(data)
-chart.renderMessage({
-  componentId: 'compositey-chart-id',
-  action: 'once',
-  messages: [{
-    level: 'info',
-    title: 'Message 1',
-    message: 'This is an example message. It will disappear after 5 seconds.'
-  }, {
-    level: 'error',
-    title: 'A Fatal Error',
-    message: 'This is an error.'
-  }, {
-    level: 'warn',
-    title: 'A waring message',
-    message: 'This is another example message.'
-  }]
-})
+const chartView = new coCharts.charts.XYChartView()
+
+export default {
+  container: container,
+  layoutMeta: layoutMeta,
+  render: () => {
+    chartView.setConfig(chartConfig)
+    chartView.setData(data)
+    chartView.renderMessage({
+      componentId: 'compositey-chart-id',
+      action: 'once',
+      messages: [{
+        level: 'info',
+        title: 'Message 1',
+        message: 'This is an example message. It will disappear after 5 seconds.'
+      }, {
+        level: 'error',
+        title: 'A Fatal Error',
+        message: 'This is an error.'
+      }, {
+        level: 'warn',
+        title: 'A waring message',
+        message: 'This is another example message.'
+      }]
+    })
+  },
+  remove: () => {
+    chartView.remove()
+  }
+}

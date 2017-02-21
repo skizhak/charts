@@ -234,6 +234,13 @@ export default class DataProvider extends ContrailModel {
     this.trigger('change', this)
   }
 
+  getNearest (accessor, value) {
+    const data = this.data
+    const xBisector = d3Array.bisector(d => d[accessor]).left
+    const index = xBisector(data, value, 1)
+    return value - data[index - 1][accessor] > data[index][accessor] - value ? data[index] : data[index - 1]
+  }
+
   triggerError () {
     if (this.error) {
       this.messageEvent.trigger('error', {type: this.type, action: 'show', messages: this.errorList})

@@ -2,7 +2,8 @@
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
 
-const commons = require('commons')
+import 'coCharts'
+import commons from 'commons'
 
 const _ = commons._
 const formatter = commons.formatter
@@ -11,7 +12,7 @@ const _c = commons._c
 const bubbleShapes = _c.bubbleShapes
 const colorScheme = _c.bubbleColorScheme13
 
-const simpleData = []
+const nodeData = []
 const nodes = {
   compute: 25,
   control: 2,
@@ -34,12 +35,17 @@ for (var n in nodes) {
       size: Math.random() * 10
     }
     data[n] = Math.random() * 10000 * 1024
-    simpleData.push(data)
+    nodeData.push(data)
   }
 }
 
+const container = 'nodes-bubble-chart'
+const layoutMeta = {
+  [container]: 'col-md-12'
+}
+
 const chartConfig = {
-  id: 'nodes-bubble-chart',
+  id: container,
   components: [{
     type: 'LegendPanel',
     config: {
@@ -285,5 +291,15 @@ const chartConfig = {
 }
 
 const chartView = new coCharts.charts.XYChartView()
-chartView.setConfig(chartConfig)
-chartView.setData(simpleData)
+
+export default {
+  container: container,
+  layoutMeta: layoutMeta,
+  render: () => {
+    chartView.setConfig(chartConfig)
+    chartView.setData(nodeData)
+  },
+  remove: () => {
+    chartView.remove()
+  }
+}

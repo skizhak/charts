@@ -3,4 +3,4 @@
  */
 
 import Backbone from 'backbone'
-module.exports = Backbone.Events
+export default Backbone.Events

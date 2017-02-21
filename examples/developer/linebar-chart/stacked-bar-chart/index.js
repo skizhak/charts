@@ -2,7 +2,8 @@
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
 
-const commons = require('commons')
+import 'coCharts'
+import commons from 'commons'
 
 const length = 20
 const data = commons.fixture({
@@ -15,9 +16,13 @@ const data = commons.fixture({
   },
 })
 
-const complexChartView = new coCharts.charts.XYChartView()
-complexChartView.setConfig({
-  id: 'grouped-bar-chart',
+const container = 'grouped-bar-chart'
+const layoutMeta = {
+  [container]: 'col-md-12'
+}
+
+const chartConfig = {
+  id: container,
   components: [{
     id: 'grouped-bar-compositey',
     type: 'CompositeYChart',
@@ -94,5 +99,18 @@ complexChartView.setConfig({
       ]
     },
   }]
-})
-complexChartView.setData(data)
+}
+
+const chartView = new coCharts.charts.XYChartView()
+
+export default {
+  container: container,
+  layoutMeta: layoutMeta,
+  render: () => {
+    chartView.setConfig(chartConfig)
+    chartView.setData(data)
+  },
+  remove: () => {
+    chartView.remove()
+  }
+}

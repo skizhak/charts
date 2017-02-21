@@ -21,7 +21,12 @@ export default class CompositeYChartView extends ContrailChartsView {
 
     this.listenTo(this.model, 'change', this.render)
     this.listenTo(this.config, 'change', this._onConfigModelChange)
-    window.addEventListener('resize', this._onResize.bind(this))
+    /**
+     * Let's bind super _onResize to this. Also .bind returns new function ref.
+     * we need to store this for successful removal from window event
+     */
+    this._onResize = this._onResize.bind(this)
+    window.addEventListener('resize', this._onResize)
   }
 
   get tagName () { return 'g' }
@@ -72,6 +77,13 @@ export default class CompositeYChartView extends ContrailChartsView {
     if (crosshairId) this._actionman.fire('HideComponent', crosshairId)
 
     this._ticking = false
+  }
+
+  remove () {
+    super.remove()
+    window.removeEventListener('resize', this._onResize)
+    _.each(this._drawings, drawing => drawing.remove())
+    this._drawings = []
   }
 
   showCrosshair (point) {

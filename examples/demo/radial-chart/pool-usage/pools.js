@@ -2,11 +2,11 @@
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
 
-const commons = require('commons')
+import 'coCharts'
+import commons from 'commons'
 
 const formatter = commons.formatter
 const _c = commons._c
-
 const radialColorScheme6 = _c.radialColorScheme6
 
 const pieData = [
@@ -24,8 +24,13 @@ function getValue (serie) {
   return serie.value
 }
 
+const container = 'pools-pie'
+const layoutMeta = {
+  [container]: 'col-md-12'
+}
+
 const chartConfig = {
-  id: 'pools-pie',
+  id: container,
   components: [{
     type: 'ControlPanel',
     config: {
@@ -67,6 +72,17 @@ const chartConfig = {
   }
   ]
 }
+
 const chartView = new coCharts.charts.RadialChartView()
-chartView.setConfig(chartConfig)
-chartView.setData(pieData)
+
+export default {
+  container: container,
+  layoutMeta: layoutMeta,
+  render: () => {
+    chartView.setConfig(chartConfig)
+    chartView.setData(pieData)
+  },
+  remove: () => {
+    chartView.remove()
+  }
+}

@@ -3,7 +3,7 @@
  */
 
 // Data generator for developer's examples and tests
-module.exports = function (p = {}) {
+export default function (p = {}) {
   const data = []
   const length = p.length || 21
   const dataConfig = p.data || {

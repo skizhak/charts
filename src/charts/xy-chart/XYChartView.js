@@ -25,13 +25,16 @@ const Actions = {ShowComponent, HideComponent, SelectSerie, SelectColor, SelectC
 */
 export default class XYChartView extends ContrailChartsView {
 
-  constructor (p) {
-    super(p)
+  constructor (...args) {
+    super(...args)
+    this.initialize.apply(this, ...args)
+  }
+
+  initialize () {
     this._dataModel = new ContrailChartsDataModel()
     this._dataProvider = new Handlers.DataProvider({ parentDataModel: this._dataModel })
     this._components = []
     this._actionman = new Actionman()
-    _.each(Actions, action => this._actionman.set(action, this))
   }
   /**
   * Provide data for this chart as a simple array of objects.
@@ -52,17 +55,26 @@ export default class XYChartView extends ContrailChartsView {
     this._dataModel.set(dataConfig, { silent: true })
   }
   /**
-  * Sets the configuration for this chart as a simple object.
-  * Instantiate the required views if they do not exist yet, set their configurations otherwise.
-  * Setting configuration to a rendered chart will trigger a ConfigModel change event that will cause the chart to be re-rendered.
-  */
+   * Sets the configuration for this chart as a simple object.
+   * Instantiate the required views if they do not exist yet, set their configurations otherwise.
+   * Updating configuration to a rendered chart will trigger a ConfigModel change event that will cause the chart to be re-rendered.
+   * calling setConfig on already rendered chart will reset the chart.
+   */
   setConfig (config) {
+    if (this._config) this.reset()
     this._config = config
     this.setElement(`#${config.id}`)
     // Todo Fix chart init similar to that of component. use the render via ContrailChartsView instead
     this._container = this.el.parentElement
     this.el.classList.add(this.selectors.chart.substr(1))
     this._actionman.id = this._config.id
+    /**
+     * Let's register actions here.
+     * Doing this in the constructor causes actions to be registered for views which may not have setConfig invoked,
+     * causing multiple chart instance scenarios having actions bound to registars not active in the dom.
+     * Since action is singleton and some actions trigger on all registrar, we need to avoid above mentioned scenario.
+     */
+    _.each(Actions, action => this._actionman.set(action, this))
     if (_.has(config, 'dataProvider.config')) this._dataProvider.setConfig(config.dataProvider.config)
     this._initComponents()
   }
@@ -85,6 +97,25 @@ export default class XYChartView extends ContrailChartsView {
     _.each(this._components, (component) => {
       component.render()
     })
+  }
+  /**
+   * Remove and re-initialize ChartView.
+   */
+  reset () {
+    this.remove()
+    this.initialize({})
+  }
+  /**
+   * Removes chart view and its components.
+   * All actions will be unregistered, individual components will be removed except the parent container.
+   */
+  remove () {
+    if (this._actionman) _.each(Actions, action => this._actionman.unset(action, this))
+    _.each(this._components, component => component.remove())
+    this._dataModel = undefined
+    this._dataProvider = undefined
+    this._components = []
+    this._actionman = undefined
   }
 
   renderMessage (msgObj) {

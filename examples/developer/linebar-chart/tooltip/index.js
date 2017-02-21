@@ -2,16 +2,20 @@
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
 
-const commons = require('commons')
+import 'coCharts'
+import commons from 'commons'
 
 const formatter = commons.formatter
 const data = commons.fixture()
 
-const chart1 = new coCharts.charts.XYChartView()
-const chart2 = new coCharts.charts.XYChartView()
+const container = ['chart-tooltip-1', 'chart-tooltip-2']
+const layoutMeta = {
+  'chart-tooltip-1': 'col-md-12',
+  'chart-tooltip-2': 'col-md-12'
+}
 
-chart1.setConfig({
-  id: 'chart-tooltip-1',
+const chartConfig1 = {
+  id: container[0],
   components: [{
     id: 'compositey-id-1',
     type: 'CompositeYChart',
@@ -100,10 +104,10 @@ chart1.setConfig({
       template: (data) => '<div class="tooltip-content">Custom tooltip</div>',
     }
   }]
-})
+}
 
-chart2.setConfig({
-  id: 'chart-tooltip-2',
+const chartConfig2 = {
+  id: container[1],
   components: [{
     id: 'compositey-id-2',
     type: 'CompositeYChart',
@@ -160,7 +164,22 @@ chart2.setConfig({
       ]
     },
   }]
-})
+}
 
-chart1.setData(data)
-chart2.setData(data)
+const chart1 = new coCharts.charts.XYChartView()
+const chart2 = new coCharts.charts.XYChartView()
+
+export default {
+  container: container,
+  layoutMeta: layoutMeta,
+  render: () => {
+    chart1.setConfig(chartConfig1)
+    chart1.setData(data)
+    chart2.setConfig(chartConfig2)
+    chart2.setData(data)
+  },
+  remove: () => {
+    chart1.remove()
+    chart2.remove()
+  }
+}

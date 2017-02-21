@@ -2,7 +2,8 @@
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
 
-const commons = require('commons')
+import 'coCharts'
+import commons from 'commons'
 
 const formatter = commons.formatter
 
@@ -19,9 +20,14 @@ for (let i = 0; i < 100; i++) {
     e: (Math.random() - 0.5) * 10,
   })
 }
-const complexChartView = new coCharts.charts.XYChartView()
-complexChartView.setConfig({
-  id: 'chart-control-panel',
+
+const container = 'chart-control-panel'
+const layoutMeta = {
+  [container]: 'col-md-12'
+}
+
+const chartConfig = {
+  id: container,
   components: [{
     id: 'control-panel-id',
     type: 'ControlPanel',
@@ -124,5 +130,18 @@ complexChartView.setConfig({
       embedded: true,
     },
   }]
-})
-complexChartView.setData(complexData)
+}
+
+const chartView = new coCharts.charts.XYChartView()
+
+export default {
+  container: container,
+  layoutMeta: layoutMeta,
+  render: () => {
+    chartView.setConfig(chartConfig)
+    chartView.setData(complexData)
+  },
+  remove: () => {
+    chartView.remove()
+  }
+}

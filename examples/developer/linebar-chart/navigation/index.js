@@ -3,9 +3,10 @@
  */
 /* global d3 */
 
-const commons = require('commons')
-const colorScheme = commons._c.d3ColorScheme10
+import 'coCharts'
+import commons from 'commons'
 
+const colorScheme = commons._c.d3ColorScheme10
 const length = 20
 const data = commons.fixture({
   length: 20,
@@ -17,10 +18,14 @@ const data = commons.fixture({
   },
 })
 
-const barChart = new coCharts.charts.XYChartView()
-const areaChart = new coCharts.charts.XYChartView()
-areaChart.setConfig({
-  id: 'chart-area',
+const container = ['chart-area', 'chart-bar']
+const layoutMeta = {
+  [container[0]]: 'render-order-1 col-md-12',
+  [container[1]]: 'render-order-2 col-md-12'
+}
+
+const areaChartConfig = {
+  id: container[0],
   components: [{
     type: 'Navigation',
     config: {
@@ -89,9 +94,9 @@ areaChart.setConfig({
       }
     }
   }]
-})
-barChart.setConfig({
-  id: 'chart-bar',
+}
+const barChartConfig = {
+  id: container[1],
   components: [{
     type: 'CompositeYChart',
     config: {
@@ -147,7 +152,23 @@ barChart.setConfig({
       ]
     },
   }]
-})
+}
 
-// Navigation component of areaChart will push the data to barChart
-areaChart.setData(data)
+const barChart = new coCharts.charts.XYChartView()
+const areaChart = new coCharts.charts.XYChartView()
+
+export default {
+  container: container,
+  layoutMeta: layoutMeta,
+  render: () => {
+    areaChart.setConfig(areaChartConfig)
+    barChart.setConfig(barChartConfig)
+
+    // Navigation component of areaChart will push the data to barChart
+    areaChart.setData(data)
+  },
+  remove: () => {
+    areaChart.remove()
+    barChart.remove()
+  }
+}

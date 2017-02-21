@@ -27,7 +27,12 @@ export default class NavigationView extends ContrailChartsView {
     this.listenTo(this._brush, 'selection', _.throttle(this._onSelection))
     this.listenTo(this.config, 'change', this.render)
     this.listenTo(this.model, 'change', this._onModelChange)
-    window.addEventListener('resize', this._onResize.bind(this))
+    /**
+     * Let's bind super _onResize to this. Also .bind returns new function ref.
+     * we need to store this for successful removal from window event
+     */
+    this._onResize = this._onResize.bind(this)
+    window.addEventListener('resize', this._onResize)
     this._debouncedEnable = _.debounce(() => { this._disabled = false }, this.config.get('duration'))
   }
 
@@ -46,6 +51,16 @@ export default class NavigationView extends ContrailChartsView {
     this._compositeYChartView.config.set(this.config.attributes)
     this._compositeYChartView.render()
     this._update()
+  }
+
+  remove () {
+    super.remove()
+    _.each(this._components, (component) => {
+      component.remove()
+    })
+    this._components = []
+    this.stopListening(this._brush, 'selection')
+    window.removeEventListener('resize', this._onResize)
   }
 
   prevChunkSelected () {

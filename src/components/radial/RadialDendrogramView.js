@@ -21,7 +21,12 @@ export default class RadialDendrogramView extends ContrailChartsView {
     super(p)
     this.listenTo(this.model, 'change', this._onDataModelChange)
     this.listenTo(this.config, 'change', this._onConfigModelChange)
-    window.addEventListener('resize', this._onResize.bind(this))
+    /**
+     * Let's bind super _onResize to this. Also .bind returns new function ref.
+     * we need to store this for successful removal from window event
+     */
+    this._onResize = this._onResize.bind(this)
+    window.addEventListener('resize', this._onResize)
   }
 
   changeModel (model) {
@@ -37,6 +42,11 @@ export default class RadialDendrogramView extends ContrailChartsView {
     super.render()
     this._render()
     this._ticking = false
+  }
+
+  remove () {
+    super.remove()
+    window.removeEventListener('resize', this._onResize)
   }
 
   _calculateDimensions () {

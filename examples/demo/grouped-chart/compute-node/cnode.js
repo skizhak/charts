@@ -2,7 +2,8 @@
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
 
-const commons = require('commons')
+import 'coCharts'
+import commons from 'commons'
 
 const _ = commons._
 const formatter = commons.formatter
@@ -34,6 +35,16 @@ function processCPUMemParser (data) {
 
 function processFlowParser (data) {
   return data[0]['flowRate']
+}
+
+const groupedChartsWrapper = 'grouped-parent-chart'
+const container = ['disk-usage', 'node-cpu', 'process-cpu-mem', 'node-mem', 'node-flow']
+const layoutMeta = {
+  [container[0]]: 'render-order-5 col-xs-12 col-md-6',
+  [container[1]]: 'render-order-2 col-xs-12 col-md-5',
+  [container[2]]: 'render-order-4 col-xs-12 col-md-6',
+  [container[3]]: 'render-order-1 col-xs-12 col-md-5',
+  [container[4]]: 'render-order-3 col-xs-12'
 }
 
 const cpuPlotConfig = {
@@ -201,7 +212,7 @@ const flowAxisConfig = {
 }
 
 const pieChartConfig = {
-  id: 'disk-usage',
+  id: container[0],
   type: 'RadialChart',
   dataProvider: {
     config: {
@@ -247,7 +258,7 @@ const pieChartConfig = {
 }
 
 const lbChartConfig1 = {
-  id: 'node-cpu',
+  id: container[1],
   type: 'XYChart',
   dataProvider: {
     config: {
@@ -316,147 +327,8 @@ const lbChartConfig1 = {
     }]
 }
 
-const areaChartConfig = {
-  id: 'node-mem',
-  type: 'XYChart',
-  dataProvider: {
-    config: {
-      formatter: memStatsParser,
-    }
-  },
-  components: [
-    {
-      type: 'LegendPanel',
-      config: {
-        sourceComponent: 'mem-chart-id',
-        editable: {
-          colorSelector: true,
-          chartSelector: true
-        },
-        placement: 'horizontal',
-        filter: true,
-      },
-    },
-    {
-      id: 'mem-tooltip-id',
-      type: 'Tooltip',
-      config: {
-        title: 'Memory Usage',
-        dataConfig: [
-          {
-            accessor: 'AVG(total)',
-            labelFormatter: 'Total',
-            valueFormatter: formatter.byteFormatter1K,
-          }, {
-            accessor: 'AVG(used)',
-            labelFormatter: 'Used',
-            valueFormatter: formatter.byteFormatter1K,
-          }, {
-            accessor: 'AVG(free)',
-            labelFormatter: 'Free',
-            valueFormatter: formatter.byteFormatter1K,
-          }, {
-            accessor: 'AVG(cached)',
-            labelFormatter: 'Cached',
-            valueFormatter: formatter.byteFormatter1K,
-          }, {
-            accessor: 'AVG(buffers)',
-            labelFormatter: 'Buffers',
-            valueFormatter: formatter.byteFormatter1K,
-          },
-        ],
-      },
-    },
-    {
-      id: 'mem-chart-id',
-      type: 'CompositeYChart',
-      config: {
-        marginLeft: 90,
-        marginRight: 70,
-        chartHeight: 300,
-        crosshair: 'mem-crosshair-id',
-        possibleChartTypes: {
-          y1: ['BarChart', 'LineChart'],
-          y2: ['BarChart', 'LineChart']
-        },
-        plot: memPlotConfig,
-        axis: memAxisConfig,
-      }
-    },
-    {
-      id: 'mem-crosshair-id',
-      type: 'Crosshair',
-      config: {
-        tooltip: 'mem-tooltip-id',
-      }
-    }]
-}
-
-var lbChartConfig2 = {
-  id: 'node-flow',
-  type: 'XYChart',
-  dataProvider: {
-    config: {
-      formatter: processFlowParser,
-    }
-  },
-  components: [
-    {
-      id: 'flow-tooltip-id',
-      type: 'Tooltip',
-      config: {
-        title: 'VRouter Flows',
-        dataConfig: [
-          {
-            accessor: 'AVG(active_flows)',
-            labelFormatter: 'Active Flows',
-            valueFormatter: formatter.toNumber,
-          }, {
-            accessor: 'AVG(added_flows)',
-            labelFormatter: 'Added Flows',
-            valueFormatter: formatter.toNumber,
-          }, {
-            accessor: 'AVG(deleted_flows)',
-            labelFormatter: 'Deleted Flows',
-            valueFormatter: formatter.toNumber,
-          }
-        ],
-      },
-    },
-    {
-      id: 'compositey-chart-id',
-      type: 'CompositeYChart',
-      config: {
-        marginLeft: 80,
-        marginRight: 60,
-        chartHeight: 275,
-        crosshair: 'flow-crosshair-id',
-        plot: flowPlotConfig,
-        axis: flowAxisConfig
-      }
-    }, {
-      type: 'Navigation',
-      config: {
-        marginLeft: 80,
-        marginRight: 60,
-        chartHeight: 175,
-        plot: flowPlotConfig,
-        axis: _.merge({}, flowAxisConfig, {y1: {ticks: 1, label: ''}, y2: {ticks: 1, label: ''}}),
-        selection: [50, 100],
-        // We will use default onChangeSelection handler.
-        // onChangeSelection: (dataProvider, chart) => {}
-      }
-    }, {
-      id: 'flow-crosshair-id',
-      type: 'Crosshair',
-      config: {
-        tooltip: 'flow-tooltip-id',
-      }
-    }]
-}
-
 const bubbleChartConfig = {
-  id: 'process-cpu-mem',
+  id: container[2],
   type: 'XYChart',
   dataProvider: {
     config: {
@@ -536,11 +408,149 @@ const bubbleChartConfig = {
   ]
 }
 
-const chartConfigs = [pieChartConfig, lbChartConfig1, bubbleChartConfig, areaChartConfig, lbChartConfig2]
-const chartView = new coCharts.charts.MultiChartView()
+const areaChartConfig = {
+  id: container[3],
+  type: 'XYChart',
+  dataProvider: {
+    config: {
+      formatter: memStatsParser,
+    }
+  },
+  components: [
+    {
+      type: 'LegendPanel',
+      config: {
+        sourceComponent: 'mem-chart-id',
+        editable: {
+          colorSelector: true,
+          chartSelector: true
+        },
+        placement: 'horizontal',
+        filter: true,
+      },
+    },
+    {
+      id: 'mem-tooltip-id',
+      type: 'Tooltip',
+      config: {
+        title: 'Memory Usage',
+        dataConfig: [
+          {
+            accessor: 'AVG(total)',
+            labelFormatter: 'Total',
+            valueFormatter: formatter.byteFormatter1K,
+          }, {
+            accessor: 'AVG(used)',
+            labelFormatter: 'Used',
+            valueFormatter: formatter.byteFormatter1K,
+          }, {
+            accessor: 'AVG(free)',
+            labelFormatter: 'Free',
+            valueFormatter: formatter.byteFormatter1K,
+          }, {
+            accessor: 'AVG(cached)',
+            labelFormatter: 'Cached',
+            valueFormatter: formatter.byteFormatter1K,
+          }, {
+            accessor: 'AVG(buffers)',
+            labelFormatter: 'Buffers',
+            valueFormatter: formatter.byteFormatter1K,
+          },
+        ],
+      },
+    },
+    {
+      id: 'mem-chart-id',
+      type: 'CompositeYChart',
+      config: {
+        marginLeft: 90,
+        marginRight: 70,
+        chartHeight: 300,
+        crosshair: 'mem-crosshair-id',
+        possibleChartTypes: {
+          y1: ['BarChart', 'LineChart'],
+          y2: ['BarChart', 'LineChart']
+        },
+        plot: memPlotConfig,
+        axis: memAxisConfig,
+      }
+    },
+    {
+      id: 'mem-crosshair-id',
+      type: 'Crosshair',
+      config: {
+        tooltip: 'mem-tooltip-id',
+      }
+    }]
+}
 
-chartView.setConfig({
-  id: 'grouped-parent-chart',
+var lbChartConfig2 = {
+  id: container[4],
+  type: 'XYChart',
+  dataProvider: {
+    config: {
+      formatter: processFlowParser,
+    }
+  },
+  components: [
+    {
+      id: 'flow-tooltip-id',
+      type: 'Tooltip',
+      config: {
+        title: 'VRouter Flows',
+        dataConfig: [
+          {
+            accessor: 'AVG(active_flows)',
+            labelFormatter: 'Active Flows',
+            valueFormatter: formatter.toNumber,
+          }, {
+            accessor: 'AVG(added_flows)',
+            labelFormatter: 'Added Flows',
+            valueFormatter: formatter.toNumber,
+          }, {
+            accessor: 'AVG(deleted_flows)',
+            labelFormatter: 'Deleted Flows',
+            valueFormatter: formatter.toNumber,
+          }
+        ],
+      },
+    },
+    {
+      id: 'compositey-chart-id',
+      type: 'CompositeYChart',
+      config: {
+        marginLeft: 80,
+        marginRight: 60,
+        chartHeight: 275,
+        crosshair: 'flow-crosshair-id',
+        plot: flowPlotConfig,
+        axis: flowAxisConfig
+      }
+    }, {
+      type: 'Navigation',
+      config: {
+        marginLeft: 80,
+        marginRight: 60,
+        chartHeight: 175,
+        plot: flowPlotConfig,
+        axis: _.merge({}, flowAxisConfig, {y1: {ticks: 1, label: ''}, y2: {ticks: 1, label: ''}}),
+        selection: [50, 100],
+        // We will use default onChangeSelection handler.
+        // onChangeSelection: (dataProvider, chart) => {}
+      }
+    }, {
+      id: 'flow-crosshair-id',
+      type: 'Crosshair',
+      config: {
+        tooltip: 'flow-tooltip-id',
+      }
+    }]
+}
+
+const chartConfigs = [pieChartConfig, lbChartConfig1, bubbleChartConfig, areaChartConfig, lbChartConfig2]
+
+const chartConfig = {
+  id: groupedChartsWrapper,
   type: 'MultiChart',
   components: [{
     id: 'control-panel-id',
@@ -552,43 +562,42 @@ chartView.setConfig({
     }
   }],
   charts: chartConfigs,
-})
-
-chartView.setData(data, {}, 'disk-usage')
-chartView.setData(data, {}, 'process-cpu-mem')
-chartView.setData(data, {}, 'node-cpu')
-chartView.setData(data, {}, 'node-mem')
-chartView.setData(data, {}, 'node-flow')
-
-chartView.render()
-
-let runner = null
-onVisibilityChange()
-function run () {
-  now += timeInterval
-  let newDataPoint = commons.dg.computeNodeData({vrCount: 1, count: 1, flowCount: 1, timeInterval: timeInterval, now: now})
-
-  newDataPoint[0].systemCPU = data[0].systemCPU.slice(1).concat(newDataPoint[0].systemCPU)
-  newDataPoint[0].systemMemory = data[0].systemMemory.slice(1).concat(newDataPoint[0].systemMemory)
-  newDataPoint[0].flowRate = data[0].flowRate.slice(1).concat(newDataPoint[0].flowRate)
-
-  data = newDataPoint
-
-  chartView.setData(newDataPoint, {}, 'disk-usage')
-  chartView.setData(newDataPoint, {}, 'process-cpu-mem')
-  chartView.setData(newDataPoint, {}, 'node-cpu')
-  chartView.setData(newDataPoint, {}, 'node-mem')
-  chartView.setData(newDataPoint, {}, 'node-flow')
-
-  chartView.render()
 }
 
-function onVisibilityChange () {
-  if (document.hidden) {
-    clearInterval(runner)
-  } else {
-    runner = setInterval(run, timeInterval)
+let intervalId = -1
+const chartView = new coCharts.charts.MultiChartView()
+
+export default {
+  groupedChartsWrapper: groupedChartsWrapper,
+  container: container,
+  layoutMeta: layoutMeta,
+  render: () => {
+    clearInterval(intervalId)
+    const dataUpdate = () => {
+      now += timeInterval
+      let newDataPoint = commons.dg.computeNodeData({vrCount: 1, count: 1, flowCount: 1, timeInterval: timeInterval, now: now})
+
+      newDataPoint[0].systemCPU = data[0].systemCPU.slice(1).concat(newDataPoint[0].systemCPU)
+      newDataPoint[0].systemMemory = data[0].systemMemory.slice(1).concat(newDataPoint[0].systemMemory)
+      newDataPoint[0].flowRate = data[0].flowRate.slice(1).concat(newDataPoint[0].flowRate)
+
+      data = newDataPoint
+
+      _.forEach(container, (container) => {
+        chartView.setData(data, {}, container)
+      })
+    }
+    chartView.setConfig(chartConfig)
+    dataUpdate()
+    intervalId = setInterval(dataUpdate, timeInterval)
+
+    // chartView.render()
+  },
+  remove: () => {
+    chartView.remove()
+  },
+  stopUpdating: () => {
+    clearInterval(intervalId)
+    intervalId = -1
   }
 }
-
-document.addEventListener('visibilitychange', onVisibilityChange, false)

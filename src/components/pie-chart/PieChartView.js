@@ -11,7 +11,12 @@ export default class PieChartView extends ContrailChartsView {
     this._highlightRadius = 10
     this.listenTo(this.model, 'change', this.render)
     this.listenTo(this.config, 'change', this._onConfigModelChange)
-    window.addEventListener('resize', this._onResize.bind(this))
+    /**
+     * Let's bind super _onResize to this. Also .bind returns new function ref.
+     * we need to store this for successful removal from window event
+     */
+    this._onResize = this._onResize.bind(this)
+    window.addEventListener('resize', this._onResize)
   }
 
   get tagName () { return 'g' }
@@ -70,6 +75,11 @@ export default class PieChartView extends ContrailChartsView {
     sectors.exit().remove()
 
     this._ticking = false
+  }
+
+  remove () {
+    super.remove()
+    window.removeEventListener('resize', this._onResize)
   }
 
   _calculateDimensions () {

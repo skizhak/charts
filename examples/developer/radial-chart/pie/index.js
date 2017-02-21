@@ -2,9 +2,10 @@
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
 
-const commons = require('commons')
-const formatter = commons.formatter
+import 'coCharts'
+import commons from 'commons'
 
+const formatter = commons.formatter
 const pieData = [
     { label: 'Process 1', value: 2704659 },
     { label: 'Process 2', value: 2159981 },
@@ -22,8 +23,13 @@ function getValue (serie) {
   return serie.value
 }
 
+const container = 'donut-chart'
+const layoutMeta = {
+  [container]: 'col-md-12'
+}
+
 const chartConfig = {
-  id: 'donut-chart',
+  id: container,
   title: 'Donut Chart',
   components: [{
     type: 'ControlPanel',
@@ -69,6 +75,17 @@ const chartConfig = {
   }
   ]
 }
+
 const chartView = new coCharts.charts.RadialChartView()
-chartView.setConfig(chartConfig)
-chartView.setData(pieData)
+
+export default {
+  container: container,
+  layoutMeta: layoutMeta,
+  render: () => {
+    chartView.setConfig(chartConfig)
+    chartView.setData(pieData)
+  },
+  remove: () => {
+    chartView.remove()
+  }
+}

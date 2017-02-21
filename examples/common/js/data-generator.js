@@ -302,7 +302,7 @@ function generatePorts4VN (portCount, vnName) {
   return ports
 }
 
-module.exports = {
+export default {
   projectVNTraffic,
   computeNodeData,
   vRouterTraffic

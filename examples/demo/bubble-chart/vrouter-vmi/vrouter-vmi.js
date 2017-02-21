@@ -2,18 +2,16 @@
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
 
-const commons = require('commons')
+import 'coCharts'
+import commons from 'commons'
 
 const _ = commons._
 const formatter = commons.formatter
 const _c = commons._c
-
 const bubbleShapes = _c.bubbleShapes
 const colorScheme = _c.bubbleColorScheme6
 
-// const simpleData = require('./vrouter-vmi.json')
-
-const simpleData = []
+const vmiData = []
 
 let cpu = 0
 let data = {}
@@ -35,11 +33,16 @@ for (let i = 0; i < count; i++) {
     vn: vn,
     memory: memory
   }
-  simpleData.push(data)
+  vmiData.push(data)
+}
+
+const container = 'vrouter-vmi-chart'
+const layoutMeta = {
+  [container]: 'col-md-12'
 }
 
 const chartConfig = {
-  id: 'vrouter-vmi-chart',
+  id: container,
   components: [
     {
       type: 'LegendPanel',
@@ -181,5 +184,16 @@ const chartConfig = {
 }
 
 const chartView = new coCharts.charts.XYChartView()
-chartView.setConfig(chartConfig)
-chartView.setData(simpleData)
+
+export default {
+  container: container,
+  layoutMeta: layoutMeta,
+  render: () => {
+    chartView.setConfig(chartConfig)
+    chartView.setData(vmiData)
+  },
+  remove: () => {
+    chartView.remove()
+  }
+}
+

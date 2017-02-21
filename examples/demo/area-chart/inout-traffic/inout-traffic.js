@@ -2,15 +2,16 @@
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
 
-const commons = require('commons')
+import 'coCharts'
+import commons from 'commons'
 
 const _ = commons._
 const formatter = commons.formatter
 const _c = commons._c
+const timeInterval = 2000
 
 let now = _.now()
-
-let simpleData = []
+let trafficData = []
 let vNetworksCount = 2
 
 for (let j = 0; j < vNetworksCount; j++) {
@@ -18,12 +19,12 @@ for (let j = 0; j < vNetworksCount; j++) {
   let trafficType = vnName + '_in'
 
   for (let k = 0; k < 100; k++) {
-    simpleData.push(getDataPoint(now - ((100 - k) * 2000), vnName, trafficType, [(j + 1) * 256000, (j + 1) * 512000]))
+    trafficData.push(getDataPoint(now - ((100 - k) * 2000), vnName, trafficType, [(j + 1) * 256000, (j + 1) * 512000]))
   }
 
   trafficType = vnName + '_out'
   for (let l = 0; l < 100; l++) {
-    simpleData.push(getDataPoint(now - ((100 - l) * 2000), vnName, trafficType, [(j + 1) * 256000, (j + 1) * 512000]))
+    trafficData.push(getDataPoint(now - ((100 - l) * 2000), vnName, trafficType, [(j + 1) * 256000, (j + 1) * 512000]))
   }
 }
 
@@ -39,8 +40,14 @@ function getDataPoint (time, vnName, trafficType, range) {
   }
 }
 
+function getNewDataPoint (x, rPoint) {
+  var newPoint = _.clone(rPoint)
+  newPoint.T = x
+  return newPoint
+}
+
 const dataSrc = {
-  data: simpleData
+  data: trafficData
 }
 
 const lbColorScheme5 = _c.lbColorScheme7
@@ -149,175 +156,172 @@ const tooltipDataConfig = _.reduce(dataProcessed.nodeIds, (config, nodeId) => {
   valueFormatter: formatter.extendedISOTime,
 }])
 
+const container = 'inout-traffic'
+const layoutMeta = {
+  [container]: 'col-md-12'
+}
+
+const chartConfig = {
+  id: container,
+  components: [{
+    id: 'control-panel-id',
+    type: 'ControlPanel',
+    config: {
+      menu: [{
+        id: 'Freeze',
+      }],
+    }
+  }, {
+    type: 'LegendPanel',
+    config: {
+      sourceComponent: 'inout-traffic-compositey',
+      editable: {
+        colorSelector: true,
+        chartSelector: true
+      },
+      placement: 'horizontal',
+      filter: true,
+    }
+  }, {
+    id: 'inout-traffic-compositey',
+    type: 'CompositeYChart',
+    config: {
+      marginInner: 10,
+      marginLeft: 80,
+      marginRight: 80,
+      marginBottom: 40,
+      chartHeight: 400,
+      crosshair: 'crosshair-id',
+      possibleChartTypes: {
+        y1: ['AreaChart', 'LineChart'],
+        y2: ['AreaChart', 'LineChart']
+      },
+      plot: {
+        x: {
+          accessor: 'T',
+          label: 'Time',
+          axis: 'x',
+        },
+        y: mainChartPlotYConfig
+      },
+      axis: {
+        x: {
+          formatter: formatter.extendedISOTime
+        },
+        y1: {
+          position: 'left',
+          label: 'Sum(Bytes)',
+          formatter: formatter.byteFormatter,
+          labelMargin: 15,
+        }
+      }
+    }
+  }, {
+    id: 'inout-traffic-navigation',
+    type: 'Navigation',
+    config: {
+      marginInner: 10,
+      marginLeft: 80,
+      marginRight: 80,
+      marginBottom: 40,
+      chartHeight: 200,
+      selection: [60, 100],
+      plot: {
+        x: {
+          accessor: 'T',
+          labelFormatter: 'Time',
+          axis: 'x',
+        },
+        y: navPlotYConfig
+      },
+      axis: {
+        x: {
+          formatter: formatter.extendedISOTime
+        },
+        y1: {
+          position: 'left',
+          formatter: () => '',
+          labelMargin: 15,
+          ticks: 4,
+        }
+      }
+    }
+  }, {
+    id: 'default-tooltip',
+    type: 'Tooltip',
+    config: {
+      title: 'Usage Details',
+      dataConfig: tooltipDataConfig
+    }
+  }, {
+    id: 'inout-traffic-controlPanel',
+    type: 'ControlPanel',
+    config: {
+      enabled: true,
+      buttons: [
+        {
+          name: 'filter',
+          title: 'Filter',
+          iconClass: 'fa fa-filter',
+          events: {
+            click: 'filterVariables',
+          },
+          panel: {
+            name: 'accessorData',
+            width: '350px',
+          }
+        }
+      ]
+    }
+  }, {
+    id: 'inout-traffic-message',
+    type: 'Message',
+    config: {
+      enabled: true,
+    }
+  }, {
+    id: 'crosshair-id',
+    type: 'Crosshair',
+    config: {
+      tooltip: 'default-tooltip',
+    }
+  }]
+}
+
+let intervalId = -1
 // Create chart view.
 const trafficView = new coCharts.charts.XYChartView()
-trafficView.setConfig({
-  id: 'inout-traffic',
-  components: [
-    {
-      id: 'control-panel-id',
-      type: 'ControlPanel',
-      config: {
-        menu: [{
-          id: 'Freeze',
-        }],
-      }
-    },
-    {
-      type: 'LegendPanel',
-      config: {
-        sourceComponent: 'inout-traffic-compositey',
-        editable: {
-          colorSelector: true,
-          chartSelector: true
-        },
-        placement: 'horizontal',
-        filter: true,
-      }
-    },
-    {
-      id: 'inout-traffic-compositey',
-      type: 'CompositeYChart',
-      config: {
-        marginInner: 10,
-        marginLeft: 80,
-        marginRight: 80,
-        marginBottom: 40,
-        chartHeight: 400,
-        crosshair: 'crosshair-id',
-        possibleChartTypes: {
-          y1: ['AreaChart', 'LineChart'],
-          y2: ['AreaChart', 'LineChart']
-        },
-        plot: {
-          x: {
-            accessor: 'T',
-            label: 'Time',
-            axis: 'x',
-          },
-          y: mainChartPlotYConfig
-        },
-        axis: {
-          x: {
-            formatter: formatter.extendedISOTime
-          },
-          y1: {
-            position: 'left',
-            label: 'Sum(Bytes)',
-            formatter: formatter.byteFormatter,
-            labelMargin: 15,
-          }
-        }
-      }
-    }, {
-      id: 'inout-traffic-navigation',
-      type: 'Navigation',
-      config: {
-        marginInner: 10,
-        marginLeft: 80,
-        marginRight: 80,
-        marginBottom: 40,
-        chartHeight: 200,
-        selection: [60, 100],
-        plot: {
-          x: {
-            accessor: 'T',
-            labelFormatter: 'Time',
-            axis: 'x',
-          },
-          y: navPlotYConfig
-        },
-        axis: {
-          x: {
-            formatter: formatter.extendedISOTime
-          },
-          y1: {
-            position: 'left',
-            formatter: () => '',
-            labelMargin: 15,
-            ticks: 4,
-          }
-        }
-      }
-    }, {
-      id: 'default-tooltip',
-      type: 'Tooltip',
-      config: {
-        title: 'Usage Details',
-        dataConfig: tooltipDataConfig
-      }
-    }, {
-      id: 'inout-traffic-controlPanel',
-      type: 'ControlPanel',
-      config: {
-        enabled: true,
-        buttons: [
-          {
-            name: 'filter',
-            title: 'Filter',
-            iconClass: 'fa fa-filter',
-            events: {
-              click: 'filterVariables',
-            },
-            panel: {
-              name: 'accessorData',
-              width: '350px',
-            }
-          }
-        ]
-      }
-    }, {
-      id: 'inout-traffic-message',
-      type: 'Message',
-      config: {
-        enabled: true,
-      }
-    }, {
-      id: 'crosshair-id',
-      type: 'Crosshair',
-      config: {
-        tooltip: 'default-tooltip',
-      }
-    }]
-})
-trafficView.setData(dataProcessed.data)
-trafficView.renderMessage({
-  componentId: 'inout-traffic-compositey',
-  action: 'once',
-  messages: [{
-    level: '',
-    title: '',
-    message: 'Loading ...',
-  }]
-})
 
-let runner = null
-onVisibilityChange()
-function run () {
-  let currentData = dataProcessed.data
-
-  currentData.splice(0, 1)
-
-  let length = currentData.length
-  let random = _.random(0, (length - 1))
-
-  now += 2000
-  dataProcessed.data = currentData.concat([getNewDataPoint(now, currentData[random])])
-  trafficView.setData(dataProcessed.data)
-}
-
-function getNewDataPoint (x, rPoint) {
-  var newPoint = _.clone(rPoint)
-  newPoint.T = x
-  return newPoint
-}
-
-function onVisibilityChange () {
-  if (document.hidden) {
-    clearInterval(runner)
-  } else {
-    runner = setInterval(run, 2000)
+export default {
+  container: container,
+  layoutMeta: layoutMeta,
+  render: () => {
+    trafficView.setConfig(chartConfig)
+    trafficView.setData(dataProcessed.data)
+    trafficView.renderMessage({
+      componentId: 'inout-traffic-compositey',
+      action: 'once',
+      messages: [{
+        level: '',
+        title: '',
+        message: 'Loading ...',
+      }]
+    })
+    intervalId = setInterval(() => {
+      let currentData = dataProcessed.data
+      currentData.splice(0, 1)
+      let length = currentData.length
+      let random = _.random(0, (length - 1))
+      now += timeInterval
+      dataProcessed.data = currentData.concat([getNewDataPoint(now, currentData[random])])
+      trafficView.setData(dataProcessed.data)
+    }, timeInterval)
+  },
+  remove: () => {
+    trafficView.remove()
+  },
+  stopUpdating: () => {
+    clearInterval(intervalId)
+    intervalId = -1
   }
 }
-
-document.addEventListener('visibilitychange', onVisibilityChange, false)

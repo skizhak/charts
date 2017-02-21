@@ -5,13 +5,18 @@
 define([ // eslint-disable-line no-undef
   'd3', // Example use of older d3 versions.
   'lodash',
-  'contrail-charts',
+  'es6!contrail-charts',
 ], function (d3, _, coCharts) {
-  // Complex example
-  const complexData = []
+  const container = ['requirejs-linebar-chart', 'requirejs-line-chart']
+  const layoutMeta = {
+    'requirejs-linebar-chart': 'col-xs-12 col-md-6',
+    'requirejs-line-chart': 'col-xs-12 col-md-6'
+  }
+
+  const data = []
   _.each(d3.range(100), (i) => {
     const a = Math.random() * 100
-    complexData.push({
+    data.push({
       x: 1475760930000 + 1000000 * i,
       a: a,
       b: a + Math.random() * 10,
@@ -21,10 +26,17 @@ define([ // eslint-disable-line no-undef
     })
   })
 
-  const complexChartView = new coCharts.charts.XYChartView()
-  complexChartView.setData(complexData)
-  complexChartView.setConfig({
-    id: 'requirejs-linebar-chart',
+  // Most basic chart.
+  const lineData = [
+    { x: 1475760930000, y: 0 },
+    { x: 1475761930000, y: 3 },
+    { x: 1475762930000, y: 2 },
+    { x: 1475763930000, y: 4 },
+    { x: 1475764930000, y: 5 }
+  ]
+
+  const chartConfig = {
+    id: container[0],
     components: [{
       type: 'CompositeYChart',
       config: {
@@ -115,21 +127,10 @@ define([ // eslint-disable-line no-undef
         ]
       }
     }]
-  })
-  complexChartView.render()
+  }
 
-  // Most basic chart.
-  const simpleData = [
-    { x: 1475760930000, y: 0 },
-    { x: 1475761930000, y: 3 },
-    { x: 1475762930000, y: 2 },
-    { x: 1475763930000, y: 4 },
-    { x: 1475764930000, y: 5 }
-  ]
-  const simpleChartView = new coCharts.charts.XYChartView()
-  simpleChartView.setData(simpleData)
-  simpleChartView.setConfig({
-    id: 'requirejs-line-chart',
+  const lineChartConfig = {
+    id: container[1],
     components: [{
       type: 'CompositeYChart',
       config: {
@@ -154,6 +155,23 @@ define([ // eslint-disable-line no-undef
         }
       }
     }]
-  })
-  simpleChartView.render()
+  }
+
+  const chartView = new coCharts.charts.XYChartView()
+  const lineChartView = new coCharts.charts.XYChartView()
+
+  return {
+    container: container,
+    layoutMeta: layoutMeta,
+    render: function () {
+      chartView.setConfig(chartConfig)
+      lineChartView.setConfig(lineChartConfig)
+      chartView.setData(data)
+      lineChartView.setData(lineData)
+    },
+    remove: () => {
+      chartView.remove()
+      lineChartView.remove()
+    }
+  }
 })

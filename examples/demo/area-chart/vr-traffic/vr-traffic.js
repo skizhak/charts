@@ -2,12 +2,12 @@
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
 
-const commons = require('commons')
+import commons from 'commons'
+import 'coCharts'
 
 const _ = commons._
 const formatter = commons.formatter
 const _c = commons._c
-
 const lbColorScheme7 = _c.d3ColorScheme20
 
 function dataProcesser (rawData) {
@@ -57,7 +57,7 @@ function generateColorPalette (nodeIds, nodeAttrs, colorSchema, offset1, offset2
   }, {})
 }
 
-const dataSrc = require('./2vr-traffic.json')
+import dataSrc from './2vr-traffic.json'
 const dataProcessed = dataProcesser(dataSrc.data)
 
 const colorPalette = generateColorPalette(
@@ -124,10 +124,13 @@ const tooltipDataConfig = _.reduce(dataProcessed.nodeIds, (config, nodeId) => {
   valueFormatter: formatter.extendedISOTime,
 }])
 
-// Create chart view.
-const trafficView = new coCharts.charts.XYChartView()
-trafficView.setConfig({
-  id: 'vr-traffic',
+const container = 'vr-traffic'
+const layoutMeta = {
+  [container]: 'col-md-12'
+}
+
+const chartConfig = {
+  id: container,
   components: [{
     type: 'LegendPanel',
     config: {
@@ -256,14 +259,28 @@ trafficView.setConfig({
       tooltip: 'default-tooltip',
     }
   }]
-})
-trafficView.setData(dataProcessed.data)
-trafficView.renderMessage({
-  componentId: 'vr-traffic-compositey',
-  action: 'once',
-  messages: [{
-    level: '',
-    title: '',
-    message: 'Loading ...',
-  }]
-})
+}
+
+// Create chart view.
+const trafficView = new coCharts.charts.XYChartView()
+
+export default {
+  container: container,
+  layoutMeta: layoutMeta,
+  render: () => {
+    trafficView.setConfig(chartConfig)
+    trafficView.setData(dataProcessed.data)
+    trafficView.renderMessage({
+      componentId: 'vr-traffic-compositey',
+      action: 'once',
+      messages: [{
+        level: '',
+        title: '',
+        message: 'Loading ...',
+      }]
+    })
+  },
+  remove: () => {
+    trafficView.remove()
+  }
+}

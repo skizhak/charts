@@ -2,11 +2,12 @@
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
 
-const commons = require('commons')
+import 'coCharts'
+import commons from 'commons'
+import * as portDistribution from './port-distribution.json'
 
 const formatter = commons.formatter
 const _c = commons._c
-
 const colorScheme = _c.d3ColorScheme10
 const bubbleShapes = _c.bubbleShapes
 
@@ -37,12 +38,15 @@ function dataProcesser (data) {
   )
 }
 
-let dataSrc = require('./port-distribution.json')
+let dataSrc = dataProcesser(portDistribution)
 
-dataSrc = dataProcesser(dataSrc)
+const container = 'pd-bubble-chart'
+const layoutMeta = {
+  [container]: 'col-md-12'
+}
 
 const chartConfig = {
-  id: 'pd-bubble-chart',
+  id: container,
   components: [
     {
       type: 'LegendPanel',
@@ -191,5 +195,15 @@ const chartConfig = {
 }
 
 const chartView = new coCharts.charts.XYChartView()
-chartView.setConfig(chartConfig)
-chartView.setData(dataSrc)
+
+export default {
+  container: container,
+  layoutMeta: layoutMeta,
+  render: () => {
+    chartView.setConfig(chartConfig)
+    chartView.setData(dataSrc)
+  },
+  remove: () => {
+    chartView.remove()
+  }
+}

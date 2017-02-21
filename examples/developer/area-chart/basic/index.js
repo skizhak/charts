@@ -1,9 +1,12 @@
 /*
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
+import 'coCharts'
+import formatter from 'formatter'
+import fixture from 'fixture'
 
 const length = 10
-const data = require('fixture')({
+const data = fixture({
   length: length,
   data: {
     t: {linear: true, range: [1475760930000, 1475800930000]},
@@ -13,12 +16,15 @@ const data = require('fixture')({
   },
 })
 data[5].a = -10
-const formatter = require('formatter')
 const colorScheme = d3.schemeCategory10
 
-const chart = new coCharts.charts.XYChartView()
-chart.setConfig({
-  id: 'area-chart',
+const container = 'area-chart'
+const layoutMeta = {
+  [container]: 'col-md-12'
+}
+
+const chartConfig = {
+  id: container,
   title: 'Area Chart',
   components: [{
     type: 'LegendPanel',
@@ -105,5 +111,18 @@ chart.setConfig({
       ]
     },
   }]
-})
-chart.setData(data)
+}
+
+const chartView = new coCharts.charts.XYChartView()
+
+export default {
+  container: container,
+  layoutMeta: layoutMeta,
+  render: () => {
+    chartView.setConfig(chartConfig)
+    chartView.setData(data)
+  },
+  remove: () => {
+    chartView.remove()
+  }
+}

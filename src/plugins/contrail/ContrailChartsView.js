@@ -136,6 +136,17 @@ export default class ContrailChartsView extends ContrailView {
   hide () {
     this.$el.hide()
   }
+
+  /**
+   * Stop listening to config and model. Remove the view from the dom.
+   */
+  remove () {
+    if (this.config) this.stopListening(this.config)
+    if (this.model) this.stopListening(this.model)
+    this.params = {}
+    super.remove()
+  }
+
   /**
    * In frozen state View ignores Model Data change
    * @param {Boolean} isFrozen change state to

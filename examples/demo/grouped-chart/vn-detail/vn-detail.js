@@ -2,12 +2,12 @@
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
 
-const commons = require('commons')
+import 'coCharts'
+import commons from 'commons'
 
 const _ = commons._
 const formatter = commons.formatter
 const _c = commons._c
-
 const data = commons.dg.projectVNTraffic({vnCount: 4, flowCount: 50})
 const colorScheme = _c.d3ColorScheme20
 const bubbleShapes = _c.bubbleShapes
@@ -113,9 +113,17 @@ const trafficPlotAxisConfig = {
   }
 }
 
+const groupedChartsWrapper = 'grouped-parent-chart'
+const container = ['vn-pie', 'vn-traffic', 'vn-ports']
+const layoutMeta = {
+  [container[0]]: 'render-order-2 col-xs-12 col-md-6',
+  [container[1]]: 'render-order-1 col-xs-12',
+  [container[2]]: 'render-order-3 col-xs-12 col-md-6'
+}
+
 const chartConfigs = [
   {
-    id: 'vn-pie',
+    id: container[0],
     type: 'RadialChart',
     dataProvider: {
       config: {
@@ -166,7 +174,7 @@ const chartConfigs = [
     }]
   },
   {
-    id: 'vn-traffic',
+    id: container[1],
     type: 'XYChart',
     dataProvider: {
       config: {
@@ -250,7 +258,7 @@ const chartConfigs = [
       }]
   },
   {
-    id: 'vn-ports',
+    id: container[2],
     type: 'XYChart',
     dataProvider: {
       config: {
@@ -355,17 +363,28 @@ const chartConfigs = [
   }
 ]
 
-const chartView = new coCharts.charts.MultiChartView()
-
-chartView.setConfig({
-  id: 'grouped-parent-chart',
+const chartConfig = {
+  id: groupedChartsWrapper,
   type: 'MultiChart',
   components: [],
   // Child charts.
   charts: chartConfigs,
-})
+}
 
-chartView.setData(data, {}, 'vn-pie')
-chartView.setData(data, {}, 'vn-ports')
-chartView.setData(data, {}, 'vn-traffic')
-chartView.render()
+const chartView = new coCharts.charts.MultiChartView()
+
+export default {
+  groupedChartsWrapper: groupedChartsWrapper,
+  container: container,
+  layoutMeta: layoutMeta,
+  render: () => {
+    chartView.setConfig(chartConfig)
+    _.forEach(container, (container) => {
+      chartView.setData(data, {}, container)
+    })
+    // chartView.render()
+  },
+  remove: () => {
+    chartView.remove()
+  }
+}
