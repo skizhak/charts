@@ -33,6 +33,9 @@ export default class RadialDendrogramConfigModel extends ContrailChartsConfigMod
       // Arc width
       arcWidth: 10,
 
+      // Show arc labels
+      showArcLabels: true,
+
       // Estimated average letter width
       arcLabelLetterWidth: 5,
 

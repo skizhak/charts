@@ -437,7 +437,7 @@ export default class RadialDendrogramView extends ContrailChartsView {
         .attr('xlink:href', (d) => '#' + d.data.namePath.join('-'))
         // .attr('startOffset', '50%')
         .merge(svgArcLabels).transition().ease(this.config.get('ease')).duration(this.params.duration)
-        .text((d) => d.labelFits ? d.label : '')
+        .text((d) => (this.params.showArcLabels && d.labelFits) ? d.label : '')
       svgArcLabels.exit().remove()
 
       // Arcs for parent nodes.
@@ -458,7 +458,6 @@ export default class RadialDendrogramView extends ContrailChartsView {
         .attr('d', arcEnter)
         .merge(svgArcs).transition().ease(this.config.get('ease')).duration(this.params.duration)
         .style('fill', (d) => this.config.getColor([], this.config.get('levels')[d.depth-1]))
-        .attr('data-label', (d) => d.label)
         .attr('d', arc)
       svgArcs.exit().transition().ease(this.config.get('ease')).duration(this.params.duration)
         .attr('d', arcEnter)
