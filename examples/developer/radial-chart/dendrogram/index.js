@@ -8,18 +8,32 @@ const dendrogamData = require('./data.json')
 const chartConfig = {
   id: 'radial-dendrogram-chart',
   components: [{
+    type: 'LegendPanel',
+    config: {
+      sourceComponent: 'dendrogram-chart-id',
+      editable: {
+        colorSelector: true,
+        chartSelector: false
+      },
+      placement: 'horizontal',
+      filter: true
+    }
+  }, {
     id: 'dendrogram-chart-id',
     type: 'RadialDendrogram',
     config: {
-      // radius: 100,
       parentSeparation: 1.0,
       parentSeparationShrinkFactor: 0.05,
       parentSeparationDepthThreshold: 4,
       colorScale: d3.scaleOrdinal().range(_c.radialColorScheme10), // eslint-disable-line no-undef
       drawLinks: false,
       drawRibbons: true,
-      biDirectional: true,
       arcWidth: 15,
+      arcLabelLetterWidth: 5,
+      showArcLabels: true,
+      arcLabelXOffset: 2,
+      arcLabelYOffset: 25,
+      levels: [ { level: 0, label: 'Virtual Network' }, { level: 1, label: 'IP' }, { level: 2, label: 'Port' } ],
       hierarchyConfig: {
         parse: function (d) {
           const srcHierarchy = [d.sourcevn, d.sourceip, d.sport]
@@ -55,7 +69,7 @@ const chartConfig = {
         })
         return content
       }
-    },
+    }
   }
   ]
 }
