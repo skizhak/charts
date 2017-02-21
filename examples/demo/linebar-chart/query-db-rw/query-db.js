@@ -22,7 +22,7 @@ function getDataPoint (x) {
 let data = []
 let now = _.now()
 
-for (let i = 0; i < 100; i++) {
+for (let i = 1; i <= 100; i++) {
   data.push(getDataPoint(now - ((100 - i) * 1000)))
 }
 

@@ -24,7 +24,7 @@ export default class XYChartSubView extends ContrailChartsView {
 
   get width () {
     const delta = this.config.get('chartWidthDelta') || 0
-    return (this.config.chartWidth || this._container.getBoundingClientRect().width) + delta
+    return (this.config.get('chartWidth') || this._container.getBoundingClientRect().width) + delta
   }
 
   get height () {
