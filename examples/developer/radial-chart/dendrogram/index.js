@@ -8,6 +8,17 @@ const dendrogamData = require('./data.json')
 const chartConfig = {
   id: 'radial-dendrogram-chart',
   components: [{
+    type: 'LegendPanel',
+    config: {
+      sourceComponent: 'dendrogram-chart-id',
+      editable: {
+        colorSelector: true,
+        chartSelector: false
+      },
+      placement: 'horizontal',
+      filter: true
+    }
+  }, {
     id: 'dendrogram-chart-id',
     type: 'RadialDendrogram',
     config: {
@@ -41,17 +52,6 @@ const chartConfig = {
         }
       },
       tooltip: 'tooltip-id'
-    }
-  }, {
-    type: 'LegendPanel',
-    config: {
-      sourceComponent: 'dendrogram-chart-id',
-      editable: {
-        colorSelector: true,
-        chartSelector: false
-      },
-      placement: 'horizontal',
-      filter: true
     }
   }, {
     id: 'tooltip-id',
