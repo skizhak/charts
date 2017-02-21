@@ -2,14 +2,12 @@
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
 
-const commons = require('commons')
+import 'coCharts'
+import commons from 'commons'
 
 const _ = commons._
 const formatter = commons.formatter
 const _c = commons._c
-
-const coCharts = require('coCharts')
-
 const bubbleShapes = _c.bubbleShapes
 const colorScheme = _c.bubbleColorScheme6
 
@@ -187,7 +185,7 @@ const chartConfig = {
 
 const chartView = new coCharts.charts.XYChartView()
 
-module.exports = {
+export default {
   container: container,
   layoutMeta: layoutMeta,
   render: () => {

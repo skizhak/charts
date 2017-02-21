@@ -2,12 +2,13 @@
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
 
-const formatter = require('formatter')
-const _c = require('constants')
-const dg = require('data-generator')
-const fixture = require('fixture')
+import _ from 'lodash'
+import formatter from 'formatter'
+import _c from 'constants'
+import dg from 'data-generator'
+import fixture from 'fixture'
 
-module.exports = {
+export default {
   _: _,
   formatter: formatter,
   _c: _c,

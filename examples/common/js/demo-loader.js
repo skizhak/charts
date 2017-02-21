@@ -4,24 +4,23 @@
 
 /* global $ */
 
-require('../sass/contrail-charts-examples.scss')
-const _ = require('lodash')
+import '../sass/contrail-charts-examples.scss'
+import _ from 'lodash'
+import vrTraffic from '../../demo/area-chart/vr-traffic/vr-traffic.js'
+import inoutTrafficChart from '../../demo/area-chart/inout-traffic/inout-traffic.js'
+import nodeCPUMemChart from '../../demo/bubble-chart/nodes/nodes.js'
+import portDistributionChart from '../../demo/bubble-chart/port-distribution/port-distribution.js'
+import vRoutersChart from '../../demo/bubble-chart/vrouter-vmi/vrouter-vmi.js'
+import queryDBChart from '../../demo/linebar-chart/query-db-rw/query-db.js'
+import cpuMemChart from '../../demo/linebar-chart/cpu-mem/cpu-mem.js'
+import vRouterTrafficChart from '../../demo/radial-chart/vr-vn-traffic/vr-vn-traffic.js'
+import diskUsageChart from '../../demo/radial-chart/disk-usage/disk.js'
+import poolUsageChart from '../../demo/radial-chart/pool-usage/pools.js'
+import vnDetailChart from '../../demo/grouped-chart/vn-detail/vn-detail.js'
+import computeNodeChart from '../../demo/grouped-chart/compute-node/cnode.js'
 
-const inoutTrafficChart = require('../../demo/area-chart/inout-traffic/inout-traffic.js')
-const vrTraffic = require('../../demo/area-chart/vr-traffic/vr-traffic.js')
-const nodeCPUMemChart = require('../../demo/bubble-chart/nodes/nodes.js')
-const portDistributionChart = require('../../demo/bubble-chart/port-distribution/port-distribution.js')
-const vRoutersChart = require('../../demo/bubble-chart/vrouter-vmi/vrouter-vmi.js')
-const queryDBChart = require('../../demo/linebar-chart/query-db-rw/query-db.js')
-const cpuMemChart = require('../../demo/linebar-chart/cpu-mem/cpu-mem.js')
-const vRouterTrafficChart = require('../../demo/radial-chart/vr-vn-traffic/vr-vn-traffic.js')
-const diskUsageChart = require('../../demo/radial-chart/disk-usage/disk.js')
-const poolUsageChart = require('../../demo/radial-chart/pool-usage/pools.js')
-const vnDetailChart = require('../../demo/grouped-chart/vn-detail/vn-detail.js')
-const computeNodeChart = require('../../demo/grouped-chart/compute-node/cnode.js')
-
-const groupedChartTemplate = require('../template/multiple.tmpl')
-const exampleDescTemplate = require('../template/exampleDesc.tmpl')
+import groupedChartTemplate from '../template/multiple.tmpl'
+import exampleDescTemplate from '../template/exampleDesc.tmpl'
 
 const templates = {
   grouped: groupedChartTemplate

@@ -2,14 +2,12 @@
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
 
-const commons = require('commons')
+import commons from 'commons'
+import 'coCharts'
 
 const _ = commons._
 const formatter = commons.formatter
 const _c = commons._c
-
-const coCharts = require('coCharts')
-
 const lbColorScheme7 = _c.d3ColorScheme20
 
 function dataProcesser (rawData) {
@@ -59,7 +57,7 @@ function generateColorPalette (nodeIds, nodeAttrs, colorSchema, offset1, offset2
   }, {})
 }
 
-const dataSrc = require('./2vr-traffic.json')
+import dataSrc from './2vr-traffic.json'
 const dataProcessed = dataProcesser(dataSrc.data)
 
 const colorPalette = generateColorPalette(
@@ -266,7 +264,7 @@ const chartConfig = {
 // Create chart view.
 const trafficView = new coCharts.charts.XYChartView()
 
-module.exports = {
+export default {
   container: container,
   layoutMeta: layoutMeta,
   render: () => {

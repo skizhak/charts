@@ -2,9 +2,8 @@
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
 
-const coCharts = require('coCharts')
-
-const commons = require('commons')
+import 'coCharts'
+import commons from 'commons'
 
 const _ = commons._
 const formatter = commons.formatter
@@ -12,8 +11,7 @@ const _c = commons._c
 const timeInterval = 2000
 
 let now = _.now()
-
-let simpleData = []
+let trafficData = []
 let vNetworksCount = 2
 
 for (let j = 0; j < vNetworksCount; j++) {
@@ -21,12 +19,12 @@ for (let j = 0; j < vNetworksCount; j++) {
   let trafficType = vnName + '_in'
 
   for (let k = 0; k < 100; k++) {
-    simpleData.push(getDataPoint(now - ((100 - k) * 2000), vnName, trafficType, [(j + 1) * 256000, (j + 1) * 512000]))
+    trafficData.push(getDataPoint(now - ((100 - k) * 2000), vnName, trafficType, [(j + 1) * 256000, (j + 1) * 512000]))
   }
 
   trafficType = vnName + '_out'
   for (let l = 0; l < 100; l++) {
-    simpleData.push(getDataPoint(now - ((100 - l) * 2000), vnName, trafficType, [(j + 1) * 256000, (j + 1) * 512000]))
+    trafficData.push(getDataPoint(now - ((100 - l) * 2000), vnName, trafficType, [(j + 1) * 256000, (j + 1) * 512000]))
   }
 }
 
@@ -49,7 +47,7 @@ function getNewDataPoint (x, rPoint) {
 }
 
 const dataSrc = {
-  data: simpleData
+  data: trafficData
 }
 
 const lbColorScheme5 = _c.lbColorScheme7
@@ -294,7 +292,7 @@ let intervalId = -1
 // Create chart view.
 const trafficView = new coCharts.charts.XYChartView()
 
-module.exports = {
+export default {
   container: container,
   layoutMeta: layoutMeta,
   render: () => {

@@ -2,8 +2,9 @@
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
 
-const d3Format = require('d3-format')
-const d3TimeFormat = require('d3-time-format')
+import * as d3Format from 'd3-format'
+import * as d3TimeFormat from 'd3-time-format'
+
 const extendedISOTime = d3TimeFormat.timeFormat('%H:%M:%S')
 const toInteger = d3Format.format('.0f')
 const toFixed1 = d3Format.format('.1f')
@@ -34,7 +35,7 @@ function toFixedPercentage1 (number) {
   return number.toFixed(1) + '%'
 }
 
-module.exports = {
+export default {
   extendedISOTime,
   toInteger,
   toFixed1,

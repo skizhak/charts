@@ -2,22 +2,21 @@
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
 
+import 'coCharts'
+import commons from 'commons'
+
+const formatter = commons.formatter
+const _c = commons._c
+const radialColorScheme6 = _c.radialColorScheme6
+
 const osdStatusData = [
   {label: 'Disks Up', value: 59},
   {label: 'Disks Down', value: 4}
 ]
-
 const osdClusterData = [
   {label: 'Disks In', value: 55},
   {label: 'Disks Out', value: 6}
 ]
-
-const commons = require('commons')
-
-const formatter = commons.formatter
-const _c = commons._c
-
-const radialColorScheme6 = _c.radialColorScheme6
 
 function getLabel (serie) {
   return serie.label
@@ -75,7 +74,6 @@ const diskStatusConfig = {
     },
   }]
 }
-
 const diskClusterConfig = {
   id: container[1],
   type: 'RadialChart',
@@ -121,10 +119,9 @@ const diskClusterConfig = {
 }
 
 const diskStatusChart = new coCharts.charts.RadialChartView()
-
 const diskClusterChart = new coCharts.charts.RadialChartView()
 
-module.exports = {
+export default {
   container: container,
   layoutMeta: layoutMeta,
   render: () => {

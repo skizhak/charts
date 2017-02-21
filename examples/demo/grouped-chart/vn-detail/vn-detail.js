@@ -2,12 +2,12 @@
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
 
-const commons = require('commons')
+import 'coCharts'
+import commons from 'commons'
 
 const _ = commons._
 const formatter = commons.formatter
 const _c = commons._c
-
 const data = commons.dg.projectVNTraffic({vnCount: 4, flowCount: 50})
 const colorScheme = _c.d3ColorScheme20
 const bubbleShapes = _c.bubbleShapes
@@ -373,7 +373,7 @@ const chartConfig = {
 
 const chartView = new coCharts.charts.MultiChartView()
 
-module.exports = {
+export default {
   groupedChartsWrapper: groupedChartsWrapper,
   container: container,
   layoutMeta: layoutMeta,

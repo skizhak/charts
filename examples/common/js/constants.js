@@ -95,7 +95,7 @@ const radialColorScheme10 = [
   '#c62828',
 ]
 
-module.exports = {
+export default {
   bubbleShapes,
   bubbleColorScheme6,
   bubbleColorScheme13,

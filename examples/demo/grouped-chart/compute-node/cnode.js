@@ -2,8 +2,8 @@
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
 
-const coCharts = require('coCharts')
-const commons = require('commons')
+import 'coCharts'
+import commons from 'commons'
 
 const _ = commons._
 const formatter = commons.formatter
@@ -559,7 +559,7 @@ const chartConfig = {
 let intervalId = -1
 const chartView = new coCharts.charts.MultiChartView()
 
-module.exports = {
+export default {
   groupedChartsWrapper: groupedChartsWrapper,
   container: container,
   layoutMeta: layoutMeta,

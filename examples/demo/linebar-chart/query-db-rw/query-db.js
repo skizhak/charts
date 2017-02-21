@@ -2,13 +2,12 @@
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
 
-const commons = require('commons')
+import 'coCharts'
+import commons from 'commons'
 
 const _ = commons._
 const formatter = commons.formatter
 const _c = commons._c
-
-const coCharts = require('coCharts')
 
 function getDataPoint (x) {
   const a = _.random(3, 100) * 100
@@ -209,7 +208,7 @@ const chartConfig = {
 let intervalId = -1
 const queryChart = new coCharts.charts.XYChartView()
 
-module.exports = {
+export default {
   container: container,
   layoutMeta: layoutMeta,
   render: () => {
