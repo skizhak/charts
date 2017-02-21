@@ -2,7 +2,8 @@
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
 
-const commons = require('commons')
+import 'coCharts'
+import commons from 'commons'
 
 const formatter = commons.formatter
 const data = commons.fixture()
@@ -168,7 +169,7 @@ const chartConfig2 = {
 const chart1 = new coCharts.charts.XYChartView()
 const chart2 = new coCharts.charts.XYChartView()
 
-module.exports = {
+export default {
   container: container,
   layoutMeta: layoutMeta,
   render: () => {

@@ -3,9 +3,10 @@
  */
 /* global d3 */
 
-const commons = require('commons')
-const colorScheme = commons._c.d3ColorScheme10
+import 'coCharts'
+import commons from 'commons'
 
+const colorScheme = commons._c.d3ColorScheme10
 const length = 20
 const data = commons.fixture({
   length: 20,
@@ -156,7 +157,7 @@ const barChartConfig = {
 const barChart = new coCharts.charts.XYChartView()
 const areaChart = new coCharts.charts.XYChartView()
 
-module.exports = {
+export default {
   container: container,
   layoutMeta: layoutMeta,
   render: () => {

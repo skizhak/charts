@@ -2,10 +2,10 @@
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
 
+import 'coCharts'
 import commons from 'commons'
 
 const formatter = commons.formatter
-
 const length = 100
 const data = commons.fixture({
   length: length,
@@ -221,7 +221,7 @@ const chartConfig = {
 
 const chartView = new coCharts.charts.XYChartView()
 
-module.exports = {
+export default {
   container: container,
   layoutMeta: layoutMeta,
   render: () => {

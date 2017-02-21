@@ -2,9 +2,10 @@
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
 
-const commons = require('commons')
-const _c = commons._c
+import 'coCharts'
+import commons from 'commons'
 
+const _c = commons._c
 const colorScheme = _c.lbColorScheme7
 const simpleData = []
 
@@ -141,7 +142,7 @@ const chartConfig = {
 
 const chartView = new coCharts.charts.MultiChartView()
 
-module.exports = {
+export default {
   groupedChartsWrapper: groupedChartsWrapper,
   container: container,
   layoutMeta: layoutMeta,

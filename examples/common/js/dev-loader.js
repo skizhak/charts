@@ -4,27 +4,27 @@
 
 /* global $ */
 
-require('../sass/contrail-charts-examples.scss')
-const _ = require('lodash')
+import '../sass/contrail-charts-examples.scss'
+import  _ from 'lodash'
 
-const legend = require('../../developer/linebar-chart/legend')
-const controls = require('../../developer/linebar-chart/control-panel')
-const timeline = require('../../developer/linebar-chart/timeline')
-const tooltips = require('../../developer/linebar-chart/tooltip')
-const stackedBar = require('../../developer/linebar-chart/stacked-bar-chart')
-const groupedBar = require('../../developer/linebar-chart/grouped-bar-chart')
-const navigation = require('../../developer/linebar-chart/navigation')
-const liveData = require('../../developer/linebar-chart/live')
+import legend from '../../developer/linebar-chart/legend'
+import controls from '../../developer/linebar-chart/control-panel'
+import timeline from '../../developer/linebar-chart/timeline'
+import tooltips from '../../developer/linebar-chart/tooltip'
+import stackedBar from '../../developer/linebar-chart/stacked-bar-chart'
+import groupedBar from '../../developer/linebar-chart/grouped-bar-chart'
+import navigation from '../../developer/linebar-chart/navigation'
+import liveData from '../../developer/linebar-chart/live'
 
-const shapes = require('../../developer/bubble-chart/multiple-shapes')
+import shapes from '../../developer/bubble-chart/multiple-shapes'
 
-const pieChart = require('../../developer/radial-chart/pie')
-const dendrogramChart = require('../../developer/radial-chart/dendrogram')
-const areaBasic = require('../../developer/area-chart/basic')
-const twoBarNav = require('../../developer/grouped-chart/linebar-linebar-nav/index.js')
-const twoLineBarOnePieNav = require('../../developer/grouped-chart/linebar-pie-nav/index.js')
+import pieChart from '../../developer/radial-chart/pie'
+import dendrogramChart from '../../developer/radial-chart/dendrogram'
+import areaBasic from '../../developer/area-chart/basic'
+import twoBarNav from '../../developer/grouped-chart/linebar-linebar-nav/index.js'
+import twoLineBarOnePieNav from '../../developer/grouped-chart/linebar-pie-nav/index.js'
 
-const groupedChartTemplate = require('../template/multiple.tmpl')
+import groupedChartTemplate from '../template/multiple.tmpl'
 
 const templates = {
   grouped: groupedChartTemplate

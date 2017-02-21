@@ -2,7 +2,8 @@
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
 
-const commons = require('commons')
+import 'coCharts'
+import commons from 'commons'
 
 const _ = commons._
 const formatter = commons.formatter
@@ -11,9 +12,9 @@ const _c = commons._c
 const now = _.now()
 const colorScheme = _c.d3ColorScheme20
 
-const simpleData = []
+const dataSrc = []
 for (let i = 0; i < 100; i++) {
-  simpleData.push({
+  dataSrc.push({
     x: now - (i * 300000),
     a: _.random(10, 200),
     b: _.random(10, 300),
@@ -232,7 +233,7 @@ const chartConfig = {
 
 const chartView = new coCharts.charts.MultiChartView()
 
-module.exports = {
+export default {
   groupedChartsWrapper: groupedChartsWrapper,
   container: container,
   layoutMeta: layoutMeta,
@@ -240,8 +241,8 @@ module.exports = {
     chartView.setConfig(chartConfig)
     // chartView.setData(tsData, {}, container[0])
     // chartView.setData(tsData, {}, container[1])
-    chartView.setData(simpleData, {}, container[2])
-    chartView.setData(simpleData, {}, container[3])
+    chartView.setData(dataSrc, {}, container[2])
+    chartView.setData(dataSrc, {}, container[3])
     // chartView.render()
   },
   remove: () => {

@@ -1,9 +1,12 @@
 /*
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
+import 'coCharts'
+import formatter from 'formatter'
+import fixture from 'fixture'
 
 const length = 10
-const data = require('fixture')({
+const data = fixture({
   length: length,
   data: {
     t: {linear: true, range: [1475760930000, 1475800930000]},
@@ -13,7 +16,6 @@ const data = require('fixture')({
   },
 })
 data[5].a = -10
-const formatter = require('formatter')
 const colorScheme = d3.schemeCategory10
 
 const container = 'area-chart'
@@ -113,7 +115,7 @@ const chartConfig = {
 
 const chartView = new coCharts.charts.XYChartView()
 
-module.exports = {
+export default {
   container: container,
   layoutMeta: layoutMeta,
   render: () => {

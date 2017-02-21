@@ -2,9 +2,10 @@
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
 
-const commons = require('commons')
-const formatter = commons.formatter
+import 'coCharts'
+import commons from 'commons'
 
+const formatter = commons.formatter
 const pieData = [
     { label: 'Process 1', value: 2704659 },
     { label: 'Process 2', value: 2159981 },
@@ -77,7 +78,7 @@ const chartConfig = {
 
 const chartView = new coCharts.charts.RadialChartView()
 
-module.exports = {
+export default {
   container: container,
   layoutMeta: layoutMeta,
   render: () => {
