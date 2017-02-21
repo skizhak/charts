@@ -34,13 +34,6 @@ export default class XYChartView extends ContrailChartsView {
     _.each(Actions, action => this._actionman.set(action, this))
   }
   /**
-   * In frozen state chart ignores Model Data change
-   * @param {Boolean} isFrozen change state to
-   */
-  set frozen (isFrozen) {
-    this._frozen = !!isFrozen
-  }
-  /**
   * Provide data for this chart as a simple array of objects.
   * Additional ContrailChartsDataModel configuration may be provided.
   * Setting data to a rendered chart will trigger a DataModel change event that will cause the chart to be re-rendered.
