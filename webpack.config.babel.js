@@ -45,18 +45,21 @@ export default (env = defaultEnv) => {
         keep_fnames: true,
       },
       sourceMap: true,
-      include: fileName + '.js',
+      include: /\.min\.js$/,
     }))
   }
   // Let's put css under css directory.
   plugins.push(new ExtractTextPlugin(fileName + '.css'))
 
   return {
-    entry: absolute('src/index.js'),
+    entry: {
+      [fileName]: absolute('src/index.js'),
+      [`${fileName}.min`]: absolute('src/index.js')
+    },
     devtool: 'source-map',
     output: {
       path: absolute('build'),
-      filename: fileName + '.js',
+      filename: '[name].js',
       library: libraryName,
       libraryTarget: 'umd',
       umdNamedDefine: false,
