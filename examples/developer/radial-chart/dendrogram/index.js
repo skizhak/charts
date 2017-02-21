@@ -18,8 +18,10 @@ const chartConfig = {
       colorScale: d3.scaleOrdinal().range(_c.radialColorScheme10), // eslint-disable-line no-undef
       drawLinks: false,
       drawRibbons: true,
-      biDirectional: true,
       arcWidth: 15,
+      arcLabelLetterWidth: 4,
+      arcLabelXOffset: 2,
+      arcLabelYOffset: 25,
       hierarchyConfig: {
         parse: function (d) {
           const srcHierarchy = [d.sourcevn, d.sourceip, d.sport]

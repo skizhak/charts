@@ -198,6 +198,9 @@ export default class RadialDendrogramView extends ContrailChartsView {
     // console.log('circles: ', this.circles)
   }
 
+  /**
+  * Positions the arcs.
+  */
   _prepareAngleRanges () {
     const depthValueOffset = [0]
     this.hierarchyRootNode.angleRange = [0, 360]
@@ -241,6 +244,14 @@ export default class RadialDendrogramView extends ContrailChartsView {
     })
   }
 
+  /**
+  * Prepares the connections. A connection consists of a path:
+  * - starting from the leaf of the outer edge of the ribbon
+  * - moving to just before the root
+  * - leaf of the outer edge of the target arc
+  * - inner edge to just before the root
+  * - inner edge of the source leaf arc.
+  */
   _prepareRibbons () {
     this.ribbons = []
     _.each(this.links, (link) => {
@@ -249,6 +260,7 @@ export default class RadialDendrogramView extends ContrailChartsView {
       const srcAncestors = src.ancestors()
       const dstAncestors = dst.ancestors()
       const outerPoints = []
+      // Outer edge from source leaf to root.
       _.each(srcAncestors, (n, i) => {
         if (n.parent && n.children) {
           let valueStart = n.valueRange[0]
@@ -270,6 +282,7 @@ export default class RadialDendrogramView extends ContrailChartsView {
           outerPoints.push([n.angleScale(valueStart), n.y])
         }
       })
+      // Outer edge from root to target leaf.
       let i = 0
       for (i = dstAncestors.length - 1; i >= 0; i--) {
         let n = dstAncestors[i]
@@ -295,6 +308,7 @@ export default class RadialDendrogramView extends ContrailChartsView {
           outerPoints.push([n.angleScale(valueStart), n.y])
         }
       }
+      // Inner edge from target leaf to root.
       const innerPoints = []
       _.each(dstAncestors, (n, i) => {
         if (n.parent && n.children) {
@@ -317,6 +331,7 @@ export default class RadialDendrogramView extends ContrailChartsView {
           innerPoints.push([n.angleScale(valueStart), n.y])
         }
       })
+      // Inner edge from root to source leaf.
       for (i = srcAncestors.length - 1; i >= 0; i--) {
         let n = srcAncestors[i]
         if (n.parent && n.children) {
@@ -353,6 +368,10 @@ export default class RadialDendrogramView extends ContrailChartsView {
       if (!n.parent || !n.children) {
         return
       }
+      // Estimate arc length and wheather the label will fit (default letter width is assumed to be 5px).
+      n.arcLength = 6 * (n.y - this.params.arcLabelYOffset) * (n.angleRange[1] - n.angleRange[0]) / 360
+      n.label = '' + n.data.namePath[n.data.namePath.length - 1]
+      n.labelFits = this.params.arcLabelLetterWidth * n.label.length < n.arcLength
       this.arcs.push(n)
     })
   }
@@ -411,14 +430,14 @@ export default class RadialDendrogramView extends ContrailChartsView {
       // Arc labels
       const svgArcLabels = this.d3.selectAll('.arc-label').data(this.arcs)
       svgArcLabels.enter().append('text')
-        .attr('x', 2)
-        .attr('dy', 1.75 * this.params.arcWidth)
+        .attr('x', this.params.arcLabelXOffset)
+        .attr('dy', this.params.arcLabelYOffset)
         .append('textPath')
         .attr('class', 'arc-label')
         .attr('xlink:href', (d) => '#' + d.data.namePath.join('-'))
         // .attr('startOffset', '50%')
         .merge(svgArcLabels).transition().ease(this.config.get('ease')).duration(this.params.duration)
-        .text((d) => d.depth == 1 ? (d.data.namePath[d.data.namePath.length - 1]) : '')
+        .text((d) => d.labelFits ? d.label : '')
       svgArcLabels.exit().remove()
 
       // Arcs for parent nodes.
@@ -439,6 +458,7 @@ export default class RadialDendrogramView extends ContrailChartsView {
         .attr('d', arcEnter)
         .merge(svgArcs).transition().ease(this.config.get('ease')).duration(this.params.duration)
         .style('fill', (d) => this.config.get('colorScale')(d.depth))
+        .attr('data-label', (d) => d.label)
         .attr('d', arc)
       svgArcs.exit().transition().ease(this.config.get('ease')).duration(this.params.duration)
         .attr('d', arcEnter)

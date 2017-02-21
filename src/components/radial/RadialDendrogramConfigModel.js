@@ -27,6 +27,15 @@ export default class RadialDendrogramConfigModel extends ContrailChartsConfigMod
       // Arc width
       arcWidth: 10,
 
+      // Estimated average letter width
+      arcLabelLetterWidth: 5,
+
+      // The X offset (in pixels) of the arc label counted from the beggining of the arc.
+      arcLabelXOffset: 2,
+
+      // The Y offset (in pixels) of the arc label counted from the outer edge of the arc (positive values offset the label into the center of the circle).
+      arcLabelYOffset: 18,
+
       // Initial drill down level
       drillDownLevel: 1,
 
