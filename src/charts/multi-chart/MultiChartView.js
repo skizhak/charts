@@ -8,7 +8,10 @@ import * as Charts from 'charts/index'
 import * as Components from 'components/index'
 import * as Handlers from 'handlers/index'
 import Actionman from '../../plugins/Actionman'
-const Actions = {}
+import Freeze from 'actions/Freeze'
+import Unfreeze from 'actions/Unfreeze'
+
+const Actions = {Freeze, Unfreeze}
 
 export default class ChartView extends ContrailChartsView {
   constructor (p) {
@@ -26,6 +29,7 @@ export default class ChartView extends ContrailChartsView {
   * Data can be set separately into every chart so every chart can have different data.
   */
   setData (data, dataConfig = {}, id = 'default') {
+    if (this._frozen) return
     // Set data to the given chart if it exists.
     if (this._charts[id]) {
       this._charts[id].setData(data, dataConfig)
@@ -56,10 +60,18 @@ export default class ChartView extends ContrailChartsView {
      * Since action is singleton and some actions trigger on all registrar, we need to avoid above mentioned scenario.
      */
     _.each(Actions, action => this._actionman.set(action, this))
+    this.setElement(`#${config.id}`)
     // Initialize parent components
     this._initComponents()
     // Initialize child charts
     this._initCharts()
+  }
+  /**
+   * Get array of components by type
+   * @return {Array}
+   */
+  getComponentsByType (type) {
+    return _.filter(this._components, {type: type})
   }
 
   render () {
@@ -114,13 +126,13 @@ export default class ChartView extends ContrailChartsView {
       this._charts[chart.id].setConfig(chart)
     }
   }
-
   /**
    * Initialize configured components
    */
   _initComponents () {
     _.each(this._config.components, (component, index) => {
       component.config.order = index
+      component.config.id = component.id
       this._registerComponent(component.type, component.config, this._dataProvider, component.id)
     })
 
@@ -140,7 +152,6 @@ export default class ChartView extends ContrailChartsView {
       }
     })
   }
-
   /**
    * Initialize individual component by type, given config, data model and id
    * @param {String} type

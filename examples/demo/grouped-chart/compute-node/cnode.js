@@ -552,7 +552,15 @@ const chartConfigs = [pieChartConfig, lbChartConfig1, bubbleChartConfig, areaCha
 const chartConfig = {
   id: groupedChartsWrapper,
   type: 'MultiChart',
-  components: [],
+  components: [{
+    id: 'control-panel-id',
+    type: 'ControlPanel',
+    config: {
+      menu: [{
+        id: 'Freeze',
+      }],
+    }
+  }],
   charts: chartConfigs,
 }
 

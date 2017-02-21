@@ -148,6 +148,13 @@ export default class ContrailChartsView extends ContrailView {
   }
 
   /**
+   * In frozen state View ignores Model Data change
+   * @param {Boolean} isFrozen change state to
+   */
+  set frozen (isFrozen) {
+    this._frozen = !!isFrozen
+  }
+  /**
    * First component which uses shared svg container appends svg element to container
    * There is a div wrapper over svg to workaround FF bug, when svg data-order attribute is not set
    */
