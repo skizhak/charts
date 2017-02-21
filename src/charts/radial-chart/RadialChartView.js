@@ -11,12 +11,13 @@ import Actionman from '../../plugins/Actionman'
 import ShowComponent from 'actions/ShowComponent'
 import HideComponent from 'actions/HideComponent'
 import SelectColor from 'actions/SelectColor'
+import SelectSerie from 'actions/SelectSerie'
 import Refresh from 'actions/Refresh'
 import Freeze from 'actions/Freeze'
 import Unfreeze from 'actions/Unfreeze'
 import ChangeSelection from 'actions/ChangeSelection'
 import OnClick from 'actions/OnClick'
-const Actions = {ShowComponent, HideComponent, SelectColor, ChangeSelection, Refresh, Freeze, Unfreeze, OnClick}
+const Actions = {ShowComponent, HideComponent, SelectSerie, SelectColor, ChangeSelection, Refresh, Freeze, Unfreeze, OnClick}
 /**
 * Group of charts rendered in polar coordinates system
 * TODO merge with XYChart

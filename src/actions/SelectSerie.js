@@ -13,6 +13,7 @@ export default class SelectSerie extends Action {
 
   _execute (accessorName, isSelected) {
     const chart = this._registrar
+
     _.each(chart.getComponentsByType('CompositeYChart'), (compositeY) => {
       const plot = compositeY.config.get('plot')
       const accessor = _.find(plot.y, (a) => a.accessor === accessorName)
@@ -31,6 +32,20 @@ export default class SelectSerie extends Action {
       if (accessor) {
         accessor.enabled = isSelected
         navigation.config.trigger('change', navigation.config)
+      }
+    })
+
+    _.each(chart.getComponentsByType('RadialDendrogram'), (radialDendrogram) => {
+      const levels = radialDendrogram.config.get('levels')
+      const level = _.find(levels, (level) => level.level === accessorName)
+      if (level) {
+        //level.enabled = isSelected
+        //radialDendrogram.config.trigger('change', radialDendrogram.config)
+        let drillDownLevel = isSelected ? level.level + 1 : level.level
+        if (drillDownLevel < 1) {
+          drillDownLevel = 1
+        }
+        radialDendrogram.config.set('drillDownLevel', drillDownLevel)
       }
     })
   }

@@ -33,5 +33,14 @@ export default class SelectColor extends Action {
         navigation.config.trigger('change', navigation.config)
       }
     })
+
+    _.each(chart.getComponentsByType('RadialDendrogram'), (radialDendrogram) => {
+      const levels = radialDendrogram.config.get('levels')
+      const level = _.find(levels, (level) => level.level === accessorName)
+      if (level) {
+        level.color = color
+        radialDendrogram.config.trigger('change', radialDendrogram.config)
+      }
+    })
   }
 }
