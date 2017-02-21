@@ -27,8 +27,8 @@ function getValue (serie) {
 
 const container = ['disk-status-chart', 'disk-cluster-chart']
 const layoutMeta = {
-  [container[0]]: 'render-order-1 col-md-12',
-  [container[1]]: 'render-order-2 col-md-12'
+  [container[0]]: 'render-order-1 col-md-6',
+  [container[1]]: 'render-order-2 col-md-6'
 }
 
 const diskStatusConfig = {

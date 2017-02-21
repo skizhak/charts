@@ -60,39 +60,40 @@ const allExamples = {
     'Navigation': {
       instance: navigation
     },
-    'RequireJS': {
-      instance: function RJS (callback) {
-        if (!window.AMDChartInstance) {
-          window.AMDChartInstance = {}
-
-          // NOTE: this delay wrapper is unnecessary if the jquery custom event is working
-          // Something breaks jQuery.trigger function
-          var _callback = function () {
-            setTimeout(function () {
-              callback()
-            }, 500)
-          }
-        }
-
-        let entryPoint = document.createElement('script')
-
-        entryPoint.setAttribute('data-main', './developer/linebar-chart/requirejs/requirejs-config.js')
-        entryPoint.src = 'https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.2/require.min.js'
-
-        entryPoint.onreadystatechange = function () {
-          if (this.readyState === 'complete') {
-            if (_callback) {
-              _callback()
-            } else {
-              callback()
-            }
-          }
-        }
-        entryPoint.onload = _callback || callback
-
-        document.body.append(entryPoint)
-      }
-    },
+    // TODO fix requireJS example loading. locally loading using file:// is blocked in browser (cross-origin). Should work in hosted example scenario
+    // 'RequireJS': {
+    //   instance: function RJS (callback) {
+    //     if (!window.AMDChartInstance) {
+    //       window.AMDChartInstance = {}
+    //
+    //       // NOTE: this delay wrapper is unnecessary if the jquery custom event is working
+    //       // Something breaks jQuery.trigger function
+    //       var _callback = function () {
+    //         setTimeout(function () {
+    //           callback()
+    //         }, 500)
+    //       }
+    //     }
+    //
+    //     let entryPoint = document.createElement('script')
+    //
+    //     entryPoint.setAttribute('data-main', './developer/linebar-chart/requirejs/requirejs-config.js')
+    //     entryPoint.src = 'https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.2/require.min.js'
+    //
+    //     entryPoint.onreadystatechange = function () {
+    //       if (this.readyState === 'complete') {
+    //         if (_callback) {
+    //           _callback()
+    //         } else {
+    //           callback()
+    //         }
+    //       }
+    //     }
+    //     entryPoint.onload = _callback || callback
+    //
+    //     document.body.append(entryPoint)
+    //   }
+    // },
     'Live Data': {
       instance: liveData
     }

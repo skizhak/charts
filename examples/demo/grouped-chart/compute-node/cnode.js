@@ -41,9 +41,9 @@ const groupedChartsWrapper = 'grouped-parent-chart'
 const container = ['disk-usage', 'node-cpu', 'process-cpu-mem', 'node-mem', 'node-flow']
 const layoutMeta = {
   [container[0]]: 'render-order-5 col-xs-12 col-md-6',
-  [container[1]]: 'render-order-2 col-xs-12 col-md-6',
+  [container[1]]: 'render-order-2 col-xs-12 col-md-5',
   [container[2]]: 'render-order-4 col-xs-12 col-md-6',
-  [container[3]]: 'render-order-1 col-xs-12 col-md-6',
+  [container[3]]: 'render-order-1 col-xs-12 col-md-5',
   [container[4]]: 'render-order-3 col-xs-12'
 }
 
