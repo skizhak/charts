@@ -542,7 +542,15 @@ const chartView = new coCharts.charts.MultiChartView()
 chartView.setConfig({
   id: 'grouped-parent-chart',
   type: 'MultiChart',
-  components: [],
+  components: [{
+    id: 'control-panel-id',
+    type: 'ControlPanel',
+    config: {
+      menu: [{
+        id: 'Freeze',
+      }],
+    }
+  }],
   charts: chartConfigs,
 })
 
