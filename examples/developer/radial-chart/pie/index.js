@@ -25,7 +25,7 @@ function getValue (serie) {
 
 const container = 'donut-chart'
 const layoutMeta = {
-  [container]: 'col-md-12'
+  [container]: 'col-md-6'
 }
 
 const chartConfig = {

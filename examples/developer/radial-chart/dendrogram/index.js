@@ -8,7 +8,7 @@ import dendrogamData from './data.json'
 const _c = commons._c
 const container = 'radial-dendrogram-chart'
 const layoutMeta = {
-  [container]: 'col-md-12'
+  [container]: 'col-md-11'
 }
 
 const chartConfig = {

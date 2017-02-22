@@ -21,7 +21,7 @@ const data = commons.fixture({
 
 const container = 'chart-legend'
 const layoutMeta = {
-  [container]: 'col-md-12'
+  [container]: 'col-md-11'
 }
 
 const chartConfig = {

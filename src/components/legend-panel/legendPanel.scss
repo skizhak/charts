@@ -13,7 +13,7 @@ $border-color: #fafafa;
   color: #707070;
   border: 1px solid $border-color;
   border-radius: 4px;
-  padding: 4px 10px;
+  padding: 0 10px;
   overflow: hidden;
 
   &.vertical {
@@ -32,6 +32,7 @@ $border-color: #fafafa;
   }
 
   .legend-inner-container {
+    padding-top: 8px;
     white-space: nowrap;
     overflow-x: auto;
   }
@@ -46,6 +47,7 @@ $border-color: #fafafa;
     display: inline-block;
     border-right: 1px solid $border-color;
     padding-right: 8px;
+    padding-bottom: 8px;
     font-size: 18px;
     vertical-align: middle;
     color: #9e9e9e;

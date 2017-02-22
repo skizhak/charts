@@ -40,11 +40,11 @@ function processFlowParser (data) {
 const groupedChartsWrapper = 'grouped-parent-chart'
 const container = ['disk-usage', 'node-cpu', 'process-cpu-mem', 'node-mem', 'node-flow']
 const layoutMeta = {
-  [container[0]]: 'render-order-5 col-xs-12 col-md-6',
+  [container[0]]: 'render-order-5 col-xs-12 col-md-3',
   [container[1]]: 'render-order-2 col-xs-12 col-md-5',
-  [container[2]]: 'render-order-4 col-xs-12 col-md-6',
-  [container[3]]: 'render-order-1 col-xs-12 col-md-5',
-  [container[4]]: 'render-order-3 col-xs-12'
+  [container[2]]: 'render-order-4 col-xs-12 col-md-8',
+  [container[3]]: 'render-order-1 col-xs-12 col-md-6',
+  [container[4]]: 'render-order-3 col-xs-11'
 }
 
 const cpuPlotConfig = {
@@ -224,7 +224,7 @@ const pieChartConfig = {
     type: 'PieChart',
     config: {
       type: 'pie',
-      radius: 120,
+      radius: 110,
       chartWidth: 225,
       chartHeight: 225,
       colorScale: d3.scaleOrdinal().range([colorScheme[5], colorScheme[6]]), // eslint-disable-line no-undef
@@ -340,7 +340,7 @@ const bubbleChartConfig = {
       id: 'scatter-plot',
       type: 'CompositeYChart',
       config: {
-        chartHeight: 300,
+        chartHeight: 320,
         marginLeft: 100,
         marginBottom: 60,
         plot: {
@@ -519,8 +519,8 @@ var lbChartConfig2 = {
       id: 'compositey-chart-id',
       type: 'CompositeYChart',
       config: {
-        marginLeft: 80,
-        marginRight: 60,
+        marginLeft: 60,
+        marginRight: 50,
         chartHeight: 275,
         crosshair: 'flow-crosshair-id',
         plot: flowPlotConfig,
@@ -552,16 +552,20 @@ const chartConfigs = [pieChartConfig, lbChartConfig1, bubbleChartConfig, areaCha
 const chartConfig = {
   id: groupedChartsWrapper,
   type: 'MultiChart',
-  components: [{
-    id: 'control-panel-id',
-    type: 'ControlPanel',
-    config: {
-      menu: [{
-        id: 'Freeze',
-      }],
-    }
-  }],
   charts: chartConfigs,
+  components: [
+    //TODO: Fix the placement of control panel for multi-chart
+    /*
+    {
+      id: 'control-panel-id',
+      type: 'ControlPanel',
+      config: {
+        menu: [{
+          id: 'Freeze',
+        }],
+      }
+    }*/
+  ]
 }
 
 let intervalId = -1
