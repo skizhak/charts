@@ -68,7 +68,6 @@ export default (env = defaultEnv) => {
     externals: {
       jquery: { amd: 'jquery', root: 'jQuery' },
       d3: { amd: 'd3v4', root: 'd3' },
-      d3Array: { amd: 'd3-array', root: 'd3-array' },
       lodash: { amd: 'lodash', root: '_' },
       backbone: { amd: 'backbone', root: 'Backbone' },
     },

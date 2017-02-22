@@ -1,8 +1,8 @@
 /*
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
-
 // Data generator for examples
+import _ from 'lodash'
 
 const nodeProcesses = [
   'contrail-analytics-api',
@@ -46,23 +46,23 @@ function vRouterTraffic (dataConfig = {}) {
   const now = _.now()
 
   for (let i = 0; i < flowCount; i++) {
-    let bytes= _.random(74325736, 474325736)
+    const bytes = _.random(74325736, 474325736)
 
-    let flow = {
-      "UuidKey": 'b5ba466a-9e56-42e8-8cf5-e75d27c62' + i,
-      "action": 'pass',
-      "agg-bytes": bytes,
-      "agg-packets": _.round((bytes / 330), 0),
-      "destip": destIPArray[_.random(0, destIPArray.length - 1)],
-      "destvn": destVNArray[_.random(0, destVNArray.length - 1)],
-      "direction_ing": 1,
-      "dport": destPortArray[_.random(0, destPortArray.length - 1)],
-      "protocol": protocolArray[_.random(0, protocolArray.length - 1)],
-      "setup_time": now,
-      "sourceip": srcIPArray[_.random(0, srcIPArray.length - 1)],
-      "sourcevn": srcVNArray[_.random(0, srcVNArray.length - 1)],
-      "sport": srcPortArray[_.random(0, srcPortArray.length - 1)],
-      "vrouter": 'a7s12'
+    const flow = {
+      'UuidKey': 'b5ba466a-9e56-42e8-8cf5-e75d27c62' + i,
+      'action': 'pass',
+      'agg-bytes': bytes,
+      'agg-packets': _.round((bytes / 330), 0),
+      'destip': destIPArray[_.random(0, destIPArray.length - 1)],
+      'destvn': destVNArray[_.random(0, destVNArray.length - 1)],
+      'direction_ing': 1,
+      'dport': destPortArray[_.random(0, destPortArray.length - 1)],
+      'protocol': protocolArray[_.random(0, protocolArray.length - 1)],
+      'setup_time': now,
+      'sourceip': srcIPArray[_.random(0, srcIPArray.length - 1)],
+      'sourcevn': srcVNArray[_.random(0, srcVNArray.length - 1)],
+      'sport': srcPortArray[_.random(0, srcPortArray.length - 1)],
+      'vrouter': 'a7s12'
     }
 
     data.push(flow)
@@ -105,7 +105,7 @@ function createVNArray (count) {
   let vnArray = []
 
   for (let i = 0; i < count; i++) {
-    vnArray.push('vnetwork-' + (i+1))
+    vnArray.push('vnetwork-' + (i + 1))
   }
 
   return vnArray
@@ -146,10 +146,10 @@ function generateFlows4Node (now, count, timeInterval) {
 
   for (let j = 0; j < count; j++) {
     flow = {
-      "time": now - ((count - j) * timeInterval),
-      "AVG(active_flows)": _.random(180, 230),
-      "AVG(added_flows)": _.random(4, 12),
-      "AVG(deleted_flows)": _.random(2, 7)
+      'time': now - ((count - j) * timeInterval),
+      'AVG(active_flows)': _.random(180, 230),
+      'AVG(added_flows)': _.random(4, 12),
+      'AVG(deleted_flows)': _.random(2, 7)
     }
     flows.push(flow)
   }
@@ -160,19 +160,19 @@ function generateFlows4Node (now, count, timeInterval) {
 function generateCPU4Node (now, count, timeInterval) {
   let cpuUsage = []
   let cpu = {}
-  let cpu_share = 0
+  let cpuShare = 0
   let min15 = 0
 
   for (let j = 0; j < count; j++) {
-    cpu_share = _.random(15.10, 20.20)
-    min15 = (cpu_share/3)
+    cpuShare = _.random(15.10, 20.20)
+    min15 = (cpuShare / 3)
 
     cpu = {
-      "time": now - ((count - j) * timeInterval),
-      "AVG(cpu_share)": _.round(cpu_share, 2),
-      "AVG(fifteen_min_avg)": _.round(min15, 2),
-      "AVG(five_min_avg)": _.round(min15 + _.random(-1.01, 1.3), 2),
-      "AVG(one_min_avg)": _.round(min15 + _.random(-2.2, 2.1), 2),
+      'time': now - ((count - j) * timeInterval),
+      'AVG(cpu_share)': _.round(cpuShare, 2),
+      'AVG(fifteen_min_avg)': _.round(min15, 2),
+      'AVG(five_min_avg)': _.round(min15 + _.random(-1.01, 1.3), 2),
+      'AVG(one_min_avg)': _.round(min15 + _.random(-2.2, 2.1), 2),
     }
     cpuUsage.push(cpu)
   }
@@ -190,19 +190,18 @@ function generateMemory4Node (now, count, timeInterval) {
     used = _.random(10327400, 25497400)
 
     mem = {
-      "time": now - ((count - j) * timeInterval),
-      "AVG(buffers)": _.random(315422, 446422),
-      "AVG(cached)": _.random(11118300, 19518300),
-      "AVG(free)": total - used,
-      "AVG(total)": total,
-      "AVG(used)": used
+      'time': now - ((count - j) * timeInterval),
+      'AVG(buffers)': _.random(315422, 446422),
+      'AVG(cached)': _.random(11118300, 19518300),
+      'AVG(free)': total - used,
+      'AVG(total)': total,
+      'AVG(used)': used
     }
     memUsage.push(mem)
   }
 
   return memUsage
 }
-
 
 function generateProcessCPUMem4Node () {
   let cpuMemUsage = []
@@ -211,7 +210,7 @@ function generateProcessCPUMem4Node () {
   for (let i = 0; i < nodeProcesses.length; i++) {
     cpuMemUsage4Process = {
       'process_name': nodeProcesses[i],
-      'AVG(process_cpu_share)': (_.random(.1, 10)).toFixed(2),
+      'AVG(process_cpu_share)': (_.random(0.1, 10)).toFixed(2),
       'AVG(process_mem_res)': _.random(32804, 82804),
       'AVG(process_mem_virt)': _.random(336860, 936860),
     }
@@ -225,8 +224,8 @@ function generateDiskUsage4VR (partitionCount) {
   partitionCount = partitionCount || 2
   let diskUsage = []
 
-  diskUsage.push({"fieldName": 'Disk Available', "value": _.random(150000, 160000)})
-  diskUsage.push({"fieldName": 'Disk Used', "value": _.random(68796, 68996)})
+  diskUsage.push({'fieldName': 'Disk Available', 'value': _.random(150000, 160000)})
+  diskUsage.push({'fieldName': 'Disk Used', 'value': _.random(68796, 68996)})
 
   return diskUsage
 }
@@ -305,5 +304,5 @@ function generatePorts4VN (portCount, vnName) {
 export default {
   projectVNTraffic,
   computeNodeData,
-  vRouterTraffic
+  vRouterTraffic,
 }

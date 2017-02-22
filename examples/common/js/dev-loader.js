@@ -1,11 +1,10 @@
 /*
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
-
 /* global $ */
 
 import '../sass/contrail-charts-examples.scss'
-import  _ from 'lodash'
+import _ from 'lodash'
 
 import legend from '../../developer/linebar-chart/legend'
 import controls from '../../developer/linebar-chart/control-panel'
@@ -29,7 +28,6 @@ import groupedChartTemplate from '../template/multiple.tmpl'
 const templates = {
   grouped: groupedChartTemplate
 }
-
 /**
  * structure of an example:
  * 'example title': {

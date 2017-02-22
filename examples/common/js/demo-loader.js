@@ -1,7 +1,6 @@
 /*
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
-
 /* global $ */
 
 import '../sass/contrail-charts-examples.scss'
@@ -59,21 +58,25 @@ const allExamples = {
       instance: nodeCPUMemChart,
       description: {
         chartTitle: 'CPU & Memory of Contrail Nodes',
-        chartDesc: 'Bubble chart with navigation is used to analyze CPU and Memory of different nodes. Each node is identified by it\'s temporary icon. Users can filter the nodes by CPU Share through navigation chart at bottom.'
+        chartDesc: `Bubble chart with navigation is used to analyze CPU and Memory of different nodes.
+          Each node is identified by it's temporary icon. Users can filter the nodes by CPU Share through navigation chart at bottom.`
       }
     },
     'Port Distribution': {
       instance: portDistributionChart,
       description: {
         chartTitle: 'VN Traffic In/Out across Ports',
-        chartDesc: 'Top bubble charts displays the traffic in/out over a port range of a virtual network. Different, temporary icons are used to identify traffic in and traffic out. Users can filter the ports by traffic through navigation chart at bottom.'
+        chartDesc: `Top bubble charts displays the traffic in/out over a port range of a virtual network.
+          Different, temporary icons are used to identify traffic in and traffic out.
+          Users can filter the ports by traffic through navigation chart at bottom.`
       }
     },
     'vRouters': {
       instance: vRoutersChart,
       description: {
         chartTitle: 'VN, VMI, CPU, Memory of vRouters',
-        chartDesc: 'Top bubble charts displays virtual networks and interfaces of a vRouter. Users can filter the vRouters by CPU share through navigation chart at bottom.'
+        chartDesc: `Top bubble charts displays virtual networks and interfaces of a vRouter.
+          Users can filter the vRouters by CPU share through navigation chart at bottom.`
       }
     }
   },
@@ -83,7 +86,9 @@ const allExamples = {
       instance: vnDetailChart,
       description: {
         chartTitle: 'Traffic Analysis for a Project',
-        chartDesc: 'A combination of three charts used to analyze traffic across VNs under a project. LineBar chart shows either total traffic of this project or traffic of VN selected by clicking on Pie chart. Bubble chart shows traffic across ports with two icons: one for in-traffic and other one for out-traffic.'
+        chartDesc: `A combination of three charts used to analyze traffic across VNs under a project.
+          LineBar chart shows either total traffic of this project or traffic of VN selected by clicking on Pie chart.
+          Bubble chart shows traffic across ports with two icons: one for in-traffic and other one for out-traffic.`
       }
     },
     'Compute Node': {
@@ -91,9 +96,12 @@ const allExamples = {
       instance: computeNodeChart,
       description: {
         chartTitle: 'Compute Node',
-        chartDesc: 'A combination of five charts used to analyze these stats of a vRouter node: System/Node CPU/Memory, Flows, Process CPU/Memory, Disk Usages. Area chart shows System/Node memory usage. ' +
-          'Grouped Bar chart shows System/Node CPU usage. Stacked Bar chart with navigation show active, added, and deleted flows. Bubble chart shows CPU/Memory of different proceses on that node. ' +
-          'Finally, pie chart shows the disk usage of node.'
+        chartDesc: `A combination of five charts used to analyze these stats of a vRouter node: System/Node CPU/Memory, Flows, Process CPU/Memory, Disk Usages.
+          Area chart shows System/Node memory usage.
+          Grouped Bar chart shows System/Node CPU usage.
+          Stacked Bar chart with navigation show active, added, and deleted flows.
+          Bubble chart shows CPU/Memory of different proceses on that node.
+          Finally, pie chart shows the disk usage of node.`
       }
     }
   },
@@ -102,7 +110,8 @@ const allExamples = {
       instance: inoutTrafficChart,
       description: {
         chartTitle: 'Traffic in/out of two VNs',
-        chartDesc: 'Real-time area chart is used to compare the in/out traffic of multiple VNs. Quadrant I displays traffic in and quadrant IV displays traffic out.'
+        chartDesc: `Real-time area chart is used to compare the in/out traffic of multiple VNs.
+          Quadrant I displays traffic in and quadrant IV displays traffic out.`
       }
     },
     'vRouter Traffic': {

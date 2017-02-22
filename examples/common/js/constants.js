@@ -2,9 +2,7 @@
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
 
-// const d3 = require('d3')
-const d3ColorScheme10 = d3.schemeCategory10
-const d3ColorScheme20 = d3.schemeCategory20
+import {schemeCategory10 as d3ColorScheme10, schemeCategory20 as d3ColorScheme20} from 'd3-scale'
 
 const lbColorScheme7 = [
   '#a88add',
