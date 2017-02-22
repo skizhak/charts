@@ -3,9 +3,9 @@
  */
 
 define([ // eslint-disable-line no-undef
-  'd3', // Example use of older d3 versions.
+  'd3v4', // Example use of multiple d3 versions. chart will use d3v4 instead of older d3.
   'lodash',
-  'es6!contrail-charts',
+  'contrail-charts',
 ], function (d3, _, coCharts) {
   const container = ['requirejs-linebar-chart', 'requirejs-line-chart']
   const layoutMeta = {

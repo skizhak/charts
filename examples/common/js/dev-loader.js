@@ -60,40 +60,20 @@ const allExamples = {
     'Navigation': {
       instance: navigation
     },
-    // TODO fix requireJS example loading. locally loading using file:// is blocked in browser (cross-origin). Should work in hosted example scenario
-    // 'RequireJS': {
-    //   instance: function RJS (callback) {
-    //     if (!window.AMDChartInstance) {
-    //       window.AMDChartInstance = {}
-    //
-    //       // NOTE: this delay wrapper is unnecessary if the jquery custom event is working
-    //       // Something breaks jQuery.trigger function
-    //       var _callback = function () {
-    //         setTimeout(function () {
-    //           callback()
-    //         }, 500)
-    //       }
-    //     }
-    //
-    //     let entryPoint = document.createElement('script')
-    //
-    //     entryPoint.setAttribute('data-main', './developer/linebar-chart/requirejs/requirejs-config.js')
-    //     entryPoint.src = 'https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.2/require.min.js'
-    //
-    //     entryPoint.onreadystatechange = function () {
-    //       if (this.readyState === 'complete') {
-    //         if (_callback) {
-    //           _callback()
-    //         } else {
-    //           callback()
-    //         }
-    //       }
-    //     }
-    //     entryPoint.onload = _callback || callback
-    //
-    //     document.body.append(entryPoint)
-    //   }
-    // },
+    'RequireJS': {
+      instance: function RJS (callback) {
+        if (!window.AMDChartInstance) {
+          // Once the require entry point load is complete, the script callback will invoke render callback.
+          window.AMDRenderCB = callback
+          let entryPoint = document.createElement('script')
+          entryPoint.src = '../node_modules/requirejs/require.js'
+          entryPoint.setAttribute('data-main', './developer/linebar-chart/requirejs/requirejs-config.js')
+          document.body.append(entryPoint)
+        } else {
+          callback()
+        }
+      }
+    },
     'Live Data': {
       instance: liveData
     }
@@ -140,8 +120,7 @@ _.forEach(allExamples, (examples, chartCategory) => {
   })
 })
 
-function _RJSRender (templateId, chartType, linkText) {
-  const RJSInstance = window.AMDChartInstance[`${chartType}${linkText}`]
+function _RJSRender (templateId, RJSInstance) {
   let containerIds = _.isArray(RJSInstance.container) ? RJSInstance.container : [RJSInstance.container]
   let currentInstance = $chartBox.data('currentInstance')
 
@@ -172,11 +151,12 @@ function createLink (chartType = '', templateId = 'grouped', instance, linkText)
   if (_.isFunction(instance) && instance.name === 'RJS') {
     $link.click((e) => {
       if (instance === RJSInitFlag) {
-        _RJSRender(templateId, chartType, cleaned)
+        _RJSRender(templateId, window.AMDChartInstance)
       } else if (_.isFunction(instance) && instance.name === 'RJS') {
-        instance(() => {
+        instance((RJSChart) => {
+          window.AMDChartInstance = RJSChart
           instance = RJSInitFlag
-          _RJSRender(templateId, chartType, cleaned)
+          _RJSRender(templateId, RJSChart)
         })
       }
     })
