@@ -9,8 +9,8 @@ define([ // eslint-disable-line no-undef
 ], function (d3, _, coCharts) {
   const container = ['requirejs-linebar-chart', 'requirejs-line-chart']
   const layoutMeta = {
-    'requirejs-linebar-chart': 'col-xs-12 col-md-6',
-    'requirejs-line-chart': 'col-xs-12 col-md-6'
+    'requirejs-linebar-chart': 'col-xs-12 col-md-12',
+    'requirejs-line-chart': 'col-xs-12 col-md-12'
   }
 
   const data = []
