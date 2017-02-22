@@ -1,14 +1,12 @@
 /*
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
-/* global d3 */
+import {charts} from 'coCharts'
+import {_c, fixture} from 'commons'
 
-import 'coCharts'
-import commons from 'commons'
-
-const colorScheme = commons._c.d3ColorScheme10
+const colorScheme = _c.d3ColorScheme10
 const length = 20
-const data = commons.fixture({
+const data = fixture({
   length: 20,
   data: {
     x: {linear: true, range: [0, length]},
@@ -154,8 +152,8 @@ const barChartConfig = {
   }]
 }
 
-const barChart = new coCharts.charts.XYChartView()
-const areaChart = new coCharts.charts.XYChartView()
+const barChart = new charts.XYChartView()
+const areaChart = new charts.XYChartView()
 
 export default {
   container: container,

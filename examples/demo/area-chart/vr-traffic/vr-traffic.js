@@ -1,13 +1,9 @@
 /*
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
-
-import commons from 'commons'
-import 'coCharts'
-
-const _ = commons._
-const formatter = commons.formatter
-const _c = commons._c
+import _ from 'lodash'
+import {charts} from 'coCharts'
+import {formatter, _c} from 'commons'
 const lbColorScheme7 = _c.d3ColorScheme20
 
 function dataProcesser (rawData) {
@@ -33,7 +29,6 @@ function dataProcesser (rawData) {
     nodeIds: _.uniq(_.map(rawData, 'vrouter'))
   }
 }
-
 /**
  * Try to use the given colorSchema to assign a color to each attribute of each node
  *
@@ -242,7 +237,7 @@ const chartConfig = {
 }
 
 // Create chart view.
-const trafficView = new coCharts.charts.XYChartView()
+const trafficView = new charts.XYChartView()
 
 export default {
   container: container,

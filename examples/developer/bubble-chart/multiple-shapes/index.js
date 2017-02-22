@@ -1,13 +1,10 @@
 /*
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
+import {charts} from 'coCharts'
+import {formatter, _c, fixture} from 'commons'
 
-import 'coCharts'
-import commons from 'commons'
-
-const formatter = commons.formatter
-const _c = commons._c
-const data = commons.fixture({
+const data = fixture({
   length: 40,
   data: {
     x: {linear: true, range: [1475760930000, 1475800930000]},
@@ -166,7 +163,7 @@ const chartConfig = {
   }]
 }
 
-const chartView = new coCharts.charts.XYChartView()
+const chartView = new charts.XYChartView()
 
 export default {
   container: container,

@@ -1,9 +1,10 @@
 /*
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
-import 'coCharts'
+import {charts} from 'coCharts'
 import formatter from 'formatter'
 import fixture from 'fixture'
+import {schemeCategory10 as colorScheme} from 'd3-scale'
 
 const length = 10
 const data = fixture({
@@ -16,8 +17,6 @@ const data = fixture({
   },
 })
 data[5].a = -10
-const colorScheme = d3.schemeCategory10
-
 const container = 'area-chart'
 const layoutMeta = {
   [container]: 'col-md-12'
@@ -113,7 +112,7 @@ const chartConfig = {
   }]
 }
 
-const chartView = new coCharts.charts.XYChartView()
+const chartView = new charts.XYChartView()
 
 export default {
   container: container,

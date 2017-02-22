@@ -1,18 +1,14 @@
 /*
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
+import _ from 'lodash'
+import {charts} from 'coCharts'
+import {formatter, _c} from 'commons'
 
-import 'coCharts'
-import commons from 'commons'
-
-const _ = commons._
-const formatter = commons.formatter
-const _c = commons._c
 const timeInterval = 2000
-
 let now = _.now()
-let trafficData = []
-let vNetworksCount = 2
+const trafficData = []
+const vNetworksCount = 2
 
 for (let j = 0; j < vNetworksCount; j++) {
   let vnName = 'vnetwork' + (j + 1)
@@ -270,7 +266,7 @@ const chartConfig = {
 
 let intervalId = -1
 // Create chart view.
-const trafficView = new coCharts.charts.XYChartView()
+const trafficView = new charts.XYChartView()
 
 export default {
   container: container,

@@ -1,13 +1,9 @@
 /*
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
-
-import 'coCharts'
-import commons from 'commons'
-
-const _ = commons._
-const formatter = commons.formatter
-const _c = commons._c
+import _ from 'lodash'
+import {charts} from 'coCharts'
+import {formatter, _c} from 'commons'
 
 function getDataPoint (x) {
   const a = _.random(3, 100) * 100
@@ -206,7 +202,7 @@ const chartConfig = {
 }
 
 let intervalId = -1
-const queryChart = new coCharts.charts.XYChartView()
+const queryChart = new charts.XYChartView()
 
 export default {
   container: container,
