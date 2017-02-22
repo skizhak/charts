@@ -254,26 +254,6 @@ const chartConfig = {
       dataConfig: tooltipDataConfig
     }
   }, {
-    id: 'inout-traffic-controlPanel',
-    type: 'ControlPanel',
-    config: {
-      enabled: true,
-      buttons: [
-        {
-          name: 'filter',
-          title: 'Filter',
-          iconClass: 'fa fa-filter',
-          events: {
-            click: 'filterVariables',
-          },
-          panel: {
-            name: 'accessorData',
-            width: '350px',
-          }
-        }
-      ]
-    }
-  }, {
     id: 'inout-traffic-message',
     type: 'Message',
     config: {
