@@ -26,7 +26,7 @@ function getValue (serie) {
 
 const container = 'pools-pie'
 const layoutMeta = {
-  [container]: 'col-md-12'
+  [container]: 'col-md-6'
 }
 
 const chartConfig = {

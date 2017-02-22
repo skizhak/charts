@@ -10,8 +10,8 @@ const data = commons.fixture()
 
 const container = ['chart-tooltip-1', 'chart-tooltip-2']
 const layoutMeta = {
-  'chart-tooltip-1': 'col-md-12',
-  'chart-tooltip-2': 'col-md-12'
+  'chart-tooltip-1': 'col-md-11',
+  'chart-tooltip-2': 'col-md-11'
 }
 
 const chartConfig1 = {

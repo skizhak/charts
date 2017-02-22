@@ -43,8 +43,8 @@ const groupedChartsWrapper = 'grouped-parent-chart'
 const container = ['grouped-chart1', 'grouped-chart2', 'donut-chart', 'navigation-chart']
 const layoutMeta = {
   'grouped-chart1': 'render-order-1 col-md-12',
-  'grouped-chart2': 'render-order-3 col-md-6',
-  'donut-chart': 'render-order-2 col-md-6',
+  'grouped-chart2': 'render-order-2 col-md-8',
+  'donut-chart': 'render-order-3 col-md-3',
   'navigation-chart': 'render-order-4 col-md-12'
 }
 

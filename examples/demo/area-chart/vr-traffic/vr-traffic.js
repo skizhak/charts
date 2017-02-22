@@ -126,7 +126,7 @@ const tooltipDataConfig = _.reduce(dataProcessed.nodeIds, (config, nodeId) => {
 
 const container = 'vr-traffic'
 const layoutMeta = {
-  [container]: 'col-md-12'
+  [container]: 'col-md-11'
 }
 
 const chartConfig = {

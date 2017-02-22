@@ -13,7 +13,7 @@ $border-color: #fafafa;
   color: #707070;
   border: 1px solid $border-color;
   border-radius: 4px;
-  padding: 4px 10px;
+  padding: 0 10px;
   overflow: hidden;
 
   &.vertical {
@@ -92,6 +92,7 @@ $border-color: #fafafa;
     }
 
     .legend-attribute {
+      padding-top: 10px;
       padding-left: 0;
     }
 
@@ -106,6 +107,7 @@ $border-color: #fafafa;
   display: inline-block;
   padding: 3px 0;
   position: relative;
+  padding-top: 10px;
   vertical-align: middle;
 
   input[type=checkbox] {

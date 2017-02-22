@@ -116,9 +116,9 @@ const trafficPlotAxisConfig = {
 const groupedChartsWrapper = 'grouped-parent-chart'
 const container = ['vn-pie', 'vn-traffic', 'vn-ports']
 const layoutMeta = {
-  [container[0]]: 'render-order-2 col-xs-12 col-md-6',
-  [container[1]]: 'render-order-1 col-xs-12',
-  [container[2]]: 'render-order-3 col-xs-12 col-md-6'
+  [container[0]]: 'render-order-3 col-xs-12 col-md-4',
+  [container[1]]: 'render-order-1 col-xs-11',
+  [container[2]]: 'render-order-2 col-xs-12 col-md-8'
 }
 
 const chartConfigs = [
@@ -135,11 +135,10 @@ const chartConfigs = [
       type: 'PieChart',
       config: {
         type: 'donut',
-        radius: 130,
+        radius: 110,
         chartWidth: 275,
         chartHeight: 275,
-        marginBottom: 20,
-        marginTop: 20,
+        marginTop: 50,
         colorScale: d3.scaleOrdinal().range([colorScheme[4], colorScheme[6], colorScheme[7], colorScheme[8]]), // eslint-disable-line no-undef
         serie: {
           getValue: serie => serie.vmiCount,
@@ -283,7 +282,7 @@ const chartConfigs = [
         id: 'scatter-plot',
         type: 'CompositeYChart',
         config: {
-          chartHeight: 350,
+          chartHeight: 320,
           marginLeft: 100,
           plot: {
             x: {

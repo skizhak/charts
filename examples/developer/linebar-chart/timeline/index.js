@@ -22,7 +22,7 @@ for (let i = 0; i < 100; i++) {
 
 const container = 'timeline-chart'
 const layoutMeta = {
-  [container]: 'col-md-12'
+  [container]: 'col-md-11'
 }
 
 const chartConfig = {

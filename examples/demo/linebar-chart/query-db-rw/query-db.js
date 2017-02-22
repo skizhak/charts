@@ -28,7 +28,7 @@ for (let i = 1; i <= 100; i++) {
 
 const container = 'query-db-chart'
 const layoutMeta = {
-  [container]: 'col-md-12'
+  [container]: 'col-md-11'
 }
 
 const chartConfig = {

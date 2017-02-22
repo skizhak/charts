@@ -25,7 +25,7 @@ const bubbleShapes = _c.bubbleShapes
 
 const container = 'multi-shape-bubble'
 const layoutMeta = {
-  [container]: 'col-md-12'
+  [container]: 'col-md-11'
 }
 
 const chartConfig = {
