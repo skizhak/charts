@@ -6,14 +6,11 @@ import ExtractTextPlugin from 'extract-text-webpack-plugin'
 import UglifyJSPlugin from 'uglifyjs-webpack-plugin'
 
 const fileName = 'contrail-charts-examples'
-const paths = {
-  dev: 'examples/developer',
-  demo: 'examples/demo/',
-}
+
 function absolute (...args) {
   return join(__dirname, ...args)
 }
-const defaultEnv = paths.dev
+const defaultEnv = {dev: true}
 
 export default (env = defaultEnv) => {
   const plugins = [
@@ -30,10 +27,16 @@ export default (env = defaultEnv) => {
     loader: 'handlebars-loader',
   }]
 
-  if (env === 'build') {
+  if (env.prod) {
     plugins.push(new UglifyJSPlugin({
-      include: /\.min\.js$/,
-      minimize: false,
+      compress: {
+        warnings: false
+      },
+      mangle: {
+        keep_fnames: true,
+      },
+      sourceMap: true,
+      include: /\.js$/,
     }))
   }
   loaders.push({

@@ -14,7 +14,7 @@ const paths = {
 function absolute (...args) {
   return join(__dirname, ...args)
 }
-const defaultEnv = 'dev'
+const defaultEnv = {'dev': true}
 
 export default (env = defaultEnv) => {
   const plugins = []
@@ -36,7 +36,7 @@ export default (env = defaultEnv) => {
     }
   }]
 
-  if (env === 'build') {
+  if (env.prod) {
     plugins.push(new UglifyJSPlugin({
       compress: {
         warnings: false
