@@ -5,7 +5,7 @@ import {join} from 'path'
 import ExtractTextPlugin from 'extract-text-webpack-plugin'
 import UglifyJSPlugin from 'uglifyjs-webpack-plugin'
 
-const fileName = 'contrail-charts'
+let fileName = 'contrail-charts'
 const libraryName = 'coCharts'
 const paths = {
   framework: 'plugins/backbone/',
@@ -14,7 +14,7 @@ const paths = {
 function absolute (...args) {
   return join(__dirname, ...args)
 }
-const defaultEnv = 'dev'
+const defaultEnv = {'dev': true}
 
 export default (env = defaultEnv) => {
   const plugins = []
@@ -35,8 +35,15 @@ export default (env = defaultEnv) => {
       presets: ['es2015'],
     }
   }]
+  const externals = {
+    jquery: { amd: 'jquery', root: 'jQuery' },
+    d3: { amd: 'd3v4', root: 'd3' },
+    d3Array: { amd: 'd3-array', root: 'd3-array' },
+    lodash: { amd: 'lodash', root: '_' },
+    backbone: { amd: 'backbone', root: 'Backbone' },
+  }
 
-  if (env === 'build') {
+  if (env.prod) {
     plugins.push(new UglifyJSPlugin({
       compress: {
         warnings: false
@@ -47,6 +54,15 @@ export default (env = defaultEnv) => {
       sourceMap: true,
       include: /\.min\.js$/,
     }))
+  }
+
+  // For every library added in the include env, we will remove from externals.
+  if (env.include) {
+    env.include.split(',').forEach((lib) => {
+      delete externals[lib.trim()]
+    })
+    // Will append .bundle to the output file name.
+    fileName = `${fileName}.bundle`
   }
   // Let's put css under css directory.
   plugins.push(new ExtractTextPlugin(fileName + '.css'))
@@ -65,13 +81,7 @@ export default (env = defaultEnv) => {
       umdNamedDefine: false,
     },
     module: {rules},
-    externals: {
-      jquery: { amd: 'jquery', root: 'jQuery' },
-      d3: { amd: 'd3v4', root: 'd3' },
-      d3Array: { amd: 'd3-array', root: 'd3-array' },
-      lodash: { amd: 'lodash', root: '_' },
-      backbone: { amd: 'backbone', root: 'Backbone' },
-    },
+    externals: externals,
     resolve: {
       modules: [absolute('src'), 'node_modules'],
       alias: {
