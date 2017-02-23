@@ -4,6 +4,7 @@
 import './scatter-plot.scss'
 import _ from 'lodash'
 import 'd3-transition'
+import * as d3Selection from 'd3-selection'
 import * as d3Ease from 'd3-ease'
 import XYChartSubView from 'components/composite-y/XYChartSubView'
 
@@ -94,7 +95,7 @@ export default class ScatterPlotView extends XYChartSubView {
 
   _onMouseover (d, el, event) {
     if (this.config.get('tooltipEnabled')) {
-      const [left, top] = d3.mouse(this._container)
+      const [left, top] = d3Selection.mouse(this._container)
       this._actionman.fire('ShowComponent', d.accessor.tooltip, {left, top}, d.data)
     }
     el.classList.add(this.selectorClass('active'))

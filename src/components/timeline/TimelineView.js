@@ -3,7 +3,11 @@
  */
 import './timeline.scss'
 import _ from 'lodash'
-import 'd3'
+import * as d3Selection from 'd3-selection'
+import * as d3Brush from 'd3-brush'
+import * as d3Shape from 'd3-shape'
+import * as d3Scale from 'd3-scale'
+import * as d3Axis from 'd3-axis'
 import * as d3Ease from 'd3-ease'
 import ContrailChartsView from 'contrail-charts-view'
 import DataProvider from 'handlers/DataProvider'
@@ -59,21 +63,21 @@ export default class TimelineView extends ContrailChartsView {
     const xScale = this.params.axis[this.params.plot.x.axis].scale
     if (!this.brush) {
       const brushHandleHeight = this.params.brushHandleHeight
-      this.brush = d3.brushX()
+      this.brush = d3Brush.brushX()
         .extent([
           [this.params.xRange[0], this.params.yRange[1] + 10],
           [this.params.xRange[1], this.params.yRange[0] - 10]])
         .handleSize(10)
         .on('brush', () => {
-          this._handleBrushSelection(d3.event.selection)
+          this._handleBrushSelection(d3Selection.event.selection)
         })
         .on('end', () => {
-          const dataWindow = d3.event.selection
+          const dataWindow = d3Selection.event.selection
           if (!dataWindow) {
             this._removeBrush()
             this._renderBrush()
           } else {
-            this._handleBrushSelection(d3.event.selection)
+            this._handleBrushSelection(d3Selection.event.selection)
           }
         })
       const gBrush = this.d3.append('g').classed('brush', true).call(this.brush)
@@ -82,7 +86,7 @@ export default class TimelineView extends ContrailChartsView {
         .enter().append('path')
         .classed('handle--custom', true)
         .classed('hide', true)
-        .attr('d', d3.arc()
+        .attr('d', d3Shape.arc()
           .innerRadius(0)
           .outerRadius(brushHandleHeight)
           .startAngle(0)
@@ -136,7 +140,7 @@ export default class TimelineView extends ContrailChartsView {
       if (this.hasAxisConfig(axisName, 'scale') && _.isFunction(d3[this.config.get('axis')[axisName]])) {
         baseScale = d3[this.params.axis[axisName].scale]()
       } else {
-        baseScale = d3.scaleTime()
+        baseScale = d3Scale.scaleTime()
       }
       this.params.axis[axisName].scale = baseScale.domain(this.params.axis[axisName].domain).range(this.params.xRange)
       if (this.hasAxisParam(axisName, 'nice') && this.params.axis[axisName].nice) {
@@ -151,7 +155,7 @@ export default class TimelineView extends ContrailChartsView {
 
   _renderAxis () {
     const xAxisName = this.params.plot.x.axis
-    let xAxis = d3.axisBottom(this.params.axis[xAxisName].scale)
+    let xAxis = d3Axis.axisBottom(this.params.axis[xAxisName].scale)
       .tickSize(this.params.yRange[0] - this.params.yRange[1])
       .tickPadding(10)
     if (this.hasAxisParam('x', 'ticks')) {

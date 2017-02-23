@@ -2,14 +2,16 @@
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
 import './brush.scss'
-import 'd3'
+import * as d3Selection from 'd3-selection'
+import * as d3Shape from 'd3-shape'
+import * as d3Brush from 'd3-brush'
 import * as d3Ease from 'd3-ease'
 import ContrailChartsView from 'contrail-charts-view'
 
 export default class BrushView extends ContrailChartsView {
   constructor (p) {
     super(p)
-    this._brush = d3.brushX()
+    this._brush = d3Brush.brushX()
     this.listenTo(this.config, 'change', this.render)
   }
 
@@ -27,7 +29,7 @@ export default class BrushView extends ContrailChartsView {
       .enter().append('path')
       .classed('hide', true)
       .classed('handle--custom', true)
-      .attr('d', d3.arc()
+      .attr('d', d3Shape.arc()
         .innerRadius(0)
         .outerRadius(this.config.handleHeight / 2)
         .startAngle(0)
@@ -45,7 +47,7 @@ export default class BrushView extends ContrailChartsView {
   // Event handlers
 
   _onSelection () {
-    let selection = d3.event.selection
+    let selection = d3Selection.event.selection
     if (!selection) {
       return this.remove()
     }

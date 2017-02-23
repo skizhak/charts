@@ -2,6 +2,7 @@
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
 import _ from 'lodash'
+import * as d3Scale from 'd3-scale'
 import ContrailChartsConfigModel from 'contrail-charts-config-model'
 const chartTypeIconMap = {
   'BarChart': 'fa-bar-chart',
@@ -14,7 +15,7 @@ const chartTypeIconMap = {
 export default class LegendPanelConfigModel extends ContrailChartsConfigModel {
   get defaults () {
     return {
-      palette: d3.schemeCategory20,
+      palette: d3Scale.schemeCategory20,
       editable: {
         colorSelector: true,
         chartSelector: true

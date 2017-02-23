@@ -3,7 +3,7 @@
  */
 import './control-panel.scss'
 import _ from 'lodash'
-import 'd3'
+import * as d3Selection from 'd3-selection'
 import ContrailChartsView from 'contrail-charts-view'
 import _template from './control-panel.html'
 import _panelTemplate from './panel.html'
@@ -77,7 +77,7 @@ export default class ControlPanelView extends ContrailChartsView {
   // Event handlers
 
   _onMenuItemClick (d, el) {
-    d3.event.stopPropagation()
+    d3Selection.event.stopPropagation()
     if (d.component) this.open(d)
     else this._actionman.fire(d.id, d)
   }

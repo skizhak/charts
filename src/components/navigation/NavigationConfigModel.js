@@ -2,7 +2,8 @@
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
 import _ from 'lodash'
-import 'd3'
+import * as d3Scale from 'd3-scale'
+import * as d3Shape from 'd3-shape'
 import ContrailChartsConfigModel from 'contrail-charts-config-model'
 
 export default class NavigationConfigModel extends ContrailChartsConfigModel {
@@ -18,9 +19,9 @@ export default class NavigationConfigModel extends ContrailChartsConfigModel {
       chartHeight: undefined,
 
       // Scale to transform values from percentage based selection to visual coordinates
-      selectionScale: d3.scaleLinear().domain([0, 100]),
+      selectionScale: d3Scale.scaleLinear().domain([0, 100]),
 
-      colorScale: d3.scaleOrdinal(d3.schemeCategory20),
+      colorScale: d3Scale.scaleOrdinal(d3Scale.schemeCategory20),
       // Duration of chart transitions.
       duration: 300,
 
@@ -37,7 +38,7 @@ export default class NavigationConfigModel extends ContrailChartsConfigModel {
       marginRight: 50,
       marginInner: 10,
 
-      curve: d3.curveCatmullRom.alpha(0.5),
+      curve: d3Shape.curveCatmullRom.alpha(0.5),
 
       // The selection to use when first rendered [xMin%, xMax%].
       selection: [],

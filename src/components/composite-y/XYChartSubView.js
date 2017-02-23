@@ -2,7 +2,7 @@
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
 import _ from 'lodash'
-import 'd3'
+import * as d3Scale from 'd3-scale'
 import ContrailChartsView from 'contrail-charts-view'
 
 export default class XYChartSubView extends ContrailChartsView {
@@ -36,7 +36,7 @@ export default class XYChartSubView extends ContrailChartsView {
   }
 
   get yScale () {
-    return _.has(this.params.axis[this.axisName], 'scale') ? this.params.axis[this.axisName].scale : d3.scaleLinear()
+    return _.has(this.params.axis[this.axisName], 'scale') ? this.params.axis[this.axisName].scale : d3Scale.scaleLinear()
   }
 
   get axisName () {

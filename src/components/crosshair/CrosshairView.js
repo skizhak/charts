@@ -2,7 +2,8 @@
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
 import './crosshair.scss'
-import 'd3'
+import * as d3Selection from 'd3-selection'
+import * as d3Ease from 'd3-ease'
 import ContrailChartsView from 'contrail-charts-view'
 
 export default class CrosshairView extends ContrailChartsView {
@@ -43,7 +44,7 @@ export default class CrosshairView extends ContrailChartsView {
     linesEnter
       .attr('transform', d => `translate(${d.x(data)}, 0)`)
       .merge(lines)
-      .transition().ease(d3.easeLinear).duration(this.config.get('duration'))
+      .transition().ease(d3Ease.easeLinear).duration(this.config.get('duration'))
       .attr('transform', d => `translate(${d.x(data)}, 0)`)
     linesEnter.append('line')
       .attr('class', this.selectorClass('line'))
@@ -66,7 +67,7 @@ export default class CrosshairView extends ContrailChartsView {
     // Draw bubbles for all enabled y accessors.
     update.each((d, i, els) => {
       const bubbleData = _.filter(config.bubbles, bubble => !!data[bubble.id])
-      const bubbles = d3.select(els[i]).selectAll(this.selectors.bubble)
+      const bubbles = d3Selection.select(els[i]).selectAll(this.selectors.bubble)
         .data(bubbleData, d => d.id)
       bubbles.enter().append('circle')
         .classed(this.selectorClass('bubble'), true)
@@ -75,7 +76,7 @@ export default class CrosshairView extends ContrailChartsView {
         .attr('fill', d => d.color)
         .attr('r', 0)
         .merge(bubbles)
-        .transition().ease(d3.easeLinear).duration(this.config.get('duration'))
+        .transition().ease(d3Ease.easeLinear).duration(this.config.get('duration'))
         .attr('cy', d => d.y(data))
         .attr('r', this.config.get('bubbleR'))
       bubbles.exit().remove()

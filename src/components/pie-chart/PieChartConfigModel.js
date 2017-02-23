@@ -1,7 +1,7 @@
 /*
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
-import 'd3'
+import * as d3Scale from 'd3-scale'
 import ContrailChartsConfigModel from 'contrail-charts-config-model'
 
 export default class PieChartConfigModel extends ContrailChartsConfigModel {
@@ -16,7 +16,7 @@ export default class PieChartConfigModel extends ContrailChartsConfigModel {
       // The chart height. If not provided will be caculated by View.
       chartHeight: undefined,
 
-      colorScale: d3.scaleOrdinal(d3.schemeCategory20),
+      colorScale: d3Scale.scaleOrdinal(d3Scale.schemeCategory20),
 
       onClick: (data, el, chart) => {},
 

@@ -3,7 +3,9 @@
  */
 import './area-chart.scss'
 import _ from 'lodash'
-import 'd3'
+import * as d3Selection from 'd3-selection'
+import * as d3Shape from 'd3-shape'
+import * as d3Ease from 'd3-ease'
 import * as d3Array from 'd3-array'
 import XYChartSubView from 'components/composite-y/XYChartSubView'
 
@@ -62,7 +64,7 @@ export default class AreaChartView extends XYChartSubView {
   render () {
     super.render()
     const data = this.model.data
-    const area = d3.area()
+    const area = d3Shape.area()
       .x(d => this.xScale(d.data[this.params.plot.x.accessor]))
       .y0(d => this.yScale(d[1]))
       .y1(d => this.yScale(d[0]))
@@ -70,8 +72,8 @@ export default class AreaChartView extends XYChartSubView {
 
     const stackGroups = _.groupBy(this.params.activeAccessorData, 'stack')
     _.each(stackGroups, (accessorsByStack, stackName) => {
-      const stack = d3.stack()
-        .offset(d3.stackOffsetNone)
+      const stack = d3Shape.stack()
+        .offset(d3Shape.stackOffsetNone)
         .keys(_.map(accessorsByStack, 'accessor'))
 
       const areas = this.d3.selectAll(`${this.selectors.node}-${stackName}`).data(stack(data))
@@ -79,7 +81,7 @@ export default class AreaChartView extends XYChartSubView {
       areas.enter().append('path')
         .attr('class', d => `${this.selectorClass('node')} ${this.selectorClass('node')}-${d.key} ${this.selectorClass('node')}-${stackName}`)
         .merge(areas)
-        .transition().ease(d3.easeLinear).duration(this.params.duration)
+        .transition().ease(d3Ease.easeLinear).duration(this.params.duration)
         .attr('fill', d => this.config.getColor([], _.find(accessorsByStack, {accessor: d.key})))
         .attr('d', area)
     })
@@ -98,7 +100,7 @@ export default class AreaChartView extends XYChartSubView {
   _onMousemove (d, el) {
     if (this.config.get('tooltipEnabled')) {
       const tooltipId = this.params.activeAccessorData[d.index].tooltip
-      const [left, top] = d3.mouse(this._container)
+      const [left, top] = d3Selection.mouse(this._container)
       const xAccessor = this.params.plot.x.accessor
       const xVal = this.xScale.invert(left)
       const dataItem = this.model.getNearest(xAccessor, xVal)
