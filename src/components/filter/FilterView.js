@@ -2,7 +2,7 @@
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
 import './filter.scss'
-import 'd3'
+import * as d3Selection from 'd3-selection'
 import ContrailChartsView from 'contrail-charts-view'
 import _template from './filter.html'
 
@@ -28,7 +28,7 @@ export default class FilterView extends ContrailChartsView {
   }
 
   _onItemClick (d, el) {
-    d3.event.stopPropagation()
+    d3Selection.event.stopPropagation()
     const accessorName = el.value
     const isChecked = el.checked
     this._actionman.fire('SelectSerie', accessorName, isChecked)

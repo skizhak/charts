@@ -3,7 +3,9 @@
  */
 import './bar-chart.scss'
 import _ from 'lodash'
-import 'd3'
+import * as d3Scale from 'd3-scale'
+import * as d3Array from 'd3-array'
+import * as d3Selection from 'd3-selection'
 import * as d3Ease from 'd3-ease'
 import XYChartSubView from 'components/composite-y/XYChartSubView'
 
@@ -60,8 +62,8 @@ export default class BarChartView extends XYChartSubView {
     // Create a flat data structure
     const numOfAccessors = _.keys(this.params.activeAccessorData).length
     const bandWidthHalf = this.bandWidth / 2
-    const innerBandScale = d3.scaleBand()
-      .domain(d3.range(numOfAccessors))
+    const innerBandScale = d3Scale.scaleBand()
+      .domain(d3Array.range(numOfAccessors))
       .range([-bandWidthHalf, bandWidthHalf])
       .paddingInner(0.05)
       .paddingOuter(0.05)
@@ -114,7 +116,7 @@ export default class BarChartView extends XYChartSubView {
 
   _onMousemove (d, el, event) {
     if (this.config.get('tooltipEnabled')) {
-      const [left, top] = d3.mouse(this._container)
+      const [left, top] = d3Selection.mouse(this._container)
       this._actionman.fire('ShowComponent', d.accessor.tooltip, {left, top}, d.data)
     }
     el.classList.add(this.selectorClass('active'))

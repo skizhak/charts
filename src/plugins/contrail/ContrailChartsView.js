@@ -1,7 +1,7 @@
 /*
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
-import 'd3'
+import * as d3Selection from 'd3-selection'
 import ContrailView from 'contrail-view'
 /**
  * View base class.
@@ -64,7 +64,7 @@ export default class ContrailChartsView extends ContrailView {
    * @return {Object} d3 selection - container to render into
    */
   get container () {
-    return d3.select(this._container)
+    return d3Selection.select(this._container)
   }
   /**
    * One-time setter

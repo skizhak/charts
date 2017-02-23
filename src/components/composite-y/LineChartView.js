@@ -3,7 +3,8 @@
  */
 import './line-chart.scss'
 import _ from 'lodash'
-import 'd3'
+import * as d3Array from 'd3-array'
+import * as d3Selection from 'd3-selection'
 import {interpolatePath as d3InterpolatePath} from 'd3-interpolate-path'
 import 'd3-transition'
 import * as d3Shape from 'd3-shape'
@@ -74,7 +75,7 @@ export default class LineChartView extends XYChartSubView {
   _interpolate (d) {
     const interpolate = d3Scale.scaleQuantile()
       .domain([0, 1])
-      .range(d3.range(1, d.data.length + 1))
+      .range(d3Array.range(1, d.data.length + 1))
 
     return (t) => {
       const interpolatedLine = d.data.slice(0, interpolate(t))
@@ -86,7 +87,7 @@ export default class LineChartView extends XYChartSubView {
 
   _onMouseover (d, el) {
     if (this.config.get('tooltipEnabled')) {
-      const [left, top] = d3.mouse(this._container)
+      const [left, top] = d3Selection.mouse(this._container)
       const xAccessor = this.params.plot.x.accessor
       const xVal = this.xScale.invert(left)
       const dataItem = this.model.getNearest(xAccessor, xVal)

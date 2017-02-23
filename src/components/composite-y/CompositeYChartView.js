@@ -3,8 +3,10 @@
  */
 import './composite-y.scss'
 import _ from 'lodash'
-import 'd3'
+import * as d3Ease from 'd3-ease'
+import * as d3Axis from 'd3-axis'
 import * as d3Array from 'd3-array'
+import * as d3TimeFormat from 'd3-time-format'
 import ContrailChartsView from 'contrail-charts-view'
 import LineChartView from 'components/composite-y/LineChartView'
 import AreaChartView from 'components/composite-y/AreaChartView'
@@ -299,19 +301,19 @@ export default class CompositeYChartView extends ContrailChartsView {
     const axis = this.params.axis[name]
     if (!axis.scale) return
 
-    let d3Axis = d3.axisBottom(axis.scale)
+    let xAxis = d3Axis.axisBottom(axis.scale)
       .tickSize(this.params.yRange[0] - this.params.yRange[1] + 2 * this.params.marginInner)
       .tickPadding(10)
     if (this.hasAxisParam('x', 'ticks')) {
-      d3Axis = d3Axis.ticks(axis.ticks)
+      xAxis = xAxis.ticks(axis.ticks)
     } else {
-      d3Axis = d3Axis.ticks(this.params._xTicks)
+      xAxis = xAxis.ticks(this.params._xTicks)
     }
     if (this.hasAxisConfig('x', 'formatter')) {
-      d3Axis = d3Axis.tickFormat(this.config.get('axis').x.formatter)
+      xAxis = xAxis.tickFormat(this.config.get('axis').x.formatter)
     }
-    this.d3.transition().ease(d3.easeLinear).duration(this.params.duration)
-    this.d3.select('.axis.x-axis').call(d3Axis)
+    this.d3.transition().ease(d3Ease.easeLinear).duration(this.params.duration)
+    this.d3.select('.axis.x-axis').call(xAxis)
 
     const labelData = []
     let labelMargin = 5
@@ -349,11 +351,11 @@ export default class CompositeYChartView extends ContrailChartsView {
       if (axisInfo.position === 'right') {
         yLabelX = this.params.chartWidth - this.params.marginLeft - yLabelMargin
         yLabelTransform = 'rotate(90)'
-        axisInfo.yAxis = d3.axisRight(this.params.axis[axisInfo.name].scale)
+        axisInfo.yAxis = d3Axis.axisRight(this.params.axis[axisInfo.name].scale)
           .tickSize((this.params.xRange[1] - this.params.xRange[0] + 2 * this.xMarginInner))
           .tickPadding(5)
       } else {
-        axisInfo.yAxis = d3.axisLeft(this.params.axis[axisInfo.name].scale)
+        axisInfo.yAxis = d3Axis.axisLeft(this.params.axis[axisInfo.name].scale)
           .tickSize(-(this.params.xRange[1] - this.params.xRange[0] + 2 * this.xMarginInner))
           .tickPadding(5)
       }
@@ -418,7 +420,7 @@ export default class CompositeYChartView extends ContrailChartsView {
     const xScale = this.params.axis[this.params.plot.x.axis].scale
     const xAccessor = this.params.plot.x.accessor
     const mouseX = xScale.invert(point[0])
-    const xBisector = d3.bisector(d => d[xAccessor]).right
+    const xBisector = d3Array.bisector(d => d[xAccessor]).right
     const indexRight = xBisector(data, mouseX, 0, data.length - 1)
     let indexLeft = indexRight - 1
     if (indexLeft < 0) indexLeft = 0
@@ -443,7 +445,7 @@ export default class CompositeYChartView extends ContrailChartsView {
 
     // Prepare x label formatter
     data.xFormat = this.config.get('axis')[x.axis].formatter
-    if (!_.isFunction(data.xFormat)) data.xFormat = d3.timeFormat('%H:%M')
+    if (!_.isFunction(data.xFormat)) data.xFormat = d3TimeFormat.timeFormat('%H:%M')
 
     // Prepare line coordinates
     data.line = {

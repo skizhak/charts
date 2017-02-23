@@ -3,7 +3,8 @@
  */
 import './bar-chart.scss'
 import _ from 'lodash'
-import 'd3'
+import * as d3Selection from 'd3-selection'
+import * as d3Ease from 'd3-ease'
 import XYChartSubView from 'components/composite-y/XYChartSubView'
 
 export default class StackedBarChartView extends XYChartSubView {
@@ -73,7 +74,7 @@ export default class StackedBarChartView extends XYChartSubView {
       .attr('y', start)
       .attr('height', 0)
       .attr('width', d => d.w)
-      .merge(barGroups).transition().ease(d3.easeLinear).duration(this.params.duration)
+      .merge(barGroups).transition().ease(d3Ease.easeLinear).duration(this.params.duration)
       .attr('fill', d => d.color)
       .attr('x', d => d.x)
       .attr('y', d => d.y)
@@ -115,7 +116,7 @@ export default class StackedBarChartView extends XYChartSubView {
 
   _onMousemove (d, el, event) {
     if (this.config.get('tooltipEnabled')) {
-      const [left, top] = d3.mouse(this._container)
+      const [left, top] = d3Selection.mouse(this._container)
       this._actionman.fire('ShowComponent', d.accessor.tooltip, {left, top}, d.data)
     }
     el.classList.add(this.selectorClass('active'))

@@ -2,7 +2,8 @@
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
 */
 import _ from 'lodash'
-import 'd3'
+import * as d3Scale from 'd3-scale'
+import * as d3Shape from 'd3-shape'
 import ContrailChartsConfigModel from 'contrail-charts-config-model'
 
 export default class CompositeYChartConfigModel extends ContrailChartsConfigModel {
@@ -21,7 +22,7 @@ export default class CompositeYChartConfigModel extends ContrailChartsConfigMode
       // The chart height. If not provided will be calculated by View.
       chartHeight: undefined,
 
-      colorScale: d3.scaleOrdinal(d3.schemeCategory20),
+      colorScale: d3Scale.scaleOrdinal(d3Scale.schemeCategory20),
       // Duration of chart transitions.
       duration: 300,
 
@@ -39,7 +40,7 @@ export default class CompositeYChartConfigModel extends ContrailChartsConfigMode
       marginRight: 50,
       marginInner: 10,
 
-      curve: d3.curveCatmullRom.alpha(0.5),
+      curve: d3Shape.curveCatmullRom.alpha(0.5),
       axisPositions: ['left', 'right', 'top', 'bottom'],
       plot: {},
       axis: {},
@@ -54,9 +55,9 @@ export default class CompositeYChartConfigModel extends ContrailChartsConfigMode
    */
   getScale (name) {
     const axis = this.attributes.axis[name] || {}
-    if (_.isFunction(d3[axis.scale])) return d3[axis.scale]()
-    if (['bottom', 'top'].includes(this.getPosition(name))) return d3.scaleTime()
-    return d3.scaleLinear()
+    if (_.isFunction(d3Scale[axis.scale])) return d3Scale[axis.scale]()
+    if (['bottom', 'top'].includes(this.getPosition(name))) return d3Scale.scaleTime()
+    return d3Scale.scaleLinear()
   }
   /**
    * @param {String} name of the axis
