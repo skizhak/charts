@@ -13,4 +13,14 @@
       shape-rendering: geometricPrecision;
     }
   }
+  .bucket {
+    opacity: 0.8;
+    fill: steelblue;
+
+    text {
+      text-anchor: middle;
+      alignment-baseline: middle;
+      stroke: black;
+    }
+  }
 }

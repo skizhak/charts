@@ -47,16 +47,6 @@ export default class ScatterPlotView extends XYChartSubView {
     super.render()
     const {points: data, buckets: bucketData} = this._prepareData()
 
-    const buckets = this.d3.selectAll(this.selectors.bucket)
-      .data(bucketData, d => d.id)
-
-    buckets.enter()
-      .append('circle')
-      .classed(this.selectorClass('bucket'), true)
-      .attr('cx', d => d.x)
-      .attr('cy', d => d.y)
-      .attr('r', d => d.r)
-
     let points = this.d3.selectAll(this.selectors.node)
       .data(data, d => d.id)
 
@@ -74,7 +64,27 @@ export default class ScatterPlotView extends XYChartSubView {
       .transition().ease(d3Ease.easeLinear).duration(this.params.duration)
       .attr('transform', d => `translate(${d.x},${d.y})`)
 
+    const buckets = this.d3.selectAll(this.selectors.bucket)
+      .data(bucketData, d => d.id)
+
+    const bucketGroups = buckets.enter()
+      .append('g')
+      .classed(this.selectorClass('bucket'), true)
+      .attr('transform', d => `translate(${d.x},${d.y})`)
+    bucketGroups
+      .append('circle')
+      .attr('r', d => d.r)
+    bucketGroups
+      .append('text')
+      .text(d => d.bucket.length)
+      .style('font-size', d => d.r * 1.5)
+    // Update
+    buckets
+      .transition().ease(d3Ease.easeLinear).duration(this.params.duration)
+      .attr('transform', d => `translate(${d.x},${d.y})`)
+
     points.exit().remove()
+    buckets.exit().remove()
   }
   /**
    * Create a flat data structure
