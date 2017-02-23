@@ -35,12 +35,30 @@ export default (env = defaultEnv) => {
       presets: ['es2015'],
     }
   }]
+  /**
+   * By default we will exclude bundling d3 modules with library.
+   * To make it easier to use this library, all modules are resolved to d3.
+   * Keep d3 version 4 in global scope or in amd scenario, export d3 version 4 as d3v4.
+   * In the case of co-existing with older version of d3:
+   *  1. in amd, use d3 to point to older version and use d3v4 to point to version 4
+   *  2. other cases, use library bundled with the d3 v4 modules. build library with 'npm run build:lib:withD3'
+   *     use the built contrail-charts.bundle.js or min file
+   *  Note: updating d3 specific module, update package.json run target build:lib:withD3
+   */
   const externals = {
-    jquery: { amd: 'jquery', root: 'jQuery' },
-    d3: { amd: 'd3v4', root: 'd3' },
-    d3Array: { amd: 'd3-array', root: 'd3-array' },
-    lodash: { amd: 'lodash', root: '_' },
-    backbone: { amd: 'backbone', root: 'Backbone' },
+    'jquery': {amd: 'jquery', root: 'jQuery'},
+    'd3': {amd: 'd3v4', root: 'd3'},
+    'd3-selection': {amd: 'd3v4', root: 'd3'},
+    'd3-scale': {amd: 'd3v4', root: 'd3'},
+    'd3-shape': {amd: 'd3v4', root: 'd3'},
+    'd3-array': {amd: 'd3v4', root: 'd3'},
+    'd3-axis': {amd: 'd3v4', root: 'd3'},
+    'd3-ease': {amd: 'd3v4', root: 'd3'},
+    'd3-brush': {amd: 'd3v4', root: 'd3'},
+    'd3-time-format': {amd: 'd3v4', root: 'd3'},
+    'd3-hierarchy': {amd: 'd3v4', root: 'd3'},
+    'lodash': {amd: 'lodash', root: '_'},
+    'backbone': {amd: 'backbone', root: 'Backbone'},
   }
 
   if (env.prod) {
