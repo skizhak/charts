@@ -8,14 +8,14 @@ import ContrailChartsConfigModel from 'contrail-charts-config-model'
 export default class ColorPickerConfigModel extends ContrailChartsConfigModel {
   get defaults () {
     return {
-      palette: d3Scale.schemeCategory20,
+      colorScheme: d3Scale.schemeCategory20,
     }
   }
   /**
    * Ask parent component for serie accessors
    */
   get data () {
-    const data = {colors: this.attributes.palette}
+    const data = {colors: this.attributes.colorScheme}
     const accessors = this._parent.getAccessors()
     data.series = _.map(accessors, (accessor) => {
       return {

@@ -31,7 +31,7 @@ const chartConfig = {
       parentSeparation: 1.0,
       parentSeparationShrinkFactor: 0.05,
       parentSeparationDepthThreshold: 4,
-      colorScale: d3.scaleOrdinal().range(_c.radialColorScheme10), // eslint-disable-line no-undef
+      colorScheme: _c.radialColorScheme10,
       drawLinks: false,
       drawRibbons: true,
       arcWidth: 15,
