@@ -1,6 +1,7 @@
 // Copyright (c) Juniper Networks, Inc. All rights reserved.
 
 import './pie-chart.scss'
+import * as d3Selection from 'd3-selection'
 import * as d3Shape from 'd3-shape'
 import ContrailChartsView from 'contrail-charts-view'
 import TitleView from 'plugins/title/TitleView'
@@ -96,10 +97,10 @@ export default class PieChartView extends ContrailChartsView {
   }
 
   _onMousemove (d, el, event) {
-    const [left, top] = d3.mouse(this._container)
+    const [left, top] = d3Selection.mouse(this._container)
     const onClickCursor = this.config.get('onClickCursor')
     if (onClickCursor) {
-      d3.select(el)
+      d3Selection.select(el)
         .classed(this.selectorClass('click'), true)
         .style('cursor', () => (typeof (onClickCursor) === 'boolean') ? 'pointer' : onClickCursor)
     }

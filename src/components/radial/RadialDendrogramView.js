@@ -3,7 +3,10 @@
  */
 import './radial-dendogram.scss'
 import _ from 'lodash'
-import 'd3'
+import * as d3Hierarchy from 'd3-hierarchy'
+import * as d3Scale from 'd3-scale'
+import * as d3Selection from 'd3-selection'
+import * as d3Shape from 'd3-shape'
 import ContrailChartsView from 'contrail-charts-view'
 
 export default class RadialDendrogramView extends ContrailChartsView {
@@ -154,7 +157,7 @@ export default class RadialDendrogramView extends ContrailChartsView {
 
   _prepareHierarchyRootNode () {
     const valueScale = this.config.get('valueScale').domain([0.01, this.valueSum]).range([0, 360])
-    this.hierarchyRootNode = d3.hierarchy(this.rootNode).sum((d) => valueScale(d.value)).sort((a, b) => b.value - a.value)
+    this.hierarchyRootNode = d3Hierarchy.hierarchy(this.rootNode).sum((d) => valueScale(d.value)).sort((a, b) => b.value - a.value)
     // console.log('hierarchyRootNode: ', this.hierarchyRootNode)
   }
 
@@ -175,8 +178,8 @@ export default class RadialDendrogramView extends ContrailChartsView {
   _prepareCluster () {
     const extraPaddingPerDepth = _.fill(_.range(this.params.drillDownLevel + 1), 0)
     // Create the cluster layout.
-    const cluster = d3.cluster().size([360, this.params.innerRadius])
-    // const cluster = d3.tree().size([360, this.params.innerRadius])
+    const cluster = d3Hierarchy.cluster().size([360, this.params.innerRadius])
+    // const cluster = d3Hierarchy.tree().size([360, this.params.innerRadius])
     .separation((a, b) => {
       let distance = (a.value + b.value) / 2
       if (a.parent !== b.parent) {
@@ -195,7 +198,7 @@ export default class RadialDendrogramView extends ContrailChartsView {
 
   _prepareCircles () {
     this.circles = []
-    const radiusScale = d3.scaleLinear().domain([0, this.params.drillDownLevel]).range([0, this.params.innerRadius]).clamp(true)
+    const radiusScale = d3Scale.scaleLinear().domain([0, this.params.drillDownLevel]).range([0, this.params.innerRadius]).clamp(true)
     this.hierarchyRootNode.each((n) => {
       if (!n.parent || !n.children) {
         return
@@ -215,7 +218,7 @@ export default class RadialDendrogramView extends ContrailChartsView {
     const depthValueOffset = [0]
     this.hierarchyRootNode.angleRange = [0, 360]
     this.hierarchyRootNode.valueRange = [0, this.hierarchyRootNode.value]
-    this.hierarchyRootNode.angleScale = d3.scaleLinear().domain(this.hierarchyRootNode.valueRange).range(this.hierarchyRootNode.angleRange)
+    this.hierarchyRootNode.angleScale = d3Scale.scaleLinear().domain(this.hierarchyRootNode.valueRange).range(this.hierarchyRootNode.angleRange)
     this.hierarchyRootNode.each((n) => {
       if (!n.parent) {
         return
@@ -237,7 +240,7 @@ export default class RadialDendrogramView extends ContrailChartsView {
       minAngle += n.separationValue
       maxAngle -= n.separationValue
       n.angleRange = [minAngle, maxAngle]
-      n.angleScale = d3.scaleLinear().domain(n.valueRange).range(n.angleRange)
+      n.angleScale = d3Scale.scaleLinear().domain(n.valueRange).range(n.angleRange)
     })
     // Now shrink the parent nodes by the amount of sepration added to children.
     this.hierarchyRootNode.each((n) => {
@@ -250,7 +253,7 @@ export default class RadialDendrogramView extends ContrailChartsView {
       })
       n.angleRange[0] += separationValueOfChildren
       n.angleRange[1] -= separationValueOfChildren
-      n.angleScale = d3.scaleLinear().domain(n.valueRange).range(n.angleRange)
+      n.angleScale = d3Scale.scaleLinear().domain(n.valueRange).range(n.angleRange)
     })
   }
 
@@ -410,7 +413,7 @@ export default class RadialDendrogramView extends ContrailChartsView {
 
     if (this.params.drawLinks) {
       // Links
-      const radialLine = d3.radialLine().angle((d) => d.x / 180 * Math.PI).radius((d) => d.y).curve(this.config.get('curve'))
+      const radialLine = d3Shape.radialLine().angle((d) => d.x / 180 * Math.PI).radius((d) => d.y).curve(this.config.get('curve'))
       const svgLinks = this.d3.selectAll('.link').data(this.links)
       svgLinks.enter().append('path')
         .attr('class', (d) => 'link ' + d[0].data.id)
@@ -422,7 +425,7 @@ export default class RadialDendrogramView extends ContrailChartsView {
     }
     if (this.params.drawRibbons) {
       // Ribbons
-      const radialLine = d3.radialLine().angle((d) => d[0] / 180 * Math.PI).radius((d) => d[1]).curve(this.config.get('curve'))
+      const radialLine = d3Shape.radialLine().angle((d) => d[0] / 180 * Math.PI).radius((d) => d[1]).curve(this.config.get('curve'))
       const svgLinks = this.d3.selectAll('.ribbon').data(this.ribbons, (d) => d.id)
       svgLinks.enter().append('path')
         .attr('class', (d) => 'ribbon' + ((d.active) ? ' active' : ''))
@@ -451,12 +454,12 @@ export default class RadialDendrogramView extends ContrailChartsView {
       svgArcLabels.exit().remove()
 
       // Arcs for parent nodes.
-      const arcEnter = d3.arc()
+      const arcEnter = d3Shape.arc()
         .innerRadius((n) => n.y)
         .outerRadius((n) => n.y + 1)
         .startAngle((n) => Math.PI * n.angleRange[0] / 180)
         .endAngle((n) => Math.PI * n.angleRange[1] / 180)
-      const arc = d3.arc()
+      const arc = d3Shape.arc()
         .innerRadius((n) => n.y)
         .outerRadius((n) => n.y + this.params.arcWidth)
         .startAngle((n) => Math.PI * n.angleRange[0] / 180)
@@ -491,7 +494,7 @@ export default class RadialDendrogramView extends ContrailChartsView {
       ribbon.active = Boolean(_.find(leaves, (leaf) => leaf.data.linkId === ribbon.id))
     })
     this._render()
-    const [left, top] = d3.mouse(this._container)
+    const [left, top] = d3Selection.mouse(this._container)
     this._actionman.fire('ShowComponent', this.config.get('tooltip'), {left, top}, d.data)
   }
 

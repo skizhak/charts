@@ -1,7 +1,9 @@
 /*
  * Copyright (c) 2016 Juniper Networks, Inc. All rights reserved.
  */
-import 'd3'
+import * as d3Scale from 'd3-scale'
+import * as d3Ease from 'd3-ease'
+import * as d3Shape from 'd3-shape'
 import _ from 'lodash'
 import ContrailChartsConfigModel from 'contrail-charts-config-model'
 
@@ -14,17 +16,17 @@ export default class RadialDendrogramConfigModel extends ContrailChartsConfigMod
       // The chart height. If not provided will be caculated by View.
       chartHeight: undefined,
 
-      colorScale: d3.scaleOrdinal(d3.schemeCategory20),
+      colorScale: d3Scale.scaleOrdinal(d3Scale.schemeCategory20),
 
       // The labels of the levels.
       levels: [],
 
       // The duration of transitions.
-      ease: d3.easeCubic,
+      ease: d3Ease.easeCubic,
       duration: 500,
 
-      valueScale: d3.scaleLog(),
-      // valueScale: d3.scaleLinear(),
+      valueScale: d3Scale.scaleLog(),
+      // valueScale: d3Scale.scaleLinear(),
 
       // The separation in degrees between nodes with different parents
       parentSeparation: 1,
@@ -48,13 +50,13 @@ export default class RadialDendrogramConfigModel extends ContrailChartsConfigMod
       // Initial drill down level
       drillDownLevel: 1,
 
-      // curve: d3.curveBundle.beta(0.85)
-      // curve: d3.curveBundle.beta(0.95)
-      // curve: d3.curveBundle.beta(1)
-      curve: d3.curveCatmullRom.alpha(0.5)
-      // curve: d3.curveCatmullRom.alpha(0.75)
-      // curve: d3.curveCatmullRom.alpha(1)
-      // curve: d3.curveLinear
+      // curve: d3Shape.curveBundle.beta(0.85)
+      // curve: d3Shape.curveBundle.beta(0.95)
+      // curve: d3Shape.curveBundle.beta(1)
+      curve: d3Shape.curveCatmullRom.alpha(0.5)
+      // curve: d3Shape.curveCatmullRom.alpha(0.75)
+      // curve: d3Shape.curveCatmullRom.alpha(1)
+      // curve: d3Shape.curveLinear
     }
   }
 

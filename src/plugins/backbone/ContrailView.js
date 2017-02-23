@@ -4,14 +4,14 @@
 import _ from 'lodash'
 import Backbone from 'backbone'
 import $ from 'jquery'
-import 'd3'
+import * as d3Selection from 'd3-selection'
 
-d3.selection.prototype.delegate = function (eventName, targetSelector, handler) {
+d3Selection.selection.prototype.delegate = function (eventName, targetSelector, handler) {
   function delegated () {
     // TODO use jquery.closest d3 alternative here
     // as native closest is not supported in IE15
-    const eventTarget = $(d3.event.target).closest(targetSelector)[0]
-    if (eventTarget) handler.call(eventTarget, eventTarget.__data__, eventTarget, d3.event)
+    const eventTarget = $(d3Selection.event.target).closest(targetSelector)[0]
+    if (eventTarget) handler.call(eventTarget, eventTarget.__data__, eventTarget, d3Selection.event)
   }
   return this.on(eventName, delegated)
 }
@@ -88,6 +88,6 @@ export default class ContrailView extends Backbone.View {
    */
   _setElement (el) {
     super._setElement(el)
-    this.d3 = d3.select(el)
+    this.d3 = d3Selection.select(el)
   }
 }

@@ -2,13 +2,13 @@
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
 import _ from 'lodash'
-import 'd3'
+import * as d3Scale from 'd3-scale'
 import ContrailChartsConfigModel from 'contrail-charts-config-model'
 
 export default class ColorPickerConfigModel extends ContrailChartsConfigModel {
   get defaults () {
     return {
-      palette: d3.schemeCategory20,
+      palette: d3Scale.schemeCategory20,
     }
   }
   /**
