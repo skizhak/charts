@@ -3,7 +3,10 @@
  */
 import './scatter-plot.scss'
 import _ from 'lodash'
+import * as d3 from 'd3'
+import {hashCode} from '../../plugins/Util'
 import 'd3-transition'
+import Cluster from './cluster'
 import * as d3Ease from 'd3-ease'
 import XYChartSubView from 'components/composite-y/XYChartSubView'
 
@@ -15,6 +18,7 @@ export default class ScatterPlotView extends XYChartSubView {
   get selectors () {
     return _.extend(super.selectors, {
       node: '.point',
+      bucket: '.bucket',
     })
   }
 
@@ -41,9 +45,20 @@ export default class ScatterPlotView extends XYChartSubView {
 
   render () {
     super.render()
+    const {points: data, buckets: bucketData} = this._prepareData()
+
+    const buckets = this.d3.selectAll(this.selectors.bucket)
+      .data(bucketData, d => d.id)
+
+    buckets.enter()
+      .append('circle')
+      .classed(this.selectorClass('bucket'), true)
+      .attr('cx', d => d.x)
+      .attr('cy', d => d.y)
+      .attr('r', d => d.r)
 
     let points = this.d3.selectAll(this.selectors.node)
-      .data(this._prepareData(), d => d.id)
+      .data(data, d => d.id)
 
     points.enter()
       .append('text')
@@ -51,7 +66,7 @@ export default class ScatterPlotView extends XYChartSubView {
       .attr('transform', d => `translate(${d.x},${d.y})`)
       .merge(points)
       .html(d => d.shape)
-      .attr('fill', d => d.color)
+      .attr('fill', d => d.overlap ? 'none' : d.color)
       .style('font-size', d => Math.sqrt(d.area))
 
     // Update
@@ -65,7 +80,7 @@ export default class ScatterPlotView extends XYChartSubView {
    * Create a flat data structure
    */
   _prepareData () {
-    const flatData = []
+    const points = []
     _.map(this.model.data, d => {
       const x = d[this.params.plot.x.accessor]
       _.each(this.params.activeAccessorData, accessor => {
@@ -82,12 +97,42 @@ export default class ScatterPlotView extends XYChartSubView {
             color: this.config.getColor(d, accessor),
             accessor: accessor,
             data: d,
+            halfWidth: Math.sqrt(sizeScale(d[accessor.sizeAccessor])) / 2,
+            halfHeight: Math.sqrt(sizeScale(d[accessor.sizeAccessor])) / 2,
           }
-          flatData.push(obj)
+          points.push(obj)
         }
       })
     })
-    return flatData
+    const cluster = new Cluster()
+    cluster
+      .x(d => d.x)
+      .y(d => d.y)
+      .data(points)
+    const buckets = cluster.buckets()
+
+    _.each(buckets, d => {
+      d.id = this._getBucketId(d)
+      d.r = this._getBucketRadius(d)
+    })
+
+    return {points, buckets}
+  }
+
+  _getBucketId (bucket) {
+    const summaryId = _.reduce(bucket.bucket, (sum, datum) => {
+      sum += datum.id
+      return sum
+    }, '')
+    return hashCode(summaryId)
+  }
+
+  _getBucketRadius (bucket) {
+    let sum = _.reduce(bucket.bucket, (sum, datum) => {
+      sum += datum.area
+      return sum
+    }, 0)
+    return Math.sqrt(sum / Math.PI)
   }
 
   // Event handlers
