@@ -44,7 +44,7 @@ const chartConfig = {
     config: {
       type: 'donut',
       radius: 150,
-      colorScale: d3.scaleOrdinal().range(d3.schemeCategory20), // eslint-disable-line no-undef
+      colorScheme: d3.schemeCategory20, // eslint-disable-line no-undef
       serie: {
         getValue: getValue,
         getLabel: getLabel,

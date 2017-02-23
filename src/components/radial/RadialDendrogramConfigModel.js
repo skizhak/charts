@@ -16,7 +16,9 @@ export default class RadialDendrogramConfigModel extends ContrailChartsConfigMod
       // The chart height. If not provided will be caculated by View.
       chartHeight: undefined,
 
-      colorScale: d3Scale.scaleOrdinal(d3Scale.schemeCategory20),
+      colorScheme: d3Scale.schemeCategory20,
+      // default we're keeping colorScale as undefined. during init, we will set it to ordinal scale of colorScheme. If set, this has precedence over scheme.
+      colorScale: undefined,
 
       // The labels of the levels.
       levels: [],
@@ -58,6 +60,11 @@ export default class RadialDendrogramConfigModel extends ContrailChartsConfigMod
       // curve: d3Shape.curveCatmullRom.alpha(1)
       // curve: d3Shape.curveLinear
     }
+  }
+
+  initialize (p) {
+    // User should provide colorScheme instead of colorScale. it can be always overridden. if colorScale is not provided, lets use the colorScheme to create one.
+    if (!this.attributes.colorScale && p.colorScheme) this.attributes.colorScale = d3Scale.scaleOrdinal(p.colorScheme)
   }
 
   getColor (data, accessor) {

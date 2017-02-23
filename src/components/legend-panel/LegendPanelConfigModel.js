@@ -15,7 +15,7 @@ const chartTypeIconMap = {
 export default class LegendPanelConfigModel extends ContrailChartsConfigModel {
   get defaults () {
     return {
-      palette: d3Scale.schemeCategory20,
+      colorScheme: d3Scale.schemeCategory20,
       editable: {
         colorSelector: true,
         chartSelector: true
@@ -41,7 +41,7 @@ export default class LegendPanelConfigModel extends ContrailChartsConfigModel {
     })
 
     const data = {
-      colors: this.attributes.palette,
+      colors: this.attributes.colorScheme,
       possibleChartTypes: possibleChartTypes,
       editable: this.attributes.editable.colorSelector || this.attributes.editable.chartSelector,
       axesCount: axesCount
