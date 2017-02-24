@@ -3,14 +3,23 @@
  */
 import './scatter-plot.scss'
 import _ from 'lodash'
-import {hashCode} from '../../plugins/Util'
 import 'd3-transition'
-import Cluster from './cluster'
 import * as d3Selection from 'd3-selection'
 import * as d3Ease from 'd3-ease'
 import XYChartSubView from 'components/composite-y/XYChartSubView'
+import BucketConfigModel from 'components/bucket/BucketConfigModel'
+import BucketView from 'components/bucket/BucketView'
 
 export default class ScatterPlotView extends XYChartSubView {
+  constructor (p) {
+    super(p)
+    this._bucketConfig = new BucketConfigModel(this.config.get('bucket'))
+    this._bucketConfig.set('duration', this.config.get('duration'))
+    this._bucketView = new BucketView({
+      config: this._bucketConfig,
+    })
+  }
+
   get zIndex () { return 1 }
   /**
    * follow same naming convention for all XY chart sub views
@@ -18,7 +27,6 @@ export default class ScatterPlotView extends XYChartSubView {
   get selectors () {
     return _.extend(super.selectors, {
       node: '.point',
-      bucket: '.bucket',
     })
   }
 
@@ -45,7 +53,9 @@ export default class ScatterPlotView extends XYChartSubView {
 
   render () {
     super.render()
-    const {points: data, buckets: bucketData} = this._prepareData()
+    this._bucketView.container = this._container
+    const data = this._prepareData()
+    this._bucketView.render(data)
 
     let points = this.d3.selectAll(this.selectors.node)
       .data(data, d => d.id)
@@ -56,35 +66,16 @@ export default class ScatterPlotView extends XYChartSubView {
       .attr('transform', d => `translate(${d.x},${d.y})`)
       .merge(points)
       .html(d => d.shape)
+      // overlap attribute is set in Bucket View
       .attr('fill', d => d.overlap ? 'none' : d.color)
       .style('font-size', d => Math.sqrt(d.area))
 
     // Update
     points
-      .transition().ease(d3Ease.easeLinear).duration(this.params.duration)
-      .attr('transform', d => `translate(${d.x},${d.y})`)
-
-    const buckets = this.d3.selectAll(this.selectors.bucket)
-      .data(bucketData, d => d.id)
-
-    const bucketGroups = buckets.enter()
-      .append('g')
-      .classed(this.selectorClass('bucket'), true)
-      .attr('transform', d => `translate(${d.x},${d.y})`)
-    bucketGroups
-      .append('circle')
-      .attr('r', d => d.r)
-    bucketGroups
-      .append('text')
-      .text(d => d.bucket.length)
-      .style('font-size', d => d.r * 1.5)
-    // Update
-    buckets
-      .transition().ease(d3Ease.easeLinear).duration(this.params.duration)
+      .transition().ease(d3Ease.easeLinear).duration(this.config.get('duration'))
       .attr('transform', d => `translate(${d.x},${d.y})`)
 
     points.exit().remove()
-    buckets.exit().remove()
   }
   /**
    * Create a flat data structure
@@ -114,35 +105,7 @@ export default class ScatterPlotView extends XYChartSubView {
         }
       })
     })
-    const cluster = new Cluster()
-    cluster
-      .x(d => d.x)
-      .y(d => d.y)
-      .data(points)
-    const buckets = cluster.buckets()
-
-    _.each(buckets, d => {
-      d.id = this._getBucketId(d)
-      d.r = this._getBucketRadius(d)
-    })
-
-    return {points, buckets}
-  }
-
-  _getBucketId (bucket) {
-    const summaryId = _.reduce(bucket.bucket, (sum, datum) => {
-      sum += datum.id
-      return sum
-    }, '')
-    return hashCode(summaryId)
-  }
-
-  _getBucketRadius (bucket) {
-    let sum = _.reduce(bucket.bucket, (sum, datum) => {
-      sum += datum.area
-      return sum
-    }, 0)
-    return Math.sqrt(sum / Math.PI)
+    return points
   }
 
   // Event handlers

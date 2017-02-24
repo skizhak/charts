@@ -99,6 +99,11 @@ const chartConfig = {
           label: 'Y value of Square and Star',
         }
       },
+      bucket: {
+        range: [300, 500],
+        shape: bubbleShapes.circleFill,
+        color: '#ff7f0e',
+      }
     }
   }, {
     id: 'tooltip-id',
