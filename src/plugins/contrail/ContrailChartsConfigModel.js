@@ -72,5 +72,7 @@ export default class ContrailChartsConfigModel extends ContrailModel {
    * @param {String} type Component type
    * @param {Boolean} enable Change state of this component
    */
-  toggleComponent (type, enable) {}
+  toggleComponent (type, enable) {
+    this.set(`${type}Enabled`, !enable, {silent: true})
+  }
 }

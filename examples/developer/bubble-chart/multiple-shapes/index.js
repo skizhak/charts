@@ -103,6 +103,7 @@ const chartConfig = {
         range: [300, 500],
         shape: bubbleShapes.circleFill,
         color: '#ff7f0e',
+        tooltip: 'tooltip-bucket',
       }
     }
   }, {
@@ -113,7 +114,6 @@ const chartConfig = {
         accessor: 'x',
         valueFormatter: formatter.extendedISOTime,
       },
-
       dataConfig: [
         {
           accessor: 'data1',
@@ -138,6 +138,14 @@ const chartConfig = {
         }
       ]
     }
+  }, {
+    id: 'tooltip-bucket',
+    type: 'Tooltip',
+    config: {
+      title: {
+        accessor: d => 'Points in Bucket: ' + d.length,
+      },
+    },
   }, {
     type: 'Navigation',
     config: {

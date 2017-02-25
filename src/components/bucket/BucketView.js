@@ -18,11 +18,14 @@ export default class BucketView extends ContrailChartsView {
   get selectors () {
     return _.extend(super.selectors, {
       node: '.bucket',
+      active: '.active',
     })
   }
 
   get events () {
     return {
+      [`mouseover ${this.selectors.node}`]: '_onMouseover',
+      [`mouseout ${this.selectors.node}`]: '_onMouseout',
       [`click ${this.selectors.node}`]: '_onClick',
     }
   }
@@ -95,11 +98,21 @@ export default class BucketView extends ContrailChartsView {
   // Event handlers
 
   _onMouseover (d, el, event) {
-    if (this.config.get('tooltipEnabled')) {
+    const tooltip = this.config.get('tooltip')
+    if (tooltip) {
       const [left, top] = d3Selection.mouse(this._container)
-      this._actionman.fire('ShowComponent', d.accessor.tooltip, {left, top}, d.data)
+      this._actionman.fire('ShowComponent', tooltip, {left, top}, d.bucket)
     }
     el.classList.add(this.selectorClass('active'))
+  }
+
+  _onMouseout (d, el) {
+    const tooltip = this.config.get('tooltip')
+    if (tooltip) {
+      this._actionman.fire('HideComponent', tooltip)
+    }
+    if (el) el.classList.remove('active')
+    else this.d3.selectAll(this.selectors.node).classed('active', false)
   }
 
   _onClick (d, el) {
