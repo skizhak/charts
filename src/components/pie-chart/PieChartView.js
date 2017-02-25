@@ -1,6 +1,7 @@
 // Copyright (c) Juniper Networks, Inc. All rights reserved.
 
 import './pie-chart.scss'
+import _ from 'lodash'
 import * as d3Selection from 'd3-selection'
 import * as d3Shape from 'd3-shape'
 import ContrailChartsView from 'contrail-charts-view'
@@ -113,8 +114,8 @@ export default class PieChartView extends ContrailChartsView {
     if (this.config.get('onClickCursor') && el) el.classList.remove(this.selectorClass('click'))
 
     this._actionman.fire('HideComponent', this.config.get('tooltip'))
-    const els = el ? [el] : document.querySelectorAll(this.selectors.node)
-    _.each(els, el => el.classList.remove(this.selectorClass('active')))
+    const els = el ? this.d3.select(() => el) : this.d3.selectAll(this.selectors.node)
+    els.classed('active', false)
   }
 
   _onClick (d, el) {

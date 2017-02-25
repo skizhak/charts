@@ -111,8 +111,8 @@ export default class BucketView extends ContrailChartsView {
     if (tooltip) {
       this._actionman.fire('HideComponent', tooltip)
     }
-    if (el) el.classList.remove('active')
-    else this.d3.selectAll(this.selectors.node).classed('active', false)
+    const els = el ? this.d3.select(() => el) : this.d3.selectAll(this.selectors.node)
+    els.classed('active', false)
   }
 
   _onClick (d, el) {
