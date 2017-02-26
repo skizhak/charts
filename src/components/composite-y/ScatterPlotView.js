@@ -13,12 +13,14 @@ import BucketView from 'components/bucket/BucketView'
 export default class ScatterPlotView extends XYChartSubView {
   constructor (p) {
     super(p)
-    this._bucketConfig = new BucketConfigModel(this.config.get('bucket'))
-    this._bucketConfig.set('duration', this.config.get('duration'))
-    this._bucketView = new BucketView({
-      config: this._bucketConfig,
-      actionman: this._actionman,
-    })
+    if (this.config.get('bucket')) {
+      this._bucketConfig = new BucketConfigModel(this.config.get('bucket'))
+      this._bucketConfig.set('duration', this.config.get('duration'))
+      this._bucketView = new BucketView({
+        config: this._bucketConfig,
+        actionman: this._actionman,
+      })
+    }
   }
 
   get zIndex () { return 1 }
@@ -54,9 +56,11 @@ export default class ScatterPlotView extends XYChartSubView {
 
   render () {
     super.render()
-    this._bucketView.container = this._container
     const data = this._prepareData()
-    this._bucketView.render(data)
+    if (this._bucketView) {
+      this._bucketView.container = this._container
+      this._bucketView.render(data)
+    }
 
     let points = this.d3.selectAll(this.selectors.node)
       .data(data, d => d.id)
