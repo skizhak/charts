@@ -1,13 +1,9 @@
 /*
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
-
-import 'coCharts'
-import commons from 'commons'
-
-const _ = commons._
-const formatter = commons.formatter
-const _c = commons._c
+import _ from 'lodash'
+import {charts} from 'coCharts'
+import {formatter, _c} from 'commons'
 
 const now = _.now()
 const colorScheme = _c.d3ColorScheme20
@@ -231,7 +227,7 @@ const chartConfig = {
   charts: chartConfigs,
 }
 
-const chartView = new coCharts.charts.MultiChartView()
+const chartView = new charts.MultiChartView()
 
 export default {
   groupedChartsWrapper: groupedChartsWrapper,

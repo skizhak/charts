@@ -1,14 +1,11 @@
 /*
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
-
-import 'coCharts'
-import commons from 'commons'
+import _ from 'lodash'
+import {charts} from 'coCharts'
+import {formatter, _c} from 'commons'
 import dataSrc from './cpu-mem.json'
 
-const _ = commons._
-const formatter = commons.formatter
-const _c = commons._c
 const lbColorScheme7 = _c.lbColorScheme7
 const dataProcessed = dataProcesser(dataSrc.data)
 
@@ -36,7 +33,6 @@ function dataProcesser (rawData) {
     nodeIds: _.uniq(_.map(rawData, 'process_mem_cpu_usage.__key'))
   }
 }
-
 /**
  * Try to use the given colorSchema to assign a color to each attribute of each node
  *
@@ -229,26 +225,6 @@ const chartConfig = {
       dataConfig: tooltipDataConfig
     }
   }, {
-    id: 'cpu-mem-controlpanel',
-    type: 'ControlPanel',
-    config: {
-      enabled: true,
-      buttons: [
-        {
-          name: 'filter',
-          title: 'Filter',
-          iconClass: 'fa fa-filter',
-          events: {
-            click: 'filterVariables',
-          },
-          panel: {
-            name: 'accessorData',
-            width: '350px',
-          }
-        }
-      ]
-    }
-  }, {
     id: 'cpu-mem-message',
     type: 'Message',
     config: {
@@ -265,7 +241,7 @@ const chartConfig = {
 }
 
 // Create chart view.
-const cpuMemChartView = new coCharts.charts.XYChartView()
+const cpuMemChartView = new charts.XYChartView()
 
 export default {
   container: container,
@@ -287,4 +263,3 @@ export default {
     cpuMemChartView.remove()
   }
 }
-

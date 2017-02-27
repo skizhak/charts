@@ -1,18 +1,17 @@
 /*
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
+import _ from 'lodash'
+import {charts} from 'coCharts'
+import {_c} from 'commons'
 
-import 'coCharts'
-import commons from 'commons'
-
-const _c = commons._c
 const colorScheme = _c.lbColorScheme7
-const simpleData = []
+const data = []
 
 let now = _.now()
 
 for (let i = 0; i < 100; i++) {
-  simpleData.push({
+  data.push({
     x: now - (i * 60000),
     a: _.random(10, 100),
     b: _.random(10, 100),
@@ -26,7 +25,7 @@ const container = ['grouped-chart1', 'grouped-chart2', 'grouped-chart-navigation
 const layoutMeta = {
   'grouped-chart1': 'render-order-1 col-md-6',
   'grouped-chart2': 'render-order-2 col-md-6',
-  'grouped-chart-navigation': 'render-order-3 col-md-12'
+  'grouped-chart-navigation': 'render-order-3 col-md-12',
 }
 
 const chartConfigs = [
@@ -140,7 +139,7 @@ const chartConfig = {
   charts: chartConfigs,
 }
 
-const chartView = new coCharts.charts.MultiChartView()
+const chartView = new charts.MultiChartView()
 
 export default {
   groupedChartsWrapper: groupedChartsWrapper,
@@ -151,7 +150,7 @@ export default {
     // selection on navigation will set the data on these charts.
     // chartView.setData(complexData, {}, container[0])
     // chartView.setData(complexData, {}, container[1])
-    chartView.setData(simpleData, {}, container[2])
+    chartView.setData(data, {}, container[2])
     // chartView.render()
   },
   remove: () => {

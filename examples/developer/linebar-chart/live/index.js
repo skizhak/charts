@@ -1,12 +1,8 @@
 /*
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
-
-import 'coCharts'
-import commons from 'commons'
-
-const formatter = commons.formatter
-const generator = commons.fixture
+import {charts} from 'coCharts'
+import {formatter, fixture} from 'commons'
 
 let counter = 0
 const length = 21
@@ -88,7 +84,7 @@ const chartConfig = {
 }
 
 let intervalId = -1
-const chartView = new coCharts.charts.XYChartView()
+const chartView = new charts.XYChartView()
 
 export default {
   container: container,
@@ -104,7 +100,7 @@ export default {
           a: {linear: true, range: [counter, counter + length * 3]},
         },
       }
-      const data = generator(dataConfig)
+      const data = fixture(dataConfig)
       chartView.setData(data)
       counter++
     }, 1000)

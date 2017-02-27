@@ -2,6 +2,7 @@
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
 import './crosshair.scss'
+import _ from 'lodash'
 import * as d3Selection from 'd3-selection'
 import * as d3Ease from 'd3-ease'
 import ContrailChartsView from 'contrail-charts-view'
@@ -88,7 +89,8 @@ export default class CrosshairView extends ContrailChartsView {
       left: this.svgOffset.left + point[0],
       top: this.svgOffset.top + point[1],
     }
-    this._actionman.fire('ShowComponent', this.config.get('tooltip'), tooltipPosition, data)
+    const tooltipOptions = {placement: 'horizontal'}
+    this._actionman.fire('ShowComponent', this.config.get('tooltip'), tooltipPosition, data, tooltipOptions)
   }
 
   hide () {

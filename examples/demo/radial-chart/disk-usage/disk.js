@@ -1,12 +1,9 @@
 /*
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
+import {charts} from 'coCharts'
+import {formatter, _c} from 'commons'
 
-import 'coCharts'
-import commons from 'commons'
-
-const formatter = commons.formatter
-const _c = commons._c
 const radialColorScheme6 = _c.radialColorScheme6
 
 const osdStatusData = [
@@ -118,8 +115,8 @@ const diskClusterConfig = {
   }]
 }
 
-const diskStatusChart = new coCharts.charts.RadialChartView()
-const diskClusterChart = new coCharts.charts.RadialChartView()
+const diskStatusChart = new charts.RadialChartView()
+const diskClusterChart = new charts.RadialChartView()
 
 export default {
   container: container,

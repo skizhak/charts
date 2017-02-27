@@ -1,13 +1,10 @@
 /*
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
-
-import 'coCharts'
-import commons from 'commons'
+import {charts} from 'coCharts'
+import {formatter, _c} from 'commons'
 import * as portDistribution from './port-distribution.json'
 
-const formatter = commons.formatter
-const _c = commons._c
 const colorScheme = _c.d3ColorScheme10
 const bubbleShapes = _c.bubbleShapes
 
@@ -194,7 +191,7 @@ const chartConfig = {
     }]
 }
 
-const chartView = new coCharts.charts.XYChartView()
+const chartView = new charts.XYChartView()
 
 export default {
   container: container,

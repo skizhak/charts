@@ -1,11 +1,5 @@
 {
   "extends": "standard",
-  "globals": {
-    'coCharts': true,
-    '_': true,
-    'd3': true,
-    '$': true
-  },
   rules: {
     'comma-dangle': 0,
     'no-console': ['error', { allow: ['warn', 'error'] }]

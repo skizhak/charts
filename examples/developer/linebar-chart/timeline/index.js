@@ -1,11 +1,9 @@
 /*
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
+import {charts} from 'coCharts'
+import {formatter} from 'commons'
 
-import 'coCharts'
-import commons from 'commons'
-
-const formatter = commons.formatter
 // Complex example
 const dataSrc = []
 for (let i = 0; i < 100; i++) {
@@ -150,7 +148,7 @@ const chartConfig = {
   }]
 }
 
-const chartView = new coCharts.charts.XYChartView()
+const chartView = new charts.XYChartView()
 
 export default {
   container: container,

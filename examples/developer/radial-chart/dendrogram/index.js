@@ -1,11 +1,10 @@
 /*
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
-import 'coCharts'
-import commons from 'commons'
+import {charts} from 'coCharts'
+import {_c} from 'commons'
 import dendrogamData from './data.json'
 
-const _c = commons._c
 const container = 'radial-dendrogram-chart'
 const layoutMeta = {
   [container]: 'col-md-11'
@@ -80,7 +79,7 @@ const chartConfig = {
   ]
 }
 
-const chartView = new coCharts.charts.RadialChartView()
+const chartView = new charts.RadialChartView()
 
 export default {
   container: container,

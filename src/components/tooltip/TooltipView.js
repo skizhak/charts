@@ -9,22 +9,20 @@ export default class TooltipView extends ContrailChartsView {
   constructor (p) {
     super(p)
     this.resetParams()
-    // TODO we don't probably need this. container is accessed from view._container
-    // this.config.container = p.container
     this.listenTo(this.config, 'change', this.resetParams)
   }
+
+  get width () { return this.el.offsetWidth }
+  get height () { return this.el.offsetHeight }
   /**
    * @param {Object} position relative to container: top, left in pixels
    * @param {Object} data to display
    */
-  show (position, data) {
-    let left, top
+  show (rect, data, p = {}) {
+    let {left, top} = rect
+    let placement
     this._loadTemplate(data)
     this.d3.classed('active', true)
-
-    const width = this.el.offsetWidth
-    const height = this.el.offsetHeight
-    const containerWidth = this._container.offsetWidth
 
     if (this.config.get('sticky')) {
       // TODO do not make assumptions on source component internal structure, just get it by ID only
@@ -32,30 +30,63 @@ export default class TooltipView extends ContrailChartsView {
       const sourceRect = this._container.querySelector('#' + this.config.sourceId + ' clipPath rect').getBoundingClientRect()
       const containerRect = this._container.getBoundingClientRect()
       left = sourceRect.left - containerRect.left
-      if (position.left > containerRect.width / 2) {
+      if (rect.left > containerRect.width / 2) {
         left += this.config.stickyMargin.left
       } else {
-        left += (sourceRect.width - this.config.stickyMargin.right - width)
+        left += (sourceRect.width - this.config.stickyMargin.right - this.width)
       }
-      top = sourceRect.top - containerRect.top + (sourceRect.height / 2 - height / 2)
-      position = {left, top}
+      top = sourceRect.top - containerRect.top + (sourceRect.height / 2 - this.height / 2)
     } else {
-      left = position.left - width / 2
-      top = position.top - height - 10
-
-      if (top < 0) top = position.top + 10
-      if (left + width > containerWidth) {
-        left = containerWidth - width
-      } else if (left < 0) left = 0
+      placement = p.placement || this.config.get('placement')
     }
-
-    this.el.style.top = `${top}px`
-    this.el.style.left = `${left}px`
-    this.el.style.height = `${position.height}px`
+    this.place({left, top}, placement)
+    this.el.style.height = `${rect.height}px`
   }
 
   hide () {
     this.d3.classed('active', false)
+  }
+  /**
+   * Position tooltip box relative to the passed center point (usually cursor)
+   * vertical and horizontal placement tries to keep the box within container
+   */
+  place (point, placement) {
+    let {left, top} = point
+    const margin = 10
+    const containerWidth = this._container.offsetWidth
+    const containerHeight = this._container.offsetHeight
+
+    switch (placement) {
+      case 'vertical':
+        if (top - this.height - margin > 0) return this.place(point, 'top')
+        else if (top + this.height + margin < containerHeight) return this.place(point, 'bottom')
+        return this.place(point, 'center')
+      case 'horizontal':
+        if (left + this.width + margin < containerWidth) return this.place(point, 'right')
+        else if (left - this.width - margin > 0) return this.place(point, 'left')
+        return this.place(point, 'center')
+      case 'top':
+        left = left - this.width / 2
+        top = top - this.height - margin
+        break
+      case 'bottom':
+        left = left - this.width / 2
+        top = top + margin
+        break
+      case 'left':
+        left = left - this.width - margin
+        top = top - this.height / 2
+        break
+      case 'right':
+        left = left + margin
+        top = top - this.height / 2
+        break
+      case 'center':
+        left = left - this.width / 2
+        top = top - this.height / 2
+    }
+    this.el.style.left = `${left}px`
+    this.el.style.top = `${top}px`
   }
 
   _loadTemplate (data) {

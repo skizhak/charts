@@ -1,12 +1,10 @@
 /*
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
+import {charts} from 'coCharts'
+import {formatter, fixture} from 'commons'
 
-import 'coCharts'
-import commons from 'commons'
-
-const formatter = commons.formatter
-const data = commons.fixture()
+const data = fixture()
 
 const container = ['chart-tooltip-1', 'chart-tooltip-2']
 const layoutMeta = {
@@ -166,8 +164,8 @@ const chartConfig2 = {
   }]
 }
 
-const chart1 = new coCharts.charts.XYChartView()
-const chart2 = new coCharts.charts.XYChartView()
+const chart1 = new charts.XYChartView()
+const chart2 = new charts.XYChartView()
 
 export default {
   container: container,

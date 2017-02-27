@@ -1,13 +1,10 @@
 /*
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
+import {charts} from 'coCharts'
+import {formatter, _c, fixture} from 'commons'
 
-import 'coCharts'
-import commons from 'commons'
-
-const formatter = commons.formatter
-const _c = commons._c
-const data = commons.fixture({
+const data = fixture({
   length: 40,
   data: {
     x: {linear: true, range: [1475760930000, 1475800930000]},
@@ -102,6 +99,12 @@ const chartConfig = {
           label: 'Y value of Square and Star',
         }
       },
+      bucket: {
+        range: [300, 500],
+        shape: bubbleShapes.circleFill,
+        color: '#ff7f0e',
+        tooltip: 'tooltip-bucket',
+      }
     }
   }, {
     id: 'tooltip-id',
@@ -111,7 +114,6 @@ const chartConfig = {
         accessor: 'x',
         valueFormatter: formatter.extendedISOTime,
       },
-
       dataConfig: [
         {
           accessor: 'data1',
@@ -136,6 +138,14 @@ const chartConfig = {
         }
       ]
     }
+  }, {
+    id: 'tooltip-bucket',
+    type: 'Tooltip',
+    config: {
+      title: {
+        accessor: d => 'Points in Bucket: ' + d.length,
+      },
+    },
   }, {
     type: 'Navigation',
     config: {
@@ -166,7 +176,7 @@ const chartConfig = {
   }]
 }
 
-const chartView = new coCharts.charts.XYChartView()
+const chartView = new charts.XYChartView()
 
 export default {
   container: container,

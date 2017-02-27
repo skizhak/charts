@@ -9,6 +9,10 @@ export default class TooltipConfigModel extends ContrailChartsConfigModel {
     return {
       // Which tooltip ids to accept. If empty accept all.
       acceptFilters: [],
+
+      // place tooltip at the top of the cursor by default
+      placement: 'vertical',
+
       sticky: false,
       // Default formatter to build tooltip content.
       formatter: (data) => {

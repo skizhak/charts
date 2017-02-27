@@ -1,12 +1,9 @@
 /*
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
+import {charts} from 'coCharts'
+import {formatter, _c} from 'commons'
 
-import 'coCharts'
-import commons from 'commons'
-
-const formatter = commons.formatter
-const _c = commons._c
 const radialColorScheme6 = _c.radialColorScheme6
 
 const pieData = [
@@ -73,7 +70,7 @@ const chartConfig = {
   ]
 }
 
-const chartView = new coCharts.charts.RadialChartView()
+const chartView = new charts.RadialChartView()
 
 export default {
   container: container,

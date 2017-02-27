@@ -1,11 +1,8 @@
 /*
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
-
-import 'coCharts'
-import commons from 'commons'
-
-const formatter = commons.formatter
+import {charts} from 'coCharts'
+import {formatter} from 'commons'
 
 // Complex example
 const complexData = []
@@ -132,7 +129,7 @@ const chartConfig = {
   }]
 }
 
-const chartView = new coCharts.charts.XYChartView()
+const chartView = new charts.XYChartView()
 
 export default {
   container: container,

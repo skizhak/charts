@@ -1,13 +1,11 @@
 /*
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
+import {charts} from 'coCharts'
+import {_c, dg} from 'commons'
 
-import 'coCharts'
-import commons from 'commons'
-
-const _c = commons._c
 const dendrogamData = {
-  data: commons.dg.vRouterTraffic()
+  data: dg.vRouterTraffic()
 }
 const container = 'radial-dendrogram-chart'
 const layoutMeta = {
@@ -85,7 +83,7 @@ const chartConfig = {
 }
 
 // Create chart view.
-const chartView = new coCharts.charts.RadialChartView()
+const chartView = new charts.RadialChartView()
 
 export default {
   container: container,
