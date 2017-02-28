@@ -47,6 +47,7 @@ const layoutMeta = {
 const chartConfigs = [
   {
     id: container[0],
+    title: 'Static bar chart for series: a, b',
     type: 'XYChart',
     components: [{
       type: 'LegendPanel',
@@ -104,6 +105,7 @@ const chartConfigs = [
     }]
   }, {
     id: container[1],
+    title: 'Updatable chart for serie: c',
     type: 'XYChart',
     components: [{
       type: 'LegendPanel',
@@ -145,6 +147,7 @@ const chartConfigs = [
     }]
   }, {
     id: container[2],
+    title: '% of each serie in selection',
     type: 'RadialChart',
     dataProvider: {
       config: {
@@ -198,6 +201,7 @@ const chartConfigs = [
     }]
   }, {
     id: container[3],
+    title: 'Navigate all series by serie: d',
     type: 'XYChart',
     components: [{
       id: 'navigation-id',
