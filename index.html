@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
+  <head>
     <meta charset="utf-8"/>
     <title>Contrail Charts</title>
     <meta name="description" content="Contrail Charts"/>
@@ -24,100 +24,100 @@
     <!-- endbuild -->
     <link rel="stylesheet" href="build/contrail-charts.css" type="text/css"/>
     <link rel="stylesheet" href="build/examples/css/contrail-charts-examples.css" type="text/css">
-</head>
+  </head>
 
-<body>
+  <body>
     <div class="app app-fixed" id="app">
-        <!-- ############ LAYOUT START-->
-        <div id="menu" class="side-bar nav-dropdown">
-            <div class="left nav-sidebar dark dk panel" layout="column">
-                <div class="no-radius">
-                    <a class="navbar-logo">
-                        <img src="examples/common/assets/images/logo.png" alt=".">
-                        <span class="title inline">Contrail Charts</span>
-                    </a>
-                </div>
-                <div flex class="hide-scroll content">
-                    <nav>
-                        <ul class="nav examples">
-                            <li class="example-group">
-                                <a class="title">
-                                    <span class="nav-caret"><i class="fa fa-caret-down"></i></span>
-                                    <span class="nav-icon"><i class="fa fa-object-group fa-2"></i></span>
-                                    <span id="grouped" class="nav-text">Grouped</span>
-                                </a>
-                                <ul id="groupedLinks" class="nav-sub links"></ul>
-                            </li>
-                            <li class="example-group">
-                                <a class="title">
-                                    <span class="nav-caret"><i class="fa fa-caret-down"></i></span>
-                                    <span class="nav-icon"><i class="fa fa-line-chart"></i></span>
-                                    <span id="linebar" class="nav-text">Line Bar</span>
-                                </a>
-                                <ul id="lineBarLinks" class="nav-sub links"></ul>
-                            </li>
-                            <li class="example-group">
-                                <a class="title">
-                                    <span class="nav-caret"><i class="fa fa-caret-down"></i></span>
-                                    <span class="nav-icon"><i class="fa fa-circle-o-notch"></i></span>
-                                    <span class="nav-text">Bubble</span>
-                                </a>
-                                <ul id="bubbleLinks" class="nav-sub links"></ul>
-                            </li>
-                            <li class="example-group">
-                                <a class="title">
-                                    <span class="nav-caret"><i class="fa fa-caret-down"></i></span>
-                                    <span class="nav-icon"><i class="fa fa-pie-chart"></i></span>
-                                    <span class="nav-text">Radial</span>
-                                </a>
-                                <ul id="radialLinks" class="nav-sub links"></ul>
-                            </li>
-                            <li class="example-group">
-                                <a class="title">
-                                    <span class="nav-caret"><i class="fa fa-caret-down"></i></span>
-                                    <span class="nav-icon"><i class="fa fa-area-chart"></i></span>
-                                    <span class="nav-text">Area</span>
-                                </a>
-                                <ul id="areaLinks" class="nav-sub links"></ul>
-                            </li>
-                        </ul>
-                        <ul class="nav documentation">
-                            <li class="">
-                                <a href="https://github.com/absingla/contrail-charts/wiki">
-                                    <span class="nav-text">Documentation</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </nav>
-                </div>
-            </div>
+      <!-- ############ LAYOUT START-->
+      <div id="menu" class="side-bar nav-dropdown">
+        <div class="left nav-sidebar dark dk panel" layout="column">
+          <div class="no-radius">
+            <a class="navbar-logo">
+              <img src="examples/common/assets/images/logo.png" alt=".">
+              <span class="title inline">Contrail Charts</span>
+            </a>
+          </div>
+          <div flex class="hide-scroll content">
+            <nav>
+              <ul class="nav examples">
+                <li class="example-group">
+                  <a class="title">
+                    <span class="nav-caret"><i class="fa fa-caret-down"></i></span>
+                    <span class="nav-icon"><i class="fa fa-object-group fa-2"></i></span>
+                    <span id="grouped" class="nav-text">Grouped</span>
+                  </a>
+                  <ul id="groupedLinks" class="nav-sub links"></ul>
+                </li>
+                <li class="example-group">
+                  <a class="title">
+                    <span class="nav-caret"><i class="fa fa-caret-down"></i></span>
+                    <span class="nav-icon"><i class="fa fa-line-chart"></i></span>
+                    <span id="linebar" class="nav-text">Line Bar</span>
+                  </a>
+                  <ul id="lineBarLinks" class="nav-sub links"></ul>
+                </li>
+                <li class="example-group">
+                  <a class="title">
+                    <span class="nav-caret"><i class="fa fa-caret-down"></i></span>
+                    <span class="nav-icon"><i class="fa fa-circle-o-notch"></i></span>
+                    <span class="nav-text">Bubble</span>
+                  </a>
+                  <ul id="bubbleLinks" class="nav-sub links"></ul>
+                </li>
+                <li class="example-group">
+                  <a class="title">
+                    <span class="nav-caret"><i class="fa fa-caret-down"></i></span>
+                    <span class="nav-icon"><i class="fa fa-pie-chart"></i></span>
+                    <span class="nav-text">Radial</span>
+                  </a>
+                  <ul id="radialLinks" class="nav-sub links"></ul>
+                </li>
+                <li class="example-group">
+                  <a class="title">
+                    <span class="nav-caret"><i class="fa fa-caret-down"></i></span>
+                    <span class="nav-icon"><i class="fa fa-area-chart"></i></span>
+                    <span class="nav-text">Area</span>
+                  </a>
+                  <ul id="areaLinks" class="nav-sub links"></ul>
+                </li>
+              </ul>
+              <ul class="nav documentation">
+                <li class="">
+                  <a href="https://github.com/absingla/contrail-charts/wiki">
+                    <span class="nav-text">Documentation</span>
+                  </a>
+                </li>
+              </ul>
+            </nav>
+          </div>
         </div>
-        <!-- / -->
-        <!-- content -->
-        <div id="content" class="app-content page-content box-shadow-z0" role="main">
-            <div ui-view class="app-body" id="view">
-                <div class="row">
-                    <div class="col-sm-12 col-md-12">
-                        <div class="box">
-                            <!-- TODO: Get the height from css -->
-                            <div id="chartBox" class="box-body">
-                            </div>
-                        </div>
-                    </div>
+      </div>
+      <!-- / -->
+      <!-- content -->
+      <div id="content" class="app-content page-content box-shadow-z0" role="main">
+        <div ui-view class="app-body" id="view">
+          <div class="row">
+            <div class="col-sm-12 col-md-12">
+              <div class="box">
+                <!-- TODO: Get the height from css -->
+                <div id="chartBox" class="box-body">
                 </div>
+              </div>
             </div>
+          </div>
         </div>
-        <!-- / -->
-        <div class="app-footer">
-            <div class="p-a text-xs">
-                <div class="pull-right text-muted">
-                    &copy; Copyright <strong>Juniper Networks</strong> <span class="hidden-xs-down">- v0.0.1</span>
-                    <a ui-scroll-to="content"><i class="fa fa-long-arrow-up p-x-sm"></i></a>
-                </div>
-                </div>
-            </div>
+      </div>
+      <!-- / -->
+      <div class="app-footer">
+        <div class="p-a text-xs">
+          <div class="pull-right text-muted">
+            &copy; Copyright <strong>Juniper Networks</strong> <span class="hidden-xs-down">- v0.0.1</span>
+            <a ui-scroll-to="content"><i class="fa fa-long-arrow-up p-x-sm"></i></a>
+          </div>
         </div>
-        <!-- ############ LAYOUT END-->
+      </div>
+    </div>
+    <!-- ############ LAYOUT END-->
     </div>
     <!-- loading chart library and its external dependencies -->
     <script src="node_modules/jquery/dist/jquery.js"></script>
@@ -127,5 +127,5 @@
     <script src="build/contrail-charts.js"></script>
     <!-- end -->
     <script src="build/examples/loader.bundle.js"></script>
-</body>
+  </body>
 </html>
