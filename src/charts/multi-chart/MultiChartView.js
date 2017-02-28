@@ -27,22 +27,14 @@ export default class ChartView extends ContrailChartsView {
   /**
   * Data can be set separately into every chart so every chart can have different data.
   */
-  setData (data, dataConfig = {}, id = 'default') {
+  setData (data, id = 'default') {
     if (this._frozen) return
     // Set data to the given chart if it exists.
     if (this._charts[id]) {
-      this._charts[id].setData(data, dataConfig)
+      this._charts[id].setData(data)
     } else {
-      if (dataConfig) this.setDataConfig(dataConfig)
       if (_.isArray(data)) this._dataModel.data = data
     }
-  }
-  /**
-   * Set ContrailChartsDataModel config
-   * @param dataConfig
-   */
-  setDataConfig (dataConfig = {}) {
-    this._dataModel.set(dataConfig, { silent: true })
   }
   /**
   * Sets the config for all charts that can be part of this parent chart.
@@ -73,10 +65,10 @@ export default class ChartView extends ContrailChartsView {
   }
 
   render () {
-    _.each(this._charts, (chart) => {
+    _.each(this._charts, chart => {
       chart.render()
     })
-    _.each(this._components, (component) => {
+    _.each(this._components, component => {
       component.render()
     })
   }

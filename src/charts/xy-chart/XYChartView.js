@@ -40,18 +40,9 @@ export default class XYChartView extends ContrailChartsView {
   * Additional ContrailChartsDataModel configuration may be provided.
   * Setting data to a rendered chart will trigger a DataModel change event that will cause the chart to be re-rendered.
   */
-  setData (data, dataConfig) {
-    if (dataConfig) this.setDataConfig(dataConfig)
+  setData (data) {
     if (this._frozen) return
     if (_.isArray(data)) this._dataModel.data = data
-  }
-  // Todo deprecate setDataConfig. DataModel parser will be set as input parser in dataProvider config.
-  /**
-   * Set ContrailChartsDataModel config
-   * @param dataConfig
-   */
-  setDataConfig (dataConfig = {}) {
-    this._dataModel.set(dataConfig, { silent: true })
   }
   /**
    * Sets the configuration for this chart as a simple object.

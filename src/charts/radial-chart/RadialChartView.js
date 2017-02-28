@@ -58,12 +58,7 @@ export default class RadialChartView extends ContrailView {
   * Additional ContrailChartsDataModel configuration may be provided.
   * Setting data to a rendered chart will trigger a DataModel change event that will cause the chart to be re-rendered.
   */
-  setData (data, dataConfig = {}) {
-    this._dataModel.set(dataConfig, { silent: true })
-
-    if (_.isArray(data)) this._dataModel.data = data
-  }
-  setProviderData (data) {
+  setData (data) {
     if (_.isArray(data)) this._dataProvider.data = data
   }
   /**
