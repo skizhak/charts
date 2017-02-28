@@ -15,6 +15,14 @@ function absolute (...args) {
   return join(__dirname, ...args)
 }
 const defaultEnv = {'dev': true}
+/**
+ * Following allows publishing compiled files to multiple paths.
+ * add path relative to directory of this config file.
+ * For eg: if you need to output the compiled output in lib dir of parent dir contrail-charts-demo,
+ * use '../contrail-charts-demo/lib'
+ * @type {Array}
+ */
+const publishPaths = []
 
 export default (env = defaultEnv) => {
   const plugins = []
@@ -85,19 +93,14 @@ export default (env = defaultEnv) => {
   // Let's put css under css directory.
   plugins.push(new ExtractTextPlugin(fileName + '.css'))
 
-  return {
+  const configList = []
+
+  const config = {
     entry: {
       [fileName]: absolute('src/index.js'),
       [`${fileName}.min`]: absolute('src/index.js')
     },
     devtool: 'source-map',
-    output: {
-      path: absolute('build'),
-      filename: '[name].js',
-      library: libraryName,
-      libraryTarget: 'umd',
-      umdNamedDefine: false,
-    },
     module: {rules},
     externals: externals,
     resolve: {
@@ -118,4 +121,31 @@ export default (env = defaultEnv) => {
     plugins: plugins,
     stats: { children: false }
   }
+
+  const defaultConfig = Object.assign({}, config, {
+    output: {
+      path: absolute('build'),
+      filename: '[name].js',
+      library: libraryName,
+      libraryTarget: 'umd',
+      umdNamedDefine: false,
+    }
+  })
+  configList.push(defaultConfig)
+
+  if (publishPaths) {
+    publishPaths.forEach((outPath) => {
+      configList.push(Object.assign({}, config, {
+        output: {
+          path: absolute(outPath),
+          filename: '[name].js',
+          library: libraryName,
+          libraryTarget: 'umd',
+          umdNamedDefine: false,
+        }
+      }))
+    })
+  }
+
+  return configList
 }
