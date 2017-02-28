@@ -1,11 +1,10 @@
 /*
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
-
 /* global $ */
 
 import '../sass/contrail-charts-examples.scss'
-import  _ from 'lodash'
+import _ from 'lodash'
 // LineBar
 import legend from '../../developer/linebar-chart/legend'
 import controls from '../../developer/linebar-chart/control-panel'
@@ -135,7 +134,7 @@ function _viewRenderInit (templateId, view) {
 function createLink (chartType = '', templateId = 'grouped', view, linkText) {
   const RJSInitFlag = 'RJSInstantiated'
   let cleaned = encodeURIComponent(linkText.replace(/\s/g, ''))
-  let $link = $(`<a id="${chartType}${cleaned}" href="#${cleaned}"><span class="nav-text">${linkText}</span></a>`)
+  let $link = $(`<a id="${chartType}${cleaned}" href="#${chartType}${cleaned}"><span class="nav-text">${linkText}</span></a>`)
   if (view.type === 'RJS') {
     $link.click((e) => {
       if (view.status && view.status === RJSInitFlag) {
@@ -163,9 +162,11 @@ function createLink (chartType = '', templateId = 'grouped', view, linkText) {
   return $link
 }
 
+// Open chart from url or first one
 const $1stNavMenu = $('.nav .nav-header + li').first()
 $1stNavMenu.children('a').find('.nav-text').click()
-$1stNavMenu.children('ul').find('a[id]').first().click()
+const exampleId = window.location.hash || '#grouped2BarNav'
+$(exampleId).click()
 
 $('#demo-link').click(function () {
   window.open('demo.html', '_self', false)

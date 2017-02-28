@@ -4,7 +4,7 @@
 import * as d3Selection from 'd3-selection'
 import ContrailView from 'contrail-view'
 /**
- * View base class.
+ * View base class
  */
 export default class ContrailChartsView extends ContrailView {
   constructor (p = {}) {
@@ -27,6 +27,7 @@ export default class ContrailChartsView extends ContrailView {
       sharedSvg: '.shared-svg',
     }
   }
+
   get zIndex () { return 0 }
   /**
    * @return {String} id provided by config or Backbone generated
@@ -136,7 +137,6 @@ export default class ContrailChartsView extends ContrailView {
   hide () {
     this.$el.hide()
   }
-
   /**
    * Stop listening to config and model. Remove the view from the dom.
    */
@@ -146,7 +146,6 @@ export default class ContrailChartsView extends ContrailView {
     this.params = {}
     super.remove()
   }
-
   /**
    * In frozen state View ignores Model Data change
    * @param {Boolean} isFrozen change state to
