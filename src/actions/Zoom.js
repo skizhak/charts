@@ -12,8 +12,10 @@ export default class Zoom extends Action {
 
   _execute (componentIds, ...args) {
     const chart = this._registrar
-    _.each(componentIds, id => {
-      const component = chart.getComponent(id)
+    let components
+    if (componentIds) components = _.map(componentIds, id => chart.getComponent(id))
+    else components = chart.getComponentsByType('CompositeYChart')
+    _.each(components, component => {
       if (component) component.zoom(...args)
     })
   }
