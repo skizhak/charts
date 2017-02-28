@@ -50,8 +50,7 @@ export default (env = defaultEnv) => {
 
   return {
     entry: {
-      'demo-loader': absolute('examples/common/js/demo-loader'),
-      'dev-loader': absolute('examples/common/js/dev-loader')
+      'loader': absolute('examples/common/js/loader')
     },
     devtool: 'source-map',
     output: {
@@ -78,6 +77,11 @@ export default (env = defaultEnv) => {
       extensions: ['.js']
     },
     plugins: plugins,
-    stats: { children: false }
+    stats: { children: false },
+    devServer: {
+      publicPath: '/build/examples/',
+      compress: true,
+      port: 9000
+    }
   }
 }

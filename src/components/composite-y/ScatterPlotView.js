@@ -7,8 +7,22 @@ import 'd3-transition'
 import * as d3Selection from 'd3-selection'
 import * as d3Ease from 'd3-ease'
 import XYChartSubView from 'components/composite-y/XYChartSubView'
+import BucketConfigModel from 'components/bucket/BucketConfigModel'
+import BucketView from 'components/bucket/BucketView'
 
 export default class ScatterPlotView extends XYChartSubView {
+  constructor (p) {
+    super(p)
+    if (this.config.get('bucket')) {
+      this._bucketConfig = new BucketConfigModel(this.config.get('bucket'))
+      this._bucketConfig.set('duration', this.config.get('duration'))
+      this._bucketView = new BucketView({
+        config: this._bucketConfig,
+        actionman: this._actionman,
+      })
+    }
+  }
+
   get zIndex () { return 1 }
   /**
    * follow same naming convention for all XY chart sub views
@@ -42,9 +56,14 @@ export default class ScatterPlotView extends XYChartSubView {
 
   render () {
     super.render()
+    const data = this._prepareData()
+    if (this._bucketView) {
+      this._bucketView.container = this._container
+      this._bucketView.render(data)
+    }
 
     let points = this.d3.selectAll(this.selectors.node)
-      .data(this._prepareData(), d => d.id)
+      .data(data, d => d.id)
 
     points.enter()
       .append('text')
@@ -52,12 +71,13 @@ export default class ScatterPlotView extends XYChartSubView {
       .attr('transform', d => `translate(${d.x},${d.y})`)
       .merge(points)
       .html(d => d.shape)
-      .attr('fill', d => d.color)
+      // overlap attribute is set in Bucket View
+      .attr('fill', d => d.overlap ? 'none' : d.color)
       .style('font-size', d => Math.sqrt(d.area))
 
     // Update
     points
-      .transition().ease(d3Ease.easeLinear).duration(this.params.duration)
+      .transition().ease(d3Ease.easeLinear).duration(this.config.get('duration'))
       .attr('transform', d => `translate(${d.x},${d.y})`)
 
     points.exit().remove()
@@ -66,7 +86,7 @@ export default class ScatterPlotView extends XYChartSubView {
    * Create a flat data structure
    */
   _prepareData () {
-    const flatData = []
+    const points = []
     _.map(this.model.data, d => {
       const x = d[this.params.plot.x.accessor]
       _.each(this.params.activeAccessorData, accessor => {
@@ -83,12 +103,14 @@ export default class ScatterPlotView extends XYChartSubView {
             color: this.config.getColor(d, accessor),
             accessor: accessor,
             data: d,
+            halfWidth: Math.sqrt(sizeScale(d[accessor.sizeAccessor])) / 2,
+            halfHeight: Math.sqrt(sizeScale(d[accessor.sizeAccessor])) / 2,
           }
-          flatData.push(obj)
+          points.push(obj)
         }
       })
     })
-    return flatData
+    return points
   }
 
   // Event handlers
