@@ -39,7 +39,7 @@ export default class Action {
         this._registrar = undefined
       })
     }
-    return undefined
+    this.trigger('fired', ...args)
   }
   /**
    * Changes enable/disable state

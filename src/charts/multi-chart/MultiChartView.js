@@ -56,6 +56,13 @@ export default class ChartView extends ContrailChartsView {
     // Initialize child charts
     this._initCharts()
   }
+  getComponent (id) {
+    return _.find(this._components, {id: id})
+  }
+
+  getChart (id) {
+    return this._charts[id]
+  }
   /**
    * Get array of components by type
    * @return {Array}

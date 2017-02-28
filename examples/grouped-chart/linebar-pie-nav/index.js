@@ -200,6 +200,7 @@ const chartConfigs = [
     id: container[3],
     type: 'XYChart',
     components: [{
+      id: 'navigation-id',
       type: 'Navigation',
       config: {
         marginLeft: 60,
@@ -246,11 +247,18 @@ export default {
   layoutMeta: layoutMeta,
   render: () => {
     chartView.setConfig(chartConfig)
-    // chartView.setData(tsData, {}, container[0])
-    // chartView.setData(tsData, {}, container[1])
-    chartView.setData(dataSrc, {}, container[2])
-    chartView.setData(dataSrc, {}, container[3])
-    // chartView.render()
+    chartView.setData(dataSrc, container[0])
+    chartView.setData(dataSrc, container[1])
+    chartView.setData(dataSrc, container[3])
+
+    // Update pie chart data on Navigation zoom
+    const navDataProvider = chartView.getChart(container[3]).provider
+    const zoom = chartView.actionman.get('Zoom')
+    const pieChart = chartView.getChart(container[2])
+    zoom.on('fired', (componentIds, {accessor, range}) => {
+      const data = navDataProvider.filter(accessor, range)
+      pieChart.setData(data)
+    })
   },
   remove: () => {
     chartView.remove()

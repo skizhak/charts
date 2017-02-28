@@ -42,6 +42,9 @@ export default class XYChartView extends ContrailChartsView {
     if (_.isArray(data)) this._dataProvider.data = data
   }
 
+  get provider () {
+    return this._dataProvider
+  }
   /**
    * Sets the configuration for this chart as a simple object.
    * Instantiate the required views if they do not exist yet, set their configurations otherwise.
