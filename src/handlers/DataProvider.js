@@ -3,179 +3,76 @@
  */
 import _ from 'lodash'
 import * as d3Array from 'd3-array'
-import ContrailModel from 'contrail-model'
-import ContrailEvents from 'contrail-events'
+import Events from 'contrail-events'
 /**
- * A DataModel wrapper for view components.
- * Handles:
- * - data range calculation for view components
- * - data filtering and chaining between components
+ * Data preparation
  */
-export default class DataProvider extends ContrailModel {
-  get defaults () {
-    return {
-      // The formatted/filtered data
-      data: [],
-
-      // Function to format/filter data. Always applied on parentData
-      formatter: undefined,
-
-      // A lazy store of data ranges for which a range was calculated or for which the range was set manually.
-      // example: { x: [0, 100], y: [20, 30], r: [5, 20] }
-      range: {},
-
-      // Ranges set manually on this data provider.
-      manualRange: {},
-
-      // This can be a DataModel or another DataProvider.
-      parentDataModel: undefined,
-
-      error: false,
-
-      // List or error objects with level and error message
-      errorList: [],
-
-      messageEvent: _.extend({}, ContrailEvents)
-    }
-  }
-
-  constructor (options) {
-    super(options)
-    this.prepareData()
-    // Listen for changes in the parent model.
-    if (this.hasParentModel()) {
-      this.listenTo(this.parentModel, 'change', this.prepareData)
-    }
-    this.listenTo(this, 'change:error', this.triggerError)
-  }
-
-  get type () {
-    return 'Data'
-  }
-  get parentModel () {
-    return this.get('parentDataModel')
+export default class DataProvider {
+  constructor (data, config) {
+    this.data = data
+    this.config = config
+    this._ranges = {}
   }
 
   get data () {
-    return this.get('data')
+    return this._data
   }
 
   set data (data) {
-    this.set({data: data})
+    this._data = this.parse(data) || []
+    this._ranges = {}
+    this.trigger('change')
   }
 
-  get parentData () {
-    let data = []
-    if (this.hasParentModel()) {
-      data = this.parentModel.data
-    }
-    return data
+  set config ({formatter} = {}) {
+    if (!formatter) return
+    this._formatter = formatter
+    this.trigger('change')
   }
 
-  setConfig (config) {
-    this.set(config)
-  }
-
-  get queryLimit () {
-    let queryLimit
-    if (this.hasParentModel() && _.isFunction(this.parentModel.getQueryLimit)) {
-      queryLimit = this.parentModel.getQueryLimit()
-    } else {
-      queryLimit = {}
-    }
-    return queryLimit
+  parse (data) {
+    return _.isFunction(this._formatter) ? this._formatter(data) : data
   }
   /**
-   * Sets queryLimit to a parent. In practice this will iterate down to the DataModel and should cause a data re-fetch with new limits.
+   * Calculate and cache range of a serie
+   * @param {String} key - serie accessor
+   * @param {Boolean} isFull if true get range of the whole data, not just selection
+   * @return {Array} [min, max] extent of values of the serie
    */
-  set queryLimit (queryLimit) {
-    if (this.hasParentModel()) {
-      this.parentModel.queryLimit = queryLimit
+  getRangeFor (key, isFull) {
+    if (isFull) return d3Array.extent(this._data, d => d[key])
+
+    if (!_.has(this._ranges, key)) {
+      this._ranges[key] = d3Array.extent(this._data, d => d[key])
     }
-    const range = this.range
-    _.each(queryLimit, (queryRange, key) => {
-      delete range[key]
-    })
-  }
-
-  get range () {
-    return this.get('range')
-  }
-
-  set range (range) {
-    this.set({range: range})
-  }
-
-  get manualRange () {
-    return this.get('manualRange')
-  }
-
-  hasParentModel () {
-    return this.has('parentDataModel')
-  }
-
-  getRangeFor (key) {
-    if (_.isEmpty(this.data)) return []
-    const range = this.range
-    if (!_.has(range, key)) {
-      range[key] = this.calculateRangeForDataAndVariableName(this.data, key)
-    }
-    return range[key]
-  }
-
-  getParentRange () {
-    let parentRange = {}
-    if (this.hasParentModel()) {
-      parentRange = this.parentModel.range
-    }
-    return parentRange
+    return this._ranges[key]
   }
   /**
-   * Sets the ranges and manual ranges for the constiables provided in the newRange object.
-   * Example: setRangeFor( { x: [0,100], y: [5,10] } )
+   * @return {Array} [min, max] values of provided series values combined
    */
-  setRangeFor (newRange) {
-    const range = _.extend({}, this.range)
-    const manualRange = _.extend({}, this.manualRange)
-    _.each(newRange, (constiableRange, constiableName) => {
-      range[constiableName] = constiableRange
-      manualRange[constiableName] = constiableRange
+  combineDomains (accessors) {
+    const domains = _.map(accessors, accessor => {
+      return this.getRangeFor(accessor)
     })
-    this.setRanges(range, manualRange)
+    return d3Array.extent(_.concat(...domains))
   }
 
-  resetRangeFor (newRange) {
-    const range = _.extend({}, this.range)
-    const manualRange = _.extend({}, this.get('manualRange'))
-    _.each(newRange, (constiableRange, constiableName) => {
-      delete range[constiableName]
-      delete manualRange[constiableName]
-    })
-    this.setRanges(range, manualRange)
-  }
-
-  resetAllRanges () {
-    this.setRanges({}, {})
+  getNearest (accessor, value) {
+    const data = this._data
+    const xBisector = d3Array.bisector(d => d[accessor]).left
+    const index = xBisector(data, value, 1)
+    return value - data[index - 1][accessor] > data[index][accessor] - value ? data[index] : data[index - 1]
   }
   /**
-   * Worker function used to calculate a data range for provided key name.
+   * TODO do not trigger change if range doesn't actually change selection
+   * Filter out dataframes which have no provided key or its value is not within provided range
+   * @param {String} key - serie accessor to filter dataframes by
+   * @param {Array} range - [min, max] values of a serie
    */
-  calculateRangeForDataAndVariableName (data, key) {
-    let keyRange
-    const manualRange = this.get('manualRange')
-    if (_.isArray(manualRange[key])) {
-      // Use manually set range if available.
-      keyRange = [manualRange[key][0], manualRange[key][1]]
-    } else {
-      // Otherwise calculate the range from data.
-      if (data.length) {
-        keyRange = d3Array.extent(data, d => _.get(d, key))
-      } else {
-        // No data available so assume a [0..1] range.
-        keyRange = [0, 1]
-      }
-    }
-    return keyRange
+  filter (key, range) {
+    return _.filter(this._data, d => {
+      return _.has(d, key) && d[key] >= range[0] && d[key] <= range[1]
+    })
   }
   /**
    * Utility function to filter data by inclusion of dataframe inside provided ranges
@@ -195,57 +92,6 @@ export default class DataProvider extends ContrailModel {
       }
     })
   }
-
-  setRanges (range, manualRange) {
-    let data = this.data
-    const formatter = this.get('formatter')
-    if (!manualRange) {
-      manualRange = this.get('manualRange')
-    }
-    if (_.isFunction(formatter)) {
-      data = formatter(data, manualRange)
-    }
-    this.set({data, range, manualRange})
-  }
-  /**
-   * @return {Array} [min, max] values of provided series values combined
-   */
-  combineDomains (accessors) {
-    const domains = _.map(accessors, accessor => {
-      return this.getRangeFor(accessor)
-    })
-    return d3Array.extent(_.concat(...domains))
-  }
-  /**
-   * Take the parent's data and filter / format it.
-   * Called on initialization and when parent data changed.
-   */
-  prepareData () {
-    let data = this.parentData
-    // TODO handle empty dataset too
-    if (_.isEmpty(data)) return
-    const formatter = this.get('formatter')
-    if (_.isFunction(formatter)) {
-      data = formatter(data)
-    }
-    // Trigger change only at the end to avoid multiple trigger
-    this.set({data: data}, {silent: true})
-    this.set({range: {}}, {silent: true})
-    this.trigger('change', this)
-  }
-
-  getNearest (accessor, value) {
-    const data = this.data
-    const xBisector = d3Array.bisector(d => d[accessor]).left
-    const index = xBisector(data, value, 1)
-    return value - data[index - 1][accessor] > data[index][accessor] - value ? data[index] : data[index - 1]
-  }
-
-  triggerError () {
-    if (this.error) {
-      this.messageEvent.trigger('error', {type: this.type, action: 'show', messages: this.errorList})
-    } else {
-      this.messageEvent.trigger('error', {type: this.type, action: 'hide'})
-    }
-  }
 }
+// TODO replace with class extends syntax
+_.extend(DataProvider.prototype, Events)

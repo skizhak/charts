@@ -2,7 +2,6 @@
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
 import _ from 'lodash'
-import ContrailChartsDataModel from 'contrail-charts-data-model'
 import ContrailChartsView from 'contrail-charts-view'
 import * as Components from 'components/index'
 import * as Handlers from 'handlers/index'
@@ -31,8 +30,7 @@ export default class XYChartView extends ContrailChartsView {
   }
 
   initialize () {
-    this._dataModel = new ContrailChartsDataModel()
-    this._dataProvider = new Handlers.DataProvider({ parentDataModel: this._dataModel })
+    this._dataProvider = new Handlers.DataProvider()
     this._components = []
   }
   /**
@@ -42,8 +40,9 @@ export default class XYChartView extends ContrailChartsView {
   */
   setData (data) {
     if (this._frozen) return
-    if (_.isArray(data)) this._dataModel.data = data
+    if (_.isArray(data)) this._dataProvider.data = data
   }
+
   /**
    * Sets the configuration for this chart as a simple object.
    * Instantiate the required views if they do not exist yet, set their configurations otherwise.
@@ -63,8 +62,8 @@ export default class XYChartView extends ContrailChartsView {
      * causing multiple chart instance scenarios having actions bound to registars not active in the dom.
      * Since action is singleton and some actions trigger on all registrar, we need to avoid above mentioned scenario.
      */
-    if (_.has(config, 'dataProvider.config')) this._dataProvider.setConfig(config.dataProvider.config)
     _.each(Actions, action => actionman.set(action, this))
+    if (_.has(config, 'dataProvider.config')) this._dataProvider.config = config.dataProvider.config
     this._initComponents()
   }
   /**
@@ -101,7 +100,6 @@ export default class XYChartView extends ContrailChartsView {
   remove () {
     if (actionman) _.each(Actions, action => actionman.unset(action, this))
     _.each(this._components, component => component.remove())
-    this._dataModel = undefined
     this._dataProvider = undefined
     this._components = []
   }
