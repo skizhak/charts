@@ -6,22 +6,22 @@
 import '../sass/contrail-charts-examples.scss'
 import _ from 'lodash'
 // LineBar
-import legend from '../../developer/linebar-chart/legend'
-import controls from '../../developer/linebar-chart/control-panel'
-import timeline from '../../developer/linebar-chart/timeline'
-import tooltips from '../../developer/linebar-chart/tooltip'
-import stackedBar from '../../developer/linebar-chart/stacked-bar-chart'
-import groupedBar from '../../developer/linebar-chart/grouped-bar-chart'
-import navigation from '../../developer/linebar-chart/navigation'
-import liveData from '../../developer/linebar-chart/live'
+import legend from '../../linebar-chart/legend'
+import controls from '../../linebar-chart/control-panel'
+import timeline from '../../linebar-chart/timeline'
+import tooltips from '../../linebar-chart/tooltip'
+import stackedBar from '../../linebar-chart/stacked-bar-chart'
+import groupedBar from '../../linebar-chart/grouped-bar-chart'
+import navigation from '../../linebar-chart/navigation'
+import liveData from '../../linebar-chart/live'
 // Scatter
-import shapes from '../../developer/bubble-chart/multiple-shapes'
+import shapes from '../../bubble-chart/multiple-shapes'
 // Radial
-import pieChart from '../../developer/radial-chart/pie'
-import dendrogramChart from '../../developer/radial-chart/dendrogram'
-import areaBasic from '../../developer/area-chart/basic'
-import twoBarNav from '../../developer/grouped-chart/linebar-linebar-nav/index.js'
-import twoLineBarOnePieNav from '../../developer/grouped-chart/linebar-pie-nav/index.js'
+import pieChart from '../../radial-chart/pie'
+import dendrogramChart from '../../radial-chart/dendrogram'
+import areaBasic from '../../area-chart/basic'
+import twoBarNav from '../../grouped-chart/linebar-linebar-nav/index.js'
+import twoLineBarOnePieNav from '../../grouped-chart/linebar-pie-nav/index.js'
 
 import groupedChartTemplate from '../template/multiple.tmpl'
 
@@ -62,7 +62,7 @@ const allExamples = {
     'RequireJS': {
       view: {
         type: 'RJS',
-        entryPoint: './developer/linebar-chart/requirejs/requirejs-config.js'
+        entryPoint: './examples/linebar-chart/requirejs/requirejs-config.js'
       }
     },
     'Live Data': {
@@ -105,7 +105,6 @@ _.forEach(allExamples, (examples, chartCategory) => {
   let $links = $(`#${chartCategory}Links`)
   _.forEach(examples, (example, title) => {
     var $link = createLink(chartCategory, example.template, example.view, title)
-
     $links.append($('<li>').append($link))
   })
 })
@@ -142,7 +141,7 @@ function createLink (chartType = '', templateId = 'grouped', view, linkText) {
       } else {
         // Load the entry point
         let entryPoint = document.createElement('script')
-        entryPoint.src = '../node_modules/requirejs/require.js'
+        entryPoint.src = 'node_modules/requirejs/require.js'
         entryPoint.setAttribute('data-main', view.entryPoint)
         document.body.append(entryPoint)
         // Once the require entry point load is complete (not just the file load but all dependencies),
@@ -162,12 +161,5 @@ function createLink (chartType = '', templateId = 'grouped', view, linkText) {
   return $link
 }
 
-// Open chart from url or first one
-const $1stNavMenu = $('.nav .nav-header + li').first()
-$1stNavMenu.children('a').find('.nav-text').click()
-const exampleId = window.location.hash || '#grouped2BarNav'
-$(exampleId).click()
-
-$('#demo-link').click(function () {
-  window.open('demo.html', '_self', false)
-})
+const $1stNavMenu = $('.nav .example-group .links').first()
+$1stNavMenu.children('li').first().find('.nav-text').click()
