@@ -1,6 +1,7 @@
 /*
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
+import _ from 'lodash'
 import * as d3Selection from 'd3-selection'
 import ContrailView from 'contrail-view'
 /**
@@ -136,11 +137,11 @@ export default class ContrailChartsView extends ContrailView {
       this._container = container
       this.render()
     }
-    this.$el.show()
+    this.d3.classed('hide', false)
   }
 
   hide () {
-    this.$el.hide()
+    this.d3.classed('hide', true)
   }
 
   /**
