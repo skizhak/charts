@@ -4,6 +4,7 @@
 import './legendPanel.scss'
 import ContrailChartsView from 'contrail-charts-view'
 import * as d3Color from 'd3-color'
+import actionman from 'plugins/Actionman'
 import _template from './legend.html'
 const _states = {
   DEFAULT: 'default',
@@ -47,7 +48,7 @@ export default class LegendPanelView extends ContrailChartsView {
   _toggleAttribute (d, el) {
     const accessorName = $(el).parents('.attribute').data('accessor')
     const isChecked = el.querySelector('input').checked
-    this._actionman.fire('SelectSerie', accessorName, isChecked)
+    actionman.fire('SelectSerie', accessorName, isChecked)
   }
 
   _setEditState () {
@@ -118,11 +119,11 @@ export default class LegendPanelView extends ContrailChartsView {
 
   _selectColor (d, el) {
     const color = window.getComputedStyle(el).backgroundColor
-    this._actionman.fire('SelectColor', this._accessor, color)
+    actionman.fire('SelectColor', this._accessor, color)
   }
 
   _selectChartType (d, el) {
     const chartType = el.dataset.chartType
-    this._actionman.fire('SelectChartType', this._accessor, chartType)
+    actionman.fire('SelectChartType', this._accessor, chartType)
   }
 }

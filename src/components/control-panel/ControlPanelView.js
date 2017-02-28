@@ -5,6 +5,7 @@ import './control-panel.scss'
 import _ from 'lodash'
 import * as d3Selection from 'd3-selection'
 import ContrailChartsView from 'contrail-charts-view'
+import actionman from 'plugins/Actionman'
 import _template from './control-panel.html'
 import _panelTemplate from './panel.html'
 import _actionTemplate from './action.html'
@@ -71,7 +72,7 @@ export default class ControlPanelView extends ContrailChartsView {
     panel.classList.toggle('hide')
     const actionId = this._opened ? 'HideComponent' : 'ShowComponent'
     this._opened = !this._opened
-    this._actionman.fire(actionId, config.component, container)
+    actionman.fire(actionId, config.component, container)
   }
 
   // Event handlers
@@ -79,6 +80,6 @@ export default class ControlPanelView extends ContrailChartsView {
   _onMenuItemClick (d, el) {
     d3Selection.event.stopPropagation()
     if (d.component) this.open(d)
-    else this._actionman.fire(d.id, d)
+    else actionman.fire(d.id, d)
   }
 }

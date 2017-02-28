@@ -7,7 +7,7 @@ import ContrailChartsView from 'contrail-charts-view'
 import * as Charts from 'charts/index'
 import * as Components from 'components/index'
 import * as Handlers from 'handlers/index'
-import Actionman from '../../plugins/Actionman'
+import actionman from '../../plugins/Actionman'
 import Freeze from 'actions/Freeze'
 import Unfreeze from 'actions/Unfreeze'
 
@@ -23,7 +23,6 @@ export default class ChartView extends ContrailChartsView {
     this._dataModel = new ContrailChartsDataModel()
     this._dataProvider = new Handlers.DataProvider({ parentDataModel: this._dataModel })
     this._components = []
-    this._actionman = new Actionman()
   }
   /**
   * Data can be set separately into every chart so every chart can have different data.
@@ -52,14 +51,13 @@ export default class ChartView extends ContrailChartsView {
   setConfig (config) {
     if (this._config) this.reset()
     this._config = config
-    this._actionman.id = this._config.id
     /**
      * Let's register actions here.
      * Doing this in the constructor causes actions to be registered for views which may not have setConfig invoked,
      * causing multiple chart instance scenarios having actions bound to registars not active in the dom.
      * Since action is singleton and some actions trigger on all registrar, we need to avoid above mentioned scenario.
      */
-    _.each(Actions, action => this._actionman.set(action, this))
+    _.each(Actions, action => actionman.set(action, this))
     this.setElement(`#${config.id}`)
     // Initialize parent components
     this._initComponents()
@@ -89,7 +87,7 @@ export default class ChartView extends ContrailChartsView {
   }
 
   remove () {
-    if (this._actionman) _.each(Actions, action => this._actionman.unset(action, this))
+    _.each(Actions, action => actionman.unset(action, this))
     _.each(this._charts, chart => chart.remove())
     this._charts = {}
     this._dataModel = undefined
@@ -156,8 +154,6 @@ export default class ChartView extends ContrailChartsView {
       config: configModel,
       model: model,
       container: this.el,
-      // actionman is passed as parameter to each component for it to be able to register action
-      actionman: this._actionman,
     })
     const component = new Components[`${type}View`](viewOptions)
     this._components.push(component)

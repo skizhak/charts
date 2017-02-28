@@ -6,7 +6,7 @@ import ContrailChartsDataModel from 'contrail-charts-data-model'
 import ContrailChartsView from 'contrail-charts-view'
 import * as Components from 'components/index'
 import * as Handlers from 'handlers/index'
-import Actionman from '../../plugins/Actionman'
+import actionman from '../../plugins/Actionman'
 
 import ShowComponent from 'actions/ShowComponent'
 import HideComponent from 'actions/HideComponent'
@@ -34,7 +34,6 @@ export default class XYChartView extends ContrailChartsView {
     this._dataModel = new ContrailChartsDataModel()
     this._dataProvider = new Handlers.DataProvider({ parentDataModel: this._dataModel })
     this._components = []
-    this._actionman = new Actionman()
   }
   /**
   * Provide data for this chart as a simple array of objects.
@@ -67,15 +66,14 @@ export default class XYChartView extends ContrailChartsView {
     // Todo Fix chart init similar to that of component. use the render via ContrailChartsView instead
     this._container = this.el.parentElement
     this.el.classList.add(this.selectors.chart.substr(1))
-    this._actionman.id = this._config.id
     /**
      * Let's register actions here.
      * Doing this in the constructor causes actions to be registered for views which may not have setConfig invoked,
      * causing multiple chart instance scenarios having actions bound to registars not active in the dom.
      * Since action is singleton and some actions trigger on all registrar, we need to avoid above mentioned scenario.
      */
-    _.each(Actions, action => this._actionman.set(action, this))
     if (_.has(config, 'dataProvider.config')) this._dataProvider.setConfig(config.dataProvider.config)
+    _.each(Actions, action => actionman.set(action, this))
     this._initComponents()
   }
   /**
@@ -110,16 +108,15 @@ export default class XYChartView extends ContrailChartsView {
    * All actions will be unregistered, individual components will be removed except the parent container.
    */
   remove () {
-    if (this._actionman) _.each(Actions, action => this._actionman.unset(action, this))
+    if (actionman) _.each(Actions, action => actionman.unset(action, this))
     _.each(this._components, component => component.remove())
     this._dataModel = undefined
     this._dataProvider = undefined
     this._components = []
-    this._actionman = undefined
   }
 
   renderMessage (msgObj) {
-    this._actionman.fire('SendMessage', msgObj)
+    actionman.fire('SendMessage', msgObj)
   }
 
   clearMessage (componentId) {
@@ -129,19 +126,7 @@ export default class XYChartView extends ContrailChartsView {
       action: 'update',
       messages: [],
     }
-    this._actionman.fire('ClearMessage', msgObj)
-  }
-
-  _registerHandler (type, config) {
-    if (!this._isEnabledHandler(type)) return false
-    if (type === 'dataProvider') {
-      // Set dataProvider config. Eg. input data formatter config
-      this._dataProvider.set(config, { silent: true })
-      // Since we're setting the config, trigger a change to parentDataModel to re-compute based on new config.
-      // Triggering the change on parentModel triggers prepareData on all the dataProvider instances of same parentModel.
-      // Todo check if we really need to trigger this or simply call prepareData in current dataProvider?
-      this._dataProvider.getParentModel().trigger('change')
-    }
+    actionman.fire('ClearMessage', msgObj)
   }
   /**
    * Initialize configured components
@@ -188,8 +173,6 @@ export default class XYChartView extends ContrailChartsView {
       config: configModel,
       model: model,
       container: this.el,
-      // actionman is passed as parameter to each component for it to be able to register action
-      actionman: this._actionman,
     })
     const component = new Components[`${type}View`](viewOptions)
     this._components.push(component)

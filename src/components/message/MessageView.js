@@ -4,6 +4,7 @@
 import './message.scss'
 import _ from 'lodash'
 import ContrailChartsView from 'contrail-charts-view'
+import actionman from 'plugins/Actionman'
 import _template from './message.html'
 import SendMessage from './actions/SendMessage'
 import ClearMessage from './actions/ClearMessage'
@@ -14,7 +15,7 @@ export default class MessageView extends ContrailChartsView {
     super(p)
     this.params.containerList = {}
     this.render()
-    _.each(Actions, action => this._actionman.set(action, this))
+    _.each(Actions, action => actionman.set(action, this))
   }
 
   get selectors () {
@@ -96,6 +97,6 @@ export default class MessageView extends ContrailChartsView {
 
   remove () {
     super.remove()
-    _.each(Actions, action => this._actionman.unset(action, this))
+    _.each(Actions, action => actionman.unset(action, this))
   }
 }

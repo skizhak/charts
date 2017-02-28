@@ -8,6 +8,7 @@ import * as d3Array from 'd3-array'
 import * as d3Selection from 'd3-selection'
 import * as d3Ease from 'd3-ease'
 import XYChartSubView from 'components/composite-y/XYChartSubView'
+import actionman from 'plugins/Actionman'
 
 export default class BarChartView extends XYChartSubView {
   get zIndex () { return 1 }
@@ -117,7 +118,7 @@ export default class BarChartView extends XYChartSubView {
   _onMousemove (d, el, event) {
     if (this.config.get('tooltipEnabled')) {
       const [left, top] = d3Selection.mouse(this._container)
-      this._actionman.fire('ShowComponent', d.accessor.tooltip, {left, top}, d.data)
+      actionman.fire('ShowComponent', d.accessor.tooltip, {left, top}, d.data)
     }
     el.classList.add(this.selectorClass('active'))
   }

@@ -8,6 +8,7 @@ import * as d3Scale from 'd3-scale'
 import * as d3Selection from 'd3-selection'
 import * as d3Shape from 'd3-shape'
 import ContrailChartsView from 'contrail-charts-view'
+import actionman from 'plugins/Actionman'
 
 export default class RadialDendrogramView extends ContrailChartsView {
   get tagName () { return 'g' }
@@ -495,7 +496,7 @@ export default class RadialDendrogramView extends ContrailChartsView {
     })
     this._render()
     const [left, top] = d3Selection.mouse(this._container)
-    this._actionman.fire('ShowComponent', this.config.get('tooltip'), {left, top}, d.data)
+    actionman.fire('ShowComponent', this.config.get('tooltip'), {left, top}, d.data)
   }
 
   _onMouseout (d, el) {
@@ -503,7 +504,7 @@ export default class RadialDendrogramView extends ContrailChartsView {
       ribbon.active = false
     })
     this._render()
-    this._actionman.fire('HideComponent', this.config.get('tooltip'))
+    actionman.fire('HideComponent', this.config.get('tooltip'))
   }
 
   _arcClick (d, el) {

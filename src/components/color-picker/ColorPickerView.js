@@ -3,6 +3,7 @@
  */
 import './color-picker.scss'
 import ContrailChartsView from 'contrail-charts-view'
+import actionman from 'plugins/Actionman'
 import _template from './color-picker.html'
 
 export default class ColorPickerView extends ContrailChartsView {
@@ -47,6 +48,6 @@ export default class ColorPickerView extends ContrailChartsView {
 
   _onSelectColor (d, el) {
     const color = el.style['background-color']
-    this._actionman.fire('SelectColor', this._accessor, color)
+    actionman.fire('SelectColor', this._accessor, color)
   }
 }

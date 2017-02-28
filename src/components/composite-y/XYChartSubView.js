@@ -4,6 +4,7 @@
 import _ from 'lodash'
 import * as d3Scale from 'd3-scale'
 import ContrailChartsView from 'contrail-charts-view'
+import actionman from 'plugins/Actionman'
 
 export default class XYChartSubView extends ContrailChartsView {
   constructor (p) {
@@ -99,7 +100,7 @@ export default class XYChartSubView extends ContrailChartsView {
   _onMouseout (d, el) {
     if (this.config.get('tooltipEnabled')) {
       const tooltipId = d && d.accessor ? d.accessor.tooltip : _.map(this.params.activeAccessorData, a => a.tooltip)
-      this._actionman.fire('HideComponent', tooltipId)
+      actionman.fire('HideComponent', tooltipId)
     }
     const els = el ? this.d3.select(() => el) : this.d3.selectAll(this.selectors.node)
     els.classed('active', false)

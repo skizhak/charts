@@ -5,6 +5,7 @@ import _ from 'lodash'
 import Backbone from 'backbone'
 import $ from 'jquery'
 import * as d3Selection from 'd3-selection'
+import actionman from 'plugins/Actionman'
 
 d3Selection.selection.prototype.delegate = function (eventName, targetSelector, handler) {
   function delegated () {
@@ -19,6 +20,10 @@ d3Selection.selection.prototype.delegate = function (eventName, targetSelector, 
  * Extending Backbone View
  */
 export default class ContrailView extends Backbone.View {
+  constructor (p) {
+    super(p)
+    this.actionman = actionman
+  }
   /**
    * @return {String} this class name without 'View'
    */

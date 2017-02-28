@@ -18,13 +18,6 @@ export default class Action {
     if (!_.includes(instance.registrars, p.registrar)) instance.registrars.push(p.registrar)
 
     instance._deny = true
-
-    /**
-     * Action may be registered to multiple registrars.
-     * This will restrict triggering action only on to registrar which action manager registered to
-     */
-    instance._triggerAll = false
-
     return instance
   }
   /**
@@ -36,21 +29,15 @@ export default class Action {
   /**
    * Execute the action code
    */
-  apply (actionManId, ...args) {
+  apply (...args) {
     if (this._deny) return undefined
 
     if (this._execute) {
-      if (this._triggerAll) {
-        _.each(this.registrars, registrar => {
-          this._registrar = registrar
-          this._execute(...args)
-          this._registrar = undefined
-        })
-      } else {
-        this._registrar = _.find(this.registrars, registrar => registrar._actionman.id === actionManId)
+      _.each(this.registrars, registrar => {
+        this._registrar = registrar
         this._execute(...args)
         this._registrar = undefined
-      }
+      })
     }
     return undefined
   }

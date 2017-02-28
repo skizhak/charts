@@ -4,6 +4,7 @@
 import _ from 'lodash'
 import ContrailChartsView from 'contrail-charts-view'
 import CompositeYChartView from 'components/composite-y/CompositeYChartView'
+import actionman from 'plugins/Actionman'
 import BrushView from 'components/brush/BrushView'
 import BrushConfigModel from 'components/brush/BrushConfigModel'
 import CompositeYChartConfigModel from 'components/composite-y/CompositeYChartConfigModel'
@@ -103,7 +104,6 @@ export default class NavigationView extends ContrailChartsView {
     if (_.isDate(xMax)) xMax = xMax.getTime()
 
     this._selection.filter(xAccessor, [xMin, xMax])
-    this._actionman.fire('ChangeSelection', this._selection, this.config.get('onChangeSelection'))
   }
   /**
    * Turn off selection for the animation period on resize

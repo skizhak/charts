@@ -6,6 +6,7 @@ import _ from 'lodash'
 import * as d3Selection from 'd3-selection'
 import * as d3Ease from 'd3-ease'
 import ContrailChartsView from 'contrail-charts-view'
+import actionman from 'plugins/Actionman'
 
 export default class CrosshairView extends ContrailChartsView {
   constructor (p) {
@@ -90,13 +91,13 @@ export default class CrosshairView extends ContrailChartsView {
       top: this.svgOffset.top + point[1],
     }
     const tooltipOptions = {placement: 'horizontal'}
-    this._actionman.fire('ShowComponent', this.config.get('tooltip'), tooltipPosition, data, tooltipOptions)
+    actionman.fire('ShowComponent', this.config.get('tooltip'), tooltipPosition, data, tooltipOptions)
   }
 
   hide () {
     const lines = this.d3.selectAll(this.selectors.node).data([])
     lines.exit().remove()
 
-    this._actionman.fire('HideComponent', this.config.get('tooltip'))
+    actionman.fire('HideComponent', this.config.get('tooltip'))
   }
 }

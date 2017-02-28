@@ -8,6 +8,7 @@ import * as d3Axis from 'd3-axis'
 import * as d3Array from 'd3-array'
 import * as d3TimeFormat from 'd3-time-format'
 import ContrailChartsView from 'contrail-charts-view'
+import actionman from 'plugins/Actionman'
 import LineChartView from 'components/composite-y/LineChartView'
 import AreaChartView from 'components/composite-y/AreaChartView'
 import BarChartView from 'components/composite-y/GroupedBarChartView'
@@ -76,7 +77,7 @@ export default class CompositeYChartView extends ContrailChartsView {
     _.each(this._drawings, drawing => drawing.render())
 
     const crosshairId = this.config.get('crosshair')
-    if (crosshairId) this._actionman.fire('HideComponent', crosshairId)
+    if (crosshairId) actionman.fire('HideComponent', crosshairId)
 
     this._ticking = false
   }
@@ -92,7 +93,7 @@ export default class CompositeYChartView extends ContrailChartsView {
     const crosshairId = this.config.get('crosshair')
     const data = this.getCrosshairData(point)
     const config = this.getCrosshairConfig()
-    this._actionman.fire('ShowComponent', crosshairId, data, point, config)
+    actionman.fire('ShowComponent', crosshairId, data, point, config)
 
     // reset the tick so we can capture the next handler
     this._ticking = false
@@ -502,7 +503,6 @@ export default class CompositeYChartView extends ContrailChartsView {
                 config: compositeYConfig,
                 container: this._container,
                 parent: this,
-                actionman: this._actionman,
               })
               this._drawings.push(foundDrawing)
             }

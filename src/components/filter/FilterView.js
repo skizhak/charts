@@ -4,6 +4,7 @@
 import './filter.scss'
 import * as d3Selection from 'd3-selection'
 import ContrailChartsView from 'contrail-charts-view'
+import actionman from 'plugins/Actionman'
 import _template from './filter.html'
 
 export default class FilterView extends ContrailChartsView {
@@ -31,6 +32,6 @@ export default class FilterView extends ContrailChartsView {
     d3Selection.event.stopPropagation()
     const accessorName = el.value
     const isChecked = el.checked
-    this._actionman.fire('SelectSerie', accessorName, isChecked)
+    actionman.fire('SelectSerie', accessorName, isChecked)
   }
 }

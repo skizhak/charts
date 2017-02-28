@@ -12,7 +12,6 @@ export default class ContrailChartsView extends ContrailView {
     this._id = p.id
     this.d3.attr('id', this.id)
     this.config = p.config
-    this._actionman = p.actionman
     this._order = p.order
     this._container = p.container
     this.params = {}

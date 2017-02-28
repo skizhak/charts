@@ -9,6 +9,7 @@ import * as d3Ease from 'd3-ease'
 import XYChartSubView from 'components/composite-y/XYChartSubView'
 import BucketConfigModel from 'components/bucket/BucketConfigModel'
 import BucketView from 'components/bucket/BucketView'
+import actionman from 'plugins/Actionman'
 
 export default class ScatterPlotView extends XYChartSubView {
   constructor (p) {
@@ -118,7 +119,7 @@ export default class ScatterPlotView extends XYChartSubView {
   _onMouseover (d, el, event) {
     if (this.config.get('tooltipEnabled')) {
       const [left, top] = d3Selection.mouse(this._container)
-      this._actionman.fire('ShowComponent', d.accessor.tooltip, {left, top}, d.data)
+      actionman.fire('ShowComponent', d.accessor.tooltip, {left, top}, d.data)
     }
     el.classList.add(this.selectorClass('active'))
   }

@@ -6,7 +6,7 @@ import ContrailChartsDataModel from 'contrail-charts-data-model'
 import ContrailView from 'contrail-view' // Todo use contrail-charts-view instead
 import * as Components from 'components/index'
 import SerieProvider from 'handlers/SerieProvider'
-import Actionman from '../../plugins/Actionman'
+import actionman from '../../plugins/Actionman'
 
 import ShowComponent from 'actions/ShowComponent'
 import HideComponent from 'actions/HideComponent'
@@ -33,7 +33,6 @@ export default class RadialChartView extends ContrailView {
     this._dataModel = new ContrailChartsDataModel()
     this._dataProvider = new SerieProvider({ parent: this._dataModel })
     this._components = []
-    this._actionman = new Actionman()
   }
 
   render () {
@@ -48,12 +47,11 @@ export default class RadialChartView extends ContrailView {
   }
 
   remove () {
-    if (this._actionman) _.each(Actions, action => this._actionman.unset(action, this))
+    if (actionman) _.each(Actions, action => actionman.unset(action, this))
     _.each(this._components, component => component.remove())
     this._dataModel = undefined
     this._dataProvider = undefined
     this._components = []
-    this._actionman = undefined
   }
   /**
   * Provide data for this chart as a simple array of objects.
@@ -81,15 +79,14 @@ export default class RadialChartView extends ContrailView {
     // Todo use class from selectors. extend ContrailChartsView instead of ContrailView
     // streamline chart class. xy uses cc-chart. position relative mess with tooltip position
     this.el.classList.add('cc-chart')
-    this._actionman.id = this._config.id
     /**
      * Let's register actions here.
      * Doing this in the constructor causes actions to be registered for views which may not have setConfig invoked,
      * causing multiple chart instance scenarios having actions bound to registars not active in the dom.
      * Since action is singleton and some actions trigger on all registrar, we need to avoid above mentioned scenario.
      */
-    _.each(Actions, action => this._actionman.set(action, this))
     if (_.has(config, 'dataProvider.config')) this._dataProvider.setConfig(config.dataProvider.config)
+    _.each(Actions, action => actionman.set(action, this))
     this._initComponents()
   }
 
@@ -131,7 +128,6 @@ export default class RadialChartView extends ContrailView {
       id: id,
       config: configModel,
       model: model,
-      actionman: this._actionman,
       container: this.el,
     })
     const component = new Components[`${type}View`](viewOptions)
