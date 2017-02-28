@@ -2,41 +2,36 @@
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
 import _ from 'lodash'
-import ContrailModel from 'contrail-model'
+import Events from 'contrail-events'
 
-export default class SerieProvider extends ContrailModel {
-  get defaults () {
-    return {
-      _type: 'SerieProvider',
-      // Data formatter
-      formatter: undefined,
-    }
+export default class SerieProvider {
+  constructor (data, config) {
+    this.data = data
+    this.config = config
   }
 
-  constructor (p) {
-    super(p)
-    if (this.has('parent')) {
-      this.listenTo(this.get('parent'), 'change', this.parse)
-    }
-    this.parse()
-
-    this.listenTo(this, 'change:error', this.triggerError)
+  get data () {
+    return this._data
   }
 
-  setConfig (config) {
-    this.set(config)
+  set data (data) {
+    this._data = this.parse(data) || []
+    this.trigger('change')
   }
 
-  parse () {
-    let data = this.get('parent').get('data')
-    const formatter = this.get('formatter')
-    if (_.isFunction(formatter)) {
-      data = formatter(data)
-    }
-    this.set('data', data)
+  set config ({formatter} = {}) {
+    if (!formatter) return
+    this._formatter = formatter
+    this.trigger('change')
+  }
+
+  parse (data) {
+    return _.isFunction(this._formatter) ? this._formatter(data) : data
   }
 
   getLabels (formatter) {
-    return _.map(this.get('data'), (serie) => formatter(serie))
+    return _.map(this._data, serie => formatter(serie))
   }
 }
+// TODO replace with class extends syntax
+_.extend(SerieProvider.prototype, Events)

@@ -55,7 +55,7 @@ export default class PieChartView extends ContrailChartsView {
     this._onMouseout()
     const serieConfig = this.config.get('serie')
     const radius = this.config.get('radius')
-    const data = this.model.get('data')
+    const data = this.model.data
 
     const arc = d3Shape.arc()
       .outerRadius(radius)

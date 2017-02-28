@@ -2,7 +2,6 @@
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
 import _ from 'lodash'
-import ContrailChartsDataModel from 'contrail-charts-data-model'
 import ContrailView from 'contrail-view' // Todo use contrail-charts-view instead
 import * as Components from 'components/index'
 import SerieProvider from 'handlers/SerieProvider'
@@ -30,8 +29,7 @@ export default class RadialChartView extends ContrailView {
   }
 
   initialize () {
-    this._dataModel = new ContrailChartsDataModel()
-    this._dataProvider = new SerieProvider({ parent: this._dataModel })
+    this._dataProvider = new SerieProvider()
     this._components = []
   }
 
@@ -49,7 +47,6 @@ export default class RadialChartView extends ContrailView {
   remove () {
     if (actionman) _.each(Actions, action => actionman.unset(action, this))
     _.each(this._components, component => component.remove())
-    this._dataModel = undefined
     this._dataProvider = undefined
     this._components = []
   }
@@ -80,8 +77,8 @@ export default class RadialChartView extends ContrailView {
      * causing multiple chart instance scenarios having actions bound to registars not active in the dom.
      * Since action is singleton and some actions trigger on all registrar, we need to avoid above mentioned scenario.
      */
-    if (_.has(config, 'dataProvider.config')) this._dataProvider.setConfig(config.dataProvider.config)
     _.each(Actions, action => actionman.set(action, this))
+    if (_.has(config, 'dataProvider.config')) this._dataProvider.config = config.dataProvider.config
     this._initComponents()
   }
 
