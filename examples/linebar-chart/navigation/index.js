@@ -16,7 +16,7 @@ const data = fixture({
   },
 })
 
-const container = ['chart-area', 'chart-bar']
+const container = ['area-chart', 'bar-chart']
 const layoutMeta = {
   [container[0]]: 'render-order-1 col-md-12',
   [container[1]]: 'render-order-2 col-md-12'
@@ -162,8 +162,8 @@ export default {
     areaChart.setConfig(areaChartConfig)
     barChart.setConfig(barChartConfig)
 
-    // Navigation component of areaChart will push the data to barChart
     areaChart.setData(data)
+    barChart.setData(data)
   },
   remove: () => {
     areaChart.remove()
