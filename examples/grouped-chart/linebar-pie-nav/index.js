@@ -224,6 +224,7 @@ const chartConfigs = [
             }
           ]
         },
+        updateComponents: ['compositey-chart-id2'],
       }
     }]
   }

@@ -101,7 +101,7 @@ export default class NavigationView extends ContrailChartsView {
     if (_.isDate(xMax)) xMax = xMax.getTime()
 
     const data = {accessor: xAccessor, range: [xMin, xMax]}
-    actionman.fire('Zoom', data)
+    actionman.fire('Zoom', this.config.get('updateComponents'), data)
   }
   /**
    * Turn off selection for the animation period on resize
