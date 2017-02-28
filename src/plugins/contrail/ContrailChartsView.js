@@ -5,7 +5,7 @@ import _ from 'lodash'
 import * as d3Selection from 'd3-selection'
 import ContrailView from 'contrail-view'
 /**
- * View base class.
+ * View base class
  */
 export default class ContrailChartsView extends ContrailView {
   constructor (p = {}) {
@@ -143,7 +143,6 @@ export default class ContrailChartsView extends ContrailView {
   hide () {
     this.d3.classed('hide', true)
   }
-
   /**
    * Stop listening to config and model. Remove the view from the dom.
    */
@@ -153,7 +152,6 @@ export default class ContrailChartsView extends ContrailView {
     this.params = {}
     super.remove()
   }
-
   /**
    * In frozen state View ignores Model Data change
    * @param {Boolean} isFrozen change state to

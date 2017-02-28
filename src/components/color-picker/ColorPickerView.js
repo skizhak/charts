@@ -37,11 +37,11 @@ export default class ColorPickerView extends ContrailChartsView {
     elemOffset.left += $elem.outerWidth(true)
     paletteElement.css(elemOffset)
     paletteElement.find('.color-picker-palette-title').html(label)
-    paletteElement.show()
+    paletteElement.removeClass('hide')
   }
 
   close () {
-    this.$('.color-picker-palette').hide()
+    this.d3.select('.color-picker-palette').classed('hide', true)
   }
 
   // Event handlers
