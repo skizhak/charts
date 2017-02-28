@@ -22,6 +22,8 @@ import dendrogramChart from '../../radial-chart/dendrogram'
 import areaBasic from '../../area-chart/basic'
 import twoBarNav from '../../grouped-chart/linebar-linebar-nav/index.js'
 import twoLineBarOnePieNav from '../../grouped-chart/linebar-pie-nav/index.js'
+// Sankey
+import sankeyChart from '../../sankey-chart'
 
 import groupedChartTemplate from '../template/multiple.tmpl'
 
@@ -95,6 +97,11 @@ const allExamples = {
     '2 LineBar 1 Pie Nav': {
       template: 'grouped',
       view: twoLineBarOnePieNav
+    }
+  },
+  'sankey': {
+    'Sankey': {
+      view: sankeyChart
     }
   }
 }
