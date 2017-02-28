@@ -76,6 +76,7 @@ export default class XYChartSubView extends ContrailChartsView {
     let getFullRange = false
     if (this.model.data.length < 2) getFullRange = true
     domains[xAxisName] = this.model.getRangeFor(xAccessor, getFullRange)
+    this._overrideDomain(xAxisName, domains)
 
     const enabledAccessors = _.filter(this.params.plot.y, a => a.enabled)
     const accessorsByAxis = _.groupBy(enabledAccessors, 'axis')
@@ -85,14 +86,16 @@ export default class XYChartSubView extends ContrailChartsView {
         // TODO get maximum range of all enabled series but not of first only?
         domains[axisName] = this.model.getRangeFor(accessors[0].accessor, true)
       }
-
-      // Override axis domain based on axis config.
-      const configDomain = this.config.getDomain(axisName)
-      if (!configDomain) return
-      if (!_.isNil(configDomain[0])) domains[axisName][0] = configDomain[0]
-      if (!_.isNil(configDomain[1])) domains[axisName][1] = configDomain[1]
+      this._overrideDomain(axisName, domains)
     })
     return domains
+  }
+  // Override axis domain based on axis config
+  _overrideDomain (axisName, domains) {
+    const configDomain = this.config.getDomain(axisName)
+    if (!configDomain) return
+    if (!_.isNil(configDomain[0])) domains[axisName][0] = configDomain[0]
+    if (!_.isNil(configDomain[1])) domains[axisName][1] = configDomain[1]
   }
 
   // Event handlers

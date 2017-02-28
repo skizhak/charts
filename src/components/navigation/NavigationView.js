@@ -8,12 +8,10 @@ import actionman from 'plugins/Actionman'
 import BrushView from 'components/brush/BrushView'
 import BrushConfigModel from 'components/brush/BrushConfigModel'
 import CompositeYChartConfigModel from 'components/composite-y/CompositeYChartConfigModel'
-import Selection from 'handlers/Selection'
 
 export default class NavigationView extends ContrailChartsView {
   constructor (p) {
     super(p)
-    this._selection = new Selection(this.model.data)
     this._brush = new BrushView({
       config: new BrushConfigModel({
         isSharedContainer: true,
@@ -87,7 +85,6 @@ export default class NavigationView extends ContrailChartsView {
   // Event handlers
 
   _onModelChange () {
-    this._selection.data = this.model.data
     this.render()
   }
 
@@ -103,7 +100,8 @@ export default class NavigationView extends ContrailChartsView {
     if (_.isDate(xMin)) xMin = xMin.getTime()
     if (_.isDate(xMax)) xMax = xMax.getTime()
 
-    this._selection.filter(xAccessor, [xMin, xMax])
+    const data = {accessor: xAccessor, range: [xMin, xMax]}
+    actionman.fire('Zoom', data)
   }
   /**
    * Turn off selection for the animation period on resize

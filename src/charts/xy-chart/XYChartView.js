@@ -12,12 +12,11 @@ import HideComponent from 'actions/HideComponent'
 import SelectSerie from 'actions/SelectSerie'
 import SelectColor from 'actions/SelectColor'
 import SelectChartType from 'actions/SelectChartType'
-import ChangeSelection from 'actions/ChangeSelection'
+import Zoom from 'actions/Zoom'
 import Refresh from 'actions/Refresh'
 import Freeze from 'actions/Freeze'
 import Unfreeze from 'actions/Unfreeze'
-import OnClick from 'actions/OnClick'
-const Actions = {ShowComponent, HideComponent, SelectSerie, SelectColor, SelectChartType, ChangeSelection, Refresh, Freeze, Unfreeze, OnClick}
+const Actions = {ShowComponent, HideComponent, SelectSerie, SelectColor, SelectChartType, Zoom, Refresh, Freeze, Unfreeze}
 /**
 * Chart with a common X axis and many possible child components rendering data on the Y axis (for example: line, bar, stackedBar).
 * Many different Y axis may be configured.

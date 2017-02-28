@@ -14,7 +14,6 @@ import SelectSerie from 'actions/SelectSerie'
 import Refresh from 'actions/Refresh'
 import Freeze from 'actions/Freeze'
 import Unfreeze from 'actions/Unfreeze'
-import ChangeSelection from 'actions/ChangeSelection'
 const Actions = {ShowComponent, HideComponent, SelectSerie, SelectColor, Refresh, Freeze, Unfreeze}
 /**
 * Group of charts rendered in polar coordinates system

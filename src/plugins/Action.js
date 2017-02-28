@@ -99,3 +99,5 @@ export default class Action {
 }
 // TODO replace with class extends syntax
 _.extend(Action.prototype, Events)
+
+module.exports = Action

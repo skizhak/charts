@@ -469,6 +469,15 @@ export default class CompositeYChartView extends ContrailChartsView {
     })
     return data
   }
+
+  zoom ({accessor, range}) {
+    const axisConfig = this.config.get('axis')
+    if (axisConfig) {
+      if (!axisConfig[accessor]) axisConfig[accessor] = {}
+      axisConfig[accessor].domain = range
+      this.config.trigger('change', this.config)
+    }
+  }
   /**
   * Update the drawings array based on the plot.y.
   */
