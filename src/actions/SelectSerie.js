@@ -39,8 +39,6 @@ export default class SelectSerie extends Action {
       const levels = radialDendrogram.config.get('levels')
       const level = _.find(levels, (level) => level.level === accessorName)
       if (level) {
-        //level.enabled = isSelected
-        //radialDendrogram.config.trigger('change', radialDendrogram.config)
         let drillDownLevel = isSelected ? level.level + 1 : level.level
         if (drillDownLevel < 1) {
           drillDownLevel = 1

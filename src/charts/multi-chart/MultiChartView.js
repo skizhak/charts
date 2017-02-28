@@ -95,19 +95,6 @@ export default class ChartView extends ContrailChartsView {
     this._dataModel = undefined
     this._dataProvider = undefined
   }
-
-  _registerHandler (type, config) {
-    if (!this._isEnabledHandler(type)) return false
-    // Todo create handlers array similar to components.
-    if (type === 'dataProvider') {
-      // Set dataProvider config. Eg. input data formatter config
-      this._dataProvider.set(config, { silent: true })
-      // Since we're setting the config, trigger a change to parentDataModel to re-compute based on new config.
-      // Triggering the change on parentModel triggers prepareData on all the dataProvider instances of same parentModel.
-      // Todo check if we really need to trigger this or simply call prepareData in current dataProvider?
-      this._dataProvider.parentModel.trigger('change')
-    }
-  }
   /**
    * Initialize child chart views.
    */

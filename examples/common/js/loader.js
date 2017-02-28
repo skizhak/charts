@@ -160,6 +160,5 @@ function createLink (chartType = '', templateId = 'grouped', view, linkText) {
   }
   return $link
 }
-
-const $1stNavMenu = $('.nav .example-group .links').first()
-$1stNavMenu.children('li').first().find('.nav-text').click()
+const exampleId = window.location.hash || '#grouped2BarNav'
+$(exampleId).click()

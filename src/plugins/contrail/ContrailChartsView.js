@@ -205,6 +205,8 @@ export default class ContrailChartsView extends ContrailView {
     }
   }
 
+  // Event handlers
+
   _onResize () {
     if (!this._ticking) {
       window.requestAnimationFrame(this.render.bind(this))

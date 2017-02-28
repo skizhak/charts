@@ -2,7 +2,7 @@
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
 import _ from 'lodash'
-import Events from 'contrail-charts-events'
+import Events from 'contrail-events'
 /**
  * A "Command" object
  * @event enable
@@ -65,7 +65,6 @@ export default class Action {
   }
   /**
    * Changes enable/disable state
-   * Notifies "enable" Event
    * Notifies "enable" Event
    */
   enable () {

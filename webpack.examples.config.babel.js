@@ -66,7 +66,7 @@ export default (env = defaultEnv) => {
       coCharts: 'coCharts'
     },
     resolve: {
-      modules: [join(__dirname), 'node_modules'],
+      modules: [absolute(), 'node_modules'],
       alias: {
         'fixture': 'tests/generator.js',
         'formatter': 'examples/common/js/value-formatters.js',

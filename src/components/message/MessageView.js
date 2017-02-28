@@ -45,6 +45,7 @@ export default class MessageView extends ContrailChartsView {
     if (!this.params.containerList[msgObj.componentId]) {
       let componentElemD3 = d3.select(`#${msgObj.componentId}`)
 
+      // TODO el.closest is not supported in IE15
       if (componentElemD3.node() && componentElemD3.node().closest(this.selectors.chart)) {
         this.params.containerList[msgObj.componentId] = componentElemD3
       }
@@ -54,6 +55,7 @@ export default class MessageView extends ContrailChartsView {
 
     if (associatedComponent) {
       if (!associatedComponent.classed(this.selectors.component.substring(1))) {
+        // TODO el.closest is not supported in IE15
         associatedComponent = d3.select(associatedComponent.node().closest(this.selectors.component))
       }
 

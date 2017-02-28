@@ -9,7 +9,6 @@ export default class SelectChartType extends Action {
     super(p)
     this._deny = false
   }
-
   /**
    * To update chart type of an accessor under the component.
    * If the updated chart type is one of BarChart type, then we will change all charts (any of bar chart type)

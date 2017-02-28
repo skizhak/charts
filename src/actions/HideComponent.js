@@ -1,6 +1,7 @@
 /*
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
+import _ from 'lodash'
 import Action from '../plugins/Action'
 
 export default class HideComponent extends Action {

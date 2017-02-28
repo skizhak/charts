@@ -3,7 +3,7 @@
  */
 import _ from 'lodash'
 import * as d3Array from 'd3-array'
-import Events from 'contrail-charts-events'
+import Events from 'contrail-events'
 
 // Selection object for dataframes
 export default class Selection {
