@@ -77,6 +77,11 @@ export default (env = defaultEnv) => {
       extensions: ['.js']
     },
     plugins: plugins,
-    stats: { children: false }
+    stats: { children: false },
+    devServer: {
+      publicPath: '/build/examples/',
+      compress: true,
+      port: 9000
+    }
   }
 }
