@@ -30,15 +30,13 @@ export default class PieChartView extends ContrailChartsView {
     return _.extend(super.selectors, {
       node: '.arc',
       active: '.active',
-      click: '.click'
     })
   }
   get events () {
-    return {
+    return _.extend(super.events, {
       [`mousemove ${this.selectors.node}`]: '_onMousemove',
       [`mouseout ${this.selectors.node}`]: '_onMouseout',
-      [`click ${this.selectors.node}`]: '_onClick',
-    }
+    })
   }
 
   changeModel (model) {
@@ -119,8 +117,8 @@ export default class PieChartView extends ContrailChartsView {
     els.classed('active', false)
   }
 
-  _onClick (d, el) {
+  _onClickNode (d, el) {
     el.classList.remove(this.selectorClass('active'))
-    this._actionman.fire('OnClick', d.data, el, this.config.get('onClick'))
+    this.config.get('onClickNode')(d.data)
   }
 }

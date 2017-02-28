@@ -15,8 +15,7 @@ import Refresh from 'actions/Refresh'
 import Freeze from 'actions/Freeze'
 import Unfreeze from 'actions/Unfreeze'
 import ChangeSelection from 'actions/ChangeSelection'
-import OnClick from 'actions/OnClick'
-const Actions = {ShowComponent, HideComponent, SelectSerie, SelectColor, ChangeSelection, Refresh, Freeze, Unfreeze, OnClick}
+const Actions = {ShowComponent, HideComponent, SelectSerie, SelectColor, Refresh, Freeze, Unfreeze}
 /**
 * Group of charts rendered in polar coordinates system
 * TODO merge with XYChart

@@ -95,6 +95,12 @@ const chartConfigs = [
           ]
         }
       }
+    }, {
+      id: 'message-id',
+      type: 'Message',
+      config: {
+        enabled: true,
+      }
     }]
   }, {
     id: container[1],
@@ -161,6 +167,16 @@ const chartConfigs = [
           valueFormatter: formatter.commaGroupedInteger,
         },
         tooltip: 'tooltip-id',
+        onClickNode: data => {
+          chartView.actionman.fire('SendMessage', {
+            action: 'once',
+            messages: [{
+              level: 'info',
+              title: 'Pie chart message',
+              message: `Sum of selected "${data.label}" values: ${data.value}`,
+            }]
+          })
+        },
       },
     }, {
       id: 'tooltip-id',

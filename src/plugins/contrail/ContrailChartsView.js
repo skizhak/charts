@@ -26,6 +26,13 @@ export default class ContrailChartsView extends ContrailView {
       sharedSvg: '.shared-svg',
     }
   }
+
+  get events () {
+    return {
+      [`click ${this.selectors.node}`]: '_onClickNode',
+    }
+  }
+
   get zIndex () { return 0 }
   /**
    * @return {String} id provided by config or Backbone generated
@@ -211,5 +218,10 @@ export default class ContrailChartsView extends ContrailView {
       window.requestAnimationFrame(this.render.bind(this))
       this._ticking = true
     }
+  }
+
+  _onClickNode (d, el) {
+    const cb = this.config.get('onClickNode')
+    if (_.isFunction(cb)) cb(d.data)
   }
 }
