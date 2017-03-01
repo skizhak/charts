@@ -27,4 +27,16 @@ export default class BucketConfigModel extends ContrailChartsConfigModel {
     const end = _.isNil(configRange[1]) ? defaultRange[1] : configRange[1]
     return this.attributes.scale.range([start, end])
   }
+
+  get duration () {
+    return this._parent.get('duration') || this.this.attributes.duration
+  }
+
+  get xAccessor () {
+    return _.get(this._parent.attributes, 'plot.x.accessor')
+  }
+
+  get updateComponents () {
+    return this._parent.get('updateComponents')
+  }
 }
