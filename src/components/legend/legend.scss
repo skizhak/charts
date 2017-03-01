@@ -1,17 +1,9 @@
-.legend.cc-component {
-	.legend-group {
-		display: inline-block;
-		padding: 10px;
+@import "legend-rules";
+@import "../../styles/variables";
+@import "../../styles/mixins";
 
-		.color {
-			display: inline-block;
-			width: 16px;
-			height: 16px;
-			border-radius: 16px;
-			margin-right: 10px;
-		}
-		.label {
-			font-size: 12px;
-		}
-	}
+.legend.cc-component {
+  @include legendRules($legend);
+
+  @include themify("legend", $themes);
 }

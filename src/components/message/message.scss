@@ -1,49 +1,12 @@
-@import "../../styles/colors.scss";
+@import "message-rules";
+@import "../../styles/variables";
+@import "../../styles/mixins";
 
 .message.cc-component {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  @include messageRules(
+    $message-info,
+    $message-error,
+    $message-warn);
 
-  .message-row {
-    overflow: hidden;
-    font-size: 0.75rem;
-
-    &.msg-info {
-      color: map-get($infoBlue, "foreground");
-      background-color: map-get($infoBlue, "background");
-    }
-
-    &.msg-error {
-      color: map-get($errorRed, "foreground");
-      background-color: map-get($errorRed, "background");
-    }
-
-    &.msg-warn {
-      color: map-get($warnYellow, "foreground");
-      background-color: map-get($warnYellow, "background");
-    }
-
-    & .message-heading,
-    & .message-body {
-      width: 100%;
-      padding: 0 5px;
-      margin: 5px 0;
-    }
-
-    .message-heading {
-      display: flex;
-      position: relative;
-
-      .fa {
-        margin-right: 2px;
-      }
-
-      .message-title {
-        flex-grow: 1;
-        font-weight: bold;
-      }
-    }
-  }
+  @include themify("message", $themes);
 }

@@ -1,10 +1,9 @@
+@import "pie-chart-rules";
+@import "../../styles/variables";
+@import "../../styles/mixins";
+
 .cc-svg .pie-chart {
-  opacity: 0.9;
-  path.arc {
-    stroke: white;
-  }
-  path.active {
-    opacity: 0.45;
-  }
-  path.click {}
+  @include pieChartRules($pie-chart);
+
+  @include themify("pie-chart", $themes);
 }

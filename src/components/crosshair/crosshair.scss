@@ -1,19 +1,9 @@
+@import "crosshair-rules";
+@import "../../styles/variables";
+@import "../../styles/mixins";
+
 .cc-svg .crosshair {
-	.crosshair-line {
-		.x-line {
-			stroke-width: 1;
-			stroke: #888;
-			shape-rendering: crispEdges;
-		}
-		.x-text {
-			text-anchor: middle;
-			font-size: 11px;
-			font-weight: bold;
-			fill: #888;
-		}
-		.bubble {
-      stroke-width: 1;
-      stroke: #fff;
-		}
-	}
+  @include crosshairRules($crosshair);
+
+  @include themify("crosshair", $themes);
 }
