@@ -56,7 +56,7 @@ export default class BucketView extends ContrailChartsView {
       .text(d => d.bucket.length)
     // Update
     buckets
-      .transition().ease(d3Ease.easeLinear).duration(this.config.get('duration'))
+      .transition().ease(d3Ease.easeLinear).duration(this.config.duration)
       .attr('transform', d => `translate(${d.x},${d.y})`)
 
     buckets.exit().remove()

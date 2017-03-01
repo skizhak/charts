@@ -62,6 +62,14 @@ export default class NavigationView extends ContrailChartsView {
     window.removeEventListener('resize', this._onResize)
   }
 
+  zoom ({accessor, range}) {
+    const sScale = this.config.get('selectionScale')
+    let visualMin = this.params.xScale(range[0])
+    let visualMax = this.params.xScale(range[1])
+    this.config.set('selection', [sScale.invert(visualMin), sScale.invert(visualMax)], {silent: true})
+    this._update()
+  }
+
   prevChunkSelected () {
     const range = this.model.getRange()
     const x = this.params.xAccessor

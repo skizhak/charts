@@ -104,7 +104,8 @@ const chartConfig = {
         shape: bubbleShapes.circleFill,
         color: '#ff7f0e',
         tooltip: 'tooltip-bucket',
-      }
+      },
+      updateComponents: ['navigation-id'],
     }
   }, {
     id: 'tooltip-id',
@@ -147,6 +148,7 @@ const chartConfig = {
       },
     },
   }, {
+    id: 'navigation-id',
     type: 'Navigation',
     config: {
       marginInner: 5,
