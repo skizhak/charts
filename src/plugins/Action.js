@@ -77,13 +77,13 @@ export default class Action {
   }
   /**
    * Remove registrar from action's registrars list
+   * Clear all listeners if there are no registrars left
    * @param registrar
    */
   unRegister (registrar) {
     const instance = instances[this.id]
-    if (_.includes(instance.registrars, registrar)) {
-      _.remove(instance.registrars, r => r.el.id === registrar.el.id)
-    }
+    instance.registrars = _.without(instance.registrars, registrar)
+    if (_.isEmpty(instances.registrars)) this.off()
   }
   /**
    * Override in Concrete Command
