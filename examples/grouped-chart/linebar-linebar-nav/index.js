@@ -147,11 +147,9 @@ export default {
   layoutMeta: layoutMeta,
   render: () => {
     chartView.setConfig(chartConfig)
-    // selection on navigation will set the data on these charts.
-    // chartView.setData(complexData, {}, container[0])
-    // chartView.setData(complexData, {}, container[1])
-    chartView.setData(data, {}, container[2])
-    // chartView.render()
+    chartView.setData(data, container[0])
+    chartView.setData(data, container[1])
+    chartView.setData(data, container[2])
   },
   remove: () => {
     chartView.remove()

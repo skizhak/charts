@@ -73,13 +73,12 @@ export default class RadialDendrogramView extends ContrailChartsView {
       this.params.innerRadius = this.params.radius - this.params.labelMargin
     }
   }
-
   /**
   * Build the root node tree structure that will be the input for the d3.hierarchy() layout.
   * We build one more level than configured in order to allow branching of the last configured level.
   */
   _prepareRootNode () {
-    const data = this.model.get('data')
+    const data = this.model.data
     const hierarchyConfig = this.config.get('hierarchyConfig')
     const leafNodes = []
     this.maxDepth = 0
@@ -471,7 +470,7 @@ export default class RadialDendrogramView extends ContrailChartsView {
         .attr('class', (d) => 'arc arc-' + d.depth)
         .attr('d', arcEnter)
         .merge(svgArcs).transition().ease(this.config.get('ease')).duration(this.params.duration)
-        .style('fill', (d) => this.config.getColor([], this.config.get('levels')[d.depth-1]))
+        .style('fill', d => this.config.getColor([], this.config.get('levels')[d.depth - 1]))
         .attr('d', arc)
       svgArcs.exit().transition().ease(this.config.get('ease')).duration(this.params.duration)
         .attr('d', arcEnter)

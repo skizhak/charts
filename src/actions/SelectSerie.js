@@ -8,7 +8,6 @@ export default class SelectSerie extends Action {
   constructor (p) {
     super(p)
     this._deny = false
-    this._triggerAll = false
   }
 
   _execute (accessorName, isSelected) {
