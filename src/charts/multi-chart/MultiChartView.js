@@ -2,11 +2,9 @@
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
 import _ from 'lodash'
-import ContrailChartsDataModel from 'contrail-charts-data-model'
 import ContrailChartsView from 'contrail-charts-view'
 import * as Charts from 'charts/index'
 import * as Components from 'components/index'
-import * as Handlers from 'handlers/index'
 import actionman from '../../plugins/Actionman'
 import Freeze from 'actions/Freeze'
 import Unfreeze from 'actions/Unfreeze'
@@ -16,12 +14,7 @@ const Actions = {Freeze, Unfreeze}
 export default class ChartView extends ContrailChartsView {
   constructor (p) {
     super(p)
-    this.initialize()
-  }
-  initialize () {
     this._charts = {}
-    this._dataModel = new ContrailChartsDataModel()
-    this._dataProvider = new Handlers.DataProvider({ parentDataModel: this._dataModel })
     this._components = []
   }
   /**
@@ -41,7 +34,7 @@ export default class ChartView extends ContrailChartsView {
   * This config needs to be set before setData because when setting data we need the sub chart to be already defined in order to set data into it.
   */
   setConfig (config) {
-    if (this._config) this.reset()
+    if (this._config) this.remove()
     this._config = config
     /**
      * Let's register actions here.
@@ -80,17 +73,10 @@ export default class ChartView extends ContrailChartsView {
     })
   }
 
-  reset () {
-    this.remove()
-    this.initialize()
-  }
-
   remove () {
     _.each(Actions, action => actionman.unset(action, this))
     _.each(this._charts, chart => chart.remove())
     this._charts = {}
-    this._dataModel = undefined
-    this._dataProvider = undefined
   }
   /**
    * Initialize child chart views.

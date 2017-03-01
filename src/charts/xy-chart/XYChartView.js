@@ -4,7 +4,7 @@
 import _ from 'lodash'
 import ContrailChartsView from 'contrail-charts-view'
 import * as Components from 'components/index'
-import * as Handlers from 'handlers/index'
+import DataProvider from 'handlers/DataProvider'
 import actionman from '../../plugins/Actionman'
 
 import ShowComponent from 'actions/ShowComponent'
@@ -23,13 +23,9 @@ const Actions = {ShowComponent, HideComponent, SelectSerie, SelectColor, SelectC
 */
 export default class XYChartView extends ContrailChartsView {
 
-  constructor (...args) {
-    super(...args)
-    this.initialize.apply(this, ...args)
-  }
-
-  initialize () {
-    this._dataProvider = new Handlers.DataProvider()
+  constructor (p) {
+    super(p)
+    this._dataProvider = new DataProvider()
     this._components = []
   }
   /**
@@ -52,7 +48,7 @@ export default class XYChartView extends ContrailChartsView {
    * calling setConfig on already rendered chart will reset the chart.
    */
   setConfig (config) {
-    if (this._config) this.reset()
+    if (this._config) this.remove()
     this._config = config
     this.setElement(`#${config.id}`)
     // Todo Fix chart init similar to that of component. use the render via ContrailChartsView instead
@@ -89,20 +85,12 @@ export default class XYChartView extends ContrailChartsView {
     })
   }
   /**
-   * Remove and re-initialize ChartView.
-   */
-  reset () {
-    this.remove()
-    this.initialize({})
-  }
-  /**
    * Removes chart view and its components.
    * All actions will be unregistered, individual components will be removed except the parent container.
    */
   remove () {
-    if (actionman) _.each(Actions, action => actionman.unset(action, this))
+    _.each(Actions, action => actionman.unset(action, this))
     _.each(this._components, component => component.remove())
-    this._dataProvider = undefined
     this._components = []
   }
 
