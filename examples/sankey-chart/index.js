@@ -23,19 +23,45 @@ const chartConfig = {
         parse: function (d) {
           const links = []
           const srcHierarchy = [d.sport, d.sourceip, d.sourcevn]
+          const dstHierarchy = [d.dport, d.destip, d.destvn]
           links.push({
-            source: 'sport-' + srcHierarchy[0]
-            target: 'sip-' + srcHierarchy[1]
-            value: d['agg-bytes']
+            source: 'sport-' + srcHierarchy[0],
+            target: 'sip-' + srcHierarchy[1],
+            value: d['agg-bytes'],
+            sourceNode: { label: srcHierarchy[0] },
+            targetNode: { label: srcHierarchy[1] }
           })
           links.push({
-            source: 'sip-' + srcHierarchy[1]
-            target: 'svn-' + srcHierarchy[2]
-            value: d['agg-bytes']
+            source: 'sip-' + srcHierarchy[1],
+            target: 'svn-' + srcHierarchy[2],
+            value: d['agg-bytes'],
+            sourceNode: { label: srcHierarchy[1] },
+            targetNode: { label: srcHierarchy[2] }
+          })
+          links.push({
+            source: 'svn-' + srcHierarchy[2],
+            target: 'dvn-' + dstHierarchy[2],
+            value: d['agg-bytes'],
+            sourceNode: { label: srcHierarchy[2] },
+            targetNode: { label: dstHierarchy[2] }
+          })
+          links.push({
+            source: 'dvn-' + dstHierarchy[2],
+            target: 'dip-' + dstHierarchy[1],
+            value: d['agg-bytes'],
+            sourceNode: { label: dstHierarchy[2] },
+            targetNode: { label: dstHierarchy[1] }
+          })
+          links.push({
+            source: 'dip-' + dstHierarchy[1],
+            target: 'dport-' + dstHierarchy[0],
+            value: d['agg-bytes'],
+            sourceNode: { label: dstHierarchy[1] },
+            targetNode: { label: dstHierarchy[0] }
           })
           return links
         }
-      },
+      }
     }
   }, {
     id: 'default-tooltip',
@@ -68,7 +94,7 @@ export default {
   layoutMeta: layoutMeta,
   render: () => {
     chartView.setConfig(chartConfig)
-    chartView.setData(flowData)
+    chartView.setData(flowData.data)
     chartView.render()
   },
   remove: () => {

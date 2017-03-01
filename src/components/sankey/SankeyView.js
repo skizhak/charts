@@ -5,6 +5,7 @@ import './sankey.scss'
 import _ from 'lodash'
 import * as d3Scale from 'd3-scale'
 import * as d3Selection from 'd3-selection'
+import * as d3Sankey from 'd3-sankey'
 import ContrailChartsView from 'contrail-charts-view'
 
 export default class SankeyView extends ContrailChartsView {
@@ -62,7 +63,7 @@ export default class SankeyView extends ContrailChartsView {
       this.params.chartWidth += this.params.chartWidthDelta
     }
     if (!this.params.chartHeight) {
-      this.params.chartHeight = this.params.chartWidth
+      this.params.chartHeight = 3 * this.params.chartWidth / 5
     }
     if (!this.params.labelMargin) {
       this.params.labelMargin = 50
@@ -71,101 +72,72 @@ export default class SankeyView extends ContrailChartsView {
 
   _prepareLayout () {
     const data = this.model.get('data')
+    const nodeNameMap = {}
     const parseConfig = this.config.get('parseConfig')
-    _.each(data, (d, index) => {
+    this.nodes = []
+    this.links = []
+    _.each(data, (d) => {
       // Parsing a data element should return an array of links: { source: 'sourceNodeName', target: 'targetNodeName', value: value }
-      const links = parseConfig.parse(d)
-      _.each(links, (link, i) => {
+      const parsedLinks = parseConfig.parse(d)
+      _.each(parsedLinks, (link, i) => {
+        if (!link.value || link.value <= 0) {
+          return
+        }
+        if (!nodeNameMap[link.source]) {
+          const node = { name: link.source, label: link.sourceNode.label, index: this.nodes.length }
+          nodeNameMap[link.source] = node
+          this.nodes.push(node)
+        }
+        if (!nodeNameMap[link.target]) {
+          const node = { name: link.target, label: link.targetNode.label, index: this.nodes.length }
+          nodeNameMap[link.target] = node
+          this.nodes.push(node)
+        }
+        this.links.push({ source: nodeNameMap[link.source].index, target: nodeNameMap[link.target].index, value: link.value })
       })
     })
+    this.sankey = d3Sankey.sankey().nodeWidth(15).nodePadding(1).size([this.params.chartWidth - 2 * this.params.labelMargin, this.params.chartHeight])
+    this.sankey
+      .nodes(this.nodes)
+      .links(this.links)
+      .layout(32)
+    console.log('nodes: ', this.nodes)
+    console.log('links: ', this.links)
   }
 
    _render () {
-    console.log('Sankey _render: ', this.d3)
-    const svgCircles = this.d3.selectAll('.circle').data([{r:30}, {r:50}])
-    svgCircles.enter().append('circle')
-      .attr('class', 'circle')
-      .attr('r', 0)
-      .merge(svgCircles)
-      .attr('r', (d) => d.r)
-    svgCircles.exit().remove()
-    /*
-    this.d3.attr('transform', `translate(${this.params.chartWidth / 2}, ${this.params.chartHeight / 2})`)
-    // Circles
-    const svgCircles = this.d3.selectAll('.circle').data(this.circles)
-    svgCircles.enter().append('circle')
-      .attr('class', 'circle')
-      .attr('r', 0)
-      .merge(svgCircles)
-      .attr('r', (d) => d.r + 1)
-    svgCircles.exit().remove()
-
-    if (this.params.drawLinks) {
-      // Links
-      const radialLine = d3Shape.radialLine().angle((d) => d.x / 180 * Math.PI).radius((d) => d.y).curve(this.config.get('curve'))
-      const svgLinks = this.d3.selectAll('.link').data(this.links)
-      svgLinks.enter().append('path')
-        .attr('class', (d) => 'link ' + d[0].data.id)
-        .style('stroke-width', 0)
-        .attr('d', (d) => radialLine(d[0]))
+    this.d3.attr('transform', `translate(${this.params.labelMargin}, 0)`)
+    // Links
+    const path = this.sankey.link()
+    const svgLinks = this.d3.selectAll('.link').data(this.links)
+    svgLinks.enter().append('path')
+      .attr('class', 'link')
+      .attr('d', path)
+      .style("stroke-width", function(d) {
+        return Math.max(1, d.dy);
+      })
       .merge(svgLinks)
-        .style('stroke-width', (d) => (d[0].y * Math.sin((d[0].angleRange[1] - d[0].angleRange[0]) * Math.PI / 180)) + 'px')
-        .attr('d', radialLine)
-    }
-    if (this.params.drawRibbons) {
-      // Ribbons
-      const radialLine = d3Shape.radialLine().angle((d) => d[0] / 180 * Math.PI).radius((d) => d[1]).curve(this.config.get('curve'))
-      const svgLinks = this.d3.selectAll('.ribbon').data(this.ribbons, (d) => d.id)
-      svgLinks.enter().append('path')
-        .attr('class', (d) => 'ribbon' + ((d.active) ? ' active' : ''))
-        .merge(svgLinks)// .transition().ease(this.config.get('ease')).duration(this.params.duration)
-        .attr('class', (d) => 'ribbon' + ((d.active) ? ' active' : ''))
-        .attr('d', (d) => {
-          const outerPath = radialLine(d.outerPoints)
-          const innerPath = radialLine(d.innerPoints)
-          const innerStitch = 'A' + d.outerPoints[0][1] + ' ' + d.outerPoints[0][1] + ' 0 0 0 '
-          const endingStitch = 'A' + d.outerPoints[0][1] + ' ' + d.outerPoints[0][1] + ' 0 0 0 ' + radialLine([d.outerPoints[0]]).substr(1)
-          return outerPath + innerStitch + innerPath.substr(1) + endingStitch
-        })
-      svgLinks.exit().remove()
-
-      // Arc labels
-      const svgArcLabels = this.d3.selectAll('.arc-label').data(this.arcs)
-      svgArcLabels.enter().append('text')
-        .attr('x', this.params.arcLabelXOffset)
-        .attr('dy', this.params.arcLabelYOffset)
-        .append('textPath')
-        .attr('class', 'arc-label')
-        .attr('xlink:href', (d) => '#' + d.data.namePath.join('-'))
-        // .attr('startOffset', '50%')
-        .merge(svgArcLabels).transition().ease(this.config.get('ease')).duration(this.params.duration)
-        .text((d) => (this.params.showArcLabels && d.labelFits) ? d.label : '')
-      svgArcLabels.exit().remove()
-
-      // Arcs for parent nodes.
-      const arcEnter = d3Shape.arc()
-        .innerRadius((n) => n.y)
-        .outerRadius((n) => n.y + 1)
-        .startAngle((n) => Math.PI * n.angleRange[0] / 180)
-        .endAngle((n) => Math.PI * n.angleRange[1] / 180)
-      const arc = d3Shape.arc()
-        .innerRadius((n) => n.y)
-        .outerRadius((n) => n.y + this.params.arcWidth)
-        .startAngle((n) => Math.PI * n.angleRange[0] / 180)
-        .endAngle((n) => Math.PI * n.angleRange[1] / 180)
-      const svgArcs = this.d3.selectAll('.arc').data(this.arcs, (d) => d.data.namePath.join('-'))
-      svgArcs.enter().append('path')
-        .attr('id', (d) => d.data.namePath.join('-'))
-        .attr('class', (d) => 'arc arc-' + d.depth)
-        .attr('d', arcEnter)
-        .merge(svgArcs).transition().ease(this.config.get('ease')).duration(this.params.duration)
-        .style('fill', (d) => this.config.getColor([], this.config.get('levels')[d.depth-1]))
-        .attr('d', arc)
-      svgArcs.exit().transition().ease(this.config.get('ease')).duration(this.params.duration)
-        .attr('d', arcEnter)
-        .remove()
-    }
-    */
+      .attr('d', path)
+      .style("stroke-width", function(d) {
+        return Math.max(1, d.dy);
+      })
+    svgLinks.exit().remove()
+    // Nodes
+    const svgNodes = this.d3.selectAll('.node').data(this.nodes)
+    const svgNodesEnter = svgNodes.enter().append('g')
+      .attr('class', 'node')
+      .attr('transform', (d) => 'translate(' + d.x + ',' + d.y + ')')
+    svgNodesEnter.append('rect')
+      .attr('width', this.sankey.nodeWidth())
+      .attr('height', (d) => d.dy)
+    svgNodesEnter.append('text')
+      .attr("x", -5)
+      .attr("y", (d) => d.dy / 2)
+      .attr("text-anchor", "end")
+      .text((d) => d.dy > 10 ? d.label : '')
+      .filter((d) => d.x > this.params.chartWidth / 2)
+      .attr("x", 5 + this.sankey.nodeWidth())
+      .attr("text-anchor", "start")
   }
 
   // Event handlers

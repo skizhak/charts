@@ -22,6 +22,8 @@ export default class SankeyConfigModel extends ContrailChartsConfigModel {
       // The chart height. If not provided will be caculated by View.
       chartHeight: undefined,
 
+      labelMargin: 50,
+
       colorScheme: d3Scale.schemeCategory20,
       // default we're keeping colorScale as undefined. during init, we will set it to ordinal scale of colorScheme. If set, this has precedence over scheme.
       colorScale: undefined,
