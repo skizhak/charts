@@ -116,6 +116,7 @@ export default class BucketView extends ContrailChartsView {
   }
 
   _onClickNode (d, el) {
+    this._onMouseout(d, el)
     const range = d3Array.extent(_.map(d.bucket, 'data.x'))
     actionman.fire('Zoom', this.config.updateComponents, {accessor: this.config.xAccessor, range})
   }
