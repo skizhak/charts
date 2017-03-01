@@ -47,6 +47,12 @@ export default class CompositeYChartView extends ContrailChartsView {
   get xMarginInner () {
     return this.config.get('marginInner') + this.params.xMarginInner
   }
+  /**
+   * @return {String} id of element to clip the visible area
+   */
+  get clip () {
+    return 'rect-clipPath-' + this.id
+  }
 
   refresh () {
     this.config.trigger('change', this.config)
@@ -244,10 +250,9 @@ export default class CompositeYChartView extends ContrailChartsView {
    */
   renderSVG () {
     const translate = this.params.xRange[0] - this.xMarginInner
-    this.params.rectClipPathId = 'rect-clipPath-' + this.cid
     if (this.d3.select('clipPath').empty()) {
       this.d3.append('clipPath')
-        .attr('id', this.params.rectClipPathId)
+        .attr('id', this.clip)
         .append('rect')
         .attr('x', this.params.xRange[0] - this.xMarginInner)
         .attr('y', this.params.yRange[1] - this.params.marginInner)
@@ -260,7 +265,7 @@ export default class CompositeYChartView extends ContrailChartsView {
     // TODO merge with previous as enter / update
     // Handle (re)size.
     this.d3
-      .select('#' + this.params.rectClipPathId).select('rect')
+      .select('#' + this.clip).select('rect')
       .attr('x', this.params.xRange[0] - this.xMarginInner)
       .attr('y', this.params.yRange[1] - this.params.marginInner)
       .attr('width', this.params.xRange[1] - this.params.xRange[0] + 2 * this.xMarginInner)

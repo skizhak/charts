@@ -14,11 +14,13 @@ import actionman from 'plugins/Actionman'
 export default class ScatterPlotView extends XYChartSubView {
   constructor (p) {
     super(p)
-    if (this.config.get('bucket')) {
-      this._bucketConfig = new BucketConfigModel(this.config.get('bucket'))
-      this._bucketConfig.parent = this.config
+    const bucketConfig = this.config.get('bucket')
+    if (bucketConfig) {
+      this._bucketConfigModel = new BucketConfigModel(bucketConfig)
+      this._bucketConfigModel.set('clip', this._parent.clip)
+      this._bucketConfigModel.parent = this.config
       this._bucketView = new BucketView({
-        config: this._bucketConfig,
+        config: this._bucketConfigModel,
         actionman: this._actionman,
       })
       const updateComponents = _.concat([this._parent.id], this.config.get('updateComponents'))

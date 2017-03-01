@@ -64,7 +64,7 @@ export default class XYChartSubView extends ContrailChartsView {
   render () {
     super.render()
     this._onMouseout()
-    this.d3.attr('clip-path', `url(#${this._parent.params.rectClipPathId})`)
+    this.d3.attr('clip-path', `url(#${this._parent.clip})`)
   }
   /**
    * Combine series domains (extents) by axis

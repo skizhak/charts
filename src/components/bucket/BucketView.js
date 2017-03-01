@@ -32,6 +32,7 @@ export default class BucketView extends ContrailChartsView {
 
   render (points) {
     super.render()
+    this.d3.attr('clip-path', `url(#${this.config.get('clip')})`)
     const data = this._bucketize(points)
 
     const buckets = this.d3.selectAll(this.selectors.node)
