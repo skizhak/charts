@@ -205,12 +205,12 @@ export default class CompositeYChartView extends ContrailChartsView {
         }
       }
       if (!_.isFunction(axis.scale) && axis.range) {
-        let scale = this.config.getScale(axisName)
-        if (this.hasAxisParam(axisName, 'nice') && axis.nice) {
+        const scale = this.config.getScale(axisName)
+        if (axis.nice) {
           if (this.hasAxisParam(axisName, 'ticks')) {
-            scale = axis.scale.nice(axis.ticks)
+            scale.nice(axis.ticks)
           } else {
-            scale = axis.scale.nice()
+            scale.nice()
           }
         }
         scale.domain(axis.domain)
@@ -226,7 +226,7 @@ export default class CompositeYChartView extends ContrailChartsView {
     })
   }
   /**
-   * shrink x and y axises range to have margin for displaying of shapes sticking out of scale
+   * shrink x and y axes range to have margin for displaying of shapes sticking out of scale
    */
   adjustAxisMargin () {
     let sizeMargin = 0
