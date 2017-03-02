@@ -1,8 +1,9 @@
+@import "bar-chart-rules";
+@import "../../styles/variables";
+@import "../../styles/mixins";
+
 .cc-svg .bar-chart, .stacked-bar-chart {
-  .bar {
-    opacity: 0.6;
-  }
-  .bar.active {
-    opacity: 0.9;
-  }
+  @include barChartRules($bar-chart);
+
+  @include themify($barChartId, $themes);
 }
