@@ -8,5 +8,5 @@
     $message-error,
     $message-warn);
 
-  @include themify("message", $themes);
+  @include themify($messageId, $themes);
 }

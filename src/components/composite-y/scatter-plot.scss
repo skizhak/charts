@@ -5,5 +5,5 @@
 .cc-svg .scatter-plot {
   @include scatterBubbleChartRules($scatter-bubble-chart);
 
-  @include themify("scatter-bubble-chart", $themes);
+  @include themify($scatterBubbleChartId, $themes);
 }

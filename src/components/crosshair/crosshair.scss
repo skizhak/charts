@@ -5,5 +5,5 @@
 .cc-svg .crosshair {
   @include crosshairRules($crosshair);
 
-  @include themify("crosshair", $themes);
+  @include themify($crosshairId, $themes);
 }

@@ -7,5 +7,5 @@
     $brush-selection,
     $brush-handle);
 
-  @include themify("brush", $themes);
+  @include themify($brushId, $themes);
 }

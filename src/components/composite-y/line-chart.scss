@@ -5,5 +5,5 @@
 .cc-svg .line-chart {
   @include lineChartRules($line-chart);
 
-  @include themify("line-chart", $themes);
+  @include themify($lineChartId, $themes);
 }

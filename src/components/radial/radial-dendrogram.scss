@@ -5,5 +5,5 @@
 .cc-svg .radial-dendrogram {
   @include dendrogramRules($dendrogram);
 
-  @include themify("dendrogram", $themes);
+  @include themify($dendrogramId, $themes);
 }

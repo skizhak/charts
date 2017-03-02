@@ -5,5 +5,5 @@
 .cc-svg .bar-chart, .stacked-bar-chart {
   @include barChartRules($bar-chart);
 
-  @include themify("bar-chart", $themes);
+  @include themify($barChartId, $themes);
 }

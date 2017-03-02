@@ -5,5 +5,5 @@
 .cc-svg .timeline-bar {
   @include timelineBarRules($timeline-bar);
 
-  @include themify("timeline-bar", $themes);
+  @include themify($timelineBarId, $themes);
 }

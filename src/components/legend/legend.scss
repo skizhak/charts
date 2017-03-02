@@ -5,5 +5,5 @@
 .legend.cc-component {
   @include legendRules($legend);
 
-  @include themify("legend", $themes);
+  @include themify($legendId, $themes);
 }

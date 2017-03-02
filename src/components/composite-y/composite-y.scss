@@ -5,5 +5,5 @@
 .cc-svg {
   @include compositeYChartRules($compositeY);
 
-  @include themify("compositeY", $themes);
+  @include themify($compositeYId, $themes);
 }

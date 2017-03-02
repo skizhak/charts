@@ -8,5 +8,5 @@
     $control-panel-item,
     $control-panel-popup);
 
-  @include themify("control-panel", $themes);
+  @include themify($controlPanelId, $themes);
 }

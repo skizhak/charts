@@ -5,5 +5,5 @@
 .cc-svg .area-chart {
   @include areaChartRules($area-chart);
 
-  @include themify("area-chart", $themes);
+  @include themify($areaChartId, $themes);
 }

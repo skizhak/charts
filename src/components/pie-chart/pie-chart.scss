@@ -5,5 +5,5 @@
 .cc-svg .pie-chart {
   @include pieChartRules($pie-chart);
 
-  @include themify("pie-chart", $themes);
+  @include themify($pieChartId, $themes);
 }

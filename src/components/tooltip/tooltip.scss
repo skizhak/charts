@@ -7,5 +7,5 @@
     $tooltip-title,
     $tooltip-item);
 
-  @include themify("tooltip", $themes);
+  @include themify($tooltipId, $themes);
 }

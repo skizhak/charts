@@ -13,5 +13,5 @@
     $legend-panel-selector-panel,
     $legend-panel-selector-panel-swatch);
 
-  @include themify("legend-panel", $themes);
+  @include themify($legendPanelId, $themes);
 }
