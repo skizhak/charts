@@ -37,7 +37,8 @@ export default class StackedBarChartView extends XYChartSubView {
     if (_.isEmpty(this.model.data)) return 0
     const paddedPart = 1 - (this.config.get('barPadding') / 2 / 100)
     // TODO do not use model.data.length as there can be gaps
-    return this.innerWidth / this.model.data.length * paddedPart
+    // or fill the gaps in it beforehand
+    return this.outerWidth / this.model.data.length * paddedPart
   }
 
   combineDomains () {
