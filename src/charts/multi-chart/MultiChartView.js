@@ -35,7 +35,7 @@ export default class ChartView extends ContrailChartsView {
   */
   setConfig (config) {
     if (this._config) this.remove()
-    this._config = config
+    this._config = _.cloneDeep(config)
     /**
      * Let's register actions here.
      * Doing this in the constructor causes actions to be registered for views which may not have setConfig invoked,

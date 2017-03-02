@@ -55,7 +55,7 @@ export default class RadialChartView extends ContrailView {
   */
   setConfig (config) {
     if (this._config) this.remove()
-    this._config = config
+    this._config = _.cloneDeep(config)
     this.setElement(`#${config.id}`)
     this._container = this.el.parentElement
     // Todo use class from selectors. extend ContrailChartsView instead of ContrailView

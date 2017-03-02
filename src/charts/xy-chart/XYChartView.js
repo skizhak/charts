@@ -49,7 +49,7 @@ export default class XYChartView extends ContrailChartsView {
    */
   setConfig (config) {
     if (this._config) this.remove()
-    this._config = config
+    this._config = _.cloneDeep(config)
     this.setElement(`#${config.id}`)
     // Todo Fix chart init similar to that of component. use the render via ContrailChartsView instead
     this._container = this.el.parentElement
