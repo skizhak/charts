@@ -45,7 +45,7 @@ export default class DataProvider {
     if (!_.has(this._ranges, key)) {
       this._ranges[key] = d3Array.extent(this._data, d => d[key])
     }
-    return this._ranges[key]
+    return _.clone(this._ranges[key])
   }
   /**
    * @return {Array} [min, max] values of provided series values combined
