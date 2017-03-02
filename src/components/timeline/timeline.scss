@@ -1,4 +1,9 @@
+@import "timeline-rules";
+@import "../../styles/variables";
+@import "../../styles/mixins";
+
 .cc-svg .timeline-bar {
-  fill: #aaa;
-  opacity: 0.75;
+  @include timelineBarRules($timeline-bar);
+
+  @include themify($timelineBarId, $themes);
 }
