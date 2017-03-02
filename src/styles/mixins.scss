@@ -19,29 +19,45 @@
     @error "applyRuleTemplate mixin only works with a component id";
   } @else {
     @if ($componentId == $brushId) {
-      @include brushRules(nth($arg, 1), nth($arg, 2));
+      @include brushRules(
+        $brush-selection: nth($arg, 1),
+        $brush-handle: nth($arg, 2)
+      );
     } @else if ($componentId == $controlPanelId) {
-      @include controlPanelRules(nth($arg, 1), nth($arg, 2), nth($arg, 3));
+      @include controlPanelRules(
+        $control-panel: nth($arg, 1),
+        $control-panel-item: nth($arg, 2),
+        $control-panel-popup: nth($arg, 3)
+      );
     } @else if ($componentId == $crosshairId) {
       @include crosshairRules(nth($arg, 1));
     } @else if ($componentId == $legendId) {
       @include legendRules(nth($arg, 1));
     } @else if ($componentId == $legendPanelId) {
       @include legendPanelRules(
-        nth($arg, 1),
-        nth($arg, 2),
-        nth($arg, 3),
-        nth($arg, 4),
-        nth($arg, 5),
-        nth($arg, 6),
-        nth($arg, 7),
-        nth($arg, 8));
+        $legend-panel: nth($arg, 1),
+        $legend-panel-edit-btn: nth($arg, 2),
+        $legend-panel-attr-item: nth($arg, 3),
+        $legend-panel-axis-indicator: nth($arg, 4),
+        $legend-panel-color-indicator: nth($arg, 5),
+        $legend-panel-selector-trigger: nth($arg, 6),
+        $legend-panel-selector-panel: nth($arg, 7),
+        $legend-panel-selector-panel-swatch: nth($arg, 8)
+      );
     } @else if ($componentId == $messageId) {
-      @include messageRules(nth($arg, 1), nth($arg, 2), nth($arg, 3));
+      @include messageRules(
+        $message-info: nth($arg, 1),
+        $message-error: nth($arg, 2),
+        $message-warn: nth($arg, 3)
+      );
     } @else if ($componentId == $timelineBarId) {
       @include timelineBarRules(nth($arg, 1));
     } @else if ($componentId == $tooltipId) {
-      @include tooltipRules(nth($arg, 1), nth($arg, 2), nth($arg, 3));
+      @include tooltipRules(
+        $tooltip: nth($arg, 1),
+        $tooltip-title: nth($arg, 2),
+        $tooltip-item: nth($arg, 3)
+      );
     } @else if ($componentId == $compositeYId) {
       @include compositeYChartRules(nth($arg, 1));
     } @else if ($componentId == $areaChartId) {
