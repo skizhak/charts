@@ -59,7 +59,7 @@ const chartConfig = {
       plot: {
         x: {
           accessor: 'x',
-          labelFormatter: 'Time',
+          labelFormatter: 'X Values',
           axis: 'x'
         },
         y: [
@@ -105,7 +105,7 @@ const chartConfig = {
       },
       axis: {
         x: {
-          formatter: formatter.extendedISOTime,
+          scale: 'scaleLinear',
         },
         y1: {
           position: 'left',
@@ -130,7 +130,7 @@ const chartConfig = {
       plot: {
         x: {
           accessor: 'x',
-          labelFormatter: 'Time',
+          labelFormatter: 'X Values',
           axis: 'x',
         },
         y: [
@@ -157,6 +157,7 @@ const chartConfig = {
       },
       axis: {
         x: {
+          scale: 'scaleLinear',
         },
         y1: {
           position: 'left',
@@ -176,7 +177,6 @@ const chartConfig = {
     config: {
       title: {
         accessor: 'x',
-        valueFormatter: formatter.extendedISOTime,
       },
       dataConfig: [
         {

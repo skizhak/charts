@@ -33,8 +33,7 @@ export default class XYChartSubView extends ContrailChartsView {
   }
 
   get xScale () {
-    const x = this.params.plot.x.accessor
-    return _.get(this.params.axis, `${x}.scale`)
+    return _.get(this.params.axis, 'x.scale')
   }
 
   get yScale () {
