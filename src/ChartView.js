@@ -2,7 +2,6 @@
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
 import _ from 'lodash'
-import ContrailChartsView from 'contrail-charts-view'
 import * as Components from 'components/index'
 import * as Handlers from 'handlers/index'
 import actionman from 'plugins/Actionman'
@@ -19,10 +18,8 @@ import Unfreeze from 'actions/Unfreeze'
 const Actions = {ShowComponent, HideComponent, SelectSerie, SelectColor, SelectChartType, Zoom, Refresh, Freeze, Unfreeze}
 /**
 */
-export default class ChartView extends ContrailChartsView {
-
+export default class ChartView {
   constructor (p) {
-    super(p)
     this._components = []
   }
   /**
@@ -47,10 +44,7 @@ export default class ChartView extends ContrailChartsView {
   setConfig (config) {
     if (this._config) this.remove()
     this._config = _.cloneDeep(config)
-    this.setElement(`#${config.id}`)
-    // Todo Fix chart init similar to that of component. use the render via ContrailChartsView instead
-    this._container = this.el.parentElement
-    this.el.classList.add(this.selectors.chart.substr(1))
+    this._container = document.querySelector('#' + config.id)
     /**
      * Let's register actions here.
      * Doing this in the constructor causes actions to be registered for views which may not have setConfig invoked,
@@ -148,7 +142,7 @@ export default class ChartView extends ContrailChartsView {
       id: id,
       config: configModel,
       model: model,
-      container: this.el,
+      container: this._container,
     })
     const component = new Components[`${type}View`](viewOptions)
     this._components.push(component)
