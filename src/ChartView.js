@@ -138,11 +138,12 @@ export default class ChartView {
     if (Components[`${type}ConfigModel`]) {
       configModel = new Components[`${type}ConfigModel`](config)
     }
+    const componentContainer = this._container.querySelector('#' + id)
     const viewOptions = _.extend({}, config, {
       id: id,
       config: configModel,
       model: model,
-      container: this._container,
+      container: componentContainer || this._container,
     })
     const component = new Components[`${type}View`](viewOptions)
     this._components.push(component)

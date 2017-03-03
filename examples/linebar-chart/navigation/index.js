@@ -16,18 +16,20 @@ const data = fixture({
   },
 })
 
-const container = ['area-chart', 'bar-chart']
+const container = ['navigation-id', 'area-chart', 'bar-chart']
 const layoutMeta = {
   [container[0]]: 'render-order-1 col-md-12',
-  [container[1]]: 'render-order-2 col-md-12'
+  [container[1]]: 'render-order-2 col-md-6',
+  [container[2]]: 'render-order-3 col-md-6'
 }
 
 const areaChartConfig = {
-  id: container[0],
+  id: 'chart-container',
   dataProvider: {
     type: 'DataFrame',
   },
   components: [{
+    id: container[0],
     type: 'Navigation',
     config: {
       marginInner: 10,
@@ -63,6 +65,7 @@ const areaChartConfig = {
       }
     },
   }, {
+    id: container[1],
     type: 'CompositeYChart',
     config: {
       marginInner: 10,
@@ -94,14 +97,8 @@ const areaChartConfig = {
         }
       }
     }
-  }]
-}
-const barChartConfig = {
-  id: container[1],
-  dataProvider: {
-    type: 'DataFrame',
-  },
-  components: [{
+  }, {
+    id: container[2],
     type: 'CompositeYChart',
     config: {
       marginInner: 10,
@@ -158,21 +155,17 @@ const barChartConfig = {
   }]
 }
 
-const barChart = new ChartView()
-const areaChart = new ChartView()
+const chart = new ChartView()
 
 export default {
+  groupedChartsWrapper: 'chart-container',
   container: container,
   layoutMeta: layoutMeta,
   render: () => {
-    areaChart.setConfig(areaChartConfig)
-    barChart.setConfig(barChartConfig)
-
-    areaChart.setData(data)
-    barChart.setData(data)
+    chart.setConfig(areaChartConfig)
+    chart.setData(data)
   },
   remove: () => {
-    areaChart.remove()
-    barChart.remove()
+    chart.remove()
   }
 }
