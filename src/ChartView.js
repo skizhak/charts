@@ -4,8 +4,8 @@
 import _ from 'lodash'
 import ContrailChartsView from 'contrail-charts-view'
 import * as Components from 'components/index'
-import DataProvider from 'handlers/DataProvider'
-import actionman from '../../plugins/Actionman'
+import * as Handlers from 'handlers/index'
+import actionman from 'plugins/Actionman'
 
 import ShowComponent from 'actions/ShowComponent'
 import HideComponent from 'actions/HideComponent'
@@ -18,14 +18,11 @@ import Freeze from 'actions/Freeze'
 import Unfreeze from 'actions/Unfreeze'
 const Actions = {ShowComponent, HideComponent, SelectSerie, SelectColor, SelectChartType, Zoom, Refresh, Freeze, Unfreeze}
 /**
-* Chart with a common X axis and many possible child components rendering data on the Y axis (for example: line, bar, stackedBar).
-* Many different Y axis may be configured.
 */
-export default class XYChartView extends ContrailChartsView {
+export default class ChartView extends ContrailChartsView {
 
   constructor (p) {
     super(p)
-    this._dataProvider = new DataProvider()
     this._components = []
   }
   /**
@@ -61,7 +58,7 @@ export default class XYChartView extends ContrailChartsView {
      * Since action is singleton and some actions trigger on all registrar, we need to avoid above mentioned scenario.
      */
     _.each(Actions, action => actionman.set(action, this))
-    if (_.has(config, 'dataProvider.config')) this._dataProvider.config = config.dataProvider.config
+    this._dataProvider = new Handlers[`${config.dataProvider.type}Provider`](config.dataProvider.config)
     this._initComponents()
   }
   /**

@@ -1,7 +1,7 @@
 /*
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
-import {charts} from 'coCharts'
+import {ChartView} from 'coCharts'
 import formatter from 'formatter'
 import fixture from 'fixture'
 import {schemeCategory10 as colorScheme} from 'd3-scale'
@@ -24,6 +24,9 @@ const layoutMeta = {
 
 const chartConfig = {
   id: container,
+  dataProvider: {
+    type: 'DataFrame',
+  },
   title: 'Area Chart',
   components: [{
     type: 'LegendPanel',
@@ -112,7 +115,7 @@ const chartConfig = {
   }]
 }
 
-const chartView = new charts.XYChartView()
+const chartView = new ChartView()
 
 export default {
   container: container,

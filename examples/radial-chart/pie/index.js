@@ -1,7 +1,7 @@
 /*
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
-import {charts} from 'coCharts'
+import {ChartView} from 'coCharts'
 import {formatter} from 'commons'
 
 const pieData = [
@@ -29,6 +29,9 @@ const layoutMeta = {
 const chartConfig = {
   id: container,
   title: 'Donut Chart',
+  dataProvider: {
+    type: 'Serie',
+  },
   components: [{
     type: 'ControlPanel',
     config: {
@@ -74,7 +77,7 @@ const chartConfig = {
   ]
 }
 
-const chartView = new charts.RadialChartView()
+const chartView = new ChartView()
 
 export default {
   container: container,

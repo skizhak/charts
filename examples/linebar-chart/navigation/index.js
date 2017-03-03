@@ -1,7 +1,7 @@
 /*
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
-import {charts} from 'coCharts'
+import {ChartView} from 'coCharts'
 import {_c, fixture} from 'commons'
 
 const colorScheme = _c.d3ColorScheme10
@@ -24,6 +24,9 @@ const layoutMeta = {
 
 const areaChartConfig = {
   id: container[0],
+  dataProvider: {
+    type: 'DataFrame',
+  },
   components: [{
     type: 'Navigation',
     config: {
@@ -95,6 +98,9 @@ const areaChartConfig = {
 }
 const barChartConfig = {
   id: container[1],
+  dataProvider: {
+    type: 'DataFrame',
+  },
   components: [{
     type: 'CompositeYChart',
     config: {
@@ -152,8 +158,8 @@ const barChartConfig = {
   }]
 }
 
-const barChart = new charts.XYChartView()
-const areaChart = new charts.XYChartView()
+const barChart = new ChartView()
+const areaChart = new ChartView()
 
 export default {
   container: container,

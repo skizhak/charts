@@ -7,21 +7,21 @@ import '../sass/contrail-charts-examples.scss'
 import _ from 'lodash'
 // LineBar
 import legend from '../../linebar-chart/legend'
-import controls from '../../linebar-chart/control-panel'
-import timeline from '../../linebar-chart/timeline'
-import tooltips from '../../linebar-chart/tooltip'
-import stackedBar from '../../linebar-chart/stacked-bar-chart'
-import groupedBar from '../../linebar-chart/grouped-bar-chart'
+//import controls from '../../linebar-chart/control-panel'
+//import timeline from '../../linebar-chart/timeline'
+//import tooltips from '../../linebar-chart/tooltip'
+//import stackedBar from '../../linebar-chart/stacked-bar-chart'
+//import groupedBar from '../../linebar-chart/grouped-bar-chart'
 import navigation from '../../linebar-chart/navigation'
-import liveData from '../../linebar-chart/live'
+//import liveData from '../../linebar-chart/live'
 // Scatter
 import shapes from '../../bubble-chart/multiple-shapes'
 // Radial
 import pieChart from '../../radial-chart/pie'
-import dendrogramChart from '../../radial-chart/dendrogram'
+//import dendrogramChart from '../../radial-chart/dendrogram'
 import areaBasic from '../../area-chart/basic'
-import twoBarNav from '../../grouped-chart/linebar-linebar-nav/index.js'
-import twoLineBarOnePieNav from '../../grouped-chart/linebar-pie-nav/index.js'
+//import twoBarNav from '../../grouped-chart/linebar-linebar-nav/index.js'
+//import twoLineBarOnePieNav from '../../grouped-chart/linebar-pie-nav/index.js'
 
 import groupedChartTemplate from '../template/multiple.tmpl'
 
@@ -41,33 +41,33 @@ const allExamples = {
     'Legend': {
       view: legend
     },
-    'Controls': {
-      view: controls
-    },
-    'Timeline': {
-      view: timeline
-    },
-    'Tooltips': {
-      view: tooltips
-    },
-    'Stacked Bar': {
-      view: stackedBar
-    },
-    'Grouped Bar': {
-      view: groupedBar
-    },
+    //'Controls': {
+      //view: controls
+    //},
+    //'Timeline': {
+      //view: timeline
+    //},
+    //'Tooltips': {
+      //view: tooltips
+    //},
+    //'Stacked Bar': {
+      //view: stackedBar
+    //},
+    //'Grouped Bar': {
+      //view: groupedBar
+    //},
     'Navigation': {
       view: navigation
     },
-    'RequireJS': {
-      view: {
-        type: 'RJS',
-        entryPoint: './examples/linebar-chart/requirejs/requirejs-config.js'
-      }
-    },
-    'Live Data': {
-      view: liveData
-    }
+    //'RequireJS': {
+      //view: {
+        //type: 'RJS',
+        //entryPoint: './examples/linebar-chart/requirejs/requirejs-config.js'
+      //}
+    //},
+    //'Live Data': {
+      //view: liveData
+    //}
   },
   'bubble': {
     'Shapes': {
@@ -78,25 +78,25 @@ const allExamples = {
     'Pie Chart': {
       view: pieChart
     },
-    'Dendrogram': {
-      view: dendrogramChart
-    }
+    //'Dendrogram': {
+      //view: dendrogramChart
+    //}
   },
   'area': {
     'Basic': {
       view: areaBasic
     }
   },
-  'grouped': {
-    '2 Bar Nav': {
-      template: 'grouped',
-      view: twoBarNav
-    },
-    '2 LineBar 1 Pie Nav': {
-      template: 'grouped',
-      view: twoLineBarOnePieNav
-    }
-  }
+  //'grouped': {
+    //'2 Bar Nav': {
+      //template: 'grouped',
+      //view: twoBarNav
+    //},
+    //'2 LineBar 1 Pie Nav': {
+      //template: 'grouped',
+      //view: twoLineBarOnePieNav
+    //}
+  //}
 }
 
 const $chartBox = $('#chartBox')

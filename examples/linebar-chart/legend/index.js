@@ -1,7 +1,7 @@
 /*
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
-import {charts} from 'coCharts'
+import {ChartView} from 'coCharts'
 import {formatter, fixture} from 'commons'
 
 const length = 100
@@ -24,6 +24,9 @@ const layoutMeta = {
 
 const chartConfig = {
   id: container,
+  dataProvider: {
+    type: 'DataFrame',
+  },
   components: [{
     type: 'LegendPanel',
     config: {
@@ -217,7 +220,7 @@ const chartConfig = {
   }]
 }
 
-const chartView = new charts.XYChartView()
+const chartView = new ChartView()
 
 export default {
   container: container,
