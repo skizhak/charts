@@ -147,13 +147,13 @@
         display: inline-block;
       }
 
-      .indicator {
+      .color-indicator {
         display: none;
       }
     }
   }
 
-  .legend-attribute {  
+  .legend-attribute {
     display: inline-block;
     padding: 10px 0;
     margin: 0;
@@ -190,41 +190,41 @@
     }
   }
 
-  .indicator {
+  @at-root .color-indicator {
+    position: relative;
+    display: inline-block;
     font-size: 14px;
+    width: 10px;
+    height: 10px;
+    vertical-align: middle;
+    border: 1px solid $black;
+    border-radius: 50%;
+    background-color: $p_color_indicator_bg_color;
 
-    &.radio {
-      display: inline-block;
-      width: 10px;
-      height: 10px;
-      vertical-align: middle;
-      border-radius: 50%;
-      background-color: $p_color_indicator_bg_color;
-      border: 1px solid $black;
+    .legend-attribute input:checked ~ & {
+      background-color: $p_color_indicator_active_bg_color;
+    }
+
+    &:after {
+      position: absolute;
+      display: none;
+      content: ' ';
 
       .legend-attribute input:checked ~ & {
-        background-color: $p_color_indicator_active_bg_color;
+        display: block;
       }
 
-      &:after {
-        position: absolute;
+      .legend-attribute.disabled input:checked ~ & {
         display: none;
-        content: '';
+      }
 
-        .legend-attribute input:checked ~ & {
-          display: block;
-        }
-
-        .legend-attribute.disabled input:checked ~ & {
-          display: none;
-        }
-
-        .legend-attribute & {
-          width: 8px;
-          height: 8px;
-          border: 1px solid $white;
-          border-radius: 50%;
-        }
+      .legend-attribute & {
+        left: 1px;
+        top: 1px;
+        width: 8px;
+        height: 8px;
+        border: 1px solid $white;
+        border-radius: 50%;
       }
     }
   }
