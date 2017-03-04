@@ -24,16 +24,10 @@ export default class ChartView {
   }
   /**
   * Provide data for this chart as a simple array of objects.
-  * Additional ContrailChartsDataModel configuration may be provided.
-  * Setting data to a rendered chart will trigger a DataModel change event that will cause the chart to be re-rendered.
   */
   setData (data) {
     if (this._frozen) return
-    if (_.isArray(data)) this._dataProvider.data = data
-  }
-
-  get provider () {
-    return this._dataProvider
+    if (_.isArray(data)) _(this._components).map(c => c.model).uniq().compact().each(m => { m.data = data })
   }
   /**
    * Sets the configuration for this chart as a simple object.
@@ -52,7 +46,11 @@ export default class ChartView {
      * Since action is singleton and some actions trigger on all registrar, we need to avoid above mentioned scenario.
      */
     _.each(Actions, action => actionman.set(action, this))
-    this._dataProvider = new Handlers[`${config.dataProvider.type}Provider`](config.dataProvider.config)
+
+    // create common provider for all components to prepare (format) data just once
+    if (config.provider && config.provider.type) {
+      this._provider = new Handlers[`${config.provider.type}Provider`](config.provider.config)
+    }
     this._initComponents()
   }
   /**
@@ -105,7 +103,7 @@ export default class ChartView {
     _.each(this._config.components, (component, index) => {
       component.config.order = index
       component.config.id = component.id
-      this._registerComponent(component.type, component.config, this._dataProvider, component.id)
+      this._registerComponent(component.type, component.config, component.provider, component.id)
     })
 
     // Post init configuration of components dependant on others
@@ -125,27 +123,33 @@ export default class ChartView {
     })
   }
   /**
-   * Initialize individual component by type, given config, data model and id
+   * Initialize individual component
    * @param {String} type
    * @param {Object} config
+   * @param {Object} providerConfig
    * @param {String} id optional
    */
-  _registerComponent (type, config, model, id) {
+  _registerComponent (type, config, providerConfig, id) {
     if (!this._isEnabledComponent(type)) return false
-    // Set title to parent title only if it doesn't exist. Each component may be handling title in different way.
-    if (!config.title) config.title = this._config.title
+    const Component = Components[type + 'View']
+    const ConfigModel = Components[type + 'ConfigModel']
+    const Provider = Handlers[Component.dataType + 'Provider']
+
     let configModel
-    if (Components[`${type}ConfigModel`]) {
-      configModel = new Components[`${type}ConfigModel`](config)
-    }
-    const componentContainer = this._container.querySelector('#' + id)
-    const viewOptions = _.extend({}, config, {
+    if (ConfigModel) configModel = new ConfigModel(config)
+    const container = this._container.querySelector('#' + id)
+    let model = this._provider
+    if (Provider && (!model || providerConfig)) model = new Provider(null, providerConfig)
+
+    // Share first initialized provider with all other components
+    if (!this._provider) this._provider = model
+    const viewOptions = {
       id: id,
       config: configModel,
       model: model,
-      container: componentContainer || this._container,
-    })
-    const component = new Components[`${type}View`](viewOptions)
+      container: container || this._container,
+    }
+    const component = new Component(viewOptions)
     this._components.push(component)
 
     return component

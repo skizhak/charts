@@ -18,6 +18,8 @@ import CompositeYChartConfigModel from 'components/composite-y/CompositeYChartCo
 import TitleView from 'plugins/title/TitleView'
 
 export default class CompositeYChartView extends ContrailChartsView {
+  static get dataType () { return 'DataFrame' }
+
   constructor (p) {
     super(p)
     this._drawings = []

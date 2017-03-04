@@ -8,6 +8,8 @@ import actionman from 'plugins/Actionman'
 import _template from './filter.html'
 
 export default class FilterView extends ContrailChartsView {
+  static get dataType () { return 'DataFrame' }
+
   constructor (p) {
     super(p)
     this.listenTo(this.model, 'change', this.render)

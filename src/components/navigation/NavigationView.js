@@ -10,6 +10,8 @@ import BrushConfigModel from 'components/brush/BrushConfigModel'
 import CompositeYChartConfigModel from 'components/composite-y/CompositeYChartConfigModel'
 
 export default class NavigationView extends ContrailChartsView {
+  static get dataType () { return 'DataFrame' }
+
   constructor (p) {
     super(p)
     this._brush = new BrushView({

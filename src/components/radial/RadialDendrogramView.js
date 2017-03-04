@@ -20,6 +20,7 @@ export default class RadialDendrogramView extends ContrailChartsView {
       'click .arc': '_arcClick'
     }
   }
+  static get dataType () { return 'Serie' }
 
   constructor (p = {}) {
     super(p)

@@ -9,6 +9,8 @@ import actionman from 'plugins/Actionman'
 import TitleView from 'plugins/title/TitleView'
 
 export default class PieChartView extends ContrailChartsView {
+  static get dataType () { return 'Serie' }
+
   constructor (p = {}) {
     super(p)
     this._highlightRadius = 10
