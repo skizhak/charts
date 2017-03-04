@@ -1,7 +1,7 @@
 /*
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
-import {charts} from 'coCharts'
+import {ChartView} from 'coCharts'
 import {fixture} from 'commons'
 
 const length = 20
@@ -93,16 +93,16 @@ const chartConfig = {
   }]
 }
 
-const chartView = new charts.XYChartView()
+const chart = new ChartView()
 
 export default {
   container: container,
   layoutMeta: layoutMeta,
   render: () => {
-    chartView.setConfig(chartConfig)
-    chartView.setData(data)
+    chart.setConfig(chartConfig)
+    chart.setData(data)
   },
   remove: () => {
-    chartView.remove()
+    chart.remove()
   }
 }

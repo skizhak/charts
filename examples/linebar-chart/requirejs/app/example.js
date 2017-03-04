@@ -157,8 +157,8 @@ define([ // eslint-disable-line no-undef
     }]
   }
 
-  const chartView = new coCharts.charts.XYChartView()
-  const lineChartView = new coCharts.charts.XYChartView()
+  const chartView = new coCharts.ChartView()
+  const lineChartView = new coCharts.ChartView()
 
   return {
     container: container,

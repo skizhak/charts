@@ -24,9 +24,6 @@ const layoutMeta = {
 
 const chartConfig = {
   id: container,
-  dataProvider: {
-    type: 'DataFrame',
-  },
   title: 'Area Chart',
   components: [{
     type: 'LegendPanel',

@@ -2,15 +2,15 @@
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
 import _ from 'lodash'
-import {charts} from 'coCharts'
+import {ChartView} from 'coCharts'
 import {formatter, _c} from 'commons'
 
 const now = _.now()
 const colorScheme = _c.d3ColorScheme20
 
-const dataSrc = []
+const data = []
 for (let i = 0; i < 100; i++) {
-  dataSrc.push({
+  data.push({
     x: now - (i * 300000),
     a: _.random(10, 200),
     b: _.random(10, 300),
@@ -44,227 +44,199 @@ const layoutMeta = {
   'navigation-chart': 'render-order-4 col-md-12'
 }
 
-const chartConfigs = [
-  {
-    id: container[0],
-    title: 'Static bar chart for series: a, b',
-    type: 'XYChart',
-    components: [{
-      type: 'LegendPanel',
-      config: {
-        marginLeft: 90,
-        marginRight: 60,
-        marginBottom: 40,
-        chartHeight: 350,
-        sourceComponent: 'compositey-chart-id',
-        editable: {
-          colorSelector: false,
-          chartSelector: false
-        },
-        placement: 'horizontal',
-        filter: true,
+const chartConfig = {
+  id: 'chart-id',
+  title: 'Static bar chart for series: a, b',
+  components: [{
+    id: 'legend-panel-id',
+    type: 'LegendPanel',
+    config: {
+      marginLeft: 90,
+      marginRight: 60,
+      marginBottom: 40,
+      chartHeight: 350,
+      sourceComponent: 'compositey-chart-id',
+      editable: {
+        colorSelector: false,
+        chartSelector: false
       },
-    }, {
-      id: 'compositey-chart-id',
-      type: 'CompositeYChart',
-      config: {
-        chartHeight: 300,
-        possibleChartTypes: {
-          y1: ['BarChart', 'LineChart'],
-          y2: ['BarChart', 'LineChart']
-        },
-        plot: {
-          x: {
-            accessor: 'x',
-            axis: 'x',
-            ticks: 6
-          },
-          y: [
-            {
-              accessor: 'a',
-              enabled: true,
-              chart: 'BarChart',
-              color: colorScheme[0],
-              axis: 'y',
-            }, {
-              accessor: 'b',
-              enabled: true,
-              chart: 'BarChart',
-              color: colorScheme[1],
-              axis: 'y',
-            }
-          ]
-        }
-      }
-    }, {
-      id: 'message-id',
-      type: 'Message',
-      config: {
-        enabled: true,
-      }
-    }]
+      placement: 'horizontal',
+      filter: true,
+    },
   }, {
-    id: container[1],
-    title: 'Updatable chart for serie: c',
-    type: 'XYChart',
-    components: [{
-      type: 'LegendPanel',
-      config: {
-        marginLeft: 60,
-        marginRight: 60,
-        marginBottom: 40,
-        chartHeight: 350,
-        sourceComponent: 'compositey-chart-id2',
-        editable: {
-          colorSelector: false,
-          chartSelector: false
+    id: 'compositey-chart-id',
+    type: 'CompositeYChart',
+    config: {
+      chartHeight: 300,
+      possibleChartTypes: {
+        y1: ['BarChart', 'LineChart'],
+        y2: ['BarChart', 'LineChart']
+      },
+      plot: {
+        x: {
+          accessor: 'x',
+          axis: 'x',
+          ticks: 6
         },
-        placement: 'horizontal',
-        filter: true,
-      },
-    }, {
-      type: 'CompositeYChart',
-      id: 'compositey-chart-id2',
-      config: {
-        chartHeight: 300,
-        possibleChartTypes: ['BarChart', 'LineChart'],
-        plot: {
-          x: {
-            accessor: 'x',
-            axis: 'x',
-          },
-          y: [
-            {
-              accessor: 'c',
-              enabled: true,
-              chart: 'LineChart',
-              axis: 'y',
-              color: colorScheme[2],
-            }
-          ]
-        }
-      },
-    }]
+        y: [
+          {
+            accessor: 'a',
+            enabled: true,
+            chart: 'BarChart',
+            color: colorScheme[0],
+            axis: 'y',
+          }, {
+            accessor: 'b',
+            enabled: true,
+            chart: 'BarChart',
+            color: colorScheme[1],
+            axis: 'y',
+          }
+        ]
+      }
+    }
   }, {
-    id: container[2],
-    title: '% of each serie in selection',
-    type: 'RadialChart',
-    dataProvider: {
-      config: {
-        formatter: pieDataParser
+    id: 'message-id',
+    type: 'Message',
+    config: {
+      enabled: true,
+    }
+  }, {
+    type: 'LegendPanel',
+    config: {
+      marginLeft: 60,
+      marginRight: 60,
+      marginBottom: 40,
+      chartHeight: 350,
+      sourceComponent: 'compositey-chart-id2',
+      editable: {
+        colorSelector: false,
+        chartSelector: false
+      },
+      placement: 'horizontal',
+      filter: true,
+    },
+  }, {
+    type: 'CompositeYChart',
+    id: 'compositey-chart-id2',
+    config: {
+      chartHeight: 300,
+      possibleChartTypes: ['BarChart', 'LineChart'],
+      plot: {
+        x: {
+          accessor: 'x',
+          axis: 'x',
+        },
+        y: [
+          {
+            accessor: 'c',
+            enabled: true,
+            chart: 'LineChart',
+            axis: 'y',
+            color: colorScheme[2],
+          }
+        ]
       }
     },
-    components: [{
-      id: 'donut-chart-id',
-      type: 'PieChart',
-      config: {
-        marginLeft: 60,
-        type: 'donut',
-        radius: 100,
-        chartWidth: 200,
-        chartHeight: 300,
-        colorScale: d3.scaleOrdinal().range([colorScheme[0], colorScheme[4], colorScheme[2]]), // eslint-disable-line no-undef
-        serie: {
-          getValue: serie => serie.value,
-          getLabel: serie => serie.label,
+  }, {
+    id: 'donut-chart-id',
+    type: 'PieChart',
+    provider: {
+      formatter: pieDataParser,
+    },
+    config: {
+      marginLeft: 60,
+      type: 'donut',
+      radius: 100,
+      chartWidth: 200,
+      chartHeight: 300,
+      colorScale: d3.scaleOrdinal().range([colorScheme[0], colorScheme[4], colorScheme[2]]), // eslint-disable-line no-undef
+      serie: {
+        getValue: serie => serie.value,
+        getLabel: serie => serie.label,
+        valueFormatter: formatter.commaGroupedInteger,
+      },
+      tooltip: 'tooltip-id',
+      onClickNode: data => {
+        chart.renderMessage({
+          action: 'once',
+          messages: [{
+            level: 'info',
+            title: 'Pie chart message',
+            message: `Sum of selected "${data.label}" values: ${data.value}`,
+          }]
+        })
+      },
+    },
+  }, {
+    id: 'tooltip-id',
+    container: 'donut-chart-id',
+    type: 'Tooltip',
+    config: {
+      dataConfig: [
+        {
+          accessor: 'value',
+          labelFormatter: serie => serie.label,
           valueFormatter: formatter.commaGroupedInteger,
         },
-        tooltip: 'tooltip-id',
-        onClickNode: data => {
-          chartView.actionman.fire('SendMessage', {
-            action: 'once',
-            messages: [{
-              level: 'info',
-              title: 'Pie chart message',
-              message: `Sum of selected "${data.label}" values: ${data.value}`,
-            }]
-          })
-        },
-      },
-    }, {
-      id: 'tooltip-id',
-      type: 'Tooltip',
-      config: {
-        dataConfig: [
-          {
-            accessor: 'value',
-            labelFormatter: serie => serie.label,
-            valueFormatter: formatter.commaGroupedInteger,
-          },
-        ],
-      },
-    }, {
-      type: 'LegendUniversal',
-      config: {
-        sourceComponent: 'donut-chart-id',
-      },
-    }]
+      ],
+    },
   }, {
-    id: container[3],
-    title: 'Navigate all series by serie: d',
-    type: 'XYChart',
-    components: [{
-      id: 'navigation-id',
-      type: 'Navigation',
-      config: {
-        marginLeft: 60,
-        marginRight: 60,
-        marginBottom: 40,
-        chartHeight: 350,
-        selection: [75, 100],
-        plot: {
-          x: {
-            accessor: 'x',
-            axis: 'x',
-            label: 'Time'
-          },
-          y: [
-            {
-              accessor: 'd',
-              label: 'Label D',
-              enabled: true,
-              chart: 'LineChart',
-              color: colorScheme[4],
-              axis: 'y',
-            }
-          ]
+    type: 'LegendUniversal',
+    config: {
+      sourceComponent: 'donut-chart-id',
+    },
+  }, {
+    id: 'navigation-id',
+    type: 'Navigation',
+    config: {
+      marginLeft: 60,
+      marginRight: 60,
+      marginBottom: 40,
+      chartHeight: 350,
+      selection: [75, 100],
+      plot: {
+        x: {
+          accessor: 'x',
+          axis: 'x',
+          label: 'Time'
         },
-        updateComponents: ['compositey-chart-id2'],
-      }
-    }]
-  }
-]
-
-const chartConfig = {
-  id: groupedChartsWrapper,
-  type: 'MultiChart',
-  components: [],
-  // Child charts.
-  charts: chartConfigs,
+        y: [
+          {
+            accessor: 'd',
+            label: 'Label D',
+            enabled: true,
+            chart: 'LineChart',
+            color: colorScheme[4],
+            axis: 'y',
+          }
+        ]
+      },
+      updateComponents: ['compositey-chart-id2'],
+    }
+  }]
 }
 
-const chartView = new charts.MultiChartView()
+const chart = new ChartView()
 
 export default {
   groupedChartsWrapper: groupedChartsWrapper,
   container: container,
   layoutMeta: layoutMeta,
   render: () => {
-    chartView.setConfig(chartConfig)
-    chartView.setData(dataSrc, container[0])
-    chartView.setData(dataSrc, container[1])
-    chartView.setData(dataSrc, container[3])
+    chart.setConfig(chartConfig)
+    chart.setData(data)
 
     // Update pie chart data on Navigation zoom
-    const navDataProvider = chartView.getChart(container[3]).provider
-    const zoom = chartView.actionman.get('Zoom')
-    const pieChart = chartView.getChart(container[2])
+    const navigation = chart.getComponent('navigation-id')
+    const zoom = navigation.actionman.get('Zoom')
+    const pieChart = chart.getComponent('pie-chart-id')
     zoom.on('fired', (componentIds, {accessor, range}) => {
-      const data = navDataProvider.filter(accessor, range)
-      pieChart.setData(data)
+      const data = navigation.model.filter(accessor, range)
+      pieChart.model.data = data
     })
   },
   remove: () => {
-    chartView.remove()
+    chart.remove()
   }
 }

@@ -1,7 +1,7 @@
 /*
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
-import {charts} from 'coCharts'
+import {ChartView} from 'coCharts'
 import {_c} from 'commons'
 import dendrogamData from './data.json'
 
@@ -79,16 +79,16 @@ const chartConfig = {
   ]
 }
 
-const chartView = new charts.RadialChartView()
+const chart = new ChartView()
 
 export default {
   container: container,
   layoutMeta: layoutMeta,
   render: () => {
-    chartView.setConfig(chartConfig)
-    chartView.setData(dendrogamData.data)
+    chart.setConfig(chartConfig)
+    chart.setData(dendrogamData.data)
   },
   remove: () => {
-    chartView.remove()
+    chart.remove()
   }
 }

@@ -1,7 +1,7 @@
 /*
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
-import {charts} from 'coCharts'
+import {ChartView} from 'coCharts'
 import {formatter, fixture} from 'commons'
 
 const data = fixture()
@@ -164,8 +164,8 @@ const chartConfig2 = {
   }]
 }
 
-const chart1 = new charts.XYChartView()
-const chart2 = new charts.XYChartView()
+const chart1 = new ChartView()
+const chart2 = new ChartView()
 
 export default {
   container: container,

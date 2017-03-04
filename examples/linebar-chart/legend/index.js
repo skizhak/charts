@@ -24,9 +24,6 @@ const layoutMeta = {
 
 const chartConfig = {
   id: container,
-  dataProvider: {
-    type: 'DataFrame',
-  },
   components: [{
     type: 'LegendPanel',
     config: {
@@ -220,15 +217,15 @@ const chartConfig = {
   }]
 }
 
-const chartView = new ChartView()
+const chart = new ChartView()
 
 export default {
   container: container,
   layoutMeta: layoutMeta,
   render: () => {
-    chartView.setConfig(chartConfig)
-    chartView.setData(data)
-    chartView.renderMessage({
+    chart.setConfig(chartConfig)
+    chart.setData(data)
+    chart.renderMessage({
       componentId: 'compositey-chart-id',
       action: 'once',
       messages: [{
@@ -247,6 +244,6 @@ export default {
     })
   },
   remove: () => {
-    chartView.remove()
+    chart.remove()
   }
 }

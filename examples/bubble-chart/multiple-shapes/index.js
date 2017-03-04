@@ -27,9 +27,6 @@ const layoutMeta = {
 
 const chartConfig = {
   id: container,
-  dataProvider: {
-    type: 'DataFrame',
-  },
   components: [{
     type: 'LegendPanel',
     config: {

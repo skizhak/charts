@@ -29,9 +29,6 @@ const layoutMeta = {
 const chartConfig = {
   id: container,
   title: 'Donut Chart',
-  dataProvider: {
-    type: 'Serie',
-  },
   components: [{
     type: 'ControlPanel',
     config: {

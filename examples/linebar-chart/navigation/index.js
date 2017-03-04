@@ -23,7 +23,7 @@ const layoutMeta = {
   [container[2]]: 'render-order-3 col-md-6'
 }
 
-const areaChartConfig = {
+const chartConfig = {
   id: 'chart-container',
   dataProvider: {
     type: 'DataFrame',
@@ -162,7 +162,7 @@ export default {
   container: container,
   layoutMeta: layoutMeta,
   render: () => {
-    chart.setConfig(areaChartConfig)
+    chart.setConfig(chartConfig)
     chart.setData(data)
   },
   remove: () => {

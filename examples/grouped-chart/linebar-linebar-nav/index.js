@@ -2,7 +2,7 @@
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
 import _ from 'lodash'
-import {charts} from 'coCharts'
+import {ChartView} from 'coCharts'
 import {_c} from 'commons'
 
 const colorScheme = _c.lbColorScheme7
@@ -28,124 +28,106 @@ const layoutMeta = {
   'grouped-chart-navigation': 'render-order-3 col-md-12',
 }
 
-const chartConfigs = [
-  {
-    id: container[0],
-    type: 'XYChart',
-    components: [{
-      type: 'CompositeYChart',
-      config: {
-        marginLeft: 60,
-        marginRight: 60,
-        marginBottom: 40,
-        chartHeight: 350,
-        plot: {
-          x: {
-            accessor: 'x',
-            axis: 'x',
-          },
-          y: [
-            {
-              accessor: 'a',
-              label: 'Label A',
-              enabled: true,
-              chart: 'StackedBarChart',
-              color: colorScheme[1],
-              axis: 'y',
-            }, {
-              accessor: 'b',
-              label: 'Label B',
-              enabled: true,
-              chart: 'StackedBarChart',
-              color: colorScheme[3],
-              axis: 'y',
-            }
-          ]
-        }
-      }
-    }]
-  }, {
-    id: container[1],
-    type: 'XYChart',
-    components: [{
-      type: 'CompositeYChart',
-      config: {
-        marginLeft: 60,
-        marginRight: 60,
-        marginBottom: 40,
-        chartHeight: 350,
-        plot: {
-          x: {
-            accessor: 'x',
-            axis: 'x'
-          },
-          y: [
-            {
-              accessor: 'c',
-              label: 'Label C',
-              enabled: true,
-              chart: 'BarChart',
-              color: colorScheme[4],
-              axis: 'y',
-            }
-          ]
-        }
-      },
-    }]
-  }, {
-    id: container[2],
-    type: 'XYChart',
-    components: [{
-      type: 'Navigation',
-      config: {
-        marginLeft: 60,
-        marginRight: 60,
-        marginBottom: 40,
-        chartHeight: 250,
-        selection: [75, 100],
-        plot: {
-          x: {
-            accessor: 'x',
-            axis: 'x',
-            label: 'Time'
-          },
-          y: [
-            {
-              accessor: 'd',
-              label: 'Label D',
-              enabled: true,
-              color: colorScheme[2],
-              chart: 'LineChart',
-              axis: 'y',
-            }
-          ]
-        },
-      }
-    }]
-  }
-]
-
 const chartConfig = {
   id: groupedChartsWrapper,
-  // Parent Chart components
-  components: [],
-  // Child charts.
-  charts: chartConfigs,
+  components: [{
+    id: container[0],
+    type: 'CompositeYChart',
+    config: {
+      marginLeft: 60,
+      marginRight: 60,
+      marginBottom: 40,
+      chartHeight: 350,
+      plot: {
+        x: {
+          accessor: 'x',
+          axis: 'x',
+        },
+        y: [
+          {
+            accessor: 'a',
+            label: 'Label A',
+            enabled: true,
+            chart: 'StackedBarChart',
+            color: colorScheme[1],
+            axis: 'y',
+          }, {
+            accessor: 'b',
+            label: 'Label B',
+            enabled: true,
+            chart: 'StackedBarChart',
+            color: colorScheme[3],
+            axis: 'y',
+          }
+        ]
+      }
+    }
+  }, {
+    id: container[1],
+    type: 'CompositeYChart',
+    config: {
+      marginLeft: 60,
+      marginRight: 60,
+      marginBottom: 40,
+      chartHeight: 350,
+      plot: {
+        x: {
+          accessor: 'x',
+          axis: 'x'
+        },
+        y: [
+          {
+            accessor: 'c',
+            label: 'Label C',
+            enabled: true,
+            chart: 'BarChart',
+            color: colorScheme[4],
+            axis: 'y',
+          }
+        ]
+      }
+    },
+  }, {
+    id: container[2],
+    type: 'Navigation',
+    config: {
+      marginLeft: 60,
+      marginRight: 60,
+      marginBottom: 40,
+      chartHeight: 250,
+      selection: [75, 100],
+      plot: {
+        x: {
+          accessor: 'x',
+          axis: 'x',
+          label: 'Time'
+        },
+        y: [
+          {
+            accessor: 'd',
+            label: 'Label D',
+            enabled: true,
+            color: colorScheme[2],
+            chart: 'LineChart',
+            axis: 'y',
+          }
+        ]
+      },
+    }
+  }]
 }
 
-const chartView = new charts.MultiChartView()
+const chart = new ChartView()
 
 export default {
   groupedChartsWrapper: groupedChartsWrapper,
   container: container,
   layoutMeta: layoutMeta,
   render: () => {
-    chartView.setConfig(chartConfig)
-    chartView.setData(data, container[0])
-    chartView.setData(data, container[1])
-    chartView.setData(data, container[2])
+    chart.setConfig(chartConfig)
+    chart.setData(data, container[0])
   },
   remove: () => {
-    chartView.remove()
+    chart.remove()
   }
 }
