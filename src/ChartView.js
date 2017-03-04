@@ -103,17 +103,17 @@ export default class ChartView {
     _.each(this._config.components, (component, index) => {
       component.config.order = index
       component.config.id = component.id
-      this._registerComponent(component.type, component.config, component.provider, component.id)
+    })
+    const [dependent, independent] = _.partition(this._config.components, c => c.config.sourceComponent)
+    _.each(independent, component => this._registerComponent(component))
+    _.each(dependent, component => {
+      const sourceComponent = this.getComponent(component.config.sourceComponent)
+      const componentView = this._registerComponent(component, sourceComponent.model)
+      componentView.config.parent = sourceComponent.config
     })
 
     // Post init configuration of components dependant on others
-
-    _.each(this._components, (component, index) => {
-      const sourceComponentId = component.config.get('sourceComponent')
-      if (sourceComponentId) {
-        const sourceComponent = this.getComponent(sourceComponentId)
-        component.config.parent = sourceComponent.config
-      }
+    _.each(this._components, (component) => {
       if (this._isEnabledComponent('Tooltip')) {
         component.config.toggleComponent('Tooltip', true)
       }
@@ -127,9 +127,9 @@ export default class ChartView {
    * @param {String} type
    * @param {Object} config
    * @param {Object} providerConfig
-   * @param {String} id optional
+   * @param {Provider} model optional for dependent components
    */
-  _registerComponent (type, config, providerConfig, id) {
+  _registerComponent ({type, config, provider: providerConfig}, model) {
     if (!this._isEnabledComponent(type)) return false
     const Component = Components[type + 'View']
     const ConfigModel = Components[type + 'ConfigModel']
@@ -137,14 +137,14 @@ export default class ChartView {
 
     let configModel
     if (ConfigModel) configModel = new ConfigModel(config)
-    const container = this._container.querySelector('#' + id)
-    let model = this._provider
+    const container = this._container.querySelector('#' + config.id)
+    model = model || this._provider
     if (Provider && (!model || providerConfig)) model = new Provider(null, providerConfig)
 
     // Share first initialized provider with all other components
     if (!this._provider) this._provider = model
     const viewOptions = {
-      id: id,
+      id: config.id,
       config: configModel,
       model: model,
       container: container || this._container,
@@ -164,11 +164,8 @@ export default class ChartView {
     return false
   }
 
+  // TODO this is not enough specific
   _isEnabledComponent (type) {
     return this._isEnabled(this._config.components, type)
-  }
-
-  _isEnabledHandler (type) {
-    return this._isEnabled(this._config.handlers, type)
   }
 }
