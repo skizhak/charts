@@ -11,18 +11,9 @@ import ContrailChartsView from 'contrail-charts-view'
 import actionman from 'plugins/Actionman'
 
 export default class RadialDendrogramView extends ContrailChartsView {
-  get tagName () { return 'g' }
-  get className () { return 'radial-dendrogram' }
-  get events () {
-    return {
-      'mouseover .arc': '_onMouseover',
-      'mouseout .arc': '_onMouseout',
-      'click .arc': '_arcClick'
-    }
-  }
   static get dataType () { return 'Serie' }
 
-  constructor (p = {}) {
+  constructor (p) {
     super(p)
     this.listenTo(this.model, 'change', this._onDataModelChange)
     this.listenTo(this.config, 'change', this._onConfigModelChange)
@@ -34,10 +25,14 @@ export default class RadialDendrogramView extends ContrailChartsView {
     window.addEventListener('resize', this._onResize)
   }
 
-  changeModel (model) {
-    this.stopListening(this.model)
-    this.model = model
-    this.listenTo(this.model, 'change', this._onDataModelChange)
+  get tagName () { return 'g' }
+
+  get events () {
+    return {
+      'mouseover .arc': '_onMouseover',
+      'mouseout .arc': '_onMouseout',
+      'click .arc': '_arcClick'
+    }
   }
 
   render () {

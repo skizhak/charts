@@ -26,7 +26,7 @@ export default class ChartView {
   * Provide data for this chart as a simple array of objects.
   */
   setData (data) {
-    if (this._frozen) return
+    if (this.frozen) return
     if (_.isArray(data)) _(this._components).map(c => c.model).uniq().compact().each(m => { m.data = data })
   }
   /**

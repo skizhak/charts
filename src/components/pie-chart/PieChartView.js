@@ -41,12 +41,6 @@ export default class PieChartView extends ContrailChartsView {
     })
   }
 
-  changeModel (model) {
-    this.stopListening(this.model)
-    this.model = model
-    this.listenTo(this.model, 'change', this.render)
-  }
-
   render () {
     this.resetParams()
     if (this.params.title) TitleView(this._container, this.params.title)

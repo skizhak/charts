@@ -3,6 +3,7 @@
  */
 import './message.scss'
 import _ from 'lodash'
+import * as d3Selection from 'd3-selection'
 import ContrailChartsView from 'contrail-charts-view'
 import actionman from 'plugins/Actionman'
 import _template from './message.html'
@@ -44,7 +45,7 @@ export default class MessageView extends ContrailChartsView {
     let template = this.config.get('template') || _template
 
     if (!this.params.containerList[msgObj.componentId]) {
-      let componentElemD3 = d3.select(`#${msgObj.componentId}`)
+      let componentElemD3 = d3Selection.select(`#${msgObj.componentId}`)
 
       // TODO el.closest is not supported in IE15
       if (componentElemD3.node() && componentElemD3.node().closest(this.selectors.chart)) {
@@ -57,7 +58,7 @@ export default class MessageView extends ContrailChartsView {
     if (associatedComponent) {
       if (!associatedComponent.classed(this.selectors.component.substring(1))) {
         // TODO el.closest is not supported in IE15
-        associatedComponent = d3.select(associatedComponent.node().closest(this.selectors.component))
+        associatedComponent = d3Selection.select(associatedComponent.node().closest(this.selectors.component))
       }
 
       this.d3.remove()

@@ -2,6 +2,7 @@
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
 import './legendPanel.scss'
+import _ from 'lodash'
 import ContrailChartsView from 'contrail-charts-view'
 import * as d3Color from 'd3-color'
 import actionman from 'plugins/Actionman'
