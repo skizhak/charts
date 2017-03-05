@@ -5,13 +5,8 @@ import {ChartView} from 'coCharts'
 import {_c} from 'commons'
 import dendrogamData from './data.json'
 
-const container = 'radial-dendrogram-chart'
-const layoutMeta = {
-  [container]: 'col-md-11'
-}
-
 const chartConfig = {
-  id: container,
+  id: 'chartBox',
   components: [{
     type: 'LegendPanel',
     config: {
@@ -82,8 +77,6 @@ const chartConfig = {
 const chart = new ChartView()
 
 export default {
-  container: container,
-  layoutMeta: layoutMeta,
   render: () => {
     chart.setConfig(chartConfig)
     chart.setData(dendrogamData.data)

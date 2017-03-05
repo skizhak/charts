@@ -21,13 +21,8 @@ function getValue (serie) {
   return serie.value
 }
 
-const container = 'donut-chart'
-const layoutMeta = {
-  [container]: 'col-md-6'
-}
-
 const chartConfig = {
-  id: container,
+  id: 'chartBox',
   title: 'Donut Chart',
   components: [{
     type: 'ControlPanel',
@@ -74,16 +69,14 @@ const chartConfig = {
   ]
 }
 
-const chartView = new ChartView()
+const chart = new ChartView()
 
 export default {
-  container: container,
-  layoutMeta: layoutMeta,
   render: () => {
-    chartView.setConfig(chartConfig)
-    chartView.setData(pieData)
+    chart.setConfig(chartConfig)
+    chart.setData(pieData)
   },
   remove: () => {
-    chartView.remove()
+    chart.remove()
   }
 }
