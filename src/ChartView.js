@@ -4,6 +4,7 @@
 import _ from 'lodash'
 import * as Components from 'components/index'
 import * as Handlers from 'handlers/index'
+import TitleView from 'plugins/title/TitleView'
 import actionman from 'plugins/Actionman'
 
 import ShowComponent from 'actions/ShowComponent'
@@ -99,6 +100,7 @@ export default class ChartView {
    * Initialize configured components
    */
   _initComponents () {
+    // Apply template
     this._container = document.querySelector('#' + this._config.id)
     if (this._config.template) {
       const template = document.createElement('template')
@@ -109,6 +111,7 @@ export default class ChartView {
       })
       this._container.append(document.importNode(template.content, true))
     }
+    if (this._config.title) TitleView(this._container, this._config.title)
 
     _.each(this._config.components, (component, index) => {
       component.config.order = index
