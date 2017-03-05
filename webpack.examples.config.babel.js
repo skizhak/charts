@@ -23,7 +23,7 @@ export default (env = defaultEnv) => {
       use: ['css-loader', 'sass-loader']
     }),
   }, {
-    test: /\.tmpl/,
+    test: /\.html/,
     loader: 'handlebars-loader',
   }]
 
