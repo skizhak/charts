@@ -26,6 +26,7 @@ import twoLineBarOnePieNav from '../../grouped-chart/linebar-pie-nav/index.js'
  * 'example title': {
  *   template: 'template id', <= optional
  *   view: instance of chart view <= required
+ *   description: demonstrated features
  * }
  */
 const allExamples = {
@@ -79,6 +80,7 @@ const allExamples = {
   'grouped': {
     'Navigation': {
       view: navigation,
+      desc: `Grouped chart with Navigation component for all of them`,
     },
     '2 LineBar 1 Pie Nav': {
       view: twoLineBarOnePieNav
@@ -107,8 +109,8 @@ function _viewRenderInit ({view, title = '', desc = ''}) {
   }
 
   // Cleanup and apply containers template
-  $content.find('#chartTitle').text(title)
-  $content.find('#chartDesc').text(desc)
+  $content.find('#chart-title').text(title)
+  $content.find('#chart-description').text(desc)
   $chartBox.empty()
   // set current view
   $chartBox.data('chartView', view)
