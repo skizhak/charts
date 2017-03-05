@@ -12,7 +12,6 @@ import timeline from '../../linebar-chart/timeline'
 import tooltips from '../../linebar-chart/tooltip'
 import stackedBar from '../../linebar-chart/stacked-bar-chart'
 import groupedBar from '../../linebar-chart/grouped-bar-chart'
-import navigation from '../../linebar-chart/navigation'
 import liveData from '../../linebar-chart/live'
 // Scatter
 import shapes from '../../bubble-chart/multiple-shapes'
@@ -20,7 +19,7 @@ import shapes from '../../bubble-chart/multiple-shapes'
 import pieChart from '../../radial-chart/pie'
 import dendrogramChart from '../../radial-chart/dendrogram'
 import areaBasic from '../../area-chart/basic'
-import twoBarNav from '../../grouped-chart/linebar-linebar-nav/index.js'
+import navigation from '../../grouped-chart/navigation/index.js'
 import twoLineBarOnePieNav from '../../grouped-chart/linebar-pie-nav/index.js'
 /**
  * structure of an example:
@@ -47,10 +46,7 @@ const allExamples = {
       view: stackedBar,
     },
     'Grouped Bar': {
-      view: groupedBar
-    },
-    'Navigation': {
-      view: navigation
+      view: groupedBar,
     },
     'RequireJS': {
       view: {
@@ -81,8 +77,8 @@ const allExamples = {
     }
   },
   'grouped': {
-    '2 Bar Nav': {
-      view: twoBarNav
+    'Navigation': {
+      view: navigation,
     },
     '2 LineBar 1 Pie Nav': {
       view: twoLineBarOnePieNav
@@ -149,5 +145,5 @@ function createLink (example) {
   $link.click(e => _viewRenderInit(example))
   return $link
 }
-const exampleId = window.location.hash || '#grouped2BarNav'
+const exampleId = window.location.hash || '#groupedNavigation'
 $(exampleId).click()
