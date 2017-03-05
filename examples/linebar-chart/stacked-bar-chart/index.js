@@ -15,13 +15,8 @@ const data = fixture({
   },
 })
 
-const container = 'grouped-bar-chart'
-const layoutMeta = {
-  [container]: 'col-md-12'
-}
-
 const chartConfig = {
-  id: container,
+  id: 'chartBox',
   components: [{
     id: 'grouped-bar-compositey',
     type: 'CompositeYChart',
@@ -103,8 +98,6 @@ const chartConfig = {
 const chart = new ChartView()
 
 export default {
-  container: container,
-  layoutMeta: layoutMeta,
   render: () => {
     chart.setConfig(chartConfig)
     chart.setData(data)

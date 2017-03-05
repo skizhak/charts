@@ -4,6 +4,7 @@
 import _ from 'lodash'
 import {ChartView} from 'coCharts'
 import {formatter, _c} from 'commons'
+import template from './template.html'
 
 const now = _.now()
 const colorScheme = _c.d3ColorScheme20
@@ -35,18 +36,10 @@ function pieDataParser (tsData) {
   })
 }
 
-const groupedChartsWrapper = 'grouped-parent-chart'
-const container = ['grouped-chart1', 'grouped-chart2', 'donut-chart', 'navigation-chart']
-const layoutMeta = {
-  'grouped-chart1': 'render-order-1 col-md-12',
-  'grouped-chart2': 'render-order-2 col-md-8',
-  'donut-chart': 'render-order-3 col-md-3',
-  'navigation-chart': 'render-order-4 col-md-12'
-}
-
 const chartConfig = {
-  id: 'chart-id',
+  id: 'chartBox',
   title: 'Static bar chart for series: a, b',
+  template,
   components: [{
     id: 'legend-panel-id',
     type: 'LegendPanel',
@@ -102,6 +95,7 @@ const chartConfig = {
       enabled: true,
     }
   }, {
+    id: 'legend-panel-id2',
     type: 'LegendPanel',
     config: {
       marginLeft: 60,
@@ -139,7 +133,7 @@ const chartConfig = {
       }
     },
   }, {
-    id: 'donut-chart-id',
+    id: 'pie-chart-id',
     type: 'PieChart',
     provider: {
       formatter: pieDataParser,
@@ -170,7 +164,6 @@ const chartConfig = {
     },
   }, {
     id: 'tooltip-id',
-    container: 'donut-chart-id',
     type: 'Tooltip',
     config: {
       dataConfig: [
@@ -182,9 +175,10 @@ const chartConfig = {
       ],
     },
   }, {
+    id: 'legend-pie',
     type: 'LegendUniversal',
     config: {
-      sourceComponent: 'donut-chart-id',
+      sourceComponent: 'pie-chart-id',
     },
   }, {
     id: 'navigation-id',
@@ -220,9 +214,6 @@ const chartConfig = {
 const chart = new ChartView()
 
 export default {
-  groupedChartsWrapper: groupedChartsWrapper,
-  container: container,
-  layoutMeta: layoutMeta,
   render: () => {
     chart.setConfig(chartConfig)
     chart.setData(data)

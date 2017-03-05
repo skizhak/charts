@@ -32,19 +32,19 @@ import twoLineBarOnePieNav from '../../grouped-chart/linebar-pie-nav/index.js'
 const allExamples = {
   'lineBar': {
     'Legend': {
-      view: legend
+      view: legend,
     },
     'Controls': {
-      view: controls
+      view: controls,
     },
     'Timeline': {
-      view: timeline
+      view: timeline,
     },
     'Tooltips': {
-      view: tooltips
+      view: tooltips,
     },
     'Stacked Bar': {
-      view: stackedBar
+      view: stackedBar,
     },
     'Grouped Bar': {
       view: groupedBar
@@ -59,25 +59,25 @@ const allExamples = {
       }
     },
     'Live Data': {
-      view: liveData
+      view: liveData,
     }
   },
   'bubble': {
     'Shapes': {
-      view: shapes
+      view: shapes,
     }
   },
   'radial': {
     'Pie Chart': {
-      view: pieChart
+      view: pieChart,
     },
     'Dendrogram': {
-      view: dendrogramChart
+      view: dendrogramChart,
     }
   },
   'area': {
     'Basic': {
-      view: areaBasic
+      view: areaBasic,
     }
   },
   'grouped': {

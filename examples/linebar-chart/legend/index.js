@@ -17,13 +17,8 @@ const data = fixture({
   },
 })
 
-const container = 'chart-legend'
-const layoutMeta = {
-  [container]: 'col-md-11'
-}
-
 const chartConfig = {
-  id: container,
+  id: 'chartBox',
   components: [{
     type: 'LegendPanel',
     config: {
@@ -220,8 +215,6 @@ const chartConfig = {
 const chart = new ChartView()
 
 export default {
-  container: container,
-  layoutMeta: layoutMeta,
   render: () => {
     chart.setConfig(chartConfig)
     chart.setData(data)

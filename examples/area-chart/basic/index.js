@@ -17,13 +17,9 @@ const data = fixture({
   },
 })
 data[5].a = -10
-const container = 'area-chart'
-const layoutMeta = {
-  [container]: 'col-md-12'
-}
 
 const chartConfig = {
-  id: container,
+  id: 'chartBox',
   title: 'Area Chart',
   components: [{
     type: 'LegendPanel',
@@ -115,8 +111,6 @@ const chartConfig = {
 const chartView = new ChartView()
 
 export default {
-  container: container,
-  layoutMeta: layoutMeta,
   render: () => {
     chartView.setConfig(chartConfig)
     chartView.setData(data)

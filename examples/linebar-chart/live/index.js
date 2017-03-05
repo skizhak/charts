@@ -7,13 +7,8 @@ import {formatter, fixture} from 'commons'
 let counter = 0
 const length = 21
 
-const container = 'live-data-chart'
-const layoutMeta = {
-  [container]: 'col-md-12'
-}
-
 const chartConfig = {
-  id: container,
+  id: 'chartBox',
   components: [{
     id: 'control-panel-id',
     type: 'ControlPanel',
@@ -87,8 +82,6 @@ let intervalId = -1
 const chart = new ChartView()
 
 export default {
-  container: container,
-  layoutMeta: layoutMeta,
   render: () => {
     chart.setConfig(chartConfig)
     clearInterval(intervalId)
