@@ -88,7 +88,7 @@ const allExamples = {
   }
 }
 
-const $content = $('#content')
+const $content = $('.content')
 const $chartBox = $('#chartBox')
 
 _.forEach(allExamples, (examples, chartCategory) => {
@@ -109,8 +109,8 @@ function _viewRenderInit ({view, title = '', desc = ''}) {
   }
 
   // Cleanup and apply containers template
-  $content.find('#chart-title').text(title)
-  $content.find('#chart-description').text(desc)
+  $content.find('#page-title').text(title)
+  $content.find('#page-description').text(desc)
   $chartBox.empty()
   // set current view
   $chartBox.data('chartView', view)

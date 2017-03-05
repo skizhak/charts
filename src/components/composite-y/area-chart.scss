@@ -1,5 +1,9 @@
+@import "area-chart-rules";
+@import "../../styles/variables";
+@import "../../styles/mixins";
+
 .cc-svg .area-chart {
-  .area {
-    opacity: 0.7;
-  }
+  @include areaChartRules($area-chart);
+
+  @include themify($areaChartId, $themes);
 }

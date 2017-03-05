@@ -89,7 +89,7 @@ const chartConfig = {
             tooltip: 'default-tooltip',
           }, {
             accessor: 'e',
-            labelFormatter: 'E',
+            labelFormatter: 'Label E',
             color: '#9467bd',
             enabled: true,
             chart: 'LineChart',

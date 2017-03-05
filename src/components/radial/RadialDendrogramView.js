@@ -1,7 +1,7 @@
 /*
  * Copyright (c) 2016 Juniper Networks, Inc. All rights reserved.
  */
-import './radial-dendogram.scss'
+import './radial-dendrogram.scss'
 import _ from 'lodash'
 import * as d3Hierarchy from 'd3-hierarchy'
 import * as d3Scale from 'd3-scale'

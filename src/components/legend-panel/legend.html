@@ -12,9 +12,9 @@
         {{#if shape }}
         <div class="indicator fa" style="{{#if checked}} color: {{ color }} {{/if}}">{{{ shape }}}</div>
         {{else}}
-        <div class="indicator radio" style="border-color: {{ color }}; {{#if checked}} background-color: {{ color }} {{/if}}"></div>
+        <div class="color-indicator" style="border-color: {{ color }}; {{#if checked}} background-color: {{ color }} {{/if}}"></div>
         {{/if}}
-        <span class="axis">{{ axis }}</span>{{ label }}
+        <span class="associate-axis">{{ axis }}</span>{{ label }}
   		</label>
   	</div>
   	{{/each}}
