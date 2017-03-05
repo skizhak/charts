@@ -38,7 +38,6 @@ export default class ChartView {
   setConfig (config) {
     if (this._config) this.remove()
     this._config = _.cloneDeep(config)
-    this._container = document.querySelector('#' + config.id)
     /**
      * Let's register actions here.
      * Doing this in the constructor causes actions to be registered for views which may not have setConfig invoked,
@@ -100,6 +99,17 @@ export default class ChartView {
    * Initialize configured components
    */
   _initComponents () {
+    this._container = document.querySelector('#' + this._config.id)
+    if (this._config.template) {
+      const template = document.createElement('template')
+      template.innerHTML = this._config.template()
+      // some components require container to have id
+      _.each(template.content.querySelectorAll(`[component]`), el => {
+        el.setAttribute('id', 'cc-' + el.getAttribute('component'))
+      })
+      this._container.append(document.importNode(template.content, true))
+    }
+
     _.each(this._config.components, (component, index) => {
       component.config.order = index
       component.config.id = component.id
@@ -137,7 +147,7 @@ export default class ChartView {
 
     let configModel
     if (ConfigModel) configModel = new ConfigModel(config)
-    const container = this._container.querySelector('#' + config.id)
+    const container = this._container.querySelector(`[component="${config.container || config.id}"]`)
     model = model || this._provider
     if (Provider && (!model || providerConfig)) model = new Provider(null, providerConfig)
 
