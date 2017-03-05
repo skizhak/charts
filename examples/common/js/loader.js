@@ -120,32 +120,37 @@ function _viewRenderInit ({view, title = '', desc = ''}) {
 function createLink (example) {
   const chartType = example.category || ''
   const view = example.view
-  const RJSInitFlag = 'RJSInstantiated'
   const cleaned = encodeURIComponent(example.title.replace(/\s/g, ''))
   const link = `<a id="${chartType}${cleaned}" href="#${chartType}${cleaned}">
     <span class="nav-text">${example.title}</span>
     </a>`
   const $link = $(link)
   if (view.type === 'RJS') {
-    if (view.status && view.status === RJSInitFlag) {
-      example.view = view.AMDChartView
-    } else {
-      // Load the entry point
-      let entryPoint = document.createElement('script')
-      entryPoint.src = 'node_modules/requirejs/require.js'
-      entryPoint.setAttribute('data-main', view.entryPoint)
-      document.body.append(entryPoint)
-      // Once the require entry point load is complete (not just the file load but all dependencies),
-      // the script callback will invoke render callback.
-      window.AMDRenderCB = (RJSChartView) => {
-        view.AMDChartView = RJSChartView
-        view.status = RJSInitFlag
-        example.view = RJSChartView
-      }
+    $link.click(e => _initRJS(example))
+  } else {
+    $link.click(e => _viewRenderInit(example))
+  }
+  return $link
+}
+
+function _initRJS (example) {
+  const RJSInitFlag = 'RJSInstantiated'
+  const view = example.view
+  if (view.status && view.status === RJSInitFlag) {
+    _viewRenderInit(example)
+  } else {
+    // Load the entry point
+    let entryPoint = document.createElement('script')
+    entryPoint.src = 'node_modules/requirejs/require.js'
+    entryPoint.setAttribute('data-main', view.entryPoint)
+    document.body.append(entryPoint)
+    // Once the require entry point load is complete (not just the file load but all dependencies),
+    // the script callback will invoke render callback.
+    window.AMDRenderCB = (RJSChartView) => {
+      example.view = _.extend({status: RJSInitFlag}, view, RJSChartView)
+      _viewRenderInit(example)
     }
   }
-  $link.click(e => _viewRenderInit(example))
-  return $link
 }
 const exampleId = window.location.hash || '#groupedNavigation'
 $(exampleId).click()
