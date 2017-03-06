@@ -19,7 +19,7 @@ const data = fixture({
 
 const container = 'chart-legend'
 const layoutMeta = {
-  [container]: 'col-md-11'
+  [container]: 'col-xs-12'
 }
 
 const chartConfig = {

@@ -27,7 +27,7 @@ body {
 }
 
 h1 {
-  padding: 25px 0;
+  padding: 10px 0;
   font-weight: normal;
   font-size: 25px;
   text-align: center;
@@ -87,19 +87,6 @@ h1 {
   }
 }
 
-.side-bar {
-  width: 20%;
-  min-width: 140px;
-  padding: 16px 25px;
-  float: left;
-
-  .title {
-    font-weight: 900;
-    padding-bottom: 16px;
-    border-bottom: 1px solid #ddd;
-  }
-}
-
 .navbar-logo {
   padding: 0;
   font-size: 20px;
@@ -136,13 +123,11 @@ h1 {
       cursor: pointer;
     }
   }
-
 }
 
-.page-content {
+#content {
   width: 80%;
   min-width: 500px;
-  height: 100%;
   float: left;
   margin-top: 25px;
 }

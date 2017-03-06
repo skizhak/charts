@@ -28,6 +28,9 @@ export default class SankeyConfigModel extends ContrailChartsConfigModel {
       // default we're keeping colorScale as undefined. during init, we will set it to ordinal scale of colorScheme. If set, this has precedence over scheme.
       colorScale: undefined,
 
+      // The scale to use that will represent the value of links.
+      valueScale: d3Scale.scaleLog(),
+
       // The labels of the levels.
       levels: [],
 

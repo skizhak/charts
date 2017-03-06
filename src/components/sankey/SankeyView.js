@@ -74,6 +74,7 @@ export default class SankeyView extends ContrailChartsView {
     const data = this.model.get('data')
     const nodeNameMap = {}
     const parseConfig = this.config.get('parseConfig')
+    let valueSum = 0
     this.nodes = []
     this.links = []
     _.each(data, (d) => {
@@ -83,6 +84,7 @@ export default class SankeyView extends ContrailChartsView {
         if (!link.value || link.value <= 0) {
           return
         }
+        valueSum += link.value
         if (!nodeNameMap[link.source]) {
           const node = { name: link.source, label: link.sourceNode.label, index: this.nodes.length }
           nodeNameMap[link.source] = node
@@ -93,9 +95,32 @@ export default class SankeyView extends ContrailChartsView {
           nodeNameMap[link.target] = node
           this.nodes.push(node)
         }
-        this.links.push({ source: nodeNameMap[link.source].index, target: nodeNameMap[link.target].index, value: link.value })
+        const sourceIndex = nodeNameMap[link.source].index
+        const targetIndex = nodeNameMap[link.target].index
+        let foundLink = null
+        // Check if this link already exists.
+        _.each(this.links, (uniqueLink) => {
+          if ((uniqueLink.source === sourceIndex && uniqueLink.target === targetIndex) || (uniqueLink.source === targetIndex && uniqueLink.target === sourceIndex)) {
+            foundLink = uniqueLink
+          }
+        })
+        if (foundLink) {
+          foundLink.value += link.value
+        }
+        else {
+          this.links.push({ source: sourceIndex, target: targetIndex, value: link.value })
+        }
       })
     })
+    // Rescale the link values.
+    /*
+    console.log('valueSum, chartHeight: ', valueSum, this.params.chartHeight)
+    const valueScale = this.config.get('valueScale').domain([1, valueSum]).range([1, this.params.chartHeight])
+    _.each(this.links, (link) => {
+      link.originalValue = link.value
+      link.value = valueScale(link.originalValue)
+    })
+    */
     this.sankey = d3Sankey.sankey().nodeWidth(15).nodePadding(1).size([this.params.chartWidth - 2 * this.params.labelMargin, this.params.chartHeight])
     this.sankey
       .nodes(this.nodes)
