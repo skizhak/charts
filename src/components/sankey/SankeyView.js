@@ -131,8 +131,8 @@ export default class SankeyView extends ContrailChartsView {
       .nodes(this.nodes)
       .links(this.links)
       .layout(32)
-    console.log('nodes: ', this.nodes)
-    console.log('links: ', this.links)
+    //console.log('nodes: ', this.nodes)
+    //console.log('links: ', this.links)
   }
 
    _render () {
