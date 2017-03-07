@@ -5,6 +5,9 @@
     stroke: #aaa;
     stroke-opacity: 0.4;
   }
+  .link:hover {
+    stroke: #f22;
+  }
   .node {
     rect {
       fill: #5577ff;

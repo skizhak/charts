@@ -19,74 +19,81 @@ const chartConfig = {
       marginLeft: 80,
       marginRight: 80,
       marginBottom: 40,
+      colorScheme: d3.schemeCategory20,
+      levels: [ { level: 0, label: 'Virtual Network' }, { level: 1, label: 'IP' }, { level: 2, label: 'Port' } ],
       parseConfig: {
         parse: function (d) {
           const links = []
-          const srcHierarchy = [d.sport, d.sourceip, d.sourcevn]
-          const dstHierarchy = [d.dport, d.destip, d.destvn]
+          const srcHierarchy = [d.sourcevn, d.sourceip, d.sport]
+          const dstHierarchy = [d.destvn, d.destip, d.dport]
           links.push({
-            source: 'sport-' + srcHierarchy[0],
-            target: 'sip-' + srcHierarchy[1],
+            source: 'svn-' + srcHierarchy[0] + '-sip-' + srcHierarchy[1] + '-sport-' + srcHierarchy[2],
+            target: 'svn-' + srcHierarchy[0] + '-sip-' + srcHierarchy[1],
             value: d['agg-bytes'],
-            sourceNode: { label: srcHierarchy[0] },
-            targetNode: { label: srcHierarchy[1] }
+            sourceNode: { label: srcHierarchy[2], level: 2 },
+            targetNode: { label: srcHierarchy[1], level: 1 },
+            label: srcHierarchy[2] + ' - ' + srcHierarchy[1]
           })
           links.push({
-            source: 'sip-' + srcHierarchy[1],
-            target: 'svn-' + srcHierarchy[2],
+            source: 'svn-' + srcHierarchy[0] + '-sip-' + srcHierarchy[1],
+            target: 'svn-' + srcHierarchy[0],
             value: d['agg-bytes'],
-            sourceNode: { label: srcHierarchy[1] },
-            targetNode: { label: srcHierarchy[2] }
+            sourceNode: { label: srcHierarchy[1], level: 1 },
+            targetNode: { label: srcHierarchy[0], level: 0 },
+            label: srcHierarchy[1] + ' - ' + srcHierarchy[0]
           })
           links.push({
-            source: 'svn-' + srcHierarchy[2],
-            target: 'dvn-' + dstHierarchy[2],
+            source: 'svn-' + srcHierarchy[0],
+            target: 'dvn-' + dstHierarchy[0],
             value: d['agg-bytes'],
-            sourceNode: { label: srcHierarchy[2] },
-            targetNode: { label: dstHierarchy[2] }
+            sourceNode: { label: srcHierarchy[0], level: 0 },
+            targetNode: { label: dstHierarchy[0], level: 0 },
+            label: srcHierarchy[0] + ' - ' + dstHierarchy[0]
           })
           links.push({
-            source: 'dvn-' + dstHierarchy[2],
-            target: 'dip-' + dstHierarchy[1],
+            source: 'dvn-' + dstHierarchy[0],
+            target: 'dvn-' + dstHierarchy[0] + '-dip-' + dstHierarchy[1],
             value: d['agg-bytes'],
-            sourceNode: { label: dstHierarchy[2] },
-            targetNode: { label: dstHierarchy[1] }
+            sourceNode: { label: dstHierarchy[0], level: 0 },
+            targetNode: { label: dstHierarchy[1], level: 1 },
+            label: dstHierarchy[0] + ' - ' + dstHierarchy[1]
           })
           links.push({
-            source: 'dip-' + dstHierarchy[1],
-            target: 'dport-' + dstHierarchy[0],
+            source: 'dvn-' + dstHierarchy[0] + '-dip-' + dstHierarchy[1],
+            target: 'dvn-' + dstHierarchy[0] + '-dip-' + dstHierarchy[1] + '-dport-' + dstHierarchy[2],
             value: d['agg-bytes'],
-            sourceNode: { label: dstHierarchy[1] },
-            targetNode: { label: dstHierarchy[0] }
+            sourceNode: { label: dstHierarchy[1], level: 1 },
+            targetNode: { label: dstHierarchy[2], level: 2 },
+            label: dstHierarchy[1] + ' - ' + dstHierarchy[2]
           })
           return links
         }
-      }
+      },
+      tooltip: 'tooltip-id'
     }
   }, {
-    id: 'default-tooltip',
+    id: 'tooltip-id',
     type: 'Tooltip',
     config: {
-      dataConfig: [
-        {
-          accessor: 'x',
-          labelFormatter: 'Value',
+      formatter: (d) => {
+        const type = ['Virtual Network', 'IP', 'Port']
+        let content = { title: d.data.label, items: [] }
+        content.items.push({
+          label: 'Source',
+          value: type[d.data.sourceNode.level] + ' ' + d.data.sourceNode.label
         }, {
-          accessor: 'a',
-          labelFormatter: 'Tooltip A',
+          label: 'Target',
+          value: type[d.data.targetNode.level] + ' ' + d.data.targetNode.label
         }, {
-          accessor: 'b',
-          labelFormatter: 'Tooltip B',
-        }, {
-          accessor: 'c',
-          labelFormatter: 'Tooltip C',
-        }
-      ]
+          label: 'Flow',
+          value: d.data.value
+        })
+        return content
+      }
     }
   }]
 }
 
-//const chartView = new charts.XYChartView()
 const chartView = new charts.RadialChartView()
 
 export default {

@@ -13,8 +13,8 @@ export default class SankeyView extends ContrailChartsView {
   get className () { return 'sankey' }
   get events () {
     return {
-      'mouseover .arc': '_onMouseover',
-      'mouseout .arc': '_onMouseout',
+      'mouseover .link': '_onMouseoverLink',
+      'mouseout .link': '_onMouseoutLink',
       'click .arc': '_arcClick'
     }
   }
@@ -68,6 +68,9 @@ export default class SankeyView extends ContrailChartsView {
     if (!this.params.labelMargin) {
       this.params.labelMargin = 50
     }
+    if (!this.params.topMargin) {
+      this.params.topMargin = 5
+    }
   }
 
   _prepareLayout () {
@@ -86,12 +89,12 @@ export default class SankeyView extends ContrailChartsView {
         }
         valueSum += link.value
         if (!nodeNameMap[link.source]) {
-          const node = { name: link.source, label: link.sourceNode.label, index: this.nodes.length }
+          const node = { name: link.source, label: link.sourceNode.label, level: link.sourceNode.level, index: this.nodes.length }
           nodeNameMap[link.source] = node
           this.nodes.push(node)
         }
         if (!nodeNameMap[link.target]) {
-          const node = { name: link.target, label: link.targetNode.label, index: this.nodes.length }
+          const node = { name: link.target, label: link.targetNode.label, level: link.targetNode.level, index: this.nodes.length }
           nodeNameMap[link.target] = node
           this.nodes.push(node)
         }
@@ -108,11 +111,13 @@ export default class SankeyView extends ContrailChartsView {
           foundLink.value += link.value
         }
         else {
-          this.links.push({ source: sourceIndex, target: targetIndex, value: link.value })
+          this.links.push({ source: sourceIndex, target: targetIndex, value: link.value, data: link })
         }
       })
     })
     // Rescale the link values.
+    // Does not look good - the sum of incomming values will not equal sum of outgoing values and the outgoing link will be thinner than the sum of incomming ones.
+    // This needs to be handled during data parsing (ie. by the user) because only the user knows which data is input (in our example the input is from port to ip).
     /*
     console.log('valueSum, chartHeight: ', valueSum, this.params.chartHeight)
     const valueScale = this.config.get('valueScale').domain([1, valueSum]).range([1, this.params.chartHeight])
@@ -121,7 +126,7 @@ export default class SankeyView extends ContrailChartsView {
       link.value = valueScale(link.originalValue)
     })
     */
-    this.sankey = d3Sankey.sankey().nodeWidth(15).nodePadding(1).size([this.params.chartWidth - 2 * this.params.labelMargin, this.params.chartHeight])
+    this.sankey = d3Sankey.sankey().nodeWidth(this.params.nodeWidth).nodePadding(this.params.nodePadding).size([this.params.chartWidth - 2 * this.params.labelMargin, this.params.chartHeight - 2 * this.params.topMargin])
     this.sankey
       .nodes(this.nodes)
       .links(this.links)
@@ -131,7 +136,7 @@ export default class SankeyView extends ContrailChartsView {
   }
 
    _render () {
-    this.d3.attr('transform', `translate(${this.params.labelMargin}, 0)`)
+    this.d3.attr('transform', `translate(${this.params.labelMargin}, ${this.params.topMargin})`)
     // Links
     const path = this.sankey.link()
     const svgLinks = this.d3.selectAll('.link').data(this.links)
@@ -163,6 +168,20 @@ export default class SankeyView extends ContrailChartsView {
       .filter((d) => d.x > this.params.chartWidth / 2)
       .attr("x", 5 + this.sankey.nodeWidth())
       .attr("text-anchor", "start")
+    const svgNodesEdit = svgNodesEnter.merge(svgNodes).transition().ease(this.config.get('ease')).duration(this.params.duration)
+      .attr('transform', (d) => 'translate(' + d.x + ',' + d.y + ')')
+    svgNodesEdit.select('rect')
+      .style('fill', (d) => this.config.getColor([], this.config.get('levels')[d.level]))
+      .attr('width', this.sankey.nodeWidth())
+      .attr('height', (d) => d.dy)
+    svgNodesEdit.select('text')
+      .attr("x", -5)
+      .attr("y", (d) => d.dy / 2)
+      .attr("text-anchor", "end")
+      .text((d) => d.dy > 10 ? d.label : '')
+      .filter((d) => d.x > this.params.chartWidth / 2)
+      .attr("x", 5 + this.sankey.nodeWidth())
+      .attr("text-anchor", "start")
   }
 
   // Event handlers
@@ -175,21 +194,12 @@ export default class SankeyView extends ContrailChartsView {
     this.render()
   }
 
-  _onMouseover (d, el) {
-    const leaves = d.leaves()
-    _.each(this.ribbons, (ribbon) => {
-      ribbon.active = Boolean(_.find(leaves, (leaf) => leaf.data.linkId === ribbon.id))
-    })
-    this._render()
+  _onMouseoverLink (d, el) {
     const [left, top] = d3Selection.mouse(this._container)
-    this._actionman.fire('ShowComponent', this.config.get('tooltip'), {left, top}, d.data)
+    this._actionman.fire('ShowComponent', this.config.get('tooltip'), {left, top}, d)
   }
 
-  _onMouseout (d, el) {
-    _.each(this.ribbons, (ribbon) => {
-      ribbon.active = false
-    })
-    this._render()
+  _onMouseoutLink (d, el) {
     this._actionman.fire('HideComponent', this.config.get('tooltip'))
   }
 

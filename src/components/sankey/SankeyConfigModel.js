@@ -31,6 +31,12 @@ export default class SankeyConfigModel extends ContrailChartsConfigModel {
       // The scale to use that will represent the value of links.
       valueScale: d3Scale.scaleLog(),
 
+      // The width of the nodes in sankey diagram.
+      nodeWidth: 15,
+
+      // The padding between nodes in sankey diagram.
+      nodePadding: 2,
+
       // The labels of the levels.
       levels: [],
 
