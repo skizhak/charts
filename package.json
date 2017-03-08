@@ -6,7 +6,7 @@
   "scripts": {
     "build": "npm run build:lib && npm run build:examples",
     "build:lib": "webpack --env.prod",
-    "build:lib:withD3": "webpack --env.prod --env.include 'd3-selection, d3-scale, d3-shape, d3-array, d3-axis, d3-ease, d3-brush, d3-time-format, d3-hierarchy'",
+    "build:lib:withD3": "webpack --env.prod --env.include 'd3-all'",
     "build:examples": "webpack --env.prod --config webpack.examples.config.babel.js",
     "build:clean": "rm -rf build/* && npm run build",
     "dev": "npm run dev:lib & npm run dev:examples",
