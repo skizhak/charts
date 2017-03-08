@@ -22,7 +22,7 @@ const defaultEnv = {'dev': true}
  * use '../contrail-charts-demo/lib'
  * @type {Array}
  */
-const publishPaths = ['../../absingla/contrail-charts-demo/lib']
+const publishPaths = []
 
 export default (env = defaultEnv) => {
   const plugins = []
