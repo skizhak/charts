@@ -40,6 +40,9 @@ export default class RadialDendrogramConfigModel extends ContrailChartsConfigMod
       // Show arc labels
       showArcLabels: true,
 
+      // Define how will the labels be rendered: 'along-arc', 'perpendicular'
+      labelFlow: 'along-arc',
+
       // Estimated average letter width
       arcLabelLetterWidth: 5,
 

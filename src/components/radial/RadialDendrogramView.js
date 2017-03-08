@@ -385,6 +385,9 @@ export default class RadialDendrogramView extends ContrailChartsView {
       n.arcLength = 6 * (n.y - this.params.arcLabelYOffset) * (n.angleRange[1] - n.angleRange[0]) / 360
       n.label = '' + n.data.namePath[n.data.namePath.length - 1]
       n.labelFits = this.params.arcLabelLetterWidth * n.label.length < n.arcLength
+      if (this.params.labelFlow === 'perpendicular') {
+        n.labelFits = (n.arcLength > 9) && ((this.params.innerRadius / this.params.drillDownLevel) - this.params.arcLabelYOffset > this.params.arcLabelLetterWidth * n.label.length)
+      }
       this.arcs.push(n)
     })
   }
@@ -441,17 +444,41 @@ export default class RadialDendrogramView extends ContrailChartsView {
       svgLinks.exit().remove()
 
       // Arc labels
-      const svgArcLabels = this.d3.selectAll('.arc-label').data(this.arcs)
-      svgArcLabels.enter().append('text')
+      const arcLabelsAlongArcData = (this.params.labelFlow === 'along-arc') ? this.arcs : []
+      const arcLabelsPerpendicularData = (this.params.labelFlow === 'perpendicular') ? this.arcs : []
+      // Along Arc
+      let svgArcLabels = this.d3.selectAll('.arc-label.along-arc').data(arcLabelsAlongArcData)
+      let svgArcLabelsEnter = svgArcLabels.enter().append('text')
+        .attr('class', 'arc-label along-arc')
         .attr('x', this.params.arcLabelXOffset)
         .attr('dy', this.params.arcLabelYOffset)
+      svgArcLabelsEnter
         .append('textPath')
-        .attr('class', 'arc-label')
         .attr('xlink:href', (d) => '#' + d.data.namePath.join('-'))
-        // .attr('startOffset', '50%')
-        .merge(svgArcLabels).transition().ease(this.config.get('ease')).duration(this.params.duration)
+      let svgArcLabelsEdit = svgArcLabelsEnter.merge(svgArcLabels).transition().ease(this.config.get('ease')).duration(this.params.duration)
+        .attr('x', this.params.arcLabelXOffset)
+        .attr('dy', this.params.arcLabelYOffset)
+      svgArcLabelsEdit.select('textPath')
         .text((d) => (this.params.showArcLabels && d.labelFits) ? d.label : '')
       svgArcLabels.exit().remove()
+      // Perpendicular
+      svgArcLabels = this.d3.selectAll('.arc-label.perpendicular').data(arcLabelsPerpendicularData)
+      svgArcLabelsEnter = svgArcLabels.enter().append('text')
+        .attr('class', 'arc-label perpendicular')
+        .merge(svgArcLabels)
+        .attr('transform', (d) => {
+          let alpha = ((d.angleRange[1] + d.angleRange[0]) / 2) + 90
+          if ((d.angleRange[1] + d.angleRange[0]) / 2 < 180) {
+            alpha -= 180
+          }
+          const x = (d.y + this.params.arcLabelYOffset) * Math.cos((d.angleRange[1] + d.angleRange[0] - 180) * Math.PI / 360) + this.params.arcLabelXOffset
+          const y = (d.y + this.params.arcLabelYOffset) * Math.sin((d.angleRange[1] + d.angleRange[0] - 180) * Math.PI / 360)
+          return `translate(${x}, ${y}) rotate(${alpha})`
+        })
+        .style('text-anchor', (d) => ((d.angleRange[1] + d.angleRange[0]) / 2 < 180) ? 'start' : 'end')
+        .text((d) => (this.params.showArcLabels && d.labelFits) ? d.label : '')
+      svgArcLabels.exit().remove()
+
 
       // Arcs for parent nodes.
       const arcEnter = d3Shape.arc()

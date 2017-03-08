@@ -36,8 +36,12 @@ const chartConfig = {
       arcWidth: 15,
       arcLabelLetterWidth: 5,
       showArcLabels: true,
-      arcLabelXOffset: 2,
-      arcLabelYOffset: 25,
+      //labelFlow: 'along-arc',
+      labelFlow: 'perpendicular',
+      //arcLabelXOffset: 2,
+      arcLabelXOffset: 0,
+      //arcLabelYOffset: 25,
+      arcLabelYOffset: 20,
       levels: [ { level: 0, label: 'Virtual Network' }, { level: 1, label: 'IP' }, { level: 2, label: 'Port' } ],
       hierarchyConfig: {
         parse: function (d) {
