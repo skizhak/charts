@@ -3,6 +3,7 @@
  */
 import {charts} from 'coCharts'
 import flowData from './data.json'
+import * as d3Scale from 'd3-scale'
 
 const container = 'sankey-chart'
 const layoutMeta = {
@@ -19,7 +20,7 @@ const chartConfig = {
       marginLeft: 80,
       marginRight: 80,
       marginBottom: 40,
-      colorScheme: d3.schemeCategory20,
+      colorScheme: d3Scale.schemeCategory20,
       levels: [ { level: 0, label: 'Virtual Network' }, { level: 1, label: 'IP' }, { level: 2, label: 'Port' } ],
       parseConfig: {
         parse: function (d) {

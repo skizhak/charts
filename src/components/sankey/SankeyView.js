@@ -103,20 +103,20 @@ export default class SankeyView extends ContrailChartsView {
         let foundLink = null
         // Check if this link already exists.
         _.each(this.links, (uniqueLink) => {
-          if ((uniqueLink.source === sourceIndex && uniqueLink.target === targetIndex) || (uniqueLink.source === targetIndex && uniqueLink.target === sourceIndex)) {
+          if ((uniqueLink.source === sourceIndex && uniqueLink.target === targetIndex) ||
+            (uniqueLink.source === targetIndex && uniqueLink.target === sourceIndex)) {
             foundLink = uniqueLink
           }
         })
         if (foundLink) {
           foundLink.value += link.value
-        }
-        else {
+        } else {
           this.links.push({ source: sourceIndex, target: targetIndex, value: link.value, data: link })
         }
       })
     })
     // Rescale the link values.
-    // Does not look good - the sum of incomming values will not equal sum of outgoing values and the outgoing link will be thinner than the sum of incomming ones.
+    // Does not look good - the sum of incoming values will not equal sum of outgoing values and the outgoing link will be thinner than the sum of incomming ones.
     // This needs to be handled during data parsing (ie. by the user) because only the user knows which data is input (in our example the input is from port to ip).
     /*
     console.log('valueSum, chartHeight: ', valueSum, this.params.chartHeight)
@@ -126,16 +126,17 @@ export default class SankeyView extends ContrailChartsView {
       link.value = valueScale(link.originalValue)
     })
     */
-    this.sankey = d3Sankey.sankey().nodeWidth(this.params.nodeWidth).nodePadding(this.params.nodePadding).size([this.params.chartWidth - 2 * this.params.labelMargin, this.params.chartHeight - 2 * this.params.topMargin])
+    this.sankey = d3Sankey.sankey()
+      .nodeWidth(this.params.nodeWidth)
+      .nodePadding(this.params.nodePadding)
+      .size([this.params.chartWidth - 2 * this.params.labelMargin, this.params.chartHeight - 2 * this.params.topMargin])
     this.sankey
       .nodes(this.nodes)
       .links(this.links)
       .layout(32)
-    //console.log('nodes: ', this.nodes)
-    //console.log('links: ', this.links)
   }
 
-   _render () {
+  _render () {
     this.d3.attr('transform', `translate(${this.params.labelMargin}, ${this.params.topMargin})`)
     // Links
     const path = this.sankey.link()
@@ -143,13 +144,13 @@ export default class SankeyView extends ContrailChartsView {
     svgLinks.enter().append('path')
       .attr('class', 'link')
       .attr('d', path)
-      .style("stroke-width", function(d) {
-        return Math.max(1, d.dy);
+      .style('stroke-width', function (d) {
+        return Math.max(1, d.dy)
       })
       .merge(svgLinks)
       .attr('d', path)
-      .style("stroke-width", function(d) {
-        return Math.max(1, d.dy);
+      .style('stroke-width', function (d) {
+        return Math.max(1, d.dy)
       })
     svgLinks.exit().remove()
     // Nodes
@@ -161,13 +162,13 @@ export default class SankeyView extends ContrailChartsView {
       .attr('width', this.sankey.nodeWidth())
       .attr('height', (d) => d.dy)
     svgNodesEnter.append('text')
-      .attr("x", -5)
-      .attr("y", (d) => d.dy / 2)
-      .attr("text-anchor", "end")
+      .attr('x', -5)
+      .attr('y', (d) => d.dy / 2)
+      .attr('text-anchor', 'end')
       .text((d) => d.dy > 10 ? d.label : '')
       .filter((d) => d.x > this.params.chartWidth / 2)
-      .attr("x", 5 + this.sankey.nodeWidth())
-      .attr("text-anchor", "start")
+      .attr('x', 5 + this.sankey.nodeWidth())
+      .attr('text-anchor', 'start')
     const svgNodesEdit = svgNodesEnter.merge(svgNodes).transition().ease(this.config.get('ease')).duration(this.params.duration)
       .attr('transform', (d) => 'translate(' + d.x + ',' + d.y + ')')
     svgNodesEdit.select('rect')
@@ -175,13 +176,13 @@ export default class SankeyView extends ContrailChartsView {
       .attr('width', this.sankey.nodeWidth())
       .attr('height', (d) => d.dy)
     svgNodesEdit.select('text')
-      .attr("x", -5)
-      .attr("y", (d) => d.dy / 2)
-      .attr("text-anchor", "end")
+      .attr('x', -5)
+      .attr('y', (d) => d.dy / 2)
+      .attr('text-anchor', 'end')
       .text((d) => d.dy > 10 ? d.label : '')
       .filter((d) => d.x > this.params.chartWidth / 2)
-      .attr("x", 5 + this.sankey.nodeWidth())
-      .attr("text-anchor", "start")
+      .attr('x', 5 + this.sankey.nodeWidth())
+      .attr('text-anchor', 'start')
   }
 
   // Event handlers

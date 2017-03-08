@@ -3,6 +3,7 @@
  */
 import {charts} from 'coCharts'
 import {formatter} from 'commons'
+import * as d3Scale from 'd3-scale'
 
 const pieData = [
     { label: 'Process 1', value: 2704659 },
@@ -42,7 +43,7 @@ const chartConfig = {
     config: {
       type: 'donut',
       radius: 150,
-      colorScheme: d3.schemeCategory20, // eslint-disable-line no-undef
+      colorScheme: d3Scale.schemeCategory20,
       serie: {
         getValue: getValue,
         getLabel: getLabel,
