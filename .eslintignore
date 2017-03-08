@@ -1,4 +1,4 @@
 node_modules
 lib
-themes
+examples/common/assets
 *.html

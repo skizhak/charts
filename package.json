@@ -6,7 +6,7 @@
   "scripts": {
     "build": "npm run build:lib && npm run build:examples",
     "build:lib": "webpack --env.prod",
-    "build:lib:withD3": "webpack --env.prod --env.include 'd3-selection, d3-scale, d3-shape, d3-array, d3-axis, d3-ease, d3-brush, d3-time-format, d3-hierarchy'",
+    "build:lib:withD3": "webpack --env.prod --env.include 'd3-all'",
     "build:examples": "webpack --env.prod --config webpack.examples.config.babel.js",
     "build:clean": "rm -rf build/* && npm run build",
     "dev": "npm run dev:lib & npm run dev:examples",
@@ -53,6 +53,7 @@
     "backbone": "1.3.3",
     "d3": "4.4.3",
     "d3-interpolate-path": "1.1.0",
+    "d3-sankey": "0.4.2",
     "handlebars": "4.0.6",
     "handlebars-loader": "1.4.0",
     "jquery": "3.1.1",
