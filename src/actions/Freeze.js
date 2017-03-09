@@ -1,7 +1,8 @@
 /*
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
-import Action from '../plugins/Action'
+import _ from 'lodash'
+import Action from '../core/Action'
 
 export default class Freeze extends Action {
   constructor (p) {

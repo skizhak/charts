@@ -10,7 +10,6 @@ import * as d3Scale from 'd3-scale'
 import * as d3Axis from 'd3-axis'
 import * as d3Ease from 'd3-ease'
 import ContrailChartsView from 'contrail-charts-view'
-import DataProvider from 'handlers/DataProvider'
 
 export default class TimelineView extends ContrailChartsView {
   constructor (p) {

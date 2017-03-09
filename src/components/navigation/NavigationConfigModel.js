@@ -42,22 +42,6 @@ export default class NavigationConfigModel extends ContrailChartsConfigModel {
 
       // The selection to use when first rendered [xMin%, xMax%].
       selection: [],
-
-      /**
-       * Handler to invoke when user makes brush selection.
-       * By default, We're handling case of single chart visualization with navigation component.
-       * we will change the model of subscribing chart's all CompositeYChart component with dataProvider.
-       * For chart visualization with multiple charts, override this handler.
-       * @param dataProvider selection data model
-       * @param chart charts subscribed to ChangeSelection Action
-       */
-      onChangeSelection: (dataProvider, chart) => {
-        if (!_.isEmpty(chart.getComponentsByType('Navigation'))) {
-          _.each(chart.getComponentsByType('CompositeYChart'), (compositeY) => {
-            compositeY.changeModel(dataProvider)
-          })
-        }
-      }
     }
   }
 

@@ -4,6 +4,7 @@
 import _ from 'lodash'
 import * as d3Scale from 'd3-scale'
 import ContrailChartsView from 'contrail-charts-view'
+import actionman from 'core/Actionman'
 
 export default class XYChartSubView extends ContrailChartsView {
   constructor (p) {
@@ -32,7 +33,7 @@ export default class XYChartSubView extends ContrailChartsView {
   }
 
   get xScale () {
-    return this.params.axis[this.params.plot.x.axis].scale
+    return _.get(this.params.axis, 'x.scale')
   }
 
   get yScale () {
@@ -46,6 +47,12 @@ export default class XYChartSubView extends ContrailChartsView {
   get innerWidth () {
     const p = this.params
     return this.width - p.marginRight - p.marginLeft - 2 * p.marginInner
+  }
+
+  get outerWidth () {
+    const x = this.params.plot.x.accessor
+    if (!_.isFunction(this.xScale)) return this.innerWidth
+    return Math.abs(this.xScale(_.last(this.model.data)[x]) - this.xScale(this.model.data[0][x]))
   }
 
   get xMarginInner () {
@@ -63,7 +70,7 @@ export default class XYChartSubView extends ContrailChartsView {
   render () {
     super.render()
     this._onMouseout()
-    this.d3.attr('clip-path', `url(#${this._parent.params.rectClipPathId})`)
+    this.d3.attr('clip-path', `url(#${this._parent.clip})`)
   }
   /**
    * Combine series domains (extents) by axis
@@ -75,6 +82,7 @@ export default class XYChartSubView extends ContrailChartsView {
     let getFullRange = false
     if (this.model.data.length < 2) getFullRange = true
     domains[xAxisName] = this.model.getRangeFor(xAccessor, getFullRange)
+    this._overrideDomain(xAxisName, domains)
 
     const enabledAccessors = _.filter(this.params.plot.y, a => a.enabled)
     const accessorsByAxis = _.groupBy(enabledAccessors, 'axis')
@@ -84,14 +92,16 @@ export default class XYChartSubView extends ContrailChartsView {
         // TODO get maximum range of all enabled series but not of first only?
         domains[axisName] = this.model.getRangeFor(accessors[0].accessor, true)
       }
-
-      // Override axis domain based on axis config.
-      const configDomain = this.config.getDomain(axisName)
-      if (!configDomain) return
-      if (!_.isNil(configDomain[0])) domains[axisName][0] = configDomain[0]
-      if (!_.isNil(configDomain[1])) domains[axisName][1] = configDomain[1]
+      this._overrideDomain(axisName, domains)
     })
     return domains
+  }
+  // Override axis domain based on axis config
+  _overrideDomain (axisName, domains) {
+    const configDomain = this.config.getDomain(axisName)
+    if (!configDomain) return
+    if (!_.isNil(configDomain[0])) domains[axisName][0] = configDomain[0]
+    if (!_.isNil(configDomain[1])) domains[axisName][1] = configDomain[1]
   }
 
   // Event handlers
@@ -99,7 +109,7 @@ export default class XYChartSubView extends ContrailChartsView {
   _onMouseout (d, el) {
     if (this.config.get('tooltipEnabled')) {
       const tooltipId = d && d.accessor ? d.accessor.tooltip : _.map(this.params.activeAccessorData, a => a.tooltip)
-      this._actionman.fire('HideComponent', tooltipId)
+      actionman.fire('HideComponent', tooltipId)
     }
     const els = el ? this.d3.select(() => el) : this.d3.selectAll(this.selectors.node)
     els.classed('active', false)

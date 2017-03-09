@@ -1,19 +1,14 @@
 /*
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
-import {charts} from 'coCharts'
+import {ChartView} from 'coCharts'
 import {formatter, fixture} from 'commons'
 
 let counter = 0
 const length = 21
 
-const container = 'live-data-chart'
-const layoutMeta = {
-  [container]: 'col-md-12'
-}
-
 const chartConfig = {
-  id: container,
+  id: 'chartBox',
   components: [{
     id: 'control-panel-id',
     type: 'ControlPanel',
@@ -84,13 +79,11 @@ const chartConfig = {
 }
 
 let intervalId = -1
-const chartView = new charts.XYChartView()
+const chart = new ChartView()
 
 export default {
-  container: container,
-  layoutMeta: layoutMeta,
   render: () => {
-    chartView.setConfig(chartConfig)
+    chart.setConfig(chartConfig)
     clearInterval(intervalId)
     intervalId = setInterval(() => {
       const dataConfig = {
@@ -101,12 +94,12 @@ export default {
         },
       }
       const data = fixture(dataConfig)
-      chartView.setData(data)
+      chart.setData(data)
       counter++
     }, 1000)
   },
   remove: () => {
-    chartView.remove()
+    chart.remove()
   },
   stopUpdating: () => {
     clearInterval(intervalId)

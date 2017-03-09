@@ -8,19 +8,12 @@ import * as d3Scale from 'd3-scale'
 import * as d3Selection from 'd3-selection'
 import * as d3Shape from 'd3-shape'
 import ContrailChartsView from 'contrail-charts-view'
+import actionman from 'core/Actionman'
 
 export default class RadialDendrogramView extends ContrailChartsView {
-  get tagName () { return 'g' }
-  get className () { return 'radial-dendrogram' }
-  get events () {
-    return {
-      'mouseover .arc': '_onMouseover',
-      'mouseout .arc': '_onMouseout',
-      'click .arc': '_arcClick'
-    }
-  }
+  static get dataType () { return 'Serie' }
 
-  constructor (p = {}) {
+  constructor (p) {
     super(p)
     this.listenTo(this.model, 'change', this._onDataModelChange)
     this.listenTo(this.config, 'change', this._onConfigModelChange)
@@ -32,10 +25,14 @@ export default class RadialDendrogramView extends ContrailChartsView {
     window.addEventListener('resize', this._onResize)
   }
 
-  changeModel (model) {
-    this.stopListening(this.model)
-    this.model = model
-    this.listenTo(this.model, 'change', this._onDataModelChange)
+  get tagName () { return 'g' }
+
+  get events () {
+    return {
+      'mouseover .arc': '_onMouseover',
+      'mouseout .arc': '_onMouseout',
+      'click .arc': '_arcClick'
+    }
   }
 
   render () {
@@ -72,13 +69,12 @@ export default class RadialDendrogramView extends ContrailChartsView {
       this.params.innerRadius = this.params.radius - this.params.labelMargin
     }
   }
-
   /**
   * Build the root node tree structure that will be the input for the d3.hierarchy() layout.
   * We build one more level than configured in order to allow branching of the last configured level.
   */
   _prepareRootNode () {
-    const data = this.model.get('data')
+    const data = this.model.data
     const hierarchyConfig = this.config.get('hierarchyConfig')
     const leafNodes = []
     this.maxDepth = 0
@@ -479,7 +475,6 @@ export default class RadialDendrogramView extends ContrailChartsView {
         .text((d) => (this.params.showArcLabels && d.labelFits) ? d.label : '')
       svgArcLabels.exit().remove()
 
-
       // Arcs for parent nodes.
       const arcEnter = d3Shape.arc()
         .innerRadius((n) => n.y)
@@ -497,7 +492,7 @@ export default class RadialDendrogramView extends ContrailChartsView {
         .attr('class', (d) => 'arc arc-' + d.depth)
         .attr('d', arcEnter)
         .merge(svgArcs).transition().ease(this.config.get('ease')).duration(this.params.duration)
-        .style('fill', (d) => this.config.getColor([], this.config.get('levels')[d.depth-1]))
+        .style('fill', d => this.config.getColor([], this.config.get('levels')[d.depth - 1]))
         .attr('d', arc)
       svgArcs.exit().transition().ease(this.config.get('ease')).duration(this.params.duration)
         .attr('d', arcEnter)
@@ -522,7 +517,7 @@ export default class RadialDendrogramView extends ContrailChartsView {
     })
     this._render()
     const [left, top] = d3Selection.mouse(this._container)
-    this._actionman.fire('ShowComponent', this.config.get('tooltip'), {left, top}, d.data)
+    actionman.fire('ShowComponent', this.config.get('tooltip'), {left, top}, d.data)
   }
 
   _onMouseout (d, el) {
@@ -530,7 +525,7 @@ export default class RadialDendrogramView extends ContrailChartsView {
       ribbon.active = false
     })
     this._render()
-    this._actionman.fire('HideComponent', this.config.get('tooltip'))
+    actionman.fire('HideComponent', this.config.get('tooltip'))
   }
 
   _arcClick (d, el) {

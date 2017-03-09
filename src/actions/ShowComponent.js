@@ -1,7 +1,7 @@
 /*
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
-import Action from '../plugins/Action'
+import Action from '../core/Action'
 
 export default class ShowComponent extends Action {
   constructor (p) {

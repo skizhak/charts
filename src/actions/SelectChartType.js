@@ -2,14 +2,13 @@
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
 import _ from 'lodash'
-import Action from '../plugins/Action'
+import Action from '../core/Action'
 
 export default class SelectChartType extends Action {
   constructor (p) {
     super(p)
     this._deny = false
   }
-
   /**
    * To update chart type of an accessor under the component.
    * If the updated chart type is one of BarChart type, then we will change all charts (any of bar chart type)

@@ -6,7 +6,8 @@ import _ from 'lodash'
 import * as d3Array from 'd3-array'
 import * as d3Selection from 'd3-selection'
 import * as d3Ease from 'd3-ease'
-import {hashCode} from '../../plugins/Util'
+import actionman from 'core/Actionman'
+import {hashCode} from '../../core/Util'
 import Cluster from './Cluster'
 import ContrailChartsView from 'contrail-charts-view'
 
@@ -23,15 +24,15 @@ export default class BucketView extends ContrailChartsView {
   }
 
   get events () {
-    return {
+    return _.extend(super.events, {
       [`mouseover ${this.selectors.node}`]: '_onMouseover',
       [`mouseout ${this.selectors.node}`]: '_onMouseout',
-      [`click ${this.selectors.node}`]: '_onClick',
-    }
+    })
   }
 
   render (points) {
     super.render()
+    this.d3.attr('clip-path', `url(#${this.config.get('clip')})`)
     const data = this._bucketize(points)
 
     const buckets = this.d3.selectAll(this.selectors.node)
@@ -56,7 +57,7 @@ export default class BucketView extends ContrailChartsView {
       .text(d => d.bucket.length)
     // Update
     buckets
-      .transition().ease(d3Ease.easeLinear).duration(this.config.get('duration'))
+      .transition().ease(d3Ease.easeLinear).duration(this.config.duration)
       .attr('transform', d => `translate(${d.x},${d.y})`)
 
     buckets.exit().remove()
@@ -101,7 +102,7 @@ export default class BucketView extends ContrailChartsView {
     const tooltip = this.config.get('tooltip')
     if (tooltip) {
       const [left, top] = d3Selection.mouse(this._container)
-      this._actionman.fire('ShowComponent', tooltip, {left, top}, d.bucket)
+      actionman.fire('ShowComponent', tooltip, {left, top}, d.bucket)
     }
     el.classList.add(this.selectorClass('active'))
   }
@@ -109,13 +110,15 @@ export default class BucketView extends ContrailChartsView {
   _onMouseout (d, el) {
     const tooltip = this.config.get('tooltip')
     if (tooltip) {
-      this._actionman.fire('HideComponent', tooltip)
+      actionman.fire('HideComponent', tooltip)
     }
     const els = el ? this.d3.select(() => el) : this.d3.selectAll(this.selectors.node)
     els.classed('active', false)
   }
 
-  _onClick (d, el) {
-    d
+  _onClickNode (d, el) {
+    this._onMouseout(d, el)
+    const range = d3Array.extent(_.map(d.bucket, 'data.x'))
+    actionman.fire('Zoom', this.config.updateComponents, {accessor: this.config.xAccessor, range})
   }
 }

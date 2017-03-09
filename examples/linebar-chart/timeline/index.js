@@ -1,7 +1,7 @@
 /*
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
-import {charts} from 'coCharts'
+import {ChartView} from 'coCharts'
 import {formatter} from 'commons'
 
 // Complex example
@@ -148,16 +148,16 @@ const chartConfig = {
   }]
 }
 
-const chartView = new charts.XYChartView()
+const chart = new ChartView()
 
 export default {
   container: container,
   layoutMeta: layoutMeta,
   render: () => {
-    chartView.setConfig(chartConfig)
-    chartView.setData(dataSrc)
+    chart.setConfig(chartConfig)
+    chart.setData(dataSrc)
   },
   remove: () => {
-    chartView.remove()
+    chart.remove()
   }
 }

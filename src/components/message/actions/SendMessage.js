@@ -1,4 +1,4 @@
-import Action from '../../../plugins/Action'
+import Action from '../../../core/Action'
 
 export default class SendMessage extends Action {
   constructor (p) {

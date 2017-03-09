@@ -3,12 +3,14 @@
  */
 import './sankey.scss'
 import _ from 'lodash'
-import * as d3Scale from 'd3-scale'
 import * as d3Selection from 'd3-selection'
 import * as d3Sankey from 'd3-sankey'
 import ContrailChartsView from 'contrail-charts-view'
+import actionman from 'core/Actionman'
 
 export default class SankeyView extends ContrailChartsView {
+  static get dataType () { return 'Serie' }
+
   get tagName () { return 'g' }
   get className () { return 'sankey' }
   get events () {
@@ -29,12 +31,6 @@ export default class SankeyView extends ContrailChartsView {
      */
     this._onResize = this._onResize.bind(this)
     window.addEventListener('resize', this._onResize)
-  }
-
-  changeModel (model) {
-    this.stopListening(this.model)
-    this.model = model
-    this.listenTo(this.model, 'change', this._onDataModelChange)
   }
 
   render () {
@@ -74,7 +70,7 @@ export default class SankeyView extends ContrailChartsView {
   }
 
   _prepareLayout () {
-    const data = this.model.get('data')
+    const data = this.model.data
     const nodeNameMap = {}
     const parseConfig = this.config.get('parseConfig')
     let valueSum = 0
@@ -197,11 +193,11 @@ export default class SankeyView extends ContrailChartsView {
 
   _onMouseoverLink (d, el) {
     const [left, top] = d3Selection.mouse(this._container)
-    this._actionman.fire('ShowComponent', this.config.get('tooltip'), {left, top}, d)
+    actionman.fire('ShowComponent', this.config.get('tooltip'), {left, top}, d)
   }
 
   _onMouseoutLink (d, el) {
-    this._actionman.fire('HideComponent', this.config.get('tooltip'))
+    actionman.fire('HideComponent', this.config.get('tooltip'))
   }
 
   _arcClick (d, el) {

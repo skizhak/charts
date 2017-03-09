@@ -12,7 +12,6 @@ import timeline from '../../linebar-chart/timeline'
 import tooltips from '../../linebar-chart/tooltip'
 import stackedBar from '../../linebar-chart/stacked-bar-chart'
 import groupedBar from '../../linebar-chart/grouped-bar-chart'
-import navigation from '../../linebar-chart/navigation'
 import liveData from '../../linebar-chart/live'
 // Scatter
 import shapes from '../../bubble-chart/multiple-shapes'
@@ -20,46 +19,36 @@ import shapes from '../../bubble-chart/multiple-shapes'
 import pieChart from '../../radial-chart/pie'
 import dendrogramChart from '../../radial-chart/dendrogram'
 import areaBasic from '../../area-chart/basic'
-import twoBarNav from '../../grouped-chart/linebar-linebar-nav/index.js'
+import navigation from '../../grouped-chart/navigation/index.js'
 import twoLineBarOnePieNav from '../../grouped-chart/linebar-pie-nav/index.js'
-// Sankey
 import sankeyChart from '../../sankey-chart'
-
-import groupedChartTemplate from '../template/multiple.tmpl'
-
-const templates = {
-  grouped: groupedChartTemplate
-}
-
 /**
  * structure of an example:
  * 'example title': {
  *   template: 'template id', <= optional
  *   view: instance of chart view <= required
+ *   description: demonstrated features
  * }
  */
 const allExamples = {
   'lineBar': {
     'Legend': {
-      view: legend
+      view: legend,
     },
     'Controls': {
-      view: controls
+      view: controls,
     },
     'Timeline': {
-      view: timeline
+      view: timeline,
     },
     'Tooltips': {
-      view: tooltips
+      view: tooltips,
     },
     'Stacked Bar': {
-      view: stackedBar
+      view: stackedBar,
     },
     'Grouped Bar': {
-      view: groupedBar
-    },
-    'Navigation': {
-      view: navigation
+      view: groupedBar,
     },
     'RequireJS': {
       view: {
@@ -68,34 +57,34 @@ const allExamples = {
       }
     },
     'Live Data': {
-      view: liveData
+      view: liveData,
     }
   },
   'bubble': {
     'Shapes': {
-      view: shapes
+      view: shapes,
     }
   },
   'radial': {
     'Pie Chart': {
-      view: pieChart
+      view: pieChart,
     },
     'Dendrogram': {
-      view: dendrogramChart
+      view: dendrogramChart,
     }
   },
   'area': {
     'Basic': {
-      view: areaBasic
+      view: areaBasic,
     }
   },
   'grouped': {
-    '2 Bar Nav': {
-      template: 'grouped',
-      view: twoBarNav
+    'Navigation': {
+      view: navigation,
+      desc: `Grouped chart with Navigation component for all of them. </br>
+      First line chart is not updated as it is plotted with different values at x axis`,
     },
     '2 LineBar 1 Pie Nav': {
-      template: 'grouped',
       view: twoLineBarOnePieNav
     }
   },
@@ -106,66 +95,69 @@ const allExamples = {
   }
 }
 
+const $content = $('.content')
 const $chartBox = $('#chartBox')
 
 _.forEach(allExamples, (examples, chartCategory) => {
   let $links = $(`#${chartCategory}Links`)
   _.forEach(examples, (example, title) => {
-    var $link = createLink(chartCategory, example.template, example.view, title)
+    example.title = title
+    example.category = chartCategory
+    var $link = createLink(example)
     $links.append($('<li>').append($link))
   })
 })
 
-function _viewRenderInit (templateId, view) {
-  let containerIds = _.isArray(view.container) ? view.container : [view.container]
+function _viewRenderInit ({view, title = '', desc = ''}) {
   let currentView = $chartBox.data('chartView')
   if (currentView) {
     currentView.remove()
-    if (currentView.stopUpdating) {
-      currentView.stopUpdating()
-    }
+    if (currentView.stopUpdating) currentView.stopUpdating()
   }
-  // Cleanup and apply template.
+
+  // Cleanup and apply containers template
+  $content.find('#page-title').text(title)
+  $content.find('#page-description').html(desc)
   $chartBox.empty()
+  // set current view
   $chartBox.data('chartView', view)
-  $chartBox.append(templates[templateId]({
-    groupedChartsWrapperId: view.groupedChartsWrapper,
-    containerIds: containerIds,
-    layoutMeta: view.layoutMeta
-  }))
-  // Render it
   view.render()
 }
 
-function createLink (chartType = '', templateId = 'grouped', view, linkText) {
-  const RJSInitFlag = 'RJSInstantiated'
-  let cleaned = encodeURIComponent(linkText.replace(/\s/g, ''))
-  let $link = $(`<a id="${chartType}${cleaned}" href="#${chartType}${cleaned}"><span class="nav-text">${linkText}</span></a>`)
+function createLink (example) {
+  const chartType = example.category || ''
+  const view = example.view
+  const cleaned = encodeURIComponent(example.title.replace(/\s/g, ''))
+  const link = `<a id="${chartType}${cleaned}" href="#${chartType}${cleaned}">
+    <span class="nav-text">${example.title}</span>
+    </a>`
+  const $link = $(link)
   if (view.type === 'RJS') {
-    $link.click((e) => {
-      if (view.status && view.status === RJSInitFlag) {
-        _viewRenderInit(templateId, view.AMDChartView)
-      } else {
-        // Load the entry point
-        let entryPoint = document.createElement('script')
-        entryPoint.src = 'node_modules/requirejs/require.js'
-        entryPoint.setAttribute('data-main', view.entryPoint)
-        document.body.append(entryPoint)
-        // Once the require entry point load is complete (not just the file load but all dependencies),
-        // the script callback will invoke render callback.
-        window.AMDRenderCB = (RJSChartView) => {
-          view.AMDChartView = RJSChartView
-          view.status = RJSInitFlag
-          _viewRenderInit(templateId, RJSChartView)
-        }
-      }
-    })
+    $link.click(e => _initRJS(example))
   } else {
-    $link.click((e) => {
-      _viewRenderInit(templateId, view)
-    })
+    $link.click(e => _viewRenderInit(example))
   }
   return $link
 }
-const exampleId = window.location.hash || '#grouped2BarNav'
+
+function _initRJS (example) {
+  const RJSInitFlag = 'RJSInstantiated'
+  const view = example.view
+  if (view.status && view.status === RJSInitFlag) {
+    _viewRenderInit(example)
+  } else {
+    // Load the entry point
+    let entryPoint = document.createElement('script')
+    entryPoint.src = 'node_modules/requirejs/require.js'
+    entryPoint.setAttribute('data-main', view.entryPoint)
+    document.body.append(entryPoint)
+    // Once the require entry point load is complete (not just the file load but all dependencies),
+    // the script callback will invoke render callback.
+    window.AMDRenderCB = (RJSChartView) => {
+      example.view = _.extend({status: RJSInitFlag}, view, RJSChartView)
+      _viewRenderInit(example)
+    }
+  }
+}
+const exampleId = window.location.hash || '#groupedNavigation'
 $(exampleId).click()

@@ -44,7 +44,6 @@ export default class CompositeYChartConfigModel extends ContrailChartsConfigMode
       axisPositions: ['left', 'right', 'top', 'bottom'],
       plot: {},
       axis: {},
-      onClick: (data, el, chart) => {},
       // TODO move to the BarChartConfigModel
       // Padding between series in percents of bar width
       barPadding: 15,
@@ -55,6 +54,7 @@ export default class CompositeYChartConfigModel extends ContrailChartsConfigMode
    */
   getScale (name) {
     const axis = this.attributes.axis[name] || {}
+    if (_.isFunction(axis.scale)) return axis.scale
     if (_.isFunction(d3Scale[axis.scale])) return d3Scale[axis.scale]()
     if (['bottom', 'top'].includes(this.getPosition(name))) return d3Scale.scaleTime()
     return d3Scale.scaleLinear()

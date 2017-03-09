@@ -6,6 +6,7 @@ import _ from 'lodash'
 import * as d3Selection from 'd3-selection'
 import * as d3Ease from 'd3-ease'
 import XYChartSubView from 'components/composite-y/XYChartSubView'
+import actionman from 'core/Actionman'
 
 export default class StackedBarChartView extends XYChartSubView {
   get zIndex () { return 1 }
@@ -36,7 +37,8 @@ export default class StackedBarChartView extends XYChartSubView {
     if (_.isEmpty(this.model.data)) return 0
     const paddedPart = 1 - (this.config.get('barPadding') / 2 / 100)
     // TODO do not use model.data.length as there can be gaps
-    return this.innerWidth / this.model.data.length * paddedPart
+    // or fill the gaps in it beforehand
+    return this.outerWidth / this.model.data.length * paddedPart
   }
 
   combineDomains () {
@@ -117,7 +119,7 @@ export default class StackedBarChartView extends XYChartSubView {
   _onMousemove (d, el, event) {
     if (this.config.get('tooltipEnabled')) {
       const [left, top] = d3Selection.mouse(this._container)
-      this._actionman.fire('ShowComponent', d.accessor.tooltip, {left, top}, d.data)
+      actionman.fire('ShowComponent', d.accessor.tooltip, {left, top}, d.data)
     }
     el.classList.add(this.selectorClass('active'))
   }

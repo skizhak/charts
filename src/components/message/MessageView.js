@@ -3,7 +3,9 @@
  */
 import './message.scss'
 import _ from 'lodash'
+import * as d3Selection from 'd3-selection'
 import ContrailChartsView from 'contrail-charts-view'
+import actionman from 'core/Actionman'
 import _template from './message.html'
 import SendMessage from './actions/SendMessage'
 import ClearMessage from './actions/ClearMessage'
@@ -14,7 +16,7 @@ export default class MessageView extends ContrailChartsView {
     super(p)
     this.params.containerList = {}
     this.render()
-    _.each(Actions, action => this._actionman.set(action, this))
+    _.each(Actions, action => actionman.set(action, this))
   }
 
   get selectors () {
@@ -43,8 +45,9 @@ export default class MessageView extends ContrailChartsView {
     let template = this.config.get('template') || _template
 
     if (!this.params.containerList[msgObj.componentId]) {
-      let componentElemD3 = d3.select(`#${msgObj.componentId}`)
+      let componentElemD3 = d3Selection.select(`#${msgObj.componentId}`)
 
+      // TODO el.closest is not supported in IE15
       if (componentElemD3.node() && componentElemD3.node().closest(this.selectors.chart)) {
         this.params.containerList[msgObj.componentId] = componentElemD3
       }
@@ -54,7 +57,8 @@ export default class MessageView extends ContrailChartsView {
 
     if (associatedComponent) {
       if (!associatedComponent.classed(this.selectors.component.substring(1))) {
-        associatedComponent = d3.select(associatedComponent.node().closest(this.selectors.component))
+        // TODO el.closest is not supported in IE15
+        associatedComponent = d3Selection.select(associatedComponent.node().closest(this.selectors.component))
       }
 
       this.d3.remove()
@@ -94,6 +98,6 @@ export default class MessageView extends ContrailChartsView {
 
   remove () {
     super.remove()
-    _.each(Actions, action => this._actionman.unset(action, this))
+    _.each(Actions, action => actionman.unset(action, this))
   }
 }

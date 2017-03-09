@@ -6,6 +6,8 @@ import ContrailChartsView from 'contrail-charts-view'
 import _template from './legend.html'
 
 export default class LegendView extends ContrailChartsView {
+  static get dataType () { return 'Serie' }
+
   constructor (p) {
     super(p)
     this.listenTo(this.config, 'change', this.render)

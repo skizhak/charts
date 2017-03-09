@@ -7,37 +7,28 @@ define([ // eslint-disable-line no-undef
   'lodash',
   'contrail-charts',
 ], function (d3, _, coCharts) {
-  const container = ['requirejs-linebar-chart', 'requirejs-line-chart']
-  const layoutMeta = {
-    'requirejs-linebar-chart': 'col-xs-11 col-md-11',
-    'requirejs-line-chart': 'col-xs-11 col-md-11'
-  }
-
   const data = []
-  _.each(d3.range(100), (i) => {
-    const a = Math.random() * 100
+  _.each(d3.range(100), i => {
+    const a = _.random(0, 100)
     data.push({
       x: 1475760930000 + 1000000 * i,
       a: a,
-      b: a + Math.random() * 10,
-      c: Math.random() * 100,
-      d: i + (Math.random() - 0.5) * 10,
-      e: (Math.random() - 0.5) * 10
+      b: a + _.random(0, 10),
+      c: _.random(0, 100),
+      d: i + _.random(-10, 10),
+      e: _.random(-10, 10),
     })
   })
 
-  // Most basic chart.
-  const lineData = [
-    { x: 1475760930000, y: 0 },
-    { x: 1475761930000, y: 3 },
-    { x: 1475762930000, y: 2 },
-    { x: 1475763930000, y: 4 },
-    { x: 1475764930000, y: 5 }
-  ]
+  const template = _.template(
+  `<div component="chart-id1"></div>
+   <div component="chart-id2"></div>`)
 
   const chartConfig = {
-    id: container[0],
+    id: 'chartBox',
+    template,
     components: [{
+      id: 'chart-id1',
       type: 'CompositeYChart',
       config: {
         marginInner: 10,
@@ -93,7 +84,6 @@ define([ // eslint-disable-line no-undef
           ]
         },
         axis: {
-          x: {},
           y1: {
             position: 'left',
             formatter: (value) => value.toFixed(0),
@@ -126,12 +116,8 @@ define([ // eslint-disable-line no-undef
           }
         ]
       }
-    }]
-  }
-
-  const lineChartConfig = {
-    id: container[1],
-    components: [{
+    }, {
+      id: 'chart-id2',
       type: 'CompositeYChart',
       config: {
         marginInner: 10,
@@ -147,9 +133,8 @@ define([ // eslint-disable-line no-undef
           y: [
             {
               enabled: true,
-              accessor: 'y',
+              accessor: 'e',
               chart: 'LineChart',
-              axis: 'y',
             }
           ]
         }
@@ -157,21 +142,15 @@ define([ // eslint-disable-line no-undef
     }]
   }
 
-  const chartView = new coCharts.charts.XYChartView()
-  const lineChartView = new coCharts.charts.XYChartView()
+  const chart = new coCharts.ChartView()
 
   return {
-    container: container,
-    layoutMeta: layoutMeta,
     render: function () {
-      chartView.setConfig(chartConfig)
-      lineChartView.setConfig(lineChartConfig)
-      chartView.setData(data)
-      lineChartView.setData(lineData)
+      chart.setConfig(chartConfig)
+      chart.setData(data)
     },
     remove: () => {
-      chartView.remove()
-      lineChartView.remove()
+      chart.remove()
     }
   }
 })

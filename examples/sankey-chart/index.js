@@ -1,17 +1,12 @@
 /*
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
-import {charts} from 'coCharts'
-import flowData from './data.json'
+import {ChartView} from 'coCharts'
 import * as d3Scale from 'd3-scale'
-
-const container = 'sankey-chart'
-const layoutMeta = {
-  [container]: 'col-md-12'
-}
+import flowData from './data.json'
 
 const chartConfig = {
-  id: container,
+  id: 'chartBox',
   components: [{
     id: 'sankey-chart-component',
     type: 'Sankey',
@@ -95,11 +90,9 @@ const chartConfig = {
   }]
 }
 
-const chartView = new charts.RadialChartView()
+const chartView = new ChartView()
 
 export default {
-  container: container,
-  layoutMeta: layoutMeta,
   render: () => {
     chartView.setConfig(chartConfig)
     chartView.setData(flowData.data)

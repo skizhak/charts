@@ -2,7 +2,7 @@
 
 import './tooltip.scss'
 import ContrailChartsView from 'contrail-charts-view'
-import TitleView from 'plugins/title/TitleView'
+import TitleView from 'helpers/title/TitleView'
 import _template from './tooltip.html'
 
 export default class TooltipView extends ContrailChartsView {

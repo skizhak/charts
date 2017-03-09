@@ -11,6 +11,7 @@ import * as d3Shape from 'd3-shape'
 import * as d3Ease from 'd3-ease'
 import * as d3Scale from 'd3-scale'
 import XYChartSubView from 'components/composite-y/XYChartSubView'
+import actionman from 'core/Actionman'
 
 export default class LineChartView extends XYChartSubView {
   get zIndex () { return 3 }
@@ -91,7 +92,7 @@ export default class LineChartView extends XYChartSubView {
       const xAccessor = this.params.plot.x.accessor
       const xVal = this.xScale.invert(left)
       const dataItem = this.model.getNearest(xAccessor, xVal)
-      this._actionman.fire('ShowComponent', d.accessor.tooltip, {left, top}, dataItem)
+      actionman.fire('ShowComponent', d.accessor.tooltip, {left, top}, dataItem)
     }
     el.classList.add(this.selectorClass('active'))
   }

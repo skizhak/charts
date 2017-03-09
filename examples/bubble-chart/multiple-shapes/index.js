@@ -1,7 +1,7 @@
 /*
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
-import {charts} from 'coCharts'
+import {ChartView} from 'coCharts'
 import {formatter, _c, fixture} from 'commons'
 
 const data = fixture({
@@ -20,13 +20,8 @@ const data = fixture({
 const colorScheme = _c.bubbleColorScheme6
 const bubbleShapes = _c.bubbleShapes
 
-const container = 'multi-shape-bubble'
-const layoutMeta = {
-  [container]: 'col-md-11'
-}
-
 const chartConfig = {
-  id: container,
+  id: 'chartBox',
   components: [{
     type: 'LegendPanel',
     config: {
@@ -104,7 +99,8 @@ const chartConfig = {
         shape: bubbleShapes.circleFill,
         color: '#ff7f0e',
         tooltip: 'tooltip-bucket',
-      }
+      },
+      updateComponents: ['navigation-id'],
     }
   }, {
     id: 'tooltip-id',
@@ -147,6 +143,7 @@ const chartConfig = {
       },
     },
   }, {
+    id: 'navigation-id',
     type: 'Navigation',
     config: {
       marginInner: 5,
@@ -176,11 +173,9 @@ const chartConfig = {
   }]
 }
 
-const chartView = new charts.XYChartView()
+const chartView = new ChartView()
 
 export default {
-  container: container,
-  layoutMeta: layoutMeta,
   render: () => {
     chartView.setConfig(chartConfig)
     chartView.setData(data)

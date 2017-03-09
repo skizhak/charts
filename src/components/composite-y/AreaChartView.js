@@ -8,6 +8,7 @@ import * as d3Shape from 'd3-shape'
 import * as d3Ease from 'd3-ease'
 import * as d3Array from 'd3-array'
 import XYChartSubView from 'components/composite-y/XYChartSubView'
+import actionman from 'core/Actionman'
 
 export default class AreaChartView extends XYChartSubView {
   get zIndex () { return 2 }
@@ -104,7 +105,7 @@ export default class AreaChartView extends XYChartSubView {
       const xAccessor = this.params.plot.x.accessor
       const xVal = this.xScale.invert(left)
       const dataItem = this.model.getNearest(xAccessor, xVal)
-      this._actionman.fire('ShowComponent', tooltipId, {left, top}, dataItem)
+      actionman.fire('ShowComponent', tooltipId, {left, top}, dataItem)
     }
     el.classList.add(this.selectorClass('active'))
   }

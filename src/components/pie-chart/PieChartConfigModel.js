@@ -19,11 +19,6 @@ export default class PieChartConfigModel extends ContrailChartsConfigModel {
       colorScheme: d3Scale.schemeCategory20,
       // default we're keeping colorScale as undefined. during init, we will set it to ordinal scale of colorScheme. If set, this has precedence over scheme.
       colorScale: undefined,
-
-      onClick: (data, el, chart) => {},
-
-      // Boolean to enable/disable default pointer cursor. You may pass in custom cursor.
-      onClickCursor: false,
     }
   }
 

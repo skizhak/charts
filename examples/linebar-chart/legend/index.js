@@ -1,7 +1,7 @@
 /*
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
-import {charts} from 'coCharts'
+import {ChartView} from 'coCharts'
 import {formatter, fixture} from 'commons'
 
 const length = 100
@@ -17,13 +17,8 @@ const data = fixture({
   },
 })
 
-const container = 'chart-legend'
-const layoutMeta = {
-  [container]: 'col-xs-12'
-}
-
 const chartConfig = {
-  id: container,
+  id: 'chartBox',
   components: [{
     type: 'LegendPanel',
     config: {
@@ -59,7 +54,7 @@ const chartConfig = {
       plot: {
         x: {
           accessor: 'x',
-          labelFormatter: 'Time',
+          labelFormatter: 'X Values',
           axis: 'x'
         },
         y: [
@@ -94,7 +89,7 @@ const chartConfig = {
             tooltip: 'default-tooltip',
           }, {
             accessor: 'e',
-            labelFormatter: 'E',
+            labelFormatter: 'Label E',
             color: '#9467bd',
             enabled: true,
             chart: 'LineChart',
@@ -105,7 +100,7 @@ const chartConfig = {
       },
       axis: {
         x: {
-          formatter: formatter.extendedISOTime,
+          scale: 'scaleLinear',
         },
         y1: {
           position: 'left',
@@ -130,7 +125,7 @@ const chartConfig = {
       plot: {
         x: {
           accessor: 'x',
-          labelFormatter: 'Time',
+          labelFormatter: 'X Values',
           axis: 'x',
         },
         y: [
@@ -157,6 +152,7 @@ const chartConfig = {
       },
       axis: {
         x: {
+          scale: 'scaleLinear',
         },
         y1: {
           position: 'left',
@@ -176,7 +172,6 @@ const chartConfig = {
     config: {
       title: {
         accessor: 'x',
-        valueFormatter: formatter.extendedISOTime,
       },
       dataConfig: [
         {
@@ -217,15 +212,13 @@ const chartConfig = {
   }]
 }
 
-const chartView = new charts.XYChartView()
+const chart = new ChartView()
 
 export default {
-  container: container,
-  layoutMeta: layoutMeta,
   render: () => {
-    chartView.setConfig(chartConfig)
-    chartView.setData(data)
-    chartView.renderMessage({
+    chart.setConfig(chartConfig)
+    chart.setData(data)
+    chart.renderMessage({
       componentId: 'compositey-chart-id',
       action: 'once',
       messages: [{
@@ -244,6 +237,6 @@ export default {
     })
   },
   remove: () => {
-    chartView.remove()
+    chart.remove()
   }
 }

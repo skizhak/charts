@@ -1,21 +1,17 @@
 /*
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
-import {charts} from 'coCharts'
+import {ChartView} from 'coCharts'
 import {formatter, fixture} from 'commons'
+import template from './template.html'
 
 const data = fixture()
 
-const container = ['chart-tooltip-1', 'chart-tooltip-2']
-const layoutMeta = {
-  'chart-tooltip-1': 'col-md-11',
-  'chart-tooltip-2': 'col-md-11'
-}
-
-const chartConfig1 = {
-  id: container[0],
+const chartConfig = {
+  id: 'chartBox',
+  template,
   components: [{
-    id: 'compositey-id-1',
+    id: 'compositey-id1',
     type: 'CompositeYChart',
     config: {
       marginInner: 10,
@@ -101,13 +97,8 @@ const chartConfig1 = {
     config: {
       template: (data) => '<div class="tooltip-content">Custom tooltip</div>',
     }
-  }]
-}
-
-const chartConfig2 = {
-  id: container[1],
-  components: [{
-    id: 'compositey-id-2',
+  }, {
+    id: 'compositey-id2',
     type: 'CompositeYChart',
     config: {
       marginInner: 10,
@@ -147,7 +138,7 @@ const chartConfig2 = {
     id: 'sticky-tooltip',
     type: 'Tooltip',
     config: {
-      sourceComponent: 'compositey-id-2',
+      sourceComponent: 'compositey-id2',
       sticky: true,
       dataConfig: [
         {
@@ -164,20 +155,14 @@ const chartConfig2 = {
   }]
 }
 
-const chart1 = new charts.XYChartView()
-const chart2 = new charts.XYChartView()
+const chart = new ChartView()
 
 export default {
-  container: container,
-  layoutMeta: layoutMeta,
   render: () => {
-    chart1.setConfig(chartConfig1)
-    chart1.setData(data)
-    chart2.setConfig(chartConfig2)
-    chart2.setData(data)
+    chart.setConfig(chartConfig)
+    chart.setData(data)
   },
   remove: () => {
-    chart1.remove()
-    chart2.remove()
+    chart.remove()
   }
 }

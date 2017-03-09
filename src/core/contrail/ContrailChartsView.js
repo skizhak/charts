@@ -1,6 +1,7 @@
 /*
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
+import _ from 'lodash'
 import * as d3Selection from 'd3-selection'
 import ContrailView from 'contrail-view'
 /**
@@ -12,7 +13,6 @@ export default class ContrailChartsView extends ContrailView {
     this._id = p.id
     this.d3.attr('id', this.id)
     this.config = p.config
-    this._actionman = p.actionman
     this._order = p.order
     this._container = p.container
     this.params = {}
@@ -25,6 +25,12 @@ export default class ContrailChartsView extends ContrailView {
       svgWrapper: '.svg-wrapper',
       svg: '.cc-svg',
       sharedSvg: '.shared-svg',
+    }
+  }
+
+  get events () {
+    return {
+      [`click ${this.selectors.node}`]: '_onClickNode',
     }
   }
 
@@ -131,11 +137,11 @@ export default class ContrailChartsView extends ContrailView {
       this._container = container
       this.render()
     }
-    this.$el.show()
+    this.d3.classed('hide', false)
   }
 
   hide () {
-    this.$el.hide()
+    this.d3.classed('hide', true)
   }
   /**
    * Stop listening to config and model. Remove the view from the dom.
@@ -145,13 +151,6 @@ export default class ContrailChartsView extends ContrailView {
     if (this.model) this.stopListening(this.model)
     this.params = {}
     super.remove()
-  }
-  /**
-   * In frozen state View ignores Model Data change
-   * @param {Boolean} isFrozen change state to
-   */
-  set frozen (isFrozen) {
-    this._frozen = !!isFrozen
   }
   /**
    * First component which uses shared svg container appends svg element to container
@@ -204,10 +203,17 @@ export default class ContrailChartsView extends ContrailView {
     }
   }
 
+  // Event handlers
+
   _onResize () {
     if (!this._ticking) {
       window.requestAnimationFrame(this.render.bind(this))
       this._ticking = true
     }
+  }
+
+  _onClickNode (d, el) {
+    const cb = this.config.get('onClickNode')
+    if (_.isFunction(cb)) cb(d.data)
   }
 }

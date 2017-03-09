@@ -8,15 +8,18 @@ import * as d3Axis from 'd3-axis'
 import * as d3Array from 'd3-array'
 import * as d3TimeFormat from 'd3-time-format'
 import ContrailChartsView from 'contrail-charts-view'
+import actionman from 'core/Actionman'
 import LineChartView from 'components/composite-y/LineChartView'
 import AreaChartView from 'components/composite-y/AreaChartView'
 import BarChartView from 'components/composite-y/GroupedBarChartView'
 import StackedBarChartView from 'components/composite-y/StackedBarChartView'
 import ScatterPlotView from 'components/composite-y/ScatterPlotView'
 import CompositeYChartConfigModel from 'components/composite-y/CompositeYChartConfigModel'
-import TitleView from 'plugins/title/TitleView'
+import TitleView from 'helpers/title/TitleView'
 
 export default class CompositeYChartView extends ContrailChartsView {
+  static get dataType () { return 'DataFrame' }
+
   constructor (p) {
     super(p)
     this._drawings = []
@@ -46,18 +49,15 @@ export default class CompositeYChartView extends ContrailChartsView {
   get xMarginInner () {
     return this.config.get('marginInner') + this.params.xMarginInner
   }
+  /**
+   * @return {String} id of element to clip the visible area
+   */
+  get clip () {
+    return 'rect-clipPath-' + this.id
+  }
 
   refresh () {
     this.config.trigger('change', this.config)
-  }
-
-  changeModel (model) {
-    this.stopListening(this.model)
-    this.model = model
-    this.listenTo(this.model, 'change', this.render)
-    _.each(this._drawings, drawing => (drawing.model = model))
-
-    this.render()
   }
 
   render () {
@@ -76,7 +76,7 @@ export default class CompositeYChartView extends ContrailChartsView {
     _.each(this._drawings, drawing => drawing.render())
 
     const crosshairId = this.config.get('crosshair')
-    if (crosshairId) this._actionman.fire('HideComponent', crosshairId)
+    if (crosshairId) actionman.fire('HideComponent', crosshairId)
 
     this._ticking = false
   }
@@ -92,7 +92,7 @@ export default class CompositeYChartView extends ContrailChartsView {
     const crosshairId = this.config.get('crosshair')
     const data = this.getCrosshairData(point)
     const config = this.getCrosshairConfig()
-    this._actionman.fire('ShowComponent', crosshairId, data, point, config)
+    actionman.fire('ShowComponent', crosshairId, data, point, config)
 
     // reset the tick so we can capture the next handler
     this._ticking = false
@@ -198,12 +198,12 @@ export default class CompositeYChartView extends ContrailChartsView {
         }
       }
       if (!_.isFunction(axis.scale) && axis.range) {
-        let scale = this.config.getScale(axisName)
-        if (this.hasAxisParam(axisName, 'nice') && axis.nice) {
+        const scale = this.config.getScale(axisName)
+        if (axis.nice) {
           if (this.hasAxisParam(axisName, 'ticks')) {
-            scale = axis.scale.nice(axis.ticks)
+            scale.nice(axis.ticks)
           } else {
-            scale = axis.scale.nice()
+            scale.nice()
           }
         }
         scale.domain(axis.domain)
@@ -219,7 +219,7 @@ export default class CompositeYChartView extends ContrailChartsView {
     })
   }
   /**
-   * shrink x and y axises range to have margin for displaying of shapes sticking out of scale
+   * shrink x and y axes range to have margin for displaying of shapes sticking out of scale
    */
   adjustAxisMargin () {
     let sizeMargin = 0
@@ -243,10 +243,9 @@ export default class CompositeYChartView extends ContrailChartsView {
    */
   renderSVG () {
     const translate = this.params.xRange[0] - this.xMarginInner
-    this.params.rectClipPathId = 'rect-clipPath-' + this.cid
     if (this.d3.select('clipPath').empty()) {
       this.d3.append('clipPath')
-        .attr('id', this.params.rectClipPathId)
+        .attr('id', this.clip)
         .append('rect')
         .attr('x', this.params.xRange[0] - this.xMarginInner)
         .attr('y', this.params.yRange[1] - this.params.marginInner)
@@ -259,7 +258,7 @@ export default class CompositeYChartView extends ContrailChartsView {
     // TODO merge with previous as enter / update
     // Handle (re)size.
     this.d3
-      .select('#' + this.params.rectClipPathId).select('rect')
+      .select('#' + this.clip).select('rect')
       .attr('x', this.params.xRange[0] - this.xMarginInner)
       .attr('y', this.params.yRange[1] - this.params.marginInner)
       .attr('width', this.params.xRange[1] - this.params.xRange[0] + 2 * this.xMarginInner)
@@ -469,6 +468,17 @@ export default class CompositeYChartView extends ContrailChartsView {
     return data
   }
   /**
+   * Zooming by x scale
+   * Works only with components which triggers Zoom action which have the same x accessor
+   * Works only with incremental values at x scale, as range is set as min / max values for x scale
+   * There is no option to set zoomed range by exact position at x scale (start / end)
+   */
+  zoom ({accessor, range}) {
+    if (this.config.attributes.plot.x.accessor !== accessor) return
+    _.set(this.config, 'attributes.axis.x.domain', range)
+    this.config.trigger('change', this.config)
+  }
+  /**
   * Update the drawings array based on the plot.y.
   */
   _updateChildDrawings () {
@@ -502,7 +512,6 @@ export default class CompositeYChartView extends ContrailChartsView {
                 config: compositeYConfig,
                 container: this._container,
                 parent: this,
-                actionman: this._actionman,
               })
               this._drawings.push(foundDrawing)
             }

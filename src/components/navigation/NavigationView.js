@@ -4,15 +4,16 @@
 import _ from 'lodash'
 import ContrailChartsView from 'contrail-charts-view'
 import CompositeYChartView from 'components/composite-y/CompositeYChartView'
-import BrushView from 'components/brush/BrushView'
-import BrushConfigModel from 'components/brush/BrushConfigModel'
+import actionman from 'core/Actionman'
+import BrushView from 'helpers/brush/BrushView'
+import BrushConfigModel from 'helpers/brush/BrushConfigModel'
 import CompositeYChartConfigModel from 'components/composite-y/CompositeYChartConfigModel'
-import Selection from 'handlers/Selection'
 
 export default class NavigationView extends ContrailChartsView {
+  static get dataType () { return 'DataFrame' }
+
   constructor (p) {
     super(p)
-    this._selection = new Selection(this.model.data)
     this._brush = new BrushView({
       config: new BrushConfigModel({
         isSharedContainer: true,
@@ -63,6 +64,14 @@ export default class NavigationView extends ContrailChartsView {
     window.removeEventListener('resize', this._onResize)
   }
 
+  zoom ({accessor, range}) {
+    const sScale = this.config.get('selectionScale')
+    let visualMin = this.params.xScale(range[0])
+    let visualMax = this.params.xScale(range[1])
+    this.config.set('selection', [sScale.invert(visualMin), sScale.invert(visualMax)], {silent: true})
+    this._update()
+  }
+
   prevChunkSelected () {
     const range = this.model.getRange()
     const x = this.params.xAccessor
@@ -86,7 +95,6 @@ export default class NavigationView extends ContrailChartsView {
   // Event handlers
 
   _onModelChange () {
-    this._selection.data = this.model.data
     this.render()
   }
 
@@ -102,8 +110,8 @@ export default class NavigationView extends ContrailChartsView {
     if (_.isDate(xMin)) xMin = xMin.getTime()
     if (_.isDate(xMax)) xMax = xMax.getTime()
 
-    this._selection.filter(xAccessor, [xMin, xMax])
-    this._actionman.fire('ChangeSelection', this._selection, this.config.get('onChangeSelection'))
+    const data = {accessor: xAccessor, range: [xMin, xMax]}
+    actionman.fire('Zoom', this.config.get('updateComponents'), data)
   }
   /**
    * Turn off selection for the animation period on resize

@@ -2,7 +2,7 @@
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
 import _ from 'lodash'
-import Events from 'contrail-charts-events'
+import Events from 'contrail-events'
 /**
  * A "Command" object
  * @event enable
@@ -18,13 +18,6 @@ export default class Action {
     if (!_.includes(instance.registrars, p.registrar)) instance.registrars.push(p.registrar)
 
     instance._deny = true
-
-    /**
-     * Action may be registered to multiple registrars.
-     * This will restrict triggering action only on to registrar which action manager registered to
-     */
-    instance._triggerAll = false
-
     return instance
   }
   /**
@@ -36,23 +29,17 @@ export default class Action {
   /**
    * Execute the action code
    */
-  apply (actionManId, ...args) {
+  apply (...args) {
     if (this._deny) return undefined
 
     if (this._execute) {
-      if (this._triggerAll) {
-        _.each(this.registrars, registrar => {
-          this._registrar = registrar
-          this._execute(...args)
-          this._registrar = undefined
-        })
-      } else {
-        this._registrar = _.find(this.registrars, registrar => registrar._actionman.id === actionManId)
+      _.each(this.registrars, registrar => {
+        this._registrar = registrar
         this._execute(...args)
         this._registrar = undefined
-      }
+      })
     }
-    return undefined
+    this.trigger('fired', ...args)
   }
   /**
    * Changes enable/disable state
@@ -65,7 +52,6 @@ export default class Action {
   }
   /**
    * Changes enable/disable state
-   * Notifies "enable" Event
    * Notifies "enable" Event
    */
   enable () {
@@ -91,13 +77,13 @@ export default class Action {
   }
   /**
    * Remove registrar from action's registrars list
+   * Clear all listeners if there are no registrars left
    * @param registrar
    */
   unRegister (registrar) {
     const instance = instances[this.id]
-    if (_.includes(instance.registrars, registrar)) {
-      _.remove(instance.registrars, r => r.el.id === registrar.el.id)
-    }
+    instance.registrars = _.without(instance.registrars, registrar)
+    if (_.isEmpty(instances.registrars)) this.off()
   }
   /**
    * Override in Concrete Command
@@ -113,3 +99,5 @@ export default class Action {
 }
 // TODO replace with class extends syntax
 _.extend(Action.prototype, Events)
+
+module.exports = Action

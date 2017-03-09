@@ -4,20 +4,11 @@
 import _ from 'lodash'
 import Events from 'contrail-charts-events'
 /**
- * Action Manager
+ * Action Manager - Singleton
  */
-export default class Actionman {
+class Actionman {
   constructor () {
-    this._id = undefined
     this._instances = {}
-  }
-
-  set id (id) {
-    this._id = id
-  }
-
-  get id () {
-    return this._id
   }
 
   get (id) {
@@ -69,9 +60,11 @@ export default class Actionman {
     const action = this._instances[actionName]
 
     if (!_.isNil(action)) {
-      action.apply(this.id, ...args)
+      action.apply(...args)
     }
   }
 }
 // TODO replace with class extends syntax
 _.extend(Actionman.prototype, Events)
+let actionman = new Actionman()
+export default actionman

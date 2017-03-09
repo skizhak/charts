@@ -5,9 +5,11 @@ import _ from 'lodash'
 import * as d3Selection from 'd3-selection'
 import * as d3Shape from 'd3-shape'
 import ContrailChartsView from 'contrail-charts-view'
-import TitleView from 'plugins/title/TitleView'
+import actionman from 'core/Actionman'
 
 export default class PieChartView extends ContrailChartsView {
+  static get dataType () { return 'Serie' }
+
   constructor (p = {}) {
     super(p)
     this._highlightRadius = 10
@@ -29,32 +31,23 @@ export default class PieChartView extends ContrailChartsView {
     return _.extend(super.selectors, {
       node: '.arc',
       active: '.active',
-      click: '.click'
     })
   }
   get events () {
-    return {
+    return _.extend(super.events, {
       [`mousemove ${this.selectors.node}`]: '_onMousemove',
       [`mouseout ${this.selectors.node}`]: '_onMouseout',
-      [`click ${this.selectors.node}`]: '_onClick',
-    }
-  }
-
-  changeModel (model) {
-    this.stopListening(this.model)
-    this.model = model
-    this.listenTo(this.model, 'change', this.render)
+    })
   }
 
   render () {
     this.resetParams()
-    if (this.params.title) TitleView(this._container, this.params.title)
     this._calculateDimensions()
     super.render()
     this._onMouseout()
     const serieConfig = this.config.get('serie')
     const radius = this.config.get('radius')
-    const data = this.model.get('data')
+    const data = this.model.data
 
     const arc = d3Shape.arc()
       .outerRadius(radius)
@@ -107,19 +100,19 @@ export default class PieChartView extends ContrailChartsView {
     }
 
     el.classList.add(this.selectorClass('active'))
-    this._actionman.fire('ShowComponent', this.config.get('tooltip'), {left, top}, d.data)
+    actionman.fire('ShowComponent', this.config.get('tooltip'), {left, top}, d.data)
   }
 
   _onMouseout (d, el) {
     if (this.config.get('onClickCursor') && el) el.classList.remove(this.selectorClass('click'))
 
-    this._actionman.fire('HideComponent', this.config.get('tooltip'))
+    actionman.fire('HideComponent', this.config.get('tooltip'))
     const els = el ? this.d3.select(() => el) : this.d3.selectAll(this.selectors.node)
     els.classed('active', false)
   }
 
-  _onClick (d, el) {
+  _onClickNode (d, el) {
     el.classList.remove(this.selectorClass('active'))
-    this._actionman.fire('OnClick', d.data, el, this.config.get('onClick'))
+    this.config.get('onClickNode')(d.data)
   }
 }

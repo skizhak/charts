@@ -2,13 +2,12 @@
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
 import _ from 'lodash'
-import Action from '../plugins/Action'
+import Action from '../core/Action'
 
 export default class SelectSerie extends Action {
   constructor (p) {
     super(p)
     this._deny = false
-    this._triggerAll = false
   }
 
   _execute (accessorName, isSelected) {
@@ -39,8 +38,6 @@ export default class SelectSerie extends Action {
       const levels = radialDendrogram.config.get('levels')
       const level = _.find(levels, (level) => level.level === accessorName)
       if (level) {
-        //level.enabled = isSelected
-        //radialDendrogram.config.trigger('change', radialDendrogram.config)
         let drillDownLevel = isSelected ? level.level + 1 : level.level
         if (drillDownLevel < 1) {
           drillDownLevel = 1

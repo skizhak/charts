@@ -1,7 +1,7 @@
 /*
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
-import {charts} from 'coCharts'
+import {ChartView} from 'coCharts'
 import {formatter} from 'commons'
 
 // Complex example
@@ -18,13 +18,8 @@ for (let i = 0; i < 100; i++) {
   })
 }
 
-const container = 'chart-control-panel'
-const layoutMeta = {
-  [container]: 'col-md-11'
-}
-
 const chartConfig = {
-  id: container,
+  id: 'chartBox',
   components: [{
     id: 'control-panel-id',
     type: 'ControlPanel',
@@ -129,16 +124,14 @@ const chartConfig = {
   }]
 }
 
-const chartView = new charts.XYChartView()
+const chart = new ChartView()
 
 export default {
-  container: container,
-  layoutMeta: layoutMeta,
   render: () => {
-    chartView.setConfig(chartConfig)
-    chartView.setData(complexData)
+    chart.setConfig(chartConfig)
+    chart.setData(complexData)
   },
   remove: () => {
-    chartView.remove()
+    chart.remove()
   }
 }

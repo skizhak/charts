@@ -7,19 +7,24 @@ import 'd3-transition'
 import * as d3Selection from 'd3-selection'
 import * as d3Ease from 'd3-ease'
 import XYChartSubView from 'components/composite-y/XYChartSubView'
-import BucketConfigModel from 'components/bucket/BucketConfigModel'
-import BucketView from 'components/bucket/BucketView'
+import BucketConfigModel from 'helpers/bucket/BucketConfigModel'
+import BucketView from 'helpers/bucket/BucketView'
+import actionman from 'core/Actionman'
 
 export default class ScatterPlotView extends XYChartSubView {
   constructor (p) {
     super(p)
-    if (this.config.get('bucket')) {
-      this._bucketConfig = new BucketConfigModel(this.config.get('bucket'))
-      this._bucketConfig.set('duration', this.config.get('duration'))
+    const bucketConfig = this.config.get('bucket')
+    if (bucketConfig) {
+      this._bucketConfigModel = new BucketConfigModel(bucketConfig)
+      this._bucketConfigModel.set('clip', this._parent.clip)
+      this._bucketConfigModel.parent = this.config
       this._bucketView = new BucketView({
-        config: this._bucketConfig,
+        config: this._bucketConfigModel,
         actionman: this._actionman,
       })
+      const updateComponents = _.concat([this._parent.id], this.config.get('updateComponents'))
+      this.config.set('updateComponents', updateComponents, {silent: true})
     }
   }
 
@@ -118,7 +123,7 @@ export default class ScatterPlotView extends XYChartSubView {
   _onMouseover (d, el, event) {
     if (this.config.get('tooltipEnabled')) {
       const [left, top] = d3Selection.mouse(this._container)
-      this._actionman.fire('ShowComponent', d.accessor.tooltip, {left, top}, d.data)
+      actionman.fire('ShowComponent', d.accessor.tooltip, {left, top}, d.data)
     }
     el.classList.add(this.selectorClass('active'))
   }

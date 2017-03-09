@@ -3,4 +3,4 @@
  */
 
 export {default as SerieProvider} from './SerieProvider'
-export {default as DataProvider} from './DataProvider'
+export {default as DataFrameProvider} from './DataFrameProvider'
