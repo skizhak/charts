@@ -56,6 +56,7 @@ const chartConfig = {
       axis: {
         x: {
           scale: 'scaleLinear',
+          label: 'X',
         },
         y: {
           ticks: 10,
@@ -96,6 +97,7 @@ const chartConfig = {
       axis: {
         x: {
           scale: 'scaleLinear',
+          label: 'X',
         },
         y: {
           ticks: 10,
@@ -120,12 +122,14 @@ const chartConfig = {
           {
             enabled: true,
             accessor: 'a',
+            label: 'Label A',
             chart: 'AreaChart',
             axis: 'y',
             color: colorScheme[2],
           }, {
             enabled: true,
             accessor: 'c',
+            label: 'Label C',
             chart: 'AreaChart',
             stack: 'negative',
             axis: 'y',
@@ -136,6 +140,7 @@ const chartConfig = {
       axis: {
         x: {
           scale: 'scaleLinear',
+          label: 'X',
         },
         y: {
           ticks: 10,
@@ -153,19 +158,21 @@ const chartConfig = {
       chartHeight: 300,
       plot: {
         x: {
-          accessor: 'x',
+          accessor: 'd',
           axis: 'x',
         },
         y: [
           {
             enabled: true,
             accessor: 'a',
+            label: 'Label A',
             chart: 'LineChart',
             axis: 'y',
             color: colorScheme[2],
           }, {
             enabled: true,
             accessor: 'c',
+            label: 'Label C',
             chart: 'LineChart',
             axis: 'y',
             color: colorScheme[4],
@@ -175,6 +182,8 @@ const chartConfig = {
       axis: {
         x: {
           scale: 'scaleLinear',
+          label: 'D',
+          ticks: 8,
         },
         y: {
           ticks: 10,
@@ -194,11 +203,11 @@ const chartConfig = {
         x: {
           accessor: 'x',
           axis: 'x',
-          label: 'Linear values',
+          label: 'X',
         },
         y: [
           {
-            accessor: 'd',
+            accessor: 'a',
             label: 'Label D',
             enabled: true,
             color: colorScheme[2],

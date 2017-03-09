@@ -80,7 +80,8 @@ const allExamples = {
   'grouped': {
     'Navigation': {
       view: navigation,
-      desc: `Grouped chart with Navigation component for all of them`,
+      desc: `Grouped chart with Navigation component for all of them. </br>
+      First line chart is not updated as it is plotted with different values at x axis`,
     },
     '2 LineBar 1 Pie Nav': {
       view: twoLineBarOnePieNav
@@ -110,7 +111,7 @@ function _viewRenderInit ({view, title = '', desc = ''}) {
 
   // Cleanup and apply containers template
   $content.find('#page-title').text(title)
-  $content.find('#page-description').text(desc)
+  $content.find('#page-description').html(desc)
   $chartBox.empty()
   // set current view
   $chartBox.data('chartView', view)
