@@ -51,23 +51,32 @@ export default (env = defaultEnv) => {
    *  1. in amd, use d3 to point to older version and use d3v4 to point to version 4
    *  2. other cases, use library bundled with the d3 v4 modules. build library with 'npm run build:lib:withD3'
    *     use the built contrail-charts.bundle.js or min file
-   *  Note: updating d3 specific module, update package.json run target build:lib:withD3
+   *
+   *  Note: updating d3 specific module which are not dependencies, update d3Libs. d3Libs is used to track externals.
+   *  When we need a build with all d3 packages set include env 'd3-all' or pass individual library name to be included.
    */
+  let d3Libs = ['d3', 'd3-selection', 'd3-scale', 'd3-shape', 'd3-array', 'd3-axis', 'd3-ease', 'd3-brush',
+    'd3-time-format', 'd3-hierarchy']
+
   const externals = {
     'jquery': {amd: 'jquery', root: 'jQuery'},
-    'd3': {amd: 'd3v4', root: 'd3'},
-    'd3-selection': {amd: 'd3v4', root: 'd3'},
-    'd3-scale': {amd: 'd3v4', root: 'd3'},
-    'd3-shape': {amd: 'd3v4', root: 'd3'},
-    'd3-array': {amd: 'd3v4', root: 'd3'},
-    'd3-axis': {amd: 'd3v4', root: 'd3'},
-    'd3-ease': {amd: 'd3v4', root: 'd3'},
-    'd3-brush': {amd: 'd3v4', root: 'd3'},
-    'd3-time-format': {amd: 'd3v4', root: 'd3'},
-    'd3-hierarchy': {amd: 'd3v4', root: 'd3'},
     'lodash': {amd: 'lodash', root: '_'},
     'backbone': {amd: 'backbone', root: 'Backbone'},
   }
+
+  // For every library added in the include env, we will remove from d3Libs.
+  if (env.include) {
+    const d3Include = env.include.split(',')
+    d3Libs = d3Libs.filter(lib => {
+      return d3Include.indexOf(lib) === -1 && d3Include.indexOf('d3-all') === -1
+    })
+    // Will append .bundle to the output file name.
+    fileName = `${fileName}.bundle`
+  }
+
+  d3Libs.forEach(d3Lib => {
+    externals[d3Lib] = {amd: 'd3v4', root: 'd3'}
+  })
 
   if (env.prod) {
     plugins.push(new UglifyJSPlugin({
@@ -82,14 +91,6 @@ export default (env = defaultEnv) => {
     }))
   }
 
-  // For every library added in the include env, we will remove from externals.
-  if (env.include) {
-    env.include.split(',').forEach((lib) => {
-      delete externals[lib.trim()]
-    })
-    // Will append .bundle to the output file name.
-    fileName = `${fileName}.bundle`
-  }
   // Let's put css under css directory.
   plugins.push(new ExtractTextPlugin(fileName + '.css'))
 

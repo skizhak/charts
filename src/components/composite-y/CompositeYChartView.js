@@ -60,15 +60,6 @@ export default class CompositeYChartView extends ContrailChartsView {
     this.config.trigger('change', this.config)
   }
 
-  changeModel (model) {
-    this.stopListening(this.model)
-    this.model = model
-    this.listenTo(this.model, 'change', this.render)
-    _.each(this._drawings, drawing => (drawing.model = model))
-
-    this.render()
-  }
-
   render () {
     if (!this.config || !this._container) return
     this.resetParams()

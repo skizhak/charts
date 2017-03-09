@@ -7,18 +7,35 @@ import * as d3Shape from 'd3-shape'
 import _ from 'lodash'
 import ContrailChartsConfigModel from 'contrail-charts-config-model'
 
-export default class RadialDendrogramConfigModel extends ContrailChartsConfigModel {
+export default class SankeyConfigModel extends ContrailChartsConfigModel {
   get defaults () {
     return {
+      /*
+      isPrimary: true,
+      // by default will use common shared container under the parent
+      isSharedContainer: true,
+      */
+
       // The chart width. If not provided will be caculated by View.
       chartWidth: undefined,
 
       // The chart height. If not provided will be caculated by View.
       chartHeight: undefined,
 
+      labelMargin: 50,
+
       colorScheme: d3Scale.schemeCategory20,
       // default we're keeping colorScale as undefined. during init, we will set it to ordinal scale of colorScheme. If set, this has precedence over scheme.
       colorScale: undefined,
+
+      // The scale to use that will represent the value of links.
+      valueScale: d3Scale.scaleLog(),
+
+      // The width of the nodes in sankey diagram.
+      nodeWidth: 15,
+
+      // The padding between nodes in sankey diagram.
+      nodePadding: 2,
 
       // The labels of the levels.
       levels: [],
@@ -39,9 +56,6 @@ export default class RadialDendrogramConfigModel extends ContrailChartsConfigMod
 
       // Show arc labels
       showArcLabels: true,
-
-      // Define how will the labels be rendered: 'along-arc', 'perpendicular'
-      labelFlow: 'along-arc',
 
       // Estimated average letter width
       arcLabelLetterWidth: 5,

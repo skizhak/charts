@@ -21,6 +21,7 @@ import dendrogramChart from '../../radial-chart/dendrogram'
 import areaBasic from '../../area-chart/basic'
 import navigation from '../../grouped-chart/navigation/index.js'
 import twoLineBarOnePieNav from '../../grouped-chart/linebar-pie-nav/index.js'
+import sankeyChart from '../../sankey-chart'
 /**
  * structure of an example:
  * 'example title': {
@@ -85,6 +86,11 @@ const allExamples = {
     },
     '2 LineBar 1 Pie Nav': {
       view: twoLineBarOnePieNav
+    }
+  },
+  'sankey': {
+    'Sankey': {
+      view: sankeyChart
     }
   }
 }
