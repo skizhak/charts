@@ -4,7 +4,7 @@
 import _ from 'lodash'
 import * as d3Scale from 'd3-scale'
 import ContrailChartsView from 'contrail-charts-view'
-import actionman from 'plugins/Actionman'
+import actionman from 'core/Actionman'
 
 export default class XYChartSubView extends ContrailChartsView {
   constructor (p) {

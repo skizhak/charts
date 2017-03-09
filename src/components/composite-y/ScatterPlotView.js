@@ -7,9 +7,9 @@ import 'd3-transition'
 import * as d3Selection from 'd3-selection'
 import * as d3Ease from 'd3-ease'
 import XYChartSubView from 'components/composite-y/XYChartSubView'
-import BucketConfigModel from 'components/bucket/BucketConfigModel'
-import BucketView from 'components/bucket/BucketView'
-import actionman from 'plugins/Actionman'
+import BucketConfigModel from 'helpers/bucket/BucketConfigModel'
+import BucketView from 'helpers/bucket/BucketView'
+import actionman from 'core/Actionman'
 
 export default class ScatterPlotView extends XYChartSubView {
   constructor (p) {

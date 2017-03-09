@@ -6,7 +6,7 @@ import $ from 'jquery'
 import _ from 'lodash'
 import ContrailChartsView from 'contrail-charts-view'
 import * as d3Color from 'd3-color'
-import actionman from 'plugins/Actionman'
+import actionman from 'core/Actionman'
 import _template from './legend.html'
 const _states = {
   DEFAULT: 'default',

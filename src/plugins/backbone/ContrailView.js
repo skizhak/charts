@@ -5,7 +5,7 @@ import _ from 'lodash'
 import Backbone from 'backbone'
 import $ from 'jquery'
 import * as d3Selection from 'd3-selection'
-import actionman from 'plugins/Actionman'
+import actionman from 'core/Actionman'
 
 d3Selection.selection.prototype.delegate = function (eventName, targetSelector, handler) {
   function delegated () {

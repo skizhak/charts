@@ -4,9 +4,9 @@
 import _ from 'lodash'
 import ContrailChartsView from 'contrail-charts-view'
 import CompositeYChartView from 'components/composite-y/CompositeYChartView'
-import actionman from 'plugins/Actionman'
-import BrushView from 'components/brush/BrushView'
-import BrushConfigModel from 'components/brush/BrushConfigModel'
+import actionman from 'core/Actionman'
+import BrushView from 'helpers/brush/BrushView'
+import BrushConfigModel from 'helpers/brush/BrushConfigModel'
 import CompositeYChartConfigModel from 'components/composite-y/CompositeYChartConfigModel'
 
 export default class NavigationView extends ContrailChartsView {

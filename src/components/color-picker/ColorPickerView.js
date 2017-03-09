@@ -3,7 +3,7 @@
  */
 import './color-picker.scss'
 import ContrailChartsView from 'contrail-charts-view'
-import actionman from 'plugins/Actionman'
+import actionman from 'core/Actionman'
 import _template from './color-picker.html'
 
 export default class ColorPickerView extends ContrailChartsView {

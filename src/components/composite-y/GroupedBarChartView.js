@@ -8,7 +8,7 @@ import * as d3Array from 'd3-array'
 import * as d3Selection from 'd3-selection'
 import * as d3Ease from 'd3-ease'
 import XYChartSubView from 'components/composite-y/XYChartSubView'
-import actionman from 'plugins/Actionman'
+import actionman from 'core/Actionman'
 
 export default class BarChartView extends XYChartSubView {
   get zIndex () { return 1 }

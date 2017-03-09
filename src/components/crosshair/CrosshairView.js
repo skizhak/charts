@@ -6,7 +6,7 @@ import _ from 'lodash'
 import * as d3Selection from 'd3-selection'
 import * as d3Ease from 'd3-ease'
 import ContrailChartsView from 'contrail-charts-view'
-import actionman from 'plugins/Actionman'
+import actionman from 'core/Actionman'
 
 export default class CrosshairView extends ContrailChartsView {
   constructor (p) {

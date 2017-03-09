@@ -3,9 +3,9 @@
  */
 import _ from 'lodash'
 import * as Components from 'components/index'
-import * as Handlers from 'handlers/index'
-import TitleView from 'plugins/title/TitleView'
-import actionman from 'plugins/Actionman'
+import * as Providers from 'providers/index'
+import TitleView from 'helpers/title/TitleView'
+import actionman from 'core/Actionman'
 
 import ShowComponent from 'actions/ShowComponent'
 import HideComponent from 'actions/HideComponent'
@@ -49,7 +49,7 @@ export default class ChartView {
 
     // create common provider for all components to prepare (format) data just once
     if (config.provider && config.provider.type) {
-      this._provider = new Handlers[`${config.provider.type}Provider`](config.provider.config)
+      this._provider = new [`${config.provider.type}Provider`](config.provider.config)
     }
     this._initComponents()
   }
@@ -146,7 +146,7 @@ export default class ChartView {
     if (!this._isEnabledComponent(type)) return false
     const Component = Components[type + 'View']
     const ConfigModel = Components[type + 'ConfigModel']
-    const Provider = Handlers[Component.dataType + 'Provider']
+    const Provider = Providers[Component.dataType + 'Provider']
 
     let configModel
     if (ConfigModel) configModel = new ConfigModel(config)

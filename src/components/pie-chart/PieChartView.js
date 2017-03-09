@@ -5,8 +5,7 @@ import _ from 'lodash'
 import * as d3Selection from 'd3-selection'
 import * as d3Shape from 'd3-shape'
 import ContrailChartsView from 'contrail-charts-view'
-import actionman from 'plugins/Actionman'
-import TitleView from 'plugins/title/TitleView'
+import actionman from 'core/Actionman'
 
 export default class PieChartView extends ContrailChartsView {
   static get dataType () { return 'Serie' }
@@ -43,7 +42,6 @@ export default class PieChartView extends ContrailChartsView {
 
   render () {
     this.resetParams()
-    if (this.params.title) TitleView(this._container, this.params.title)
     this._calculateDimensions()
     super.render()
     this._onMouseout()

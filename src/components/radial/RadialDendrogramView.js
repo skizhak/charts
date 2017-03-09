@@ -8,7 +8,7 @@ import * as d3Scale from 'd3-scale'
 import * as d3Selection from 'd3-selection'
 import * as d3Shape from 'd3-shape'
 import ContrailChartsView from 'contrail-charts-view'
-import actionman from 'plugins/Actionman'
+import actionman from 'core/Actionman'
 
 export default class RadialDendrogramView extends ContrailChartsView {
   static get dataType () { return 'Serie' }
@@ -474,7 +474,6 @@ export default class RadialDendrogramView extends ContrailChartsView {
         .style('text-anchor', (d) => ((d.angleRange[1] + d.angleRange[0]) / 2 < 180) ? 'start' : 'end')
         .text((d) => (this.params.showArcLabels && d.labelFits) ? d.label : '')
       svgArcLabels.exit().remove()
-
 
       // Arcs for parent nodes.
       const arcEnter = d3Shape.arc()

@@ -1,9 +1,9 @@
 /*
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
-import * as handlers from 'handlers/index'
+import * as providers from 'providers/index'
 import * as components from 'components/index'
-import ChartView from 'ChartView'
-export {ChartView, components, handlers}
+import ChartView from 'core/ChartView'
+export {ChartView, components, providers}
 
 import './styles/index.scss'

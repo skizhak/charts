@@ -6,7 +6,7 @@ import _ from 'lodash'
 import * as d3Selection from 'd3-selection'
 import * as d3Sankey from 'd3-sankey'
 import ContrailChartsView from 'contrail-charts-view'
-import actionman from 'plugins/Actionman'
+import actionman from 'core/Actionman'
 
 export default class SankeyView extends ContrailChartsView {
   static get dataType () { return 'Serie' }

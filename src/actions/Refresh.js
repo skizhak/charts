@@ -2,7 +2,7 @@
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
 import _ from 'lodash'
-import Action from '../plugins/Action'
+import Action from '../core/Action'
 
 export default class Refresh extends Action {
   constructor (p) {

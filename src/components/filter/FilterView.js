@@ -4,7 +4,7 @@
 import './filter.scss'
 import * as d3Selection from 'd3-selection'
 import ContrailChartsView from 'contrail-charts-view'
-import actionman from 'plugins/Actionman'
+import actionman from 'core/Actionman'
 import _template from './filter.html'
 
 export default class FilterView extends ContrailChartsView {

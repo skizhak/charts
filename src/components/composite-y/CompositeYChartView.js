@@ -8,14 +8,14 @@ import * as d3Axis from 'd3-axis'
 import * as d3Array from 'd3-array'
 import * as d3TimeFormat from 'd3-time-format'
 import ContrailChartsView from 'contrail-charts-view'
-import actionman from 'plugins/Actionman'
+import actionman from 'core/Actionman'
 import LineChartView from 'components/composite-y/LineChartView'
 import AreaChartView from 'components/composite-y/AreaChartView'
 import BarChartView from 'components/composite-y/GroupedBarChartView'
 import StackedBarChartView from 'components/composite-y/StackedBarChartView'
 import ScatterPlotView from 'components/composite-y/ScatterPlotView'
 import CompositeYChartConfigModel from 'components/composite-y/CompositeYChartConfigModel'
-import TitleView from 'plugins/title/TitleView'
+import TitleView from 'helpers/title/TitleView'
 
 export default class CompositeYChartView extends ContrailChartsView {
   static get dataType () { return 'DataFrame' }

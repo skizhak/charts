@@ -9,7 +9,7 @@ let fileName = 'contrail-charts'
 const libraryName = 'coCharts'
 const paths = {
   framework: 'plugins/backbone/',
-  contrail: 'plugins/contrail/',
+  contrail: 'core/contrail/',
 }
 function absolute (...args) {
   return join(__dirname, ...args)

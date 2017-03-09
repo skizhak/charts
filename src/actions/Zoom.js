@@ -1,8 +1,8 @@
 /*
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
-const _ = require('lodash')
-const Action = require('../plugins/Action')
+import _ from 'lodash'
+import Action from '../core/Action'
 
 export default class Zoom extends Action {
   constructor (p) {
