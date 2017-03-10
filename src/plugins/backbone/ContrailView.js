@@ -54,7 +54,7 @@ export default class ContrailView extends Backbone.View {
       if (!_.isFunction(method)) method = this[method]
       if (!method) continue
       const match = key.match(this.delegateEventSplitter)
-      this.delegate(match[1], match[2], method.bind(this))
+      this.delegate(match[1], match[2], method.bind(this), events[key])
     }
     return this
   }
@@ -63,8 +63,9 @@ export default class ContrailView extends Backbone.View {
    * d3 doesn't support multiple listeners on the same event and element,
    * so add listener name to create event namespace
    */
-  delegate (eventName, selector, listener) {
-    const listenerName = listener.name.split(' ')[1]
+  delegate (eventName, selector, listener, listenerName) {
+    // code minification drops original listener name
+    // const listenerName = listener.name.split(' ')[1]
     this.d3.delegate(`${eventName}.${listenerName}.delegateEvents${this.cid}`, selector, listener)
     return this
   }

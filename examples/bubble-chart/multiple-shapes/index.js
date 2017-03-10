@@ -1,7 +1,7 @@
 /*
  * Copyright (c) Juniper Networks, Inc. All rights reserved.
  */
-import {ChartView} from 'coCharts'
+import {ChartView, Util} from 'coCharts'
 import {formatter, _c, fixture} from 'commons'
 
 const data = fixture({
@@ -18,7 +18,7 @@ const data = fixture({
 })
 
 const colorScheme = _c.bubbleColorScheme6
-const bubbleShapes = _c.bubbleShapes
+const bubbleShapes = Util.bubbleShapes
 
 const chartConfig = {
   id: 'chartBox',
