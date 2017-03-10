@@ -40,37 +40,6 @@ const bubbleColorScheme13 = [
   '#3f51b5'
 ].concat(d3ColorScheme10)
 
-const bubbleShapes = {
-  signin: '&#xf090;',
-  signout: '&#xf08b;',
-  certificate: '&#xf0a3;',
-  circleFill: '&#xf111;',
-  circle: '&#xf10c;',
-  notchCircle: '&#xf1ce;',
-  thinCircle: '&#xf1db;',
-  dotCircle: '&#xf192;',
-  cog: '&#xf013;',
-  dashboard: '&#xf0e4;',
-  db: '&#xf1c0;',
-  desktop: '&#xf108;',
-  squareFill: '&#xf0c8;',
-  sun: '&#xf185;',
-  square: '&#xf096;',
-  star: '&#xf005;',
-  spinner: '&#xf110;',
-  sheld: '&#xf132;',
-  network: '&#xf0e8;',
-  tv: '&#xf26c;',
-  window: '&#xf2d0;',
-  cloud: '&#xf0c2;',
-  cogs: '&#xf085;',
-  compass: '&#xf14e;',
-  warning: '&#xf071;',
-  alarmFill: '&#xf0f3;',
-  deleted: '&#xf05e;',
-  asterisk: '&#xf069;'
-}
-
 const radialColorScheme6 = [
   '#00bcd4',
   '#4caf50',
@@ -94,7 +63,6 @@ const radialColorScheme10 = [
 ]
 
 export default {
-  bubbleShapes,
   bubbleColorScheme6,
   bubbleColorScheme13,
   lbColorScheme7,
