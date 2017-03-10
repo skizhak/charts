@@ -8,10 +8,10 @@ describe('coCharts', function () {
     expect(coCharts).toBeDefined()
   })
 
-  it('coCharts has ChartView, handlers and components', function () {
+  it('coCharts has ChartView, providers and components', function () {
     expect(coCharts.ChartView).toBeDefined()
-    expect(coCharts.handlers.SerieProvider).toBeDefined()
-    expect(coCharts.handlers.DataFrameProvider).toBeDefined()
+    expect(coCharts.providers.SerieProvider).toBeDefined()
+    expect(coCharts.providers.DataFrameProvider).toBeDefined()
     expect(coCharts.components.CompositeYChartConfigModel).toBeDefined()
     expect(coCharts.components.CompositeYChartView).toBeDefined()
     expect(coCharts.components.ControlPanelConfigModel).toBeDefined()
