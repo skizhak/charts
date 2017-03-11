@@ -25,7 +25,6 @@ import sankeyChart from '../../sankey-chart'
 /**
  * structure of an example:
  * 'example title': {
- *   template: 'template id', <= optional
  *   view: instance of chart view <= required
  *   description: demonstrated features
  * }
@@ -85,12 +84,12 @@ const allExamples = {
       First line chart is not updated as it is plotted with different values at x axis`,
     },
     '2 LineBar 1 Pie Nav': {
-      view: twoLineBarOnePieNav
+      view: twoLineBarOnePieNav,
     }
   },
   'sankey': {
     'Sankey': {
-      view: sankeyChart
+      view: sankeyChart,
     }
   }
 }
@@ -115,7 +114,6 @@ function _viewRenderInit ({view, title = '', desc = ''}) {
     if (currentView.stopUpdating) currentView.stopUpdating()
   }
 
-  // Cleanup and apply containers template
   $content.find('#page-title').text(title)
   $content.find('#page-description').html(desc)
   $chartBox.empty()

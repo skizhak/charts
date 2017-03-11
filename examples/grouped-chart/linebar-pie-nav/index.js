@@ -44,10 +44,6 @@ const chartConfig = {
     id: 'legend-panel-id',
     type: 'LegendPanel',
     config: {
-      marginLeft: 90,
-      marginRight: 60,
-      marginBottom: 40,
-      chartHeight: 350,
       sourceComponent: 'compositey-chart-id',
       editable: {
         colorSelector: false,
@@ -98,10 +94,6 @@ const chartConfig = {
     id: 'legend-panel-id2',
     type: 'LegendPanel',
     config: {
-      marginLeft: 60,
-      marginRight: 60,
-      marginBottom: 40,
-      chartHeight: 350,
       sourceComponent: 'compositey-chart-id2',
       editable: {
         colorSelector: false,
