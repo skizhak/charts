@@ -4,6 +4,7 @@
 import _ from 'lodash'
 import {ChartView} from 'coCharts'
 import {formatter, _c, fixture} from 'commons'
+import './index.scss'
 import template from './template.html'
 const colorScheme = _c.d3ColorScheme20
 

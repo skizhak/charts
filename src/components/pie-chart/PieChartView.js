@@ -92,20 +92,11 @@ export default class PieChartView extends ContrailChartsView {
 
   _onMousemove (d, el, event) {
     const [left, top] = d3Selection.mouse(this._container)
-    const onClickCursor = this.config.get('onClickCursor')
-    if (onClickCursor) {
-      d3Selection.select(el)
-        .classed(this.selectorClass('click'), true)
-        .style('cursor', () => (typeof (onClickCursor) === 'boolean') ? 'pointer' : onClickCursor)
-    }
-
     el.classList.add(this.selectorClass('active'))
     actionman.fire('ShowComponent', this.config.get('tooltip'), {left, top}, d.data)
   }
 
   _onMouseout (d, el) {
-    if (this.config.get('onClickCursor') && el) el.classList.remove(this.selectorClass('click'))
-
     actionman.fire('HideComponent', this.config.get('tooltip'))
     const els = el ? this.d3.select(() => el) : this.d3.selectAll(this.selectors.node)
     els.classed('active', false)
