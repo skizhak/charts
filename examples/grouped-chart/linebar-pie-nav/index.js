@@ -38,7 +38,6 @@ function pieDataParser (tsData) {
 
 const chartConfig = {
   id: 'chartBox',
-  title: 'Static bar chart for series: a, b',
   template,
   components: [{
     id: 'legend-panel-id',
@@ -57,6 +56,7 @@ const chartConfig = {
     type: 'CompositeYChart',
     config: {
       chartHeight: 300,
+      crosshair: 'crosshair-id',
       possibleChartTypes: {
         y1: ['BarChart', 'LineChart'],
         y2: ['BarChart', 'LineChart']
@@ -65,7 +65,7 @@ const chartConfig = {
         x: {
           accessor: 'x',
           axis: 'x',
-          ticks: 6
+          ticks: 6,
         },
         y: [
           {
@@ -85,11 +85,46 @@ const chartConfig = {
       }
     }
   }, {
+    id: 'crosshair-id',
+    config: {
+      container: 'compositey-chart-id',
+      tooltip: 'tooltip-id2',
+    },
+    type: 'Crosshair',
+  }, {
     id: 'message-id',
     type: 'Message',
     config: {
       enabled: true,
     }
+  }, {
+    id: 'tooltip-id2',
+    type: 'Tooltip',
+    config: {
+      title: {
+        accessor: 'x',
+        valueFormatter: formatter.extendedISOTime,
+      },
+      dataConfig: [
+        {
+          accessor: 'a',
+          labelFormatter: 'Label A',
+          valueFormatter: formatter.toInteger,
+        }, {
+          accessor: 'b',
+          labelFormatter: 'Label B',
+          valueFormatter: formatter.toInteger,
+        }, {
+          accessor: 'c',
+          labelFormatter: 'Label C',
+          valueFormatter: formatter.toInteger,
+        }, {
+          accessor: 'd',
+          labelFormatter: 'Label D',
+          valueFormatter: formatter.toInteger,
+        }
+      ]
+    },
   }, {
     id: 'legend-panel-id2',
     type: 'LegendPanel',

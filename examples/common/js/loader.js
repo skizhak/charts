@@ -85,6 +85,8 @@ const allExamples = {
     },
     '2 LineBar 1 Pie Nav': {
       view: twoLineBarOnePieNav,
+      desc: `All charts except first are updated by navigation component. </br>
+      Crosshair for the first chart needs container specified in it's config as there are more than one shared svg in this chart`,
     }
   },
   'sankey': {

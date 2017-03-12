@@ -90,7 +90,9 @@ export default class CompositeYChartView extends ContrailChartsView {
 
   showCrosshair (point) {
     const crosshairId = this.config.get('crosshair')
-    const data = this.getCrosshairData(point)
+    const xScale = this.params.axis[this.params.plot.x.axis].scale
+    const mouseX = xScale.invert(point[0])
+    const data = this.model.getNearest(this.params.plot.x.accessor, mouseX)
     const config = this.getCrosshairConfig()
     actionman.fire('ShowComponent', crosshairId, data, point, config)
 
@@ -413,22 +415,6 @@ export default class CompositeYChartView extends ContrailChartsView {
       yAxisLabelSvg.exit().remove()
     })
   }
-
-  getCrosshairData (point) {
-    const data = this.model.data
-    const xScale = this.params.axis[this.params.plot.x.axis].scale
-    const xAccessor = this.params.plot.x.accessor
-    const mouseX = xScale.invert(point[0])
-    const xBisector = d3Array.bisector(d => d[xAccessor]).right
-    const indexRight = xBisector(data, mouseX, 0, data.length - 1)
-    let indexLeft = indexRight - 1
-    if (indexLeft < 0) indexLeft = 0
-    let index = indexRight
-    if (Math.abs(mouseX - data[indexLeft][xAccessor]) < Math.abs(mouseX - data[indexRight][xAccessor])) {
-      index = indexLeft
-    }
-    return data[index]
-  }
   // TODO move to CrosshairConfig
   getCrosshairConfig () {
     const x = this.config.get('plot').x
@@ -443,7 +429,7 @@ export default class CompositeYChartView extends ContrailChartsView {
     const globalXScale = this.params.axis[x.axis].scale
 
     // Prepare x label formatter
-    data.xFormat = this.config.get('axis')[x.axis].formatter
+    data.xFormat = _.get(this.config, `attributes.axis.${x.axis}.formatter`)
     if (!_.isFunction(data.xFormat)) data.xFormat = d3TimeFormat.timeFormat('%H:%M')
 
     // Prepare line coordinates
