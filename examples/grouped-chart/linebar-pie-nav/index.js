@@ -3,22 +3,22 @@
  */
 import _ from 'lodash'
 import {ChartView} from 'coCharts'
-import {formatter, _c} from 'commons'
+import {formatter, _c, fixture} from 'commons'
 import template from './template.html'
-
-const now = _.now()
 const colorScheme = _c.d3ColorScheme20
 
-const data = []
-for (let i = 0; i < 100; i++) {
-  data.push({
-    x: now - (i * 300000),
-    a: _.random(10, 200),
-    b: _.random(10, 300),
-    c: _.random(10, 900),
-    d: _.random(100, 150),
-  })
-}
+const now = _.now()
+const length = 100
+const data = fixture({
+  length: length,
+  data: {
+    x: {linear: true, range: [now - 30000000, now]},
+    a: {random: true, range: [2, (length - 1) * 2]},
+    b: {random: true, range: [3, (length - 1) * 3]},
+    c: {random: true, range: [7, (length - 1) * 7]},
+    d: {random: true, range: [9, (length - 1) * 9]},
+  },
+})
 
 function pieDataParser (tsData) {
   const tsSumData = _.reduce(tsData, (v1, v2) => {
