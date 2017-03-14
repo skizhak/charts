@@ -56,11 +56,13 @@ export default class DataFrameProvider {
     })
     return d3Array.extent(_.concat(...domains))
   }
-
+  /**
+   * Limited to ascending sorted values
+   */
   getNearest (accessor, value) {
     const data = this._data
     const xBisector = d3Array.bisector(d => d[accessor]).left
-    const index = xBisector(data, value, 1)
+    const index = xBisector(data, value, 1, data.length - 1)
     return value - data[index - 1][accessor] > data[index][accessor] - value ? data[index] : data[index - 1]
   }
   /**
