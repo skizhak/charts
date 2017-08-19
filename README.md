@@ -1,19 +1,15 @@
-[![Build Status](https://circleci.com/gh/absingla/contrail-charts/tree/master.svg?style=shield&circle-token=59e6876b319241f9dd809aa2a7399b6edac92e66)](https://circleci.com/gh/absingla/contrail-charts)
+[![Build Status](https://circleci.com/gh/skizhak/charts.svg?style=svg)](https://circleci.com/gh/skizhak/charts)
 [![JavaScript Style Guide](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](http://standardjs.com/)
 
 #### This is a initial POC done for now released charts library [contrail-charts](https://github.com/juniper/contrail-charts)
 
-# Contrail Charts
+# Charts
 
 A chart library using D3.
 
 # Installation
 
-simply do
-```
-npm install contrail-charts
-```
-Alternatively, you can clone this repo and
+simply clone this repo and do
 ```
 npm install
 ```
